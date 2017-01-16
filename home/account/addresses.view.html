@@ -1,0 +1,52 @@
+<div class="headline"><em></em>{{ 'HEADLINE_ADDRESSES' | translate }}</div>
+<div class="modal fade" id="showqrmodal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog ">
+    <div class="modal-content panel">
+      <div class="address" id="modal_address"></div>
+      <div id="modal_qr">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mainContent" >
+<div class="account_content_center">
+  <table cellspacing="0" class='centertable'>
+    <tr>
+      <th class="center">{{ 'DATE_CREATED' | translate }}
+        <span>
+          <i class="fa fa-caret-up"></i>
+          <i class="fa fa-caret-down"></i>
+            </span></th>
+      <th class="center">{{ 'ADDRESS' | translate }}
+        <span>
+          <i class="fa fa-caret-up"></i>
+          <i class="fa fa-caret-down"></i>
+        </span>
+      </th>
+      <th class="center">{{ 'BALANCE' | translate }}
+        <span>
+          <i class="fa fa-caret-up"></i>
+          <i class="fa fa-caret-down"></i>
+            </span></th>
+      <th  class="center">{{ 'ASSET_TYPE' | translate }}
+        <span>
+          <i class="fa fa-caret-up"></i>
+          <i class="fa fa-caret-down"></i>
+        </span></th>
+
+    </tr>
+    <tr ng-repeat="address in addresses">
+      <td></td>
+      <td><span class="address">{{address.balance.address}} <a href=""><img src="images/receiveBig.png" ng-click="showqr(address.balance.address)" alt="receive"/></a></span></td>
+      <td>{{address.balance.confirmed}}</td>
+      <td>ETP</td>
+
+    </tr>
+  </table>
+  <div class="center"><a href="" ><img src="images/add2.png" alt="" ng-click="getnewaddress()"/></a></div>
+
+
+
+</div>
+</div>

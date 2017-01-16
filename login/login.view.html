@@ -1,0 +1,39 @@
+<div class="bg"></div>
+
+    <form >
+    <div class="panel loginbox">
+
+        <div class="text-center margin-big padding-big-top">
+        	<img src="images/logo-black.png" class="logo" alt="" />
+        </div>
+        <div class="login_center">
+          <p>{{ 'LOGIN.ENTER_ACCOUNT_NAME' | translate }}<i>*</i></p>
+          <input type="text" ng-model="vm.username" autocomplete="on">
+          <p>{{ 'LOGIN.ENTER_ACCOUNT_PASSWORD' | translate }}<i>*</i></p>
+          <input type="password" ng-model="vm.password">
+        	<p class="pull-right"><a href="#!/reset">{{ 'LOGIN.FORGOT_PASSWORD' | translate }}</a></p>
+
+<br><br><br><br><br>
+          <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+          <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || vm.dataLoading" ng-click="vm.login()">{{ 'LOGIN.LOGIN_BUTTON' | translate }}</button>
+          <a href="#!/register" class="btn btn-info">{{ 'LOGIN.REGISTGER_BUTTON' | translate }}</a>
+          <div class="dropdown pull-right">
+            <button class="btn btn-primary" type="button" data-toggle="dropdown">
+              Language
+              <span class="glyphicon glyphicon-flag" ></span></button>
+  <ul class="dropdown-menu">
+    <li><a ng-click="vm.changeLang('zh_ZH')">中文</a></li>
+    <li><a ng-click="vm.changeLang('en_US')">English</a></li>
+    <li><a ng-click="vm.changeLang('de_DE')">Deutsch</a></li>
+  </ul>
+  </div>
+        </div>
+        <br><br>
+        <div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
+          <div class="" ng-bind="flash.message">
+          </div>
+        </div>
+      </div>
+
+    </div>
+    </form>

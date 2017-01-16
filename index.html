@@ -1,0 +1,44 @@
+<!doctype html>
+<html ng-app="app">
+  <head>
+    <title>{{ 'APP_HEADLINE' | translate }}</title>
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="node_modules/angular-cookies/angular-cookies.min.js"></script>
+    <script src="node_modules/angular-local-storage/dist/angular-local-storage.min.js"></script>
+    <script src="app.js"></script>
+    <script src="home/home.controller.js"></script>
+    <script src="register/register.controller.js"></script>
+    <script src="login/login.controller.js"></script>
+    <script src="app-services/flash.service.js"></script>
+    <script src="app-services/metaverse.service.js"></script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/nprogress/nprogress.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/qrcode.min.js"></script>
+    <script src="node_modules/angular-translate/dist/angular-translate.min.js"></script>
+    <script src="node_modules/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel='stylesheet' href='node_modules/nprogress/nprogress.css'/>
+		<link rel="stylesheet" href="css/admin.css" />
+		<link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/calendar.css" />
+
+
+  </head>
+  <body class="bg">
+
+    <div >
+      <div ui-view></div>
+    </div>
+  </body>
+
+
+
+  <script>
+
+  </script>
+
+</html>

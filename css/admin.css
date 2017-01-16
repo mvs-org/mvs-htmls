@@ -1,0 +1,1723 @@
+body{ color:#ddd; font-size:13px;}
+input,select{color:#999;padding-left:10px;}
+a{text-decoration: none;}
+body	{ background:url(../images/bg.png) top right no-repeat; background-attachment:fixed; }
+
+/*.bg{width:100%; height:100%;background:url(../images/banner-2.png) top right no-repeat !important;background-attachment:fixed;background-size:100% 100%;}
+*/
+form .form-group:last-child{padding-bottom:0;}
+.passcode{position:absolute;right:0;bottom:0;height:32px;margin:1px;border-left:solid 1px #ddd;text-align:center;line-height:32px;border-radius:0 4px 4px 0;}
+ul,li{ list-style-type:none;}
+button{font-size:16px;}
+button:hover{cursor:pointer;}
+.lefter{position:relative;float:left;width:180px;margin-right:-180px;background:#e6f2fb;text-align:center;}
+.righter{float:right;width:100%;padding-top:15px;background:#e6f2fb;}
+.mainer{margin-left:180px;}
+.field-icon-right .icon{ bottom:0px; top:auto}
+.logo img{ float:left; margin-left:30px;height:57px;}
+.header-right{width:auto;float:right;height:auto;}
+html{margin:0;padding:0;border:0;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0, 0, 0, 0);}
+body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, q, dl, dt, dd, ol, ul, li, fieldset, form, legend, caption, tbody, tfoot, thead, article, aside, dialog, figure, footer, header, hgroup, nav, section{margin:0;padding:0;border:0;font-size:14px;font:inherit;vertical-align:baseline;}
+article, aside, details, figcaption, figure, dialog, footer, header, hgroup, menu, nav, section{display:block;}
+body{font-size:14px;color:#ddd;font-family:"Microsoft YaHei","simsun","Helvetica Neue", Arial, Helvetica, sans-serif;}
+img{border:0;vertical-align:bottom;}
+::-webkit-input-placeholder{color:#999;}
+:-moz-placeholder{color:#999;}
+::-moz-placeholder{color:#999;}
+:-ms-input-placeholder{color:#ccc;}
+*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+*:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+button::-moz-focus-inner,input::-moz-focus-inner{padding:0;border:0;}
+textarea{overflow:auto;}
+input:focus,textarea:focus,button:focus,select:focus{outline:none;}
+input::-ms-clear{display:none;}
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block;}
+audio,canvas,progress,video{display:inline-block;vertical-align:baseline;}
+audio:not([controls]){display:none;height:0;}
+[hidden],template{display:none;}
+a{background:transparent;}
+a:active,a:hover{outline:0;}
+a:focus{outline:thin dotted;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}
+.input-small{
+	width:70px;
+	height:30px;
+}
+
+.layout{width:1200px;margin:0 auto;}
+/*----------------------------------------------------------头部--------------------------*/
+.head{
+	width: 100%;
+	height: 60px;
+	background: #fff;
+	border-bottom: 1px solid #a4c1da;
+	box-shadow: 2px 2px 2px #a4c1da;
+}
+.header{height:60px; overflow:hidden; width:1200px;margin:0 auto;}
+.header .Tbox{float:left;width:625px;height:40px;line-height:40px;margin:10px 0 10px 13px;background:#f1f5f8;text-align: center;}
+.header .btn{float:left;height:30px;margin:15px 25px;background:#79a6cc;border-radius: 15px;border:1px solid #79a6cc;text-align: center;color:#fff;}
+.header .btn a{color:#fff;font-size:16px;}
+.header .btn a:hover{color:#666;}
+.header .install{float:left;}
+.header .own{float:left;}
+/*.head-l{ float:left; margin-top:17px; margin-left:15px; }
+.head-l .button{ padding:8px 15px;}
+.head-l .bg-blue:hover{ background-color:#03b6fd;}*/
+.leftnav{width:222px; height:770px;float:left; top:75px; left:0px;color:#777;
+	position:relative;top:0px;}
+	.leftnav p{width:222px;height:40px;line-height:40px;text-align:center;color:#ddd;float:left;  position:absolute;bottom:10px;}
+	.leftnav > a.current:link,.leftnav > a.current:hover{color:#5bc0de;}
+
+
+	/*.leftnav-title {height:50px;  color:#FFF; padding-left:22px;  font-size:14px; line-height:50px;}
+	.leftnav-title a{color:#fff;}*/
+	.leftnav-title{color:#229dff;}
+	.leftnav-account .em1{width:24px;float:left;height:21px;background:url(../images/icon-account.png) no-repeat center center;margin-top:14px;margin-right:5px;}
+	.leftnav-assets .em1{width:24px;float:left;height:21px;background:url(../images/icon-assets.png) no-repeat center center;margin-top:14px;margin-right:5px;}
+	.leftnav-account .em2,.leftnav-assets .em2,.leftnav-mining .em2,.leftnav-home .em2,.leftnav-console .em2{width:13px;hegiht:17px;margin-top:0px;margin-bottom:15px;position:absolute;right:15px;top:-15px;}
+	.layout .centent .leftnav .leftnav-mining .em3{width:24px;float:left;height:21px;margin-top:14px;margin-right:5px;background:url(../images/icon-mining.png) no-repeat center center;}
+	.layout .centent .leftnav .leftnav-home .em3{width:24px;float:left;height:21px;margin-top:14px;margin-right:5px;background:url(../images/icon-home.png) no-repeat center center;}
+	.layout .centent .leftnav .leftnav-console .em4{width:24px;float:left;height:21px;margin-top:14px;margin-right:5px;background:url(../images/icon-console.png) no-repeat center center;}
+	.assetH_A .em2{width:13px;hegiht:17px;margin-top:0px;margin-bottom:15px;position:absolute;right:15px;top:-15px;}
+	.leftnav h2 > p{color: #acaeb2;  width: 90px;  height: 50px;  line-height: 50px;  padding-left: 40px;  display: block;  cursor: pointer;  font-size: 16px;  color: #666;  font-family: Microsoft Yahei;}
+	.leftnav h2{color:#acaeb2;width:222px;height:50px;line-height:50px; padding-left:40px;display:block; cursor:pointer; font-size:16px;color:#666;
+		font-family: Microsoft Yahei;  position:relative;}
+		.leftnav h2:hover{border-left:2px solid #229dff; color:#229dff;}
+		.accountH2 > span,.assetH_A .span{width:auto;float:left;line-height:50px;position:absolute;top:0px;}
+		.assetH2 .em1{}
+
+			.leftnav a h2{color:#229dff;}
+			.leftnav a h2.on{ color:#d8d8d9;background:#2a2c32;}
+			.leftnav .border-bottom{ border-bottom:1px solid #b5cfd9;}
+			.leftnav h2{font-weight:bold;}
+			.leftnav h2 span{ margin-right:10px;color:#ccc;}
+			.leftnav h2 a:hover{ color:#229dff;}
+			/*.leftnav ul {display:none;width:222px;height:100px;  padding:5px 0;}*/
+			.leftnav ul li{ list-style-type:none;width:222px;height:40px;line-height:40px;font-size:16px;}
+			.leftnav ul li a{ display:block;padding-left:60px;color:#9f9f9f;}
+			.leftnav ul li a.current:hover{border-left:2px solid #229dff;color:#229dff;}
+			.leftnav ul li a.current{border-left:2px solid #fff;}
+			.leftnav ul li span{ margin-right:8px;}
+			.leftnav ul li a:hover,.leftnav ul li a.on{ color:#09c;}
+			.leftnav h3{padding:10px 0 10px 30px; transition:all .1s ease-in-out; display:block; cursor:pointer; font-weight:bold; font-size:14px;}
+			.leftnav h3.on{ color:#09c;}
+
+			/*--------------------------------------------主要内容-------------------------*/
+			.admin{width:968px;min-height:715px;/*background:#fff;*/float:right;}
+			.centent{width:1200px;flaot:left;hegiht:auto;margin-top:20px;}
+			.mainContent1 dl{height:165px;width:100%;}
+			.mainContent1 dl dt{width:100%;height:165px;background-color: rgba(255,255,255,0.1);float:left;}
+			.mainContent1 dl dt .first_l{width:100%;height:auto;padding-top:5px;float:left;color:#229dff;}
+			.mainContent1 dl dt .first_l p{border-bottom:1px dashed #29dff;float:left;height:25px;line-height:25px;width:130px;text-align:center;color:#229dff;}
+			.mainContent1 dl dt .first_l p1{font-size:12px;}
+			.mainContent1 dl dt .first_l .p{float:left;height:40px;line-height:35px;width:129px;text-align:center;color:#229dff;font-size:24px;border-bottom:1px dashed #dfdfdf;font-weight:bold;margin-bottom:5px;margin-top:5px;}
+			.mainContent1 dl dt .first_r{float:right;width:130px;}
+			.mainContent1 dl dt .first_r > span{width:130px;float:left;line-height:25px;text-align:center;color:#229dff;}
+			.mainContent1 dl dt .first_r .span1{display:block;height:25px;font-size:24px;width:130px;line-height:25px;text-align:center;color:#229dff;border-bottom:1px solid #dadada;padding-bottom:5px;}
+			.mainContent1 dl dt .first_r .span2{display:block;height:25px;font-size:24px;width:130px;line-height:25px;text-align:center;color:#229dff;}
+
+			.mainContent1 dl dt .first_r:hover span{color:#229dff;}
+			.mainContent1 dl dt .first_r span:nth-of-type(1){font-weight:normal;color:#229dff;}
+			.mainContent1 dl dd{width:130px;height:165px;margin-left:10px;float:left;}
+			.mainContent1 dl dd .span1{width:100%;float:left;line-height:40px;text-align:center;margin-top:5px;padding-bottom:5px;color:#ddd;font-size:24px;border-bottom:1px dashed #e1e1e1;}
+			.mainContent1 dl dd .span2{width:100%;float:left;line-height:25px;text-align:center;color:#ddd;font-size:12px;}
+			.mainContent1 dl dd .span3,.mainContent1 dl dd .span4{width:100%;float:left;line-height:25px;text-align:center;color:#aaa;font-size:12px;}
+
+			.mainContent1 dl dd:hover{color:#229dff;}
+			.mainContent1 dl dd .first_r span{width:130px;height:30px;color:#229dff;font-weight:bold;font-family:Microsoft Yahei;line-height:30px;text-align:center;float:left;}
+
+			.mainContent1 .pageNum{width:965px;height:50px;}
+			.mainContent1 .pageNum span{display:block;width:30px;height:30px;border-radius: 15px;background:#fff;text-align:center;line-height:30px;float:left;font-size:16px;}
+			.mainContent1 .pageNum .homeSpan1{margin:8px 0 0 450px;background:#229dff;width:26px;float:left;height:26px;border-radius:50%;}
+			.mainContent1 .pageNum .homeSpan1 img{width:13px;float:left;height:17px;margin-left:6px;margin-right:7px;margin-top:5px;transform: rotateY(180deg);}
+			.mainContent1 .pageNum .homeSpan2{margin:8px 0 0 10px;background:#229dff;width:26px;float:left;height:26px;border-radius:50%;}
+			.mainContent1 .pageNum .homeSpan2 img{width:13px;float:left;height:17px;margin-left:8px;margin-right:7px;margin-top:4px;}
+			.mainContent1 .data{background:#fff;width:965px;height:505px;background:#d9e1e8;padding-top:30px;}
+			.mainContent1 .data .dataBox{width:601px;height:120px;background:#fff;margin-left:185px;}
+			.mainContent1 .data .dataBox .dataBoxLeft{width:230px;height:120px;border-right:1px dashed #f3f3f3;float:left;}
+			.mainContent1 .data .dataBox .dataBoxLeft dl{width:230px;height:60px;}
+			.mainContent1 .data .dataBox .dataBoxLeft dl dt{width:90px;height:60px;}
+			.mainContent1 .data .dataBox .dataBoxLeft dl dd{width:140px;height:30px;line-height:30px;margin:0;}
+			.mainContent1 .data .dataBox .dataBoxLeft p{height:60px;line-height:60px;font-size:14px;padding-left:20px;}
+			.mainContent1 .data .dataBox .dataBoxRight{width:370px;height:120px;float:left;}
+			.mainContent1 .data .dataBox .dataBoxRight div{width:185px;height:60px;float:left;}
+			.mainContent1 .data .dataBox .dataBoxRight div p{width:185px;height:30px;line-height:30px;padding-left:20px;}
+			/*.mainContent1 .data ul{
+			width:922px;
+			height:55px;
+			margin:0 27px;
+			border-bottom:1px solid #E1E1E1;
+		}
+		.mainContent1 .data li{
+		float:left;
+		height:55px;
+		line-height:55px;
+		display:inline-block;
+	}
+	.mainContent1 .data li:nth-of-type(1){
+	padding:0 30px 0 10px;
+}
+.mainContent1 .data li:nth-of-type(2){
+padding:0 60px;
+}
+.mainContent1 .data li:nth-of-type(3){
+padding:0 80px;
+}
+.mainContent1 .data li:nth-of-type(4){
+padding:0 40px;
+}
+.mainContent1 .data li:nth-of-type(5){
+padding:0 40px;
+}
+.mainContent1 .data li:nth-of-type(6){
+padding:0 40px;
+}
+.mainContent1 .data li:nth-of-type(7){
+padding:0 40px;
+}*/
+
+/*************footer*****************/
+footer{width:965px;height:50px;float:right;background-color: rgba(255,255,255,0.1);margin-top:10px;float:right;}
+footer select{
+	float:left;
+	width:115px;
+	height:30px;
+	margin:10px 0 0 20px;
+	padding-left:20px;
+	border:1px solid #d5d5d5;
+}
+footer span{
+	height:50px;
+	line-height:50px;
+	float:left;
+	margin-left:30px;color:#ddd;font-size:16px;
+}
+footer .footerRight{
+	width:220px;
+	float:right;
+}
+/**************账户页面 account************************/
+.accountContent{
+	width:968px;
+	height:675px;
+	z-index:100;
+}
+.accountContent .accountContentTopBox{
+	width:968px;
+	height:210px;
+}
+.accountContent .accountContentTopBox .accountContentLeft{
+	width:354px;
+	height:210px;
+	float:left;
+	padding:53px 26px;
+}
+.accountContent .accountContentTopBox .accountContentLeft dl{
+	width:302px;
+	height:104px;
+}
+.accountContent .accountContentTopBox .accountContentLeft dl dt{
+	width:104px;
+	height:104px;
+	border:1px solid #eee;
+	float:left;
+
+
+}
+
+.accountContent .accountContentTopBox .accountContentLeft dl dd{  margin-left:26px;  width:155px;  height:26px;  line-height:26px;  float:left; font-size:14px;}
+.accountContent .accountContentTopBox .accountContentRight{  width:600px;  height:210px;   float:right;  padding:0 30px;  }
+.accountContent .accountContentTopBox .accountContentRight .accountContentRightP1{  display:block;  width:90px;  height:54px;  line-height:54px;  float:left;  }
+.accountContent .accountContentTopBox .accountContentRight #accountContentRightBtn1{
+	width:70px;
+	height:30px;
+	border:0;
+	border-radius:5px;
+	color:#fff;
+	margin:12px 0;
+	font-size:14px;
+}
+#mainKey{
+	width:540px;
+	height:80px;
+	outline: none;
+	padding: 10px 20px;
+	background-color: rgba(255,255,255,0.5);
+
+}
+.accountContent .accountContentTopBox .accountContentRight .mainKeyCare{
+	width:330px;
+	height:50px;
+	line-height:50px;
+	float:left;
+	color:#e60012;
+	position:relative;
+	padding-left:25px;
+}
+.accountContent .accountContentTopBox .accountContentRight .mainKeyCare img{
+	position:absolute;
+	top:15px;
+	left:0;
+}
+.accountContent .accountContentTopBox .accountContentRight .accountContentRightBtn2{
+	width:120px;
+	height:35px;
+	float:right;
+	border:1px solid #eee;
+	border-radius:5px;
+	box-shadow:5px 5px 9px #eee;
+	color:#333;
+	margin-top:18px;
+}
+.accountContent .accountContentBottom{
+	width:968px;
+	height:450px;
+	float:left;
+	margin-top:10px;
+}
+.accountContent .accountContentBottom .account_content_top{
+	height:60px;
+	line-height:60px;
+	padding-left:30px;
+	border-bottom:1px solid #e1e1e1;
+}
+/*饼图*/
+
+#chartBox #chart1{
+	width:300px;
+	height:300px;
+	float:left;
+	margin-top:40px;
+	margin-bottom:40px;
+	margin-left:339px;
+	margin-right:120px;
+}
+/*#chartBox #chart2{*/
+/*width:300px;*/
+/*height:300px;*/
+/*margin:40px 0px;*/
+/*float:left;*/
+/*}*/
+
+
+/*遮罩层*/
+#overlay{
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	background-color: rgb(45, 45, 45);
+	z-index: 500;
+	opacity: 0.2;
+	display: none;
+	position:fixed;
+}
+/**********账户页面激活蒙层***************/
+#popBox{
+	width:360px;
+	height:210px;
+	padding:10px 20px;
+	background:#fff;
+	border-radius:10px;
+	position:absolute;
+	top:30%;
+	left:40%;
+	z-index:1000;
+	display:none;
+}
+#popBox .passwordP1{
+	height:45px;
+	line-height:45px;
+	color:#999;
+	position:relative;
+}
+#popBox .passwordP1 span{
+	width:30px;
+	height:30px;
+	border-radius:15px;
+	position:absolute;
+	top:-40px;
+	right:-40px;
+	background:#fff;
+	text-align:center;
+	line-height:30px;
+	font-size:18px;
+}
+#popBox input{
+	width:320px;
+	height:40px;
+	background:#f1f5f8;
+	border:0;
+	padding-left:15px;
+}
+#popBox .popBoxP{
+	height:50px;
+	line-height:50px;
+}
+#popBox button{
+	border:0;
+	color:#229dff;
+	margin:20px 0 0 135px;
+	background:#fff;
+}
+/*****************创建资产页面的地址蒙层********************/
+#addressView{
+	width:600px;
+	height:400px;
+	border-radius: 10px;
+	background:#fff;
+	position:absolute;
+	top:30%;
+	left:30%;
+	z-index:1000;
+	display:none;
+	padding:0 20px;
+}
+#addressView h3{
+	height:60px;
+	line-height:60px;
+	font-size:18px;
+	border-bottom:1px solid #d8d8d8;
+}
+#addressView h3 em{
+	width:6px;float:left;height:24px;background:#229dff;margin-top:17px;margin-bottom:15px;margin-right:10px;
+}
+
+
+#addressView h3 span{
+	width:30px;
+	height:30px;
+	border-radius:15px;
+	position:absolute;
+	top:-30px;
+	right:-30px;
+	background:#fff;
+	text-align:center;
+	line-height:30px;
+	font-size:18px;
+}
+#addressView h3 span img {
+	width:16px;float:left;height:16px;margin-top:7px;margin-left:7px;
+}
+#addressView table{
+	width:560px;
+
+}
+#addressView table tr{
+	height:46px;
+}
+#addressView table tr td{
+	text-align:center;
+	height:46px;
+	line-height:46px;
+}
+#addressView table tr .td{
+	color:#999;
+}
+
+#addressView table tr td input{
+	color:blue;
+	background:blue;
+}
+#addressView table tr td:nth-of-type(1){
+	width:200px;
+
+}
+/*******************address_list 我的账户 》》》账户设置》》》地址**********************/
+.account_content_top{
+	height:40px;
+}
+.account_content_top ul li{
+	float:left;
+	width:150px;
+	height:40px;
+	line-height:40px;
+	text-align:center;
+
+}
+.account_content_top ul li{
+	font-size:18px;
+}
+.mainContent table{
+	width:100%;
+	border:0;
+
+}
+.mainContent .account_content_center table tr{
+	width:938px;
+	height:55px;
+	line-height:55px;
+	margin-left:30px;
+}
+.mainContent table tr:hover{
+	background-color:rgba(255,255,255,0.2);
+}
+.mainContent table tr th{
+	border-bottom:1px solid #e1e1e1;
+}
+.mainContent table tr .th1{
+	color:#eee;
+	width:15%;
+	position:relative;
+}
+.mainContent table tr .th2{
+	color:#eee;
+	width:16%;
+	position:relative;
+}
+.mainContent table tr .th2 span{
+	display: block;
+	width: 15px;
+	height: 30px;
+	position: absolute;
+	top: 5px;
+	right:30px;
+}
+.mainContent table tr .th1 span i:nth-of-type(1){
+	position:absolute;
+	top:10px;
+	color:#999;
+}
+.mainContent table tr .th2 span i:nth-of-type(1) {
+	position: absolute;
+	top: 10px;
+	color: #eee;
+}
+.mainContent table tr .th3 span{
+	color:#eee;
+	width:20%;
+	position:relative;
+}
+.mainContent table tr .th3{
+	color:#eee;
+}
+.mainContent table tr .th3 span i:nth-of-type(1) {
+	position: absolute;
+	top: -5px;
+	color: #eee;
+	right:-15px;
+}
+.mainContent table tr .th3 span i:nth-of-type(2) {
+	position: absolute;
+	top: 5px;
+	right:-15px;
+	color: #eee;
+}
+.mainContent table tr .th4{
+	color:#eee;
+	position:relative;
+	width:10%;
+}
+.mainContent table tr .th4 span i:nth-of-type(1) {
+	position: absolute;
+	top: 15px;
+	color: #eee;
+	right:10px;
+}
+.mainContent table tr .th4 span i:nth-of-type(2) {
+	position: absolute;
+	top: 25px;
+	right:10px;
+	color: #eee;
+}
+.mainContent table tr .th5{
+	color:#eee;
+	position:relative;
+	width:10%;
+}
+.mainContent table tr .th5 span i:nth-of-type(1) {
+	position: absolute;
+	top: 15px;
+	color: #eee;
+	right:10px;
+}
+.mainContent table tr .th5 span i:nth-of-type(2) {
+	position: absolute;
+	top: 25px;
+	right:10px;
+	color: #eee;
+}
+.mainContent table tr .th6{
+	color:#eee;
+	position:relative;
+	width:12%;
+}
+.mainContent table tr .th6 span i:nth-of-type(1) {
+	position: absolute;
+	top: 15px;
+	color: #eee;
+	right:10px;
+}
+.mainContent table tr .th6 span i:nth-of-type(2) {
+	position: absolute;
+	top: 25px;
+	right:10px;
+	color: #eee;
+}
+
+
+.mainContent table tr .imgTh span i:nth-of-type(2) {
+	position: absolute;
+	top: 20px;
+	right:55px;
+	color: #eee;
+}
+.mainContent table tr .imgTh span i:nth-of-type(1) {
+	position: absolute;
+	top: 10px;
+	right:55px;
+	color: #eee;
+}
+.mainContent table tr .th1 span{
+	display: block;
+	width: 15px;
+	height: 30px;
+	position: absolute;
+	top: 5px;
+	right:20px;
+}
+
+.mainContent table tr .imgThi span{
+	display: block;
+	width: 15px;
+	height: 30px;
+	position: absolute;
+	top: 5px;
+	right:10px;
+}
+
+.mainContent table tr .imgTh{
+	position:relative;
+	color:#eee;
+	width:25%;
+}
+.mainContent table tr .imgTh span{
+	display: block;
+	width: 15px;
+	height: 30px;
+	position: absolute;
+	top: 5px;
+	right:20px;
+}
+.mainContent table tr th a img{
+	display:block;
+	width:30px;
+	height:30px;
+	position:absolute;
+	top:13px;
+	left:50px;
+}
+.mainContent table tr td{
+	text-align:center;
+}
+#table>tr>td{
+	height:56px;
+	text-align:center;
+}
+/***********************滑动按钮start******************************************/
+.mainContent table tr td .checkbox {
+	position: relative;
+	display: inline-block;
+	width:35px;
+	height:15px;
+
+}
+.mainContent table tr td .checkbox:after, .mainContent table tr td .checkbox:before {
+	font-family: FontAwesome;
+	-webkit-font-feature-settings: normal;
+	-moz-font-feature-settings: normal;
+	font-feature-settings: normal;
+	-webkit-font-kerning: auto;
+	-moz-font-kerning: auto;
+	font-kerning: auto;
+	-webkit-font-language-override: normal;
+	-moz-font-language-override: normal;
+	font-language-override: normal;
+	font-stretch: normal;
+	font-style: normal;
+	font-synthesis: weight style;
+	font-variant: normal;
+	font-weight: normal;
+	text-rendering: auto;
+}
+.mainContent table tr td .checkbox label {
+	width: 35px;
+	height: 20px;
+	background: #ccc;
+	position: absolute;
+	top:0;
+	left:0;
+	display: inline-block;
+	border-radius: 20px;
+	-webkit-transition: 0.4s;
+	transition: 0.4s;
+}
+.mainContent table tr td .checkbox label:after {
+	content: '';
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	border-radius: 100%;
+	left: 0;
+	top: 0px;
+	z-index: 2;
+	background: #fff;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	-webkit-transition: 0.4s;
+	transition: 0.4s;
+}
+.mainContent table tr td .checkbox input {
+	position: absolute;
+	left: 0;
+	top: 0px;
+	width: 35px;
+	height: 20px;
+	z-index: 5;
+	opacity: 0;
+	cursor: pointer;
+}
+.mainContent table tr td .checkbox input:hover + label:after {
+	box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.2), 0 3px 8px 0 rgba(0, 0, 0, 0.15);
+}
+.mainContent table tr td .checkbox input:checked + label:after {
+	left: 15px;
+}
+
+.mainContent table tr td .checkbox input:checked + label {
+	background:#376ecb;
+}
+.mainContent table tr td .checkbox input:checked + label:after {
+	background: #4285F4;
+}
+/***********************滑动按钮end******************************************/
+.contentBox{
+	width:968px;
+	height:150px!important;
+	background:#d9e1e8;
+	position:relative;
+}
+.mainContent table .contentBox:hover{
+	background:#d9e1e8;
+}
+.contentBox .contentDiv{
+	width:540px;
+	height:130px;
+	background:#fff;
+	float:right;
+	margin:10px 65px 0 0;
+
+}
+.contentBox .contentDiv .contentBoxLeft{
+	width:405px;
+	height:130px;
+	border-right:1px dashed #d8d8d8;
+	float:left;
+}
+.contentBox .contentDiv .contentBoxLeft1{
+	width:90px;
+	height:130px;
+	float:left;
+}
+
+
+.contentBox .contentDiv .contentBoxLeft2{
+	width:290px;
+	height:130px;
+	float:left;
+}
+.contentBox .contentDiv .contentBoxLeft2 .contentBoxSpan5{
+	width:290px;
+	height:32px;
+	line-height:32px;
+	display:block;
+}
+.contentBox .contentDiv .contentBoxLeft2 input{
+	border:1px solid #d5d5d5;
+	background:#f1f5f8;
+	float:left;
+	margin:3px 0;
+	padding-left:10px;
+}
+.contentBox .contentDiv .contentBoxLeft2 .contentBoxInput1{
+	width:250px;
+	height:25px;
+}
+.contentBox .contentDiv .contentBoxLeft2 .contentBoxInput2{
+	width:180px;
+	height:25px;
+}
+.contentBox .contentDiv .contentBoxLeft2 .contentBoxInput3{
+	width:140px;
+	height:25px;
+}
+.contentBox .contentDiv .contentBoxLeft2 span{
+	width:110px;
+	height:32px;
+	line-height:32px;
+	padding-left:5px;
+	float:left;
+	text-align:left;
+	font-weight:bolder;
+}
+.contentBox .contentDiv .contentBoxLeft1 span{
+	padding-left:5px;
+	float:left;
+	width:80px;
+	color:#999999;
+	text-align:right;
+}
+.contentBox .contentDiv .contentBoxLeft .contentBoxSpan1{
+	display:block;
+	width:80px;
+	height:32px;
+	line-height:32px;
+
+}
+.contentBox .contentDiv .contentBoxLeft .contentBoxSpan2{
+	display:block;
+	width:80px;
+	height:32px;
+	line-height:32px;
+
+}
+.contentBox .contentDiv .contentBoxLeft .contentBoxSpan3{
+	display:block;
+	width:80px;
+	height:32px;
+	line-height:32px;
+
+}
+.contentBox .contentDiv .contentBoxLeft .contentBoxSpan4{
+	display:block;
+	width:80px;
+	height:32px;
+	line-height:32px;
+
+}
+.contentBox .contentDiv .contentBoxRight{
+	width:130px;
+	height:130px;
+	float:left;
+}
+.contentBox .contentDiv .contentBoxRight img{
+	display:block;
+	width:49px;
+	height:39px;
+	margin:40px auto;
+}
+.contentBox .contentLeft{
+	width:130px;
+	height:130px;
+	float:left;
+	margin:10px 0 0 65px;
+	background:#fff;
+	z-index:10000;
+	padding:10px;
+	box-shadow:2px 0px 2px;
+}
+.contentBox .contentLeftSpan1{
+	display: block;
+	width:96px;
+	height:65px;
+	background:#fff;
+	color:#229dff;
+	margin:10px 5px 0;
+	float:left;
+	padding:10px 30px;
+	text-align:center;
+	line-height:20px;
+	border-bottom:dashed 1px #dadada;
+
+}
+.contentBox .contentLeftSpan1:hover{
+	background:#229dff;
+	cursor:pointer;
+	color:#fff;
+}
+.contentBox .contentLeftSpan2{
+	display: block;
+	width:96px;
+	height:65px;
+	background:#fff;
+	margin:0px 5px 0;
+	color:#229dff;
+	float:left;
+	padding:10px 25px;
+	text-align:center;
+	line-height:20px;
+}
+.contentBox .contentLeftSpan2:hover{
+	background:#229dff;
+	cursor:pointer;
+	color:#fff;
+}
+/*****************login***********************/
+.loginbox {
+	background:url(../images/tmbg-white.png);
+	border:0px;
+	background:#fff;
+	width:470px;
+	height:380px;
+	border-radius: 10px;
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin-top:-190px;
+	margin-left:-235px;
+}
+.loginbox .login_center{
+	padding:0 20px;
+}
+.loginbox .login_center p{
+	height:50px;
+	line-height:50px;
+}
+.loginbox .login_center p > i{
+	color:red;
+	font-style:normal;
+	font-size:16px;
+	line-height:55px;
+	padding-left:5px;
+}
+.loginbox .login_center .passP{
+	width:125px;
+	float:left;
+}
+.loginbox .login_center .passP2{
+	width:70px;
+	float:right;
+	font-size:14px;
+}
+.loginbox .login_center .passP2 a{
+	color:#229dff;
+}
+
+.loginbox .login_center .registerCare{
+	color:red;
+	position:relative;
+}
+
+.loginbox .login_center input{
+	height:40px;
+	width:428px;
+	border:0;
+	border:1px solid #cccccc;
+	padding-left:15px;
+	color: #fff;
+}
+.loginbox .login_center .loginState{
+	height:50px;
+	line-height:50px;
+}
+.loginbox .login_center .loginState h3{
+	width:120px;
+	height:50px;
+	line-height:50px;
+	float:left;
+	font-size:18px;
+	color:#333;
+}
+#loginState_list{
+	float:right;
+	background:#f1f5f8;
+	margin:20px 80px 0 0;
+	width:70px;
+	border:1px solid #d5d5d5;
+	text-align: center;
+}
+
+
+.loginbox .loginBtn{
+	width:70px;
+	height:35px;
+	color:#fff;
+	background:#229dff;
+	border:0;
+	border-radius: 5px;
+	font-size:16px;
+}
+.loginbox .registerBtn{
+	height:35px;
+	background:#fff;
+	color:#333;
+	width:90px;
+	border:1px solid #e9e9e9;
+	border-radius: 5px;
+	margin-left:10px;
+	font-size:16px;
+}
+/*********************修改密码页面*******************************/
+.loginPassbox {
+
+	width:470px;
+	height:510px;
+	border-radius: 10px;
+	margin:-80px auto;
+}
+.loginPassbox .loginBoxTop{
+	width:470px;
+	border-radius: 10px;
+	margin-bottom:10px;
+}
+.loginPassbox .login_center_top{
+	padding:0 20px;
+	min-height:185px;
+}
+.loginPassbox .login_center_top p{
+	height:50px;
+	line-height:50px;
+}
+.loginPassbox .login_center_top p:nth-of-type(1) i{
+	color:red;}
+
+	.loginPassbox .loginBoxBottom{
+		width:470px;
+		min-height:245px;
+		border-radius: 10px;
+		padding:0 20px;
+	}
+	.loginPassbox .loginBoxBottom p{
+		height:50px;
+		line-height:50px;
+		float:left;
+	}
+	.loginPassbox .loginBoxBottom .titleP{
+		color:#999;
+	}
+	.loginPassbox .loginBoxBottom .titleP i{
+		font-style:normal;
+		color:red;
+		font-size:16px;
+	}
+
+
+	.loginPassbox .loginBoxBottom .hintMain1{
+		display:block;
+		color:red;
+		width:250px!important;
+	}
+	.loginPassbox .loginBoxBottom .hintMain2{
+		display:block;
+		color:red;
+		width:250px!important;
+	}
+	.loginPassbox .loginBoxBottom input{
+		height:40px;
+		width:428px;
+		border:0;
+		background:#fff;
+		padding-left:20px;
+		border:1px solid #cccccc;
+	}
+	.loginPassbox .loginBoxBottom button{
+		border:1px solid #e9e9e9;
+		border-radius: 5px;
+		font-size:16px;
+	}
+	.loginPassbox .loginBoxBottom .modifyBtn1{
+		width:90px;
+		height:35px;
+		background:#fff;
+		color:#229dff;
+	}
+	.loginPassbox .loginBoxBottom .modifyBtn1 a:hover{
+		color:#22dff;
+	}
+
+	.loginPassbox .loginBoxBottom .modifyBtn2{
+		width:120px;
+		height:35px;
+		background:#229dff;
+		color:#fff;
+		margin-left:50px;
+	}
+
+	/*****************注册页面register************************/
+	.bodyBox{background:url(../images/banner-2.png) no-repeat;background-size:cover;}
+	.registerBox{
+		width:470px;
+		height:450px;
+		border-radius: 10px;
+		position:absolute;
+		top:50%;
+		left:50%;
+		margin-left:-235px;
+		margin-top:-225px;
+		background:#fff;
+	}
+	.margin-big{
+		width:470px;
+		height:57px;
+		text-align:center;
+	}
+	.registerBox2{
+		width:470px;
+		height:325px;
+		border-radius: 10px;
+		position:absolute;
+		top:50%;
+		left:50%;
+		margin-left:-235px;
+		margin-top:-163px;
+		background:#fff;
+	}
+	.registerBox2 .login_center{
+		padding:0 20px;
+
+	}
+	.registerBox2 .login_center p{
+		height:50px;
+		line-height:50px;
+		color:#999;
+	}
+	.registerBox2 .login_center .keepBtn{
+		width:70px;
+		height:35px;
+		background:#229dff;
+		color:#fff;
+		border:0;
+		border-radius: 5px;
+		float:left;
+		font-size:16px;
+	}
+	.registerBox2 .login_center .loginBtn{
+		width:90px;
+		height:35px;
+		background:#fff;
+		color:#333;
+		border:1px solid #e9e9e9;
+		border-radius: 5px;
+		margin-left:15px;
+		font-size:16px;
+	}
+	.registerBox2 .login_center .registerCare{
+		color:#f00;
+		position:relative;
+		padding-left:25px;
+	}
+	.registerBox2 .login_center .registerCare img{
+		position:absolute;
+		top:15px;
+		left:0;
+	}
+	#registerBox{
+		height:80px;
+		width:430px;
+		background:#f1f5f8;
+		outline:none;
+		padding:10px 20px;
+		border:1px solid #cccccc;
+	}
+	.registerUser div p{
+		line-height:50px;
+	}
+
+	.registerUser div .titleP{
+		color:#999;
+	}
+	.registerUser div .titleP i{
+		color:red;
+		font-style:normal;
+		width:auto;
+		font-size:16px;
+		margin-left:5px;
+		line-height:55px;
+	}
+
+	.registerUser div .hint1,.hint2,.hint3{
+		display:block;
+		color:red;
+		width:250px!important;
+
+	}
+	.registerUser div span{
+		background:url(../images/right.png) no-repeat;
+	}
+	.registerUser div{
+		position:relative;
+	}
+	.registerUser div .span1{
+		display:none;
+		width:18px;
+		height:18px;
+		position:absolute;
+		top:15px;
+		left:130px;
+
+	}
+	.registerUser div .span2{
+		display:none;
+		width:18px;
+		height:18px;
+		position:absolute;
+		top:15px;
+		left:130px;
+	}
+	.registerUser div .span3{
+		display:none;
+		width:18px;
+		height:18px;
+		position:absolute;
+		top:15px;
+		left:130px;
+	}
+	.registerUser div input{
+		height:40px;
+		width:428px;
+		border:0;
+		border:1px solid #cccccc;
+		color: #fff;
+		padding-left:15px;
+	}
+	.registerUser span{
+		position:absolute;
+		top:0;
+		right:0;
+	}
+	.registerUser .submit{
+		margin-top:40px;
+
+	}
+	.registerUser .returnBtn{
+		width:90px;
+		height:35px;
+		border:1px solid #e9e9e9;
+		border-radius: 5px;
+		background:#fff;
+	}
+	.registerUser .newBtn{
+		width:120px;
+		height:35px;
+		background:#229dff;
+		color:#fff;
+		border:0;
+		margin-left:70px;
+		border-radius: 5px;
+	}
+
+
+	/*************************creatAccout************************************/
+	.transferAccountBox{
+		height:715px;
+		width:965px;
+	}
+	.transferAccountBox .transferBoxTop{
+		width:100%;
+		height:205px;
+		padding:0 30px;
+		margin-bottom:10px;
+	}
+	.transferAccountBox .transferBoxTop h2{
+		height:56px;
+		line-height:56px;font-size:15px;
+	}
+	.transferAccountBox .transferBoxTop h2 em{
+		width:5px;
+		float:left;
+		height:24px;
+		background:#229dff;
+		margin-top:16px;margin-bottom:16px;margin-right:10px;
+	}
+
+	.transferAccountBox .transferBoxTop .transferBoxTopLeft{
+		width:450px;
+		height:150px;
+		float:left;
+	}
+	.transferAccountBox .transferBoxTop .form-group{
+		margin:0;
+		padding:0;
+		height:25px;
+		line-height:25px;
+		margin-bottom:10px;
+	}
+	.transferAccountBox .transferBoxTop .form-group .control-label{
+		padding:0;
+		margin:0;
+	}
+	.transferAccountBox .transferBoxTop .form-group div{
+		margin:0;
+		padding:0;
+	}
+	.transferAccountBox .transferBoxTop .form-group input{
+		margin:0;
+		padding:0;
+		height:25px;
+		padding-left:10px;
+		border-radius: 0;
+		float:left;
+	}
+	.transferAccountBox .transferBoxTop .form-group div em{
+		color:red;
+		width:auto;
+		float:left;
+		margin-left:5px;
+		font-size:16px;
+	}
+	#inputID1,#inputID2{
+		width:250px;
+	}
+	#inputID3{
+		width:180px;
+		float:left;
+	}
+
+	#inputID4{
+		width:140px;
+	}
+	#inputID5{
+		width:180px;
+	}
+	.transferAccountBox .transferBoxTop .transferBoxTopRight{
+		width:450px;
+		height:150px;
+		float:left;
+	}
+	.transferAccountBox .transferBoxTop .transferBoxTopRight textarea{
+		width:380px;
+		height:60px;
+		padding-left:10px;
+		border:1px solid #d5d5d5;
+	}
+	.transferAccountBox .transferBoxTop .transferBoxTopRight .assetExplain{
+		margin:0;
+		padding:0;
+		height:60px;
+		line-height:30px;
+		margin-bottom:10px;
+	}
+	.transferAccountBox .transferBoxTop .transferBoxTopRight .assetExplain .control-label{
+		margin:0;
+		padding:0;
+	}
+	.transferAccountBox .transferBoxTop .transferBoxTopRight .assetExplain div{
+		margin:0;
+		padding:0;
+	}
+	.transferAccountBox .transferBoxTop .transferBoxTopRight .assetExplain .assetNameBox{
+		width:370px;
+		height:60px;
+		display:block;
+	}
+	#transferBtn{
+		width:120px;
+		height:35px;
+		background:#229dff;
+		color:#fff;
+		border:0;
+		border-radius: 5px;
+		right:30px;
+		top:150px;
+	}
+	/*******转账记录*******/
+	.transferBoxBottom{
+		width:100%;
+	}
+	.transferBoxBottom .transferBoxBottomLeft{
+		width:645px;
+		min-height:500px;
+		float:left;
+		padding-top:20px;
+	}
+	.transferBoxBottomLeft .dataBox{
+		width:601px;
+		height:120px;
+		color: #fff;
+	}
+	.transferBoxBottomLeft .dataBox .dataBoxLeft{
+		width:230px;
+		height:120px;
+		border-right:1px dashed #f3f3f3;
+		float:left;
+	}
+	.transferBoxBottomLeft .dataBox .dataBoxLeft dl{
+		width:230px;
+		height:60px;
+	}
+	.transferBoxBottomLeft .dataBox .dataBoxLeft dl dt{	width:75px;margin-right:7px;height:60px;float:left;background:url(../images/receiveBig.png) no-repeat left center;margin-top:-10px;margin-left:5px;}
+
+	.transferBoxBottomLeft .dataBox .dataBoxLeft dl dd{
+		width:140px;height:30px;line-height:30px;margin:0;float:left;color:#ddd;}
+		.transferBoxBottomLeft .dataBox .dataBoxLeft p{
+			height:60px;
+			line-height:60px;
+			font-size:14px;
+			padding-left:20px;
+		}
+		.transferBoxBottomLeft .dataBox .dataBoxRight{
+			width:370px;
+			height:120px;
+			float:left;
+		}
+		.transferBoxBottomLeft .dataBox .dataBoxRight div{
+			width:185px;
+			height:60px;
+			float:left;
+		}
+		.transferBoxBottomLeft .dataBox .dataBoxRight div p{width:185px;height:30px;line-height:30px;padding-left:20px;color:#ddd;}
+		.dataBoxText{width:601px;height:120px; /* background:#fff */;margin-left:30px;}
+		.dataBoxText p{margin-left:15px;width:586px;float:left;}
+		.transferBoxBottom .transferBoxBottomRight{width:300px;height:500px;/*background:#fff*/;float:left;}
+		.transferBoxBottom .transferBoxBottomRight .calendar{width:300px;height:270px;/*background:#fff;*/border-bottom:1px solid #eee;}
+		.transferBoxBottom .transferBoxBottomRight .searchBox{width:300px;height:130px;padding:0 20px;border-bottom:1px solid #eee;}
+		.transferBoxBottom .transferBoxBottomRight .searchBox .searchBoxTop{width:260px;height:65px;padding-top:25px;margin-bottom:15px;position:relative;}
+		.transferBoxBottom .transferBoxBottomRight .searchBox .searchBoxTop input{width:198px;height:38px;border:1px solid #d5d5d5;}
+		.transferBoxBottom .transferBoxBottomRight .searchBox .searchBoxTop button{height:38px;width:58px;border:1px solid #d5d5d5;margin:0;padding:0;position:absolute;top:25px;left:198px;}
+		.transferBoxBottom .transferBoxBottomRight .searchBox>button{
+			width:110px;
+			height:30px;
+			border:0;
+			border-radius: 5px;
+		}
+		.transferBoxBottom .transferBoxBottomRight .searchBox>button:nth-of-type(1){
+			background:url(../images/receive.png) no-repeat;
+
+		}
+		.transferBoxBottom .transferBoxBottomRight .searchBox>button:nth-of-type(2){
+			background:url(../images/send.png) no-repeat;
+			float:right;
+		}
+		.transferBoxBottom .transferBoxBottomRight .sortBox{
+			width:300px;
+			height:100px;
+		}
+		.transferBoxBottom .transferBoxBottomRight .sortBox p{
+			width:112px;
+			height:28px;
+			line-height:28px;
+			border:1px solid #E1E1E1;
+			float:left;
+			text-align:left;
+			position:relative;
+			margin:10px 15px 0;
+			padding-left:5px;
+		}
+		.transferBoxBottom .transferBoxBottomRight .sortBox .p1{
+			background:#229dff;
+			color:#fff;
+			border:1px solid #229dff;
+		}
+		.transferBoxBottom .transferBoxBottomRight .sortBox .p1 span i:nth-of-type(1),.transferBoxBottom .transferBoxBottomRight .sortBox .p1 span i:nth-of-type(2){
+			color:#fff;
+		}
+
+		.transferBoxBottom .transferBoxBottomRight .sortBox .p{
+			background:#229dff;
+			color:#fff;
+			border:1px solid #229dff;
+		}
+		.sortBox .p span i:nth-of-type(1){
+			position:absolute;
+			top:2px;
+			color:#fff;
+		}
+		.sortBox .p span i:nth-of-type(2){
+			position:absolute;
+			top:12px;
+			color:#fff;
+		}
+		.transferBoxBottom .transferBoxBottomRight .sortBox p span{
+			display:block;
+			width:15px;
+			height:30px;
+			position:absolute;
+			top:0;
+			right:0px;
+		}
+		.sortBox p span i:nth-of-type(1){
+			position:absolute;
+			top:2px;
+			color:#999;
+
+		}
+		.sortBox p span i:nth-of-type(2){
+			position:absolute;
+			top:12px;
+			color:#999;
+
+		}
+		/*#creatAccountList{
+		width:490px;
+		height:380px;
+		margin-left:310px;
+		margin-top:26px;
+	}
+	#creatAccountList .form-group{
+	height:30px;
+	line-height:30px;
+}
+#creatAccountList .form-group input{
+height:30px;
+width:240px;
+}
+#creatAccountList .form-group button{
+background:#229dff;
+color:#fff;
+border:0;
+width:85px;
+height:30px;
+margin-top:10px;
+}
+#creatAccountList .assetName{
+height:80px;
+}
+#creatAccountList .assetName .assetNameBox{
+margin-bottom:10px;
+border-radius: 5px;
+-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
+box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
+border:1px solid #ccc;
+}
+.ListBottom{
+width:935px;
+}*/
+
+/**************assetTransaction******************/
+.assetTranCenterTop{
+	height:100px;
+	padding-top:15px;
+	margin-bottom:5px;
+}
+#TimeBox{
+	width:480px;
+	height:70px;
+	float:left;
+}
+#TimeBox tr{
+	height:35px;
+}
+#TimeBox tr td{
+	border:0;
+	height:35px;
+	line-height:35px;
+}
+.timeBoxRight{
+	width:320px;
+	height:72px;
+	float:left;
+	margin-left:65px;
+}
+.timeBoxRight .timeBoxRightTop{
+	margin-bottom:12px;
+}
+.timeBoxRight .timeBoxRightTop input{
+	width:120px;
+	height:30px;
+	padding-left:10px;
+}
+.timeBoxRight .timeBoxRightBottom input{
+	width:160px;
+	height:30px;
+	padding-left:10px;
+}
+.timeBoxRight input{
+	background: #f1f5f8;
+	border:0;
+}
+.timeBoxRight button{
+	height:30px;
+	background: #f5f5f5;
+	border:0;
+}
+#assetTranList{
+	/*background:#fff;*/
+
+	padding:0 20px;
+}
+#assetTranList tr th{
+	height:60px;
+	line-height:60px;
+	margin:0;
+	padding:0;
+	/*background:#fff;*/
+	border-bottom:1px solid #e1e1e1;
+	border-top:0;
+}
+.content{width:100%;}
+/*.body-content{background:#bedbf1;}*/
+.content .title{ border-bottom:1px solid #dfdfdf; line-height:35px; font-size:14px; font-weight:bold; color:#09c}
+.w50 { width:25%; float:left;}
+.form-x .tipss{ float:left; padding-left:10px; color:#888; line-height:42px;}
+.input-help { float:left; line-height:30px;}
+.input-help li{ float:left;margin-left:10px;}
+.bread{ margin-left:190px; margin-top:4px;}
+.bread li{ float:left;}
+.label label{ font-weight:normal; color:#333;}
+/*.form-group{ margin-bottom:20px;}*/
+.button{ padding:10px 15px;}
+/*.form-group .field .file{ background:#FFF; border:0px;}
+.form-group .field input[type=radio]{ vertical-align:middle; line-height:35px; margin-right:5px;}
+.form-group .radio { line-height:35px;}*/
+.table th{ text-align:center;}
+.table td { vertical-align:middle;}
+.tip img{width:100px; height:100px;}
+.clear{ clear:both; overflow:hidden;}
+.pagelist {padding:10px 0; text-align:center;}
+.pagelist span,.pagelist a{ border-radius:3px; border:1px solid #dfdfdf;display:inline-block; padding:5px 12px;}
+.pagelist a{ margin:0 3px;}
+.pagelist span.current{ background:#09F; color:#FFF; border-color:#09F; margin:0 2px;}
+.pagelist a:hover{background:#09F; color:#FFF; border-color:#09F; }
+.pagelist label{ padding-left:15px; color:#999;}
+.pagelist label b{color:red; font-weight:normal; margin:0 3px;}
+
+.search{ overflow:hidden;}
+.search li{float:left; margin-right:15px; line-height:35px;}
+
+.button.bg-main.icon-check-square-o{ padding:10px 30px;}
+.button.bg-main.icon-check-square-o:hover{ background:#08bbe1;}
+input[type="checkbox"], input[type="radio"]{ width:15px; height:15px; vertical-align:-3px; margin-right:5px;}
+textarea[name=content]{width:100%; height:500px; border:1px solid #ddd; border-radius:3px; -webkit-border-radius:3px;}
+
+
+.own{
+	height: 30px;
+	margin: 15px;
+	font-size: 24px;
+	font-weight: 100;
+}
+
+.own *{
+	vertical-align: middle;
+}
+
+.layout{
+	color: #ddd;
+}
+
+/* Input styling */
+.form-control,
+.transferAccountBox .transferBoxTop .transferBoxTopRight textarea,
+.searchBoxTop input,
+textarea{
+	color: #333;
+	background-color: rgba(255,255,255,0.5);
+	padding-left: 10px;
+}
+.form-control::-webkit-input-placeholder,
+.searchBoxTop input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	color:    #444;
+}
+.form-control:-moz-placeholder,
+.searchBoxTop input::-webkit-input-placeholder
+textarea:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color:    #444;
+	opacity:  1;
+}
+.form-control::-moz-placeholder,
+.searchBoxTop input::-moz-placeholder
+textarea::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color:    #444;
+	opacity:  1;
+}
+.form-control:-ms-input-placeholder
+.searchBoxTop input:-ms-input-placeholder
+textarea:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	color:    #444;
+}
+
+.panel,
+.greybg{
+	background-color: rgba(255,255,255,0.3);
+	padding-bottom:5px;
+	padding-top:5px;
+}
+
+
+.mainContent1 dl .assetBox{margin-left:10px;margin-right: 0px; width:220px;}
+.mainContent1 dl .assetBoxAdd{width:131px;height:165px;background:#fff;margin-left:10px;float:left;}
+.assetBoxWrapper{margin-left: -10px;}
+.center{text-align: center;}
+.address{
+	font-family: monospace;
+}
+
+/*-------------------------------------------------------挖矿*/
+.content{
+	width:100%;float:left;height:auto;background: rgba(255,255,255,0.1);  padding: 10px;}
+	.content .headline{width:100%;float:left;line-height:60px;font-size:20px;height:60px;border-bottom:1px solid #e8e8e8; margin-bottom: 15px;}
+	.content .headline em{width:5px;float:left;height:24px;background:#229dff;margin-top:18px;margin-left:11px;margin-bottom:18px;margin-right:15px;}
+
+	.console{
+		background-color: rgba(0,0,0,0.5);
+	}
+
+	pre{
+		background: none;
+		color: lightgreen;
+	}
+
+	#showqrmodal .modal-content{
+		top: 200px;
+		text-align: center;
+		font-size: 24px;
+	}
+	#showqrmodal #modal_qr {
+		display: inline-block;
+	}
+
+	.address img{
+		vertical-align: middle;
+	}
+
+	.row {
+		margin-right: 0px;
+		margin-left: 0px;
+	}
+
+	.spaceright{
+		margin-right: 10px;
+	}
+
+	.red{
+		color:red;
+	}
+
+	.big{
+		font-size: 18px;
+	}
+
+	.huge{
+		font-size: 24px;
+	}
+
+	.mainContent1 .assetBox .span1,
+	.assetBoxSymbol{
+		color: #fff;
+		display:block;font-size:18px;width:100%;text-align:center;padding-bottom:5px;
+		text-overflow:  ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+
+	}
+
+	input,
+	textarea{
+		border-radius: 0px !important;
+		background-color: rgba(0,0,0,0.3) !important;
+
+	}
+	.form-control, .transferAccountBox .transferBoxTop .transferBoxTopRight textarea, .searchBoxTop input, textarea{
+		color: #fff;
+	}
+
+
+	#nprogress .bar {
+		height: 4px;
+		background: rgba(73,155,234,1);
+		background: -moz-linear-gradient(left, rgba(73,155,234,1) 0%, rgba(221,227,32,1) 50%, rgba(227,34,34,1) 100%);
+		background: -webkit-gradient(left top, right top, color-stop(0%, rgba(73,155,234,1)), color-stop(50%, rgba(221,227,32,1)), color-stop(100%, rgba(227,34,34,1)));
+		background: -webkit-linear-gradient(left, rgba(73,155,234,1) 0%, rgba(221,227,32,1) 50%, rgba(227,34,34,1) 100%);
+		background: -o-linear-gradient(left, rgba(73,155,234,1) 0%, rgba(221,227,32,1) 50%, rgba(227,34,34,1) 100%);
+		background: -ms-linear-gradient(left, rgba(73,155,234,1) 0%, rgba(221,227,32,1) 50%, rgba(227,34,34,1) 100%);
+		background: linear-gradient(to right, rgba(73,155,234,1) 0%, rgba(221,227,32,1) 50%, rgba(227,34,34,1) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', endColorstr='#e32222', GradientType=1 );
+	}
+
+	#nprogress .spinner-icon {
+		width: 26px;
+		height: 26px;
+		border: solid 4px transparent;
+		border-top-color: rgba(73,155,234,1);
+		border-right-color: rgba(221,227,32,1);
+		border-bottom-color: rgba(227,34,34,1);
+	}

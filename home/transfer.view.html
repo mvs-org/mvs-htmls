@@ -1,0 +1,113 @@
+<div class="content">
+	<span class="headline"><em></em>{{ 'HEADLINE_ETP_TRANSFER' | translate }}</span>
+				<div class="">
+					<div class="row">
+						<form>
+						<div class="col-sm-5">
+							<div class="form-group">
+								<label for="sender_address" class="control-label">{{ 'TRANSFER_SENDER_ADDRESS' | translate }}:</label>
+									<input type="text" class="form-control" name="sender_address" id="" ng-model="sendfrom">
+							</div>
+							<div class="form-group">
+								<label for="recipent_address" class="control-label">{{ 'TRANSFER_RECIPENT_ADDRESS' | translate }}：<span class="red big">*</span></label>
+									<input type="text" class="form-control" name="recipent_address" id="" ng-model="sendto">
+							</div>
+							<div class="form-group">
+								<label for="value" class="control-label">{{ 'TRANSFER_VALUE' | translate }}：<span class="red big">*</span></label>
+									<input type="text" class="form-control" name="value" id="" ng-model="value">
+
+							</div>
+							<div class="form-group">
+								<label for="fee" class="control-label">{{ 'TRANSFER_FEE' | translate }}：</label>
+								<input type="text" class="form-control" name="fee" id="" ng-model="fee">
+							</div>
+						</div>
+						<div class="col-sm-1"></div>
+						<div class="col-sm-5">
+							<div class="form-group">
+								<label for="message" class="control-label">{{ 'TRANSFER_MESSAGE' | translate }}：</label>
+									<textarea class="form-control" name="" rows="" cols="" name="message" ng-model="message"></textarea>
+							</div>
+							<div class="form-group">
+								<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}：<span class="red big">*</span></label>
+									<input type="password" class="form-control" name="password" id="" ng-model="password">
+							</div>
+							<button type="submit" id="transferBtn" ng-click="transfer()">{{ 'TRANSFER_SEND' | translate }}</button>
+						</div>
+					</form>
+					</div>
+					<div class="transferBoxBottom">
+						<span class="headline"><em></em>{{ 'HEADLINE_TRANSACTIONS' | translate }}</span>
+						<div class="transferBoxBottomLeft">
+							<div class="dataBox greybg"><div class="dataBoxLeft"><dl><dt></dt><dd>Block:</dd><dd>2016-11-25</dd></dl><p>确认数:</p></div><div class="dataBoxRight"><div><p>发送方:</p></div><div><p>数量:</p></div><div><p>接收方:</p></div><div><p>手续费:</p></div></div></div>
+
+						</div>
+						<div class="transferBoxBottomRight">
+							<div class="calendar panel">
+								<!--日历-->
+								<div id="Demo">
+									<div id="CalendarMain">
+									  <div id="title"> <a class="selectBtn month" href="javascript:" onClick="CalendarHandler.CalculateLastMonthDays();"><</a><a class="selectBtn selectYear" href="javascript:" onClick="CalendarHandler.CreateSelectYear(CalendarHandler.showYearStart);">2014年</a><a class="selectBtn selectMonth" onClick="CalendarHandler.CreateSelectMonth()">6月</a> <a class="selectBtn nextMonth" href="javascript:" onClick="CalendarHandler.CalculateNextMonthDays();">></a><a class="selectBtn currentDay" href="javascript:" onClick="CalendarHandler.CreateCurrentCalendar(0,0,0);">今天</a></div>
+									  <div id="context">
+									    <div class="week">
+									      <h3> 一 </h3>
+									      <h3> 二 </h3>
+									      <h3> 三 </h3>
+									      <h3> 四 </h3>
+									      <h3> 五 </h3>
+									      <h3> 六 </h3>
+									      <h3> 日 </h3>
+									    </div>
+									    <div id="center">
+									      <div id="centerMain">
+									        <div id="selectYearDiv"></div>
+									        <div id="centerCalendarMain">
+									          <div id="Container"></div>
+									        </div>
+									        <div id="selectMonthDiv"></div>
+									      </div>
+									    </div>
+									    <!--<div id="foots"><a id="footNow"></a></div>-->
+									  </div>
+									</div>
+								</div>
+							</div>
+							<div class="searchBox">
+								<div class="searchBoxTop">
+									<input type="text" placeholder="请输入地址、block、交易号"/>
+									<button>查询</button>
+								</div>
+								<button></button>
+								<button></button>
+							</div>
+							<div class="sortBox">
+								<p class="p1">按数量排序
+									<span>
+										<i class="fa fa-caret-up"></i>
+										<i class="fa fa-caret-down"></i>
+									</span>
+								</p>
+								<p>按手续费排序
+									<span>
+										<i class="fa fa-caret-up"></i>
+										<i class="fa fa-caret-down"></i>
+									</span>
+								</p>
+								<p>按发送方排序
+									<span>
+										<i class="fa fa-caret-up"></i>
+										<i class="fa fa-caret-down"></i>
+									</span>
+								</p>
+								<p>按接收方排序
+									<span>
+										<i class="fa fa-caret-up"></i>
+										<i class="fa fa-caret-down"></i>
+									</span>
+								</p>
+							</div>
+						</div>
+					</div>
+
+			</div>
+</div>

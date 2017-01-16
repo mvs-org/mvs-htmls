@@ -1,0 +1,22 @@
+<div class="content">
+  <div class="headline"><em></em>{{ 'HEADLINE_CONSOLE' | translate }}</div>
+<div class="console" id="consolelog">
+  <div ng-repeat="log in consolelog">
+    <div class="console_b">
+        <span class="span1"><p>{{log.query}}</p><em></em></span>
+    </div>
+    <div class="console_a" >
+        <span class="span1"><pre>{{log.answer}}</pre><em></em></span>
+    </div>
+  </div>
+</div>
+<div class="consoleInput">
+    <form>
+      <div class="input_1">
+        <input type="text" ng-model="querystring" class="forminput" id="" placeholder="请输入相关内容">
+      </div>
+      <input class="input_2" type="submit" ng-click="query()" value="输入">
+    </form>
+</div>
+</div>
+<link rel="stylesheet" href="css/mining.css">

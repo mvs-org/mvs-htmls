@@ -1,0 +1,20 @@
+{
+  "name": "MVS-GUI",
+  "description": "Web GUI for Metavserse.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mvs-live/mvs-htmls.git"
+  },
+  "dependencies": {
+    "angular": "^1.6.1",
+    "angular-cookies": "^1.6.1",
+    "angular-local-storage": "^0.5.0",
+    "angular-translate": "^2.13.1",
+    "angular-translate-loader-static-files": "^2.13.1",
+    "angular-ui-router": "^0.3.2",
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.1.1",
+    "nprogress": "^0.2.0"
+  }
+}

@@ -1,0 +1,46 @@
+
+<div ng-show="asset.symbol">
+  <div class="headline"><em></em>{{ 'HEADLINE_ASSETS_DETAILS' | translate }}</div>
+<div class="row">
+  <div class="col-md-3">{{'ASSET_ASSET_CREATE_SYMBOL' | translate}}:</div>
+  <div class="col-md-3">{{asset.symbol}}</div>
+</div>
+<div class="row">
+  <div class="col-md-3">{{'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate}}:</div>
+  <div class="col-md-3">{{asset.maximum_supply}}</div>
+</div>
+<div class="row">
+  <div class="col-md-3">{{'ISSUER' | translate}}:</div>
+  <div class="col-md-3">{{asset.issuer}}</div>
+</div>
+<div class="row">
+  <div class="col-md-3">{{'ASSET_ASSET_CREATE_DESCRIPTION' | translate}}:</div>
+  <div class="col-md-3">{{asset.description}}</div>
+</div>
+<div class="row">
+  <div class="col-md-3">{{'STATUS' | translate}}:</div>
+  <div class="col-md-3">{{asset.status}}</div>
+</div>
+<div class="headline"><em></em>{{ 'NAV_ASSETS' | translate }}</div>
+</div>
+
+<div class=" ">
+  <div class="mainContent1">
+    <div class="row assetBoxWrapper">
+      <dl id="outer_wrap">
+        <a href="#!/asset/details/{{asset.symbol}}" ng-repeat="asset in assets">
+        <dd class="panel assetBox" >
+          <span class="span1 assetBoxSymbol">{{asset.symbol}}</span>
+          <span class="span3">{{ 'ISSUER' | translate }}</span>
+          <span class="span2">{{asset.issuer}}</span>
+          <span class="span3">{{ 'STATUS' | translate }}</span>
+          <span class="span2">{{asset.status}}</span>
+        </dd>
+      </a>
+        <div class="assetBoxAdd assetBox">
+          <a href="#!/asset/create"><img src="images/add.png" alt="" /></a>
+        </div>
+      </dl>
+    </div>
+  </div>
+</div>

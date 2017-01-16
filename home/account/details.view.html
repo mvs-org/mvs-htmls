@@ -1,0 +1,48 @@
+<div class="headline"><em></em>{{ 'HEADLINE_ACCOUNTSETTINGS' | translate }}</div>
+
+  <div class="row">
+    <div class="col-md-5 panel">
+      <div class="row">
+        <div class="col-sm-3"><img src="images/icon_5.jpg" ></div>
+        <div class="col-sm-9">
+          <dl>
+            <dt></dt>
+            <dd>{{ 'SETTINGS_ACCOUNT_ID' | translate }}:</dd>
+            <dd></dd>
+            <dd>{{ 'SETTINGS_ACCOUNT_NAME' | translate }}: {{accountname}}</dd>
+            <dd></dd>
+          </dl>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-6 panel">
+      <div class="headline"><em></em>{{ 'SETTINGS_PRIVATE_KEY' | translate }}</div>
+      <form ng-hide="privatekey">
+      <div class="form-group row">
+        <label for="password" class="col-sm-2 control-label">{{ 'SETTINGS_BACKUP_PASSWORD' | translate }}</label>
+        <div class="col-sm-10">
+          <input type="password" name="password" ng-model="privatekey_password" class="form-control" placeholder="">
+        </div>
+        <br>
+      </div>
+      <div class="row">
+        <input type="submit" ng-click="showprivatekey(privatekey_password)" value="{{ 'SETTINGS_BACKUP_ACCOUNT' | translate }}" class="btn btn-info">
+      </div>
+
+      </form>
+      <div class="form-group" ng-show="privatekey">
+        <label for="privatekey" class="col-sm-2 control-label">{{ 'SETTINGS_PRIVATE_KEY' | translate }}</label>
+        <div class="col-sm-10">
+          <textarea name="privatekey" class="form-control" ng-model="privatekey" rows="" cols="" placeholder=""></textarea>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="accountContentBottom">
+    <div class="headline"><em></em>{{ 'SETTINGS_ACCOUNT_INFORMATION' | translate }}</div>
+  </div>

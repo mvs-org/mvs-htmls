@@ -1,0 +1,68 @@
+<div class="content">
+  <div class="headline"><em></em>{{ 'HEADLINE_ASSETS' | translate }}</div>
+  <div class="body-content">
+    <form method="post" class="form-x" action="">
+      <div class="mainContent1">
+        <div class="row assetBoxWrapper">
+          <dl id="outer_wrap">
+            <dd class="panel assetBox">
+              <span class="span1">ETP</span>
+              <span class="span3">{{ 'BALANCE_CONFIRMED' | translate }}</span>
+              <span class="span2">{{balance['total-confirmed']}}</span>
+              <span class="span3">{{ 'BALANCE_UNCONFIRMED' | translate }}</span>
+              <span class="span2">{{balance['total-received'] - balance['total-unspent']}}</span>
+            </dd>
+            <a href="#!/asset/details/{{asset.symbol}}" ng-repeat="asset in assets">
+            <dd class="panel assetBox" >
+              <span class="span1 assetBoxSymbol">{{asset.symbol}}</span>
+              <span class="span3">{{ 'ISSUER' | translate }}</span>
+              <span class="span2">{{asset.issuer}}</span>
+              <span class="span3">{{ 'STATUS' | translate }}</span>
+              <span class="span2">{{asset.status}}</span>
+            </dd>
+          </a>
+            <div class="assetBoxAdd assetBox">
+              <a href="#!/asset/create"><img src="images/add.png" alt="" /></a>
+            </div>
+          </dl>
+        </div>
+        <div class="transferBoxBottom">
+          <div class="headline"><em></em>{{ 'HEADLINE_TRANSACTIONS' | translate }}</div>
+          <div class="transferBoxBottomLeft">
+            <div class="dataBox greybg">
+              <div class="dataBoxLeft">
+                <dl>
+                  <dt>
+                  </dt>
+                  <dd>{{ 'BLOCK' | translate }}:</dd>
+                  <dd>2016-11-25</dd>
+                  <dd></dd>
+                  <dd>{{ 'TRANSFER_NO_OF_CONFIRMATIONS' | translate }}: 1052</dd>
+                </dl>
+                <div>
+              </div>
+              </div>
+              <div class="dataBoxRight">
+                <div>
+                  <p>{{ 'TRANSFER_SENDER' | translate }}:</p>
+                </div>
+                <div>
+                  <p>{{ 'TRANSFER_VALUE' | translate }}:</p>
+                </div>
+                <div>
+                  <p>{{ 'TRANSFER_RECIPENT' | translate }}:</p>
+                </div>
+                <div>
+                  <p>{{ 'TRANSFER_FEE' | translate }}:</p>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

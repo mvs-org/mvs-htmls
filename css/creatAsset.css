@@ -1,0 +1,415 @@
+/*******************************************自定义资产---创建资产 creatAsset***************************************************/
+/*******************************************创建资产 creatAsset***************************************************/
+/*******************************************创建资产 creatAsset***************************************************/
+.assetBox{
+	width:100%;
+	height:40px;
+	text-align:center;
+	border-bottom:1px solid #e1e1e1;
+}
+.assetBox ul{
+	margin-left:300px;
+}
+.assetBox ul li{
+	float:left;
+	width:80px;
+	height:40px;
+	margin:0 22px;
+	font-size:16px;
+	line-height:40px;
+}
+#creatAssetList{
+	width:968px;
+	height:675px;
+	padding:50px 190px 0 260px;
+}
+#creatAssetList .form-group{
+	margin:0;
+	padding:0;
+	height:30px;
+	line-height:30px;
+	margin-bottom:20px;
+}
+#creatAssetList .form-group .control-label{
+	padding:0;
+	margin:0;color:#ddd;
+}
+#creatAssetList .form-group div{
+	margin:0;
+	padding:0;
+}
+#creatAssetList .form-group div span a{
+	color:#229dff;
+}
+#creatAssetList .assetExplain{
+	margin:0;
+	padding:0;
+	height:80px;
+	line-height:30px;
+	margin-bottom:20px;
+}
+#creatAssetList .assetExplain .control-label{
+	margin:0;
+	padding:0;color:#eee;
+}
+#creatAssetList .assetExplain div{
+	margin:0;
+	padding:0;
+}
+#creatAssetList .assetExplain .assetNameBox{
+	width:320px;
+	height:80px;
+	display:block;
+	border:1px solid #d8d8d8;
+}
+#creatAssetList .form-group input{
+	margin:0;
+	padding:0;
+	width:320px;
+	height:30px;
+	padding-left:10px;
+	border-radius: 0;
+}
+#creatAssetList .creatAssetBtn{
+	width:120px;
+	height:40px;
+	background:#229dff;
+	border-radius: 5px;
+	border:0;
+	margin:30px 0 0 160px;
+	color:#fff;
+}
+#creatAssetList #spendId{
+	width:120px;
+}
+#creatAssetList #creatPasswordId{
+	width:240px;
+}
+/************************************creatAsset 资产交易********************************************/
+/************************************creatAsset 资产交易********************************************/
+/************************************creatAsset 资产交易********************************************/
+.mainContent .transferBoxTop{
+	width:968px;
+	height:165px;
+	padding:15px 30px 0;
+	margin-bottom:10px;
+}
+.mainContent .transferBoxTop .transferBoxTopLeft{
+	width:450px;
+	height:150px;
+	float:left;
+}
+.mainContent .transferBoxTop .form-group{
+	margin:0;
+	padding:0;
+	height:25px;
+	line-height:25px;
+	margin-bottom:10px;
+}
+.mainContent .transferBoxTop .form-group .control-label{
+	padding:0;
+	margin:0;color:#eee;
+}
+.mainContent .transferBoxTop .form-group div{
+	margin:0;
+	padding:0;
+}
+.mainContent .transferBoxTop .form-group input{
+	margin:0;
+	padding:0;
+	height:25px;
+	padding-left:10px;
+	border-radius: 0;
+}
+#inputID1,#inputID2{
+	width:250px;
+	float:left;
+}
+
+#inputID3{
+	width:180px;
+}
+#inputID4{
+	width:140px;
+}
+#inputID5{
+	width:180px;
+}
+.mainContent .transferBoxTop .transferBoxTopRight{
+	width:450px;
+	height:150px;
+	float:left;
+}
+.mainContent .transferBoxTop .transferBoxTopRight textarea{
+	width:380px;
+	height:55px;
+	padding-left:10px;
+	border:1px solid #d8d8d8;
+	margin-bottom:5px;
+}
+#transferBtn{
+	width:120px;
+	height:35px;
+	background:#229dff;
+	color:#fff;
+	border:0;
+	border-radius: 5px;
+	right:30px;
+	top:150px;
+}
+/*******转账记录*******/
+.mainContent .transferBoxBottom {
+	width:965px;
+	height:500px;
+}
+.mainContent .transferBoxBottom .transferBoxBottomLeft{
+	width:665px;
+	height:500px;
+	float:left;
+	padding-top:20px;
+}
+#echarts3{
+	width:300px;
+	height:300px;
+	margin:20px 50px;
+}
+.transferBoxBottomLeft .dataBox{
+	width:601px;
+	height:120px;
+	background:#fff;
+	margin-left:30px;
+}
+.transferBoxBottomLeft .dataBox .dataBoxLeft{
+	width:230px;
+	height:120px;
+	border-right:1px dashed #f3f3f3;
+	float:left;
+}
+.transferBoxBottomLeft .dataBox .dataBoxLeft dl{
+	width:230px;
+	height:60px;
+}
+.transferBoxBottomLeft .dataBox .dataBoxLeft dl dt{
+	width:75px;
+	height:60px;
+	float:left;
+}
+.transferBoxBottomLeft .dataBox .dataBoxLeft dl dd{
+	width:140px;
+	height:30px;
+	line-height:30px;
+	margin:0;
+	float:left;
+}
+.transferBoxBottomLeft .dataBox .dataBoxLeft p{
+	height:60px;
+	line-height:60px;
+	font-size:14px;
+	padding-left:20px;
+}
+.transferBoxBottomLeft .dataBox .dataBoxRight{
+	width:370px;
+	height:120px;
+	float:left;
+}
+.transferBoxBottomLeft .dataBox .dataBoxRight div{
+	width:185px;
+	height:60px;
+	float:left;
+}
+.transferBoxBottomLeft .dataBox .dataBoxRight div p{
+	width:185px;
+	height:30px;
+	line-height:30px;
+	padding-left:20px;
+}
+.dataBoxText{
+	width:601px;
+	height:120px;
+	background:#fff;
+	margin-left:30px;
+}
+.mainContent .transferBoxBottom .transferBoxBottomRight{
+	width:300px;
+	height:500px;
+	float:left;
+}
+.mainContent .transferBoxBottom .transferBoxBottomRight .searchBox{
+	width:300px;
+	height:130px;
+	padding:0 20px;
+	border-bottom:1px solid #eee;
+}
+.mainContent .transferBoxBottom .transferBoxBottomRight .searchBox .searchBoxTop{
+	width:260px;
+	height:65px;
+	padding-top:25px;
+	margin-bottom:15px;
+	position:relative;
+}
+.mainContent .transferBoxBottom .transferBoxBottomRight .searchBox .searchBoxTop input{
+	width:198px;
+	height:38px;
+	border:1px solid #d5d5d5;
+}
+.mainContent .transferBoxBottom .transferBoxBottomRight .searchBox .searchBoxTop button{
+	height:38px;
+	width:58px;
+	border:1px solid #d5d5d5;
+	margin:0;
+	padding:0;
+	position:absolute;
+	top:25px;
+	left:198px;
+}
+.mainContent .transferBoxBottom .transferBoxBottomRight .searchBox>button{
+	width:110px;
+	height:30px;
+	border:0;
+	border-radius: 5px;
+}
+.mainContent .transferBoxBottom .transferBoxBottomRight .searchBox>button:nth-of-type(1){
+	background:url(../images/receive.png) no-repeat;
+
+}
+.mainContent .transferBoxBottom .transferBoxBottomRight .searchBox>button:nth-of-type(2){
+	background:url(../images/send.png) no-repeat;
+	float:right;
+}
+.mainContent .transferBoxBottom .transferBoxBottomRight .sortBox{
+	width:300px;
+	height:100px;
+}
+.mainContent .transferBoxBottom .transferBoxBottomRight .sortBox p{
+	width:112px;
+	height:28px;
+	line-height:28px;
+	border:1px solid #E1E1E1;
+	float:left;
+	position:relative;
+	margin:10px 15px 0;
+	padding-left:5px;
+}
+.mainContent .transferBoxBottom .transferBoxBottomRight .sortBox .p{
+	border:1px solid #229dff;
+}
+.mainContent .transferBoxBottom .transferBoxBottomRight .sortBox p span{
+	display:block;
+	width:15px;
+	height:30px;
+	position:absolute;
+	top:0;
+	right:2px;
+}
+.sortBox p span i:nth-of-type(1){
+	position:absolute;
+	top:2px;
+}
+.sortBox p span i:nth-of-type(2){
+	position:absolute;
+	top:12px;
+}
+/*-------------------------资产详情********************************/
+/************************资产详情********************************/
+/************************资产详情********************************/
+.assetDetailBox{
+	width:100%;
+	height:675px;
+}
+.assetDetailBox .assetDetailBoxTop{
+	width:100%;
+	height:176px;
+	border-bottom:1px solid #d8d8d8;
+	padding-top:50px;
+	text-align:center;
+}
+.assetDetailBox .assetDetailBoxTop span{
+	width:60px;
+	height:60px;
+	font-size:12x;
+	display:inline-block;
+	border-radius: 30px;
+	line-height:60px;
+	box-shadow:1px 1px 1px 1px #d9e1e8;
+
+	margin:0 10px;
+}
+.assetDetailBox .assetDetailBoxTop .span1{
+	color:#fff;
+	font-size:12px;
+}
+
+.assetDetailBox .assetDetailBoxTop p{
+	height:60px;
+	line-height:60px;
+	text-align:center;
+}
+.assetDetailBox .assetDetailBoxTop p a{
+	color:#229dff;
+	font-size:16px;
+}
+.assetDetailBox .assetDetailBoxTop p a:hover{
+	text-decoration:none;
+}
+.assetDetailBoxBottom{
+	padding:0 30px;
+}
+.assetDetailBoxBottom h2{
+	height:40px;
+	line-height:40px;
+	font-size:20px;
+	margin-bottom:40px;
+}
+.assetDetailBoxBottom .assetDetailBoxBottomLeft{
+	width:410px;
+	height:415px;
+	float:left;
+}
+.assetDetailBoxBottom .assetDetailBoxBottomRight{
+	width:480px;
+	height:415px;
+	float:right;
+}
+.assetDetailBoxBottom .assetDetailBoxBottomRight .form-group{
+	margin:0;
+	padding:0;
+	height:30px;
+	line-height:30px;
+	margin-bottom:20px;
+}
+.assetDetailBoxBottom .assetDetailBoxBottomRight .form-group .control-label{
+	margin:0;  color:#eee;padding:0;
+}
+.assetDetailBoxBottom .assetDetailBoxBottomRight .form-group div{
+	margin:0;
+	padding:0;
+}
+.assetDetailBoxBottom .assetDetailBoxBottomRight .form-group div input{
+	width:320px;
+	height:30px;
+	border-radius: 0;
+	border:1px solid #d5d5d5;
+}
+.assetDetailBoxBottom .assetDetailBoxBottomRight .form-group div textarea{
+	width:320px;
+	height:80px;
+	margin:0;
+	padding-left:10px;
+	border:1px solid #d8d8d8;
+}
+#moneyId{
+	width:120px;
+}
+#addHomeId{
+	width:120px;
+	height:35px;
+	background:#229dff;
+	border-radius: 5px;
+	border:0;
+	margin-left:150px;
+	margin-top:10px;
+}
+#addHomeId a{
+	color:#fff;
+	text-decoration: none;
+}

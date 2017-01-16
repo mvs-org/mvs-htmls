@@ -1,0 +1,32 @@
+<div class="headline"><em></em>{{ 'HEADLINE_ASSETS_CREATE' | translate }}</div>
+<div class="row">
+  <form>
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+      <form class="form-horizontal" role="form">
+        <div class="form-group">
+          <label for="issueaddress" class="control-label">{{ 'ASSET_ASSET_CREATE_ISSUE_ADDRESS' | translate }}</label>
+          <input type="text" class="form-control" name="issueaddress" placeholder="" ng-model="issueaddress">
+          <span class="addressSpan"><a href="#!/account/addresses">{{ 'ASSET_ASSET_CREATE_SELECT_ADDRESS' | translate }}</a></span>
+        </div>
+        <div class="form-group">
+          <label for="max_supply" class="control-label">{{ 'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate }}</label>
+          <input type="text" class="form-control" name="max_supply" placeholder="" ng-model="max_supply">
+        </div>
+        <div class="form-group">
+          <label for="symbol" class="control-label">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</label>
+          <input type="text" class="form-control" name="symbol" placeholder="" ng-model="symbol">
+        </div>
+        <div class="assetExplains">
+          <label for="description" class="control-label">{{ 'ASSET_ASSET_CREATE_DESCRIPTION' | translate }}</label>
+          <textarea class="form-control" name="description" rows="4" cols="35" ng-model="description"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="password" class="control-label">{{ 'ASSET_ASSET_CREATE_PASSWORD' | translate }}</label>
+          <input type="password" class="form-control" name="password" placeholder="" ng-model="password">
+        </div>
+        <input type="submit" class="btn btn-success" ng-click="createasset()" value="{{ 'ASSET_ASSET_CREATE_SUBMIT_BUTTON' | translate }}"></button>
+      </form>
+    </div>
+  </form>
+</div>

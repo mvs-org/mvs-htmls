@@ -1,0 +1,65 @@
+<!--------------------------------------头部----------------------------------->
+<div class="panel">
+  <div class="header">
+    <div class="logo">
+      <h1><img src="images/logo-black.png" class="logo" alt="" /></h1>
+    </div>
+    <div class="header-right">
+      <a href="#!/transfer" class="btn btn-info">{{ 'NAV_TRANSFER' | translate }}</a>
+<div class="own">
+      <a href="#!/account/details"><img src="images/icon-settings.png" alt="" class="install"/></a>
+</div>
+      <div class="own"><img src="images/icon_4.jpg" alt="" /> {{vm.account}}</div>
+
+      <a href="#!/login" class="own glyphicon glyphicon-log-out huge red"></a>
+    </div>
+  </div>
+</div>
+<!---------------------------------内容------------------------------------------------->
+
+<div class="layout">
+  <div class="centent">
+
+    <div class="leftnav greybg"> <a href="#!/assets" class="current">
+      <a href="#!/assets" class="current">
+      <h2 class="leftnav-home"><em class="em3"></em><span>{{ 'NAV_HOME' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></h2>
+      </a>
+      <h2 class="leftnav-account" ng-click="show_account_menu()"><a class="current" ><em class="em1"></em><span>{{ 'NAV_ACCOUNT' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></a></h2>
+      <ul class="accountUl" ng-show="menu.account.show">
+        <li><a href="#!/account/addresses" class="current">{{ 'NAV_ACCOUNT_ADDRESSES' | translate }}</a></li>
+        <li><a href="#!/account/details" class="current">{{ 'NAV_ACCOUNT_SETTING' | translate }}</a></li>
+        <!-- <li><a class="current">{{ 'NAV_DIGITAL_IDENTITY' | translate }}</a></li> -->
+      </ul>
+      <h2 class="leftnav-assets" ng-click="show_assets_menu()"><em class="em1"></em><span>{{ 'NAV_ASSETS' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></h2>
+      <ul class="assetUl" ng-show="menu.assets.show">
+        <li><a href="#!/transfer" class="current">{{ 'NAV_ETP' | translate }}</a></li>
+        <li><a href="#!/asset/details/" class="current">{{ 'NAV_ASSET_DETAILS' | translate }}</a></li>
+        <li><a href="#!/asset/create" class="current">{{ 'NAV_ASSET_CREATE' | translate }}</a></li>
+      </ul>
+      <!--
+      <h2 class="assetH_A"><em class="em1"></em><span>我的圈子</span><em class="em2"><img src="images/icon_1.jpg" width="9" height="15"></em></h2>
+    -->
+      <a href="#!/mining" class="current">
+      <h2 class="leftnav-mining"><em class="em3"></em><span>{{ 'NAV_MINING' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></h2>
+      </a>
+      <a href="#!/console" class="current">
+      <h2 class="leftnav-console"><em class="em4"></em><span>{{ 'NAV_CONSOLE' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></h2>
+      </a>
+      <p>{{ 'METAVERSE_VERSION' | translate }} 0.0.1.5</p>
+    </div>
+    <div class="admin">
+      <div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
+        <div class="" ng-bind="flash.message">
+        </div>
+      </div>
+      <ui-view/>
+    </div>
+    <footer class="greybg">
+      <span>{{ 'CONNECTION_PEERS' | translate }}:</span> <span></span>
+      <div class="footerRight"> <span>{{ 'CONNECTION_BLOCKS' | translate }}:</span> <span>{{height}}</span> </div>
+    </footer>
+  </div>
+
+
+</div>
+  </div>

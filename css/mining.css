@@ -1,0 +1,21 @@
+.mining{width:100%;min-height:600px;}
+.mining button{width:140px;height:40px;border-radius:5px;background:#229dff;border:none;color:#fff;margin-left:400px;margin-right:400px;margin-top:15px;}
+
+
+/*-------------------------------------------------------控制台*/
+.console{width:100%;float:left;height:100%; overflow:auto; height: 650px;}
+.console_a{width:80%;float:right;margin-top:10px;margin-right:30px; margin-bottom:20px;}
+.console_a .span1{width:90%;padding:5px;float:left;border-radius:5px;margin-right:2px;font-size:12px;}
+.console_a .span2{width:38px;float:right;height:36px;font-size:12px;line-height:25px;}
+
+.console_b{width:250px;float:left;margin-top:30px;margin-right:30px; margin-bottom:5px; color: violet;}
+.console_b .span1{width:180px; padding:10px;float:right;border-radius:5px;margin-right:2px;font-size:12px;}
+.console_b .span2{width:38px;float:left;height:36px;font-size:12px;line-height:25px;margin-left:5px;}
+
+.consoleInput{width:100%;float:left;line-height:40px;height:40px;}
+.consoleInput .forminput{text-indent:10px;width:90%;float:left;line-height:40px;height:40px;margin-top:5px;background:#f1f5f8;border:1px solid #ccc;}
+.consoleInput .input_2{width:8%;font-size:14px;float:right;margin-right:10px;height:40px;margin-top:5px;background:#229dff;color:#fff;text-align:center;}
+
+pre{
+  padding: 15px;
+}
