@@ -7,9 +7,3 @@ through which, a network of smart properties , digital identities and value inte
 ```bash
 npm install
 ```
-
-# Usage
-Put mvs-htmls to metaverse work path, then rename it as html
-```
-mv -f mvs-htmls ~/.metaverse/html
-```
