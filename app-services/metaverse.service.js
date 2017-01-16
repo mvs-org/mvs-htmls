@@ -9,7 +9,7 @@
     function MetaverseService($http, localStorageService) {
         var service = {};
 
-        var SERVER = '127.0.0.1:8820';
+        var SERVER = window.location.hostname+':8820';
 
         var RPC_URL = 'http://'+SERVER+'/rpc';
 

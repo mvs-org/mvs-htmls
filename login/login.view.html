@@ -33,12 +33,14 @@
     <li><a ng-click="vm.changeLang('de_DE')">Deutsch</a></li>
   </ul>
   </div>
+  <br><br>
+  <div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
+    <div class="" ng-bind="flash.message">
+    </div>
+  </div>
         </div>
-        <br><br>
-        <div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
-          <div class="" ng-bind="flash.message">
-          </div>
-        </div>
+
+
       </div>
 </div>
     </div>

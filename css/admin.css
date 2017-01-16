@@ -1723,9 +1723,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0000', end
 		width: 26px;
 		height: 26px;
 		border: dotted 4px transparent;
-		border-top-color: rgba(73,155,234,1);
+		border-bottom-color: rgba(73,155,234,1);
 		border-right-color: rgba(221,227,32,1);
-		border-bottom-color: rgba(227,34,34,1);
+		border-top-color: rgba(227,34,34,1);
 
 		-webkit-animation: nprogress-spinner 1000ms linear infinite;
 	          animation: nprogress-spinner 1000ms linear infinite;
