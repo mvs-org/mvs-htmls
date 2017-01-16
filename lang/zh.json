@@ -29,6 +29,7 @@
   "TRANSFER_SENDER_ADDRESS" : "发送地址",
   "TRANSFER_RECIPENT_ADDRESS" : "接收地址",
   "TRANSFER_VALUE" : "数量",
+  "TRANSFER_QUANTITY" : "数量",
   "TRANSFER_SENDER" : "发送方",
   "TRANSFER_RECIPENT" : "接收方",
   "TRANSFER_FEE" : "转账费",
@@ -57,6 +58,7 @@
   "ASSET_ASSET_CREATE_PASSWORD" : "密码",
   "ASSET_ASSET_CREATE_SELECT_ADDRESS" : "切换地址",
   "ASSET_ASSET_CREATE_SUBMIT_BUTTON" : "创建资产",
+  "CREATE_NEW_ADDRESS" : "创建新地址",
   "SETTINGS_ACCOUNT_ID" : "帐户ID",
   "SETTINGS_ACCOUNT_NAME" : "帐户名",
   "SETTINGS_PRIVATE_KEY" : "您的主私钥",
@@ -98,5 +100,11 @@
   "MESSAGES.MINING_START_SUCCESS" : "开始挖矿！",
   "MESSAGES.MINING_START_ERROR" : "无法开启挖矿！",
   "MESSAGES.MINING_STOP_SUCCESS" : "停止挖矿！",
-  "MESSAGES.MINING_STOP_ERROR" : "无法停止挖矿！"
+  "MESSAGES.MINING_STOP_ERROR" : "无法停止挖矿！",
+  "MESSAGES.ASSETS_ISSUE_SUCCESS" : "资产发布必须包含在下一个区块中，请等待",
+  "MESSAGES.ASSETS_ISSUE_ERROR" : "资产无法被发布",
+  "CONSOLE.INSERT_PROMPT" : "请输入相关内容",
+  "CONSOLE.SEND" : "输入",
+  "MESSAGES.ASSETS_TRANSFER_SUCCESS" : "Asset transaction has been transmitted to the network.",
+  "MESSAGES.ASSETS_TRANSFER_ERROR" : "Could not send asset."
 }

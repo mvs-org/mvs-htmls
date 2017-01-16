@@ -21,9 +21,19 @@
   <div class="col-md-3">{{'STATUS' | translate}}:</div>
   <div class="col-md-3">{{asset.status}}</div>
 </div>
-<div class="headline"><em></em>{{ 'NAV_ASSETS' | translate }}</div>
+<div class="row">
+  <div class="col-md-3">{{'ADDRESS' | translate}}:</div>
+  <div class="col-md-3">{{asset.address}}</div>
+</div>
+<div ng-show="asset.status=='unissued'">
+  <a href="" ng-click="issue(asset.symbol)"><div class="btn btn-primary">Issue</div></a>
+</div>
+<div ng-show="asset.status=='issued'">
+  <a href="#!/asset/transfer/{{asset.symbol}}/{{asset.address}}"><input class="btn btn-success" value="{{'TRANSFER_SEND' | translate}}"></a>
 </div>
 
+</div>
+<div class="headline"><em></em>{{ 'NAV_ASSETS' | translate }}</div>
 <div class=" ">
   <div class="mainContent1">
     <div class="row assetBoxWrapper">

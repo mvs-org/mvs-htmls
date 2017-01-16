@@ -26,6 +26,7 @@
   "TRANSFER_SENDER_ADDRESS" : "Send from address",
   "TRANSFER_RECIPENT_ADDRESS" : "Recipent address",
   "TRANSFER_VALUE" : "Value",
+  "TRANSFER_QUANTITY" : "Quantity",
   "TRANSFER_SENDER" : "Sender",
   "TRANSFER_RECIPENT" : "Recipent",
   "TRANSFER_FEE" : "Fee",
@@ -56,6 +57,7 @@
   "ASSET_ASSET_CREATE_PASSWORD" : "Password",
   "ASSET_ASSET_CREATE_SELECT_ADDRESS" : "Select address",
   "ASSET_ASSET_CREATE_SUBMIT_BUTTON" : "Create",
+  "CREATE_NEW_ADDRESS" : "Create new address",
   "SETTINGS_ACCOUNT_ID" : "Account ID",
   "SETTINGS_ACCOUNT_NAME" : "Name",
   "SETTINGS_PRIVATE_KEY" : "Private key",
@@ -97,5 +99,11 @@
   "MESSAGES.MINING_START_SUCCESS" : "Mining started.",
   "MESSAGES.MINING_START_ERROR" : "Could not start mining.",
   "MESSAGES.MINING_STOP_SUCCESS" : "Mining stopped.",
-  "MESSAGES.MINING_STOP_ERROR" : "Could not stop mining."
+  "MESSAGES.MINING_STOP_ERROR" : "Could not stop mining.",
+  "MESSAGES.ASSETS_ISSUE_SUCCESS" : "The asset will be issued within the next blocks. Please wait.",
+  "MESSAGES.ASSETS_ISSUE_ERROR" : "The assue could not be issued.",
+  "CONSOLE.INSERT_PROMPT" : "Enter your command here.",
+  "CONSOLE.SEND" : "Send",
+  "MESSAGES.ASSETS_TRANSFER_SUCCESS" : "Asset transaction has been transmitted to the network.",
+  "MESSAGES.ASSETS_TRANSFER_ERROR" : "Could not send asset."
 }

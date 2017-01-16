@@ -15,7 +15,7 @@
         </div>
         <div class="form-group">
           <label for="symbol" class="control-label">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</label>
-          <input type="text" class="form-control" name="symbol" placeholder="" ng-model="symbol">
+          <input type="text" class="form-control uppercase" name="symbol" placeholder="" ng-model="symbol">
         </div>
         <div class="assetExplains">
           <label for="description" class="control-label">{{ 'ASSET_ASSET_CREATE_DESCRIPTION' | translate }}</label>
@@ -25,7 +25,7 @@
           <label for="password" class="control-label">{{ 'ASSET_ASSET_CREATE_PASSWORD' | translate }}</label>
           <input type="password" class="form-control" name="password" placeholder="" ng-model="password">
         </div>
-        <input type="submit" class="btn btn-success" ng-click="createasset()" value="{{ 'ASSET_ASSET_CREATE_SUBMIT_BUTTON' | translate }}"></button>
+        <input type="submit" class="btn btn-success" ng-click="createasset()" value="{{ 'ASSET_ASSET_CREATE_SUBMIT_BUTTON' | translate }}">
       </form>
     </div>
   </form>

@@ -13,9 +13,9 @@
 <div class="consoleInput">
     <form>
       <div class="input_1">
-        <input type="text" ng-model="querystring" class="forminput" id="" placeholder="请输入相关内容">
+        <input type="text" ng-model="querystring" class="forminput" id="" placeholder="{{ 'CONSOLE.INSERT_PROMPT' | translate }}">
       </div>
-      <input class="input_2" type="submit" ng-click="query()" value="输入">
+      <input class="input_2 btn btn-primary" type="submit" ng-click="query()" value="{{ 'CONSOLE.SEND' | translate }}">
     </form>
 </div>
 </div>

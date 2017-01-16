@@ -1,8 +1,11 @@
-﻿(function () {
+(function () {
     'use strict';
 
     angular.module('app', ['ui.router','ngCookies','LocalStorageModule', 'pascalprecht.translate'])
         .config(config)
+        .config(['$compileProvider', function ($compileProvider) {
+            $compileProvider.debugInfoEnabled(false);
+          }])
         .config(function (localStorageServiceProvider) {
           localStorageServiceProvider
           .setPrefix('mvs.live');
@@ -17,6 +20,7 @@
                 'de-DE': 'de',
                 'zh-ZH': 'zh',
             });
+            $translateProvider.useSanitizeValueStrategy('escapeParameters');
 
 
               $translateProvider.preferredLanguage('zh_ZH');
@@ -88,9 +92,7 @@
 
     .state('home.asset', {
       abstract: true,
-      templateUrl: "home/assets/index.view.html",
-      controller: 'AssetController',
-      controllerAs: 'vm'
+      templateUrl: "home/assets/index.view.html"
     })
 
     .state('home.asset.details', {
@@ -108,9 +110,9 @@
     })
 
     .state('home.asset.transfer', {
-      url: "/asset/transfer",
+      url: "/asset/transfer/:symbol/:sender_address",
       templateUrl: "home/assets/transfer.view.html",
-      controller: 'AssetController',
+      controller: 'TransferAssetController',
       controllerAs: 'vm'
     })
 

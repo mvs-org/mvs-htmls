@@ -1622,6 +1622,12 @@ textarea:-ms-input-placeholder { /* Internet Explorer 10-11 */
 	padding-top:5px;
 }
 
+.lightgreybg{
+	background-color: rgba(255,255,255,0.1);
+	padding-bottom:5px;
+	padding-top:5px;
+}
+
 
 .mainContent1 dl .assetBox{margin-left:10px;margin-right: 0px; width:220px;}
 .mainContent1 dl .assetBoxAdd{width:131px;height:165px;background:#fff;margin-left:10px;float:left;}
@@ -1703,21 +1709,32 @@ textarea:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
 	#nprogress .bar {
 		height: 4px;
-		background: rgba(73,155,234,1);
-		background: -moz-linear-gradient(left, rgba(73,155,234,1) 0%, rgba(221,227,32,1) 50%, rgba(227,34,34,1) 100%);
-		background: -webkit-gradient(left top, right top, color-stop(0%, rgba(73,155,234,1)), color-stop(50%, rgba(221,227,32,1)), color-stop(100%, rgba(227,34,34,1)));
-		background: -webkit-linear-gradient(left, rgba(73,155,234,1) 0%, rgba(221,227,32,1) 50%, rgba(227,34,34,1) 100%);
-		background: -o-linear-gradient(left, rgba(73,155,234,1) 0%, rgba(221,227,32,1) 50%, rgba(227,34,34,1) 100%);
-		background: -ms-linear-gradient(left, rgba(73,155,234,1) 0%, rgba(221,227,32,1) 50%, rgba(227,34,34,1) 100%);
-		background: linear-gradient(to right, rgba(73,155,234,1) 0%, rgba(221,227,32,1) 50%, rgba(227,34,34,1) 100%);
-		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', endColorstr='#e32222', GradientType=1 );
+		background: rgba(255,0,0,1);
+background: -moz-linear-gradient(left, rgba(255,0,0,1) 0%, rgba(221,227,32,1) 50%, rgba(0,36,214,1) 100%);
+background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,0,0,1)), color-stop(50%, rgba(221,227,32,1)), color-stop(100%, rgba(0,36,214,1)));
+background: -webkit-linear-gradient(left, rgba(255,0,0,1) 0%, rgba(221,227,32,1) 50%, rgba(0,36,214,1) 100%);
+background: -o-linear-gradient(left, rgba(255,0,0,1) 0%, rgba(221,227,32,1) 50%, rgba(0,36,214,1) 100%);
+background: -ms-linear-gradient(left, rgba(255,0,0,1) 0%, rgba(221,227,32,1) 50%, rgba(0,36,214,1) 100%);
+background: linear-gradient(to right, rgba(255,0,0,1) 0%, rgba(221,227,32,1) 50%, rgba(0,36,214,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0000', endColorstr='#0024d6', GradientType=1 );
 	}
 
 	#nprogress .spinner-icon {
 		width: 26px;
 		height: 26px;
-		border: solid 4px transparent;
+		border: dotted 4px transparent;
 		border-top-color: rgba(73,155,234,1);
 		border-right-color: rgba(221,227,32,1);
 		border-bottom-color: rgba(227,34,34,1);
+
+		-webkit-animation: nprogress-spinner 1000ms linear infinite;
+	          animation: nprogress-spinner 1000ms linear infinite;
+	}
+
+	.uppercase{
+		text-transform: uppercase;
+	}
+
+	.btn{
+		width: 10em;
 	}

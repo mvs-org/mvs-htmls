@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     angular
@@ -32,6 +32,8 @@
         service.CreateAsset = CreateAsset;
         service.ListAssets = ListAssets;
         service.GetAsset = GetAsset;
+        service.SendAssetFrom = SendAssetFrom;
+        service.Issue = Issue;
 
 
         //Chain
@@ -343,6 +345,23 @@
         }
 
         /**
+         * @api {post} /rpc Issue asset
+         * @apiName Issue an unissued asset
+         * @apiGroup Assets
+         *
+         * @apiDescription Issues an asset. The asset will be written it into
+         * the blockchain.
+         *
+         * @apiParam {Const} method issue
+         * @apiParam {List} params [username, password,symbol]
+         *
+         **/
+        function Issue(symbol){
+          var credentials = localStorageService.get('credentials');
+          return $http.post(RPC_URL, { method: 'issue', params: [credentials.user,credentials.password,symbol] },{headers : {}}).then(handleSuccess, handleError);
+        }
+
+        /**
          * @api {post} /rpc List assets
          * @apiName List assets
          * @apiGroup Assets
@@ -372,6 +391,22 @@
         function GetAsset(symbol){
           var credentials = localStorageService.get('credentials');
           return $http.post(RPC_URL, { method: 'getasset', params: [credentials.user,credentials.password, symbol] },{headers : {}}).then(handleSuccess, handleError);
+        }
+
+        /**
+         * @api {post} /rpc Send asset from
+         * @apiName Send asset from
+         * @apiGroup Assets
+         *
+         * @apiDescription Sends an asset from a specified address.
+         *
+         * @apiParam {Const} method sendassetfrom
+         * @apiParam {List} params [username, password, sender_address, recipent_address, symbol, quantity]
+         *
+         **/
+        function SendAssetFrom(sender_address, recipent_address, symbol, quantity){
+          var credentials = localStorageService.get('credentials');
+          return $http.post(RPC_URL, { method: 'sendassetfrom', params: [credentials.user,credentials.password, sender_address, recipent_address, symbol, quantity] },{headers : {}}).then(handleSuccess, handleError);
         }
 
         function Query(string){

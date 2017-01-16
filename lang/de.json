@@ -26,6 +26,7 @@
   "TRANSFER_SENDER_ADDRESS" : "Absender",
   "TRANSFER_RECIPENT_ADDRESS" : "Empfänger",
   "TRANSFER_VALUE" : "Wert",
+  "TRANSFER_QUANTITY" : "Anzahl",
   "TRANSFER_SENDER" : "Sender",
   "TRANSFER_RECIPENT" : "Enpfänger",
   "TRANSFER_FEE" : "Gebühr",
@@ -56,6 +57,7 @@
   "ASSET_ASSET_CREATE_PASSWORD" : "Passwort",
   "ASSET_ASSET_CREATE_SELECT_ADDRESS" : "Addresse auswählen",
   "ASSET_ASSET_CREATE_SUBMIT_BUTTON" : "Erstellen",
+  "CREATE_NEW_ADDRESS" : "Neue Adresse erstellen",
   "SETTINGS_ACCOUNT_ID" : "Konto ID",
   "SETTINGS_ACCOUNT_NAME" : "Name",
   "SETTINGS_PRIVATE_KEY" : "Privater Schlüssel",
@@ -97,5 +99,11 @@
   "MESSAGES.MINING_START_SUCCESS" : "Mining gestartet.",
   "MESSAGES.MINING_START_ERROR" : "Could not start mining.",
   "MESSAGES.MINING_STOP_SUCCESS" : "Mining stopped.",
-  "MESSAGES.MINING_STOP_ERROR" : "Could not stop mining."
+  "MESSAGES.MINING_STOP_ERROR" : "Could not stop mining.",
+  "MESSAGES.ASSETS_ISSUE_SUCCESS" : "Das Asset wird nun veröffentlicht. Dies geschiet in der Regel innerhalb der nächsten Blöcke.",
+  "MESSAGES.ASSETS_ISSUE_ERROR" : "Beim veröffentlichen des Assets trat ein Fehler auf.",
+  "CONSOLE.INSERT_PROMPT" : "Geben Sie hier einen Behehl ein.",
+  "CONSOLE.SEND" : "Send",
+  "MESSAGES.ASSETS_TRANSFER_SUCCESS" : "Asset transaction has been transmitted to the network.",
+  "MESSAGES.ASSETS_TRANSFER_ERROR" : "Could not send asset."
 }
