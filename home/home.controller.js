@@ -284,6 +284,7 @@
 				NProgress.done();
 				if ( typeof response.success !== 'undefined' && response.success) {
 					$scope.asset = response.data.assets[0];
+					console.log(response);
 				}
 				else {
 					$translate('MESSAGES.ASSETS_LOAD_ERROR').then(function (data) {
@@ -304,12 +305,40 @@
 			$scope.symbol='';
 			$scope.description='';
 			$scope.max_supply='';
-			$scope.issueaddress='';
 			$scope.password='';
 		}
 
+		function checkready(){
+			console.log($scope.error);
+			for (var error in $scope.error) {
+				if($scope.error[error]){
+					$scope.submittable=false;
+					return;
+				}
+			}
+			$scope.submittable=true;
+		}
+
+		$scope.error={};
 
 		$scope.createasset=createasset;
+
+		$scope.$watch('max_supply', function(newVal, oldVal){
+			$scope.error.max_supply = (newVal == undefined || ! (newVal==parseInt(newVal)));
+			checkready();
+  	});
+
+		$scope.$watch('symbol', function(newVal, oldVal){
+			$scope.error.symbol = (newVal == undefined || !newVal.match(/^[0-9A-Za-z.]+$/));
+			checkready();
+  	});
+
+		$scope.$watch('description', function(newVal, oldVal){
+			$scope.error.description = (newVal == undefined || !(newVal.length >0));
+			checkready();
+  	});
+
+
 
 		function createasset(){
 			if(localStorageService.get('credentials').password!=$scope.password){

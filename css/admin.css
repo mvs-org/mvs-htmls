@@ -1736,5 +1736,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0000', end
 	}
 
 	.btn{
-		width: 10em;
+		width: 12em;
+	}
+
+	.border-danger{
+		border: 1px solid red !important;
 	}

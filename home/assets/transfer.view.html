@@ -21,7 +21,7 @@
 						<div class="col-sm-5">
 							<div class="form-group">
 								<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}：<span class="red big">*</span></label>
-									<input type="password" class="form-control" name="password" id="" ng-model="password">
+									<input type="password" class="form-control" name="password" id="" ng-model="password" autocomplete="new-password">
 							</div>
 							<input type="submit" class="btn btn-success" ng-click="sendassetfrom(sender_address,recipent_address,symbol,quantity)" value="{{ 'TRANSFER_SEND' | translate }}">
 						</div>

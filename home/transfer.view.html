@@ -14,7 +14,7 @@
 							</div>
 							<div class="form-group">
 								<label for="value" class="control-label">{{ 'TRANSFER_VALUE' | translate }}：<span class="red big">*</span></label>
-									<input type="text" class="form-control" name="value" id="" ng-model="value">
+									<input type="text" class="form-control" name="value" ng-model="value">
 
 							</div>
 							<div class="form-group">
@@ -30,7 +30,7 @@
 							</div>
 							<div class="form-group">
 								<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}：<span class="red big">*</span></label>
-									<input type="password" class="form-control" name="password" id="" ng-model="password">
+									<input type="password" class="form-control" name="password" id="" autocomplete="new-password" ng-model="password">
 							</div>
 							<button type="submit" id="transferBtn" ng-click="transfer()">{{ 'TRANSFER_SEND' | translate }}</button>
 						</div>
