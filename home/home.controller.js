@@ -338,7 +338,10 @@
 			checkready();
   	});
 
-
+		$scope.$watch('password', function(newVal, oldVal){
+			$scope.error.password = (newVal == undefined || !(newVal.length >=6) || !(localStorageService.get('credentials').password==$scope.password));
+			checkready();
+  	});
 
 		function createasset(){
 			if(localStorageService.get('credentials').password!=$scope.password){
@@ -348,11 +351,11 @@
 			}
 			else{
 			NProgress.start();
-			MetaverseService.CreateAsset($scope.symbol, $scope.max_supply, $scope.description, $scope.address)
+			MetaverseService.CreateAsset($scope.symbol, $scope.max_supply, $scope.description)
 			.then(function (response) {
 				NProgress.done();
 				if ( typeof response.success !== 'undefined' && response.success) {
-					
+
 					//Redirect user to the assets page
 					$location.path('/assets');
 

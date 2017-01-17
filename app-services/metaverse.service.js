@@ -339,7 +339,7 @@
          * @apiParam {List} params [username, password,'-s',symbol,'-v',max_supply,'-d',description]
          *
          **/
-        function CreateAsset(symbol, max_supply, description, address){
+        function CreateAsset(symbol, max_supply, description){
           var credentials = localStorageService.get('credentials');
           return $http.post(RPC_URL, { method: 'createasset', params: [credentials.user,credentials.password,'-s',symbol,'-v',max_supply,'-d',description] },{headers : {}}).then(handleSuccess, handleError);
         }
