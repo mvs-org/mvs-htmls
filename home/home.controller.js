@@ -398,6 +398,11 @@
 
 		$scope.start = function(){
 			NProgress.start();
+			$translate('MESSAGES.FUNCTION_NOT_IMPLEMENTED').then(function (data) {
+				FlashService.Error(data);
+				NProgress.done();
+			});
+			/*
 			MetaverseService.Start()
 			.then(function (response) {
 				NProgress.done();
@@ -412,6 +417,7 @@
 					});
 				}
 			});
+			*/
 		}
 
 		$scope.stop = function(){
