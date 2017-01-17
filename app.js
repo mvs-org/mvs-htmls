@@ -4,7 +4,7 @@
     angular.module('app', ['ui.router','ngCookies','LocalStorageModule', 'pascalprecht.translate'])
         .config(config)
         .config(['$compileProvider', function ($compileProvider) {
-            $compileProvider.debugInfoEnabled(false);
+            //$compileProvider.debugInfoEnabled(false);
           }])
         .config(function (localStorageServiceProvider) {
           localStorageServiceProvider

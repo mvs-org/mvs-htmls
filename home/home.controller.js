@@ -158,7 +158,8 @@
 		$scope.sendassetfrom=sendassetfrom;
 
 		function loadasset(symbol){
-			MetaverseService.GetAsset($scope.symbol)
+
+			MetaverseService.GetAsset(symbol)
 			.then(function (response) {
 				NProgress.done();
 				if ( typeof response.success !== 'undefined' && response.success) {
@@ -233,6 +234,7 @@
 
 		$scope.issue = issue;
 
+
 		//Load assets
 		NProgress.start();
 		MetaverseService.ListAssets()
@@ -279,12 +281,11 @@
 		}
 
 		function loadasset(symbol){
-			MetaverseService.GetAsset($scope.symbol)
+			MetaverseService.GetAsset(symbol)
 			.then(function (response) {
 				NProgress.done();
 				if ( typeof response.success !== 'undefined' && response.success) {
 					$scope.asset = response.data.assets[0];
-					console.log(response);
 				}
 				else {
 					$translate('MESSAGES.ASSETS_LOAD_ERROR').then(function (data) {
@@ -309,7 +310,6 @@
 		}
 
 		function checkready(){
-			console.log($scope.error);
 			for (var error in $scope.error) {
 				if($scope.error[error]){
 					$scope.submittable=false;
@@ -352,12 +352,21 @@
 			.then(function (response) {
 				NProgress.done();
 				if ( typeof response.success !== 'undefined' && response.success) {
+					
 					//Redirect user to the assets page
-					$location.path('/asset/details/');
+					$location.path('/assets');
 
 					$translate('MESSAGES.ASSSET_CREATED_LOCAL_SUCCESS').then(function (data) {
-	  				FlashService.Success(data);
+
+						setTimeout(function(){
+
+							FlashService.Success(data);
+							$rootScope.$apply();
+						}, 100);
+
 					});
+
+
 				}
 			});
 		}
@@ -365,7 +374,7 @@
 	}
 
 
-	function AssetsController(MetaverseService, $rootScope, $scope, $location, $translate) {
+	function AssetsController(MetaverseService, $rootScope, $scope, $location, $translate, FlashService) {
 
 		$scope.assets=[];
 		$scope.balance={};
@@ -376,6 +385,8 @@
 				$scope.balance = response.data;
 			}
 		});
+
+
 
 		NProgress.start();
 		MetaverseService.ListAssets()
