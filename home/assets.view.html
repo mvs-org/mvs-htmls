@@ -9,8 +9,6 @@
               <span class="span1">ETP</span>
               <span class="span3">{{ 'BALANCE_CONFIRMED' | translate }}</span>
               <span class="span2">{{balance['total-confirmed']}}</span>
-              <span class="span3">{{ 'BALANCE_UNCONFIRMED' | translate }}</span>
-              <span class="span2">{{balance['total-received'] - balance['total-unspent']}}</span>
             </dd>
             <a href="#!/asset/details/{{asset.symbol}}" ng-repeat="asset in assets">
             <dd class="panel assetBox" >
