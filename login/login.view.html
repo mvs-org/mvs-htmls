@@ -23,7 +23,7 @@
 <br><br><br>
           <button type="submit" class="btn btn-success" ng-disabled="form.$invalid || vm.dataLoading" ng-click="vm.login()">{{ 'LOGIN.LOGIN_BUTTON' | translate }}</button>
           <a href="#!/register" class="btn btn-info">{{ 'LOGIN.REGISTGER_BUTTON' | translate }}</a>
-          <div class="dropdown pull-right">
+          <span class="dropdown">
             <button class="btn btn-primary" type="button" data-toggle="dropdown">
               Language
               <span class="glyphicon glyphicon-flag" ></span></button>
@@ -32,7 +32,7 @@
     <li><a ng-click="vm.changeLang('en_US')">English</a></li>
     <li><a ng-click="vm.changeLang('de_DE')">Deutsch</a></li>
   </ul>
-  </div>
+  </span>
   <br><br>
   <div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
     <div class="" ng-bind="flash.message">
