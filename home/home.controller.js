@@ -17,6 +17,9 @@
 	 */
 	function ETPController(MetaverseService, MetaverseHelperService, $rootScope, $scope, FlashService, localStorageService, $translate) {
 
+		//Start loading animation
+		NProgress.start();
+
 		$scope.transfer=transfer;
 
 		// Initializes all transaction parameters with empty strings.

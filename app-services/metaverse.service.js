@@ -498,7 +498,7 @@
                         "address" : output.address,
                         "value" : output.value
                       })
-                      transaction.value+=output.value;
+                      transaction.value+= parseInt(output.value);
                   })
 
     							transactions.push(transaction);
