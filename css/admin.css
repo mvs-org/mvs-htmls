@@ -1617,6 +1617,7 @@ textarea:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
 .panel,
 .greybg{
+	border-radius: 0px;
 	background-color: rgba(255,255,255,0.3);
 	padding-bottom:5px;
 	padding-top:5px;
@@ -1640,7 +1641,7 @@ textarea:-ms-input-placeholder { /* Internet Explorer 10-11 */
 /*-------------------------------------------------------挖矿*/
 .content{
 	width:100%;float:left;height:auto;background: rgba(255,255,255,0.1);  padding: 10px;}
-	.content .headline{width:100%;float:left;line-height:60px;font-size:20px;height:60px;border-bottom:1px solid #e8e8e8; margin-bottom: 15px;}
+	.content .headline{width:100%;line-height:60px;font-size:20px;height:60px;border-bottom:1px solid #e8e8e8; margin-bottom: 15px;}
 	.content .headline em{width:5px;float:left;height:24px;background:#229dff;margin-top:18px;margin-left:11px;margin-bottom:18px;margin-right:15px;}
 
 	.console{
@@ -1741,4 +1742,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0000', end
 
 	.border-danger{
 		border: 1px solid red !important;
+	}
+
+	.transactionbox{
+		padding: 15px;
+		border-bottom: 1px solid;
+	}
+
+	.hash{
+		color: grey;
 	}

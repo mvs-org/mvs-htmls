@@ -105,5 +105,6 @@
   "CONSOLE.INSERT_PROMPT" : "Enter your command here.",
   "CONSOLE.SEND" : "Send",
   "MESSAGES.ASSETS_TRANSFER_SUCCESS" : "Asset transaction has been transmitted to the network.",
-  "MESSAGES.ASSETS_TRANSFER_ERROR" : "Could not send asset."
+  "MESSAGES.ASSETS_TRANSFER_ERROR" : "Could not send asset.",
+  "MESSAGES.TRANSACTIONS_LOAD_ERROR" : "Could not load transaction list."
 }

@@ -3,7 +3,8 @@
 
     angular
         .module('app')
-        .factory('MetaverseService', MetaverseService);
+        .factory('MetaverseService', MetaverseService)
+        .factory('HelperService', HelperService);
 
     MetaverseService.$inject = ['$http','localStorageService'];
     function MetaverseService($http, localStorageService) {
@@ -20,6 +21,7 @@
         service.GetAccount = GetAccount;
         service.GetNewAddress = GetNewAddress;
         service.Send = Send;
+        service.ListTxs = ListTxs;
 
 
         service.SERVER = SERVER;
@@ -191,8 +193,21 @@
         }
 
 
-
-
+        /**
+         * @api {post} /rpc List transactions
+         * @apiName List transactions
+         * @apiGroup Misc
+         *
+         * @apiDescription Get a list of transactions.
+         *
+         * @apiParam {Const} method listtxs
+         * @apiParam {List} params [username, password]
+         *
+         **/
+        function ListTxs() {
+            var credentials = localStorageService.get('credentials');
+            return $http.post(RPC_URL, { method: 'listtxs', params: [credentials.user,credentials.password] },{headers : {}}).then(handleSuccess, handleError);
+        }
 
         /**
          * @api {post} /rpc Send
@@ -315,7 +330,7 @@
         /**
          * @api {post} /rpc Get blockchain height
          * @apiName Get blockchain height
-         * @apiGroup Blockchain
+         * @apiGroup Misc
          *
          * @apiDescription Get the current height of the blockchain.
          *
@@ -433,6 +448,45 @@
           return { success: false, message: 'General connection error' };
         }
 
+
+
+    }
+
+    HelperService.$inject = ['MetaverseService'];
+    function HelperService(MetaverseService) {
+        var service = {};
+
+        service.LoadTransactions = LoadTransactions;
+
+        return service;
+
+        function LoadTransactions (callback){
+    			MetaverseService.ListTxs()
+    			.then(function (response) {
+    				var transactions=[];
+    				if ( typeof response.success !== 'undefined' && response.success && (response.data.transactions.length>0)) {
+    					response.data.transactions.forEach(function(e){
+    						if(e.transaction.outputs !=undefined && e.transaction.outputs[0].attachment.type=='etp'){
+    							//ETP transaction handling
+    							var transaction = {
+    								"hash" : e.transaction.hash,
+    								"type" : e.transaction.outputs[0].attachment.type.toUpperCase(),
+    								"recipent" : e.transaction.outputs[0].address,
+    								"value" : e.transaction.outputs[0].value
+    							};
+    							transactions.push(transaction);
+    						}
+    						else{
+    							//Asset transactions
+    						}
+    					});
+    					callback(null,transactions);
+    				}
+    				else {
+              callback('ASSETS_LOAD_ERROR');
+    				}
+    			});
+    		}
 
 
     }

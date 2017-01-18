@@ -104,6 +104,7 @@
   "MESSAGES.ASSETS_ISSUE_ERROR" : "Beim veröffentlichen des Assets trat ein Fehler auf.",
   "CONSOLE.INSERT_PROMPT" : "Geben Sie hier einen Behehl ein.",
   "CONSOLE.SEND" : "Send",
-  "MESSAGES.ASSETS_TRANSFER_SUCCESS" : "Asset transaction has been transmitted to the network.",
-  "MESSAGES.ASSETS_TRANSFER_ERROR" : "Could not send asset."
+  "MESSAGES.ASSETS_TRANSFER_SUCCESS" : "Asset Transaktion wurde an das Netzwerk gesendet.",
+  "MESSAGES.ASSETS_TRANSFER_ERROR" : "Asset wurde nicht gesendet.",
+  "MESSAGES.TRANSACTIONS_LOAD_ERROR" : "Transaktionen konnten nicht geladen werden."
 }

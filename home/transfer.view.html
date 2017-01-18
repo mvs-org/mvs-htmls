@@ -26,6 +26,9 @@
 					</div>
 
 
+
+
+
 					<!--
 					<div class="transferBoxBottom">
 						<span class="headline"><em></em>{{ 'HEADLINE_TRANSACTIONS' | translate }}</span>
@@ -99,4 +102,33 @@
 					</div>
 -->
 			</div>
+</div>
+<div class="content">
+	<div class="headline"><em></em>{{ 'HEADLINE_TRANSACTIONS' | translate }}</div>
+	<div class="">
+	<div class="transactionbox" ng-repeat="transaction in transactions">
+
+		<div class="row">
+			<div class="col-md-1">
+				<img src="images/receiveBig.png">
+			</div>
+			<div class="col-md-11">
+					<div class="row">
+						<div class="col-md-12 hash">
+						{{transaction.hash}}
+					</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							{{transaction.value}} {{transaction.type}}
+						</div>
+						<div class="col-md-4">
+							{{ 'TRANSFER_RECIPENT' | translate }}: {{transaction.recipent}}
+						</div>
+					</div>
+			</div>
+		</div>
+
+		</div>
+	</div>
 </div>
