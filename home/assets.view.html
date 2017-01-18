@@ -44,7 +44,7 @@
                       {{transaction.value}} {{transaction.type}}
                     </div>
                     <div class="col-md-4">
-                      {{ 'TRANSFER_RECIPENT' | translate }}: {{transaction.recipent}}
+                      {{ 'TRANSFER_RECIPENT' | translate }}: <div ng-repeat="recipent in transaction.recipents">{{recipent.address}}</div>
                     </div>
                   </div>
               </div>

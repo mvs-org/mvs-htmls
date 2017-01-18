@@ -12,7 +12,10 @@
 	.controller('ETPController', ETPController)
 	.controller('MiningController', MiningController);
 
-	function ETPController(MetaverseService, HelperService, $rootScope, $scope, FlashService, localStorageService, $translate) {
+	/**
+	 * The ETP Controller provides ETP transaction functionality.
+	 */
+	function ETPController(MetaverseService, MetaverseHelperService, $rootScope, $scope, FlashService, localStorageService, $translate) {
 
 		$scope.transfer=transfer;
 
@@ -78,9 +81,10 @@
 			}
 		}
 
-		HelperService.LoadTransactions(function(err,transactions){
+		//Load a list of all transactions
+		MetaverseHelperService.LoadTransactions(function(err,transactions){
 			if(err){
-				$translate('MESSAGES.ASSETS_LOAD_ERROR').then(function (data) {
+				$translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then(function (data) {
 					FlashService.Error(data);
 				});
 			}
@@ -230,22 +234,15 @@
 			}
 		}
 
-
-
 		loadasset($scope.symbol);
-
-
 
 	}
 
 	function ShowAssetsController(MetaverseService, $rootScope, $scope, FlashService, $translate, $stateParams){
 
 		$scope.symbol = $stateParams.symbol;
-
 		$scope.assets=[];
-
 		$scope.issue = issue;
-
 
 		//Load assets
 		NProgress.start();
@@ -292,6 +289,7 @@
 			});
 		}
 
+		//Loads a given asset
 		function loadasset(symbol){
 			MetaverseService.GetAsset(symbol)
 			.then(function (response) {
@@ -300,20 +298,24 @@
 					$scope.asset = response.data.assets[0];
 				}
 				else {
+					//Asset could not be loaded
 					$translate('MESSAGES.ASSETS_LOAD_ERROR').then(function (data) {
 						FlashService.Error(data);
 					});
 				}
 			});
 		}
-
-
-
 	}
 
 	function CreateAssetController(MetaverseService, $rootScope, $scope, FlashService, localStorageService, $location, $translate){
 
+		//This object contains all form errors
+		$scope.error={};
 
+		//Function to create a new asset
+		$scope.createasset=createasset;
+
+		//Initialize form data
 		function init(){
 			$scope.symbol='';
 			$scope.description='';
@@ -321,7 +323,9 @@
 			$scope.password='';
 		}
 
+		//Check if the form is submittable
 		function checkready(){
+			//Check for errors
 			for (var error in $scope.error) {
 				if($scope.error[error]){
 					$scope.submittable=false;
@@ -331,30 +335,31 @@
 			$scope.submittable=true;
 		}
 
-		$scope.error={};
-
-		$scope.createasset=createasset;
-
+		//Check if the max_supply is valid
 		$scope.$watch('max_supply', function(newVal, oldVal){
 			$scope.error.max_supply = (newVal == undefined || ! (newVal==parseInt(newVal)));
 			checkready();
 		});
 
+		//Check if the symbol is valid
 		$scope.$watch('symbol', function(newVal, oldVal){
 			$scope.error.symbol = (newVal == undefined || !newVal.match(/^[0-9A-Za-z.]+$/));
 			checkready();
 		});
 
+		//Check if the description is valid
 		$scope.$watch('description', function(newVal, oldVal){
 			$scope.error.description = (newVal == undefined || !(newVal.length >0));
 			checkready();
 		});
 
+		//Check if the password is valid
 		$scope.$watch('password', function(newVal, oldVal){
 			$scope.error.password = (newVal == undefined || !(newVal.length >=6) || !(localStorageService.get('credentials').password==$scope.password));
 			checkready();
 		});
 
+		//Create asset function
 		function createasset(){
 			if(localStorageService.get('credentials').password!=$scope.password){
 				$translate('MESSAGES.WRONG_PASSWORD').then(function (data) {
@@ -363,25 +368,21 @@
 			}
 			else{
 				NProgress.start();
+				//Let Metaverse create an local asset
 				MetaverseService.CreateAsset($scope.symbol, $scope.max_supply, $scope.description)
 				.then(function (response) {
 					NProgress.done();
 					if ( typeof response.success !== 'undefined' && response.success) {
-
 						//Redirect user to the assets page
 						$location.path('/assets');
-
+						//Show success message
 						$translate('MESSAGES.ASSSET_CREATED_LOCAL_SUCCESS').then(function (data) {
-
+							//Wait some time to make sure the user gets the message
 							setTimeout(function(){
-
 								FlashService.Success(data);
 								$rootScope.$apply();
 							}, 100);
-
 						});
-
-
 					}
 				});
 			}
@@ -389,22 +390,23 @@
 	}
 
 
-	function AssetsController(HelperService, MetaverseService, $rootScope, $scope, $location, $translate, FlashService) {
+	function AssetsController(MetaverseHelperService, MetaverseService, $rootScope, $scope, $location, $translate, FlashService) {
 
 		$scope.assets=[];
 		$scope.balance={};
 		$scope.transactions=[];
 
-		MetaverseService.GetBalance()
-		.then(function (response) {
-			if ( typeof response.success !== 'undefined' && response.success) {
-				$scope.balance = response.data;
+		NProgress.start();
+
+		//Load users ETP balance
+		MetaverseHelperService.GetBalance(function(err, balance, message){
+			if(err)
+					FlashService.Error(message);
+			else{
+				$scope.balance = balance;
 			}
 		});
 
-
-
-		NProgress.start();
 		MetaverseService.ListAssets()
 		.then(function (response) {
 			if ( typeof response.success !== 'undefined' && response.success) {
@@ -417,7 +419,7 @@
 			}
 		});
 
-		HelperService.LoadTransactions(function(err,transactions){
+		MetaverseHelperService.LoadTransactions(function(err,transactions){
 			if(err){
 				$translate('MESSAGES.ASSETS_LOAD_ERROR').then(function (data) {
 					FlashService.Error(data);
@@ -436,9 +438,25 @@
 
 		$scope.start = function(){
 			NProgress.start();
+			/*
 			$translate('MESSAGES.FUNCTION_NOT_IMPLEMENTED').then(function (data) {
 				FlashService.Error(data);
 				NProgress.done();
+			});
+			*/
+			MetaverseService.Start()
+			.then(function (response) {
+				NProgress.done();
+				if ( typeof response.success !== 'undefined' && response.success) {
+					$translate('MESSAGES.MINING_START_SUCCESS').then(function (data) {
+						FlashService.Success(data);
+					});
+				}
+				else {
+					$translate('MESSAGES.MINING_START_ERROR').then(function (data) {
+						FlashService.Error(data);
+					});
+				}
 			});
 		}
 

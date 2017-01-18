@@ -4,8 +4,11 @@
     angular
         .module('app')
         .factory('MetaverseService', MetaverseService)
-        .factory('HelperService', HelperService);
+        .factory('MetaverseHelperService', MetaverseHelperService);
 
+    /**
+     * The MetaverseService provides access to the Metaverse JSON RPC.
+     */
     MetaverseService.$inject = ['$http','localStorageService'];
     function MetaverseService($http, localStorageService) {
         var service = {};
@@ -448,17 +451,32 @@
           return { success: false, message: 'General connection error' };
         }
 
-
-
     }
 
-    HelperService.$inject = ['MetaverseService'];
-    function HelperService(MetaverseService) {
+    MetaverseHelperService.$inject = ['MetaverseService', '$translate'];
+    function MetaverseHelperService(MetaverseService, $translate) {
         var service = {};
 
         service.LoadTransactions = LoadTransactions;
+        service.GetBalance = GetBalance;
 
         return service;
+
+        function GetBalance(callback) {
+          MetaverseService.GetBalance()
+      		.then(function (response) {
+      			if ( typeof response.success !== 'undefined' && response.success) {
+              $translate('MESSAGES.GENERAL_CONNECTION_ERROR').then(function (data) {
+      					callback(null,response.data,data);
+      				})
+      			}
+            else{
+              $translate('MESSAGES.GENERAL_CONNECTION_ERROR').then(function (data) {
+      					callback(1,null,data);
+      				})
+            }
+      		});
+        }
 
         function LoadTransactions (callback){
     			MetaverseService.ListTxs()
@@ -471,9 +489,18 @@
     							var transaction = {
     								"hash" : e.transaction.hash,
     								"type" : e.transaction.outputs[0].attachment.type.toUpperCase(),
-    								"recipent" : e.transaction.outputs[0].address,
-    								"value" : e.transaction.outputs[0].value
+    								"recipents" : [],
+    								"value" : 0
     							};
+                  e.transaction.outputs.forEach(function(output){
+                    transaction.recipents.push(
+                      {
+                        "address" : output.address,
+                        "value" : output.value
+                      })
+                      transaction.value+=output.value;
+                  })
+
     							transactions.push(transaction);
     						}
     						else{
@@ -483,11 +510,12 @@
     					callback(null,transactions);
     				}
     				else {
-              callback('ASSETS_LOAD_ERROR');
+              $translate('MESSAGES.ASSETS_LOAD_ERROR').then(function (data) {
+      					callback(1,null,data);
+      				})
     				}
     			});
     		}
-
 
     }
 
