@@ -7,7 +7,9 @@
           <dl id="outer_wrap">
             <dd class="panel assetBox">
               <span class="span1">ETP</span>
-              <span class="span3">{{ 'BALANCE_CONFIRMED' | translate }}</span>
+              <span class="span3">{{ 'FACTOR_ETP' | translate}}</span>
+              <span class="span2">{{balance['total-confirmed']/100000000}}</span>
+              <span class="span3">{{ 'FACTOR_SATOSHI' | translate}}</span>
               <span class="span2">{{balance['total-confirmed']}}</span>
             </dd>
             <a href="#!/asset/details/{{asset.symbol}}" ng-repeat="asset in assets">

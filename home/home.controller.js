@@ -21,6 +21,9 @@
 		NProgress.start();
 
 		$scope.transfer=transfer;
+		$scope.changeFactor=changeFactor;
+
+		$rootScope.factor="FACTOR_ETP";
 
 		// Initializes all transaction parameters with empty strings.
 		function init(){
@@ -30,6 +33,23 @@
 			$scope.message='';
 			$scope.value='';
 			$scope.password='';
+		}
+
+		function changeFactor(factor){
+			switch (factor) {
+				case 'satoshi':
+					if($rootScope.factor=="FACTOR_SATOSHI")
+						return;
+					$rootScope.factor="FACTOR_SATOSHI";
+					$scope.value*=100000000;
+					$scope.value=Math.round($scope.value);
+					break;
+				default:
+					if($rootScope.factor=="FACTOR_ETP")
+						return;
+				  $rootScope.factor="FACTOR_ETP";
+					$scope.value/=100000000;
+			}
 		}
 
 		//Transfers ETP
@@ -62,7 +82,21 @@
 				}
 				else{ //Start transaction
 					NProgress.start();
-					MetaverseService.Send($scope.sendto, $scope.value, $scope.password)
+					var value=$scope.value;
+					switch ($rootScope.factor) {
+						case 'FACTOR_SATOSHI':
+							break;
+						case 'FACTOR_ETP':
+							value*=100000000;
+							break;
+						default:
+							FlashService.Error('Value cannot be transfered');
+							return;
+					}
+
+					value=Math.round(value);
+
+					MetaverseService.Send($scope.sendto, value, $scope.password)
 					.then(function (response) {
 						NProgress.done();
 						if ( typeof response.success !== 'undefined' && response.success) {
@@ -108,8 +142,29 @@
 		$scope.getnewaddress = getnewaddress;
 		$scope.showprivatekey = showprivatekey;
 		$scope.accountname = localStorageService.get('credentials').user;
+		$scope.debugState=MetaverseService.debug;
 
+		$scope.setDeugger=setDeugger;
 		$scope.showqr = showqr;
+		$scope.setOrder = setOrder;
+
+		$scope.sortType = 'address';
+		$scope.sortReverse =true;
+
+		function setOrder(order){
+			if($scope.sortType==order){
+				$scope.sortReverse=!$scope.sortReverse;
+			}
+			else{
+				switch(order){
+					case 'address':
+					case 'balance':
+						$scope.sortType = order;
+						break;
+				}
+			}
+		}
+
 
 		//Shows a modal of the address incl. a qr code
 		function showqr(address){
@@ -133,7 +188,13 @@
 			MetaverseService.ListBalances()
 			.then(function (response) {
 				if ( typeof response.success !== 'undefined' && response.success) {
-					$scope.addresses = response.data.balances;
+					$scope.addresses=[];
+					response.data.balances.forEach(function(e){
+						$scope.addresses.push({
+							"balance" : e.balance.unspent,
+							"address" : e.balance.address
+						})
+					})
 				}
 				NProgress.done();
 			});
@@ -161,8 +222,27 @@
 				});
 			}
 			else{
-				$scope.privatekey="Here you will see your private key very soon!";
+				NProgress.start();
+				MetaverseService.GetAccount()
+				.then(function (response) {
+					if ( typeof response.success !== 'undefined' && response.success) {
+						$scope.privatekey = response.data['mnemonic-key'];
+					}
+					else {
+						//Show asset load error
+						$translate('MESSAGES.ASSETS_LOAD_ERROR').then(function (data) {
+							FlashService.Error(data);
+						});
+
+					}
+					NProgress.done();
+				});
 			}
+		}
+
+		function setDeugger(state){
+			MetaverseService.debug=(state==1);
+			$scope.debugState=MetaverseService.debug;
 		}
 
 		listBalances();
@@ -447,7 +527,6 @@
 		NProgress.start();
 		MetaverseService.GetMiningInfo()
 		.then(function (response) {
-			console.log(response);
 			NProgress.done();
 			if ( typeof response.success !== 'undefined' && response.success) {
 				$scope.status = response.data['mining-info'];
@@ -555,12 +634,19 @@
 			}
 		};
 
-		MetaverseService.FetchHeight()
-		.then(function (response) {
-			if ( typeof response.success !== 'undefined' && response.success) {
-				$scope.height=response.data;
-			}
-		});
+		function updateHeight(){
+			MetaverseService.FetchHeight()
+			.then(function (response) {
+				if ( typeof response.success !== 'undefined' && response.success) {
+					$scope.height=response.data;
+				}
+			});
+		}
+
+		updateHeight();
+		setInterval(function(){
+			updateHeight();
+		}, 10000);
 
 		$scope.show_account_menu = function(){
 			$scope.menu.account.show = 1-$scope.menu.account.show;

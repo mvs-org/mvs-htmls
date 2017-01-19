@@ -16,7 +16,7 @@
     var SERVER = window.location.hostname+':8820';
     var RPC_URL = 'http://'+SERVER+'/rpc';
 
-    service.debug = true;
+    service.debug = false;
 
     service.GetNewAccount = GetNewAccount;
     service.GetBalance = GetBalance;
@@ -95,8 +95,9 @@
     *    "priority":1
     *	}
     **/
-    function GetAccount(user, password) {
-      return _send('getaccount', [user,password]);
+    function GetAccount() {
+      var credentials = localStorageService.get('credentials');
+      return _send('getaccount', [credentials.user,credentials.password]);
     }
 
     /**

@@ -15,31 +15,30 @@
     <tr>
       <th class="center">{{ 'DATE_CREATED' | translate }}
         <span>
-          <i class="fa fa-caret-up"></i>
-          <i class="fa fa-caret-down"></i>
             </span></th>
-      <th class="center">{{ 'ADDRESS' | translate }}
+      <th class="center clickable" ng-click="setOrder('address')">
+        {{ 'ADDRESS' | translate }}
         <span>
-          <i class="fa fa-caret-up"></i>
-          <i class="fa fa-caret-down"></i>
+          <i ng-show="sortType=='address' && sortReverse==false" class="fa fa-caret-up"></i>
+          <i ng-show="sortType=='address' && sortReverse==true" class="fa fa-caret-down"></i>
         </span>
       </th>
-      <th class="center">{{ 'BALANCE' | translate }}
+      <th class="center clickable" ng-click="setOrder('balance')">
+        {{ 'BALANCE' | translate }}
         <span>
-          <i class="fa fa-caret-up"></i>
-          <i class="fa fa-caret-down"></i>
-            </span></th>
-      <th  class="center">{{ 'ASSET_TYPE' | translate }}
+          <i ng-show="sortType=='balance' && sortReverse==false" class="fa fa-caret-up"></i>
+          <i ng-show="sortType=='balance' && sortReverse==true" class="fa fa-caret-down"></i>
+          </span>
+        </th>
+      <th class="center">{{ 'ASSET_TYPE' | translate }}
         <span>
-          <i class="fa fa-caret-up"></i>
-          <i class="fa fa-caret-down"></i>
         </span></th>
 
     </tr>
-    <tr ng-repeat="address in addresses">
+    <tr ng-repeat="address in addresses | orderBy:sortType:sortReverse" >
       <td></td>
-      <td><span class="address">{{address.balance.address}} <a href=""><img src="images/receiveBig.png" ng-click="showqr(address.balance.address)" alt="receive"/></a></span></td>
-      <td>{{address.balance.confirmed}}</td>
+      <td><span class="address">{{address.address}} <a href=""><img src="images/receiveBig.png" ng-click="showqr(address.address)" alt="receive"/></a></span></td>
+      <td>{{address.balance/100000000}}</td>
       <td>ETP</td>
     </tr>
   </table>

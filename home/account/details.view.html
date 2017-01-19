@@ -35,7 +35,7 @@
       <div class="form-group" ng-show="privatekey">
         <label for="privatekey" class="col-sm-2 control-label">{{ 'SETTINGS_PRIVATE_KEY' | translate }}</label>
         <div class="col-sm-10">
-          <textarea name="privatekey" class="form-control" ng-model="privatekey" rows="" cols="" placeholder=""></textarea>
+          <textarea name="privatekey" class="form-control" ng-model="privatekey" rows="5" cols="" placeholder=""></textarea>
         </div>
       </div>
 
@@ -45,4 +45,6 @@
 
   <div class="accountContentBottom">
     <div class="headline"><em></em>{{ 'SETTINGS_ACCOUNT_INFORMATION' | translate }}</div>
+      <input class="btn btn-success" ng-hide="debugState" ng-click="setDeugger(1)" value="{{ 'SETTINGS.DEBUG_ENABLE' | translate }}">
+      <input class="btn btn-danger"  ng-show="debugState" ng-click="setDeugger(0)" value="{{ 'SETTINGS.DEBUG_DISABLE' | translate }}">
   </div>

@@ -1764,3 +1764,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0000', end
 	.no_transaction_message{
 		margin-left: 10px;
 	}
+
+	.clickable{
+		cursor: pointer !important;
+	}
