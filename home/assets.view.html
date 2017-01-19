@@ -30,7 +30,7 @@
           <div class="headline"><em></em>{{ 'HEADLINE_TRANSACTIONS' | translate }}</div>
           <div class="transaction_list">
 
-            <div class="no_transaction_message">
+            <div class="no_transaction_message" ng-show="transactions.length==0">
               {{'MESSAGES.NO_LISTED_TRANSACTIONS' | translate}}
             </div>
 
@@ -40,20 +40,20 @@
 
             <div class="row">
               <div class="col-md-1">
-                <img src="images/receiveBig.png">
+                <img src="images/receiveBig.png" ng-show="transaction.direction=='receive'">
+                <img src="images/sendBig.png" ng-show="transaction.direction=='send'">
               </div>
               <div class="col-md-11">
                   <div class="row">
                     <div class="col-md-12 hash">
-                    {{transaction.hash}}
                   </div>
                   </div>
                   <div class="row">
                     <div class="col-md-4">
-                      {{transaction.value}} {{transaction.type}}
+                      {{transaction.value/100000000}} ETP
                     </div>
                     <div class="col-md-4">
-                      {{ 'TRANSFER_RECIPENT' | translate }}: <div ng-repeat="recipent in transaction.recipents">{{recipent.address}}</div>
+                      {{ 'TRANSFER_RECIPENT' | translate }}: <div ng-repeat="recipent in transaction.recipents" class="address">{{recipent.address}}</div>
                     </div>
                   </div>
               </div>

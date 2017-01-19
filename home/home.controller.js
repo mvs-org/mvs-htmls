@@ -296,14 +296,17 @@
 			else{
 				MetaverseService.SendAssetFrom(sender_address, recipent_address, symbol, quantity)
 				.then(function (response) {
+					console.log(response);
 					NProgress.done();
 					if ( typeof response.success !== 'undefined' && response.success) {
 						//Redirect user to the assets page
-						//$location.path('/asset/details/');
-						console.log(response);
+						$location.path('/asset/details/');
 
 						$translate('MESSAGES.ASSETS_TRANSFER_SUCCESS').then(function (data) {
-							FlashService.Success(data);
+							setTimeout(function(){
+								FlashService.Success(data);
+								$rootScope.$apply();
+							}, 100);
 						});
 					}
 					else {

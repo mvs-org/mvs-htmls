@@ -18,6 +18,8 @@
 
     service.debug = false;
 
+    service.CheckAccount = CheckAccount;
+
     service.GetNewAccount = GetNewAccount;
     service.GetBalance = GetBalance;
     service.ListAddresses = ListAddresses;
@@ -40,6 +42,7 @@
     service.ListAssets = ListAssets;
     service.GetAsset = GetAsset;
     service.SendAssetFrom = SendAssetFrom;
+    service.SendAsset = SendAsset;
     service.Issue = Issue;
 
 
@@ -431,6 +434,22 @@
     }
 
     /**
+    * @api {post} /rpc Send asset
+    * @apiName Send asset
+    * @apiGroup Assets
+    *
+    * @apiDescription Sends an asset to a specified address.
+    *
+    * @apiParam {Const} method sendasset
+    * @apiParam {List} params [username, password, recipent_address, symbol, quantity]
+    *
+    **/
+    function SendAsset(recipent_address, symbol, quantity){
+      var credentials = localStorageService.get('credentials');
+      return _send('sendasset', [credentials.user,credentials.password, recipent_address, symbol, quantity]);
+    }
+
+    /**
     * @api {post} /rpc Send asset from
     * @apiName Send asset from
     * @apiGroup Assets
@@ -444,6 +463,10 @@
     function SendAssetFrom(sender_address, recipent_address, symbol, quantity){
       var credentials = localStorageService.get('credentials');
       return _send('sendassetfrom', [credentials.user,credentials.password, sender_address, recipent_address, symbol, quantity]);
+    }
+
+    function CheckAccount(user,password) {
+      return _send('getaccount', [user,password]);
     }
 
     function Query(string){
@@ -525,28 +548,31 @@
             }
             else if(response.data.transactions.length>0) {
               response.data.transactions.forEach(function(e){
-                if(e.transaction.outputs !=undefined && e.transaction.outputs[0].attachment.type=='etp'){
+                var transaction = {
+                  "height" : e.height,
+                  "timestamp" : e.timestamp,
+                  "direction" : e.direction,
+                  "recipents" : [],
+                  "value" : 0
+                };
+                if(e.outputs !=undefined && e.outputs[0].attachment.type=='etp'){
                   //ETP transaction handling
-                  var transaction = {
-                    "hash" : e.transaction.hash,
-                    "type" : e.transaction.outputs[0].attachment.type.toUpperCase(),
-                    "recipents" : [],
-                    "value" : 0
-                  };
-                  for(var i=0; i<e.transaction.outputs.length; i++){
-                    transaction.recipents.push(
+                  transaction.type='ETP';
+                  for(var i=0; i<e.outputs.length; i++){
+                    if( i < (e.outputs.length-1) || i==0){
+                      transaction.recipents.push(
                       {
-                        "address" : e.transaction.outputs[i].address,
-                        "value" : e.transaction.outputs[i].value
+                        "address" : e.outputs[i].address,
+                        "value" : e.outputs[i].value
                       })
-                      if( i < (e.transaction.outputs.length-1) || i==0)
-                      transaction.value+= parseInt(e.transaction.outputs[i].value);
+                      transaction.value+= parseInt(e.outputs[i]['etp-value']);
                     }
-
+                    }
                     transactions.push(transaction);
                   }
                   else{
                     //Asset transactions
+                    console.log(e);
                   }
                 });
                 //Return transaction list

@@ -36,7 +36,7 @@
             NProgress.start();
 
             //Check login data
-            MetaverseService.GetAccount(vm.username, vm.password)
+            MetaverseService.CheckAccount(vm.username, vm.password)
       	        .then(function (response) {
       	            if ( typeof response.success !== 'undefined' && response.success) {
                       if (response.data != undefined && response.data.name) {  //Success
