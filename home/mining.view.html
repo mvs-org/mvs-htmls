@@ -1,8 +1,29 @@
 <div class="content">
   <div class="headline"><em></em>{{ 'HEADLINE_MINING' | translate }}</div>
-  <div class="mining center">
-        <input class="btn btn-success" ng-click="start()" value="{{ 'MINING_START' | translate }}">
-        <input class="btn btn-danger" ng-click="stop()" value="{{ 'MINING_END' | translate }}">
+  <div class="mining">
+    <div class="row">
+      <div class="col-md-4">
+        <div>
+          <input class="btn btn-success" ng-click="start()" value="{{ 'MINING_START' | translate }}">
+          <br><br>
+        </div>
+        <div>
+          <input class="btn btn-danger" ng-click="stop()" value="{{ 'MINING_END' | translate }}">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <p>
+          Rate: {{status.rate}}
+        </p>
+        <p>
+          Difficulty: {{status.difficulty}}
+        </p>
+        <p>
+          Height: {{status.height}}
+        </p>
+      </div>
+    </div>
   </div>
+
 
 <link rel="stylesheet" href="css/mining.css">

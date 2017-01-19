@@ -106,5 +106,6 @@
   "CONSOLE.SEND" : "Send",
   "MESSAGES.ASSETS_TRANSFER_SUCCESS" : "Asset Transaktion wurde an das Netzwerk gesendet.",
   "MESSAGES.ASSETS_TRANSFER_ERROR" : "Asset wurde nicht gesendet.",
-  "MESSAGES.TRANSACTIONS_LOAD_ERROR" : "Transaktionen konnten nicht geladen werden."
+  "MESSAGES.TRANSACTIONS_LOAD_ERROR" : "Transaktionen konnten nicht geladen werden.",
+  "MESSAGES.NO_LISTED_TRANSACTIONS" : "Sie haben keine Transaktionen."
 }

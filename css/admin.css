@@ -1752,3 +1752,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0000', end
 	.hash{
 		color: grey;
 	}
+
+	.leftnav{
+		text-transform: uppercase;
+	}
+
+	.transaction_list{
+		min-height: 400px;
+	}
+
+	.no_transaction_message{
+		margin-left: 10px;
+	}

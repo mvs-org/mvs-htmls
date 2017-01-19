@@ -424,14 +424,14 @@
 
 		MetaverseHelperService.LoadTransactions(function(err,transactions){
 			if(err){
-				$translate('MESSAGES.ASSETS_LOAD_ERROR').then(function (data) {
+				$translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then(function (data) {
 					FlashService.Error(data);
 				});
 			}
 			else{
 				$scope.transactions=transactions;
-				NProgress.done();
 			}
+			NProgress.done();
 		})
 
 	}
@@ -439,7 +439,29 @@
 
 	function MiningController(MetaverseService, $rootScope, $scope, FlashService, $translate) {
 
-		$scope.start = function(){
+		$scope.start = StartMining;
+		$scope.stop = StopMining;
+		$scope.status={};
+
+		function GetMiningInfo(){
+		NProgress.start();
+		MetaverseService.GetMiningInfo()
+		.then(function (response) {
+			console.log(response);
+			NProgress.done();
+			if ( typeof response.success !== 'undefined' && response.success) {
+				$scope.status = response.data['mining-info'];
+			}
+			else {
+				$translate('MESSAGES.MINING_STATUS_ERROR').then(function (data) {
+					FlashService.Error(data);
+				});
+			}
+		});
+	}
+
+
+		function StartMining(){
 			NProgress.start();
 			/*
 			$translate('MESSAGES.FUNCTION_NOT_IMPLEMENTED').then(function (data) {
@@ -454,6 +476,7 @@
 					$translate('MESSAGES.MINING_START_SUCCESS').then(function (data) {
 						FlashService.Success(data);
 					});
+					GetMiningInfo();
 				}
 				else {
 					$translate('MESSAGES.MINING_START_ERROR').then(function (data) {
@@ -463,7 +486,7 @@
 			});
 		}
 
-		$scope.stop = function(){
+		function StopMining(){
 			NProgress.start();
 			MetaverseService.Stop()
 			.then(function (response) {
@@ -472,6 +495,7 @@
 					$translate('MESSAGES.MINING_STOP_SUCCESS').then(function (data) {
 						FlashService.Success(data);
 					});
+					GetMiningInfo();
 				}
 				else {
 					$translate('MESSAGES.MINING_STOP_ERROR').then(function (data) {
@@ -481,7 +505,7 @@
 			});
 		}
 
-
+		GetMiningInfo();
 
 	}
 

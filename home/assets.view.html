@@ -26,8 +26,15 @@
         </div>
         <div>
           <div class="headline"><em></em>{{ 'HEADLINE_TRANSACTIONS' | translate }}</div>
-          <div class="">
+          <div class="transaction_list">
+
+            <div class="no_transaction_message">
+              {{'MESSAGES.NO_LISTED_TRANSACTIONS' | translate}}
+            </div>
+
           <div class="transactionbox" ng-repeat="transaction in transactions">
+
+
 
             <div class="row">
               <div class="col-md-1">
