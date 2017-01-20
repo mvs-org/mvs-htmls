@@ -23,23 +23,19 @@
           <i ng-show="sortType=='address' && sortReverse==true" class="fa fa-caret-down"></i>
         </span>
       </th>
-      <th class="center clickable" ng-click="setOrder('balance')">
+      <th class="center clickable right-align" ng-click="setOrder('balance')">
         {{ 'BALANCE' | translate }}
         <span>
           <i ng-show="sortType=='balance' && sortReverse==false" class="fa fa-caret-up"></i>
           <i ng-show="sortType=='balance' && sortReverse==true" class="fa fa-caret-down"></i>
           </span>
         </th>
-      <th class="center">{{ 'ASSET_TYPE' | translate }}
-        <span>
-        </span></th>
 
     </tr>
     <tr ng-repeat="address in addresses | orderBy:sortType:sortReverse" >
       <td></td>
       <td><span class="address">{{address.address}} <a href=""><img src="images/receiveBig.png" ng-click="showqr(address.address)" alt="receive"/></a></span></td>
-      <td>{{address.balance/100000000}}</td>
-      <td>ETP</td>
+      <td class="right-align">{{address.balance/100000000 }} ETP</td>
     </tr>
   </table>
   <div class="center"><input class="btn btn-success" ng-click="getnewaddress()" value="Create new address"></div>

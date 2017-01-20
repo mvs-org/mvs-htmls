@@ -1768,3 +1768,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0000', end
 	.clickable{
 		cursor: pointer !important;
 	}
+
+	.mainContent table tr .right-align,
+	.right-align{
+		text-align: right;
+	}

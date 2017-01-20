@@ -148,7 +148,7 @@
 		$scope.showqr = showqr;
 		$scope.setOrder = setOrder;
 
-		$scope.sortType = 'address';
+		$scope.sortType = 'balance';
 		$scope.sortReverse =true;
 
 		function setOrder(order){
@@ -191,7 +191,7 @@
 					$scope.addresses=[];
 					response.data.balances.forEach(function(e){
 						$scope.addresses.push({
-							"balance" : e.balance.unspent,
+							"balance" : parseInt(e.balance.unspent),
 							"address" : e.balance.address
 						})
 					})
@@ -338,6 +338,7 @@
 			if ( typeof response.success !== 'undefined' && response.success) {
 				$scope.assets=[];
 				$scope.assets = response.data.assets;
+
 			}
 			else {
 				//Redirect user to the assets page
@@ -382,6 +383,11 @@
 				NProgress.done();
 				if ( typeof response.success !== 'undefined' && response.success) {
 					$scope.asset = response.data.assets[0];
+					$scope.assets.forEach(function(a){
+						if(a.symbol==symbol){
+							$scope.asset.quantity=a.amount;
+						}
+					});
 				}
 				else {
 					//Asset could not be loaded

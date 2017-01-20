@@ -68,6 +68,7 @@
   "SETTINGS_ACCOUNT_INFORMATION" : "Kontoinformationen",
   "SETTINGS.DEBUG_ENABLE" : "Debugger aktivieren",
   "SETTINGS.DEBUG_DISABLE" : "Debugger deaktivieren",
+  "GENERAL.DATE_FORMAT" : "dd.MM.yyyy HH:mm:ss",
   "MESSAGES.PASSWORD_NEEDED_FOR_PRIVATE_KEY" : "Um ein Backup Ihres privaten Schlüssels zu erhalten müssen Sie Ihr Passwort eingeben.",
   "MESSAGES.WRONG_PASSWORD" : "Das eingegebene Passwort stimmt nicht mir Ihrem Account Passwort überein.",
   "LOGIN.ENTER_ACCOUNT_NAME" : "Geben Sie Ihren Account Namen ein",

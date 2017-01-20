@@ -15,8 +15,8 @@
             <a href="#!/asset/details/{{asset.symbol}}" ng-repeat="asset in assets">
             <dd class="panel assetBox" >
               <span class="span1 assetBoxSymbol">{{asset.symbol}}</span>
-              <span class="span3">{{ 'ISSUER' | translate }}</span>
-              <span class="span2">{{asset.issuer}}</span>
+              <span class="span3">{{ 'BALANCE' | translate }}</span>
+              <span class="span2">{{asset.amount}}</span>
               <span class="span3">{{ 'STATUS' | translate }}</span>
               <span class="span2">{{asset.status}}</span>
             </dd>
@@ -34,9 +34,7 @@
               {{'MESSAGES.NO_LISTED_TRANSACTIONS' | translate}}
             </div>
 
-          <div class="transactionbox" ng-repeat="transaction in transactions">
-
-
+          <div class="transactionbox" ng-repeat="transaction in transactions | orderBy:'height':1">
 
             <div class="row">
               <div class="col-md-1">
@@ -49,8 +47,14 @@
                   </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-4">
-                      {{transaction.value/100000000}} ETP
+                    <div class="col-md-3">
+                      {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT' | translate) }}
+                    </div>
+                    <div class="col-md-2 right-align">
+                      {{transaction.value}}
+                    </div>
+                    <div class="col-md-3">
+                      {{transaction.type}}
                     </div>
                     <div class="col-md-4">
                       {{ 'TRANSFER_RECIPENT' | translate }}: <div ng-repeat="recipent in transaction.recipents" class="address">{{recipent.address}}</div>

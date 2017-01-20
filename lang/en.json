@@ -68,6 +68,7 @@
   "SETTINGS_ACCOUNT_INFORMATION" : "Accountinformation",
   "SETTINGS.DEBUG_ENABLE" : "Enable Debugger",
   "SETTINGS.DEBUG_DISABLE" : "Disable Debugger",
+  "GENERAL.DATE_FORMAT" : "MM/dd/yyyy HH:mm:ss",
   "MESSAGES.PASSWORD_NEEDED_FOR_PRIVATE_KEY" : "To get a backup of your private key you first need to enter your account password.",
   "MESSAGES.WRONG_PASSWORD" : "The provided password is invalid.",
   "LOGIN.ENTER_ACCOUNT_NAME" : "Enter your account name",

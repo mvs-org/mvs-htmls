@@ -550,7 +550,7 @@
               response.data.transactions.forEach(function(e){
                 var transaction = {
                   "height" : e.height,
-                  "timestamp" : e.timestamp,
+                  "timestamp" : new Date(e.timestamp*1000),
                   "direction" : e.direction,
                   "recipents" : [],
                   "value" : 0
@@ -568,11 +568,24 @@
                       transaction.value+= parseInt(e.outputs[i]['etp-value']);
                     }
                     }
+                    transaction.value/=100000000;
                     transactions.push(transaction);
                   }
                   else{
                     //Asset transactions
-                    console.log(e);
+                    transaction.type=e.outputs[0].attachment.symbol;
+                    for(var i=0; i<e.outputs.length; i++){
+                      if( e.outputs.length==1 || i>0){
+                        transaction.recipents.push(
+                        {
+                          "address" : e.outputs[i].address,
+                          "value" : e.outputs[i].attachment.quantity
+                        })
+                        transaction.value+= parseInt(e.outputs[i].attachment.quantity);
+                      }
+                      }
+
+                      transactions.push(transaction);
                   }
                 });
                 //Return transaction list
