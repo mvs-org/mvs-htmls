@@ -1773,3 +1773,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0000', end
 	.right-align{
 		text-align: right;
 	}
+
+	.vcenter{
+			width:400px;
+			height:380px;
+			position:absolute;
+			top:50%;
+			left:50%;
+			margin-top:-190px;
+			margin-left:-200px;
+	}
+
+	.vcenter img{
+		width: 100%;
+	}
