@@ -22,26 +22,34 @@
     <script src="node_modules/angular-translate/dist/angular-translate.min.js"></script>
     <script src="node_modules/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-
+    <script src="node_modules/angulartics/dist/angulartics.min.js"></script>
+    <script src="node_modules/angulartics-piwik/dist/angulartics-piwik.min.js"></script>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
     <link rel='stylesheet' href='node_modules/nprogress/nprogress.css'/>
 		<link rel="stylesheet" href="css/admin.css" />
 		<link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="css/calendar.css" />
-
-
   </head>
   <body class="bg">
 
     <div >
       <div ui-view></div>
     </div>
+
   </body>
 
-
-
-  <script>
-
-  </script>
+  <script type="text/javascript">
+  var _paq = _paq || [];
+  // _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="https://info.viewfin.com/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 4]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="https://info.viewfin.com/piwik.php?idsite=4" style="border:0;" alt="" /></p></noscript>
 
 </html>

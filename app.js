@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('app', ['ui.router','ngCookies','LocalStorageModule', 'pascalprecht.translate'])
+    angular.module('app', ['angulartics','angulartics.piwik','ui.router','ngCookies','LocalStorageModule', 'pascalprecht.translate'])
         .config(config)
         .config(['$compileProvider', function ($compileProvider) {
             //$compileProvider.debugInfoEnabled(false);
