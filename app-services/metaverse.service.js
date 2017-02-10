@@ -16,7 +16,7 @@
     var SERVER = window.location.hostname+':8820';
     var RPC_URL = 'http://'+SERVER+'/rpc';
 
-    service.debug = false;
+    service.debug = true;
 
     service.CheckAccount = CheckAccount;
 
@@ -51,6 +51,7 @@
 
     //Misc
     service.Query = Query;
+    service.Deposit = Deposit;
 
     return service;
 
@@ -258,7 +259,6 @@
     function Send(recipent,quantity) {
 
       var credentials = localStorageService.get('credentials');
-      console.log([credentials.user,credentials.password, recipent, quantity]);
       return _send('send', [credentials.user,credentials.password, recipent, quantity]);
     }
 
@@ -447,6 +447,22 @@
     function SendAsset(recipent_address, symbol, quantity){
       var credentials = localStorageService.get('credentials');
       return _send('sendasset', [credentials.user,credentials.password, recipent_address, symbol, quantity]);
+    }
+
+    /**
+    * @api {post} /rpc Deposit ETP
+    * @apiName Deposit
+    * @apiGroup Deposit
+    *
+    * @apiDescription Detposits some ETP for a fixed period of time.
+    *
+    * @apiParam {Const} method deposit
+    * @apiParam {List} params [-f depositperiod,username, password, amount]
+    *
+    **/
+    function Deposit(deposit_period, amount, password){
+      var credentials = localStorageService.get('credentials');
+      return _send('deposit', ['-d',deposit_period,credentials.user,password, amount]);
     }
 
     /**

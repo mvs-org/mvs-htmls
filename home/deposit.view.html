@@ -1,0 +1,51 @@
+<div class="content">
+	<span class="headline"><em></em>{{ 'DEPOSIT.HEADLINE' | translate }}</span>
+				<div class="">
+					<div class="row">
+						<form>
+						<div class="col-sm-5">
+							<div class="form-group">
+								<label for="recipent_address" class="control-label">{{ 'DEPOSIT.PERIOD' | translate }}：<span class="red big">*</span></label>
+                <select class="form-control" name="period" ng-model="period_select" required>
+                  <option ng-repeat="(deposit_option, interest_rate) in deposit_options" value="{{deposit_option}}">{{deposit_option | translate}}</option>
+                </select>
+							</div>
+
+							<div class="form-group">
+
+								<span class="dropdown">
+								<label for="value" class="control-label">{{ 'TRANSFER_VALUE' | translate }}：<span class="red big">*</span>
+                </label>
+								<div class="input-group">
+								<span class="input-group-addon clickable" data-toggle="dropdown">{{factor | translate}}</span>
+								<ul class="dropdown-menu clickable">
+									<li><a ng-click="changeFactor('etp')">{{ 'FACTOR_ETP' | translate }}</a></li>
+									<li><a ng-click="changeFactor('satoshi')">{{ 'FACTOR_SATOSHI' | translate }}</a></li>
+								</ul>
+									<input type="text" class="form-control" name="value" ng-model="value" autocomplete="off" required="">
+								</div>
+							</span>
+							</div>
+              <p><span class="quick_response positive" ng-show="deposit_options[period_select][0]*value">{{ 'DEPOSIT.PROFIT' | translate }}: {{deposit_options[period_select][0]*value | number : 4}} {{factor | translate}}</span></p>
+              <div class="form-group">
+								<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}：<span class="red big">*</span></label>
+									<input type="password" class="form-control" name="password" id="" autocomplete="new-password" ng-model="password" required="">
+							</div>
+							<button type="submit" id="transferBtn" ng-click="deposit()">{{ 'DEPOSIT.SEND' | translate }}</button>
+						</div>
+						<div class="col-sm-1"></div>
+						<div class="col-sm-5">
+              <table class="info_table">
+                <tr><th>{{ 'DEPOSIT.PERIOD' | translate }}</th><th>{{ 'DEPOSIT.INTEREST_RATE' | translate }}</th><th>{{ 'DEPOSIT.ANNUAL_RATE' | translate }}</th></tr>
+                <tr ng-class="{'selected_row' : period_select == deposit_option}" ng-repeat="(deposit_option, interest_rate) in deposit_options">
+                  <td>{{deposit_option | translate}}</td>
+                  <td>{{interest_rate[0] * 100 | number : 2}} %</td>
+                  <td>{{interest_rate[1] * 100 | number : 2}} %</td>
+                </tr>
+              </table>
+						</div>
+					</form>
+					</div>
+
+			</div>
+</div>

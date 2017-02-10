@@ -123,6 +123,13 @@
       controllerAs: 'vm'
     })
 
+    .state('home.deposit', {
+      url: "/deposit",
+      templateUrl: "home/deposit.view.html",
+      controller: 'DepositController',
+      controllerAs: 'vm'
+    })
+
     .state('home.mining', {
       url: "/mining",
       templateUrl: "home/mining.view.html",

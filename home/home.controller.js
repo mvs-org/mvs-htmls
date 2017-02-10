@@ -10,8 +10,96 @@
 	.controller('AssetsController', AssetsController)
 	.controller('ShowAssetsController', ShowAssetsController)
 	.controller('ETPController', ETPController)
+	.controller('DepositController', DepositController)
 	.controller('MiningController', MiningController);
 
+	function DepositController(MetaverseService, MetaverseHelperService, $rootScope, $scope, FlashService, localStorageService, $translate) {
+
+	$scope.changeFactor=changeFactor;
+	$scope.deposit = deposit;
+
+	$scope.isNumber = angular.isNumber;
+
+		$scope.deposit_options = {
+			"DEPOSIT.PERIOD.WEEK" : [0.001,0.05,7],
+			"DEPOSIT.PERIOD.MONTH" : [0.0066,0.08,30],
+			"DEPOSIT.PERIOD.QUARTER": [0.0323,0.128,90],
+			"DEPOSIT.PERIOD.HALF_YEAR": [0.0798,0.16,182],
+			"DEPOSIT.PERIOD.YEAR": [0.2,0.2,365]
+			};
+
+		$rootScope.factor="FACTOR_ETP";
+
+		function changeFactor(factor){
+			switch (factor) {
+				case 'satoshi':
+					if($rootScope.factor=="FACTOR_SATOSHI")
+						return;
+					$rootScope.factor="FACTOR_SATOSHI";
+					$scope.value*=100000000;
+					$scope.value=Math.round($scope.value);
+					break;
+				default:
+					if($rootScope.factor=="FACTOR_ETP")
+						return;
+				  $rootScope.factor="FACTOR_ETP";
+					$scope.value/=100000000;
+			}
+		}
+
+		function deposit(){
+			var credentials = localStorageService.get('credentials');
+
+			if($scope.password==''){ //Check for empty password
+				$translate('MESSAGES.PASSWORD_NEEDED').then(function (data) {
+					FlashService.Error(data);
+				});
+			}
+			else if($scope.password!=credentials.password){
+				$translate('MESSAGES.WRONG_PASSWORD').then(function (data) {
+					FlashService.Error(data);
+				});
+			}
+			else if(!($scope.value>0)){
+				$translate('MESSAGES.INVALID_VALUE').then(function (data) {
+					FlashService.Error(data);
+				});
+			}
+			else if($scope.deposit_options[$scope.period_select] == undefined){
+				$translate('MESSAGES.INVALID_TIME_PERIOD').then(function (data) {
+					FlashService.Error(data);
+				});
+			}
+			else{
+				var deposit_value = ($rootScope.factor=="FACTOR_SATOSHI") ? $scope.value : $scope.value * 100000000;
+				MetaverseService.Deposit($scope.deposit_options[$scope.period_select][2], deposit_value, $scope.password)
+				.then(function (response) {
+					NProgress.done();
+					if ( typeof response.success !== 'undefined' && response.success && response.data.error == undefined) {
+						//Transaction was successful
+						$translate('MESSAGES.DEPOSIT_SUCCESS').then(function (data) {
+							FlashService.Success(data + response.data.transaction.hash);
+						});
+						init();
+					}
+					else {
+						//Transaction problem
+						$translate('MESSAGES.DEPOSIT_ERROR').then(function (data) {
+							FlashService.Error(data);
+						});
+						$scope.password='';
+					}
+				});
+			}
+		}
+
+
+		function init(){
+			$scope.password = '';
+			$scope.value= '';
+		}
+
+	}
 	/**
 	 * The ETP Controller provides ETP transaction functionality.
 	 */
@@ -102,7 +190,7 @@
 						if ( typeof response.success !== 'undefined' && response.success) {
 							//Transaction was successful
 							$translate('MESSAGES.TRANSFER_SUCCESS').then(function (data) {
-								FlashService.Success(data);
+								FlashService.Success(data + response.data.transaction.hash);
 							});
 							init();
 						}
