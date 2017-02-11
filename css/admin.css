@@ -1036,7 +1036,7 @@ footer .footerRight{
 	.bodyBox{background:url(../images/banner-2.png) no-repeat;background-size:cover;}
 	.registerBox{
 		width:470px;
-		height:450px;
+		min-height:450px;
 		border-radius: 10px;
 		position:absolute;
 		top:50%;
@@ -1168,6 +1168,15 @@ footer .footerRight{
 		border:1px solid #cccccc;
 		color: #fff;
 		padding-left:15px;
+	}
+	.registerUser div input[type=checkbox]{
+		width: 20px;
+		height: 20px;
+		margin-left: 10px;
+	}
+	.registerUser textarea{
+		min-width: 100%;
+		max-width: 100%;
 	}
 	.registerUser span{
 		position:absolute;

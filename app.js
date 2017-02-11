@@ -90,6 +90,13 @@
       controllerAs: 'vm'
     })
 
+    .state('home.explorer', {
+      url: "/explorer",
+      templateUrl: "home/explorer.view.html",
+      controller: 'ExplorerController',
+      controllerAs: 'vm'
+    })
+
     .state('home.asset', {
       abstract: true,
       templateUrl: "home/assets/index.view.html"

@@ -1,5 +1,8 @@
 <div class="bg">
-
+  <div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
+    <div class="" ng-bind="flash.message">
+    </div>
+  </div>
 <div class="container">
             <div class="registerBox lightgreybg" >
                 <div class="text-center margin-big padding-big-top">
@@ -23,22 +26,21 @@
 				         	<p class="hint3"></p>
 				         	<span class="span3"></span>
 				            <input type="password" ng-model="vm.user.password_repeat">
+                    <p >{{ 'REGISTER.DO_IMPORT' | translate }}:<input type="checkbox" ng-model="do_import"></p>
+                       <span class="span3"></span>
+                  <div ng-show="do_import">
+                  <p>{{ 'REGISTER.IMPORT_PHRASE' | translate }}: <i>*</i></p>
+				        	<p class="hint2"></p>
+				        	<span class="span2"></span>
+				            <textarea ng-model="import_phrase" rows="3"></textarea>
+                  </div>
 				        </div>
-				        <p class="hint"></p>
 				        <div class="submit">
                     <a href="#!/login" class="btn btn-default">{{ 'REGISTER.LOGIN_BUTTON' | translate }}</a>
-
-                    <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                     <button ng-click="vm.register()" type="submit" class="newBtn" ng-disabled="form.$invalid || vm.dataLoading">{{ 'REGISTER.REGISTGER_BUTTON' | translate }}</button>
-
 				        </div>
-
                 </div>
-                <br><br>
-                <div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
-                  <div class="" ng-bind="flash.message">
-                  </div>
-                </div>
+                <br>
             </div>
 </div>
 </div>

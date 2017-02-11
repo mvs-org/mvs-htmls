@@ -1,5 +1,8 @@
 <div class="bg"></div>
-
+<div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
+  <div class="" ng-bind="flash.message">
+  </div>
+</div>
     <form >
     <div class="lightgreybg loginbox">
 
@@ -34,10 +37,7 @@
   </ul>
   </span>
   <br><br>
-  <div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
-    <div class="" ng-bind="flash.message">
-    </div>
-  </div>
+
         </div>
 
 

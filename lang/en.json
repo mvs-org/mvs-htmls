@@ -82,6 +82,8 @@
   "REGISTER.REPEAT_PASSWORD" : "Please repeat your password",
   "REGISTER.LOGIN_BUTTON" : "Back to login",
   "REGISTER.REGISTGER_BUTTON" : "Register",
+  "REGISTER.DO_IMPORT" : "Import account",
+  "REGISTER.IMPORT_PHRASE" : "Your account phrase",
   "FORGOT_PASSWORD.ENTER_PRIVATE_KEY" : "Please enter your private key",
   "FORGOT_PASSWORD.CHOOSE_PASSWORD" : "Please enter a new password",
   "FORGOT_PASSWORD.REPEAT_PASSWORD" : "Please repeat your password",
@@ -130,5 +132,7 @@
   "MESSAGES.ASSETS_TRANSFER_ERROR" : "Could not send asset.",
   "MESSAGES.TRANSACTIONS_LOAD_ERROR" : "Could not load transaction list.",
   "MESSAGES.TRANSACTIONS_LOAD_ERROR" : "Could not load transaction list.",
-  "MESSAGES.NO_LISTED_TRANSACTIONS" : "No listed transactions."
+  "MESSAGES.NO_LISTED_TRANSACTIONS" : "No listed transactions.",
+  "MESSAGES.IMPORT_SUCCESS" : "Account sucessfully imported.",
+  "MESSAGES.IMPORT_ERROR" : "Account could not be imported."
 }

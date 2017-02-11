@@ -1,0 +1,25 @@
+<div class="content">
+	<span class="headline"><em></em>{{ 'EXPLORER.HEADLINE' | translate }}</span>
+				<div class="">
+					<div class="row">
+						<form>
+						<div class="col-sm-5">
+							<div class="form-group">
+								<label for="value" class="control-label">{{ 'EXPLORER.TRANSACTION_HASH' | translate }}：
+                </label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="hash" ng-model="hash" autocomplete="off" required>
+								</div>
+							</div>
+							<button type="submit" id="transferBtn" ng-click="show_transaction()">{{ 'EXPLORER.SHOW_TRANSACTION' | translate }}</button>
+						</div>
+					</form>
+					</div>
+			</div>
+</div>
+
+<div class="content" ng-show="transaction">
+
+
+
+</div>

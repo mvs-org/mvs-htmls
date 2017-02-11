@@ -38,8 +38,8 @@
             //Check login data
             MetaverseService.CheckAccount(vm.username, vm.password)
       	        .then(function (response) {
-      	            if ( typeof response.success !== 'undefined' && response.success) {
-                      if (response.data != undefined && response.data.name) {  //Success
+      	            if ( typeof response.success !== 'undefined' && response.success && response.data != undefined && response.data.name) {
+                       //Success
 
                           //Save user login credentials
                           localStorageService.set('credentials', {
@@ -63,7 +63,7 @@
                   				});
                       }
 
-      	            }
+      	            
       	        },
                 function(){
 

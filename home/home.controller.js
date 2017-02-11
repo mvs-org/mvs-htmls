@@ -11,7 +11,27 @@
 	.controller('ShowAssetsController', ShowAssetsController)
 	.controller('ETPController', ETPController)
 	.controller('DepositController', DepositController)
+	.controller('ExplorerController', ExplorerController)
 	.controller('MiningController', MiningController);
+
+
+	function ExplorerController(MetaverseService, MetaverseHelperService, $rootScope, $scope, FlashService, localStorageService, $translate) {
+
+		$scope.show_transaction = show_transaction;
+
+
+		function show_transaction(){
+			NProgress.start();
+			MetaverseService.FetchTx($scope.hash)
+			.then(function (response) {
+				if ( typeof response.success !== 'undefined' && response.success) {
+					console.log(response);
+				}
+				NProgress.done();
+			});
+		}
+
+	}
 
 	function DepositController(MetaverseService, MetaverseHelperService, $rootScope, $scope, FlashService, localStorageService, $translate) {
 
@@ -83,6 +103,7 @@
 						init();
 					}
 					else {
+
 						//Transaction problem
 						$translate('MESSAGES.DEPOSIT_ERROR').then(function (data) {
 							FlashService.Error(data);
@@ -199,6 +220,7 @@
 							$translate('MESSAGES.TRANSFER_ERROR').then(function (data) {
 								FlashService.Error(data);
 							});
+							console.log(response);
 							$scope.password='';
 						}
 					});

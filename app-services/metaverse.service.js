@@ -21,6 +21,7 @@
     service.CheckAccount = CheckAccount;
 
     service.GetNewAccount = GetNewAccount;
+    service.ImportAccount = ImportAccount;
     service.GetBalance = GetBalance;
     service.ListAddresses = ListAddresses;
     service.ListBalances = ListBalances;
@@ -48,6 +49,7 @@
 
     //Chain
     service.FetchHeight = FetchHeight;
+    service.FetchTx = FetchTx;
 
     //Misc
     service.Query = Query;
@@ -368,6 +370,21 @@
     }
 
     /**
+    * @api {post} /rpc Get transaction
+    * @apiName Get transaction
+    * @apiGroup Misc
+    *
+    * @apiDescription Returns a blockchain transaction of the given hash.
+    *
+    * @apiParam {Const} method fetch-tx
+    * @apiParam {List} params []
+    *
+    **/
+    function FetchTx(hash) {
+      return _send('fetch-tx', [hash]);
+    }
+
+    /**
     * @api {post} /rpc Create asset
     * @apiName Create a new unissued asset
     * @apiGroup Assets
@@ -485,6 +502,10 @@
       return _send('getaccount', [user,password]);
     }
 
+    function ImportAccount(user, password, phrase){
+      return this.Query('importaccount --accoutname '+user+' --password '+password+' '+phrase);
+    }
+
     function Query(string){
       var command = string;
       var params = [];
@@ -495,7 +516,10 @@
       return _send(command,params);
     }
 
-    function _send(method, params){
+    function _send(method, params){console.log({
+              "method" : method,
+              "params" : params
+            });
       return $http.post(RPC_URL, { method: method, params: params },{ headers : {}}).then(
         function(res){
           if(service.debug)
@@ -513,15 +537,15 @@
 
       // private functions
       function handleSuccess(res) {
-        if(res.error==undefined)
-        return { success: true, data: res.data};
+        if(res.data!=undefined && res.data.error==undefined)
+          return { success: true, data: res.data};
         else
-        return handleError(res);
+          return handleError(res);
       }
 
       function handleError(res) {
         if(res.error!=undefined)
-        return { success: false, message: res.error };
+          return { success: false, message: res.error };
         return { success: false, message: 'General connection error' };
       }
 
