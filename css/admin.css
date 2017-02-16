@@ -1848,3 +1848,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0000', end
 	background: rgba(255,255,255,0.1);
 	color: #fff;
 }
+
+.mnemonic_red{
+	background: red;
+	color: black;
+}

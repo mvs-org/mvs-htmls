@@ -47,14 +47,13 @@
                 </div>
                 <br>
                 <div ng-show="vm.registered">
-                  <h1>Thank you for sign up.</h1>
+                  <h1>{{ "REGISTER.SIGNUP_THANK_YOU" | translate}}</h1>
                   <br><br>
-                  <div>This is your private key:<br> <b>{{vm.registered.privatekey}}</b></div>
+                  <div>{{ "REGISTER.PRIVATE_KEY_MNEMONIC" | translate}}:<br> <b class="mnemonic_red">{{vm.registered.privatekey}}</b></div>
                   <br><br>
-                  <div>Please save this key at a safe place. A good way can be to write it down on a piece of <a href="https://en.wikipedia.org/wiki/Paper" target="_blank">paper</a>.
-                  It is very important to back up this key and it is not possible to retrieve this key later.</div>
+                  <div>{{ "REGISTER.PRIVATE_KEY_MNEMONIC_INFO" | translate}}</div>
                   <br><br>
-                  <label><input type="checkbox" ng-model="vm.registered.read">I undestand</label>
+                  <label><input type="checkbox" ng-model="vm.registered.read">{{ "REGISTER.SIGNUP_MNEMONIC_AGREE" | translate}}</label>
                   <div ng-show="vm.registered.read">
                     <br>
                     <a href="#!/login" class="btn btn-default">{{ 'REGISTER.LOGIN_BUTTON' | translate }}</a>
