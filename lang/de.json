@@ -88,7 +88,7 @@
   "REGISTER.SIGNUP_THANK_YOU" : "Account wurde erstellt.",
   "REGISTER.SIGNUP_MNEMONIC_AGREE" : "verstanden",
   "REGISTER.PRIVATE_KEY_MNEMONIC" : "Dies ist Ihr privater Schlüssel",
-  "REGISTER.PRIVATE_KEY_MNEMONIC_INFO" : "Bitte sichern Sie diesen an einem sicheren Ort. Schreiben Sie ihn am besten auf ein Stück <a href=\"https://de.wikipedia.org/wiki/Papier\" target=\"_blank\">Papier</a>. Der Schlüssel ist sehr wichtig und er lässt sich zu einem späteren Zeitpunkt nicht mehr wiederherstellen.",
+  "REGISTER.PRIVATE_KEY_MNEMONIC_INFO" : "Bitte sichern Sie diesen an einem sicheren Ort. Schreiben Sie ihn am besten auf ein Stück Papier. Der Schlüssel ist sehr wichtig und er lässt sich zu einem späteren Zeitpunkt nicht mehr wiederherstellen.",
   "FORGOT_PASSWORD.ENTER_PRIVATE_KEY" : "Geben Sie Ihren privaten Schlüssel ein",
   "FORGOT_PASSWORD.CHOOSE_PASSWORD" : "Bitte geben Sie ein neues Passwort ein",
   "FORGOT_PASSWORD.REPEAT_PASSWORD" : "Bitte wiederholen Sie Ihr Passwort",
