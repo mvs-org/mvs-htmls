@@ -44,7 +44,7 @@
         return;
       }
       if($scope.do_import){ //Import account from phrase
-        MetaverseService.ImportAccount(vm.user.username, vm.user.password, $scope.import_phrase)
+        MetaverseService.ImportAccount(vm.user.username, vm.user.password, $scope.import_phrase, $scope.address_count)
         .then(function (response) {
           if ( typeof response.success !== 'undefined' && response.success) {
             $translate('MESSAGES.IMPORT_SUCCESS').then(function (data) {
@@ -55,7 +55,6 @@
             $translate('MESSAGES.IMPORT_ERROR').then(function (data) {
               FlashService.Error(data);
             });
-            console.log(response.message);
           }
         });
       }
@@ -66,10 +65,13 @@
             $translate('MESSAGES.REGISTARTION_SUCCESS').then(function (data) {
               FlashService.Success(data);
             });
-            $location.path('/login');
+            vm.registered = {
+              "privatekey" : response.data.mnemonic,
+              "address" : response.data['default-address']
+            }
+            //$location.path('/login');
           } else {
             FlashService.Error(response.message);
-            vm.dataLoading = false;
           }
         });
       }

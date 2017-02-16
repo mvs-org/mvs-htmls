@@ -15,20 +15,33 @@
 	.controller('MiningController', MiningController);
 
 
-	function ExplorerController(MetaverseService, MetaverseHelperService, $rootScope, $scope, FlashService, localStorageService, $translate) {
+	function ExplorerController(MetaverseService, MetaverseHelperService, $location, $stateParams, $rootScope, $scope, FlashService, localStorageService, $translate) {
 
 		$scope.show_transaction = show_transaction;
 
-
-		function show_transaction(){
+		var transaction_hash = $stateParams.hash;
+		if(transaction_hash!=undefined){
 			NProgress.start();
-			MetaverseService.FetchTx($scope.hash)
+			MetaverseService.FetchTx(transaction_hash)
 			.then(function (response) {
-				if ( typeof response.success !== 'undefined' && response.success) {
-					console.log(response);
+				if ( typeof response.success !== 'undefined' && response.success && response.data !=undefined && response.data.transaction != undefined) {
+					$scope.transaction = response.data.transaction;
+				}
+				else{
+					$translate('MESSAGES.TRANSACTION_NOT_FOUND').then(function (data) {
+							setTimeout(function(){
+								FlashService.Error(data);
+								$rootScope.$apply();
+							}, 100);
+						});
+					$location.path('/explorer');
 				}
 				NProgress.done();
 			});
+		}
+
+		function show_transaction(){
+			$location.path('/explorer/tx/'+$scope.hash);
 		}
 
 	}
@@ -220,7 +233,6 @@
 							$translate('MESSAGES.TRANSFER_ERROR').then(function (data) {
 								FlashService.Error(data);
 							});
-							console.log(response);
 							$scope.password='';
 						}
 					});
@@ -320,7 +332,7 @@
 			});
 		}
 
-		function showprivatekey(password){
+		function showprivatekey(password, last_word){
 			if(password==undefined){
 				$translate('MESSAGES.PASSWORD_NEEDED_FOR_PRIVATE_KEY').then(function (data) {
 					FlashService.Error(data);
@@ -333,17 +345,16 @@
 			}
 			else{
 				NProgress.start();
-				MetaverseService.GetAccount()
+				MetaverseService.GetAccount(last_word)
 				.then(function (response) {
 					if ( typeof response.success !== 'undefined' && response.success) {
 						$scope.privatekey = response.data['mnemonic-key'];
 					}
 					else {
-						//Show asset load error
-						$translate('MESSAGES.ASSETS_LOAD_ERROR').then(function (data) {
-							FlashService.Error(data);
-						});
-
+						//Show mnemonic load error
+							$translate('SETTINGS.MNEMONIC_LOAD_ERROR').then(function (data) {
+								FlashService.Error(data);
+							});
 					}
 					NProgress.done();
 				});
@@ -406,7 +417,6 @@
 			else{
 				MetaverseService.SendAssetFrom(sender_address, recipent_address, symbol, quantity)
 				.then(function (response) {
-					console.log(response);
 					NProgress.done();
 					if ( typeof response.success !== 'undefined' && response.success) {
 						//Redirect user to the assets page

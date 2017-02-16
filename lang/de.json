@@ -84,6 +84,7 @@
   "REGISTER.REGISTGER_BUTTON" : "Registrieren",
   "REGISTER.DO_IMPORT" : "Account importieren",
   "REGISTER.IMPORT_PHRASE" : "Geben Sie ihren privaten Schlüssel ein",
+  "REGISTER.IMPORT_ADDRESS_COUNT" : "Wie viele Adressen verwendet der Account?",
   "FORGOT_PASSWORD.ENTER_PRIVATE_KEY" : "Geben Sie Ihren privaten Schlüssel ein",
   "FORGOT_PASSWORD.CHOOSE_PASSWORD" : "Bitte geben Sie ein neues Passwort ein",
   "FORGOT_PASSWORD.REPEAT_PASSWORD" : "Bitte wiederholen Sie Ihr Passwort",
@@ -100,6 +101,12 @@
   "DEPOSIT.PERIOD.QUARTER" : "1 Quartal",
   "DEPOSIT.PERIOD.HALF_YEAR" : "1 Halbjahr",
   "DEPOSIT.PERIOD.YEAR" : "1 Jahr",
+  "EXPLORER.TRANSACTION_HASH" : "Hash",
+  "EXPLORER.TRANSACTION_INPUTS" : "Inputs",
+  "EXPLORER.TRANSACTION_OUTPUTS" : "Outputs",
+  "EXPLORER.HEADLINE" : "Transaktions Explorer",
+  "EXPLORER.NAV_ITEM" : "Explorer",
+  "EXPLORER.SHOW_TRANSACTION" : "Search",
   "MESSAGES.NO_ACCOUNTNAME_PROVIDED" : "Sie müssen einen Namen für Ihren Account wählen.",
   "MESSAGES.NO_PASSWORD_PROVIDED" : "Bitte geben Sie ein Passwort für Ihren Account ein.",
   "MESSAGES.PASSWORD_SHORT" : "Das Passwort muss mindestens 6 Zeichen lang sein.",
@@ -132,5 +139,6 @@
   "MESSAGES.TRANSACTIONS_LOAD_ERROR" : "Transaktionen konnten nicht geladen werden.",
   "MESSAGES.NO_LISTED_TRANSACTIONS" : "Sie haben keine Transaktionen.",
   "MESSAGES.IMPORT_SUCCESS" : "Account erfolgreich importiert.",
-  "MESSAGES.IMPORT_ERROR" : "Fehler beim Import."
+  "MESSAGES.IMPORT_ERROR" : "Fehler beim Import.",
+    "MESSAGES.TRANSACTION_NOT_FOUND" : "Transaktion konnte nicht gefunden werden."
 }

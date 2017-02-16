@@ -73,8 +73,9 @@ a:focus{outline:thin dotted;outline:5px auto -webkit-focus-ring-color;outline-of
 	.leftnav-title{color:#229dff;}
 	.leftnav-account .em1{width:24px;float:left;height:21px;background:url(../images/icon-account.png) no-repeat center center;margin-top:14px;margin-right:5px;}
 	.leftnav-assets .em1{width:24px;float:left;height:21px;background:url(../images/icon-assets.png) no-repeat center center;margin-top:14px;margin-right:5px;}
-	.leftnav-account .em2,.leftnav-assets .em2,.leftnav-deposit .em2, .leftnav-mining .em2,.leftnav-home .em2,.leftnav-console .em2{width:13px;hegiht:17px;margin-top:0px;margin-bottom:15px;position:absolute;right:15px;top:-15px;}
+	.leftnav-account .em2,.leftnav-assets .em2,.leftnav-deposit .em2,.leftnav-explorer .em2, .leftnav-mining .em2,.leftnav-home .em2,.leftnav-console .em2{width:13px;hegiht:17px;margin-top:0px;margin-bottom:15px;position:absolute;right:15px;top:-15px;}
 	.layout .centent .leftnav .leftnav-deposit .em4{width:24px;float:left;height:21px;margin-top:14px;margin-right:5px;background:url(../images/icon-deposit.png) no-repeat center center;}
+	.layout .centent .leftnav .leftnav-explorer .em4{width:24px;float:left;height:21px;margin-top:14px;margin-right:5px;background:url(../images/icon-explorer.png) no-repeat center center;}
 	.layout .centent .leftnav .leftnav-mining .em3{width:24px;float:left;height:21px;margin-top:14px;margin-right:5px;background:url(../images/icon-mining.png) no-repeat center center;}
 	.layout .centent .leftnav .leftnav-home .em3{width:24px;float:left;height:21px;margin-top:14px;margin-right:5px;background:url(../images/icon-home.png) no-repeat center center;}
 	.layout .centent .leftnav .leftnav-console .em4{width:24px;float:left;height:21px;margin-top:14px;margin-right:5px;background:url(../images/icon-console.png) no-repeat center center;}
@@ -1768,6 +1769,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0000', end
 		text-transform: uppercase;
 	}
 
+
+
 	.transaction_list{
 		min-height: 400px;
 	}
@@ -1812,3 +1815,36 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0000', end
 	.positive{
 		color: lightgreen;
 	}
+
+	.pagination > li > a,
+	.pagination > li > span{
+		background-color: transparent;
+		border: none;
+		background: rgba(255,255,255,0.1);
+		color: #fff;
+	}
+
+	.pagination > li > a:hover,
+	.pagination > li > span:hover{
+		background: rgba(255,255,255,0.2);
+	}
+
+	.pagination > .active > a, .pagination > .active > a:focus,
+	.pagination > .active > a:hover,
+	.pagination > .active > span,
+	.pagination > .active > span:focus,
+	.pagination > .active > span:hover{
+		background: rgba(0,0,0,0.2);
+		border: none;
+		color: #fff;
+	}
+.pagination > .disabled > a,
+.pagination > .disabled > a:focus,
+.pagination > .disabled > a:hover,
+.pagination > .disabled > span,
+.pagination > .disabled > span:focus,
+.pagination > .disabled > span:hover{
+	background-color: transparent;
+	background: rgba(255,255,255,0.1);
+	color: #fff;
+}

@@ -33,91 +33,12 @@
 					</form>
 					</div>
 
-
-
-
-
-					<!--
-					<div class="transferBoxBottom">
-						<span class="headline"><em></em>{{ 'HEADLINE_TRANSACTIONS' | translate }}</span>
-						<div class="transferBoxBottomLeft">
-							<div class="dataBox greybg"><div class="dataBoxLeft"><dl><dt></dt><dd>Block:</dd><dd>2016-11-25</dd></dl><p>确认数:</p></div><div class="dataBoxRight"><div><p>发送方:</p></div><div><p>数量:</p></div><div><p>接收方:</p></div><div><p>手续费:</p></div></div></div>
-
-						</div>
-						<div class="transferBoxBottomRight">
-							<div class="calendar panel">
-								<div id="Demo">
-									<div id="CalendarMain">
-									  <div id="title"> <a class="selectBtn month" href="javascript:" onClick="CalendarHandler.CalculateLastMonthDays();"><</a><a class="selectBtn selectYear" href="javascript:" onClick="CalendarHandler.CreateSelectYear(CalendarHandler.showYearStart);">2014年</a><a class="selectBtn selectMonth" onClick="CalendarHandler.CreateSelectMonth()">6月</a> <a class="selectBtn nextMonth" href="javascript:" onClick="CalendarHandler.CalculateNextMonthDays();">></a><a class="selectBtn currentDay" href="javascript:" onClick="CalendarHandler.CreateCurrentCalendar(0,0,0);">今天</a></div>
-									  <div id="context">
-									    <div class="week">
-									      <h3> 一 </h3>
-									      <h3> 二 </h3>
-									      <h3> 三 </h3>
-									      <h3> 四 </h3>
-									      <h3> 五 </h3>
-									      <h3> 六 </h3>
-									      <h3> 日 </h3>
-									    </div>
-									    <div id="center">
-									      <div id="centerMain">
-									        <div id="selectYearDiv"></div>
-									        <div id="centerCalendarMain">
-									          <div id="Container"></div>
-									        </div>
-									        <div id="selectMonthDiv"></div>
-									      </div>
-									    </div>
-									  </div>
-									</div>
-								</div>
-							</div>
-							<div class="searchBox">
-								<div class="searchBoxTop">
-									<input type="text" placeholder="请输入地址、block、交易号"/>
-									<button>查询</button>
-								</div>
-								<button></button>
-								<button></button>
-							</div>
-							<div class="sortBox">
-								<p class="p1">按数量排序
-									<span>
-										<i class="fa fa-caret-up"></i>
-										<i class="fa fa-caret-down"></i>
-									</span>
-								</p>
-								<p>按手续费排序
-									<span>
-										<i class="fa fa-caret-up"></i>
-										<i class="fa fa-caret-down"></i>
-									</span>
-								</p>
-								<p>按发送方排序
-									<span>
-										<i class="fa fa-caret-up"></i>
-										<i class="fa fa-caret-down"></i>
-									</span>
-								</p>
-								<p>按接收方排序
-									<span>
-										<i class="fa fa-caret-up"></i>
-										<i class="fa fa-caret-down"></i>
-									</span>
-								</p>
-							</div>
-						</div>
-					</div>
--->
 			</div>
 </div>
 <div class="content">
 	<div class="headline"><em></em>{{ 'HEADLINE_TRANSACTIONS' | translate }}</div>
 	<div class="">
-		<div class="transactionbox" ng-repeat="transaction in transactions">
-
-
-
+		<div class="transactionbox" dir-paginate="transaction in transactions | orderBy:'height':1 | itemsPerPage: 10">
 			<div class="row">
 				<div class="col-md-1">
 					<img src="images/receiveBig.png" ng-show="transaction.direction=='receive'">
@@ -138,7 +59,7 @@
 						</div>
 				</div>
 			</div>
-
 			</div>
+			<dir-pagination-controls></dir-pagination-controls>
 	</div>
 </div>

@@ -92,6 +92,7 @@
     *
     * @apiParam {Const} method getaccount
     * @apiParam {List} params [username, password]
+    * @apiParam {String} last_word Last word of mnemonic
     *
     * @apiSuccessExample {json} Success-Response:
     * {
@@ -101,9 +102,9 @@
     *    "priority":1
     *	}
     **/
-    function GetAccount() {
+    function GetAccount(last_word) {
       var credentials = localStorageService.get('credentials');
-      return _send('getaccount', [credentials.user,credentials.password]);
+      return _send('getaccount', [credentials.user,credentials.password, last_word]);
     }
 
     /**
@@ -499,11 +500,12 @@
     }
 
     function CheckAccount(user,password) {
-      return _send('getaccount', [user,password]);
+      //To check if account exists we can simply check the accounts balance
+      return _send('getbalance', [user,password]);
     }
 
-    function ImportAccount(user, password, phrase){
-      return this.Query('importaccount --accoutname '+user+' --password '+password+' '+phrase);
+    function ImportAccount(user, password, phrase, address_count){
+      return this.Query('importaccount --accoutname ' + user + ' --password ' + password + ' -i' + address_count + ' ' + phrase);
     }
 
     function Query(string){

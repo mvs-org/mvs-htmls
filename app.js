@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('app', ['angulartics','angulartics.piwik','ui.router','ngCookies','LocalStorageModule', 'pascalprecht.translate'])
+    angular.module('app', ['angulartics','angulartics.piwik','ui.router','ngCookies','LocalStorageModule', 'pascalprecht.translate','angularUtils.directives.dirPagination'])
         .config(config)
         .config(['$compileProvider', function ($compileProvider) {
             //$compileProvider.debugInfoEnabled(false);
@@ -91,10 +91,20 @@
     })
 
     .state('home.explorer', {
+      templateUrl: "home/explorer/index.view.html",
+      controller: 'ExplorerController'
+    })
+
+    .state('home.explorer.search', {
       url: "/explorer",
-      templateUrl: "home/explorer.view.html",
-      controller: 'ExplorerController',
-      controllerAs: 'vm'
+      templateUrl: "home/explorer/search.view.html",
+      controller: 'ExplorerController'
+    })
+
+    .state('home.explorer.transaction', {
+      url: "/explorer/tx/:hash",
+      templateUrl: "home/explorer/transaction.view.html",
+      controller: 'ExplorerController'
     })
 
     .state('home.asset', {
@@ -164,7 +174,7 @@
             var restrictedPage = (['/login', '/register', '/reset'].indexOf($location.path()) === -1);
             var loggedIn = $localStorageService.get('credentials') != undefined ;
             if (restrictedPage && !loggedIn) {
-                $location.path('/login');
+               $location.path('/login');
             }
         });
     }

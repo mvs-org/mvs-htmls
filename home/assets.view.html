@@ -29,12 +29,10 @@
         <div>
           <div class="headline"><em></em>{{ 'HEADLINE_TRANSACTIONS' | translate }}</div>
           <div class="transaction_list">
-
             <div class="no_transaction_message" ng-show="transactions.length==0">
               {{'MESSAGES.NO_LISTED_TRANSACTIONS' | translate}}
             </div>
-
-          <div class="transactionbox" ng-repeat="transaction in transactions | orderBy:'height':1">
+          <div class="transactionbox" dir-paginate="transaction in transactions | orderBy:'height':1 | itemsPerPage: 10">
 
             <div class="row">
               <div class="col-md-1">
@@ -62,10 +60,10 @@
                   </div>
               </div>
             </div>
-
-            </div>
+       </div>
+       <dir-pagination-controls></dir-pagination-controls>
           </div>
-</div>
+        </div>
         </div>
 
 

@@ -9,6 +9,7 @@
                 	<img src="images/logo-black.png" alt="" />
                 </div>
                 <div class="registerUser" style="padding:0 20px;">
+                  <div ng-hide="vm.registered">
 				        <div>
 							<p>{{ 'REGISTER.CHOOSE_ACCOUNT_NAME' | translate }}: <i>*</i></p>
 				        	<p class="hint1"></p>
@@ -33,6 +34,10 @@
 				        	<p class="hint2"></p>
 				        	<span class="span2"></span>
 				            <textarea ng-model="import_phrase" rows="3"></textarea>
+                    <p>{{ 'REGISTER.IMPORT_ADDRESS_COUNT' | translate }}: <i>*</i></p>
+                    <p class="hint3"></p>
+                    <span class="span3"></span>
+                    <input type="number" ng-model="address_count" min="1" required>
                   </div>
 				        </div>
 				        <div class="submit">
@@ -41,6 +46,23 @@
 				        </div>
                 </div>
                 <br>
+                <div ng-show="vm.registered">
+                  <h1>Thank you for sign up.</h1>
+                  <br><br>
+                  <div>This is your private key:<br> <b>{{vm.registered.privatekey}}</b></div>
+                  <br><br>
+                  <div>Please save this key at a safe place. A good way can be to write it down on a piece of <a href="https://en.wikipedia.org/wiki/Paper" target="_blank">paper</a>.
+                  It is very important to back up this key and it is not possible to retrieve this key later.</div>
+                  <br><br>
+                  <label><input type="checkbox" ng-model="vm.registered.read">I undestand</label>
+                  <div ng-show="vm.registered.read">
+                    <br>
+                    <a href="#!/login" class="btn btn-default">{{ 'REGISTER.LOGIN_BUTTON' | translate }}</a>
+                  </div>
+
+                </div>
+              </div>
+
             </div>
 </div>
 </div>
