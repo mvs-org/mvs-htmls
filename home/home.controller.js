@@ -251,7 +251,7 @@
 				$scope.transactions=transactions;
 			}
 			NProgress.done();
-		})
+		}, 'etp')
 
 		//Initialize
 		init();

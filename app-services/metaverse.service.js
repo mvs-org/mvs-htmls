@@ -578,8 +578,8 @@
         });
       }
 
-      function LoadTransactions (callback){
-
+      function LoadTransactions (callback, type){
+        
         MetaverseService.ListTxs()
         .then(function (response) {
           var transactions=[];
@@ -597,7 +597,7 @@
                   "recipents" : [],
                   "value" : 0
                 };
-                if(e.outputs !=undefined && e.outputs[0].attachment.type=='etp'){
+                if((type==undefined||type=='etp') && e.outputs !=undefined && e.outputs[0].attachment.type=='etp'){
                   //ETP transaction handling
                   transaction.type='ETP';
                   for(var i=0; i<e.outputs.length; i++){
@@ -613,7 +613,7 @@
                     transaction.value/=100000000;
                     transactions.push(transaction);
                   }
-                  else{
+                  else if((type==undefined||type=='asset'||type==e.outputs[0].attachment.symbol)){
                     //Asset transactions
                     transaction.type=e.outputs[0].attachment.symbol;
                     for(var i=0; i<e.outputs.length; i++){
