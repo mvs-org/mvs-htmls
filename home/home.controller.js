@@ -261,8 +261,9 @@
 	function AccountController(MetaverseService, $translate, $rootScope, $scope, FlashService, $location, localStorageService) {
 
 		$scope.addresses = [];
-		$scope.getnewaddress = getnewaddress;
 		$scope.showprivatekey = showprivatekey;
+		$scope.getnewaddress = getnewaddress;
+		$scope.changepassword = changepassword;
 		$scope.accountname = localStorageService.get('credentials').user;
 		$scope.debugState=MetaverseService.debug;
 
@@ -361,6 +362,49 @@
 			}
 		}
 
+        function changepassword(password, new_password, new_password_repeat){
+            console.log('hallo')
+            if(password==undefined || localStorageService.get('credentials').password!=password){
+				$translate('MESSAGES.WRONG_PASSWORD').then(function (data) {
+					FlashService.Error(data);
+				});
+			}
+            else if(new_password==undefined || new_password.length < 6){
+                $translate('MESSAGES.PASSWORD_SHORT').then(function (data) {
+					FlashService.Error(data);
+				});
+            }
+            else if(new_password!=new_password_repeat){
+                $translate('MESSAGES.PASSWORD_NOT_MATCH').then(function (data) {
+					FlashService.Error(data);
+				});
+            }
+			else{
+            NProgress.start();
+				MetaverseService.ChangePassword(new_password)
+				.then(function (response) {
+					if ( typeof response.success !== 'undefined' && response.success) {
+                        $location.path('/login');
+						//Show success message
+						$translate('MESSAGES.CHANGE_PASSWORD_SUCCESS').then(function (data) {
+							//Wait some time to make sure the user gets the message
+							setTimeout(function(){
+								FlashService.Success(data);
+								$rootScope.$apply();
+							}, 100);
+						});
+					}
+					else {
+						//Show change password error
+							$translate('SETTINGS.CHANGE_PASSWORD_ERROR').then(function (data) {
+								FlashService.Error(data);
+							});
+					}
+					NProgress.done();
+				});
+
+            }
+        }
 		function setDeugger(state){
 			MetaverseService.debug=(state==1);
 			$scope.debugState=MetaverseService.debug;
@@ -773,9 +817,7 @@
 		}
 
 		updateHeight();
-		setInterval(function(){
-			updateHeight();
-		}, 10000);
+		setInterval( () => updateHeight(), 10000);
 
 		$scope.show_account_menu = function(){
 			$scope.menu.account.show = 1-$scope.menu.account.show;

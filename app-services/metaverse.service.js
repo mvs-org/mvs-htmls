@@ -16,7 +16,7 @@
     var SERVER = window.location.hostname+':8820';
     var RPC_URL = 'http://'+SERVER+'/rpc';
 
-    service.debug = true;
+    service.debug = false;
 
     service.CheckAccount = CheckAccount;
 
@@ -29,6 +29,7 @@
     service.GetNewAddress = GetNewAddress;
     service.Send = Send;
     service.ListTxs = ListTxs;
+    service.ChangePassword = ChangePassword;
 
 
     service.SERVER = SERVER;
@@ -106,6 +107,23 @@
       var credentials = localStorageService.get('credentials');
       return _send('getaccount', [credentials.user,credentials.password, last_word]);
     }
+
+    /**
+    * @api {post} /rpc Change account password
+    * @apiName Change Password
+    * @apiGroup Account
+    *
+    * @apiDescription Change the password the current account.
+    *
+    * @apiParam {Const} method changepasswd
+    * @apiParam {List} params [username, password, '--password', new_password]
+    *
+    **/
+    function ChangePassword(password) {
+      var credentials = localStorageService.get('credentials');
+      return _send('changepasswd', [credentials.user,credentials.password, '--password', password]);
+    }
+
 
     /**
     * @api {post} /rpc List accounts addresses
@@ -518,23 +536,20 @@
       return _send(command,params);
     }
 
-    function _send(method, params){console.log({
-              "method" : method,
-              "params" : params
-            });
-      return $http.post(RPC_URL, { method: method, params: params },{ headers : {}}).then(
-        function(res){
-          if(service.debug)
-            console.log({
-              "method" : method,
-              "params" : params,
-              "result" : res.data
-            });
-          return handleSuccess(res);
-        },
-        function(res){
-          return handleError(res);
-        });
+    function _send(method, params){
+        return $http.post(RPC_URL, { method: method, params: params },{ headers : {}})
+            .then(
+                (res) => {
+                  if(service.debug)
+                    console.log({
+                      "method" : method,
+                      "params" : params,
+                      "result" : res.data
+                    });
+                  return handleSuccess(res);
+                },
+                (res) =>  handleError(res)
+            );
       }
 
       // private functions

@@ -71,6 +71,11 @@
   "SETTINGS.DEBUG_DISABLE" : "Disable Debugger",
   "SETTINGS.MNEMONIC_LOAD_ERROR" : "Could not load mnemonic. Please check your input.",
   "SETTINGS.MNEMONIC_LAST_WORD" : "Last word of your nnemonic",
+  "SETTINGS.CHANGE_PASSWORD" : "Change your account password",
+  "SETTINGS.CHANGE_PASSWORD_BUTTON" : "Change",
+  "SETTINGS.PASSWORD" : "Current password",
+  "SETTINGS.NEW_PASSWORD" : "New password",
+  "SETTINGS.NEW_PASSWORD_REPEAT" : "Repeat new password",
   "GENERAL.DATE_FORMAT" : "MM/dd/yyyy HH:mm:ss",
   "MESSAGES.PASSWORD_NEEDED_FOR_PRIVATE_KEY" : "To get a backup of your private key you first need to enter your account password.",
   "MESSAGES.WRONG_PASSWORD" : "The provided password is invalid.",
@@ -146,6 +151,7 @@
   "MESSAGES.TRANSACTIONS_LOAD_ERROR" : "Could not load transaction list.",
   "MESSAGES.NO_LISTED_TRANSACTIONS" : "No listed transactions.",
   "MESSAGES.IMPORT_SUCCESS" : "Account sucessfully imported.",
-  "MESSAGES.IMPORT_ERROR" : "Account could not be imported.",
+  "MESSAGES.CHANGE_PASSWORD_SUCCESS" : "Account password has been changed.",
+  "MESSAGES.CHANGE_PASSWORD_ERROR" : "Account password change failed.",
   "MESSAGES.TRANSACTION_NOT_FOUND" : "Could not find a transaction for given hash."
 }

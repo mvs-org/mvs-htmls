@@ -69,6 +69,11 @@
   "SETTINGS_ACCOUNT_INFORMATION" : "Kontoinformationen",
   "SETTINGS.DEBUG_ENABLE" : "Debugger aktivieren",
   "SETTINGS.DEBUG_DISABLE" : "Debugger deaktivieren",
+  "SETTINGS.CHANGE_PASSWORD" : "Passwort ändern",
+  "SETTINGS.CHANGE_PASSWORD_BUTTON" : "Senden",
+  "SETTINGS.PASSWORD" : "Aktuelles Passwort",
+  "SETTINGS.NEW_PASSWORD" : "Neues Passwort",
+  "SETTINGS.NEW_PASSWORD_REPEAT" : "Passwort wiederholen",
   "GENERAL.DATE_FORMAT" : "dd.MM.yyyy HH:mm:ss",
   "MESSAGES.PASSWORD_NEEDED_FOR_PRIVATE_KEY" : "Um ein Backup Ihres privaten Schlüssels zu erhalten müssen Sie Ihr Passwort eingeben.",
   "MESSAGES.WRONG_PASSWORD" : "Das eingegebene Passwort stimmt nicht mir Ihrem Account Passwort überein.",
@@ -144,5 +149,7 @@
   "MESSAGES.NO_LISTED_TRANSACTIONS" : "Sie haben keine Transaktionen.",
   "MESSAGES.IMPORT_SUCCESS" : "Account erfolgreich importiert.",
   "MESSAGES.IMPORT_ERROR" : "Fehler beim Import.",
-    "MESSAGES.TRANSACTION_NOT_FOUND" : "Transaktion konnte nicht gefunden werden."
+ "MESSAGES.CHANGE_PASSWORD_SUCCESS" : "Account Passwort wurde gespeichert.",
+  "MESSAGES.CHANGE_PASSWORD_ERROR" : "Ein Fehler ist aufgetreten.",
+   "MESSAGES.TRANSACTION_NOT_FOUND" : "Transaktion konnte nicht gefunden werden."
 }
