@@ -46,6 +46,7 @@
   "BLOCK" : "Block",
   "ASSET_TYPE" : "Art",
   "ISSUER" : "Herausgeber",
+  "FROZEN": "Eingefroren",
   "CONNECTION_PEERS" : "Verbindungen",
   "CONNECTION_BLOCKS" : "Blöcke",
   "METAVERSE_VERSION" : "Version",

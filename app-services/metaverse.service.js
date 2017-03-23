@@ -540,6 +540,7 @@
         return $http.post(RPC_URL, { method: method, params: params },{ headers : {}})
             .then(
                 (res) => {
+
                   if(service.debug)
                     console.log({
                       "method" : method,
@@ -561,8 +562,8 @@
       }
 
       function handleError(res) {
-        if(res.error!=undefined)
-          return { success: false, message: res.error };
+        if(res.data!=undefined && res.data.error!=undefined)
+          return { success: false, message: res.data.error };
         return { success: false, message: 'General connection error' };
       }
 
@@ -594,7 +595,7 @@
       }
 
       function LoadTransactions (callback, type){
-        
+
         MetaverseService.ListTxs()
         .then(function (response) {
           var transactions=[];

@@ -212,7 +212,9 @@
 							value*=100000000;
 							break;
 						default:
-							FlashService.Error('Value cannot be transfered');
+							$translate('MESSAGES.TRANSFER_ERROR').then(function (data) {
+								FlashService.Error(data);
+							});
 							return;
 					}
 
@@ -231,7 +233,12 @@
 						else {
 							//Transaction problem
 							$translate('MESSAGES.TRANSFER_ERROR').then(function (data) {
-								FlashService.Error(data);
+								if(response.message!=undefined){
+									FlashService.Error(data + " " + response.message);
+								}
+								else {
+									FlashService.Error(data);
+								}
 							});
 							$scope.password='';
 						}
