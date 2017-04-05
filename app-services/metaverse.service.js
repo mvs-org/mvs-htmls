@@ -539,7 +539,7 @@
     function _send(method, params){
         return $http.post(RPC_URL, { method: method, params: params },{ headers : {}})
             .then(
-                (res) => {
+                function(res) {
 
                   if(service.debug)
                     console.log({
@@ -549,7 +549,7 @@
                     });
                   return handleSuccess(res);
                 },
-                (res) =>  handleError(res)
+                function(res){ handleError(res);}
             );
       }
 

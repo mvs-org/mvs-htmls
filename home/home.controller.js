@@ -824,7 +824,7 @@
 		}
 
 		updateHeight();
-		setInterval( () => updateHeight(), 10000);
+		setInterval( function() { updateHeight();}, 10000);
 
 		$scope.show_account_menu = function(){
 			$scope.menu.account.show = 1-$scope.menu.account.show;
