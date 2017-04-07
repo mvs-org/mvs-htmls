@@ -111,6 +111,7 @@
   "DEPOSIT.PERIOD.QUARTER" : "1 Quartal",
   "DEPOSIT.PERIOD.HALF_YEAR" : "1 Halbjahr",
   "DEPOSIT.PERIOD.YEAR" : "1 Jahr",
+  "DEPOSIT.ADDRESS_OPTION" : "Empfängeraddresse definieren",
   "EXPLORER.TRANSACTION_HASH" : "Hash",
   "EXPLORER.TRANSACTION_INPUTS" : "Inputs",
   "EXPLORER.TRANSACTION_OUTPUTS" : "Outputs",

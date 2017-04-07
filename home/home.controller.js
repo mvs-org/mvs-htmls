@@ -51,6 +51,10 @@
 	$scope.changeFactor=changeFactor;
 	$scope.deposit = deposit;
 
+      function init(){
+          $scope.deposit_address="";
+          $scope.value="";
+      }
 	$scope.isNumber = angular.isNumber;
 
 		$scope.deposit_options = {
@@ -105,10 +109,11 @@
 			}
 			else{
 				var deposit_value = ($rootScope.factor=="FACTOR_SATOSHI") ? $scope.value : $scope.value * 100000000;
-				MetaverseService.Deposit($scope.deposit_options[$scope.period_select][2], deposit_value, $scope.password)
+				  MetaverseService.Deposit($scope.deposit_options[$scope.period_select][2], deposit_value, $scope.password, ($scope.address_option)?$scope.deposit_address:undefined)
 				.then(function (response) {
 					NProgress.done();
 					if ( typeof response.success !== 'undefined' && response.success && response.data.error == undefined) {
+              init();
 						//Transaction was successful
 						$translate('MESSAGES.DEPOSIT_SUCCESS').then(function (data) {
 							FlashService.Success(data + response.data.transaction.hash);

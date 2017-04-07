@@ -31,6 +31,11 @@
 								<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}：<span class="red big">*</span></label>
 									<input type="password" class="form-control" name="password" id="" autocomplete="new-password" ng-model="password" required="">
 							</div>
+              <div class="form-group">
+								<label for="address_option" class="control-label">{{ 'DEPOSIT.ADDRESS_OPTION' | translate }}</label>
+								<input type="checkbox" class="form-control pull-right" name="address_option" ng-model="address_option">
+                <input type="text" class="form-control" name="deposit_address" ng-model="deposit_address" ng-show="address_option">
+							</div>
 							<button type="submit" id="transferBtn" ng-click="deposit()">{{ 'DEPOSIT.SEND' | translate }}</button>
 						</div>
 						<div class="col-sm-1"></div>

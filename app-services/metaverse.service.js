@@ -496,9 +496,14 @@
     * @apiParam {List} params [-f depositperiod,username, password, amount]
     *
     **/
-    function Deposit(deposit_period, amount, password){
-      var credentials = localStorageService.get('credentials');
-      return _send('deposit', ['-d',deposit_period,credentials.user,password, amount]);
+      function Deposit(deposit_period, amount, password, address){
+          var credentials = localStorageService.get('credentials');
+          if(address!=undefined){
+              return _send('deposit', ['-d',deposit_period,'-a',address,credentials.user,password, amount]);
+          }
+          else{
+              return _send('deposit', ['-d',deposit_period,credentials.user,password, amount]);
+          }
     }
 
     /**

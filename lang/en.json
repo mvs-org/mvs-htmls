@@ -114,6 +114,7 @@
   "DEPOSIT.PERIOD.HALF_YEAR" : "Half year",
   "DEPOSIT.PERIOD.YEAR" : "Year",
   "DEPOSIT.PROFIT" : "Your profit",
+  "DEPOSIT.ADDRESS_OPTION" : "Deposit to a specified address",
   "EXPLORER.TRANSACTION_HASH" : "Hash",
   "EXPLORER.TRANSACTION_INPUTS" : "Inputs",
   "EXPLORER.TRANSACTION_OUTPUTS" : "Outputs",
