@@ -112,6 +112,13 @@
       templateUrl: "home/assets/index.view.html"
     })
 
+    .state('home.asset.alldetails', {
+      url: "/asset/all",
+      templateUrl: "home/assets/all.view.html",
+      controller: 'ShowAllAssetsController',
+      controllerAs: 'vm'
+    })
+
     .state('home.asset.details', {
       url: "/asset/details/:symbol",
       templateUrl: "home/assets/details.view.html",

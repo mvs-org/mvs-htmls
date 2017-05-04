@@ -10,6 +10,7 @@
   "NAV_ASSET_DETAILS" : "Anzeigen",
   "NAV_ASSET_CREATE" : "Erstellen",
   "NAV_ASSET_TRANSFER" : "Übertragen",
+  "NAV_ASSET_ALL" : "Register",
   "NAV_MINING":      "Mining",
   "NAV_CONSOLE":      "Konsole",
   "NAV_TRANSFER" : "Senden",

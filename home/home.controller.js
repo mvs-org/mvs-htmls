@@ -9,6 +9,7 @@
 	.controller('CreateAssetController', CreateAssetController)
 	.controller('AssetsController', AssetsController)
 	.controller('ShowAssetsController', ShowAssetsController)
+	.controller('ShowAllAssetsController', ShowAllAssetsController)
 	.controller('ETPController', ETPController)
 	.controller('DepositController', DepositController)
 	.controller('ExplorerController', ExplorerController)
@@ -499,6 +500,82 @@
 		loadasset($scope.symbol);
 
 	}
+
+	function ShowAllAssetsController(MetaverseService, $rootScope, $scope, FlashService, $translate, $stateParams){
+
+		$scope.symbol = $stateParams.symbol;
+		$scope.assets=[];
+		$scope.issue = issue;
+
+		//Load assets
+		NProgress.start();
+		MetaverseService.ListAllAssets()
+		.then(function (response) {
+			NProgress.done();
+			if ( typeof response.success !== 'undefined' && response.success) {
+				$scope.assets=[];
+				$scope.assets = response.data.assets;
+
+			}
+			else {
+				//Redirect user to the assets page
+				$location.path('/asset/details/');
+
+				//Show asset load error
+				$translate('MESSAGES.ASSETS_LOAD_ERROR').then(function (data) {
+					FlashService.Error(data);
+				});
+			}
+		});
+
+		//If asset is defined -> load it
+		if($scope.symbol!=undefined && $scope.symbol!=""){
+			NProgress.start();
+			loadasset($scope.symbol);
+		}
+
+		function issue(symbol){
+			NProgress.start();
+			MetaverseService.Issue(symbol)
+			.then(function (response) {
+				if ( typeof response.success !== 'undefined' && response.success) {
+					loadasset($scope.symbol);
+					$translate('MESSAGES.ASSETS_ISSUE_SUCCESS').then(function (data) {
+						FlashService.Success(data);
+					});
+				}
+				else {
+					$translate('MESSAGES.ASSETS_ISSUE_ERROR').then(function (data) {
+						FlashService.Error(data);
+					});
+				}
+				NProgress.done();
+			});
+		}
+
+		//Loads a given asset
+		function loadasset(symbol){
+			MetaverseService.GetAsset(symbol)
+			.then(function (response) {
+				NProgress.done();
+				if ( typeof response.success !== 'undefined' && response.success) {
+					$scope.asset = response.data.assets[0];
+					$scope.assets.forEach(function(a){
+						if(a.symbol==symbol){
+							$scope.asset.quantity=a.amount;
+						}
+					});
+				}
+				else {
+					//Asset could not be loaded
+					$translate('MESSAGES.ASSETS_LOAD_ERROR').then(function (data) {
+						FlashService.Error(data);
+					});
+				}
+			});
+		}
+	}
+
 
 	function ShowAssetsController(MetaverseService, $rootScope, $scope, FlashService, $translate, $stateParams){
 

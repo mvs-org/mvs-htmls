@@ -1,0 +1,57 @@
+
+<div ng-show="asset.symbol">
+  <div class="headline"><em></em>{{ 'HEADLINE_ASSETS_DETAILS' | translate }}</div>
+<div class="row">
+  <div class="col-md-3">{{'ASSET_ASSET_CREATE_SYMBOL' | translate}}:</div>
+  <div class="col-md-3">{{asset.symbol}}</div>
+</div>
+<div class="row">
+  <div class="col-md-3">{{'BALANCE' | translate}}:</div>
+  <div class="col-md-3">{{asset.quantity}}</div>
+</div>
+<div class="row">
+  <div class="col-md-3">{{'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate}}:</div>
+  <div class="col-md-3">{{asset.maximum_supply}}</div>
+</div>
+<div class="row">
+  <div class="col-md-3">{{'ISSUER' | translate}}:</div>
+  <div class="col-md-3">{{asset.issuer}}</div>
+</div>
+<div class="row">
+  <div class="col-md-3">{{'ASSET_ASSET_CREATE_DESCRIPTION' | translate}}:</div>
+  <div class="col-md-3">{{asset.description}}</div>
+</div>
+<div class="row">
+  <div class="col-md-3">{{'STATUS' | translate}}:</div>
+  <div class="col-md-3">{{asset.status}}</div>
+</div>
+<div class="row">
+  <div class="col-md-3">{{'ADDRESS' | translate}}:</div>
+  <div class="col-md-3">{{asset.address}}</div>
+</div>
+<div ng-show="asset.status=='unissued'">
+  <a href="" ng-click="issue(asset.symbol)"><div class="btn btn-primary">Issue</div></a>
+</div>
+<div ng-show="asset.status=='issued'">
+  <a href="#!/asset/transfer/{{asset.symbol}}/{{asset.address}}"><input class="btn btn-success" value="{{'TRANSFER_SEND' | translate}}"></a>
+</div>
+
+</div>
+<div class="headline"><em></em>{{ 'NAV_ASSET_ALL' | translate }}</div>
+<div class=" ">
+  <div class="mainContent1">
+    <div class="row assetBoxWrapper">
+      <dl id="outer_wrap">
+        <a href="#!/asset/details/{{asset.symbol}}" ng-repeat="asset in assets">
+        <dd class="panel assetBox" >
+          <span class="span1 assetBoxSymbol">{{asset.symbol}}</span>
+          <span class="span3">{{ 'QUANTITY' | translate }}</span>
+          <span class="span2">{{asset.amount}}</span>
+          <span class="span3">{{ 'STATUS' | translate }}</span>
+          <span class="span2">{{asset.status}}</span>
+        </dd>
+      </a>
+      </dl>
+    </div>
+  </div>
+</div>

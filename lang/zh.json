@@ -10,6 +10,7 @@
   "NAV_ASSET_DETAILS" : "资产详情",
   "NAV_ASSET_CREATE" : "创建资产",
   "NAV_ASSET_TRANSFER" : "资产交易",
+  "NAV_ASSET_ALL" : "全网资产",
   "NAV_MINING":      "挖矿",
   "NAV_CONSOLE":      "控制台",
   "NAV_TRANSFER" : "转账",

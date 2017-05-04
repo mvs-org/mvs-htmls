@@ -9,6 +9,7 @@
   "NAV_ETP":  "ETP",
   "NAV_ASSET_DETAILS" : "Show",
   "NAV_ASSET_CREATE" : "Create",
+  "NAV_ASSET_ALL" : "Registry",
   "NAV_ASSET_TRANSFER" : "Transfer",
   "NAV_MINING":      "Mining",
   "NAV_CONSOLE":      "Console",
