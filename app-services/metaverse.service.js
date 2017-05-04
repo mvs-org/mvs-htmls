@@ -613,6 +613,7 @@
               response.data.transactions.forEach(function(e){
                 var transaction = {
                   "height" : e.height,
+                  "hash" : e.hash,
                   "timestamp" : new Date(e.timestamp*1000),
                   "direction" : e.direction,
                   "recipents" : [],
