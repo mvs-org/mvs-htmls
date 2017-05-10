@@ -28,8 +28,10 @@
     service.GetAccount = GetAccount;
     service.GetNewAddress = GetNewAddress;
     service.Send = Send;
+    service.SendFrom = SendFrom;
     service.ListTxs = ListTxs;
     service.ChangePassword = ChangePassword;
+    service.ResetPassword = ResetPassword;
 
 
     service.SERVER = SERVER;
@@ -124,6 +126,21 @@
       var credentials = localStorageService.get('credentials');
       return _send('changepasswd', [credentials.user,credentials.password, '--password', password]);
     }
+    
+    /**
+     * @api {post} /rpc Reset account password
+     * @apiName Reset Password
+     * @apiGroup Accoun:t
+     *
+     * @apiDescription Reset the password the current account.
+     *
+     * @apiParam {Const} method changepasswd
+     * @apiParam {List} params ['-n', username, '-p', password, mnemonic]
+     *
+     **/
+    function ResetPassword(username, password, mnemonic) {
+      return _send('changepasswdext', ['-n', username, '-p', password, mnemonic]);
+    }
 
 
     /**
@@ -195,7 +212,7 @@
     * @apiDescription Get the balances of all addresses of the given account.
     *
     * @apiParam {Const} method listbalances
-    * @apiParam {List} params [username, password]
+    * @apiParam {List} params [ username, password]
     *
     * @apiSuccessExample {json} Success-Response:
     * {
@@ -219,9 +236,12 @@
     *    ]
     * }
     **/
-    function ListBalances() {
+    function ListBalances(hide_empty) {
       var credentials = localStorageService.get('credentials');
-      return _send('listbalances', [credentials.user,credentials.password]);
+      if(hide_empty)
+        return _send('listbalances', ['-n', credentials.user,credentials.password]);
+      else
+      	return _send('listbalances', [credentials.user,credentials.password]);
     }
 
 
@@ -279,9 +299,50 @@
     * }
     **/
     function Send(recipent,quantity) {
-
       var credentials = localStorageService.get('credentials');
       return _send('send', [credentials.user,credentials.password, recipent, quantity]);
+    }
+    
+    /**
+    * @api {post} /rpc Send from
+    * @apiName Send from
+    * @apiGroup ETP
+    *
+    * @apiDescription Send ETP to another address from a specified address.
+    *
+    * @apiParam {Const} method send
+    * @apiParam {List} params [username, password, from address, recipent address, quantity]
+    *
+    * @apiSuccessExample {json} Success-Response:
+    * {
+    *    "transaction": {
+    *      "hash": "9486cb52db428c267854dd197495263676e0f3c5f122633f78ef39960c7523e0",
+    *      "inputs": [
+    *       {
+    *         "address": "1NyoThWXCRL7ykfN5bYRADtHdi9shAmHtK",
+    *         "previous_output": {
+    *             "hash": "e87ad5eb94a6936dcb2c86fe97ac219fc2d940f7dcf8658b5fd63f8ec451119d",
+    *             "index": "0"
+    *         },
+    *         "script": "[ 30450221008c8a6cca1eb51055ea64a1a8ef3aea41cc0637ca50276d1a85a44182be0682c502204172a15a924cc17583a0d0853e0a76493636064b45f62e78f336a3249b93df9d01 ] [ 027dd78b5199d67956dfbeedd7bfc562f87199125ff2c44fd7a6d5df331fa89536 ]",
+    *         "sequence": "4294967295"
+    *       }
+    *      ],
+    *      "lock_time": "0",
+    *      "outputs": [
+    *       {
+    *         "address": "1GRheH1GgrfPc7Dr9DbrqjwG4auj4KSrE3",
+    *         "script": "dup hash160 [ a935cbf118340293e7e8ed4a7a9c6f765ad72ad2 ] equalverify checksig",
+    *         "value": "123123456"
+    *       }
+    *      ],
+    *      "version": "1"
+    *    }
+    * }
+    **/
+    function SendFrom(sender,recipent,quantity) {
+      var credentials = localStorageService.get('credentials');
+      return _send('sendfrom', [credentials.user,credentials.password, sender, recipent, quantity]);
     }
 
     /**

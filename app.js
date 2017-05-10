@@ -40,13 +40,6 @@
       controllerAs: 'vm'
     })
 
-    .state('reset', {
-      url: "/reset",
-      templateUrl: "login/reset.view.html",
-      controller: 'LoginController',
-      controllerAs: 'vm'
-    })
-
     .state('register', {
       url: "/register",
       templateUrl: "register/register.view.html",
@@ -178,7 +171,7 @@
 
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to login page if not logged in and trying to access a restricted page
-            var restrictedPage = (['/login', '/register', '/reset'].indexOf($location.path()) === -1);
+            var restrictedPage = (['/login', '/register'].indexOf($location.path()) === -1);
             var loggedIn = $localStorageService.get('credentials') != undefined ;
             if (restrictedPage && !loggedIn) {
                $location.path('/login');

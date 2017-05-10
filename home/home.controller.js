@@ -54,8 +54,11 @@
 
       function init(){
           $scope.deposit_address="";
-          $scope.value="";
+        	$scope.value="";			
+    			$scope.password = '';
+			  	$scope.value= '';
       }
+
 	$scope.isNumber = angular.isNumber;
 
 		$scope.deposit_options = {
@@ -134,11 +137,6 @@
 		}
 
 
-		function init(){
-			$scope.password = '';
-			$scope.value= '';
-		}
-
 	}
 	/**
 	 * The ETP Controller provides ETP transaction functionality.
@@ -161,6 +159,11 @@
 			$scope.message='';
 			$scope.value='';
 			$scope.password='';
+      MetaverseService.ListBalances(true)
+      	.then(function(response){
+          if(response.success)
+						$scope.from_addresses=response.data.balances;
+        });
 		}
 
 		function changeFactor(factor){
@@ -183,20 +186,20 @@
 		//Transfers ETP
 		function transfer(){
 			//Check for unimplemented parameters
-			if($scope.sendfrom != '' || $scope.fee != '' || $scope.message != ''){
+			if($scope.sendfrom !== '' || $scope.fee !== '' || $scope.message !== ''){
 				FlashService.Error('Sorry. Only basic transfer works so far.');
 			}
-			else if($scope.password==''){ //Check for empty password
+			else if($scope.password===''){ //Check for empty password
 				$translate('MESSAGES.PASSWORD_NEEDED').then(function (data) {
 					FlashService.Error(data);
 				});
 			}
-			else if($scope.sendto==''){ //Check for recipent address
+			else if($scope.sendto===''){ //Check for recipent address
 				$translate('MESSAGES.TRANSACTION_RECIPENT_ADDRESS_NEEDED').then(function (data) {
 					FlashService.Error(data);
 				});
 			}
-			else if($scope.value==''){ //Check for transaction value
+			else if($scope.value===''){ //Check for transaction value
 				$translate('MESSAGES.TRANSACTION_VALUE_NEEDED').then(function (data) {
 					FlashService.Error(data);
 				});
@@ -226,7 +229,9 @@
 
 					value=Math.round(value);
 
-					MetaverseService.Send($scope.sendto, value, $scope.password)
+          var SendPromise=($scope.from_address)?MetaverseService.SendFrom($scope.from_address,$scope.sendto, value, $scope.password):MetaverseService.Send($scope.sendto, value, $scope.password);
+
+					SendPromise
 					.then(function (response) {
 						NProgress.done();
 						if ( typeof response.success !== 'undefined' && response.success) {
@@ -264,7 +269,7 @@
 				$scope.transactions=transactions;
 			}
 			NProgress.done();
-		}, 'etp')
+		}, 'etp');
 
 		//Initialize
 		init();

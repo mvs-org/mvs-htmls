@@ -10,7 +10,6 @@
         var vm = this;
 
         vm.login = login;
-        vm.reset = reset;
 
         (function initController() {
 
@@ -79,33 +78,6 @@
                 }
               );
         };
-
-
-        function reset() {
-          if(vm.resetpassword==undefined || vm.resetpassword.private_key==undefined){
-            FlashService.Error('You need to enter your private key in order to reset your account password.');
-            return;
-          }
-          else if(vm.resetpassword.password == undefined || vm.resetpassword.password.length<6){
-            $translate('MESSAGES.PASSWORD_SHORT').then(function (data) {
-              FlashService.Error(data);
-            });
-            return;
-          }
-          else if(vm.resetpassword.password_repeat == undefined || vm.resetpassword.password_repeat!=vm.resetpassword.password){
-            $translate('MESSAGES.PASSWORD_NOT_MATCH').then(function (data) {
-              FlashService.Error(data);
-            });
-            return;
-          }
-          else{
-            $translate('MESSAGES.FUNCTION_NOT_IMPLEMENTED').then(function (data) {
-              FlashService.Error(data);
-            });
-            return;
-          }
-        };
-
 
 
     }

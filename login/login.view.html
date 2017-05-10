@@ -21,9 +21,7 @@
               <input type="password" name="password" class="form-control" ng-model="vm.password">
           </div>
 
-        	<p class="pull-right"><a href="#!/reset">{{ 'LOGIN.FORGOT_PASSWORD' | translate }}</a></p>
-
-<br><br><br>
+<br><br>
           <button type="submit" class="btn btn-success" ng-disabled="form.$invalid || vm.dataLoading" ng-click="vm.login()">{{ 'LOGIN.LOGIN_BUTTON' | translate }}</button>
           <a href="#!/register" class="btn btn-info">{{ 'LOGIN.REGISTGER_BUTTON' | translate }}</a>
           <span class="dropdown">

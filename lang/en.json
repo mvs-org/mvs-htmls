@@ -35,6 +35,8 @@
   "TRANSFER_MESSAGE" : "Message",
   "TRANSFER_PASSWORD" : "Password",
   "TRANSFER_SEND" : "Send",
+  "TRANSFER_FROM_ADDRESS" : "From address",
+  "TRANSFER_FROM_ADDRESS_AUTOMATIC" : "Automatic",
   "TRANSFER_NO_OF_CONFIRMATIONS" : "Confirmations",
   "HEADLINE_ADDRESSES" : "Addresses",
   "HEADLINE_ACCOUNTSETTINGS" : "Settings",
