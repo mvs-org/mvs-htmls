@@ -487,7 +487,7 @@
 
 						$translate('MESSAGES.ASSETS_TRANSFER_SUCCESS').then(function (data) {
 							setTimeout(function(){
-								FlashService.Success(data);
+								FlashService.Success(data + response.data.transaction.hash);
 								$rootScope.$apply();
 							}, 100);
 						});
