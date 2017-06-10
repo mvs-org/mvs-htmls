@@ -437,6 +437,7 @@
 		$scope.symbol = $stateParams.symbol;
 		$scope.sender_address = $stateParams.sender_address;
 
+		$scope.sendasset=sendasset;
 		$scope.sendassetfrom=sendassetfrom;
 
 		function loadasset(symbol){
@@ -458,6 +459,48 @@
 
 				}
 			});
+		}
+
+		function sendasset(recipent_address, symbol, quantity){
+			if(localStorageService.get('credentials').password!=$scope.password){
+				$translate('MESSAGES.WRONG_PASSWORD').then(function (data) {
+					FlashService.Error(data);
+				});
+			}
+			else if($scope.recipent_address==undefined || $scope.recipent_address.length != 34){
+				$translate('MESSAGES.TRANSACTION_RECIPENT_ADDRESS_NEEDED').then(function (data) {
+					FlashService.Error(data);
+				});
+			}
+			else if($scope.quantity==undefined || ! ($scope.quantity > 0)){
+				$translate('MESSAGES.TRANSACTION_VALUE_NEEDED').then(function (data) {
+					FlashService.Error(data);
+				});
+			}
+			else{
+				MetaverseService.SendAsset(recipent_address, symbol, quantity)
+				.then(function (response) {
+					NProgress.done();
+					if ( typeof response.success !== 'undefined' && response.success) {
+						//Redirect user to the assets page
+						$location.path('/asset/details/');
+
+						$translate('MESSAGES.ASSETS_TRANSFER_SUCCESS').then(function (data) {
+							setTimeout(function(){
+								FlashService.Success(data);
+								$rootScope.$apply();
+							}, 100);
+						});
+					}
+					else {
+						//Show asset load error
+						$translate('MESSAGES.ASSETS_TRANSFER_ERROR').then(function (data) {
+							FlashService.Error(data);
+						});
+
+					}
+				});
+			}
 		}
 
 		function sendassetfrom(sender_address, recipent_address, symbol, quantity){
