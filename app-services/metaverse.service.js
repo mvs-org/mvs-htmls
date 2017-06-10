@@ -721,7 +721,7 @@
                           "address" : e.outputs[i].address,
                           "value" : e.outputs[i].attachment.quantity
                         })
-                        transaction.value+= parseInt(e.outputs[i].attachment.quantity);
+                        transaction.value+= parseInt(e.outputs[i].attachment.quantity||0);
                       }
                       }
 
