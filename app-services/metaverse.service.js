@@ -476,12 +476,13 @@
          * locally and you need to issue it to write it into the blockchain.
          *
          * @apiParam {Const} method createasset
-         * @apiParam {List} params [username, password,'-s',symbol,'-v',max_supply,'-d',description]
+         * @apiParam {List} params [username, password,'-s',symbol,'-v',max_supply,'-n',decimal_number, '-d',description]
          *
          **/
-        function CreateAsset(symbol, max_supply, description) {
+        function CreateAsset(symbol, max_supply, decimal_number, description) {
+            max_supply*=Math.pow(10,decimal_number);
             var credentials = localStorageService.get('credentials');
-            return _send('createasset', [credentials.user, credentials.password, '-s', symbol, '-v', max_supply, '-d', description]);
+            return _send('createasset', [credentials.user, credentials.password, '-s', symbol, '-v', max_supply, '-n',decimal_number, '-d', description]);
         }
 
         /**
@@ -736,6 +737,7 @@
                                 case TX_TYPE_ETP:
                                     //ETP transaction handling
                                     transaction.type = 'ETP';
+                                    transaction.asset_type=8;
                                     e.outputs.forEach(function(output){
                                         if((transaction.direction==='receive' && output.own==='true') || (transaction.direction==='send' && output.own==='false')){
                                             transaction.recipents.push({
@@ -745,8 +747,8 @@
                                             transaction.value += parseInt(output['etp-value']);
                                         }
                                     });
-                                    transaction.value /= 100000000;
-                                    transactions.push(transaction);
+                                    if(transaction.value)
+                                        transactions.push(transaction);
                                     break;
                                 case TX_TYPE_ASSET:
                                     //Asset transactions
@@ -758,9 +760,11 @@
                                             });
                                             transaction.value += parseInt(output.attachment.quantity);
                                             transaction.type = output.attachment.symbol;
+                                            transaction.decimal_number=output.attachment.decimal_number;
                                         }
                                     });
-                                    transactions.push(transaction);
+                                    if(transaction.value)
+                                        transactions.push(transaction);
                                     break;
                                 case TX_TYPE_ISSUE:
                                     //Asset issue tx
@@ -771,11 +775,13 @@
                                                 "address": output.address,
                                                 "value": parseInt(output.attachment.quantity)
                                             });
-                                            transaction.value += parseInt(output.attachment.quantity);
+                                            transaction.value += parseInt(output.attachment.maximum_supply);
                                             transaction.type = output.attachment.symbol;
+                                            transaction.decimal_number=output.attachment.decimal_number;
                                         }
                                     });
-                                    transactions.push(transaction);
+                                    if(transaction.value)
+                                        transactions.push(transaction);
                                 }
                             });
                             //Return transaction list

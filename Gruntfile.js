@@ -82,8 +82,6 @@ module.exports = function(grunt) {
                     './node_modules/angular-local-storage/dist/angular-local-storage.min.js',
                     './node_modules/angular-translate/dist/angular-translate.min.js',
                     './node_modules/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js',
-                    './node_modules/angulartics/dist/angulartics.min.js',
-                    './node_modules/angulartics-piwik/dist/angulartics-piwik.min.js',
                     './node_modules/angular-utils-pagination/dirPagination.js'
                 ],
                 dest: './min/framework.min.js'
@@ -155,10 +153,15 @@ module.exports = function(grunt) {
                 src: 'build.html',
                 dest: 'dist/index.html'
             }
+        }, rev:{
+            files: {
+                src: ['dist/*/**/*.{html,js,css,jpg,png}', 'dist/**/*.js', 'dist/**/*.css']
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-rev');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-browser-sync');
     grunt.loadNpmTasks('grunt-contrib-cssmin');

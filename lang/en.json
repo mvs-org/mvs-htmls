@@ -64,6 +64,7 @@
   "ASSET_ASSET_CREATE_PASSWORD" : "Password",
   "ASSET_ASSET_CREATE_SELECT_ADDRESS" : "Select address",
   "ASSET_ASSET_CREATE_SUBMIT_BUTTON" : "Create",
+  "ASSET_ASSET_CREATE_DIGITS" : "Number of decimals",
   "CREATE_NEW_ADDRESS" : "Create new address",
   "SETTINGS_ACCOUNT_ID" : "Account ID",
   "SETTINGS_ACCOUNT_NAME" : "Name",

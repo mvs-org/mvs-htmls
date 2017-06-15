@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('app', ['angulartics', 'angulartics.piwik', 'ui.router', 'ngCookies', 'LocalStorageModule', 'pascalprecht.translate', 'angularUtils.directives.dirPagination'])
+    angular.module('app', ['ui.router', 'ngCookies', 'LocalStorageModule', 'pascalprecht.translate', 'angularUtils.directives.dirPagination'])
         .config(config)
   	    .filter('assetformat',function(){
 			      return function(input, asset_type){

@@ -12,6 +12,10 @@
           <label for="max_supply" class="control-label">{{ 'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate }}</label>
           <input type="number" class="form-control" name="max_supply" ng-class="{ 'border-danger' : (error.max_supply && max_supply!=undefined) || max_supply==''}" placeholder="" ng-model="max_supply" autocomplete="off" required>
         </div>
+        <div class="form-group">
+          <label for="decimals" class="control-label">{{ 'ASSET_ASSET_CREATE_DIGITS' | translate }}</label>
+          <input type="number" class="form-control" name="decimals" ng-class="{ 'border-danger' : (error.digits && digits!=undefined) || max_supply==''}" min="0" max="8" placeholder="" ng-model="decimals" autocomplete="off" required>
+        </div>
         <div class="assetExplains">
           <label for="description" class="control-label">{{ 'ASSET_ASSET_CREATE_DESCRIPTION' | translate }}</label>
           <textarea class="form-control" name="description" ng-class="{ 'border-danger' : (error.description && description)}" rows="4" cols="35" ng-model="description" autocomplete="off"></textarea>

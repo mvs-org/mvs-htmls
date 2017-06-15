@@ -18,7 +18,7 @@
             <dd class="panel assetBox" >
               <span class="span1 assetBoxSymbol">{{asset.symbol}}</span>
               <span class="span3">{{ 'BALANCE' | translate }}</span>
-              <span class="span2">{{asset.amount}}</span>
+              <span class="span2">{{asset.quantity | assetformat : asset.decimal_number}}</span>
               <span class="span3">{{ 'STATUS' | translate }}</span>
               <span class="span2">{{asset.status}}</span>
             </dd>
@@ -53,7 +53,7 @@
                       {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT' | translate) }}
                     </div>
                     <div class="col-md-2 right-align">
-                      {{transaction.value}}
+                      {{transaction.value | assetformat : transaction.decimal_number}}
                     </div>
                     <div class="col-md-3">
                       {{transaction.type}}

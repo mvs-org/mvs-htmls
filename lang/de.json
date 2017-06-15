@@ -64,6 +64,7 @@
   "ASSET_ASSET_CREATE_PASSWORD" : "Passwort",
   "ASSET_ASSET_CREATE_SELECT_ADDRESS" : "Addresse auswählen",
   "ASSET_ASSET_CREATE_SUBMIT_BUTTON" : "Erstellen",
+  "ASSET_ASSET_CREATE_DIGITS" : "Nachkommastellen",
   "CREATE_NEW_ADDRESS" : "Neue Adresse erstellen",
   "SETTINGS_ACCOUNT_ID" : "Konto ID",
   "SETTINGS_ACCOUNT_NAME" : "Name",

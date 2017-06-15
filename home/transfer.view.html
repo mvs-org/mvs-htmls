@@ -62,7 +62,7 @@
                       {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT' | translate) }}
                     </div>
 							<div class="col-md-4">
-								{{transaction.value}} ETP
+								{{transaction.value | assetformat : 8}} ETP
 							</div>
 							<div class="col-md-4">
 								{{ 'TRANSFER_RECIPENT' | translate }}: <div ng-repeat="recipent in transaction.recipents" class="address">{{recipent.address}}</div>
