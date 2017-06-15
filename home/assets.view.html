@@ -5,6 +5,7 @@
       <div class="mainContent1">
         <div class="row assetBoxWrapper">
           <dl id="outer_wrap">
+            <a href="#!/transfer">
             <dd class="panel assetBox">
               <span class="span1">ETP</span>
               <span class="span3">{{ 'BALANCE' | translate}}</span>
@@ -12,6 +13,7 @@
               <span class="span3">{{ 'FROZEN' | translate}}</span>
               <span class="span2">{{balance['total-frozen']/100000000}}</span>
             </dd>
+          </a>
             <a href="#!/asset/details/{{asset.symbol}}" ng-repeat="asset in assets">
             <dd class="panel assetBox" >
               <span class="span1 assetBoxSymbol">{{asset.symbol}}</span>
@@ -36,13 +38,15 @@
 
             <div class="row">
               <div class="col-md-1">
-                <img src="images/receiveBig.png" ng-show="transaction.direction=='receive'">
-                <img src="images/sendBig.png" ng-show="transaction.direction=='send'">
+                <img src="images/receiveBig.png" ng-if="transaction.direction=='receive'">
+                <img src="images/sendBig.png" ng-if="transaction.direction=='send'">
+                <img src="images/add.png" style="height: 30px;" ng-if="transaction.direction=='issue'">
               </div>
               <div class="col-md-11">
                   <div class="row">
-                    <div class="col-md-12 hash">
-                  </div>
+							<div class="col-md-12 hash">
+								<a target="_blank" href="http://explorer.mvs.live/#!/tx/{{transaction.hash}}"> {{transaction.hash}}</a>
+						</div>
                   </div>
                   <div class="row">
                     <div class="col-md-3">

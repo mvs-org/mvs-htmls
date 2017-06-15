@@ -45,7 +45,7 @@
 <div class="content">
 	<div class="headline"><em></em>{{ 'HEADLINE_TRANSACTIONS' | translate }}</div>
 	<div class="">
-		<div class="transactionbox" dir-paginate="transaction in transactions | orderBy:'height':1 | itemsPerPage: 10">
+		<div class="transactionbox" dir-paginate="transaction in transactions | filter : {type: 'ETP'}| orderBy:'height':1 | itemsPerPage: 10">
 			<div class="row">
 				<div class="col-md-1">
 					<img src="images/receiveBig.png" ng-show="transaction.direction=='receive'">
@@ -58,6 +58,9 @@
 						</div>
 						</div>
 						<div class="row">
+                    <div class="col-md-3">
+                      {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT' | translate) }}
+                    </div>
 							<div class="col-md-4">
 								{{transaction.value}} ETP
 							</div>
