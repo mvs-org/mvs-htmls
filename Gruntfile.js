@@ -1,4 +1,7 @@
 module.exports = function(grunt) {
+
+    var package = require('./package.json');
+
     grunt.initConfig({
         // Watch task config
         watch: {
@@ -153,15 +156,35 @@ module.exports = function(grunt) {
                 src: 'build.html',
                 dest: 'dist/index.html'
             }
-        }, rev:{
-            files: {
-                src: ['dist/*/**/*.{html,js,css,jpg,png}', 'dist/**/*.js', 'dist/**/*.css']
+        }, revPackage:{
+            files:  'dist/*/**/*.{html,js,css}'
+        }, 'string-replace': {
+            dist: {
+                files: {
+                    'dist/': ['dist/min/app.min.*.js', 'dist/**/*.css', 'dist/**/*.html'],
+                },
+                options: {
+                    replacements: [{
+                        pattern: /\.view.html/g,
+                        replacement: '.view.'+package.version+'.html'
+                    }, {
+                        pattern: /\.js"/g,
+                        replacement: '.'+package.version+'.js"'
+                    }, {
+                        pattern: /\.css/g,
+                        replacement: '.'+package.version+'.css'
+                    }, {
+                        pattern: '<<<version>>>',
+                        replacement: package.version
+                    }]
+                }
             }
-        }
+}
     });
 
     grunt.loadNpmTasks('grunt-contrib-sass');
-    grunt.loadNpmTasks('grunt-rev');
+    grunt.loadNpmTasks('grunt-rev-package');
+    grunt.loadNpmTasks('grunt-string-replace');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-browser-sync');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
@@ -172,5 +195,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-ng-annotate');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.registerTask('default', ['browserSync', 'watch']);
-    grunt.registerTask('build', ['clean','ngAnnotate', 'concat', 'babel', 'uglify', 'cssmin', 'copy']);
+    grunt.registerTask('build', ['clean','ngAnnotate', 'concat', 'babel', 'uglify', 'cssmin', 'copy','revPackage','string-replace']);
 };
