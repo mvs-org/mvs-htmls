@@ -30,12 +30,9 @@
 				}
 				else{
 					$translate('MESSAGES.TRANSACTION_NOT_FOUND').then(function (data) {
-							setTimeout(function(){
-								FlashService.Error(data);
-								$rootScope.$apply();
-							}, 100);
+								  FlashService.Error(data,true);
+					        $location.path('/explorer');
 						});
-					$location.path('/explorer');
 				}
 				NProgress.done();
 			});
@@ -54,7 +51,7 @@
 
       function init(){
           $scope.deposit_address="";
-        	$scope.value="";			
+        	$scope.value="";
     			$scope.password = '';
 			  	$scope.value= '';
       }
@@ -334,8 +331,8 @@
 						$scope.addresses.push({
 							"balance" : parseInt(e.balance.unspent),
 							"address" : e.balance.address
-						})
-					})
+						});
+					});
 				}
 				NProgress.done();
 			});
@@ -381,7 +378,6 @@
 		}
 
         function changepassword(password, new_password, new_password_repeat){
-            console.log('hallo')
             if(password==undefined || localStorageService.get('credentials').password!=password){
 				$translate('MESSAGES.WRONG_PASSWORD').then(function (data) {
 					FlashService.Error(data);
@@ -402,14 +398,10 @@
 				MetaverseService.ChangePassword(new_password)
 				.then(function (response) {
 					if ( typeof response.success !== 'undefined' && response.success) {
-                        $location.path('/login');
 						//Show success message
 						$translate('MESSAGES.CHANGE_PASSWORD_SUCCESS').then(function (data) {
-							//Wait some time to make sure the user gets the message
-							setTimeout(function(){
-								FlashService.Success(data);
-								$rootScope.$apply();
-							}, 100);
+								  FlashService.Success(data,true);
+                  $location.path('/login');
 						});
 					}
 					else {
@@ -482,14 +474,10 @@
 				.then(function (response) {
 					NProgress.done();
 					if ( typeof response.success !== 'undefined' && response.success) {
-						//Redirect user to the assets page
-						$location.path('/asset/details/');
-
 						$translate('MESSAGES.ASSETS_TRANSFER_SUCCESS').then(function (data) {
-							setTimeout(function(){
 								FlashService.Success(data + response.data.transaction.hash);
-								$rootScope.$apply();
-							}, 100);
+						    //Redirect user to the assets page
+						    $location.path('/asset/details/');
 						});
 					}
 					else {
@@ -524,14 +512,11 @@
 				.then(function (response) {
 					NProgress.done();
 					if ( typeof response.success !== 'undefined' && response.success) {
-						//Redirect user to the assets page
-						$location.path('/asset/details/');
 
 						$translate('MESSAGES.ASSETS_TRANSFER_SUCCESS').then(function (data) {
-							setTimeout(function(){
-								FlashService.Success(data);
-								$rootScope.$apply();
-							}, 100);
+								FlashService.Success(data,true);
+						    //Redirect user to the assets page
+						    $location.path('/asset/details/');
 						});
 					}
 					else {
@@ -740,6 +725,12 @@
 			checkready();
 		});
 
+		  //Check if the decimals is valid
+		  $scope.$watch('decimals', function(newVal, oldVal){
+			    $scope.error.decimals = (newVal == undefined || !(newVal>=0 && newVal<=8));
+			    checkready();
+		  });
+
 		//Check if the description is valid
 		$scope.$watch('description', function(newVal, oldVal){
 			$scope.error.description = (newVal == undefined || !(newVal.length >0));
@@ -762,19 +753,15 @@
 			else{
 				NProgress.start();
 				//Let Metaverse create an local asset
-				MetaverseService.CreateAsset($scope.symbol, $scope.max_supply, $scope.description)
+				  MetaverseService.CreateAsset($scope.symbol, $scope.max_supply, $scope.decimals, $scope.description)
 				.then(function (response) {
 					NProgress.done();
 					if ( typeof response.success !== 'undefined' && response.success) {
-						//Redirect user to the assets page
-						$location.path('/assets');
 						//Show success message
 						$translate('MESSAGES.ASSSET_CREATED_LOCAL_SUCCESS').then(function (data) {
-							//Wait some time to make sure the user gets the message
-							setTimeout(function(){
-								FlashService.Success(data);
-								$rootScope.$apply();
-							}, 100);
+							FlashService.Success(data,true);
+						    //Redirect user to the assets page
+						    $location.path('/assets');
 						});
 					}
 				});
@@ -822,7 +809,7 @@
 				$scope.transactions=transactions;
 			}
 			NProgress.done();
-		})
+		});
 
 	}
 
@@ -923,7 +910,7 @@
 		$scope.query = function(){
 			NProgress.start();
 			ws.send($scope.querystring);
-		}
+		};
 
 
 	}
@@ -959,12 +946,12 @@
 		$scope.show_account_menu = function(){
 			$scope.menu.account.show = 1-$scope.menu.account.show;
 			$scope.menu.assets.show = 0;
-		}
+		};
 
 		$scope.show_assets_menu = function(){
 			$scope.menu.assets.show = 1-$scope.menu.assets.show;
 			$scope.menu.account.show = 0;
-		}
+		};
 
 	}
 

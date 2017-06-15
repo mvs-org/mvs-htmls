@@ -14,6 +14,8 @@
       username: ''
     };
 
+
+
     function register() {
       NProgress.start();
       setTimeout(function () {
