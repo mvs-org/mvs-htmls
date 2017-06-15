@@ -145,7 +145,7 @@
   "MESSAGES.MINING_STOP_SUCCESS" : "Mining stopped.",
   "MESSAGES.MINING_STOP_ERROR" : "Could not stop mining.",
   "MESSAGES.ASSETS_ISSUE_SUCCESS" : "The asset will be issued within the next blocks. Please wait.",
-  "MESSAGES.ASSETS_ISSUE_ERROR" : "The assue could not be issued.",
+  "MESSAGES.ASSETS_ISSUE_ERROR" : "The asset could not be issued.",
   "MESSAGES.DEPOSIT_SUCCESS" : "Deposit successful. The transaction hash is: ",
   "MESSAGES.INVALID_VALUE" : "The value you entered is not valid.",
   "MESSAGES.DEPOSIT_ERROR" : "The deposit failed.",

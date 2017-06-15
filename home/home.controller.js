@@ -645,6 +645,8 @@
                                 //Redirect user to the assets page
                                 $location.path('/assets');
                             });
+                        } else{
+                            FlashService.Error(response.message);
                         }
                     });
             }
