@@ -26,7 +26,7 @@
 						<div class="col-sm-5">
               <div class="form-group">
                   <label for="from_address" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}：</label>
-                <select class="form-control" name="period" ng-model="from_address" required>
+                <select class="form-control" name="period" ng-model="from_address">
                     <option value="">{{'TRANSFER_FROM_ADDRESS_AUTOMATIC'|translate}}</option>
                   <option ng-repeat="address in from_addresses" value="{{address.balance.address}}">{{address.balance.address}} ({{(address.balance.unspent-address.balance.frozen)/100000000}} ETP)</option>
                 </select>
