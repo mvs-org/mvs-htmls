@@ -157,7 +157,7 @@ module.exports = function(grunt) {
                 dest: 'dist/index.html'
             }
         }, revPackage:{
-            files:  'dist/*/**/*.{html,js,css}'
+            files:  'dist/*/**/*.{html,js,css,json}'
         }, 'string-replace': {
             dist: {
                 files: {
@@ -168,11 +168,8 @@ module.exports = function(grunt) {
                         pattern: /\.view.html/g,
                         replacement: '.view.'+package.version+'.html'
                     }, {
-                        pattern: /\.js"/g,
-                        replacement: '.'+package.version+'.js"'
-                    }, {
-                        pattern: /\.css/g,
-                        replacement: '.'+package.version+'.css'
+                        pattern: /(\.css|\.js(?!on)|\.json)/g,
+                        replacement: '\.'+package.version+'$1'
                     }, {
                         pattern: '<<<version>>>',
                         replacement: package.version
