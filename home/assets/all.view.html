@@ -46,7 +46,7 @@
         <dd class="panel assetBox" >
           <span class="span1 assetBoxSymbol">{{asset.symbol}}</span>
           <span class="span3">{{ 'QUANTITY' | translate }}</span>
-          <span class="span2">{{asset.quantity | assetformat : asset.decimal_number}}</span>
+          <span class="span2">{{asset.maximum_supply | assetformat : asset.decimal_number}}</span>
           <span class="span3">{{ 'STATUS' | translate }}</span>
           <span class="span2">{{asset.status}}</span>
         </dd>
