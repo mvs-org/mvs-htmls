@@ -161,9 +161,10 @@ module.exports = function(grunt) {
         }, 'string-replace': {
             dist: {
                 files: {
-                    'dist/': ['dist/min/app.min.*.js', 'dist/**/*.css', 'dist/**/*.html'],
+                    'dist/': ['dist/min/app.min.*.js', 'dist/**/*.css', 'dist/**/*.html']
                 },
                 options: {
+                    saveUnchanged: false,
                     replacements: [{
                         pattern: /\.view.html/g,
                         replacement: '.view.'+package.version+'.html'
