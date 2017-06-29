@@ -96,7 +96,7 @@
   "REGISTER.REGISTGER_BUTTON" : "Register",
   "REGISTER.DO_IMPORT" : "Import account",
   "REGISTER.IMPORT_PHRASE" : "Your account mnemonic",
-  "REGISTER.IMPORT_ADDRESS_COUNT" : "How many addresses do you need to generate? These addresses are same as your old account, if you don't remeber how many addresses you used before, recommand use a bigger number, eg: 100.",
+  "REGISTER.IMPORT_ADDRESS_COUNT" : "How many addresses do you need to generate? These addresses are same as your old account, if you don't remember how many addresses you used before, recommand use a bigger number, eg: 100.",
   "REGISTER.SIGNUP_THANK_YOU" : "Thank you for sign up.",
   "REGISTER.SIGNUP_MNEMONIC_AGREE" : "I understand.",
   "REGISTER.PRIVATE_KEY_MNEMONIC" : "This is the mnemonic of your private key",
