@@ -192,6 +192,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-babel');
     grunt.loadNpmTasks('grunt-ng-annotate');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.registerTask('default', ['browserSync', 'watch']);
+    grunt.registerTask('default', ['browserSync', 'sass', 'watch']);
     grunt.registerTask('build', ['clean','ngAnnotate', 'concat', 'babel', 'uglify', 'cssmin', 'copy','revPackage','string-replace']);
 };
