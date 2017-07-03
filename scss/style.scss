@@ -106,7 +106,7 @@ $infoButtonColor:rgba(52, 125, 237, 100); //used for Register
 }
 
 .researchTextBox{
-  width: 90%;
+  width: 80%;
   padding-right: 4px;
   display:inline;
 }
@@ -144,17 +144,11 @@ $infoButtonColor:rgba(52, 125, 237, 100); //used for Register
 }
 
 .menuButtonSmallScreen {
-  margin-right:10px;
+  position: absolute;
+  right:5px;
+  top: 5px;
 }
 
-
-/*.header .Tbox{float:left;width:625px;height:40px;line-height:40px;margin:10px 0 10px 13px;background:#f1f5f8;text-align: center;}
-.header .btn{float:left;height:30px;margin:15px 25px;background:#79a6cc;border-radius: 15px;border:1px solid #79a6cc;text-align: center;color:#fff;}
-.header .btn a{color:#fff;font-size:16px;}
-.header .btn a:hover{color:#666;}
-.header .install{float:left;}
-.header .own{float:left;}
-*/
 
 
 /***********Language***********/
