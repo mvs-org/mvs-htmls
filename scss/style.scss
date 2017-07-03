@@ -1,0 +1,164 @@
+$topSpace:80px;
+$mediumGrey:rgba(200, 200, 200, 1); //used for borders
+$lightGrey:rgba(242, 242, 242, 1); //used for background
+$successButtonColor:rgba(235, 68, 90, 1); //used for Login,research
+$infoButtonColor:rgba(52, 125, 237, 100); //used for Register
+
+//Logo Metaverse Login and Register pages
+.logoMetaverse {
+  width: 170px;
+  height: 65px;
+}
+
+.padding-big-top{
+  padding-top:$topSpace;
+}
+
+.mnemonic_red{
+	background-color: rgba(242, 242, 242, 1);
+	color: red;
+  border: 10px solid transparent;
+}
+
+//input.css-checkbox[type="checkbox"] + label.css-label {
+
+.plusCheckBox {
+    padding-left: 20px;
+    height: 15px;
+    display: inline-block;
+    line-height: 15px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    font-size: 15px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.languageButton {
+  width: 144px;
+  height: 36px;
+  background-color: rgba(255, 255, 255, 0);
+  border-width: 1px;
+  border-color: rgba(121, 121, 121, 1);
+  border-radius: 6px;
+
+}
+
+.btn {
+  height: 40px;
+  padding: 10px 12px;
+  opacity: 1;
+}
+
+.btn:hover{
+  opacity: 0.8;
+}
+
+.btn-success {
+  background-color: $successButtonColor !important;
+  border: none;
+  border-radius: 6px;
+}
+
+.btn-info {
+  background-color: $infoButtonColor !important;
+  border: none;
+  border-radius: 6px;
+}
+
+.btn-link {
+
+}
+
+/***********Top bar***********/
+.header{
+  display: flex;
+  flex-flow: row wrap;
+  height: 50px;
+}
+
+//Logo Metaverse top bar
+.logoMetaverseSmall {
+  width: 90px;
+  height: 34px;
+}
+
+.logo {
+  position: absolute;
+  left: 27px;
+  top: 8px;
+}
+
+.panel {
+  height:50px;
+  overflow:hidden;
+  margin:0 auto;
+  background-color: $lightGrey;
+  border-top: 1px solid $mediumGrey;
+  border-bottom: 1px solid $mediumGrey;
+  border-radius: 0px;
+}
+
+//Research div, including the texbox and the button
+.research {
+  flex-flow: row;
+  margin-top: 8px
+}
+
+.researchTextBox{
+  width: 90%;
+  padding-right: 4px;
+  display:inline;
+}
+
+.header .own {
+  float:left;
+  height: 50px;
+  font-size: 24px;
+}
+
+.header-right {
+  float:right;
+  display:inline;
+  padding-right: 5px;
+  padding-left: 5px;
+  margin-top: 6px;
+}
+
+.userName {
+  padding-right: 12px;
+  margin-top: 4px;
+}
+
+.headerButton {
+  padding: 6px 12px;
+  height: 30px;
+}
+
+.logoutButton {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
+  color: #6B6B6B;
+  padding: 6px 12px;
+}
+
+.menuButtonSmallScreen {
+  margin-right:10px;
+}
+
+
+/*.header .Tbox{float:left;width:625px;height:40px;line-height:40px;margin:10px 0 10px 13px;background:#f1f5f8;text-align: center;}
+.header .btn{float:left;height:30px;margin:15px 25px;background:#79a6cc;border-radius: 15px;border:1px solid #79a6cc;text-align: center;color:#fff;}
+.header .btn a{color:#fff;font-size:16px;}
+.header .btn a:hover{color:#666;}
+.header .install{float:left;}
+.header .own{float:left;}
+*/
+
+
+/***********Language***********/
+//Flags language
+.en, .zh ,.de {
+    width: 24px;
+}
