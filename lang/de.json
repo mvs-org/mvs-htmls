@@ -99,6 +99,7 @@
   "REGISTER.SIGNUP_MNEMONIC_AGREE" : "verstanden",
   "REGISTER.PRIVATE_KEY_MNEMONIC" : "Dies ist Ihr privater Schlüssel",
   "REGISTER.PRIVATE_KEY_MNEMONIC_INFO" : "Bitte sichern Sie diesen an einem sicheren Ort. Schreiben Sie ihn am besten auf ein Stück Papier. Der Schlüssel ist sehr wichtig und er lässt sich zu einem späteren Zeitpunkt nicht mehr wiederherstellen.",
+  "REGISTER.NEW_USER" : "New user",
   "FORGOT_PASSWORD.ENTER_PRIVATE_KEY" : "Geben Sie Ihren privaten Schlüssel ein",
   "FORGOT_PASSWORD.CHOOSE_PASSWORD" : "Bitte geben Sie ein neues Passwort ein",
   "FORGOT_PASSWORD.REPEAT_PASSWORD" : "Bitte wiederholen Sie Ihr Passwort",
@@ -155,7 +156,7 @@
   "MESSAGES.NO_LISTED_TRANSACTIONS" : "Sie haben keine Transaktionen.",
   "MESSAGES.IMPORT_SUCCESS" : "Account erfolgreich importiert.",
   "MESSAGES.IMPORT_ERROR" : "Fehler beim Import.",
- "MESSAGES.CHANGE_PASSWORD_SUCCESS" : "Account Passwort wurde gespeichert.",
+  "MESSAGES.CHANGE_PASSWORD_SUCCESS" : "Account Passwort wurde gespeichert.",
   "MESSAGES.CHANGE_PASSWORD_ERROR" : "Ein Fehler ist aufgetreten.",
-   "MESSAGES.TRANSACTION_NOT_FOUND" : "Transaktion konnte nicht gefunden werden."
+  "MESSAGES.TRANSACTION_NOT_FOUND" : "Transaktion konnte nicht gefunden werden."
 }

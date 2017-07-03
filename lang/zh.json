@@ -102,6 +102,7 @@
   "REGISTER.SIGNUP_MNEMONIC_AGREE" : "我同意",
   "REGISTER.PRIVATE_KEY_MNEMONIC" : "这是您的助记关键词",
   "REGISTER.PRIVATE_KEY_MNEMONIC_INFO" : "请将该私钥助记关键词存储在一个安全的地方。最好是抄写到一张纸上。备份该私钥是至关重要的事情，如果遗失该私钥，不可能再被找回。",
+  "REGISTER.NEW_USER" : "新建账户",
   "FORGOT_PASSWORD.ENTER_PRIVATE_KEY" : "请输入您需要修改密码账户的主私钥",
   "FORGOT_PASSWORD.CHOOSE_PASSWORD" : "请输入密码",
   "FORGOT_PASSWORD.REPEAT_PASSWORD" : "请再次输入密码",
@@ -160,5 +161,5 @@
   "MESSAGES.IMPORT_ERROR" : "账户无法被导入。",
   "MESSAGES.CHANGE_PASSWORD_SUCCESS" : "账户密码已经更改。",
   "MESSAGES.CHANGE_PASSWORD_ERROR" : "帐号密码更改失败。",
-"MESSAGES.TRANSACTION_NOT_FOUND" : "无法找到指定哈希的交易。"
+  "MESSAGES.TRANSACTION_NOT_FOUND" : "无法找到指定哈希的交易。"
 }

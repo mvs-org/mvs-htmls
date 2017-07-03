@@ -1,45 +1,49 @@
-<div class="bg"></div>
+<!--Language button-->
+<div class="languageButton col-xs-4 col-sm-3 col-md-3 pull-right">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Language
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li><a ng-click="vm.changeLang('zh_ZH')"><img class="zh" src="images/zh.png" alt="" /> 中文</a></li>
+    <li><a ng-click="vm.changeLang('en_US')"><img class="en" src="images/en.png" alt="" /> English</a></li>
+    <li><a ng-click="vm.changeLang('de_DE')"><img class="de" src="images/en.png" alt="" /> Deutsch</a></li>
+  </ul>
+</div>
+
+<br/>
 <div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
   <div class="" ng-bind="flash.message">
   </div>
 </div>
-    <form >
-    <div class="lightgreybg loginbox">
-
-        <div class="text-center margin-big padding-big-top">
-        	<img src="images/logo-black.png" class="logo" alt="" />
-        </div>
-        <br><br>
-        <div class="row">
-          <div class="col-md-12">
-          <div class="form-group">
-            	<label for="username" class="control-label">{{ 'LOGIN.ENTER_ACCOUNT_NAME' | translate }}<i>*</i></label>
-              <input type="text" name="username" class="form-control" ng-model="vm.username">
-          </div>
-          <div class="form-group">
-            	<label for="password" class="control-label">{{ 'LOGIN.ENTER_ACCOUNT_PASSWORD' | translate }}<i>*</i></label>
-              <input type="password" name="password" class="form-control" ng-model="vm.password">
-          </div>
-
-<br><br>
-          <button type="submit" class="btn btn-success" ng-disabled="form.$invalid || vm.dataLoading" ng-click="vm.login()">{{ 'LOGIN.LOGIN_BUTTON' | translate }}</button>
-          <a href="#!/register" class="btn btn-info">{{ 'LOGIN.REGISTGER_BUTTON' | translate }}</a>
-          <span class="dropdown">
-            <button class="btn btn-primary" type="button" data-toggle="dropdown">
-              Language
-              <span class="glyphicon glyphicon-flag" ></span></button>
-  <ul class="dropdown-menu">
-    <li><a ng-click="vm.changeLang('zh_ZH')">中文</a></li>
-    <li><a ng-click="vm.changeLang('en_US')">English</a></li>
-    <li><a ng-click="vm.changeLang('de_DE')">Deutsch</a></li>
-  </ul>
-  </span>
-  <br><br>
-
-        </div>
-
-
-      </div>
-</div>
+<form class="col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
+  <img class="center-block logoMetaverse" src="img/metaverse_logo.png" alt=""/>
+  <h2><b>{{ 'LOGIN.LOGIN_BUTTON' | translate }}</b></h2>
+  <div class="form-group">
+    <!--Username-->
+    <div class="form-group">
+      <label for="username" class="control-label">{{ 'LOGIN.ENTER_ACCOUNT_NAME' | translate }}<i>*</i></label>
+      <input type="text" name="username" class="form-control" ng-model="vm.username">
     </div>
-    </form>
+    <!--Password-->
+    <div class="form-group">
+      <label for="password" class="control-label">{{ 'LOGIN.ENTER_ACCOUNT_PASSWORD' | translate }}<i>*</i></label>
+      <input type="password" name="password" class="form-control" ng-model="vm.password">
+    </div>
+    <br><br>
+    <!--Login button-->
+    <div class="col-md-4 col-sm-4 col-xs-6">
+      <button type="submit" class="bzs" style="width:100%" ng-disabled="form.$invalid || vm.dataLoading" ng-click="vm.login()">{{ 'LOGIN.LOGIN_BUTTON' | translate }}</button>
+    </div>
+    <!--Register button-->
+    <div class="col-md-4 col-sm-4 col-xs-6">
+      <a href="#!/register" class="btn btn-info" style="width:100%">{{ 'LOGIN.REGISTGER_BUTTON' | translate }}</a>
+    </div>
+    <!--Help button-->
+    <div class="col-md-4 col-sm-4 col-xs-6 col-xs-offset-6 col-sm-offset-0 col-md-offset-0 pull-right">
+      <button type="button" class="btn btn-link" style="width:100%">无法登录？</button>
+      <!--TODO-->
+    </div>
+    <br><br>
+  </div>
+</form>

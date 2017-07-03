@@ -101,6 +101,7 @@
   "REGISTER.SIGNUP_MNEMONIC_AGREE" : "I understand.",
   "REGISTER.PRIVATE_KEY_MNEMONIC" : "This is the mnemonic of your private key",
   "REGISTER.PRIVATE_KEY_MNEMONIC_INFO" : "Please save this key at a safe place. A good way can be to write it down on a piece of paper. It is very important to back up this key and it is not possible to retrieve this key later.",
+  "REGISTER.NEW_USER" : "New User",
   "FORGOT_PASSWORD.ENTER_PRIVATE_KEY" : "Please enter your private key",
   "FORGOT_PASSWORD.CHOOSE_PASSWORD" : "Please enter a new password",
   "FORGOT_PASSWORD.REPEAT_PASSWORD" : "Please repeat your password",
