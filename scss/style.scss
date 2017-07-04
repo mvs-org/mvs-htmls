@@ -1,8 +1,12 @@
 $topSpace:80px;
-$mediumGrey:rgba(200, 200, 200, 1); //used for borders
 $lightGrey:rgba(242, 242, 242, 1); //used for background
+$mediumGrey:rgba(200, 200, 200, 1); //used for borders
+$darkGrey:rgba(121, 121, 121, 1); //used for language button
 $successButtonColor:rgba(235, 68, 90, 1); //used for Login,research
 $infoButtonColor:rgba(52, 125, 237, 100); //used for Register
+$radiusButtons: 6px;
+$leftMenuButtonColor:#1B1B1B;
+$leftMenuWidth: 179px;
 
 //Logo Metaverse Login and Register pages
 .logoMetaverse {
@@ -23,24 +27,26 @@ $infoButtonColor:rgba(52, 125, 237, 100); //used for Register
 //input.css-checkbox[type="checkbox"] + label.css-label {
 
 .plusCheckBox {
-    padding-left: 20px;
-    height: 15px;
-    display: inline-block;
-    line-height: 15px;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-    font-size: 15px;
-    vertical-align: middle;
-    cursor: pointer;
+  padding-left: 20px;
+  height: 15px;
+  display: inline-block;
+  line-height: 15px;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  font-size: 15px;
+  vertical-align: middle;
+  cursor: pointer;
 }
 
-.languageButton {
+.languageButtonLogin {
   width: 144px;
   height: 36px;
   background-color: rgba(255, 255, 255, 0);
   border-width: 1px;
   border-color: rgba(121, 121, 121, 1);
-  border-radius: 6px;
+}
+
+.languageButton {
 
 }
 
@@ -48,6 +54,7 @@ $infoButtonColor:rgba(52, 125, 237, 100); //used for Register
   height: 40px;
   padding: 10px 12px;
   opacity: 1;
+  border-radius: $radiusButtons
 }
 
 .btn:hover{
@@ -57,13 +64,11 @@ $infoButtonColor:rgba(52, 125, 237, 100); //used for Register
 .btn-success {
   background-color: $successButtonColor !important;
   border: none;
-  border-radius: 6px;
 }
 
 .btn-info {
   background-color: $infoButtonColor !important;
   border: none;
-  border-radius: 6px;
 }
 
 .btn-link {
@@ -106,9 +111,11 @@ $infoButtonColor:rgba(52, 125, 237, 100); //used for Register
 }
 
 .researchTextBox{
-  width: 80%;
-  padding-right: 4px;
+  width: 75%;
+  height: 30px;
   display:inline;
+  border-radius: 6px;
+  margin-right: 8px;
 }
 
 .header .own {
@@ -149,10 +156,84 @@ $infoButtonColor:rgba(52, 125, 237, 100); //used for Register
   top: 5px;
 }
 
+/***********Left Menu***********/
+.leftnav {
+  background-color: $lightGrey;
+  width: $leftMenuWidth;
+  min-height: 700px;
+  height: auto;
+  float: left;
+  left: 0px;
+}
+
+.leftMenu {
+  padding-top: 100px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.leftMenuButtons {
+  color: $leftMenuButtonColor;
+}
+
+.leftMenuButtons:focus{
+  color:red;
+}
+
+.leftMenuButtons:hover{
+  color:red;
+  //font-weight: bold;
+}
+
+.dropdown-header {
+    padding-top: 10px;
+    padding-left: 0px;
+}
+
+.menuLine {
+  margin-bottom: 10px;
+  height: 1px;
+  background: $mediumGrey;
+}
+
+.version {
+  width: $leftMenuWidth;
+  padding-left: auto;
+  padding-right: auto;
+  height:40px;
+  text-align:center;
+  color:$leftMenuButtonColor;
+  float:left;
+  position:absolute;
+  bottom: 10px;
+
+}
+
 
 
 /***********Language***********/
 //Flags language
 .en, .zh ,.de {
     width: 24px;
+}
+
+.dropdown-menu {
+  position:relative;
+}
+
+.languageButton, .languageButton:focus, .languageButton:hover{
+  width: 134px;
+  height: 36px;
+  margin-left: 10px;
+  color: $darkGrey;
+  background-color: $lightGrey;
+  border: solid;
+  border-width: 1px;
+
+  font-family: 'ArialMT', 'Arial';
+  font-weight: 400;
+  font-size: 13px;
+  //color: #333333;
+  text-align: center;
+  line-height: normal;
 }

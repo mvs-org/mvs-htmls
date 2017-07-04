@@ -2,13 +2,15 @@
 <div class="panel">
   <div class="header">
     <div class="logo hidden-xs">
-      <img src="img/metaverse_logo.png" class="logoMetaverseSmall" alt="" />
+      <a href="#!/assets">
+        <img src="img/metaverse_logo.png" class="logoMetaverseSmall" alt="" />
+      </a>
     </div>
-    <div class="research col-xs-offset-0 col-xs-10 col-sm-offset-2 col-sm-7 col-md-offset-2 col-md-5 col-lg-offset-4 col-lg-4">
+    <div class="form-group research col-xs-offset-0 col-xs-10 col-sm-offset-2 col-sm-7 col-md-offset-2 col-md-5 col-lg-offset-4 col-lg-4">
       <!--Search TextBox-->
-      <input type="text" class="researchTextBox">
+      <input type="text" class="form-control researchTextBox" placeholder="{{ 'EXPLORER.SHOW_TRANSACTION' | translate }}">
       <!--Search button-->
-      <button type="submit" class="btn btn-success headerButton hidden-xs">Search</button>
+      <button type="submit" class="btn btn-success headerButton hidden-xs">{{ 'EXPLORER.SHOW_TRANSACTION' | translate }}</button>
       <button type="submit" class="btn btn-success headerButton hidden-sm hidden-md hidden-lg hidden-xl"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
       <!--ng-model="vm.username">-->
     </div>
@@ -31,7 +33,7 @@
     <!--Menu button for XS device-->
     <div class="menuButtonSmallScreen pull-right visible-xs">
       <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuSmallScreen" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+        <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
         <li><a href="#!/account/details" class="btn">Setup</a></li>
@@ -43,18 +45,45 @@
 <!---------------------------------内容------------------------------------------------->
 
 <div class="layout">
-  <div class="centent">
+    <div class="leftnav greybg hidden-xs">
+      <div class="leftMenu">
+          <ul class="nav nav-pills nav-stacked">
+            <li role="presentation"><a href="#!/account/addresses" class="leftMenuButtons">{{ 'NAV_ACCOUNT' | translate }}</a></li>
+            <li role="presentation"><a href="#!/asset/details/" class="leftMenuButtons">{{ 'NAV_ASSETS' | translate }}</a></li>
+            <li role="presentation"><a href="#!/account/details" class="leftMenuButtons">{{ 'NAV_ACCOUNT_SETTING' | translate }}</a></li>
+            <li class="dropdown-header">高级</li>
+            <div class="menuLine">
+            </div>
+            <li role="presentation"><a href="#!/console" class="leftMenuButtons">{{ 'NAV_CONSOLE' | translate }}</a></li>
+            <li role="presentation"><a href="#!/mining" class="leftMenuButtons">{{ 'NAV_MINING' | translate }}</a></li>
 
-    <div class="leftnav greybg"> <a href="#!/assets" class="current">
-      <a href="#!/assets" class="current">
+          </ul>
+          <br/>
+          <br/>
+          <!--Language button-->
+          <div>
+            <button class="btn btn-default dropdown-toggle languageButton" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              Language
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <li><a ng-click="vm.changeLang('zh_ZH')"><img class="zh" src="images/zh.png" alt="" /> 中文</a></li>
+              <li><a ng-click="vm.changeLang('en_US')"><img class="en" src="images/en.png" alt="" /> English</a></li>
+              <li><a ng-click="vm.changeLang('de_DE')"><img class="de" src="images/en.png" alt="" /> Deutsch</a></li>
+            </ul>
+          </div>
+        </div>
+
+
+      <!--<a href="#!/assets" class="current">
         <h2 class="leftnav-home"><em class="em3"></em><span>{{ 'NAV_HOME' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></h2>
       </a>
       <h2 class="leftnav-account" ng-click="show_account_menu()"><a class="current" ><em class="em1"></em><span>{{ 'NAV_ACCOUNT' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></a></h2>
       <ul class="accountUl" ng-show="menu.account.show">
         <li><a href="#!/account/addresses" class="current">{{ 'NAV_ACCOUNT_ADDRESSES' | translate }}</a></li>
-        <li><a href="#!/account/details" class="current">{{ 'NAV_ACCOUNT_SETTING' | translate }}</a></li>
+        <li><a href="#!/account/details" class="current">{{ 'NAV_ACCOUNT_SETTING' | translate }}</a></li> -->
         <!-- <li><a class="current">{{ 'NAV_DIGITAL_IDENTITY' | translate }}</a></li> -->
-      </ul>
+      <!-- </ul>
       <h2 class="leftnav-assets" ng-click="show_assets_menu()"><em class="em1"></em><span>{{ 'NAV_ASSETS' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></h2>
       <ul class="assetUl" ng-show="menu.assets.show">
         <li><a href="#!/transfer" class="current">{{ 'NAV_ETP' | translate }}</a></li>
@@ -74,8 +103,8 @@
       </a>
       <a href="#!/explorer" class="current">
         <h2 class="leftnav-explorer"><em class="em4"></em><span>{{ 'EXPLORER.NAV_ITEM' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></h2>
-      </a>
-      <p>{{ 'METAVERSE_VERSION' | translate }} <<<version>>></p>
+      </a>-->
+      <div class="version">{{ 'METAVERSE_VERSION' | translate }} <<<version>>></div>
       </div>
       <div class="admin">
         <div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
@@ -89,7 +118,5 @@
         <div class="footerRight"> <span>{{ 'CONNECTION_BLOCKS' | translate }}:</span> <span>{{height}}</span> </div>
       </footer>
     </div>
-
-
   </div>
 </div>
