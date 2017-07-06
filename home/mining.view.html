@@ -1,26 +1,40 @@
 <div class="content">
-  <div class="headline"><em></em>{{ 'HEADLINE_MINING' | translate }}</div>
+  <span class="headline">
+      <div ng-show="showWhenNotMining">ETP {{ 'HEADLINE_MINING' | translate }}</div>
+      <div ng-show="showWhenMining" style="isMiningText">{{ 'MINING_IS_MINING' | translate }}</div>
+  </span>
   <div class="mining">
     <div class="row">
-      <div class="col-md-4">
-        <div>
-          <input class="btn btn-success" ng-click="start()" value="{{ 'MINING_START' | translate }}">
+      <!--View recommended configuration-->
+        <div class="configText">
+          <div type="text" ng-show="showWhenNotMining" class="miningRecommendation">{{ 'MINING_NOT_RECOMMENDED' | translate }}   </div>
+          <div ng-show="showWhenNotMining" class="miningRecommendation"><a href="#!/mining" class="btn btn-link">{{ 'MINING_RECOMMENDED_CONFIG' | translate }}</a></div>
+          <div ng-show="showWhenMining" class="miningEnd">{{ 'MINING_HOW_STOP' | translate }}</div>
           <br><br>
         </div>
-        <div>
-          <input class="btn btn-danger" ng-click="stop()" value="{{ 'MINING_END' | translate }}">
+        <!--Table for mining Rate, Difficulty and Height-->
+        <div class="col-xs-12 col-sm-6 col-md-4">
+          <table class="table miningTable">
+            <tbody>
+              <tr>
+                <td>{{ 'MINING_RATE' | translate }}</td>
+                <td>{{status.rate}}</td>
+              </tr>
+              <tr>
+                <td>{{ 'MINING_DIFFICULTY' | translate }}</td>
+                <td>{{status.difficulty}}</td>
+              </tr>
+              <tr>
+                <td>{{ 'MINING_HEIGHT' | translate }}</td>
+                <td>{{status.height}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <!--Mining button-->
+          <div style="width: 100%;">
+            <input class="btn btn-success miningButton" ng-click="start()" ng-show="showWhenNotMining" value="{{ 'MINING_START' | translate }}">
+            <input class="btn btn-success miningButton" ng-click="stop()" ng-show="showWhenMining" value="{{ 'MINING_END' | translate }}">
         </div>
-      </div>
-      <div class="col-md-6">
-        <p>
-          Rate: {{status.rate}}
-        </p>
-        <p>
-          Difficulty: {{status.difficulty}}
-        </p>
-        <p>
-          Height: {{status.height}}
-        </p>
       </div>
     </div>
   </div>

@@ -697,6 +697,9 @@
         $scope.start = StartMining;
         $scope.stop = StopMining;
         $scope.status = {};
+        $scope.showWhenMining=false;
+        $scope.showWhenNotMining=true;
+
 
         function GetMiningInfo() {
             NProgress.start();
@@ -717,6 +720,8 @@
             MetaverseService.Start()
                 .then( (response) => {
                     NProgress.done();
+                    $scope.showWhenMining=true;
+                    $scope.showWhenNotMining=false;
                     if (typeof response.success !== 'undefined' && response.success) {
                         $translate('MESSAGES.MINING_START_SUCCESS').then( (data) => FlashService.Success(data) );
                         GetMiningInfo();
@@ -731,6 +736,8 @@
             MetaverseService.Stop()
                 .then(function(response) {
                     NProgress.done();
+                    $scope.showWhenMining=false;
+                    $scope.showWhenNotMining=true;
                     if (typeof response.success !== 'undefined' && response.success) {
                         $translate('MESSAGES.MINING_STOP_SUCCESS').then( (data) => FlashService.Success(data) );
                         GetMiningInfo();

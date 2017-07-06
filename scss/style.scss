@@ -241,7 +241,7 @@ $leftMenuWidth: 179px;
 .content{
   right: 0px;
   height:auto;
-  padding: 10px;
+  margin: 10px 30px;
 }
 
 .admin {
@@ -265,4 +265,39 @@ $leftMenuWidth: 179px;
 .layout {
   //display: inline-block;
   width:100%;
+}
+
+
+
+
+//****************Mining view****************
+
+.configText {
+  position:relative;
+  margin-top: 20px;
+  margin-left: 20px;
+  height: 70px;
+
+}
+
+.miningRecommendation {
+  display: inline-block
+}
+
+.miningEnd {
+  padding: 10px 0px;
+}
+
+
+.miningTable {
+  position:relative;
+}
+
+.miningButton {
+  margin: 10px;
+  position:relative;
+}
+
+.isMiningText {
+
 }
