@@ -28,7 +28,7 @@ $off-wht: rgba(white,.4);
 		        box-shadow: 0 .125em $off-wht, inset 0 .063em $off-wht, inset 0 -.188em lighten($btn-color, 2%);
 	      }
 	      &:active {
-		        box-shadow: 0 .063em $off-wht, inset 0 0 1.094em darken($btn-color, 40%), inset 0 .063em darken($btn-color, 20%),inset 0 -0.188em darken($btn-color, 20%); 
+		        box-shadow: 0 .063em $off-wht, inset 0 0 1.094em darken($btn-color, 40%), inset 0 .063em darken($btn-color, 20%),inset 0 -0.188em darken($btn-color, 20%);
 	      }
     } @else if $type == 'Language' {
         width: 134px;
@@ -38,7 +38,6 @@ $off-wht: rgba(white,.4);
         background-color: $lightGrey;
         border: solid;
         border-width: 1px;
-
         font-family: 'ArialMT', 'Arial';
         font-weight: 400;
         font-size: 13px;
@@ -85,6 +84,40 @@ $off-wht: rgba(white,.4);
 
 .languageButton, .languageButton:focus, .languageButton:hover{
     @include btn-theme($darkGrey, 'Language')
+}
+
+
+
+.headerButton {
+  padding: 6px 12px;
+  height: 30px;
+}
+
+.logoutButton {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
+  color: #6B6B6B;
+  padding: 6px 12px;
+}
+
+
+.miningButtonWhenNotMining {
+  margin: 10px;
+  width: 100%;
+  max-width: 200px;
+}
+
+.miningButtonWhenMining {
+  margin: 10px;
+  width: 100%;
+  max-width: 200px;
+  color: $successButtonColor !important;
+  background-color: white !important;
+  border: solid;
+  border-width: 2px;
+  border-color: $successButtonColor !important;
+
 }
 
 /*********** End Buttons ****************/
@@ -189,18 +222,6 @@ $off-wht: rgba(white,.4);
   margin-top: 4px;
 }
 
-.headerButton {
-  padding: 6px 12px;
-  height: 30px;
-}
-
-.logoutButton {
-  font-weight: 400;
-  font-style: normal;
-  font-size: 14px;
-  color: #6B6B6B;
-  padding: 6px 12px;
-}
 
 .menuButtonSmallScreen {
   position: absolute;
@@ -275,6 +296,7 @@ $off-wht: rgba(white,.4);
 }
 
 
+
 //****************Commun to all pages****************
 .content{
   right: 0px;
@@ -305,10 +327,38 @@ $off-wht: rgba(white,.4);
   width:100%;
 }
 
+//Loading spinner, on the top right
+#nprogress .spinner-icon {
+  width: 26px;
+  height: 26px;
+  border: dotted 4px transparent;
+  border-bottom-color: rgba(73,155,234,1);
+  border-right-color: rgba(221,227,32,1);
+  border-top-color: rgba(227,34,34,1);
 
+  -webkit-animation: nprogress-spinner 1000ms linear infinite;
+          animation: nprogress-spinner 1000ms linear infinite;
+}
 
 
 //****************Mining view****************
+
+
+//Spinner when miningTable
+.spinner {
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  margin-left: 10px;
+  border: dotted 4px transparent;
+  border-bottom-color: rgba(73,155,234,1);
+  border-right-color: rgba(221,227,32,1);
+  border-top-color: rgba(227,34,34,1);
+  -webkit-animation: nprogress-spinner 1000ms linear infinite;
+          animation: nprogress-spinner 1000ms linear infinite;
+
+}
 
 .configText {
   position:relative;
@@ -329,13 +379,4 @@ $off-wht: rgba(white,.4);
 
 .miningTable {
   position:relative;
-}
-
-.miningButton {
-  margin: 10px;
-  position:relative;
-}
-
-.isMiningText {
-
 }
