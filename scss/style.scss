@@ -7,6 +7,90 @@ $infoButtonColor:rgba(52, 125, 237, 100); //used for Register
 $radiusButtons: 6px;
 $leftMenuButtonColor:#1B1B1B;
 $leftMenuWidth: 179px;
+$off-wht: rgba(white,.4);
+
+
+/****************** Mixin Functions
+   _____  ._______  ___.___ _______
+  /     \ |   \   \/  /|   |\      \
+ /  \ /  \|   |\     / |   |/   |   \
+/    Y    \   |/     \ |   /    |    \
+\____|__  /___/___/\  \|___\____|__  /
+        \/          \_/            \/
+*****************/
+@mixin btn-theme($btn-color, $type) {
+    @if $type == 'standard' {
+        border-color: darken($btn-color, 20%);
+	      background-color: $btn-color !important;
+	      &:hover {
+            opacity: 0.8;
+		        background-color: darken($btn-color, 6%);
+		        box-shadow: 0 .125em $off-wht, inset 0 .063em $off-wht, inset 0 -.188em lighten($btn-color, 2%);
+	      }
+	      &:active {
+		        box-shadow: 0 .063em $off-wht, inset 0 0 1.094em darken($btn-color, 40%), inset 0 .063em darken($btn-color, 20%),inset 0 -0.188em darken($btn-color, 20%); 
+	      }
+    } @else if $type == 'Language' {
+        width: 134px;
+        height: 36px;
+        margin-left: 10px;
+        color: $btn-color;
+        background-color: $lightGrey;
+        border: solid;
+        border-width: 1px;
+
+        font-family: 'ArialMT', 'Arial';
+        font-weight: 400;
+        font-size: 13px;
+        text-align: center;
+        line-height: normal;
+    }
+}
+
+@mixin trans($val...) {
+	  -webkit-transition: $val;
+	  -moz-transition: $val;
+	  -o-transition: $val;
+	  transition: $val;
+}
+/*** End Mixin ****/
+
+
+
+/************** Button Guide
+\______   \__ ___/  |__/  |_  ____   ____   ______
+ |    |  _/  |  \   __\   __\/  _ \ /    \ /  ___/
+ |    |   \  |  /|  |  |  | (  <_> )   |  \\___ \
+ |______  /____/ |__|  |__|  \____/|___|  /____  >
+        \/                              \/     \/
+***************/
+.btn {
+    height: 40px;
+    padding: 10px 12px;
+    opacity: 1;
+    border-radius: $radiusButtons;
+    /** added mixin **/
+    @include trans(0.2s ease-in-out);
+}
+
+.btn-success {
+    @include btn-theme($successButtonColor, 'standard' );
+}
+
+.btn-info {
+    @include btn-theme($infoButtonColor, 'standard');
+}
+
+.btn-link {}
+
+.languageButton, .languageButton:focus, .languageButton:hover{
+    @include btn-theme($darkGrey, 'Language')
+}
+
+/*********** End Buttons ****************/
+
+
+
 
 //Logo Metaverse Login and Register pages
 .logoMetaverse {
@@ -24,8 +108,6 @@ $leftMenuWidth: 179px;
   border: 10px solid transparent;
 }
 
-//input.css-checkbox[type="checkbox"] + label.css-label {
-
 .plusCheckBox {
   padding-left: 20px;
   height: 15px;
@@ -39,39 +121,12 @@ $leftMenuWidth: 179px;
 }
 
 .languageButtonLogin {
-  width: 144px;
-  height: 36px;
-  background-color: rgba(255, 255, 255, 0);
-  border-width: 1px;
-  border-color: rgba(121, 121, 121, 1);
+    width: 144px;
+    height: 36px;
+    background-color: rgba(255, 255, 255, 0);
+    border-width: 1px;
+    border-color: rgba(121, 121, 121, 1);
 }
-
-
-.btn {
-  height: 40px;
-  padding: 10px 12px;
-  opacity: 1;
-  border-radius: $radiusButtons
-}
-
-.btn:hover{
-  opacity: 0.8;
-}
-
-.btn-success {
-  background-color: $successButtonColor !important;
-  border: none;
-}
-
-.btn-info {
-  background-color: $infoButtonColor !important;
-  border: none;
-}
-
-.btn-link {
-
-}
-
 /***********Top bar***********/
 .header{
   display: flex;
@@ -217,23 +272,6 @@ $leftMenuWidth: 179px;
 
 .dropdown-menu {
   position:relative;
-}
-
-.languageButton, .languageButton:focus, .languageButton:hover{
-  width: 134px;
-  height: 36px;
-  margin-left: 10px;
-  color: $darkGrey;
-  background-color: $lightGrey;
-  border: solid;
-  border-width: 1px;
-
-  font-family: 'ArialMT', 'Arial';
-  font-weight: 400;
-  font-size: 13px;
-  //color: #333333;
-  text-align: center;
-  line-height: normal;
 }
 
 
