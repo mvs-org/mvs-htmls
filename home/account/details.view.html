@@ -1,66 +1,33 @@
-<div class="headline"><em></em>{{ 'HEADLINE_ACCOUNTSETTINGS' | translate }}</div>
-
-  <div class="row">
-<div class="col-md-6 panel">
-      <div class="headline"><em></em>{{ 'SETTINGS.CHANGE_PASSWORD' | translate }}</div>
-      <form ng-hide="privatekey">
-        <div class="form-group">
-								<label for="password" class="control-label">{{ 'SETTINGS.PASSWORD' | translate }}：<span class="red big">*</span></label>
-									<input type="password" class="form-control" name="password" id="" ng-model="chpwd_password" autocomplete="off">
-							</div>
-        <div class="form-group">
-								<label for="password" class="control-label">{{ 'SETTINGS.NEW_PASSWORD' | translate }}：<span class="red big">*</span></label>
-									<input type="password" class="form-control" name="password" id="" ng-model="chpwd_new_password" autocomplete="off">
-							</div>
-        <div class="form-group">
-								<label for="password" class="control-label">{{ 'SETTINGS.NEW_PASSWORD_REPEAT' | translate }}：<span class="red big">*</span></label>
-									<input type="password" class="form-control" name="password" id="" ng-model="chpwd_new_password_repeat" autocomplete="off">
-							</div>
-
-      <div class="row">
-        <input type="submit" ng-click="changepassword(chpwd_password, chpwd_new_password, chpwd_new_password_repeat)" value="{{ 'SETTINGS.CHANGE_PASSWORD_BUTTON' | translate }}" class="btn btn-info">
+<div class="row">
+  <div class="col-md-6">
+    <br/>
+    <div>{{ 'SETTINGS.CHANGE_PASSWORD' | translate }}</div>
+    <br/>
+    <form ng-hide="privatekey">
+      <div class="form-group">
+        <label for="password" class="control-label">{{ 'SETTINGS.PASSWORD' | translate }}：<span class="red big">*</span></label>
+        <input type="password" class="form-control" name="password" id="" ng-model="chpwd_password" autocomplete="off">
       </div>
-
-      </form>
-      <div class="form-group" ng-show="privatekey">
-        <label for="privatekey" class="col-sm-2 control-label">{{ 'SETTINGS_PRIVATE_KEY' | translate }}</label>
-        <div class="col-sm-10">
-          <textarea name="privatekey" class="form-control" ng-model="privatekey" rows="5" cols="" placeholder=""></textarea>
-        </div>
+      <div class="form-group">
+        <label for="password" class="control-label">{{ 'SETTINGS.NEW_PASSWORD' | translate }}：<span class="red big">*</span></label>
+        <input type="password" class="form-control" name="password" id="" ng-model="chpwd_new_password" autocomplete="off">
       </div>
-
-    </div>
-    <div class="col-md-1"></div>
-    <div class="col-md-5 panel">
-      <div class="headline"><em></em>{{ 'SETTINGS_PRIVATE_KEY' | translate }}</div>
-      <form ng-hide="privatekey">
-        <div class="form-group">
-								<label for="password" class="control-label">{{ 'SETTINGS_BACKUP_PASSWORD' | translate }}：<span class="red big">*</span></label>
-									<input type="password" class="form-control" name="password" id="" ng-model="privatekey_password" autocomplete="off">
-							</div>
-              <div class="form-group">
-								<label for="password" class="control-label">{{ 'SETTINGS.MNEMONIC_LAST_WORD' | translate }}：<span class="red big">*</span></label>
-									<input type="password" class="form-control" name="password" id="" ng-model="privatekey_last_word" autocomplete="off">
-							</div>
-
-      <div class="row">
-        <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="{{ 'SETTINGS_BACKUP_ACCOUNT' | translate }}" class="btn btn-info">
+      <div class="form-group">
+        <label for="password" class="control-label">{{ 'SETTINGS.NEW_PASSWORD_REPEAT' | translate }}：<span class="red big">*</span></label>
+        <input type="password" class="form-control" name="password" id="" ng-model="chpwd_new_password_repeat" autocomplete="off">
       </div>
-
-      </form>
-      <div class="form-group" ng-show="privatekey">
-        <label for="privatekey" class="col-sm-2 control-label">{{ 'SETTINGS_PRIVATE_KEY' | translate }}</label>
-        <div class="col-sm-10">
-          <textarea name="privatekey" class="form-control" ng-model="privatekey" rows="5" cols="" placeholder=""></textarea>
-        </div>
+      <br/>
+      <div class="row col-md-6">
+        <input type="submit" ng-click="changepassword(chpwd_password, chpwd_new_password, chpwd_new_password_repeat)" value="{{ 'SETTINGS.CHANGE_PASSWORD_BUTTON' | translate }}" class="btn btn-success  col-xs-12 col-sm-6 col-md-12">
       </div>
-
-    </div>
+    </form>
   </div>
+</div>
 
 
-  <div class="accountContentBottom">
-    <div class="headline"><em></em>{{ 'SETTINGS_ACCOUNT_INFORMATION' | translate }}</div>
-      <input class="btn btn-success" ng-hide="debugState" ng-click="setDeugger(1)" value="{{ 'SETTINGS.DEBUG_ENABLE' | translate }}">
-      <input class="btn btn-danger"  ng-show="debugState" ng-click="setDeugger(0)" value="{{ 'SETTINGS.DEBUG_DISABLE' | translate }}">
-  </div>
+<!--Account Information
+<div class="accountContentBottom">
+  <div class="headline"><em></em>{{ 'SETTINGS_ACCOUNT_INFORMATION' | translate }}</div>
+  <input class="btn btn-success" ng-hide="debugState" ng-click="setDeugger(1)" value="{{ 'SETTINGS.DEBUG_ENABLE' | translate }}">
+  <input class="btn btn-danger"  ng-show="debugState" ng-click="setDeugger(0)" value="{{ 'SETTINGS.DEBUG_DISABLE' | translate }}">
+</div>-->

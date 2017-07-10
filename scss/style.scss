@@ -4,6 +4,7 @@ $mediumGrey:rgba(200, 200, 200, 1); //used for borders
 $darkGrey:rgba(121, 121, 121, 1); //used for language button
 $successButtonColor:rgba(235, 68, 90, 1); //used for Login,research
 $infoButtonColor:rgba(52, 125, 237, 100); //used for Register
+$secondaryButtonColor: white;
 $radiusButtons: 6px;
 $leftMenuButtonColor:#1B1B1B;
 $leftMenuWidth: 179px;
@@ -11,46 +12,62 @@ $off-wht: rgba(white,.4);
 
 
 /****************** Mixin Functions
-   _____  ._______  ___.___ _______
-  /     \ |   \   \/  /|   |\      \
- /  \ /  \|   |\     / |   |/   |   \
+_____  ._______  ___.___ _______
+/     \ |   \   \/  /|   |\      \
+/  \ /  \|   |\     / |   |/   |   \
 /    Y    \   |/     \ |   /    |    \
 \____|__  /___/___/\  \|___\____|__  /
-        \/          \_/            \/
+\/          \_/            \/
 *****************/
 @mixin btn-theme($btn-color, $type) {
-    @if $type == 'standard' {
-        border-color: darken($btn-color, 20%);
-	      background-color: $btn-color !important;
-	      &:hover {
-            opacity: 0.8;
-		        background-color: darken($btn-color, 6%);
-		        box-shadow: 0 .125em $off-wht, inset 0 .063em $off-wht, inset 0 -.188em lighten($btn-color, 2%);
-	      }
-	      &:active {
-		        box-shadow: 0 .063em $off-wht, inset 0 0 1.094em darken($btn-color, 40%), inset 0 .063em darken($btn-color, 20%),inset 0 -0.188em darken($btn-color, 20%);
-	      }
-    } @else if $type == 'Language' {
-        width: 134px;
-        height: 36px;
-        margin-left: 10px;
-        color: $btn-color;
-        background-color: $lightGrey;
-        border: solid;
-        border-width: 1px;
-        font-family: 'ArialMT', 'Arial';
-        font-weight: 400;
-        font-size: 13px;
-        text-align: center;
-        line-height: normal;
+  @if $type == 'standard' {
+    width: 100%;
+    border-color: darken($btn-color, 20%);
+    background-color: $btn-color !important;
+    &:hover {
+      background-color: darken($btn-color, 6%);
+      border-color: darken($btn-color, 20%);
+      box-shadow: 0 .125em $off-wht, inset 0 .063em $off-wht, inset 0 -.188em lighten($btn-color, 2%);
     }
+    &:active {
+      box-shadow: 0 .063em $off-wht, inset 0 0 1.094em darken($btn-color, 40%), inset 0 .063em darken($btn-color, 20%),inset 0 -0.188em darken($btn-color, 20%);
+    }
+  } @else if $type == 'secondary' {
+    width: 100%;
+    color: $btn-color !important;
+    border-color: darken($btn-color, 20%);
+    background-color: white !important;
+    border: solid;
+    border-width: 2px;
+    &:hover {
+      background-color: darken($btn-color, 6%);
+      border-color: darken($btn-color, 20%);
+      box-shadow: 0 .125em $off-wht, inset 0 .063em $off-wht, inset 0 -.188em lighten($btn-color, 2%);
+    }
+    &:active {
+      box-shadow: 0 .063em $off-wht, inset 0 0 1.094em darken($btn-color, 40%), inset 0 .063em darken($btn-color, 20%),inset 0 -0.188em darken($btn-color, 20%);
+    }
+  } @else if $type == 'Language' {
+    width: 134px;
+    height: 36px;
+    margin-left: 10px;
+    color: $darkGrey;
+    background-color: $btn-color;
+    border: solid;
+    border-width: 1px;
+    font-family: 'ArialMT', 'Arial';
+    font-weight: 400;
+    font-size: 13px;
+    text-align: center;
+    line-height: normal;
+  }
 }
 
 @mixin trans($val...) {
-	  -webkit-transition: $val;
-	  -moz-transition: $val;
-	  -o-transition: $val;
-	  transition: $val;
+  -webkit-transition: $val;
+  -moz-transition: $val;
+  -o-transition: $val;
+  transition: $val;
 }
 /*** End Mixin ****/
 
@@ -58,67 +75,58 @@ $off-wht: rgba(white,.4);
 
 /************** Button Guide
 \______   \__ ___/  |__/  |_  ____   ____   ______
- |    |  _/  |  \   __\   __\/  _ \ /    \ /  ___/
- |    |   \  |  /|  |  |  | (  <_> )   |  \\___ \
- |______  /____/ |__|  |__|  \____/|___|  /____  >
-        \/                              \/     \/
+|    |  _/  |  \   __\   __\/  _ \ /    \ /  ___/
+|    |   \  |  /|  |  |  | (  <_> )   |  \\___ \
+|______  /____/ |__|  |__|  \____/|___|  /____  >
+\/                              \/     \/
 ***************/
 .btn {
-    height: 40px;
-    padding: 10px 12px;
-    opacity: 1;
-    border-radius: $radiusButtons;
-    /** added mixin **/
-    @include trans(0.2s ease-in-out);
+  height: 40px;
+  padding: 10px 12px;
+  opacity: 1;
+  border-radius: $radiusButtons;
+  /** added mixin **/
+  @include trans(0.2s ease-in-out);
+}
+
+.btn:hover {
+  opacity: 0.8;
 }
 
 .btn-success {
-    @include btn-theme($successButtonColor, 'standard' );
+  @include btn-theme($successButtonColor, 'standard');
 }
 
 .btn-info {
-    @include btn-theme($infoButtonColor, 'standard');
+  @include btn-theme($infoButtonColor, 'standard');
 }
 
-.btn-link {}
+.btn-link {
+
+}
+
+//Secondary buttons have a white background, the color is the one of the text
+.btn-secondary {
+  @include btn-theme($successButtonColor, 'secondary');
+}
 
 .languageButton, .languageButton:focus, .languageButton:hover{
-    @include btn-theme($darkGrey, 'Language')
+  @include btn-theme($lightGrey, 'Language');
 }
 
-
-
-.headerButton {
+//Header buttons are smaller
+.smallButton {
   padding: 6px 12px;
   height: 30px;
+  width: auto;
 }
 
 .logoutButton {
-  font-weight: 400;
-  font-style: normal;
-  font-size: 14px;
-  color: #6B6B6B;
-  padding: 6px 12px;
+  color: $darkGrey;
 }
 
 
-.miningButtonWhenNotMining {
-  margin: 10px;
-  width: 100%;
-  max-width: 200px;
-}
 
-.miningButtonWhenMining {
-  margin: 10px;
-  width: 100%;
-  max-width: 200px;
-  color: $successButtonColor !important;
-  background-color: white !important;
-  border: solid;
-  border-width: 2px;
-  border-color: $successButtonColor !important;
-
-}
 
 /*********** End Buttons ****************/
 
@@ -136,9 +144,10 @@ $off-wht: rgba(white,.4);
 }
 
 .mnemonic_red{
-	background-color: rgba(242, 242, 242, 1);
-	color: red;
+  background-color: rgba(242, 242, 242, 1);
+  color: red;
   border: 10px solid transparent;
+  width:100%;
 }
 
 .plusCheckBox {
@@ -154,12 +163,13 @@ $off-wht: rgba(white,.4);
 }
 
 .languageButtonLogin {
-    width: 144px;
-    height: 36px;
-    background-color: rgba(255, 255, 255, 0);
-    border-width: 1px;
-    border-color: rgba(121, 121, 121, 1);
+  width: 144px;
+  height: 36px;
+  background-color: rgba(255, 255, 255, 0);
+  border-width: 1px;
+  border-color: rgba(121, 121, 121, 1);
 }
+
 /***********Top bar***********/
 .header{
   display: flex;
@@ -171,6 +181,7 @@ $off-wht: rgba(white,.4);
 .logoMetaverseSmall {
   width: 90px;
   height: 34px;
+  position: fixed;
 }
 
 .logo {
@@ -179,7 +190,7 @@ $off-wht: rgba(white,.4);
   top: 8px;
 }
 
-.panel {
+.header {
   height:50px;
   overflow:hidden;
   margin:0 auto;
@@ -288,7 +299,7 @@ $off-wht: rgba(white,.4);
 /***********Language***********/
 //Flags language
 .en, .zh ,.de {
-    width: 24px;
+  width: 24px;
 }
 
 .dropdown-menu {
@@ -297,7 +308,7 @@ $off-wht: rgba(white,.4);
 
 
 
-//****************Commun to all pages****************
+/****************Commun to all pages****************/
 .content{
   right: 0px;
   height:auto;
@@ -308,7 +319,7 @@ $off-wht: rgba(white,.4);
   overflow:hidden;
   min-height:700px;
   padding-top: 20px;
- padding-left: 20px;
+  padding-left: 20px;
 }
 
 .headline {
@@ -337,15 +348,15 @@ $off-wht: rgba(white,.4);
   border-top-color: rgba(227,34,34,1);
 
   -webkit-animation: nprogress-spinner 1000ms linear infinite;
-          animation: nprogress-spinner 1000ms linear infinite;
+  animation: nprogress-spinner 1000ms linear infinite;
 }
 
 
-//****************Mining view****************
+/****************Mining view****************/
 
 
 //Spinner when miningTable
-.spinner {
+.miningSpinner {
   display: inline-block;
   width: 26px;
   height: 26px;
@@ -356,7 +367,7 @@ $off-wht: rgba(white,.4);
   border-right-color: rgba(221,227,32,1);
   border-top-color: rgba(227,34,34,1);
   -webkit-animation: nprogress-spinner 1000ms linear infinite;
-          animation: nprogress-spinner 1000ms linear infinite;
+  animation: nprogress-spinner 1000ms linear infinite;
 
 }
 
@@ -379,4 +390,11 @@ $off-wht: rgba(white,.4);
 
 .miningTable {
   position:relative;
+}
+
+
+/*******************Account settings*********************/
+.exportAccount {
+  display: inline-block;
+  margin: 10px;
 }

@@ -89,6 +89,7 @@
   "SETTINGS.PASSWORD" : "当前密码",
   "SETTINGS.NEW_PASSWORD" : "新密码",
   "SETTINGS.NEW_PASSWORD_REPEAT" : "重复新密码",
+  "SETTINGS.EXPORT_ACCOUNT" : "账户导出文件",
   "GENERAL.DATE_FORMAT" : "yyyy-MM-dd HH:mm:ss",
   "MESSAGES.PASSWORD_NEEDED_FOR_PRIVATE_KEY" : "注意：您需要先输入密码激活权限查看主私钥",
   "MESSAGES.WRONG_PASSWORD" : "如果您的密码错误 将会操作失败",

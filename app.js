@@ -73,6 +73,13 @@
                 controllerAs: 'vm'
             })
 
+            .state('home.account.privatekey', {
+                url: "/account/privatekey",
+                templateUrl: "home/account/privatekey.view.html",
+                controller: 'AccountController',
+                controllerAs: 'vm'
+            })
+
             .state('home.account.addresses', {
                 url: "/account/addresses",
                 templateUrl: "home/account/addresses.view.html",

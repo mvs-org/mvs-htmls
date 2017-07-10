@@ -10,8 +10,8 @@
       <!--Search TextBox-->
       <input type="text" class="form-control researchTextBox" placeholder="{{ 'EXPLORER.SHOW_TRANSACTION' | translate }}">
       <!--Search button-->
-      <button type="submit" class="btn btn-success headerButton hidden-xs">{{ 'EXPLORER.SHOW_TRANSACTION' | translate }}</button>
-      <button type="submit" class="btn btn-success headerButton hidden-sm hidden-md hidden-lg hidden-xl"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+      <button type="submit" class="btn btn-success smallButton hidden-xs">{{ 'EXPLORER.SHOW_TRANSACTION' | translate }}</button>
+      <button type="submit" class="btn btn-success smallButton hidden-sm hidden-md hidden-lg hidden-xl"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
       <!--ng-model="vm.username">-->
     </div>
     <div class="pull-right col-xs-2 col-sm-3 col-md-5 col-lg-4">
@@ -20,12 +20,12 @@
         <div class="own userName hidden-xs hidden-sm">{{vm.account}}</div>
         <!--Setup button-->
         <div class="own hidden-xs">
-          <a href="#!/account/details" class="btn btn-success headerButton">Setup</a>
+          <a href="#!/account/details" class="btn btn-success smallButton">Setup</a>
           <!--<a href="#!/account/details"><img src="images/icon-settings.png" alt="" class="install"/></a>-->
         </div>
         <!--Logout button-->
         <div class="own hidden-xs">
-          <a href="#!/login" class="btn headerButton logoutButton">Logout</a>
+          <a href="#!/login" class="btn logoutButton">Logout</a>
           <!--Previous Logout<a href="#!/login" class="own glyphicon glyphicon-log-out huge red"></a>-->
         </div>
       </div>
@@ -53,6 +53,7 @@
 
 <div class="layout">
   <div class="leftnav greybg hidden-xs">
+    <!--Left Main menu-->
     <div class="leftMenu" id="sub-header">
       <ul class="nav nav-pills nav-stacked">
         <li role="presentation"><a href="#!/account/addresses" class="leftMenuButtons">{{ 'NAV_ACCOUNT' | translate }}</a></li>

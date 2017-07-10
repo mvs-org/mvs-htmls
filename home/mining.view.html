@@ -2,7 +2,7 @@
   <span class="headline">
     <div ng-show="showWhenNotMining">ETP {{ 'HEADLINE_MINING' | translate }}</div>
     <div ng-show="showWhenMining" style="isMiningText">{{ 'MINING_IS_MINING' | translate }}
-      <div class="spinner showWhenMining">
+      <div class="miningSpinner showWhenMining">
       </div>
     </div>
   </span>
@@ -36,11 +36,11 @@
         <!--Mining buttons-->
         <div>
           <!--Play button, when not mining-->
-          <button class="btn btn-success miningButtonWhenNotMining" ng-click="start()" ng-show="showWhenNotMining">
+          <button class="btn btn-success" ng-click="start()" ng-show="showWhenNotMining">
             <i class="glyphicon glyphicon-play"></i> {{ 'MINING_START' | translate }}
           </button>
           <!--Pause button, when mining-->
-          <button class="btn btn-success miningButtonWhenMining" ng-click="stop()" ng-show="showWhenMining">
+          <button class="btn btn-secondary" ng-click="stop()" ng-show="showWhenMining">
             <i class="glyphicon glyphicon-pause"></i> {{ 'MINING_END' | translate }}
           </button>
           <!--<input class="btn btn-success miningButton" ng-click="start()" ng-show="showWhenNotMining" value="{{ 'MINING_START' | translate }}">
