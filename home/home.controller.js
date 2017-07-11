@@ -3,6 +3,7 @@
 
     angular.module('app')
         .controller('HomeController', HomeController)
+        .controller('MenuController', MenuController)
         .controller('ConsoleController', ConsoleController)
         .controller('AccountController', AccountController)
         .controller('TransferAssetController', TransferAssetController)
@@ -15,6 +16,18 @@
         .controller('ExplorerController', ExplorerController)
         .controller('MiningController', MiningController);
 
+    function MenuController($location, $rootScope){
+
+      function setMenu(){
+        $rootScope.selectedMenu={
+          main: $location.path().split('/')[1]
+        }
+      }
+      setMenu();
+      $rootScope.$on("$locationChangeStart", function(event, next, current) {
+        setMenu();
+      });
+    }
 
     function ExplorerController(MetaverseService, MetaverseHelperService, $location, $stateParams, $rootScope, $scope, FlashService, localStorageService, $translate) {
 
@@ -701,6 +714,7 @@
         $scope.showWhenNotMining=true;
 
 
+
         function GetMiningInfo() {
             NProgress.start();
             MetaverseService.GetMiningInfo()
@@ -754,6 +768,9 @@
     function ConsoleController(MetaverseService, $rootScope, $scope) {
 
         var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
+        //var ws = new WebSocket('ws://test4.metaverse.live:8820/ws');
+
+
 
         ws.onmessage = (ev) => {
             NProgress.done();

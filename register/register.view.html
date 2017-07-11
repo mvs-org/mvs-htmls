@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="text-center padding-big-top">
-    <img src="img/metaverse_logo.png" alt="" class="logoMetaverse"/>
+    <img src="img/metaverse_logo.png" alt="" class="logoMetaverseLogin"/>
   </div>
   <form class="col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6"; style="margin-top: 50px;">
       <!--To register-->
@@ -37,9 +37,13 @@
           </div>
         </div>
         <!--Submit and Cancel buttons-->
-        <div class="submit">
-          <button ng-click="vm.register()" type="submit" class="btn btn-success col-xs-6 col-sm-4 col-md-4" ng-disabled="form.$invalid || vm.dataLoading">{{ 'REGISTER.REGISTGER_BUTTON' | translate }}</button>
-          <a href="#!/login" class="btn btn-link col-xs-6 col-sm-4 col-md-4">{{ 'REGISTER.LOGIN_BUTTON' | translate }}</a>
+        <div class="form-group">
+          <div class="col-xs-6 col-sm-4 col-md-4">
+            <button class="btn btn-success" ng-click="vm.register()" type="submit" ng-disabled="form.$invalid || vm.dataLoading">{{ 'REGISTER.REGISTGER_BUTTON' | translate }}</button>
+          </div>
+          <div class=" col-xs-6 col-sm-4 col-md-4">
+            <a href="#!/login" class="btn btn-link col-xs-6 col-sm-4 col-md-4">{{ 'REGISTER.LOGIN_BUTTON' | translate }}</a>
+          </div>
         </div>
       </div>
       <br>
@@ -48,7 +52,7 @@
         <h1>{{ "REGISTER.SIGNUP_THANK_YOU" | translate}}</h1>
         <br><br>
         <div class="form-group">{{ "REGISTER.PRIVATE_KEY_MNEMONIC" | translate}}:<br></div>
-        <div><b class="form-group mnemonic_red col-xs-12 col-sm-12 col-md-12" style="width:100%">{{vm.registered.privatekey}}</b></div>
+        <div><b class="form-group mnemonic_red col-xs-12 col-sm-12 col-md-12">{{vm.registered.privatekey}}</b></div>
         <!--TO TEST<div><b class="form-group mnemonic_red col-xs-12 col-sm-12 col-md-12" style="width:100%">test words blabla voiture maison avion france espagne internet 10ememot encore presque cestok</b></div>-->
         <br><br>
         <div>{{ "REGISTER.PRIVATE_KEY_MNEMONIC_INFO" | translate}}</div>

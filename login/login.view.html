@@ -1,23 +1,26 @@
-<!--Language button-->
-<div class="languageButtonLogin col-xs-4 col-sm-3 col-md-3 pull-right">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Language
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-    <li><a ng-click="vm.changeLang('zh_ZH')"><img class="zh" src="images/zh.png" alt="" /> 中文</a></li>
-    <li><a ng-click="vm.changeLang('en_US')"><img class="en" src="images/en.png" alt="" /> English</a></li>
-    <li><a ng-click="vm.changeLang('de_DE')"><img class="de" src="images/en.png" alt="" /> Deutsch</a></li>
-  </ul>
-</div>
-
-<br/>
+<!--Alert Invalid login credentials-->
 <div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
   <div class="" ng-bind="flash.message">
   </div>
 </div>
+<!--Language button-->
+<div class="col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
+  <div class="pull-right">
+    <button class="btn btn-default dropdown-toggle languageButton" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      Language
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+      <li><a ng-click="vm.changeLang('zh_ZH')"><img class="zh" src="images/zh.png" alt="" /> 中文</a></li>
+      <li><a ng-click="vm.changeLang('en_US')"><img class="en" src="images/en.png" alt="" /> English</a></li>
+      <li><a ng-click="vm.changeLang('de_DE')"><img class="de" src="images/en.png" alt="" /> Deutsch</a></li>
+    </ul>
+  </div>
+</div>
+<!--Register area-->
 <form class="col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
-  <img class="center-block logoMetaverse" src="img/metaverse_logo.png" alt=""/>
+  <!--Logo-->
+  <img class="center-block logoMetaverseLogin" src="img/metaverse_logo.png" alt=""/>
   <h2><b>{{ 'LOGIN.LOGIN_BUTTON' | translate }}</b></h2>
   <div class="form-group">
     <!--Username-->

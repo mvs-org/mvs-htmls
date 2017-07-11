@@ -1,7 +1,7 @@
 <!--------------------------------------头部----------------------------------->
 <div class="panel">
   <div class="header">
-    <div class="logo hidden-xs">
+    <div class="hidden-xs">
       <a href="#!/assets">
         <img src="img/metaverse_logo.png" class="logoMetaverseSmall" alt="" />
       </a>
@@ -52,18 +52,19 @@
 <!---------------------------------内容------------------------------------------------->
 
 <div class="layout">
-  <div class="leftnav greybg hidden-xs">
+  <div class="leftnav greybg hidden-xs" ng-controller="MenuController">
     <!--Left Main menu-->
     <div class="leftMenu" id="sub-header">
       <ul class="nav nav-pills nav-stacked">
-        <li role="presentation"><a href="#!/account/addresses" class="leftMenuButtons">{{ 'NAV_ACCOUNT' | translate }}</a></li>
-        <li role="presentation"><a href="#!/asset/details/" class="leftMenuButtons">{{ 'NAV_ASSETS' | translate }}</a></li>
-        <li role="presentation"><a href="#!/account/details" class="leftMenuButtons">{{ 'NAV_ACCOUNT_SETTING' | translate }}</a></li>
+        <li role="presentation"><a href="#!/deposit" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='deposit'}">{{ 'NAV_DEPOSIT' | translate }}</span></a></li>
+        <li role="presentation"><a href="#!/asset/details/" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='asset'}">{{ 'NAV_ASSETS' | translate }}</span></a></li>
+        <li role="presentation"><a href="#!/account/details" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='account'}">{{ 'NAV_ACCOUNT_SETTING' | translate }}</span></a></li>
         <li class="dropdown-header">高级</li>
         <div class="menuLine">
         </div>
-        <li role="presentation"><a href="#!/console" class="leftMenuButtons">{{ 'NAV_CONSOLE' | translate }}</a></li>
-        <li role="presentation"><a href="#!/mining" class="leftMenuButtons">{{ 'NAV_MINING' | translate }}</a></li>
+        <!--<li role="presentation"><a href="#!/console" class="leftMenuButtons"><span ng-show="selectedMenu.main==='console'">xx</span>{{ 'NAV_CONSOLE' | translate }}</a></li>-->
+        <li role="presentation"><a href="#!/console" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='console'}">{{ 'NAV_CONSOLE' | translate }}</span></a></li>
+        <li role="presentation"><a href="#!/mining" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='mining'}">{{ 'NAV_MINING' | translate }}</span></a></li>
 
       </ul>
       <br/>
