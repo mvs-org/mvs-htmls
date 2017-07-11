@@ -1,31 +1,68 @@
-<div class="headline"><em></em>{{ 'HEADLINE_ASSETS_CREATE' | translate }}</div>
-<div class="row">
-  <form>
-    <div class="col-sm-3"></div>
-    <div class="col-sm-6">
-      <form class="form-horizontal" role="form">
-        <div class="form-group">
-          <label for="symbol" class="control-label">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</label>
-          <input type="text" class="form-control uppercase" name="symbol" ng-class="{ 'border-danger' : error.symbol && symbol!=undefined}" placeholder="" ng-model="symbol" autocomplete="off">
-        </div>
-        <div class="form-group">
-          <label for="max_supply" class="control-label">{{ 'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate }}</label>
-          <input type="number" class="form-control" name="max_supply" ng-class="{ 'border-danger' : (error.max_supply && max_supply!=undefined) || max_supply==''}" placeholder="" ng-model="max_supply" autocomplete="off" required>
-        </div>
-        <div class="form-group">
-          <label for="decimals" class="control-label">{{ 'ASSET_ASSET_CREATE_DIGITS' | translate }}</label>
-          <input type="number" class="form-control" name="decimals" ng-class="{ 'border-danger' : (error.digits && digits!=undefined) || max_supply==''}" min="0" max="8" placeholder="" ng-model="decimals" autocomplete="off" required>
-        </div>
-        <div class="assetExplains">
-          <label for="description" class="control-label">{{ 'ASSET_ASSET_CREATE_DESCRIPTION' | translate }}</label>
-          <textarea class="form-control" name="description" ng-class="{ 'border-danger' : (error.description && description)}" rows="4" cols="35" ng-model="description" autocomplete="off"></textarea>
-        </div>
-        <div class="form-group">
-          <label for="password" class="control-label">{{ 'ASSET_ASSET_CREATE_PASSWORD' | translate }}</label>
-          <input type="password" class="form-control" name="password" placeholder="" ng-class="{ 'border-danger' : (error.password && password)}" ng-model="password" autocomplete="new-password">
-        </div>
-        <input type="submit" class="btn btn-success" ng-disabled="!submittable" ng-click="createasset()" value="{{ 'ASSET_ASSET_CREATE_SUBMIT_BUTTON' | translate }}">
-      </form>
-    </div>
-  </form>
+<span class="headline"><em></em>{{ 'HEADLINE_ASSETS_CREATE' | translate }}</span>
+<form>
+  <br/>
+  <div class="col-sm-6">
+    <!--Via Angular-->
+    <!--<form class="form-horizontal col-sm-6" role="form">
+    <div class="form-group">
+    <label for="symbol" class="control-label">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</label>
+    <input type="text" class="form-control uppercase" name="symbol" ng-class="{ 'border-danger' : error.symbol && symbol!=undefined}" placeholder="" ng-model="symbol" autocomplete="off">
+  </div>
+  <div class="form-group">
+  <label for="max_supply" class="control-label">{{ 'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate }}</label>
+  <input type="number" class="form-control" name="max_supply" ng-class="{ 'border-danger' : (error.max_supply && max_supply!=undefined) || max_supply==''}" placeholder="" ng-model="max_supply" autocomplete="off" required>
+</div>
+<div class="form-group">
+<label for="decimals" class="control-label">{{ 'ASSET_ASSET_CREATE_DIGITS' | translate }}</label>
+<input type="number" class="form-control" name="decimals" ng-class="{ 'border-danger' : (error.digits && digits!=undefined) || max_supply==''}" min="0" max="8" placeholder="" ng-model="decimals" autocomplete="off" required>
+</div>
+<div class="assetExplains">
+<label for="description" class="control-label">{{ 'ASSET_ASSET_CREATE_DESCRIPTION' | translate }}</label>
+<textarea class="form-control" name="description" ng-class="{ 'border-danger' : (error.description && description)}" rows="4" cols="35" ng-model="description" autocomplete="off"></textarea>
+</div>
+<div class="form-group">
+<label for="password" class="control-label">{{ 'ASSET_ASSET_CREATE_PASSWORD' | translate }}</label>
+<input type="password" class="form-control" name="password" placeholder="" ng-class="{ 'border-danger' : (error.password && password)}" ng-model="password" autocomplete="new-password">
+</div>
+<input type="submit" class="btn btn-success" ng-disabled="!submittable" ng-click="createasset()" value="{{ 'ASSET_ASSET_CREATE_SUBMIT_BUTTON' | translate }}">
+</form>-->
+
+
+<!--Via HTML5 and SCSS-->
+<form class="form-horizontal" role="form">
+  <div class="form-group">
+    <label for="symbol" class="control-label">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</label>
+    <input type="text" class="form-control uppercase" name="symbol" required placeholder="" ng-model="symbol" autocomplete="off">
+  </div>
+  <div class="form-group">
+    <label for="max_supply" class="control-label">{{ 'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate }}</label>
+    <input type="number" min="0" class="form-control" name="max_supply" required placeholder="" ng-model="max_supply" autocomplete="off">
+  </div>
+  <div class="form-group">
+    <label for="decimals" class="control-label">{{ 'ASSET_ASSET_CREATE_DIGITS' | translate }}</label>
+    <select type="number" class="form-control" name="decimals" required placeholder="" ng-model="decimals">
+      <option value="1">0</option>
+      <option value="2">1</option>
+      <option value="3">2</option>
+      <option value="4">3</option>
+      <option value="5">4</option>
+      <option value="6">5</option>
+      <option value="7">6</option>
+      <option value="8">7</option>
+      <option value="9">8</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="description" class="control-label">{{ 'ASSET_ASSET_CREATE_DESCRIPTION' | translate }}</label>
+    <textarea class="form-control" name="description" required rows="4" cols="35" ng-model="description" autocomplete="off"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="password" class="control-label">{{ 'ASSET_ASSET_CREATE_PASSWORD' | translate }}</label>
+    <input type="password" class="form-control" name="password" placeholder="" ng-class="{ 'border-danger' : (error.password && password)}" ng-model="password" autocomplete="new-password">
+  </div>
+</br>
+<input type="submit" class="btn btn-success" ng-click="createasset()" value="{{ 'ASSET_ASSET_CREATE_SUBMIT_BUTTON' | translate }}">
+</form>
+</div>
+</form>
 </div>
