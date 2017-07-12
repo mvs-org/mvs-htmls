@@ -2,9 +2,11 @@ $topSpace:80px;
 $lightGrey:rgba(242, 242, 242, 1); //used for background
 $mediumGrey:rgba(200, 200, 200, 1); //used for borders
 $darkGrey:rgba(121, 121, 121, 1); //used for language button
+$veryDarkGrey: #5E5E5E; //user for text in assets
 $successButtonColor:rgba(235, 68, 90, 1); //used for Login,research
 $infoButtonColor:rgba(52, 125, 237, 100); //used for Register
 $linkButtonColor:#347DED;
+$blueGeneralColor:#347DED;
 $secondaryButtonColor: white;
 $radiusButtons: 6px;
 $leftMenuButtonColor:#1B1B1B;
@@ -51,6 +53,10 @@ _____  ._______  ___.___ _______
   } @else if $type == 'link' {
     width: 100%;
     color: $btn-color !important;
+    background-color: white !important;
+    &:hover {
+      opacity: 0.8;
+    }
   } @else if $type == 'Language' {
     width: 134px;
     height: 36px;
@@ -354,6 +360,11 @@ _____  ._______  ___.___ _______
   animation: nprogress-spinner 1000ms linear infinite;
 }
 
+.noPaddingLeftRight {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
 
 /****************Mining view****************/
 
@@ -401,3 +412,108 @@ _____  ._______  ___.___ _______
   display: inline-block;
   margin: 10px;
 }
+
+
+/********************Assets*****************************/
+.assetsMenu > li.active > a{
+    text-decoration:underline;
+}
+
+/********************My assets**************************/
+.assetBox {
+  background-color: $lightGrey;
+  width: 265px;
+  height: 120px;
+  margin: 10px;
+  border-radius: 0px;
+
+}
+
+//Contains the logo of the asset
+.assetBoxSymbolImg {
+  width: 30%;
+  height: 120px;
+  margin-left: 10px;
+
+}
+
+.assetSymbol {
+  position: absolute;
+  margin-top: 40px;
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  -webkit-border-radius: 150px;
+  -moz-border-radius: 150px;
+}
+
+.assetBoxTextInfo {
+  width: 70%;
+  display: inline-block;
+  float: right;
+}
+
+.assetBoxSymbolName {
+  width: 100%;
+  color: $blueGeneralColor;
+  float:left;
+  line-height:30px;
+  font-size: 16px;
+  text-overflow: ellipsis; //for CSS3
+  overflow: hidden; //for older browsers
+}
+
+.assetBoxTitle {
+  width: 100%;
+  color: $veryDarkGrey;
+  float:left;
+  line-height:12px;
+  font-size: 12px;
+  padding-top:10px;
+}
+
+.assetBoxValue {
+  width: 100%;
+  color: $veryDarkGrey;
+  float:left;
+  line-height:16px;
+  font-size: 16px;
+}
+
+.createAsset {
+  margin: 10px;
+}
+
+//Table to check one asset
+.currentAsset {
+  font-weight: 200;
+  font-style: normal;
+  font-size: 24px;
+
+}
+
+.assetEmptyColumn {
+  width: 10px;
+}
+
+.assetDataColumn {
+  width: 160px;
+  text-align: right;
+  padding-right: 20px;
+  font-family: 'PingFangSC-Regular', 'PingFang SC';
+  font-weight: 400;
+  font-style: normal;
+  font-size: 12px;
+
+}
+
+.assetValueColumn {
+  width: auto;
+  margin-left: 10px;
+  font-family: 'PingFangSC-Thin', 'PingFang SC Thin', 'PingFang SC';
+  font-weight: 200;
+
+}
+
+
+/********************All assets*************************/
