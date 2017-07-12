@@ -1,109 +1,74 @@
+<!--Display one specific Asset-->
 <div ng-show="asset.symbol">
   <div class="headline"><em></em>{{ 'HEADLINE_ASSETS_DETAILS' | translate }}</div>
+  <div>
+    <ul class="nav nav-pills tabsMenu">
+      <li role="presentation"><a href="#!/asset/details/" class="btn-link">My assets</a></li>
+      <li role="presentation"><a href="#!/asset/all" class="btn-link">All assets</a></li>
+    </ul>
+  </div>
   <br/>
-  <!--<table>
-  <div class="row">
-  <div class="col-md-3">{{'ASSET_ASSET_CREATE_SYMBOL' | translate}}:</div>
-  <div class="col-md-3">{{asset.symbol}}</div>
+  <h2 class="currentAsset">{{asset.symbol}}</h2>
+  <table>
+    <thead>
+      <tr>
+        <th class="assetEmptyColumn"></th>
+        <th class="assetDataColumn"></th>
+        <th class="assetValueColumn"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="row">
+        <td class="assetDataColumn">{{'BALANCE' | translate}}:</td>
+        <td class="assetValueColumn">{{asset.quantity | assetformat : asset.decimal_number}}</td>
+      </tr>
+      <tr class="row">
+        <td class="assetDataColumn">{{'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate}}:</td>
+        <td class="assetValueColumn">{{asset.maximum_supply | assetformat : asset.decimal_number}}</td>
+      </tr>
+      <tr class="row">
+        <td class="assetDataColumn">{{'ASSET_ASSET_CREATE_DIGITS' | translate}}:</td>
+        <td class="assetValueColumn">{{asset.decimal_number}}</td>
+      </tr>
+      <tr class="row">
+        <td class="assetDataColumn">{{'ISSUER' | translate}}:</td>
+        <td class="assetValueColumn">{{asset.issuer}}</td>
+      </tr>
+      <tr class="row">
+        <td class="assetDataColumn">{{'ASSET_ASSET_CREATE_DESCRIPTION' | translate}}:</td>
+        <td class="assetValueColumn">{{asset.description}}</td>
+      </td>
+      <tr class="row">
+        <td class="assetDataColumn">{{'STATUS' | translate}}:</td>
+        <td class="assetValueColumn">{{asset.status}}</td>
+      </td>
+      <tr class="row">
+        <td class="assetDataColumn">{{'ADDRESS' | translate}}:</td>
+        <td class="assetValueColumn">{{asset.address}}</td>
+      </td>
+    </tody>
+  </table>
+  <br/>
+  <br/>
+  <div ng-show="asset.status=='unissued'" class="col-xs-12 col-sm-6 col-md-4">
+    <a href="" ng-click="issue(asset.symbol)"><input class="btn btn-info" value="{{'ASSET_ISSUE' | translate}}"></a>
+  </div>
+  <div ng-show="asset.status=='issued'" class="col-xs-12 col-sm-6 col-md-4">
+    <a href="#!/asset/transfer/{{asset.symbol}}/{{asset.address}}"><input class="btn btn-success" value="{{'TRANSFER_SEND' | translate}}"></a>
+  </div>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
 </div>
-<div class="row">
-<div class="col-md-3">{{'BALANCE' | translate}}:</div>
-<div class="col-md-3">{{asset.quantity | assetformat : asset.decimal_number}}</div>
-</div>
-<div class="row">
-<div class="col-md-3">{{'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate}}:</div>
-<div class="col-md-3">{{asset.maximum_supply | assetformat : asset.decimal_number}}</div>
-</div>
-<div class="row">
-<div class="col-md-3">{{'ASSET_ASSET_CREATE_DIGITS' | translate}}:</div>
-<div class="col-md-3">{{asset.decimal_number}}</div>
-</div>
-<div class="row">
-<div class="col-md-3">{{'ISSUER' | translate}}:</div>
-<div class="col-md-3">{{asset.issuer}}</div>
-</div>
-<div class="row">
-<div class="col-md-3">{{'ASSET_ASSET_CREATE_DESCRIPTION' | translate}}:</div>
-<div class="col-md-3">{{asset.description}}</div>
-</div>
-<div class="row">
-<div class="col-md-3">{{'STATUS' | translate}}:</div>
-<div class="col-md-3">{{asset.status}}</div>
-</div>
-<div class="row">
-<div class="col-md-3">{{'ADDRESS' | translate}}:</div>
-<div class="col-md-3">{{asset.address}}</div>
-</div>
-<br/>
-<div ng-show="asset.status=='unissued'" class="col-xs-12 col-sm-6 col-md-4">
-<a href="" ng-click="issue(asset.symbol)"><div class="btn btn-primary">Issue</div></a>
-</div>
-<div ng-show="asset.status=='issued'" class="col-xs-12 col-sm-6 col-md-4">
-<a href="#!/asset/transfer/{{asset.symbol}}/{{asset.address}}"><input class="btn btn-success" value="{{'TRANSFER_SEND' | translate}}"></a>
-</div>
-<br/>
-<br/>
-<br/>
-</table>-->
-<h2 class="currentAsset">{{asset.symbol}}</h2>
-<table>
-  <thead>
-    <tr>
-      <th class="assetEmptyColumn"></th>
-      <th class="assetDataColumn"></th>
-      <th class="assetValueColumn"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="row">
-      <td class="assetDataColumn">{{'BALANCE' | translate}}:</td>
-      <td class="assetValueColumn">{{asset.quantity | assetformat : asset.decimal_number}}</td>
-    </tr>
-    <tr class="row">
-      <td class="assetDataColumn">{{'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate}}:</td>
-      <td class="assetValueColumn">{{asset.maximum_supply | assetformat : asset.decimal_number}}</td>
-    </tr>
-    <tr class="row">
-      <td class="assetDataColumn">{{'ASSET_ASSET_CREATE_DIGITS' | translate}}:</td>
-      <td class="assetValueColumn">{{asset.decimal_number}}</td>
-    </tr>
-    <tr class="row">
-      <td class="assetDataColumn">{{'ISSUER' | translate}}:</td>
-      <td class="assetValueColumn">{{asset.issuer}}</td>
-    </tr>
-    <tr class="row">
-      <td class="assetDataColumn">{{'ASSET_ASSET_CREATE_DESCRIPTION' | translate}}:</td>
-      <td class="assetValueColumn">{{asset.description}}</td>
-    </td>
-    <tr class="row">
-      <td class="assetDataColumn">{{'STATUS' | translate}}:</td>
-      <td class="assetValueColumn">{{asset.status}}</td>
-    </td>
-    <tr class="row">
-      <td class="assetDataColumn">{{'ADDRESS' | translate}}:</td>
-      <td class="assetValueColumn">{{asset.address}}</td>
-    </td>
-  </tody>
-</table>
-<br/>
-<br/>
-<div ng-show="asset.status=='unissued'" class="col-xs-12 col-sm-6 col-md-4">
-  <a href="" ng-click="issue(asset.symbol)"><input class="btn btn-info" value="{{'ASSET_ISSUE' | translate}}"></a>
-</div>
-<div ng-show="asset.status=='issued'" class="col-xs-12 col-sm-6 col-md-4">
-  <a href="#!/asset/transfer/{{asset.symbol}}/{{asset.address}}"><input class="btn btn-success" value="{{'TRANSFER_SEND' | translate}}"></a>
-</div>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
 
-</div>
+<!--My Assets-->
+<div ng-show="asset.symbol == null">
 <span class="headline"><em></em>{{ 'HEADLINE_ASSETS' | translate }}</span>
 <div>
-  <ul class="nav nav-pills assetsMenu">
+  <ul class="nav nav-pills tabsMenu">
     <li role="presentation" class="active"><a href="#!/asset/details/" class="btn-link">My assets</a></li>
     <li role="presentation"><a href="#!/asset/all" class="btn-link">All assets</a></li>
   </ul>
@@ -131,4 +96,5 @@
       </dl>
     </div>
   </div>
+</div>
 </div>

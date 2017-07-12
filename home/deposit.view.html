@@ -1,6 +1,31 @@
 <div class="content">
 	<span class="headline"><em></em>{{ 'DEPOSIT.HEADLINE' | translate }}</span>
 				<div class="">
+
+
+					<form method="post" class="form-x" action="">
+						<div class="mainContent1">
+							<div class="row assetBoxWrapper">
+								<dl id="outer_wrap">
+									<a href="#!/transfer">
+										<dd class="panel assetBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
+											<span class="assetBoxSymbolImg"><img class="assetSymbol" src="favicon.png" alt=""/></span>
+											<span class="assetBoxTextInfo">
+												<span class="assetBoxSymbolName">ETP</span>
+												<span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
+												<span class="assetBoxValue">{{balance['total-unspent']/100000000}}</span>
+												<span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
+												<span class="assetBoxValue">{{balance['total-frozen']/100000000}}</span>
+											</span>
+										</dd>
+									</a>
+								</dl>
+							</div>
+						</div>
+						</form
+
+
+
 					<div class="row">
 						<form>
 						<div class="col-sm-5">
