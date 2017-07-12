@@ -656,7 +656,7 @@
                             $translate('MESSAGES.ASSSET_CREATED_LOCAL_SUCCESS').then( (data) => {
                                 FlashService.Success(data, true);
                                 //Redirect user to the assets page
-                                $location.path('/assets');
+                                $location.path('/home');
                             });
                         } else{
                             FlashService.Error(response.message);
@@ -768,6 +768,7 @@
     function ConsoleController(MetaverseService, $rootScope, $scope) {
 
         var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
+        //To test the Console view with Grunt:
         //var ws = new WebSocket('ws://test4.metaverse.live:8820/ws');
 
 

@@ -89,7 +89,7 @@
 
 
             .state('home.assets', {
-                url: "/assets",
+                url: "/home",
                 templateUrl: "home/assets.view.html",
                 controller: 'AssetsController',
                 controllerAs: 'vm'

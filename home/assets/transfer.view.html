@@ -11,7 +11,7 @@
         </div>
         <div class="form-group">
           <label for="quantity" class="control-label">{{ 'TRANSFER_VALUE' | translate }}：<span class="red big">*</span></label>
-          <input type="text" class="form-control" name="quantity" ng-model="quantity">
+          <input type="number" class="form-control" name="quantity" ng-model="quantity">
         </div>
       </div>
       <div class="col-md-6">
@@ -26,7 +26,7 @@
           <input type="submit" class="btn btn-success" ng-click="sendasset(recipent_address,symbol,quantity)" value="{{ 'TRANSFER_SEND' | translate }}">
         </div>
         <div class="form-group col-xs-6 col-md-6">
-          <a href="#!/register" class="btn btn-info">{{ 'TRANSFER_BACK_ASSETS' | translate }}</a>
+          <a href="#!/asset/details/" class="btn btn-info">{{ 'TRANSFER_BACK_ASSETS' | translate }}</a>
         </div>
       </div>
     </form>

@@ -86,8 +86,9 @@
   </tody>
 </table>
 <br/>
+<br/>
 <div ng-show="asset.status=='unissued'" class="col-xs-12 col-sm-6 col-md-4">
-  <a href="" ng-click="issue(asset.symbol)"><div class="btn btn-primary">Issue</div></a>
+  <a href="" ng-click="issue(asset.symbol)"><input class="btn btn-info" value="{{'ASSET_ISSUE' | translate}}"></a>
 </div>
 <div ng-show="asset.status=='issued'" class="col-xs-12 col-sm-6 col-md-4">
   <a href="#!/asset/transfer/{{asset.symbol}}/{{asset.address}}"><input class="btn btn-success" value="{{'TRANSFER_SEND' | translate}}"></a>
