@@ -383,6 +383,7 @@
         $scope.sendasset = sendasset;
         $scope.sendassetfrom = sendassetfrom;
 
+
         function loadasset(symbol) {
             MetaverseService.GetAsset(symbol)
                 .then( (response) => {
@@ -675,6 +676,26 @@
 
         NProgress.start();
 
+
+        $scope.showDates = false;
+        $scope.customDates = customDates;
+
+        //Show the dates From ... To ... if the Custom button is selected
+        function customDates(showDates) {
+            switch (showDates) {
+              case 'show':
+                $scope.showDates=true;
+                break;
+              case 'hide':
+                $scope.showDates=false;
+                break;
+              default:
+                $scope.showDates=false;
+            }
+        }
+
+
+
         //Load users ETP balance
         MetaverseHelperService.GetBalance( (err, balance, message) => {
             if (err)
@@ -701,7 +722,6 @@
             }
             NProgress.done();
         });
-
     }
 
 

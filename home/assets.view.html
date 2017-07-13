@@ -1,78 +1,183 @@
 <div class="content">
   <div class="headline"><em></em>{{ 'HEADLINE_ASSETS' | translate }}</div>
-  </br>
-  <div class="body-content">
-    <form method="post" class="form-x" action="">
-      <div class="mainContent1">
-        <div class="row assetBoxWrapper">
-          <dl id="outer_wrap">
-            <a href="#!/transfer">
-              <dd class="panel assetBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
-                <span class="assetBoxSymbolImg"><img class="assetSymbol" src="favicon.png" alt=""/></span>
-                <span class="assetBoxTextInfo">
-                  <span class="assetBoxSymbolName">ETP</span>
-                  <span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
-                  <span class="assetBoxValue">{{balance['total-unspent']/100000000}}</span>
-                  <span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
-                  <span class="assetBoxValue">{{balance['total-frozen']/100000000}}</span>
-                </span>
-              </dd>
-            </a>
-            <a href="#!/asset/details/{{asset.symbol}}" ng-repeat="asset in assets">
-              <dd class="panel assetBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
-                <span class="assetBoxSymbolImg"><img class="assetSymbol" src="favicon.png" alt=""/></span>
-                <span class="assetBoxTextInfo">
-                  <span class="assetBoxSymbolName">{{asset.symbol}}</span>
-                  <span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
-                  <span class="assetBoxValue">{{asset.quantity | assetformat : asset.decimal_number}}</span>
-                  <span class="assetBoxTitle">{{ 'STATUS' | translate }}</span>
-                  <span class="assetBoxValue">{{asset.status}}</span>
-                </span>
-              </dd>
-            </a>
-          </dl>
-        </div>
-        <!--<div>
-          <div class="headline"><em></em>{{ 'HEADLINE_TRANSACTIONS' | translate }}</div>
-          <div class="transaction_list">
-            <div class="no_transaction_message" ng-show="transactions.length==0">
-              {{'MESSAGES.NO_LISTED_TRANSACTIONS' | translate}}
-            </div>
-            <div class="transactionbox" dir-paginate="transaction in transactions | orderBy:'height':1 | itemsPerPage: 10">
+</br>
+<div class="body-content">
+  <form method="post" class="form-x" action="">
+    <div class="mainContent1">
+      <div class="row assetBoxWrapper">
+        <dl id="outer_wrap">
+          <a href="#!/transfer">
+            <dd class="panel assetBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
+              <span class="assetBoxSymbolImg"><img class="assetSymbol" src="favicon.png" alt=""/></span>
+              <span class="assetBoxTextInfo">
+                <span class="assetBoxSymbolName">ETP</span>
+                <span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
+                <span class="assetBoxValue">{{balance['total-unspent']/100000000}}</span>
+                <span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
+                <span class="assetBoxValue">{{balance['total-frozen']/100000000}}</span>
+              </span>
+            </dd>
+          </a>
+          <a href="#!/asset/details/{{asset.symbol}}" ng-repeat="asset in assets">
+            <dd class="panel assetBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
+              <span class="assetBoxSymbolImg"><img class="assetSymbol" src="favicon.png" alt=""/></span>
+              <span class="assetBoxTextInfo">
+                <span class="assetBoxSymbolName">{{asset.symbol}}</span>
+                <span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
+                <span class="assetBoxValue">{{asset.quantity | assetformat : asset.decimal_number}}</span>
+                <span class="assetBoxTitle">{{ 'STATUS' | translate }}</span>
+                <span class="assetBoxValue">{{asset.status}}</span>
+              </span>
+            </dd>
+          </a>
+        </dl>
+      </div>
 
-              <div class="row">
-                <div class="col-md-1">
-                  <img src="images/receiveBig.png" ng-if="transaction.direction=='receive'">
-                  <img src="images/sendBig.png" ng-if="transaction.direction=='send'">
-                  <img src="images/add.png" style="height: 30px;" ng-if="transaction.direction=='issue'">
-                </div>
-                <div class="col-md-11">
-                  <div class="row">
-                    <div class="col-md-12 hash">
-                      <a target="_blank" href="http://explorer.mvs.live/#!/tx/{{transaction.hash}}"> {{transaction.hash}}</a>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-3">
-                      {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT' | translate) }}
-                    </div>
-                    <div class="col-md-2 right-align">
-                      {{transaction.value | assetformat : transaction.decimal_number}}
-                    </div>
-                    <div class="col-md-3">
-                      {{transaction.type}}
-                    </div>
-                    <div class="col-md-4">
-                      {{ 'TRANSFER_RECIPENT' | translate }}: <div ng-repeat="recipent in transaction.recipents" class="address">{{recipent.address}}</div>
-                    </div>
-                  </div>
-                </div>
+    </div>
+  </form>
+  <br/>
+  <div class="dropdown">
+    <span class="headline">{{ 'NAV_HISTORY' | translate }}   </span>
+    <button class="btn btn-success smallButton dropdown-toggle" type="button" id="dropdownHistory" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      ETP
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a href="#">All</a></li>
+      <li role="separator" class="divider"></li>
+      <li><a href="#">ETP</a></li>
+      <li><a href="#">ABC</a></li>
+      <li><a href="#">DCE</a></li>
+    </ul>
+  </div>
+  <br/>
+
+
+
+  <form>
+    <div>{{ 'HISTORY_TIME_PERIOD' | translate }}</div>
+    <div class="radioButton col-md-12">
+      <div class="oneRadioButton col-md-3">
+        <input type="radio" name="radio" id="oneWeek" checked value="hideCustomDate" ng-click="customDates('hide')"/>
+        <label for="oneWeek">One week</label>
+      </div>
+      <div class="oneRadioButton col-md-3">
+        <input type="radio" name="radio" id="oneMonth" value="hideCustomDate" ng-click="customDates('hide')"/>
+        <label for="oneMonth">One month</label>
+      </div>
+      <div class="oneRadioButton col-md-3">
+        <input type="radio" name="radio" id="threeMonths" ng-click="customDates('hide')"/>
+        <label for="threeMonths">Three months</label>
+      </div>
+      <div class="oneRadioButton col-md-3">
+        <input type="radio" name="radio" id="custom" ng-click="customDates('show')"/>
+        <label for="custom">Custom</label>
+      </div>
+      <span>{{customeDate.value}}</span>
+    </div>
+
+    <div ng-show="showDates" class="customDates">
+      <div class="col-md-6">
+        <div>{{ 'HISTORY_START_DATE' | translate }}</div>
+        <div class="input-append date" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+          <input class="span2" size="16" value="12-02-2012" readonly="" type="text">
+          <span class="add-on"><i class="icon-calendar"></i></span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div>{{ 'HISTORY_END_DATE' | translate }}</div>
+        <input>
+      </div>
+
+    </div>
+    <div class="col-md-3">
+      <input type="submit" class="btn btn-success" value="Submit"></input>
+    </div>
+  </form>
+
+  <!--Display Transactions history-->
+  <div class="col-md-12">
+    <div class="headline">
+      {{ 'HEADLINE_TRANSACTIONS' | translate }}
+    </div>
+    <div class="transaction_list_large hidden-xs hidden-sm">
+      <div class="no_transaction_message" ng-show="transactions.length==0">
+        {{'MESSAGES.NO_LISTED_TRANSACTIONS' | translate}}
+      </div>
+
+      <div class="transactionbox" dir-paginate="transaction in transactions | orderBy:'height':1 | itemsPerPage: 10">
+        <div class="row">
+          <div class="col-md-2">
+            {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT' | translate) }}
+          </div>
+          <!--Sender-->
+          <div class="col-md-3">
+            <div ng-repeat="recipent in transaction.recipents" class="address">{{recipent.address}}</div>
+          </div>
+          <div class="col-md-1">
+            <img src="images/receiveBig.png" ng-if="transaction.direction=='receive'">
+            <img src="images/sendBig.png" ng-if="transaction.direction=='send'">
+            <img src="images/add.png" style="height: 30px;" ng-if="transaction.direction=='issue'">
+          </div>
+          <!--Recipent-->
+          <div class="col-md-3">
+            <div ng-repeat="recipent in transaction.recipents" class="address">{{recipent.address}}</div>
+          </div>
+
+          <!--Amount-->
+          <div class="col-md-1 right-align">
+            {{transaction.value | assetformat : transaction.decimal_number}}
+          </div>
+
+          <!--Type (ETP,...)
+          <div class="col-md-3">
+          {{transaction.type}}
+        </div>-->
+
+        <!--Transaction code-->
+        <div class="col-md-1 hash">
+          <a target="_blank" href="http://explorer.mvs.live/#!/tx/{{transaction.hash}}">哈希</a>
+        </div>
+      </div>
+      </div>
+      <dir-pagination-controls></dir-pagination-controls>
+    </div>
+    <div class="transaction_list_small visible-xs visible-sm">
+      <div class="no_transaction_message" ng-show="transactions.length==0">
+        {{'MESSAGES.NO_LISTED_TRANSACTIONS' | translate}}
+      </div>
+      <div class="transactionbox" dir-paginate="transaction in transactions | orderBy:'height':1 | itemsPerPage: 10">
+
+        <div class="row">
+          <div class="col-md-1">
+            <img src="images/receiveBig.png" ng-if="transaction.direction=='receive'">
+            <img src="images/sendBig.png" ng-if="transaction.direction=='send'">
+            <img src="images/add.png" style="height: 30px;" ng-if="transaction.direction=='issue'">
+          </div>
+          <div class="col-md-11">
+            <div class="row">
+              <div class="col-md-12 hash">
+                <a target="_blank" href="http://explorer.mvs.live/#!/tx/{{transaction.hash}}"> {{transaction.hash}}</a>
               </div>
             </div>
-            <dir-pagination-controls></dir-pagination-controls>
+            <div class="row">
+              <div class="col-md-3">
+                {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT' | translate) }}
+              </div>
+              <div class="col-md-2 right-align">
+                {{transaction.value | assetformat : transaction.decimal_number}}
+              </div>
+              <div class="col-md-3">
+                {{transaction.type}}
+              </div>
+              <div class="col-md-4">
+                {{ 'TRANSFER_RECIPENT' | translate }}: <div ng-repeat="recipent in transaction.recipents" class="address">{{recipent.address}}</div>
+              </div>
+            </div>
           </div>
-        </div>-->
+        </div>
       </div>
-    </form>
+      <dir-pagination-controls></dir-pagination-controls>
+    </div>
   </div>
 </div>
