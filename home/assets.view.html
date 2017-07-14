@@ -36,19 +36,18 @@
     </div>
   </form>
   <br/>
-  <div class="dropdown">
+
+  <div>
     <span class="headline">{{ 'NAV_HISTORY' | translate }}   </span>
-    <button class="btn btn-success smallButton dropdown-toggle" type="button" id="dropdownHistory" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      ETP
-      <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu">
-      <li><a href="#">All</a></li>
-      <li role="separator" class="divider"></li>
-      <li><a href="#">ETP</a></li>
-      <li><a href="#">ABC</a></li>
-      <li><a href="#">DCE</a></li>
-    </ul>
+
+    <label class="selectdiv">
+      <select class="btn btn-link smallButton" type="button" id="dropdownHistory">
+        <option>ETP</option>
+        <option ng-repeat="asset in assets">{{asset.symbol}}</option>
+        <span class="caret"></span>
+      </select>
+    </label>
+
   </div>
   <br/>
 
@@ -56,78 +55,106 @@
 
   <form>
     <div>{{ 'HISTORY_TIME_PERIOD' | translate }}</div>
-    <div class="radioButton col-md-12">
-      <div class="oneRadioButton col-md-3">
+    <div class="radioButton noPaddingLeftRight col-md-12">
+      <span class="oneRadioButton">
         <input type="radio" name="radio" id="oneWeek" checked value="hideCustomDate" ng-click="customDates('hide')"/>
         <label for="oneWeek">One week</label>
-      </div>
-      <div class="oneRadioButton col-md-3">
+      </span>
+      <span class="oneRadioButton">
         <input type="radio" name="radio" id="oneMonth" value="hideCustomDate" ng-click="customDates('hide')"/>
         <label for="oneMonth">One month</label>
-      </div>
-      <div class="oneRadioButton col-md-3">
+      </span>
+      <span class="oneRadioButton">
         <input type="radio" name="radio" id="threeMonths" ng-click="customDates('hide')"/>
         <label for="threeMonths">Three months</label>
-      </div>
-      <div class="oneRadioButton col-md-3">
+      </span>
+      <span class="oneRadioButton">
         <input type="radio" name="radio" id="custom" ng-click="customDates('show')"/>
         <label for="custom">Custom</label>
-      </div>
-      <span>{{customeDate.value}}</span>
+      </span>
     </div>
 
     <div ng-show="showDates" class="customDates">
-      <div class="col-md-6">
+      <div class="col-xs-6 noPaddingLeftRight">
         <div>{{ 'HISTORY_START_DATE' | translate }}</div>
-        <div class="input-append date" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
-          <input class="span2" size="16" value="12-02-2012" readonly="" type="text">
+        <div data-date-format="dd-mm-yyyy">
+          <input class="calendarInput" value="14-07-2017" type="text">
           <span class="add-on"><i class="icon-calendar"></i></span>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-xs-6 noPaddingLeftRight">
         <div>{{ 'HISTORY_END_DATE' | translate }}</div>
-        <input>
+        <div data-date-format="dd-mm-yyyy">
+          <input class="calendarInput" value="21-07-2017" type="text">
+          <span class="add-on"><i class="icon-calendar"></i></span>
+        </div>
       </div>
 
     </div>
-    <div class="col-md-3">
+
+    <div class="col-xs-4 col-sm-2 noPaddingLeftRight">
+      <br/>
       <input type="submit" class="btn btn-success" value="Submit"></input>
+      <br/>
     </div>
   </form>
 
   <!--Display Transactions history-->
-  <div class="col-md-12">
+  <div class="col-md-12 noPaddingLeftRight">
+    <br/>
     <div class="headline">
       {{ 'HEADLINE_TRANSACTIONS' | translate }}
     </div>
-    <div class="transaction_list_large hidden-xs hidden-sm">
+    <br/>
+    <!--Display the history in a table for large screens-->
+    <div class="transactionBoxLarge hidden-xs hidden-sm">
       <div class="no_transaction_message" ng-show="transactions.length==0">
         {{'MESSAGES.NO_LISTED_TRANSACTIONS' | translate}}
       </div>
+      <table class="col-md-12">
+        <tr>
+          <td>
+            {{'HISTORY_TRANSACTION_DATE' | translate}}
+          </td>
+          <td>
+            {{'HISTORY_TRANSACTION_FROM' | translate}}
+          </td>
+          <td>
 
-      <div class="transactionbox" dir-paginate="transaction in transactions | orderBy:'height':1 | itemsPerPage: 10">
-        <div class="row">
-          <div class="col-md-2">
+          </td>
+          <td>
+            {{'HISTORY_TRANSACTION_TO' | translate}}
+          </td>
+          <td>
+            {{'HISTORY_TRANSACTION_AMOUNT' | translate}}
+          </td>
+          <td>
+
+          </td>
+        </tr>
+        <tr class="transactionLine" dir-paginate="transaction in transactions | orderBy:'height':1 | itemsPerPage: 10">
+          <td class="transactionBoxLargeTime noPaddingLeftRight col-md-2">
             {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT' | translate) }}
-          </div>
-          <!--Sender-->
-          <div class="col-md-3">
-            <div ng-repeat="recipent in transaction.recipents" class="address">{{recipent.address}}</div>
-          </div>
-          <div class="col-md-1">
-            <img src="images/receiveBig.png" ng-if="transaction.direction=='receive'">
-            <img src="images/sendBig.png" ng-if="transaction.direction=='send'">
-            <img src="images/add.png" style="height: 30px;" ng-if="transaction.direction=='issue'">
-          </div>
+          </td>
+          <td class="transactionBoxLargeAddress noPaddingLeftRight col-md-3">
+            <div ng-repeat="recipent in transaction.recipents" ng-if="transaction.direction=='receive'" class="address">{{recipent.address}}</div>
+            <div ng-if="transaction.direction=='send'" class="address">My account</div>
+            <div ng-if="transaction.direction=='issue'" class="address">Creation new asset</div>
+          </td>
+          <td class="noPaddingLeftRight col-md-1">
+            <span class="glyphicon glyphicon-arrow-right receiveSign" ng-if="transaction.direction=='receive'"></span>
+            <span class="glyphicon glyphicon-arrow-right sendSign" ng-if="transaction.direction=='send'"></span>
+            <span class="glyphicon glyphicon-plus issueSign" ng-if="transaction.direction=='issue'"></span>
+          </td>
           <!--Recipent-->
-          <div class="col-md-3">
+          <td class="transactionBoxLargeAddress noPaddingLeftRight col-md-3">
             <div ng-repeat="recipent in transaction.recipents" class="address">{{recipent.address}}</div>
-          </div>
+          </td>
 
           <!--Amount-->
-          <div class="col-md-1 right-align">
+          <td class="noPaddingLeftRight col-md-1 right-align">
             {{transaction.value | assetformat : transaction.decimal_number}}
-          </div>
+          </td>
 
           <!--Type (ETP,...)
           <div class="col-md-3">
@@ -135,49 +162,43 @@
         </div>-->
 
         <!--Transaction code-->
-        <div class="col-md-1 hash">
-          <a target="_blank" href="http://explorer.mvs.live/#!/tx/{{transaction.hash}}">哈希</a>
-        </div>
-      </div>
-      </div>
-      <dir-pagination-controls></dir-pagination-controls>
-    </div>
-    <div class="transaction_list_small visible-xs visible-sm">
-      <div class="no_transaction_message" ng-show="transactions.length==0">
-        {{'MESSAGES.NO_LISTED_TRANSACTIONS' | translate}}
-      </div>
-      <div class="transactionbox" dir-paginate="transaction in transactions | orderBy:'height':1 | itemsPerPage: 10">
+        <td class="col-md-1 hash">
+          <a class="btn-link linkToExplorerButton" target="_blank" href="http://explorer.mvs.live/#!/tx/{{transaction.hash}}">{{'HISTORY_TRANSACTION_CHECK' | translate}}</a>
+        </td>
+      </tr>
+    </table>
+    <dir-pagination-controls></dir-pagination-controls>
+  </div>
 
-        <div class="row">
-          <div class="col-md-1">
-            <img src="images/receiveBig.png" ng-if="transaction.direction=='receive'">
-            <img src="images/sendBig.png" ng-if="transaction.direction=='send'">
-            <img src="images/add.png" style="height: 30px;" ng-if="transaction.direction=='issue'">
-          </div>
-          <div class="col-md-11">
-            <div class="row">
-              <div class="col-md-12 hash">
-                <a target="_blank" href="http://explorer.mvs.live/#!/tx/{{transaction.hash}}"> {{transaction.hash}}</a>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-3">
-                {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT' | translate) }}
-              </div>
-              <div class="col-md-2 right-align">
-                {{transaction.value | assetformat : transaction.decimal_number}}
-              </div>
-              <div class="col-md-3">
-                {{transaction.type}}
-              </div>
-              <div class="col-md-4">
-                {{ 'TRANSFER_RECIPENT' | translate }}: <div ng-repeat="recipent in transaction.recipents" class="address">{{recipent.address}}</div>
-              </div>
-            </div>
-          </div>
+  <!--Display the history in div for small screens-->
+  <div class="transaction_list_small visible-xs visible-sm">
+    <div class="no_transaction_message" ng-show="transactions.length==0">
+      {{'MESSAGES.NO_LISTED_TRANSACTIONS' | translate}}
+    </div>
+    <div class="transactionBoxSmall" ng-repeat="transaction in transactions">
+      <div class="transactionBoxSmallInfo col-xs-10 col-sm-10">
+        <div class="transactionBoxSmallAmount">
+          {{transaction.value | assetformat : transaction.decimal_number}}
+        </div>
+        <div class="transactionBoxSmallAddress">
+          <span class="glyphicon glyphicon-arrow-left receiveSign"></span>
+          <span ng-repeat="recipent in transaction.recipents" ng-if="transaction.direction=='receive'" class="address">
+            {{recipent.address}}
+          </span>
+        </div>
+        <div class="transactionBoxSmallAddress">
+          <span class="glyphicon glyphicon-arrow-right sendSign"></span>
+          <span ng-repeat="recipent in transaction.recipents" ng-if="transaction.direction=='receive'" class="address">
+            {{recipent.address}}
+          </span>
+        </div>
+        <div class="transactionBoxSmallTime">
+          {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT' | translate) }}
         </div>
       </div>
-      <dir-pagination-controls></dir-pagination-controls>
+      <div class="transactionBoxSmallLinkToExplorer col-xs-2 col-sm-2">
+        <a class="btn-link linkToExplorerButton" target="_blank" href="http://explorer.mvs.live/#!/tx/{{transaction.hash}}">{{'HISTORY_TRANSACTION_CHECK' | translate}}</a>
+      </div>
     </div>
   </div>
 </div>
