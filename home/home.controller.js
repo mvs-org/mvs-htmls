@@ -678,21 +678,62 @@
 
 
         $scope.showDates = false;
-        $scope.customDates = customDates;
 
-        //Show the dates From ... To ... if the Custom button is selected
-        function customDates(showDates) {
-            switch (showDates) {
-              case 'show':
-                $scope.showDates=true;
-                break;
-              case 'hide':
-                $scope.showDates=false;
-                break;
-              default:
-                $scope.showDates=false;
-            }
+        $scope.startDate = new Date();
+        $scope.endDate = new Date();
+
+        $scope.setDates = setDates;
+
+        //Define the time period to use and show the dates From ... To ... if the Custom button is selected
+        function setDates(period, startDate, endDate)
+        {
+          console.log("In set date");
+          switch (period) {
+
+            case 'week':
+              $scope.showDates=false;
+              $scope.endDate = new Date();
+              $scope.startDate = $scope.endDate-(7*86400000);//8640000 millisecond/day
+              break;
+
+            case 'month':
+              $scope.showDates=false;
+              $scope.endDate = new Date();
+              $scope.startDate = $scope.endDate-(30*86400000);
+              break;
+
+            case 'threeMonths':
+              $scope.showDates=false;
+              $scope.endDate = new Date();
+              $scope.startDate = $scope.endDate-(90*86400000);
+              break;
+
+            case 'custom':
+              $scope.showDates=true;
+              break;
+
+            default:
+              $scope.startDate = new Date();
+              $scope.endDate = new Date();
+          }
         }
+
+
+
+
+        $scope.dateRangeFilter = function (transaction, startDate, endDate) {
+          if (transaction >= startDate && transaction <= endDate) {
+            console.log("true");
+            return true;
+          }
+          console.log("false");
+          return false;
+        }
+
+
+
+
+
 
 
 

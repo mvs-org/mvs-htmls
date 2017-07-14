@@ -52,24 +52,23 @@
   <br/>
 
 
-
   <form>
     <div>{{ 'HISTORY_TIME_PERIOD' | translate }}</div>
     <div class="radioButton noPaddingLeftRight col-md-12">
       <span class="oneRadioButton">
-        <input type="radio" name="radio" id="oneWeek" checked value="hideCustomDate" ng-click="customDates('hide')"/>
+        <input type="radio" name="radio" id="oneWeek" checked value="hideCustomDate" ng-click="setDates('week')"/>
         <label for="oneWeek">One week</label>
       </span>
       <span class="oneRadioButton">
-        <input type="radio" name="radio" id="oneMonth" value="hideCustomDate" ng-click="customDates('hide')"/>
+        <input type="radio" name="radio" id="oneMonth" value="hideCustomDate" ng-click="setDates('month')"/>
         <label for="oneMonth">One month</label>
       </span>
       <span class="oneRadioButton">
-        <input type="radio" name="radio" id="threeMonths" ng-click="customDates('hide')"/>
+        <input type="radio" name="radio" id="threeMonths" ng-click="setDates('threeMonths')"/>
         <label for="threeMonths">Three months</label>
       </span>
       <span class="oneRadioButton">
-        <input type="radio" name="radio" id="custom" ng-click="customDates('show')"/>
+        <input type="radio" name="radio" id="custom" ng-click="setDates('custom')"/>
         <label for="custom">Custom</label>
       </span>
     </div>
@@ -111,7 +110,7 @@
       <div class="no_transaction_message" ng-show="transactions.length==0">
         {{'MESSAGES.NO_LISTED_TRANSACTIONS' | translate}}
       </div>
-      <table class="col-md-12">
+      <table class="col-md-12" ng-hide="transactions.length==0">
         <tr>
           <td>
             {{'HISTORY_TRANSACTION_DATE' | translate}}
@@ -132,7 +131,7 @@
 
           </td>
         </tr>
-        <tr class="transactionLine" dir-paginate="transaction in transactions | orderBy:'height':1 | itemsPerPage: 10">
+        <tr class="transactionLine" ng-repeat="transaction in transactions" ng-show= "dateRangeFilter(transaction.timestamp, startDate, endDate)">
           <td class="transactionBoxLargeTime noPaddingLeftRight col-md-2">
             {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT' | translate) }}
           </td>
