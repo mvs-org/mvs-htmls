@@ -67,12 +67,14 @@
         <input type="radio" name="radio" id="threeMonths" ng-click="setDates('threeMonths')"/>
         <label for="threeMonths">Three months</label>
       </span>
+      <!--Custom option TODO
       <span class="oneRadioButton">
         <input type="radio" name="radio" id="custom" ng-click="setDates('custom')"/>
         <label for="custom">Custom</label>
-      </span>
+      </span>-->
     </div>
 
+    <!--Custom option TODO
     <div ng-show="showDates" class="customDates">
       <div class="col-xs-6 noPaddingLeftRight">
         <div>{{ 'HISTORY_START_DATE' | translate }}</div>
@@ -88,18 +90,18 @@
           <span class="add-on"><i class="icon-calendar"></i></span>
         </div>
       </div>
-
     </div>
+  -->
 
     <div class="col-xs-4 col-sm-2 noPaddingLeftRight">
       <br/>
-      <input type="submit" class="btn btn-success" value="Submit"></input>
+      <input type="submit" class="btn btn-success" value="Submit" ng-click="displayUpdatedDates()"></input>
       <br/>
     </div>
   </form>
 
   <!--Display Transactions history-->
-  <div class="col-md-12 noPaddingLeftRight">
+  <div class="col-xs-12 noPaddingLeftRight">
     <br/>
     <div class="headline">
       {{ 'HEADLINE_TRANSACTIONS' | translate }}
@@ -131,7 +133,7 @@
 
           </td>
         </tr>
-        <tr class="transactionLine" ng-repeat="transaction in transactions" ng-show= "dateRangeFilter(transaction.timestamp, startDate, endDate)">
+        <tr class="transactionLine" ng-repeat="transaction in transactions" ng-show= "dateRangeFilter(transaction.timestamp, startDateUpdated, endDateUpdated)">
           <td class="transactionBoxLargeTime noPaddingLeftRight col-md-2">
             {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT' | translate) }}
           </td>
@@ -166,15 +168,15 @@
         </td>
       </tr>
     </table>
-    <dir-pagination-controls></dir-pagination-controls>
+    <!--Pagination TODO <dir-pagination-controls></dir-pagination-controls> -->
   </div>
 
   <!--Display the history in div for small screens-->
-  <div class="transaction_list_small visible-xs visible-sm">
+  <div class="visible-xs visible-sm">
     <div class="no_transaction_message" ng-show="transactions.length==0">
       {{'MESSAGES.NO_LISTED_TRANSACTIONS' | translate}}
     </div>
-    <div class="transactionBoxSmall" ng-repeat="transaction in transactions">
+    <div class="transactionBoxSmall" ng-repeat="transaction in transactions" ng-show= "dateRangeFilter(transaction.timestamp, startDateUpdated, endDateUpdated)">
       <div class="transactionBoxSmallInfo col-xs-10 col-sm-10">
         <div class="transactionBoxSmallAmount">
           {{transaction.value | assetformat : transaction.decimal_number}}

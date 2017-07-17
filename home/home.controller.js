@@ -679,15 +679,17 @@
 
         $scope.showDates = false;
 
-        $scope.startDate = new Date();
+        $scope.startDate = new Date()-(7*86400000); //By default, display 1 week
         $scope.endDate = new Date();
+        $scope.startDateUpdated = new Date();
+        $scope.endDateUpdated = new Date();
 
         $scope.setDates = setDates;
+        $scope.displayUpdatedDates = displayUpdatedDates;
 
         //Define the time period to use and show the dates From ... To ... if the Custom button is selected
         function setDates(period, startDate, endDate)
         {
-          console.log("In set date");
           switch (period) {
 
             case 'week':
@@ -720,18 +722,19 @@
 
 
 
-
         $scope.dateRangeFilter = function (transaction, startDate, endDate) {
           if (transaction >= startDate && transaction <= endDate) {
-            console.log("true");
             return true;
           }
-          console.log("false");
           return false;
         }
 
 
-
+        //Update the startDate and endDate when the Submit button is clicked
+        function displayUpdatedDates() {
+          $scope.startDateUpdated = $scope.startDate;
+          $scope.endDateUpdated = $scope.endDate;
+        }
 
 
 
