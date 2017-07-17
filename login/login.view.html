@@ -7,13 +7,14 @@
 <div class="col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
   <div class="pull-right">
     <button class="btn btn-default dropdown-toggle languageButton" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <img class="languageFlag" src="images/{{ 'LANG_CODE' | translate }}.png" alt="" />
       Language
       <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-      <li><a ng-click="vm.changeLang('zh_ZH')"><img class="zh" src="images/zh.png" alt="" /> 中文</a></li>
-      <li><a ng-click="vm.changeLang('en_US')"><img class="en" src="images/en.png" alt="" /> English</a></li>
-      <li><a ng-click="vm.changeLang('de_DE')"><img class="de" src="images/en.png" alt="" /> Deutsch</a></li>
+      <li><a ng-click="vm.changeLang('zh_ZH')"><img class="languageFlag" src="images/zh.png" alt="" /> 中文</a></li>
+      <li><a ng-click="vm.changeLang('en_US')"><img class="languageFlag" src="images/en.png" alt="" /> English</a></li>
+      <li><a ng-click="vm.changeLang('de_DE')"><img class="languageFlag" src="images/en.png" alt="" /> Deutsch</a></li>
     </ul>
   </div>
 </div>

@@ -58,11 +58,12 @@ _____  ._______  ___.___ _______
       opacity: 0.8;
     }
   } @else if $type == 'language' {
+    padding-top: 6px;
     width: 134px;
     height: 36px;
     margin-left: 10px;
     color: $darkGrey;
-    background-color: $btn-color;
+    background-color: transparent;
     border: solid;
     border-width: 1px;
     font-family: 'ArialMT', 'Arial';
@@ -408,7 +409,7 @@ _____  ._______  ___.___ _______
 
 /***********Language***********/
 //Flags language
-.en, .zh ,.de {
+.languageFlag {
   width: 24px;
 }
 
