@@ -171,6 +171,7 @@ _____  ._______  ___.___ _______
   padding: 10px 12px;
   opacity: 1;
   border-radius: $radiusButtons;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   /** added mixin **/
   @include trans(0.2s ease-in-out);
 }
@@ -214,6 +215,7 @@ _____  ._______  ___.___ _______
 .addressLinkButton {
   padding: 6px;
   padding-left: 10px;
+  font-family: 'PingFangSC-Thin', 'PingFang SC Thin', 'PingFang SC';
 }
 
 .createAddressButton {
