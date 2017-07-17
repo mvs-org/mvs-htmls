@@ -1,44 +1,67 @@
-<div class="headline"><em></em>{{ 'HEADLINE_ADDRESSES' | translate }}</div>
-<div class="modal fade" id="showqrmodal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog ">
-    <div class="modal-content panel">
-      <div class="address" id="modal_address"></div>
-      <div id="modal_qr">
+<div class="headline">
+  {{ 'NAV_ETP' | translate }}
+  <button class="btn btn-success smallButton">{{ 'DEPOSIT.HEADLINE' | translate }}</button>
+</div>
+
+<br/>
+<div class="mainContent" >
+
+
+  <!--<tr>
+  <th class="center">{{ 'DATE_CREATED' | translate }}
+  <span>
+</span></th>
+<th class="center clickable" ng-click="setOrder('address')">
+{{ 'ADDRESS' | translate }}
+<span>
+<i ng-show="sortType=='address' && sortReverse==false" class="fa fa-caret-up"></i>
+<i ng-show="sortType=='address' && sortReverse==true" class="fa fa-caret-down"></i>
+</span>
+</th>
+<th class="center clickable right-align" ng-click="setOrder('balance')">
+{{ 'BALANCE' | translate }}
+<span>
+<i ng-show="sortType=='balance' && sortReverse==false" class="fa fa-caret-up"></i>
+<i ng-show="sortType=='balance' && sortReverse==true" class="fa fa-caret-down"></i>
+</span>
+</th>
+
+</tr>
+<tr ng-repeat="address in addresses | orderBy:sortType:sortReverse" >
+<td></td>
+<td><span class="address">{{address.address}} <a href=""><img src="images/receiveBig.png" ng-click="showqr(address.address)" alt="receive"/></a></span></td>
+<td class="right-align">{{address.balance/100000000 }} ETP</td>
+</tr>-->
+<!--Display all the ETP adresses-->
+<div ng-repeat="address in addresses | orderBy:sortType:sortReverse">
+  <dd class="panel addressBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
+    <span class="addressBoxSymbolImg">
+      <img class="assetSymbol" src="favicon.png" alt=""/>
+    </span>
+
+
+    <div class="addressBoxTextInfo">
+      <div class="copyAndQrCode">
+        <span class="qrCode">
+          <a class="btn btn-link addressLinkButton glyphicon glyphicon-qrcode" ng-click="showqr(address.address)" alt="receive"> 二维码</a>
+        </span>
+        <span class="copyAddress">
+          <a class="btn btn-link addressLinkButton glyphicon glyphicon-copy"> 复制地址</a>
+        </span>
+      </div>
+      <div class=addressText>
+        <span class="addressBoxName">New address</span>
+        <span class="addressBoxValue">{{address.balance/100000000 }} ETP</span>
+        <span class="addressBoxAddress">{{address.address}}</span>
       </div>
     </div>
-  </div>
+  </dd>
 </div>
 
-<div class="mainContent" >
-<div class="account_content_center">
-  <table cellspacing="0" class='centertable'>
-    <tr>
-      <th class="center">{{ 'DATE_CREATED' | translate }}
-        <span>
-            </span></th>
-      <th class="center clickable" ng-click="setOrder('address')">
-        {{ 'ADDRESS' | translate }}
-        <span>
-          <i ng-show="sortType=='address' && sortReverse==false" class="fa fa-caret-up"></i>
-          <i ng-show="sortType=='address' && sortReverse==true" class="fa fa-caret-down"></i>
-        </span>
-      </th>
-      <th class="center clickable right-align" ng-click="setOrder('balance')">
-        {{ 'BALANCE' | translate }}
-        <span>
-          <i ng-show="sortType=='balance' && sortReverse==false" class="fa fa-caret-up"></i>
-          <i ng-show="sortType=='balance' && sortReverse==true" class="fa fa-caret-down"></i>
-          </span>
-        </th>
-
-    </tr>
-    <tr ng-repeat="address in addresses | orderBy:sortType:sortReverse" >
-      <td></td>
-      <td><span class="address">{{address.address}} <a href=""><img src="images/receiveBig.png" ng-click="showqr(address.address)" alt="receive"/></a></span></td>
-      <td class="right-align">{{address.balance/100000000 }} ETP</td>
-    </tr>
-  </table>
-  <div class="center"><input class="btn btn-success" ng-click="getnewaddress()" value="Create new address"></div>
-
+<div class="createAddress col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
+  <button ng-click="getnewaddress()" class="btn-link createAddressButton"><span class="glyphicon glyphicon-plus"></span> {{ 'CREATE_NEW_ADDRESS' | translate }}</button>
 </div>
+
+
+
 </div>

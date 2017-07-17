@@ -53,7 +53,7 @@ _____  ._______  ___.___ _______
   } @else if $type == 'link' {
     width: 100%;
     color: $btn-color !important;
-    background-color: white !important;
+    background-color: transparent !important;
     &:hover {
       opacity: 0.8;
     }
@@ -211,6 +211,15 @@ _____  ._______  ___.___ _______
   color: $darkGrey;
 }
 
+.addressLinkButton {
+  padding: 6px;
+  padding-left: 10px;
+}
+
+.createAddressButton {
+  width: auto;
+  margin-top: 10px;
+}
 
 /*.radioButton {
   @include btn-theme($blueGeneralColor, 'radioButton');
@@ -727,7 +736,72 @@ _____  ._______  ___.___ _______
 }
 
 
-/**********************ETP Adresses*******************/
-.adressBoxName {
-  
+/**********************ETP Addresses*******************/
+.addressBox {
+  background-color: $lightGrey;
+  width: 400px;
+  height: 120px;
+  margin: 10px;
+  border-radius: 0px;
+}
+
+.addressBoxSymbolImg {
+  width: 20%;
+  height: 120px;
+  margin-left: 10px;
+}
+
+.addressBoxTextInfo {
+  width: 80%;
+  display: inline-block;
+  float: right;
+}
+
+.copyAndQrCode {
+  width: 100%;
+  height: 16px;
+  float: right;
+
+
+}
+
+.copyAddress {
+  float: right;
+  font-weight: 200;
+  font-style: normal;
+  font-size: 14px;
+}
+
+.qrCode {
+  float: right;
+  font-weight: 200;
+  font-style: normal;
+  font-size: 14px;
+}
+
+
+.addressText {
+  padding-top: 36px;
+}
+
+.addressBoxName {
+  width: 100%;
+  color: $blueGeneralColor;
+  float:left;
+  font-size: 14px;
+}
+
+.addressBoxValue {
+  width: 100%;
+  color: $veryDarkGrey;
+  float:left;
+  font-size: 18px;
+}
+
+.addressBoxAddress {
+  width: 100%;
+  color: $darkGrey;
+  float:left;
+  font-size: 14px;
+  padding-top:4px;
 }
