@@ -50,20 +50,24 @@ _____  ._______  ___.___ _______
     &:active {
       box-shadow: 0 .063em $off-wht, inset 0 0 1.094em darken($btn-color, 40%), inset 0 .063em darken($btn-color, 20%),inset 0 -0.188em darken($btn-color, 20%);
     }
+
   } @else if $type == 'link' {
     width: 100%;
     color: $btn-color !important;
     background-color: transparent !important;
+    border-width: 0 !important;
     &:hover {
       opacity: 0.8;
+      text-decoration: none;
     }
+
   } @else if $type == 'language' {
     padding-top: 6px;
     width: 134px;
     height: 36px;
     margin-left: 6px;
     color: $darkGrey;
-    background-color: transparent;
+    background-color: transparent !important;
     border: solid;
     border-width: 1px;
     font-family: 'ArialMT', 'Arial';
@@ -71,6 +75,7 @@ _____  ._______  ___.___ _______
     font-size: 13px;
     text-align: center;
     line-height: normal;
+    border-color: $btn-color !important;
 
   }
 }
@@ -86,8 +91,7 @@ _____  ._______  ___.___ _______
 //Radio buttons to add in the Mixin
 .radioButton {
     div {
-        overflow: hidden;
-
+      overflow: hidden;
     }
 
     span {
@@ -202,6 +206,12 @@ _____  ._______  ___.___ _______
   @include btn-theme($lightGrey, 'language');
 }
 
+.languageButtonRegister, .languageButtonRegister:focus, .languageButtonRegister:hover {
+  @include btn-theme(transparent, 'language');
+}
+
+
+
 //Header buttons are smaller
 .smallButton {
   padding: 6px 12px;
@@ -210,7 +220,8 @@ _____  ._______  ___.___ _______
 }
 
 .logoutButton {
-  color: $darkGrey;
+  color: $darkGrey !important;
+  font-size: 14px;
 }
 
 .addressLinkButton {
@@ -223,10 +234,6 @@ _____  ._______  ___.___ _______
   width: auto;
   margin-top: 10px;
 }
-
-
-
-
 
 .checkboxCircle {
 	background: white;
@@ -242,22 +249,22 @@ outline: 0;
 
 .checkboxCircle label {
   cursor: pointer;
-  	position: absolute;
-  	width: 22px;
-  	height: 22px;
-  	-webkit-border-radius: 50px;
-  	-moz-border-radius: 50px;
-  	border-radius: 50px;
-  	left: -2px;
-  	top: 4px;
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border-radius: 50px;
+  left: -2px;
+  top: 4px;
 
-  	-webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
-  	-moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
-  	box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
+  -webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
+  -moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
+  box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
 
-  	background: $lightGrey;
-    outline: 0;
-  }
+  background: $lightGrey;
+  outline: 0;
+}
 
 .checkboxCircle label:after {
   opacity: 0;
@@ -275,9 +282,9 @@ outline: 0;
 	-moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
 	box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
   outline: 0;
-  }
+}
 
-  .checkboxCircle label:hover::after {
+.checkboxCircle label:hover::after {
 	filter: alpha(opacity=30);
 	opacity: 0.3;
   outline: 0;
@@ -565,7 +572,7 @@ outline: 0;
 
 /********************Assets*****************************/
 .tabsMenu > li.active > a{
-    text-decoration:underline;
+    text-decoration: underline;
 }
 
 /********************My assets**************************/

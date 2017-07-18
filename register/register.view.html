@@ -32,14 +32,12 @@
             <input type="checkbox" ng-model="do_import" id="checkboxImport">
             <label for="checkboxImport"></label>
             <span class="importAccountText">{{ 'REGISTER.DO_IMPORT' | translate }}:</span>
-
           </div>
           <br/>
-
           <div ng-show="do_import">
             <p>{{ 'REGISTER.IMPORT_PHRASE' | translate }}: <i>*</i></p>
             <textarea class="form-group" ng-model="import_phrase" rows="3" style="width:100%"></textarea>
-            <p>{{ 'REGISTER.IMPORT_ADDRESS_COUNT' | translate }}: <i>*</i></p>
+            <p>{{ 'REGISTER.IMPORT_ADDRESS_COUNT' | translate }}<i>*</i></p>
             <input type="number" ng-model="address_count" min="1" required>
           </div>
         </div>
@@ -48,7 +46,7 @@
           <div class="col-xs-6 col-sm-4 col-md-4">
             <button class="btn btn-success" ng-click="vm.register()" type="submit" ng-disabled="form.$invalid || vm.dataLoading">{{ 'REGISTER.REGISTGER_BUTTON' | translate }}</button>
           </div>
-          <div class=" col-xs-6 col-sm-4 col-md-4">
+          <div class="col-xs-6 col-sm-4 col-md-4">
             <a href="#!/login" class="btn btn-link col-xs-6 col-sm-4 col-md-4">{{ 'REGISTER.LOGIN_BUTTON' | translate }}</a>
           </div>
         </div>
@@ -63,10 +61,17 @@
         <br><br>
         <div>{{ "REGISTER.PRIVATE_KEY_MNEMONIC_INFO" | translate}}</div>
         <br><br>
-        <label><input type="checkbox" ng-model="vm.registered.read">{{ "REGISTER.SIGNUP_MNEMONIC_AGREE" | translate}}</label>
+        <div class="checkboxCircle">
+          <input type="checkbox" ng-model="vm.registered.read" id="checkboxAgree">
+          <label for="checkboxAgree"></label>
+          <span class="importAccountText">{{ "REGISTER.SIGNUP_MNEMONIC_AGREE" | translate}}</span>
+        </div>
         <div ng-show="vm.registered.read">
-          <br>
-          <a href="#!/login" class="btn btn-success">{{ 'REGISTER.LOGIN_BUTTON' | translate }}</a>
+          <br/>
+          <br/>
+          <div class="col-xs-6 col-sm-4 col-md-4 noPaddingLeftRight">
+            <a href="#!/login" class="btn btn-success">{{ 'REGISTER.LOGIN_BUTTON' | translate }}</a>
+          </div>
         </div>
       </div>
   </form>
