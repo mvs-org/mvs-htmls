@@ -61,7 +61,7 @@ _____  ._______  ___.___ _______
     padding-top: 6px;
     width: 134px;
     height: 36px;
-    margin-left: 10px;
+    margin-left: 6px;
     color: $darkGrey;
     background-color: transparent;
     border: solid;
@@ -224,27 +224,80 @@ _____  ._______  ___.___ _______
   margin-top: 10px;
 }
 
-/*.radioButton {
-  @include btn-theme($blueGeneralColor, 'radioButton');
-}*/
 
 
 
-//To prevent issue on selection of buttons (click change the display in the page, but not the result)
-/*[data-toggle="buttons"] > .btn > input[type="radio"],
-[data-toggle="buttons"] > .btn > input[type="checkbox"] {
-    clip: rect(1px, 1px, 1px, 1px);
-    pointer-events: none;
-}*/
 
+.checkboxCircle {
+	background: white;
 
+  margin: 0px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border-radius: 50px;
+
+  position: relative;
+outline: 0;
+}
+
+.checkboxCircle label {
+  cursor: pointer;
+  	position: absolute;
+  	width: 22px;
+  	height: 22px;
+  	-webkit-border-radius: 50px;
+  	-moz-border-radius: 50px;
+  	border-radius: 50px;
+  	left: -2px;
+  	top: 4px;
+
+  	-webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
+  	-moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
+  	box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
+
+  	background: $lightGrey;
+    outline: 0;
+  }
+
+.checkboxCircle label:after {
+  opacity: 0;
+	content: '';
+	position: absolute;
+	width: 12px;
+	height: 12px;
+	background: $blueGeneralColor;
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+	top: 4px;
+	left: 5px;
+	-webkit-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+	-moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+	box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+  outline: 0;
+  }
+
+  .checkboxCircle label:hover::after {
+	filter: alpha(opacity=30);
+	opacity: 0.3;
+  outline: 0;
+}
+
+.checkboxCircle input[type=checkbox]:checked + label:after {
+	filter: alpha(opacity=90);
+	opacity: 0.9;
+}
+
+.checkboxCircle :focus {
+  outline: 0;
+}
 
 
 /*********** End Buttons ****************/
 
 
 
-
+/*****************Login page****************/
 //Logo Metaverse Login and Register pages
 .logoMetaverseLogin {
   width: 170px;
@@ -262,24 +315,18 @@ _____  ._______  ___.___ _______
   width:100%;
 }
 
-.plusCheckBox {
-  padding-left: 20px;
-  height: 15px;
-  display: inline-block;
-  line-height: 15px;
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  font-size: 15px;
-  vertical-align: middle;
-  cursor: pointer;
-}
-
 .languageButtonLogin {
   width: 144px;
   height: 36px;
   background-color: rgba(255, 255, 255, 0);
   border-width: 1px;
   border-color: rgba(121, 121, 121, 1);
+}
+
+
+/******************Register page*************/
+.importAccountText {
+  padding-left: 10px;
 }
 
 /***********Top bar***********/
@@ -740,6 +787,11 @@ _____  ._______  ___.___ _______
 
 
 /**********************ETP Addresses*******************/
+.emptyAdresses {
+  padding-left: 10px;
+}
+
+
 .addressBox {
   background-color: $lightGrey;
   width: 400px;
@@ -764,8 +816,6 @@ _____  ._______  ___.___ _______
   width: 100%;
   height: 16px;
   float: right;
-
-
 }
 
 .copyAddress {

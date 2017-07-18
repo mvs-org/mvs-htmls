@@ -866,7 +866,7 @@
 
     }
 
-    function HomeController(MetaverseService, $rootScope, $scope, localStorageService, $interval) {
+    function HomeController(MetaverseService, $rootScope, $scope, localStorageService, $interval, $translate) {
 
         var vm = this;
         vm.account = localStorageService.get('credentials').user;
@@ -881,6 +881,13 @@
                 show: 0
             }
         };
+
+        //Change Language
+        vm.changeLang = (key) => $translate.use(key)
+            .then(  (key) => localStorageService.set('language',key) )
+            .catch( (error) => console.log("Cannot change language.") );
+
+
 
         function updateHeight() {
             MetaverseService.FetchHeight()

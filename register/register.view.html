@@ -28,7 +28,14 @@
         </div>
         <!--Import account-->
         <div class="form-group">
-          <p >{{ 'REGISTER.DO_IMPORT' | translate }}:<input type="checkbox" ng-model="do_import"></p>
+          <div class="checkboxCircle">
+            <input type="checkbox" ng-model="do_import" id="checkboxImport">
+            <label for="checkboxImport"></label>
+            <span class="importAccountText">{{ 'REGISTER.DO_IMPORT' | translate }}:</span>
+
+          </div>
+          <br/>
+
           <div ng-show="do_import">
             <p>{{ 'REGISTER.IMPORT_PHRASE' | translate }}: <i>*</i></p>
             <textarea class="form-group" ng-model="import_phrase" rows="3" style="width:100%"></textarea>
@@ -53,7 +60,6 @@
         <br><br>
         <div class="form-group">{{ "REGISTER.PRIVATE_KEY_MNEMONIC" | translate}}:<br></div>
         <div><b class="form-group mnemonic_red col-xs-12 col-sm-12 col-md-12">{{vm.registered.privatekey}}</b></div>
-        <!--TO TEST<div><b class="form-group mnemonic_red col-xs-12 col-sm-12 col-md-12" style="width:100%">test words blabla voiture maison avion france espagne internet 10ememot encore presque cestok</b></div>-->
         <br><br>
         <div>{{ "REGISTER.PRIVATE_KEY_MNEMONIC_INFO" | translate}}</div>
         <br><br>

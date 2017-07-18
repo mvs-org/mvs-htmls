@@ -8,9 +8,9 @@
     </div>
     <div class="form-group research col-xs-offset-0 col-xs-10 col-sm-offset-2 col-sm-7 col-md-offset-2 col-md-5 col-lg-offset-4 col-lg-4">
       <!--Search TextBox-->
-      <input type="text" class="form-control researchTextBox" placeholder="{{ 'EXPLORER.SHOW_TRANSACTION' | translate }}">
+      <input type="text" class="form-control researchTextBox" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
       <!--Search button-->
-      <button type="submit" class="btn btn-success smallButton hidden-xs">{{ 'EXPLORER.SHOW_TRANSACTION' | translate }}</button>
+      <button type="submit" class="btn btn-success smallButton hidden-xs">{{ 'HEADER_SEARCH' | translate }}</button>
       <button type="submit" class="btn btn-success smallButton hidden-sm hidden-md hidden-lg hidden-xl"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
       <!--ng-model="vm.username">-->
     </div>
@@ -20,12 +20,12 @@
         <div class="own userName hidden-xs hidden-sm">{{vm.account}}</div>
         <!--Setup button-->
         <div class="own hidden-xs">
-          <a href="#!/account/details" class="btn btn-success smallButton">Setup</a>
+          <a href="#!/account/details" class="btn btn-success smallButton">{{ 'HEADER_SETUP' | translate }}</a>
           <!--<a href="#!/account/details"><img src="images/icon-settings.png" alt="" class="install"/></a>-->
         </div>
         <!--Logout button-->
         <div class="own hidden-xs">
-          <a href="#!/login" class="btn logoutButton">Logout</a>
+          <a href="#!/login" class="btn logoutButton">{{ 'HEADER_LOGOUT' | translate }}</a>
           <!--Previous Logout<a href="#!/login" class="own glyphicon glyphicon-log-out huge red"></a>-->
         </div>
       </div>
@@ -43,8 +43,8 @@
         <li><a href="#!/console" class="btn">{{ 'NAV_CONSOLE' | translate }}</a></li>
         <li><a href="#!/mining" class="btn">{{ 'NAV_MINING' | translate }}</a></li>
         <li class="divider" role="separator"></li>
-        <li><a href="#!/account/details" class="btn">Setup</a></li>
-        <li><a href="#!/login" class="btn">Logout</a></li>
+        <li><a href="#!/account/details" class="btn">{{ 'HEADER_SETUP' | translate }}</a></li>
+        <li><a href="#!/login" class="btn">{{ 'HEADER_LOGOUT' | translate }}</a></li>
       </ul>
     </div>
   </div>
@@ -83,39 +83,9 @@
         </ul>
       </div>
     </div>
-
-
-    <!--<a href="#!/assets" class="current">
-    <h2 class="leftnav-home"><em class="em3"></em><span>{{ 'NAV_HOME' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></h2>
-  </a>
-  <h2 class="leftnav-account" ng-click="show_account_menu()"><a class="current" ><em class="em1"></em><span>{{ 'NAV_ACCOUNT' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></a></h2>
-  <ul class="accountUl" ng-show="menu.account.show">
-  <li><a href="#!/account/addresses" class="current">{{ 'NAV_ACCOUNT_ADDRESSES' | translate }}</a></li>
-  <li><a href="#!/account/details" class="current">{{ 'NAV_ACCOUNT_SETTING' | translate }}</a></li> -->
-  <!-- <li><a class="current">{{ 'NAV_DIGITAL_IDENTITY' | translate }}</a></li> -->
-  <!-- </ul>
-  <h2 class="leftnav-assets" ng-click="show_assets_menu()"><em class="em1"></em><span>{{ 'NAV_ASSETS' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></h2>
-  <ul class="assetUl" ng-show="menu.assets.show">
-  <li><a href="#!/transfer" class="current">{{ 'NAV_ETP' | translate }}</a></li>
-  <li><a href="#!/asset/details/" class="current">{{ 'NAV_ASSET_DETAILS' | translate }}</a></li>
-  <li><a href="#!/asset/create" class="current">{{ 'NAV_ASSET_CREATE' | translate }}</a></li>
-  <li><a href="#!/asset/all" class="current">{{ 'NAV_ASSET_ALL' | translate }}</a></li>
-</ul>
-
-<a href="#!/mining" class="current">
-<h2 class="leftnav-mining"><em class="em3"></em><span>{{ 'NAV_MINING' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></h2>
-</a>
-<a href="#!/deposit" class="current">
-<h2 class="leftnav-deposit"><em class="em4"></em><span>{{ 'NAV_DEPOSIT' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></h2>
-</a>
-<a href="#!/console" class="current">
-<h2 class="leftnav-console"><em class="em4"></em><span>{{ 'NAV_CONSOLE' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></h2>
-</a>
-<a href="#!/explorer" class="current">
-<h2 class="leftnav-explorer"><em class="em4"></em><span>{{ 'EXPLORER.NAV_ITEM' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></h2>
-</a>-->
-    <div class="version">{{ 'METAVERSE_VERSION' | translate }} <<<version>>>
-    </div>
+    <!--Display the current version-->
+    <!--<div class="version">{{ 'METAVERSE_VERSION' | translate }} <<<version>>>
+    </div>-->
   </div>
   <div class="admin">
     <div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >

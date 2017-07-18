@@ -57,20 +57,20 @@
     <div class="radioButton noPaddingLeftRight col-md-12">
       <span class="oneRadioButton">
         <input type="radio" name="radio" id="oneWeek" checked value="hideCustomDate" ng-click="setDates('week')"/>
-        <label for="oneWeek">One week</label>
+        <label for="oneWeek">{{ 'HISTORY_ONE_WEEK' | translate }}</label>
       </span>
       <span class="oneRadioButton">
         <input type="radio" name="radio" id="oneMonth" value="hideCustomDate" ng-click="setDates('month')"/>
-        <label for="oneMonth">One month</label>
+        <label for="oneMonth">{{ 'HISTORY_ONE_MONTH' | translate }}</label>
       </span>
       <span class="oneRadioButton">
         <input type="radio" name="radio" id="threeMonths" ng-click="setDates('threeMonths')"/>
-        <label for="threeMonths">Three months</label>
+        <label for="threeMonths">{{ 'HISTORY_THREE_MONTHS' | translate }}</label>
       </span>
       <!--Custom option TODO
       <span class="oneRadioButton">
         <input type="radio" name="radio" id="custom" ng-click="setDates('custom')"/>
-        <label for="custom">Custom</label>
+        <label for="custom">{{ 'HISTORY_CUSTOM' | translate }}</label>
       </span>-->
     </div>
 
