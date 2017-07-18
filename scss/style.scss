@@ -164,6 +164,87 @@ _____  ._______  ___.___ _______
 }
 
 
+
+.radioButtonAddress {
+
+
+    div {
+      overflow: hidden;
+    }
+
+    label {
+      background-color: $lightGrey;
+      width: 400px;
+      height: 120px;
+      margin: 0px;
+      border-radius: 0px;
+
+
+
+      color: $mediumGrey;
+      font-size: 14px;
+
+      font-weight: normal;
+      text-align: right;
+
+    }
+
+    input {
+        &:empty {
+            display: none;
+            ~ label {
+                position: relative;
+                line-height: 2.5em;
+                text-indent: 3.25em;
+                cursor: pointer;
+                user-select: none;
+
+
+                &:before {
+                    position: absolute;
+                    display: block;
+                    top: 0;
+                    bottom: 0;
+                    right: 10px;
+                    content: '';
+                    width: 2.5em;
+                    border-radius: 3px 0 0 3px;
+                }
+            }
+        }
+
+        &:hover:not(:checked) ~ label {
+            opacity: 0.8;
+
+            &:before {
+                content: '\2714';
+                text-indent: .9em;
+                color: $blueGeneralColor;
+            }
+        }
+
+        &:checked ~ label {
+            border: 4px solid $blueGeneralColor;
+            border-radius: 6px;
+            margin: 0;
+
+
+            &:before {
+                content: '\2714';
+                height: 20px;
+                text-indent: .9em;
+                color: $blueGeneralColor;
+
+            }
+        }
+
+        &:focus ~ label:before {
+            opacity: 0.8;
+        }
+    }
+}
+
+
 /************** Button Guide
 \______   \__ ___/  |__/  |_  ____   ____   ______
 |    |  _/  |  \   __\   __\/  _ \ /    \ /  ___/
@@ -203,7 +284,7 @@ _____  ._______  ___.___ _______
 }
 
 .languageButton, .languageButton:focus, .languageButton:hover {
-  @include btn-theme($lightGrey, 'language');
+  @include btn-theme($darkGrey, 'language');
 }
 
 .languageButtonRegister, .languageButtonRegister:focus, .languageButtonRegister:hover {
@@ -244,7 +325,7 @@ _____  ._______  ___.___ _______
   border-radius: 50px;
 
   position: relative;
-outline: 0;
+  outline: 0;
 }
 
 .checkboxCircle label {
@@ -777,9 +858,9 @@ outline: 0;
 }
 
 .transactionBoxSmallAddress {
-    color: $mediumGrey;
-    font-weight: 400;
-    font-size: 14px;
+  color: $mediumGrey;
+  font-weight: 400;
+  font-size: 14px;
 }
 
 .transactionBoxSmallTime {
@@ -864,4 +945,46 @@ outline: 0;
   float:left;
   font-size: 14px;
   padding-top:4px;
+}
+
+
+/***********Deposit page**************/
+.addressTextDeposit {
+  padding-top: 24px;
+}
+
+.addressBoxSymbolImgDeposit {
+  width: 10px;
+
+}
+
+.assetSymbolDeposit {
+  margin-left: -26px;
+}
+
+.addressBoxTextInfoDeposit {
+  text-align: left;
+  margin-left: 34px;
+  margin-top: 12px;
+}
+
+.addressBoxNameDeposit {
+  color: $blueGeneralColor;
+  width: 100%;
+  font-size: 14px;
+  height: 0px;
+  line-height: 14px;
+}
+
+.addressBoxValueDeposit {
+  width: 100%;
+  color: $veryDarkGrey;
+  float:left;
+  font-size: 18px;
+  line-height: 12px;
+}
+
+.addressBoxAddressDeposit {
+    float:left;
+    color: $darkGrey;
 }

@@ -140,6 +140,8 @@
   "DEPOSIT.PERIOD.YEAR" : "Year",
   "DEPOSIT.ADDRESS_OPTION" : "Deposit to a specified address",
   "DEPOSIT.PROFIT" : "Your profit",
+  "DEPOSIT_SELECT_MANUAL_ADDRESS" : "Select manually an address",
+  "DEPOSIT_SELECT_AUTO_ADRESS" : "Select automatically an address",
   "HISTORY_ONE_WEEK" : "One week",
   "HISTORY_ONE_MONTH" : "One month",
   "HISTORY_THREE_MONTHS" : "Three months",

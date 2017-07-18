@@ -60,6 +60,10 @@
 
         $scope.changeFactor = changeFactor;
         $scope.deposit = deposit;
+        $scope.selectAddress = selectAddress;
+        $scope.autoSelectAddress=true;
+        $scope.underlineAuto='underline';
+        $scope.underlineManual='none';
 
         function init() {
             $scope.deposit_address = "";
@@ -128,7 +132,53 @@
             }
         }
 
+        //Load users ETP balance
+        MetaverseHelperService.GetBalance( (err, balance, message) => {
+            if (err)
+                FlashService.Error(message);
+            else {
+                $scope.balance = balance;
+            }
+        });
 
+
+
+
+        function selectAddress(type) {
+          switch(type) {
+            case 'auto':
+              $scope.autoSelectAddress=true;
+              $scope.underlineAuto='underline';
+              $scope.underlineManual='none';
+              break;
+
+            case 'manual':
+              $scope.autoSelectAddress=false;
+              $scope.underlineAuto='none';
+              $scope.underlineManual='underline';
+              break;
+          }
+        }
+
+        //Load the addresses and their balances
+        function listBalances() {
+            NProgress.start();
+            MetaverseService.ListBalances()
+                .then( (response) => {
+                    if (typeof response.success !== 'undefined' && response.success) {
+                        $scope.addresses = [];
+                        response.data.balances.forEach( (e) => {
+                            $scope.addresses.push({
+                                "balance": parseInt(e.balance.unspent),
+                                "address": e.balance.address
+                            });
+                        });
+                    }
+                    NProgress.done();
+                });
+        }
+
+        listBalances();
     }
     /**
      * The ETP Controller provides ETP transaction functionality.

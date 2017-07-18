@@ -140,6 +140,8 @@
   "DEPOSIT.PERIOD.YEAR" : "一年",
   "DEPOSIT.ADDRESS_OPTION" : "存到一个指定地址(可以是其他账户地址)",
   "DEPOSIT.PROFIT" : "Your profit",
+  "DEPOSIT_SELECT_MANUAL_ADDRESS" : "选定地址",
+  "DEPOSIT_SELECT_AUTO_ADRESS" : "自动选择地址",
   "HISTORY_ONE_WEEK" : "一周内",
   "HISTORY_ONE_MONTH" : "一个月内",
   "HISTORY_THREE_MONTHS" : "三个月内",
