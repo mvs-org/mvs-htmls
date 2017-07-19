@@ -56,7 +56,7 @@
 
     }
 
-    function DepositController(MetaverseService, MetaverseHelperService, $rootScope, $scope, FlashService, localStorageService, $translate) {
+    function DepositController(MetaverseService, MetaverseHelperService, $rootScope, $scope, FlashService, localStorageService, $translate, $window) {
 
         $scope.changeFactor = changeFactor;
         $scope.deposit = deposit;
@@ -64,6 +64,7 @@
         $scope.autoSelectAddress=true;
         $scope.underlineAuto='underline';
         $scope.underlineManual='none';
+        $scope.period_select=undefined;
 
         function init() {
             $scope.deposit_address = "";
@@ -81,6 +82,15 @@
             "DEPOSIT.PERIOD.HALF_YEAR": [0.0798, 0.16, 182],
             "DEPOSIT.PERIOD.YEAR": [0.2, 0.2, 365]
         };
+
+
+
+        $scope.setDepositPeriod = setDepositPeriod;
+
+        //Set the deposit period to use
+        function setDepositPeriod(period) {
+          $scope.period_select=period;
+        }
 
         $rootScope.factor = "FACTOR_ETP";
 
@@ -130,6 +140,7 @@
                         }
                     });
             }
+            $window.scrollTo(0,0);
         }
 
         //Load users ETP balance

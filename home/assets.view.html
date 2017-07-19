@@ -1,11 +1,12 @@
 <div class="content">
-  <div class="headline"><em></em>{{ 'NAV_WALLET' | translate }}</div>
+  <div class="headline">{{ 'NAV_WALLET' | translate }}</div>
 </br>
 <div class="body-content">
   <form method="post" class="form-x" action="">
     <div class="mainContent1">
       <div class="row assetBoxWrapper">
         <dl id="outer_wrap">
+          <!--ETP Balance-->
           <a href="#!/account/addresses">
             <dd class="panel assetBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
               <span class="assetBoxSymbolImg"><img class="assetSymbol" src="favicon.png" alt=""/></span>
@@ -18,6 +19,7 @@
               </span>
             </dd>
           </a>
+          <!--All others assets balance-->
           <a href="#!/asset/details/{{asset.symbol}}" ng-repeat="asset in assets">
             <dd class="panel assetBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
               <span class="assetBoxSymbolImg"><img class="assetSymbol" src="favicon.png" alt=""/></span>
@@ -95,7 +97,7 @@
 
     <div class="col-xs-4 col-sm-2 noPaddingLeftRight">
       <br/>
-      <input type="submit" class="btn btn-success" value="Submit" ng-click="displayUpdatedDates()"></input>
+      <input type="submit" class="btn btn-success" value="{{ 'HISTORY_SUBMIT' | translate }}" ng-click="displayUpdatedDates()"></input>
       <br/>
     </div>
   </form>
