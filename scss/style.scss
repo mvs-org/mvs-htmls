@@ -1061,6 +1061,11 @@ textarea, select, input[type]:not([type=search]):not([type=submit]) {
   line-height: 14px;
 }
 
+.addressBoxBalanceDeposit {
+  width: 50%;
+  display: inline-block;
+}
+
 .addressBoxValueDeposit {
   width: 100%;
   color: $veryDarkGrey;
@@ -1072,6 +1077,7 @@ textarea, select, input[type]:not([type=search]):not([type=submit]) {
 .addressBoxAddressDeposit {
     float:left;
     color: $darkGrey;
+    line-height: 14px;
 }
 
 //Select period

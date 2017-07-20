@@ -179,7 +179,8 @@
                         response.data.balances.forEach( (e) => {
                             $scope.addresses.push({
                                 "balance": parseInt(e.balance.unspent),
-                                "address": e.balance.address
+                                "address": e.balance.address,
+                                "frozen": e.balance.frozen
                             });
                         });
                     }
@@ -243,8 +244,6 @@
         function selectAddress(type, address) {
           switch(type) {
             case 'auto':
-            console.log("Auto");
-            console.log(address);
               $scope.autoSelectAddress=true;
               $scope.underlineAuto='underline';
               $scope.underlineManual='none';
@@ -252,8 +251,6 @@
               break;
 
             case 'manual':
-            console.log("Manual");
-            console.log(address);
               $scope.autoSelectAddress=false;
               $scope.underlineAuto='none';
               $scope.underlineManual='underline';
@@ -286,9 +283,11 @@
                     if (typeof response.success !== 'undefined' && response.success) {
                         $scope.addresses = [];
                         response.data.balances.forEach( (e) => {
+                            console.log(e.balance);
                             $scope.addresses.push({
                                 "balance": parseInt(e.balance.unspent),
-                                "address": e.balance.address
+                                "address": e.balance.address,
+                                "frozen": e.balance.frozen
                             });
                         });
                     }
@@ -432,7 +431,8 @@
                         response.data.balances.forEach( (e) => {
                             $scope.addresses.push({
                                 "balance": parseInt(e.balance.unspent),
-                                "address": e.balance.address
+                                "address": e.balance.address,
+                                "frozen": e.balance.frozen
                             });
                         });
                     }

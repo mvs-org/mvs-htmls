@@ -40,16 +40,22 @@
 	<div class="col-xs-12 noPaddingLeftRight" ng-hide=autoSelectAddress>
 		<div class="radioButtonAddress noPaddingLeftRight" ng-repeat="address in addresses | orderBy:sortType:sortReverse" ng-click="selectAddress('manual',address.address)" ng-hide="(address.balance == 0)">
 			<dd class="panel addressBox noPaddingLeftRight col-xs-1">
-				<input type="radio" name="radioDeposit" id={{address}} checked value="hideCustomDate"/>
-				<label for={{address}}>
-
+				<input type="radio" name="radioDeposit" id={{address.address}} checked value="hideCustomDate"/>
+				<label for={{address.address}}>
 					<div class="addressBoxSymbolImgDeposit">
 						<img class="assetSymbol assetSymbolDeposit" src="favicon.png" alt=""/>
 					</div>
 					<div class="addressBoxTextInfoDeposit">
 						<span class="addressBoxNameDeposit">New address</span>
-						<span class="addressBoxValueDeposit">{{address.balance/100000000 }} ETP</span>
 						<span class="addressBoxAddressDeposit">{{address.address}}</span>
+						<span class="col-xs-6 noPaddingLeftRight">
+							<span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
+							<span class="assetBoxValue">{{address.balance/100000000 }}</span>
+						</span>
+						<span class="col-xs-6 noPaddingLeftRight">
+							<span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
+							<span class="assetBoxValue">{{address.frozen/100000000 }}</span>
+						</span>
 					</div>
 				</label>
 			</dd>
