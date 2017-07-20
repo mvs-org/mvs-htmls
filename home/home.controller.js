@@ -68,6 +68,7 @@
         $scope.period_select=undefined;
 
         function init() {
+            $scope.sendfrom = '';
             $scope.deposit_address = "";
             $scope.value = "";
             $scope.password = '';
@@ -118,7 +119,7 @@
             if ($scope.password == '') { //Check for empty password
                 $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
             } else if ($scope.sendfrom !== '' ) {
-                FlashService.Error('Sorry, select the input address is not available yet.');
+                FlashService.Error('Sorry, select the input address is not available for Deposits yet.');
             } else if ($scope.password != credentials.password) {
                 $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
             } else if (!($scope.value > 0)) {
@@ -177,7 +178,6 @@
               $scope.underlineManual='none';
               $scope.sendfrom='';
           }
-          console.log($scope.sendfrom);
         }
 
         //Load users ETP balance
@@ -203,12 +203,14 @@
                                 "frozen": e.balance.frozen
                             });
                         });
+                        init();
                     }
                     NProgress.done();
                 });
         }
 
         listBalances();
+        init();
     }
     /**
      * The ETP Controller provides ETP transaction functionality.
@@ -334,8 +336,6 @@
             //Check for unimplemented parameters
             if ($scope.fee !== '' || $scope.message !== '') {
                 FlashService.Error('Sorry, only basic transfer works so far.');
-            } else if ($scope.sendfrom !== '' ) {
-                FlashService.Error('Sorry, select the input address is not available yet.');
             } else if ($scope.password === '') { //Check for empty password
                 $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
             } else if ($scope.sendto === '') { //Check for recipent address
@@ -362,8 +362,8 @@
 
                     value = Math.round(value);
 
-                    var SendPromise = ($scope.from_address) ? MetaverseService.SendFrom($scope.from_address, $scope.sendto, value, $scope.password) : MetaverseService.Send($scope.sendto, value, $scope.password);
-
+                    var SendPromise = ($scope.sendfrom) ? MetaverseService.SendFrom($scope.sendfrom, $scope.sendto, value, $scope.password) : MetaverseService.Send($scope.sendto, value, $scope.password);
+                    console.log($scope.sendfrom);
                     SendPromise
                         .then( (response) => {
                             NProgress.done();
@@ -943,7 +943,7 @@
                     NProgress.done();
                     if (typeof response.success !== 'undefined' && response.success) {
                         $scope.status = response.data['mining-info'];
-                        $scope.isMining = (response.data['mining-info'].status == 'true');  //Convert string to boolean
+                        $scope.isMining = (response.data['mining-info'].status === 'true');  //Convert string to boolean
                     } else {
                         $translate('MESSAGES.MINING_STATUS_ERROR').then( (data) => FlashService.Error(data) );
                     }

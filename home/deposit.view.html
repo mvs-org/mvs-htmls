@@ -76,7 +76,7 @@
 			<span class="dropdown">
 				<label for="value" class="control-label">{{ 'TRANSFER_VALUE' | translate }}
 				</label>
-				<input type="number" min="0" class="form-control" name="value" placeholder="0.00000000" ng-model="value" autocomplete="off" required="">
+				<input type="number" min="0" step="0.00000001" max="{{balance['total-unspent']/100000000}}" class="form-control" name="value" placeholder="0.00000000" ng-model="value" autocomplete="off" required="">
 			</span>
 		</div>
 
