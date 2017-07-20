@@ -932,8 +932,6 @@
         $scope.start = StartMining;
         $scope.stop = StopMining;
         $scope.status = {};
-        $scope.showWhenMining=false;
-        $scope.showWhenNotMining=true;
         $scope.isMining=false;
 
 
