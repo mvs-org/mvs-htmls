@@ -60,8 +60,9 @@
 
         $scope.changeFactor = changeFactor;
         $scope.deposit = deposit;
-        $scope.selectAddress = selectAddress;
-        $scope.autoSelectAddress=true;
+        $scope.selectAddress = selectAddress;         //Selection of a specific address
+        $scope.selectAddressMem = '';                 //Keep in memory the specific address previously selected (if the user go to Auto and come back to Manual)
+        $scope.autoSelectAddress=true;                //Automatically select the address
         $scope.underlineAuto='underline';
         $scope.underlineManual='none';
         $scope.period_select=undefined;
@@ -116,6 +117,8 @@
 
             if ($scope.password == '') { //Check for empty password
                 $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
+            } else if ($scope.sendfrom !== '' ) {
+                FlashService.Error('Sorry, select the input address is not available yet.');
             } else if ($scope.password != credentials.password) {
                 $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
             } else if (!($scope.value > 0)) {
@@ -144,20 +147,37 @@
         }
 
 
-        function selectAddress(type) {
+        function selectAddress(type, address) {
           switch(type) {
             case 'auto':
               $scope.autoSelectAddress=true;
               $scope.underlineAuto='underline';
               $scope.underlineManual='none';
+              $scope.sendfrom='';
               break;
 
             case 'manual':
               $scope.autoSelectAddress=false;
               $scope.underlineAuto='none';
               $scope.underlineManual='underline';
+              $scope.sendfrom=$scope.selectAddressMem;
               break;
+
+            case 'selectionAddress':
+              $scope.autoSelectAddress=false;
+              $scope.underlineAuto='none';
+              $scope.underlineManual='underline';
+              $scope.sendfrom=address;
+              $scope.selectAddressMem=address;
+              break;
+
+            default:
+              $scope.autoSelectAddress=true;
+              $scope.underlineAuto='underline';
+              $scope.underlineManual='none';
+              $scope.sendfrom='';
           }
+          console.log($scope.sendfrom);
         }
 
         //Load users ETP balance
@@ -205,8 +225,9 @@
 
         $scope.underlineAuto='underline';
         $scope.underlineManual='none';
-        $scope.selectAddress = selectAddress;
-        $scope.autoSelectAddress=true;
+        $scope.selectAddress = selectAddress;         //Selection of a specific address
+        $scope.selectAddressMem = '';                 //Keep in memory the specific address previously selected (if the user go to Auto and come back to Manual)
+        $scope.autoSelectAddress=true;                //Automatically select the address
 
         // Initializes all transaction parameters with empty strings.
         function init() {
@@ -254,7 +275,15 @@
               $scope.autoSelectAddress=false;
               $scope.underlineAuto='none';
               $scope.underlineManual='underline';
+              $scope.sendfrom=$scope.selectAddressMem;
+              break;
+
+            case 'selectionAddress':
+              $scope.autoSelectAddress=false;
+              $scope.underlineAuto='none';
+              $scope.underlineManual='underline';
               $scope.sendfrom=address;
+              $scope.selectAddressMem=address;
               break;
 
             default:
@@ -283,7 +312,6 @@
                     if (typeof response.success !== 'undefined' && response.success) {
                         $scope.addresses = [];
                         response.data.balances.forEach( (e) => {
-                            console.log(e.balance);
                             $scope.addresses.push({
                                 "balance": parseInt(e.balance.unspent),
                                 "address": e.balance.address,

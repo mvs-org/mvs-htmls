@@ -4,15 +4,15 @@
 	<!--Navigation Manual/Auto selection of addresse-->
 	<div class="col-xs-12 noPaddingLeftRight">
 		<ul class="nav nav-pills tabsMenu">
-			<li role="presentation"><a class="btn btn-link" ng-click="selectAddress('auto')" ng-style="{ 'text-decoration' : underlineAuto}">{{ 'DEPOSIT_SELECT_AUTO_ADRESS' | translate }}</a></li>
-			<li role="presentation"><a class="btn btn-link" ng-click="selectAddress('manual')" ng-style="{ 'text-decoration' : underlineManual}">{{ 'DEPOSIT_SELECT_MANUAL_ADDRESS' | translate }}</a></li>
+			<li role="presentation"><a class="btn btn-link" ng-click="selectAddress('auto','')" ng-style="{ 'text-decoration' : underlineAuto}">{{ 'DEPOSIT_SELECT_AUTO_ADRESS' | translate }}</a></li>
+			<li role="presentation"><a class="btn btn-link" ng-click="selectAddress('manual','')" ng-style="{ 'text-decoration' : underlineManual}">{{ 'DEPOSIT_SELECT_MANUAL_ADDRESS' | translate }}</a></li>
 		</ul>
 	</div>
 
 
 	<!--Display the total ETP in automatic selection-->
 	<div class="col-xs-12 noPaddingLeftRight" ng-show=autoSelectAddress>
-		<a href="#!/account/addresses">
+		<a href="">
 			<dd class="panel assetBox assetBoxChecked col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
 				<span class="assetBoxSymbolImg"><img class="assetSymbol" src="favicon.png" alt=""/></span>
 				<span class="assetBoxTextInfo">
@@ -31,7 +31,7 @@
 
 	<!--Display all the addresses if the user choose to let it manually-->
 	<div class="col-xs-12 noPaddingLeftRight" ng-hide=autoSelectAddress>
-		<div class="radioButtonAddress noPaddingLeftRight" ng-repeat="address in addresses | orderBy:sortType:sortReverse" ng-hide="(address.balance == 0)">
+		<div class="radioButtonAddress noPaddingLeftRight" ng-repeat="address in addresses | orderBy:sortType:sortReverse" ng-click="selectAddress('selectionAddress',address.address)" ng-hide="(address.balance == 0)">
 			<dd class="panel addressBox noPaddingLeftRight col-xs-1">
 				<input type="radio" name="radioDeposit" id={{address}} checked value="hideCustomDate"/>
 				<label for={{address}}>
