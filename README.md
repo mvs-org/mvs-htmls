@@ -6,4 +6,6 @@ through which, a network of smart properties , digital identities and value inte
 # Install dependencies
 ```bash
 npm install
+npm install -g grunt
+grunt build
 ```
