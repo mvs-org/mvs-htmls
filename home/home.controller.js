@@ -143,17 +143,6 @@
             $window.scrollTo(0,0);
         }
 
-        //Load users ETP balance
-        MetaverseHelperService.GetBalance( (err, balance, message) => {
-            if (err)
-                FlashService.Error(message);
-            else {
-                $scope.balance = balance;
-            }
-        });
-
-
-
 
         function selectAddress(type) {
           switch(type) {
@@ -170,6 +159,15 @@
               break;
           }
         }
+
+        //Load users ETP balance
+        MetaverseHelperService.GetBalance( (err, balance, message) => {
+            if (err)
+                FlashService.Error(message);
+            else {
+                $scope.balance = balance;
+            }
+        });
 
         //Load the addresses and their balances
         function listBalances() {
@@ -194,7 +192,7 @@
     /**
      * The ETP Controller provides ETP transaction functionality.
      */
-    function ETPController(MetaverseService, MetaverseHelperService, $rootScope, $scope, FlashService, localStorageService, $translate) {
+    function ETPController(MetaverseService, MetaverseHelperService, $rootScope, $scope, FlashService, localStorageService, $translate, $window) {
 
         //Start loading animation
         NProgress.start();
@@ -203,6 +201,11 @@
         $scope.changeFactor = changeFactor;
 
         $rootScope.factor = "FACTOR_ETP";
+
+        $scope.underlineAuto='underline';
+        $scope.underlineManual='none';
+        $scope.selectAddress = selectAddress;
+        $scope.autoSelectAddress=true;
 
         // Initializes all transaction parameters with empty strings.
         function init() {
@@ -236,11 +239,76 @@
             }
         }
 
+
+        function selectAddress(type, address) {
+          switch(type) {
+            case 'auto':
+            console.log("Auto");
+            console.log(address);
+              $scope.autoSelectAddress=true;
+              $scope.underlineAuto='underline';
+              $scope.underlineManual='none';
+              $scope.sendfrom='';
+              break;
+
+            case 'manual':
+            console.log("Manual");
+            console.log(address);
+              $scope.autoSelectAddress=false;
+              $scope.underlineAuto='none';
+              $scope.underlineManual='underline';
+              $scope.sendfrom=address;
+              break;
+
+            default:
+              $scope.autoSelectAddress=true;
+              $scope.underlineAuto='underline';
+              $scope.underlineManual='none';
+              $scope.sendfrom='';
+          }
+        }
+
+
+        //Load users ETP balance
+        MetaverseHelperService.GetBalance( (err, balance, message) => {
+            if (err)
+                FlashService.Error(message);
+            else {
+                $scope.balance = balance;
+            }
+        });
+
+        //Load the addresses and their balances
+        function listBalances() {
+            NProgress.start();
+            MetaverseService.ListBalances()
+                .then( (response) => {
+                    if (typeof response.success !== 'undefined' && response.success) {
+                        $scope.addresses = [];
+                        response.data.balances.forEach( (e) => {
+                            $scope.addresses.push({
+                                "balance": parseInt(e.balance.unspent),
+                                "address": e.balance.address
+                            });
+                        });
+                    }
+                    NProgress.done();
+                });
+        }
+
+        listBalances();
+
+
+
+
+
         //Transfers ETP
         function transfer() {
             //Check for unimplemented parameters
-            if ($scope.sendfrom !== '' || $scope.fee !== '' || $scope.message !== '') {
-                FlashService.Error('Sorry. Only basic transfer works so far.');
+            if ($scope.fee !== '' || $scope.message !== '') {
+                FlashService.Error('Sorry, only basic transfer works so far.');
+            } else if ($scope.sendfrom !== '' ) {
+                FlashService.Error('Sorry, select the input address is not available yet.');
             } else if ($scope.password === '') { //Check for empty password
                 $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
             } else if ($scope.sendto === '') { //Check for recipent address
@@ -290,6 +358,7 @@
                         });
                 }
             }
+            $window.scrollTo(0,0);
         }
 
         //Load a list of all transactions

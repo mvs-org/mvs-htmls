@@ -1,4 +1,4 @@
-$topSpace:80px;
+$topSpace: 80px;
 $lightGrey:rgba(242, 242, 242, 1); //used for background
 $mediumGrey:rgba(200, 200, 200, 1); //used for borders
 $darkGrey:rgba(121, 121, 121, 1); //used for language button
@@ -12,6 +12,7 @@ $radiusButtons: 6px;
 $leftMenuButtonColor:#1B1B1B;
 $leftMenuWidth: 179px;
 $off-wht: rgba(white,.4);
+
 
 
 /****************** Mixin Functions
@@ -128,7 +129,7 @@ _____  ._______  ___.___ _______
                     bottom: 0;
                     left: 0;
                     content: '';
-                    width: 2.5em;
+                    width: 20px;
                     border-radius: 3px 0 0 3px;
                 }
             }
@@ -139,6 +140,7 @@ _____  ._______  ___.___ _______
 
             &:before {
                 content: '\2714';
+                font-size: 20px;
                 text-indent: .9em;
                 color: $blueGeneralColor;
             }
@@ -150,10 +152,11 @@ _____  ._______  ___.___ _______
 
             &:before {
                 content: '\2714';
+                font-size: 20px;
                 height: 20px;
                 text-indent: .9em;
                 color: white;
-                background-color: $blueGeneralColor;
+                background-color: transparent;
             }
         }
 
@@ -216,6 +219,7 @@ _____  ._______  ___.___ _______
 
             &:before {
                 content: '\2714';
+                font-size: 20px;
                 text-indent: .9em;
                 color: $blueGeneralColor;
             }
@@ -229,10 +233,11 @@ _____  ._______  ___.___ _______
 
             &:before {
                 content: '\2714';
+                font-size: 20px;
                 height: 20px;
                 text-indent: .9em;
                 color: $blueGeneralColor;
-
+                background-color: transparent;
             }
         }
 
@@ -288,6 +293,7 @@ _____  ._______  ___.___ _______
 
             &:before {
                 content: '\2714';
+                font-size: 20px;
                 text-indent: .9em;
                 color: $blueGeneralColor;
             }
@@ -299,10 +305,11 @@ _____  ._______  ___.___ _______
 
             &:before {
                 content: '\2714';
+                font-size: 20px;
                 height: 20px;
                 text-indent: .9em;
                 color: white;
-                background-color: $blueGeneralColor;
+                background-color: transparent;
             }
         }
 
@@ -768,8 +775,9 @@ textarea, select, input[type]:not([type=search]):not([type=submit]) {
 .assetBoxSymbolName {
   width: 100%;
   color: $blueGeneralColor;
+  padding-top:14px;
   float:left;
-  line-height:30px;
+  line-height:16px;
   font-size: 16px;
   text-overflow: ellipsis; //for CSS3
   overflow: hidden; //for older browsers
@@ -781,7 +789,7 @@ textarea, select, input[type]:not([type=search]):not([type=submit]) {
   float:left;
   line-height:12px;
   font-size: 12px;
-  padding-top:10px;
+  padding-top: 8px;
 }
 
 .assetBoxValue {
@@ -791,6 +799,7 @@ textarea, select, input[type]:not([type=search]):not([type=submit]) {
   line-height:16px;
   font-size: 16px;
 }
+
 
 .createAsset {
   margin: 10px;
@@ -812,7 +821,7 @@ textarea, select, input[type]:not([type=search]):not([type=submit]) {
   width: 160px;
   text-align: right;
   padding-right: 20px;
-  font-family: 'PingFangSC-Regular', 'PingFang SC';
+  //font-family: 'PingFangSC-Regular', 'PingFang SC';
   font-weight: 400;
   font-style: normal;
   font-size: 12px;
@@ -898,7 +907,7 @@ textarea, select, input[type]:not([type=search]):not([type=submit]) {
 //Display of the history for large screens
 .transactionBoxLarge {
   color: $veryDarkGrey;
-  font-family: 'PingFangSC-Regular', 'PingFang SC';
+  //font-family: 'PingFangSC-Regular', 'PingFang SC';
 }
 
 .transactionBoxLargeTime {
@@ -923,7 +932,7 @@ textarea, select, input[type]:not([type=search]):not([type=submit]) {
   margin-top: 15px;
   height: 120px;
   border-bottom: 1px solid $mediumGrey;
-  font-family: 'PingFangSC-Regular', 'PingFang SC';
+  //font-family: 'PingFangSC-Regular', 'PingFang SC';
 }
 
 .transactionBoxSmallAmount {
@@ -1024,6 +1033,7 @@ textarea, select, input[type]:not([type=search]):not([type=submit]) {
 
 
 /***********Deposit page**************/
+
 .addressTextDeposit {
   padding-top: 24px;
 }
@@ -1034,7 +1044,7 @@ textarea, select, input[type]:not([type=search]):not([type=submit]) {
 }
 
 .assetSymbolDeposit {
-  margin-left: -26px;
+  margin-left: -21px;
 }
 
 .addressBoxTextInfoDeposit {
@@ -1087,4 +1097,23 @@ textarea, select, input[type]:not([type=search]):not([type=submit]) {
 .profit {
   font-size: 18px;
   color: $blueGeneralColor;
+}
+
+
+/*************Transfer**************/
+
+.assetBoxChecked {
+  border-width: 4px;
+  border-color: $blueGeneralColor;
+  border-radius: 6px;
+}
+
+.checked :before{
+  position: absolute;
+  content: '\2714';
+  height: 0px;
+  color: $blueGeneralColor;
+  font-size:20px;
+  top: 0;
+  right: 10px;
 }

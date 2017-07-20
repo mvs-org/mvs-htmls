@@ -1,7 +1,7 @@
 {
   "LANG_CODE": "zh",
   "APP_HEADLINE":  "Metaverse | The new reality",
-  "HEADER_SETUP": "转账",
+  "HEADER_TRANSFER": "转账",
   "HEADER_LOGOUT": "退出账户",
   "HEADER_SEARCH": "查询",
   "HEADER_SEARCH_PLACEHOLDER": "区块序号 / 交易哈希 / 地址 / 资产",

@@ -1,21 +1,5 @@
 <div class="content">
 	<span class="headline">{{ 'DEPOSIT.HEADLINE' | translate }}</span>
-	<div class="col-xs-12 noPaddingLeftRight">
-		<br/>
-	</div>
-	<a href="#!/account/addresses">
-		<dd class="panel assetBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
-			<span class="assetBoxSymbolImg"><img class="assetSymbol" src="favicon.png" alt=""/></span>
-			<span class="assetBoxTextInfo">
-				<span class="assetBoxSymbolName">ETP</span>
-				<span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
-				<span class="assetBoxValue">{{balance['total-unspent']/100000000}}</span>
-				<span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
-				<span class="assetBoxValue">{{balance['total-frozen']/100000000}}</span>
-			</span>
-		</dd>
-	</a>
-
 
 	<!--Navigation Manual/Auto selection of addresse-->
 	<div class="col-xs-12 noPaddingLeftRight">
@@ -23,6 +7,26 @@
 			<li role="presentation"><a class="btn btn-link" ng-click="selectAddress('auto')" ng-style="{ 'text-decoration' : underlineAuto}">{{ 'DEPOSIT_SELECT_AUTO_ADRESS' | translate }}</a></li>
 			<li role="presentation"><a class="btn btn-link" ng-click="selectAddress('manual')" ng-style="{ 'text-decoration' : underlineManual}">{{ 'DEPOSIT_SELECT_MANUAL_ADDRESS' | translate }}</a></li>
 		</ul>
+	</div>
+
+
+	<!--Display the total ETP in automatic selection-->
+	<div class="col-xs-12 noPaddingLeftRight" ng-show=autoSelectAddress>
+		<a href="#!/account/addresses">
+			<dd class="panel assetBox assetBoxChecked col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
+				<span class="assetBoxSymbolImg"><img class="assetSymbol" src="favicon.png" alt=""/></span>
+				<span class="assetBoxTextInfo">
+					<div>
+						<span class="checked"><span>
+					</div>
+					<span class="assetBoxSymbolName">ETP</span>
+					<span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
+					<span class="assetBoxValue">{{balance['total-unspent']/100000000}}</span>
+					<span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
+					<span class="assetBoxValue">{{balance['total-frozen']/100000000}}</span>
+				</span>
+			</dd>
+		</a>
 	</div>
 
 	<!--Display all the addresses if the user choose to let it manually-->
@@ -109,10 +113,10 @@
 		</div>
 	</div>
 	<div class="form-group col-xs-12 noPaddingLeftRight" ng-show="address_option">
-			<div class="form-group col-md-6 ">
-		<label for="password" class="control-label">
-			{{ 'DEPOSIT_ADDRESS_TO_DEPOSIT' | translate }}
-		</label>
+		<div class="form-group col-md-6 ">
+			<label for="password" class="control-label">
+				{{ 'DEPOSIT_ADDRESS_TO_DEPOSIT' | translate }}
+			</label>
 			<input type="text" class="form-control" name="deposit_address" ng-model="deposit_address">
 		</div>
 	</div>

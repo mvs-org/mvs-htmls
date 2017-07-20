@@ -1,76 +1,92 @@
 <div class="content">
-	<span class="headline"><em></em>{{ 'HEADLINE_ETP_TRANSFER' | translate }}</span>
-				<div class="">
-					<div class="row">
-						<form>
-						<div class="col-sm-5">
-							<div class="form-group">
-								<label for="recipent_address" class="control-label">{{ 'TRANSFER_RECIPENT_ADDRESS' | translate }}：<span class="red big">*</span></label>
-									<input type="text" class="form-control" name="recipent_address" id="" ng-model="sendto" autocomplete="off">
-							</div>
-							<div class="form-group">
-								<span class="dropdown">
-								<label for="value" class="control-label">{{ 'TRANSFER_VALUE' | translate }}：<span class="red big">*</span></label>
-								<div class="input-group">
-								<span class="input-group-addon clickable" data-toggle="dropdown">{{factor | translate}}</span>
-								<ul class="dropdown-menu clickable">
-									<li><a ng-click="changeFactor('etp')">{{ 'FACTOR_ETP' | translate }}</a></li>
-									<li><a ng-click="changeFactor('satoshi')">{{ 'FACTOR_SATOSHI' | translate }}</a></li>
-								</ul>
-									<input type="text" class="form-control" name="value" ng-model="value" autocomplete="off">
-								</div>
-							</span>
-							</div>
-						</div>
-						<div class="col-sm-1"></div>
-						<div class="col-sm-5">
-              <div class="form-group">
-                  <label for="from_address" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}：</label>
-                <select class="form-control" name="period" ng-model="from_address">
-                    <option value="">{{'TRANSFER_FROM_ADDRESS_AUTOMATIC'|translate}}</option>
-                  <option ng-repeat="address in from_addresses" value="{{address.balance.address}}">{{address.balance.address}} ({{(address.balance.unspent-address.balance.frozen)/100000000}} ETP)</option>
-                </select>
-							</div>
-							<div class="form-group">
-								<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}：<span class="red big">*</span></label>
-									<input type="password" class="form-control" name="password" id="" autocomplete="new-password" ng-model="password">
-							</div>
-							<button type="submit" id="transferBtn" ng-click="transfer()">{{ 'TRANSFER_SEND' | translate }}</button>
-						</div>
-					</form>
-					</div>
-
-			</div>
-</div>
-<div class="content">
-	<div class="headline"><em></em>{{ 'HEADLINE_TRANSACTIONS' | translate }}</div>
-	<div class="">
-		<div class="transactionbox" dir-paginate="transaction in transactions | filter : {type: 'ETP'}| orderBy:'height':1 | itemsPerPage: 10">
-			<div class="row">
-				<div class="col-md-1">
-					<img src="images/receiveBig.png" ng-show="transaction.direction=='receive'">
-					<img src="images/sendBig.png" ng-show="transaction.direction=='send'">
-				</div>
-				<div class="col-md-11">
-						<div class="row">
-							<div class="col-md-12 hash">
-								<a target="_blank" href="http://explorer.mvs.live/#!/tx/{{transaction.hash}}"> {{transaction.hash}}</a>
-						</div>
-						</div>
-						<div class="row">
-                    <div class="col-md-3">
-                      {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT' | translate) }}
-                    </div>
-							<div class="col-md-4">
-								{{transaction.value | assetformat : 8}} ETP
-							</div>
-							<div class="col-md-4">
-								{{ 'TRANSFER_RECIPENT' | translate }}: <div ng-repeat="recipent in transaction.recipents" class="address">{{recipent.address}}</div>
-							</div>
-						</div>
-				</div>
-			</div>
-			</div>
-			<dir-pagination-controls></dir-pagination-controls>
+	<span class="headline">{{ 'HEADLINE_ETP_TRANSFER' | translate }}</span>
+	<!--Navigation Manual/Auto selection of addresse-->
+	<div class="col-xs-12 noPaddingLeftRight">
+		<ul class="nav nav-pills tabsMenu">
+			<li role="presentation"><a class="btn btn-link" ng-click="selectAddress('auto','')" ng-style="{ 'text-decoration' : underlineAuto}">{{ 'DEPOSIT_SELECT_AUTO_ADRESS' | translate }}</a></li>
+			<li role="presentation"><a class="btn btn-link" ng-click="selectAddress('manual','')" ng-style="{ 'text-decoration' : underlineManual}">{{ 'DEPOSIT_SELECT_MANUAL_ADDRESS' | translate }}</a></li>
+		</ul>
 	</div>
+
+
+	<!--<div class="form-group">
+		<label for="from_address" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
+		<select class="form-control" name="period" ng-model="from_address">
+			<option value="">{{'TRANSFER_FROM_ADDRESS_AUTOMATIC'|translate}}</option>
+			<option ng-repeat="address in from_addresses" value="{{address.balance.address}}">{{address.balance.address}} ({{(address.balance.unspent-address.balance.frozen)/100000000}} ETP)</option>
+		</select>
+	</div>-->
+
+	<!--Display the total ETP in automatic selection-->
+	<div class="col-xs-12 noPaddingLeftRight" ng-show=autoSelectAddress>
+		<a href="#!/account/addresses">
+			<dd class="panel assetBox assetBoxChecked col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+				<span class="assetBoxSymbolImg"><img class="assetSymbol" src="favicon.png" alt=""/></span>
+				<span class="assetBoxTextInfo">
+					<div>
+						<span class="checked"><span>
+					</div>
+					<span class="assetBoxSymbolName">ETP</span>
+					<span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
+					<span class="assetBoxValue">{{balance['total-unspent']/100000000}}</span>
+					<span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
+					<span class="assetBoxValue">{{balance['total-frozen']/100000000}}</span>
+				</span>
+			</dd>
+		</a>
+	</div>
+
+	<!--Display all the addresses if the user choose to let it manually-->
+	<div class="col-xs-12 noPaddingLeftRight" ng-hide=autoSelectAddress>
+		<div class="radioButtonAddress noPaddingLeftRight" ng-repeat="address in addresses | orderBy:sortType:sortReverse" ng-click="selectAddress('manual',address.address)" ng-hide="(address.balance == 0)">
+			<dd class="panel addressBox noPaddingLeftRight col-xs-1">
+				<input type="radio" name="radioDeposit" id={{address}} checked value="hideCustomDate"/>
+				<label for={{address}}>
+
+					<div class="addressBoxSymbolImgDeposit">
+						<img class="assetSymbol assetSymbolDeposit" src="favicon.png" alt=""/>
+					</div>
+					<div class="addressBoxTextInfoDeposit">
+						<span class="addressBoxNameDeposit">New address</span>
+						<span class="addressBoxValueDeposit">{{address.balance/100000000 }} ETP</span>
+						<span class="addressBoxAddressDeposit">{{address.address}}</span>
+					</div>
+				</label>
+			</dd>
+		</div>
+	</div>
+
+	<form>
+		<!--Recipient-->
+		<div class="col-md-6 form-group">
+			<br/>
+			<label for="recipent_address" class="control-label">{{ 'TRANSFER_RECIPENT_ADDRESS' | translate }}</label>
+			<input type="text" class="form-control" name="recipent_address" id="" ng-model="sendto" autocomplete="off">
+		</div>
+
+		<!--Amount-->
+		<div class="col-md-6">
+			<br/>
+			<div class="form-group">
+				<label for="value" class="control-label">{{ 'TRANSFER_VALUE' | translate }}</label>
+				<input type="number" min=0 class="form-control" placeholder="0.00000000" name="value" ng-model="value" autocomplete="off">
+			</div>
+		</div>
+
+		<!--Password-->
+		<div class="col-md-6">
+			<div class="form-group">
+				<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
+				<input type="password" class="form-control" name="password" id="" autocomplete="new-password" ng-model="password">
+			</div>
+		</div>
+
+		<!--Submit button-->
+		<div class="col-md-12">
+			<div class="col-sm-6 col-md-3 noPaddingLeftRight">
+				<br/>
+				<button type="submit" class="btn btn-success" id="transferBtn" ng-click="transfer()">{{ 'TRANSFER_SEND' | translate }}</button>
+			</div>
+		</div>
+	</form>
 </div>
