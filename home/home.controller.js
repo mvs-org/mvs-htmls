@@ -934,6 +934,7 @@
         $scope.status = {};
         $scope.showWhenMining=false;
         $scope.showWhenNotMining=true;
+        $scope.isMining=false;
 
 
 
@@ -944,6 +945,7 @@
                     NProgress.done();
                     if (typeof response.success !== 'undefined' && response.success) {
                         $scope.status = response.data['mining-info'];
+                        $scope.isMining = (response.data['mining-info'].status == 'true');  //Convert string to boolean
                     } else {
                         $translate('MESSAGES.MINING_STATUS_ERROR').then( (data) => FlashService.Error(data) );
                     }
@@ -956,8 +958,6 @@
             MetaverseService.Start()
                 .then( (response) => {
                     NProgress.done();
-                    $scope.showWhenMining=true;
-                    $scope.showWhenNotMining=false;
                     if (typeof response.success !== 'undefined' && response.success) {
                         $translate('MESSAGES.MINING_START_SUCCESS').then( (data) => FlashService.Success(data) );
                         GetMiningInfo();
@@ -972,8 +972,6 @@
             MetaverseService.Stop()
                 .then(function(response) {
                     NProgress.done();
-                    $scope.showWhenMining=false;
-                    $scope.showWhenNotMining=true;
                     if (typeof response.success !== 'undefined' && response.success) {
                         $translate('MESSAGES.MINING_STOP_SUCCESS').then( (data) => FlashService.Success(data) );
                         GetMiningInfo();
@@ -989,9 +987,9 @@
 
     function ConsoleController(MetaverseService, $rootScope, $scope) {
 
-        var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
+        //var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
         //To test the Console view with Grunt:
-        //var ws = new WebSocket('ws://test4.metaverse.live:8820/ws');
+        var ws = new WebSocket('ws://test4.metaverse.live:8820/ws');
 
 
 

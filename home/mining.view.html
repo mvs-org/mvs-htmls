@@ -1,7 +1,7 @@
 <div class="content">
   <span class="headline">
-    <div ng-show="showWhenNotMining">ETP {{ 'HEADLINE_MINING' | translate }}</div>
-    <div ng-show="showWhenMining" style="isMiningText">{{ 'MINING_IS_MINING' | translate }}
+    <div ng-hide="isMining">ETP {{ 'HEADLINE_MINING' | translate }}</div>
+    <div ng-show="isMining" style="isMiningText">{{ 'MINING_IS_MINING' | translate }}
       <div class="miningSpinner showWhenMining">
       </div>
     </div>
@@ -10,9 +10,9 @@
     <div class="row">
       <!--View recommended configuration-->
       <div class="configText">
-        <div type="text" ng-show="showWhenNotMining" class="miningRecommendation">{{ 'MINING_NOT_RECOMMENDED' | translate }}   </div>
-        <div ng-show="showWhenNotMining" class="miningRecommendation"><a href="#!/mining" class="btn btn-link">{{ 'MINING_RECOMMENDED_CONFIG' | translate }}</a></div>
-        <div ng-show="showWhenMining" class="miningEnd">{{ 'MINING_HOW_STOP' | translate }}</div>
+        <div type="text" ng-hide="isMining" class="miningRecommendation">{{ 'MINING_NOT_RECOMMENDED' | translate }}   </div>
+        <div ng-hide="isMining" class="miningRecommendation"><a href="#!/mining" class="btn btn-link">{{ 'MINING_RECOMMENDED_CONFIG' | translate }}</a></div>
+        <div ng-show="isMining" class="miningEnd">{{ 'MINING_HOW_STOP' | translate }}</div>
         <br><br>
       </div>
       <!--Table for mining Rate, Difficulty and Height-->
@@ -36,15 +36,13 @@
         <!--Mining buttons-->
         <div>
           <!--Play button, when not mining-->
-          <button class="btn btn-success" ng-click="start()" ng-show="showWhenNotMining">
+          <button class="btn btn-success" ng-click="start()" ng-hide="isMining">
             <i class="glyphicon glyphicon-play"></i> {{ 'MINING_START' | translate }}
           </button>
           <!--Pause button, when mining-->
-          <button class="btn btn-secondary" ng-click="stop()" ng-show="showWhenMining">
+          <button class="btn btn-secondary" ng-click="stop()" ng-show="isMining">
             <i class="glyphicon glyphicon-pause"></i> {{ 'MINING_END' | translate }}
           </button>
-          <!--<input class="btn btn-success miningButton" ng-click="start()" ng-show="showWhenNotMining" value="{{ 'MINING_START' | translate }}">
-          <input class="btn btn-success miningButton" ng-click="stop()" ng-show="showWhenMining" value="{{ 'MINING_END' | translate }}">-->
         </div>
       </div>
     </div>
