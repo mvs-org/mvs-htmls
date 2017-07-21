@@ -101,7 +101,7 @@
             })
 
             .state('home.explorer.search', {
-                url: "/explorer",
+                url: "/explorer/search/:search",
                 templateUrl: "home/explorer/search.view.html",
                 controller: 'ExplorerController'
             })
@@ -109,6 +109,24 @@
             .state('home.explorer.transaction', {
                 url: "/explorer/tx/:hash",
                 templateUrl: "home/explorer/transaction.view.html",
+                controller: 'ExplorerController'
+            })
+
+            .state('home.explorer.address', {
+                url: "/explorer/adr/:address",
+                templateUrl: "home/explorer/address.view.html",
+                controller: 'ExplorerController'
+            })
+
+            .state('home.explorer.block', {
+                url: "/explorer/blk/:block",
+                templateUrl: "home/explorer/block.view.html",
+                controller: 'ExplorerController'
+            })
+
+            .state('home.explorer.noresult', {
+                url: "/explorer/noresult",
+                templateUrl: "home/explorer/noresult.view.html",
                 controller: 'ExplorerController'
             })
 

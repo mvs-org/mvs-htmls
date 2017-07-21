@@ -29,11 +29,47 @@
       });
     }
 
-    function ExplorerController(MetaverseService, MetaverseHelperService, $location, $stateParams, $rootScope, $scope, FlashService, localStorageService, $translate) {
+    function ExplorerController(MetaverseService, MetaverseHelperService, $location, $stateParams, $rootScope, $scope, FlashService, localStorageService, $translate, $window) {
 
-        $scope.show_transaction = show_transaction;
+        //$scope.show_transaction = show_transaction;
+        $scope.typeSearch = $location.path().split('/')[2];
+        $scope.search = $location.path().split('/')[3];
 
-        var transaction_hash = $stateParams.hash;
+        function defineTypeSearch () {
+          console.log($scope.search);
+          if ($scope.typeSearch==='') {
+            console.log("Ready to do a research");
+          } else if ($scope.typeSearch==='search') {    //we first need to define the kind of research
+            if ($scope.search.length === 64) {
+              console.log("It's a Transaction Hash");
+              $window.location.href = "#!/explorer/tx/"+$scope.search;
+            } else if ($scope.search.length === 34) {
+              console.log("It's an Address");
+              $window.location.href = "#!/explorer/adr/"+$scope.search;
+            } else if (!isNaN($scope.search)) {
+              console.log("It's a Block number");
+              $window.location.href = "#!/explorer/blk/"+$scope.search;
+            } else if (1===1){
+              console.log("It's an Asset");
+              $window.location.href = "#!/asset/details/"+$scope.search;
+            } else {    //The research's format doesn't match any kind
+              $window.location.href = "#!/explorer/noresult";
+              console.log("No result");
+            }
+          } else if ($scope.typeSearch === 'tx') {
+            console.log("In Tx page");
+          } else if ($scope.typeSearch === 'adr') {
+            console.log("In Adr page");
+          } else if ($scope.typeSearch === 'blk') {
+            console.log("In Blk page");
+          } else {    //an error happenned or the user typed the URL manually
+            $window.location.href = "#!/explorer";
+          }
+        }
+
+        defineTypeSearch();
+
+        /*var transaction_hash = $stateParams.hash;
         if ( typeof transaction_hash !== 'undefined') {
             NProgress.start();
             MetaverseService.FetchTx(transaction_hash)
@@ -52,7 +88,7 @@
 
         function show_transaction() {
             $location.path('/explorer/tx/' + $scope.hash);
-        }
+        }*/
 
     }
 

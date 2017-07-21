@@ -1,0 +1,19 @@
+<div class="content" ng-show="transaction">
+
+  <div class="row">
+    <div class="col-md-3">{{ 'EXPLORER.TRANSACTION_HASH' | translate }}：</div>
+    <div class="col-md-5">{{transaction.hash}}</div>
+  </div>
+  <br><br>
+  <div class="row">
+    <div class="col-md-5">
+      {{ 'EXPLORER.TRANSACTION_INPUTS' | translate }}：
+      <img src="images/receiveBig.png">
+      <div ng-repeat="input in transaction.inputs">{{input.address}}</div></div>
+    <div class="col-md-5">
+      {{ 'EXPLORER.TRANSACTION_OUTPUTS' | translate }}：
+      <img src="images/sendBig.png">
+      <div ng-repeat="output in transaction.outputs">{{output.value}} bit to {{output.address}}</div>
+    </div>
+  </div>
+</div>
