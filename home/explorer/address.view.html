@@ -1,19 +1,22 @@
-<div class="content" ng-show="transaction">
-
-  <div class="row">
-    <div class="col-md-3">{{ 'EXPLORER.TRANSACTION_HASH' | translate }}：</div>
-    <div class="col-md-5">{{transaction.hash}}</div>
-  </div>
-  <br><br>
-  <div class="row">
-    <div class="col-md-5">
-      {{ 'EXPLORER.TRANSACTION_INPUTS' | translate }}：
-      <img src="images/receiveBig.png">
-      <div ng-repeat="input in transaction.inputs">{{input.address}}</div></div>
-    <div class="col-md-5">
-      {{ 'EXPLORER.TRANSACTION_OUTPUTS' | translate }}：
-      <img src="images/sendBig.png">
-      <div ng-repeat="output in transaction.outputs">{{output.value}} bit to {{output.address}}</div>
+<div class="content">
+  <span class="headline">{{ 'EXPLORER_HEADLINE_ADDRESS' | translate }}</span>
+  <div class="col-md-12">
+    <h4>{{search}}</h4>
+    <!--<div dir-paginate="transaction in resultAddress | orderBy:'height':1 | itemsPerPage: 10">-->
+    <div class="col-md-6">
+      {{ 'EXPLORER_TRANSACTION_HASH' | translate }}
     </div>
+    <div class="col-md-6">
+      {{ 'EXPLORER_TRANSACTION_BLOCK' | translate }}
+    </div>
+    <div dir-paginate="transaction in transactions | orderBy:'height':1 | itemsPerPage: 10">
+      <div class="col-md-6">
+        <a href="#!/explorer/tx/{{transaction.hash}}">{{transaction.hash}}</a>
+      </div>
+      <div class="col-md-6">
+        <a href="#!/explorer/blk/{{transaction.height}}">{{transaction.height}}</a>
+      </div>
+    </div>
+    <dir-pagination-controls></dir-pagination-controls>
   </div>
 </div>
