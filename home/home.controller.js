@@ -34,7 +34,8 @@
     //$scope.show_transaction = show_transaction;
     $scope.typeSearch = $location.path().split('/')[2];
     $scope.search = $location.path().split('/')[3];
-    $scope.transactions = [];
+    $scope.transactionsAddressSearch = [];
+
 
     function defineTypeSearch () {
       console.log($scope.search);
@@ -61,6 +62,7 @@
       }
     } else if ($scope.typeSearch === 'tx') {
       console.log("In Tx page");
+      searchTransaction();
     } else if ($scope.typeSearch === 'adr') {
       console.log("In Adr page");
       searchAddress();
@@ -90,8 +92,29 @@
               "recipents": [],
               "value": 0*/
             };
-            $scope.transactions.push(transaction);
+            $scope.transactionsAddressSearch.push(transaction);
           });
+        } else {
+          $translate('MESSAGES.TRANSACTION_NOT_FOUND').then( (data) => {
+            FlashService.Error(data, true);
+            $location.path('/explorer');
+          });
+        }
+        NProgress.done();
+      });
+    }
+  }
+
+
+  function searchTransaction() {
+    var transaction_hash = $stateParams.hash;
+    if ( typeof transaction_hash !== 'undefined') {
+      NProgress.start();
+      MetaverseService.FetchTx(transaction_hash)
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success && response.data != undefined && response.data.transaction != undefined) {
+          $scope.transaction = response.data.transaction;
+          console.log($scope.transaction.inputs);
         } else {
           $translate('MESSAGES.TRANSACTION_NOT_FOUND').then( (data) => {
             FlashService.Error(data, true);

@@ -170,6 +170,8 @@
   "EXPLORER_HEADLINE_BLOCK" : "Block Details",
   "EXPLORER_TRANSACTION_HASH" : "Transaction hash",
   "EXPLORER_TRANSACTION_BLOCK" : "Block",
+  "EXPLORER_TRANSACTION_INPUT_SCRIPT" : "Input Scripts",
+  "EXPLORER_TRANSACTION_OUTPUT_SCRIPT" : "Output Scripts",
   "MESSAGES.NO_ACCOUNTNAME_PROVIDED" : "Sie müssen einen Namen für Ihren Account wählen.",
   "MESSAGES.NO_PASSWORD_PROVIDED" : "Bitte geben Sie ein Passwort für Ihren Account ein.",
   "MESSAGES.PASSWORD_SHORT" : "Das Passwort muss mindestens 6 Zeichen lang sein.",

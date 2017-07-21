@@ -1,19 +1,42 @@
 <div class="content">
   <span class="headline">{{ 'EXPLORER_HEADLINE_TRANSACTION' | translate }}</span>
-  <div class="row">
-    <div class="col-md-3">{{ 'EXPLORER.TRANSACTION_HASH' | translate }}：</div>
-    <div class="col-md-5">{{transaction.hash}}</div>
+  <div class="col-md-12">
+    <h4>{{search}}</h4>
   </div>
-  <br><br>
-  <div class="row">
-    <div class="col-md-5">
-      {{ 'EXPLORER.TRANSACTION_INPUTS' | translate }}：
-      <img src="images/receiveBig.png">
-      <div ng-repeat="input in transaction.inputs">{{input.address}}</div></div>
-    <div class="col-md-5">
-      {{ 'EXPLORER.TRANSACTION_OUTPUTS' | translate }}：
-      <img src="images/sendBig.png">
-      <div ng-repeat="output in transaction.outputs">{{output.value}} bit to {{output.address}}</div>
+  <!--<div class="col-xs-12">
+  {{ 'EXPLORER_TRANSACTION_BLOCK' | translate }}
+</div>
+<div class="col-xs-12">
+
+</div>-->
+
+  <div class="col-md-6">
+    {{ 'EXPLORER.TRANSACTION_INPUTS' | translate }}
+    <div ng-repeat="input in transaction.inputs">
+      <div ng-show="input.address==null">   <!--When NULL, coming from Mining-->
+        From Mining
+      </div>
+      <div ng-hide="input.address==null">
+        {{input.value}} bit to {{input.address}}
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    {{ 'EXPLORER.TRANSACTION_OUTPUTS' | translate }}
+    <div ng-repeat="output in transaction.outputs">
+      {{output.value}} bit to {{output.address}}
+    </div>
+  </div>
+  <div class="col-md-6">
+    {{ 'EXPLORER_TRANSACTION_INPUT_SCRIPT' | translate }}
+    <div ng-repeat="input in transaction.inputs">
+      {{input.script}}
+    </div>
+  </div>
+  <div class="col-md-6">
+    {{ 'EXPLORER_TRANSACTION_OUTPUT_SCRIPT' | translate }}
+    <div ng-repeat="output in transaction.outputs">
+      {{output.script}}
     </div>
   </div>
 </div>

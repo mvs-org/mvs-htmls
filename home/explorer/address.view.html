@@ -9,7 +9,7 @@
     <div class="col-md-6">
       {{ 'EXPLORER_TRANSACTION_BLOCK' | translate }}
     </div>
-    <div dir-paginate="transaction in transactions | orderBy:'height':1 | itemsPerPage: 10">
+    <div dir-paginate="transaction in transactionsAddressSearch | orderBy:'height':1 | itemsPerPage: 10">
       <div class="col-md-6">
         <a href="#!/explorer/tx/{{transaction.hash}}">{{transaction.hash}}</a>
       </div>
