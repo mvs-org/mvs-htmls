@@ -681,7 +681,7 @@
     }
 
 
-    function ShowAssetsController(MetaverseService, $rootScope, $scope, FlashService, $translate, $stateParams) {
+    function ShowAssetsController(MetaverseService, $rootScope, $scope, FlashService, $translate, $stateParams, $location) {
 
         $scope.symbol = $stateParams.symbol;
         $scope.assets = [];
@@ -985,9 +985,9 @@
 
     function ConsoleController(MetaverseService, $rootScope, $scope) {
 
-        //var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
+        var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
         //To test the Console view with Grunt:
-        var ws = new WebSocket('ws://test4.metaverse.live:8820/ws');
+        //var ws = new WebSocket('ws://test4.metaverse.live:8820/ws');
 
 
 

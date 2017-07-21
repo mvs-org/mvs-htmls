@@ -1,22 +1,24 @@
 <div class="content">
-  <div class="headline"><em></em>{{ 'HEADLINE_CONSOLE' | translate }}</div>
-<div class="console" id="consolelog">
-  <div ng-repeat="log in consolelog">
-    <div class="console_b">
+  <div class="headline">{{ 'HEADLINE_CONSOLE' | translate }}</div>
+  <div class="console" id="consolelog">
+    <div ng-repeat="log in consolelog">
+      <div class="console_b">
         <span class="span1"><p>{{log.query}}</p><em></em></span>
-    </div>
-    <div class="console_a" >
+      </div>
+      <div class="console_a" >
         <span class="span1"><pre>{{log.answer}}</pre><em></em></span>
+      </div>
     </div>
   </div>
-</div>
-<div class="consoleInput">
+  <footer class="consoleFooter navbar-fixed-bottom">
     <form>
-      <div class="input_1">
+      <div class="col-md-9">
         <input type="text" ng-model="querystring" class="forminput" id="" placeholder="{{ 'CONSOLE.INSERT_PROMPT' | translate }}">
       </div>
-      <input class="input_2 btn btn-primary" type="submit" ng-click="query()" value="{{ 'CONSOLE.SEND' | translate }}">
+      <div class="col-md-3">
+        <input class="btn btn-success" type="submit" ng-click="query()" value="{{ 'CONSOLE.SEND' | translate }}">
+      </div>
     </form>
-</div>
+  </footer>
 </div>
 <link rel="stylesheet" href="css/mining.css">
