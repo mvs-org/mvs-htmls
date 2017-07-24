@@ -68,12 +68,14 @@
       searchAddress();
     } else if ($scope.typeSearch === 'blk') {
       console.log("In Blk page");
+      blockInfo();
     } else {    //an error happenned or the user typed the URL manually
       $window.location.href = "#!/explorer/search/";
     }
   }
 
   defineTypeSearch();
+  $window.scrollTo(0,0);
 
 
   function searchAddress () {
@@ -107,25 +109,101 @@
 
 
   function searchTransaction() {
-    var transaction_hash = $stateParams.hash;
+    var transaction_hash = $scope.search;
     if ( typeof transaction_hash !== 'undefined') {
       NProgress.start();
       MetaverseService.FetchTx(transaction_hash)
       .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success && response.data != undefined && response.data.transaction != undefined) {
-          $scope.transaction = response.data.transaction;
-          console.log($scope.transaction.inputs);
-        } else {
+        if (typeof response == 'undefined' || typeof response.success == 'undefined' || response.success == false) {
           $translate('MESSAGES.TRANSACTION_NOT_FOUND').then( (data) => {
             FlashService.Error(data, true);
-            $location.path('/explorer');
+            $location.path('/explorer/search/');
           });
+        } else {
+          $scope.transaction = response.data.transaction;
         }
         NProgress.done();
       });
     }
   }
+
+
+  function blockInfo() {
+    var blockHeight = $scope.search;
+    $scope.blockInfos = [];
+
+    if ( typeof blockHeight !== 'undefined') {
+      NProgress.start();
+      MetaverseService.FetchHeader(blockHeight)
+      .then( (response) => {
+        if (typeof response == 'undefined' || typeof response.success == 'undefined' || response.success == false) {
+          $translate('MESSAGES.BLOCK_NOT_FOUND').then( (data) => {
+            FlashService.Error(data, true);
+            $location.path('/explorer/search/');
+          });
+        } else {
+          //console.log(response.data.result);
+          $scope.blockInfos = {
+            "hash": response.data.result.hash,
+            "timestamp": new Date(response.data.result.time_stamp * 1000),
+            "transaction_count": response.data.result.transaction_count,
+            "nonce": response.data.result.nonce,
+            "mixhash": response.data.result.mixhash,
+            "version": response.data.result.version,
+            "merkle_tree_hash": response.data.result.merkle_tree_hash,
+            "previous_block_hash": response.data.result.previous_block_hash
+          };
+          blockInfoTxs(response.data.result.hash);
+        }
+        NProgress.done();
+      });
+    }
+  }
+
+
+  function blockInfoTxs (hash) {
+    console.log("Console block hash:");
+    console.log(hash);
+    $scope.transactionsPerBlock = [];
+
+    MetaverseService.GetBlock(hash)
+    .then( (response) => {
+      if (typeof response == 'undefined' || typeof response.success == 'undefined' || response.success == false) {
+        $translate('MESSAGES.TRANSACTION_NOT_FOUND').then( (data) => {
+          FlashService.Error(data, true);
+          $location.path('/explorer/search/');
+        });
+      } else {
+        //console.log(response.data.txs.transactions);
+        response.data.txs.transactions.forEach(function(e) {
+          console.log(e);
+          console.log(e.hash);
+          var transaction = {
+            "hash": e.hash
+          };
+          $scope.transactionsPerBlock.push(transaction);
+        });
+      }
+      NProgress.done();
+    });
+  }
 }
+
+
+/*
+MetaverseService.GetBlock($scope.blockInfos.hash)
+.then( (response) => {
+  console.log("Ici");
+  if (typeof response == 'undefined' || typeof response.success == 'undefined' || response.success == false) {
+    $translate('MESSAGES.BLOCK_NOT_FOUND').then( (data) => {
+      FlashService.Error(data, true);
+      $location.path('/explorer/search/');
+    });
+  } else {
+    console.log(response.data);
+  }
+}
+*/
 
 
 function DepositController(MetaverseService, MetaverseHelperService, $rootScope, $scope, FlashService, localStorageService, $translate, $window) {

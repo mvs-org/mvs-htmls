@@ -172,6 +172,14 @@
   "EXPLORER_TRANSACTION_BLOCK" : "Block",
   "EXPLORER_TRANSACTION_INPUT_SCRIPT" : "Input Scripts",
   "EXPLORER_TRANSACTION_OUTPUT_SCRIPT" : "Output Scripts",
+  "EXPLORER_BLOCK_NB_TRANSACTIONS" : "Number of transactions",
+  "EXPLORER_BLOCK_NONCE" : "Nonce",
+  "EXPLORER_BLOCK_MIX_HASH" : "Mix Hash",
+  "EXPLORER_BLOCK_VERSION" : "Block version",
+  "EXPLORER_BLOCK_MERKLE_TREE_HASH" : "Merkle Tree Hash",
+  "EXPLORER_BLOCK_PREVIOUS_HASH" : "Previous Block hash",
+  "EXPLORER_BLOCK_TIME" : "Block time",
+  "EXPLORER_BLOCK_TRANSACTIONS" : "Transactions",
   "MESSAGES.NO_ACCOUNTNAME_PROVIDED" : "You need to choose a name for your account.",
   "MESSAGES.NO_PASSWORD_PROVIDED" : "Please choose a password to secure your account.",
   "MESSAGES.PASSWORD_SHORT" : "Passwords must be at least 6 characters long.",
@@ -207,5 +215,6 @@
   "MESSAGES.IMPORT_ERROR" : "The account cannot be imported",
   "MESSAGES.CHANGE_PASSWORD_SUCCESS" : "Account password has been changed.",
   "MESSAGES.CHANGE_PASSWORD_ERROR" : "Account password change failed.",
-  "MESSAGES.TRANSACTION_NOT_FOUND" : "Could not find a transaction for given hash."
+  "MESSAGES.TRANSACTION_NOT_FOUND" : "Could not find a transaction for given hash.",
+  "MESSAGES.BLOCK_NOT_FOUND" : "Could not find a block for given number."
 }

@@ -1,42 +1,53 @@
 <div class="content">
   <span class="headline">{{ 'EXPLORER_HEADLINE_TRANSACTION' | translate }}</span>
-  <div class="col-md-12">
-    <h4>{{search}}</h4>
+  <div class="col-md-12 noPaddingLeftRight">
+    <h2>{{search}}</h2>
   </div>
-  <!--<div class="col-xs-12">
-  {{ 'EXPLORER_TRANSACTION_BLOCK' | translate }}
-</div>
-<div class="col-xs-12">
 
-</div>-->
-
-  <div class="col-md-6">
-    {{ 'EXPLORER.TRANSACTION_INPUTS' | translate }}
+  <!--Input addresses-->
+  <div class="col-sm-12 col-md-6 form-group noPaddingLeftRight">
+    <label class="control-label">
+      {{ 'EXPLORER.TRANSACTION_INPUTS' | translate }}
+    </label>
     <div ng-repeat="input in transaction.inputs">
       <div ng-show="input.address==null">   <!--When NULL, coming from Mining-->
         From Mining
+        <div class="numbersSearch">{{output.value}} bits</div>
       </div>
       <div ng-hide="input.address==null">
-        {{input.value}} bit to {{input.address}}
+        <a class="btn-link" href="#!/explorer/adr/{{input.address}}">{{input.address}}</a>
+        <div class="numbersSearch">{{input.value}} bits</div>
       </div>
     </div>
   </div>
-  <div class="col-md-6">
-    {{ 'EXPLORER.TRANSACTION_OUTPUTS' | translate }}
+  <!--Output addresses-->
+  <div class="col-sm-12 col-md-6 form-group noPaddingLeftRight">
+    <label class="control-label">
+      {{ 'EXPLORER.TRANSACTION_OUTPUTS' | translate }}
+    </label>
     <div ng-repeat="output in transaction.outputs">
-      {{output.value}} bit to {{output.address}}
+      <a class="btn-link" href="#!/explorer/adr/{{output.address}}">{{output.address}}</a>
+      <div class="numbersSearch">{{output.value}} bits</div>
     </div>
   </div>
-  <div class="col-md-6">
-    {{ 'EXPLORER_TRANSACTION_INPUT_SCRIPT' | translate }}
+  <div class="col-md-12"></div>
+
+  <!--Input scripts-->
+  <div class="col-sm-12 col-md-12 form-group noPaddingLeftRight">
+    <label class="control-label">
+      {{ 'EXPLORER_TRANSACTION_INPUT_SCRIPT' | translate }}
+    </label>
     <div ng-repeat="input in transaction.inputs">
-      {{input.script}}
+      <div>{{input.script}}</div>
     </div>
   </div>
-  <div class="col-md-6">
-    {{ 'EXPLORER_TRANSACTION_OUTPUT_SCRIPT' | translate }}
+  <!--Output scripts-->
+  <div class="col-sm-12 col-md-12 form-group noPaddingLeftRight">
+    <label>
+      {{ 'EXPLORER_TRANSACTION_OUTPUT_SCRIPT' | translate }}
+    </label>
     <div ng-repeat="output in transaction.outputs">
-      {{output.script}}
+      <div>{{output.script}}</div>
     </div>
   </div>
 </div>

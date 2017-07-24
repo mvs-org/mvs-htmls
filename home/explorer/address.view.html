@@ -1,20 +1,20 @@
 <div class="content">
   <span class="headline">{{ 'EXPLORER_HEADLINE_ADDRESS' | translate }}</span>
-  <div class="col-md-12">
-    <h4>{{search}}</h4>
+  <div class="col-md-12 noPaddingLeftRight">
+    <h2>{{search}}</h2>
     <!--<div dir-paginate="transaction in resultAddress | orderBy:'height':1 | itemsPerPage: 10">-->
-    <div class="col-md-6">
+    <div class="col-md-6 noPaddingLeftRight form-group">
       {{ 'EXPLORER_TRANSACTION_HASH' | translate }}
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 noPaddingLeftRight form-group">
       {{ 'EXPLORER_TRANSACTION_BLOCK' | translate }}
     </div>
     <div dir-paginate="transaction in transactionsAddressSearch | orderBy:'height':1 | itemsPerPage: 10">
-      <div class="col-md-6">
-        <a href="#!/explorer/tx/{{transaction.hash}}">{{transaction.hash}}</a>
+      <div class="col-md-6 noPaddingLeftRight">
+        <a href="#!/explorer/tx/{{transaction.hash}}" class="btn-link">{{transaction.hash}}</a>
       </div>
-      <div class="col-md-6">
-        <a href="#!/explorer/blk/{{transaction.height}}">{{transaction.height}}</a>
+      <div class="col-md-6 noPaddingLeftRight">
+        <a href="#!/explorer/blk/{{transaction.height}}" class="btn-link">{{transaction.height}}</a>
       </div>
     </div>
     <dir-pagination-controls></dir-pagination-controls>
