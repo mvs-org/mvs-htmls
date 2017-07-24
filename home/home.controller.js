@@ -35,6 +35,7 @@
     $scope.typeSearch = $location.path().split('/')[2];
     $scope.search = $location.path().split('/')[3];
     $scope.transactionsAddressSearch = [];
+    $scope.transaction_count = 0;
 
 
     function defineTypeSearch () {
@@ -142,18 +143,17 @@
             $location.path('/explorer/search/');
           });
         } else {
-          //console.log(response.data.result);
+          blockInfoTxs(response.data.result.hash);
           $scope.blockInfos = {
             "hash": response.data.result.hash,
             "timestamp": new Date(response.data.result.time_stamp * 1000),
-            "transaction_count": response.data.result.transaction_count,
+            //"transaction_count": response.data.result.transaction_count always display 0, we count the number of txs instead
             "nonce": response.data.result.nonce,
             "mixhash": response.data.result.mixhash,
             "version": response.data.result.version,
             "merkle_tree_hash": response.data.result.merkle_tree_hash,
             "previous_block_hash": response.data.result.previous_block_hash
           };
-          blockInfoTxs(response.data.result.hash);
         }
         NProgress.done();
       });
@@ -162,8 +162,6 @@
 
 
   function blockInfoTxs (hash) {
-    console.log("Console block hash:");
-    console.log(hash);
     $scope.transactionsPerBlock = [];
 
     MetaverseService.GetBlock(hash)
@@ -176,8 +174,7 @@
       } else {
         //console.log(response.data.txs.transactions);
         response.data.txs.transactions.forEach(function(e) {
-          console.log(e);
-          console.log(e.hash);
+          $scope.transaction_count++;
           var transaction = {
             "hash": e.hash
           };
@@ -188,22 +185,6 @@
     });
   }
 }
-
-
-/*
-MetaverseService.GetBlock($scope.blockInfos.hash)
-.then( (response) => {
-  console.log("Ici");
-  if (typeof response == 'undefined' || typeof response.success == 'undefined' || response.success == false) {
-    $translate('MESSAGES.BLOCK_NOT_FOUND').then( (data) => {
-      FlashService.Error(data, true);
-      $location.path('/explorer/search/');
-    });
-  } else {
-    console.log(response.data);
-  }
-}
-*/
 
 
 function DepositController(MetaverseService, MetaverseHelperService, $rootScope, $scope, FlashService, localStorageService, $translate, $window) {
