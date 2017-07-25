@@ -216,5 +216,6 @@
   "MESSAGES.CHANGE_PASSWORD_SUCCESS" : "Account Passwort wurde gespeichert.",
   "MESSAGES.CHANGE_PASSWORD_ERROR" : "Ein Fehler ist aufgetreten.",
   "MESSAGES.TRANSACTION_NOT_FOUND" : "Transaktion konnte nicht gefunden werden.",
-  "MESSAGES.BLOCK_NOT_FOUND" : "Could not find a block for given number."
+  "MESSAGES.BLOCK_NOT_FOUND" : "Could not find a block for given number.",
+  "MESSAGES.ADDRESS_NOT_FOUND" : "Could not find this address."
 }

@@ -216,5 +216,6 @@
   "MESSAGES.CHANGE_PASSWORD_SUCCESS" : "Account password has been changed.",
   "MESSAGES.CHANGE_PASSWORD_ERROR" : "Account password change failed.",
   "MESSAGES.TRANSACTION_NOT_FOUND" : "Could not find a transaction for given hash.",
-  "MESSAGES.BLOCK_NOT_FOUND" : "Could not find a block for given number."
+  "MESSAGES.BLOCK_NOT_FOUND" : "Could not find a block for given number.",
+  "MESSAGES.ADDRESS_NOT_FOUND" : "Could not find this address."
 }

@@ -216,5 +216,6 @@
   "MESSAGES.CHANGE_PASSWORD_SUCCESS" : "账户密码已经更改。",
   "MESSAGES.CHANGE_PASSWORD_ERROR" : "帐号密码更改失败。",
   "MESSAGES.TRANSACTION_NOT_FOUND" : "无法找到指定哈希的交易。",
-  "MESSAGES.BLOCK_NOT_FOUND" : "Could not find a block for given number."
+  "MESSAGES.BLOCK_NOT_FOUND" : "Could not find a block for given number.",
+  "MESSAGES.ADDRESS_NOT_FOUND" : "Could not find this address."
 }

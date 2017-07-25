@@ -101,7 +101,7 @@
             })
 
             .state('home.explorer.search', {
-                url: "/explorer/search/:search",
+                url: "/explorer",
                 templateUrl: "home/explorer/search.view.html",
                 controller: 'ExplorerController'
             })
