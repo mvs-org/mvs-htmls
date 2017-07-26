@@ -172,6 +172,7 @@
   "EXPLORER_TRANSACTION_BLOCK" : "Block",
   "EXPLORER_TRANSACTION_INPUT_SCRIPT" : "Input Scripts",
   "EXPLORER_TRANSACTION_OUTPUT_SCRIPT" : "Output Scripts",
+  "EXPLORER.TRANSACTION_INPUTS_MINING" : "Coming from Deposit interests or from Mining",
   "EXPLORER_BLOCK_NB_TRANSACTIONS" : "Number of transactions",
   "EXPLORER_BLOCK_NONCE" : "Nonce",
   "EXPLORER_BLOCK_MIX_HASH" : "Mix Hash",

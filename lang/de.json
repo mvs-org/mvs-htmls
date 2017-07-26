@@ -180,6 +180,7 @@
   "EXPLORER_BLOCK_PREVIOUS_HASH" : "Previous Block hash",
   "EXPLORER_BLOCK_TIME" : "Block time",
   "EXPLORER_BLOCK_TRANSACTIONS" : "Transactions",
+  "EXPLORER.TRANSACTION_INPUTS_MINING" : "Coming from Deposit interests or from Mining",
   "MESSAGES.NO_ACCOUNTNAME_PROVIDED" : "Sie müssen einen Namen für Ihren Account wählen.",
   "MESSAGES.NO_PASSWORD_PROVIDED" : "Bitte geben Sie ein Passwort für Ihren Account ein.",
   "MESSAGES.PASSWORD_SHORT" : "Das Passwort muss mindestens 6 Zeichen lang sein.",

@@ -37,13 +37,13 @@
     $scope.transaction_count = 0;
     $scope.assets = [];
     $scope.exists = false;
-
+    $scope.transactionInputsValues = [];
 
 
 
     //define if the research is a Hash, a Transaction, a Block or an Asset
     function defineTypeSearch () {
-      console.log($scope.search);
+      //console.log($scope.search);
       if ($scope.typeSearch=='' || $scope.typeSearch=='noresult') {
         //nothing to do
       } else if ($scope.typeSearch === 'tx') {
@@ -73,10 +73,10 @@
               var transaction = {
                 "height": e.height,
                 "hash": e.hash,
-                /*"timestamp": new Date(e.timestamp * 1000),
-                "direction": e.direction,
-                "recipents": [],
-                "value": 0*/
+                //"timestamp": new Date(e.timestamp * 1000),
+                //"direction": e.direction,
+                //"recipents": [],
+                //"value": 0
               };
               $scope.transactionsAddressSearch.push(transaction);
               $scope.exists = true;
@@ -102,13 +102,50 @@
           if (typeof response == 'undefined' || typeof response.success == 'undefined' || response.success == false) {
             $translate('MESSAGES.TRANSACTION_NOT_FOUND').then( (data) => {
               FlashService.Error(data, true);
-              //$location.path('/explorer');
             });
           } else {
             $scope.transaction = response.data.transaction;
             $scope.exists = true;
+
+            //Search for the value of the input and put it in $scope.transactionInputsValues
+            $scope.transactionInputsValues = [];
+            response.data.transaction.inputs.forEach(function(e) {
+              if (e.previous_output.hash != '0000000000000000000000000000000000000000000000000000000000000000') {
+                searchInputValue(e.previous_output.hash, e.address, e.previous_output.index);
+              } else {
+                //console.log("It's coming from Deposit interests or Mining");
+              }
+            });
           }
           NProgress.done();
+        });
+      }
+    }
+
+
+    //Used to find the value of an Input
+    function searchInputValue(transaction_hash, address, index) {
+      //console.log(transaction_hash);
+      if ( typeof transaction_hash !== 'undefined') {
+        MetaverseService.FetchTx(transaction_hash)
+        .then( (response) => {
+          if (typeof response == 'undefined' || typeof response.success == 'undefined' || response.success == false) {
+            $translate('MESSAGES.TRANSACTION_NOT_FOUND').then( (data) => {
+              FlashService.Error(data, true);
+            });
+          } else {
+            response.data.transaction.outputs.forEach(function(e) {
+              if(e.address == address && e.index == index) {
+                var input = {
+                  "address" : address,
+                  "value" : e.value,
+                  "hash" : transaction_hash,
+                  "index" : e.index,
+                }
+                $scope.transactionInputsValues.push(input);
+              }
+            });
+          }
         });
       }
     }
@@ -157,7 +194,6 @@
             $location.path('/explorer');
           });
         } else {
-          //console.log(response.data.txs.transactions);
           response.data.txs.transactions.forEach(function(e) {
             $scope.transaction_count++;
             var transaction = {
@@ -169,9 +205,6 @@
         NProgress.done();
       });
     }
-
-
-
   }
 
 
@@ -330,7 +363,38 @@
 
     listBalances();
     init();
+
+    /************TEST FROM HERE*************/
+    function loadFrozenHistory() {
+      MetaverseService.ListTxs()
+        .then(function(response) {
+            var transactions = [];
+            if (typeof response.success !== 'undefined' && response.success) {
+                if (response.data.transactions == undefined) {
+                    console.log('unable to load transactions.');
+                    callback(1);
+                } else if (response.data.transactions.length > 0) {
+                    response.data.transactions.forEach(function(e) {
+                      console.log(e.hash);
+                        var transaction = {
+                            "height": e.height,
+                            "hash": e.hash,
+                            "timestamp": new Date(e.timestamp * 1000),
+                            "direction": e.direction,
+                            "recipents": [],
+                            "value": 0
+                        };
+                      });
+                    }
+                  }
+                });
+              }
+
+              loadFrozenHistory();
   }
+
+
+
   /**
   * The ETP Controller provides ETP transaction functionality.
   */
@@ -482,7 +546,7 @@
           value = Math.round(value);
 
           var SendPromise = ($scope.sendfrom) ? MetaverseService.SendFrom($scope.sendfrom, $scope.sendto, value, $scope.password) : MetaverseService.Send($scope.sendto, value, $scope.password);
-          console.log($scope.sendfrom);
+          //console.log($scope.sendfrom);
           SendPromise
           .then( (response) => {
             NProgress.done();
@@ -1145,7 +1209,6 @@
     vm.account = localStorageService.get('credentials').user;
     $scope.height = '';
     $scope.assets = [];
-    $scope.stringToSearch = '';
 
     $scope.menu = {
       account: {
@@ -1163,17 +1226,17 @@
 
 
 
-    function updateHeight() {
+    /*function updateHeight() {
       MetaverseService.FetchHeight()
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.height = response.data;
         }
       });
-    }
+    }*/
 
-    updateHeight();
-    $interval( () => updateHeight(), 10000);
+    //updateHeight();
+    //$interval( () => updateHeight(), 10000);
 
     $scope.show_account_menu = () => {
       $scope.menu.account.show = 1 - $scope.menu.account.show;
@@ -1188,60 +1251,47 @@
 
 
     function defineTypeSearch(search) {
-      console.log("In the research");
-      //console.log($scope.assets);
       if (search === '') {                 //empty research
-        //console.log("Ready to do a research");
         $location.path('/explorer');
       } else if (search.length === 64) {
-        //console.log("It's a Transaction Hash");
         $location.path('/explorer/tx/' + search);
       } else if (search.length === 34) {
-        //console.log("It's an Address");
         $location.path('/explorer/adr/' + search);
       } else if (!isNaN(search)) {
-        //console.log("It's a Block number");
         $location.path('/explorer/blk/' + search);
-      } else {    //The research's format doesn't match any kind
-      console.log("In the ELSE");
+      } else {    //The research's format doesn't match any kind, we check if it is in the list of assets
         loadListAssets(search);
-
       }
     };
 
-  vm.search = (key) => defineTypeSearch(key);
+    vm.search = (key) => defineTypeSearch(key);
 
 
-  //Used to get the full list of Assets
-  function loadListAssets(search) {
-    NProgress.start();
-    MetaverseService.ListAllAssets()
-    .then( (response) => {
+    //Used to get the full list of Assets
+    function loadListAssets(search) {
+      NProgress.start();
+      MetaverseService.ListAllAssets()
+      .then( (response) => {
+        NProgress.done();
+        if (typeof response.success !== 'undefined' && response.success) {
+          response.data.assets.forEach(function(e) {
+            //If we found the research in the list of Assets, et redirect to its page
+            if (search == e.symbol) {
+              $location.path('/asset/details/'+search);
+            }
+          });
+        } else {
+          $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => {
+            //Show asset load error
+            FlashService.Error(data);
+            //Redirect user to the search page
+            $location.path('/explorer/noresult');
+          } );
+        }
+      });
       NProgress.done();
-      if (typeof response.success !== 'undefined' && response.success) {
-        response.data.assets.forEach(function(e) {
-          //If we found the research in the list of Assets, et redirect to its page
-          if (search == e.symbol) {
-            $location.path('/asset/details/'+search);
-          }
-        });
-      } else {
-        $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => {
-          //Show asset load error
-          FlashService.Error(data);
-          //Redirect user to the search page
-          $location.path('/explorer/noresult');
-        } );
-      }
-    });
-    NProgress.done();
-    $location.path('/explorer/noresult');
+      $location.path('/explorer/noresult');
+    }
   }
-
-
-
-
-
-}
 
 })();

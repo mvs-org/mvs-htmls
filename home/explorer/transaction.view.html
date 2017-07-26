@@ -1,5 +1,5 @@
 <div class="content" ng-show=exists>
-  <span class="headline">{{ 'EXPLORER_HEADLINE_TRANSACTION' | translate }}</span>
+  <span class="headline">{{ 'EXPLORER_HEADLINE_TRANSACTION' | translate }}ss</span>
   <div class="col-md-12 noPaddingLeftRight">
     <h2>{{search}}</h2>
   </div>
@@ -10,16 +10,21 @@
       {{ 'EXPLORER.TRANSACTION_INPUTS' | translate }}
     </label>
     <div ng-repeat="input in transaction.inputs">
-      <div ng-show="input.address==null">   <!--When NULL, coming from Mining-->
-        From Mining
-        <div class="numbersSearch">{{output.value}} bits</div>
+      <div ng-show="input.previous_output.hash=='0000000000000000000000000000000000000000000000000000000000000000'">   <!--When NULL, coming from Mining-->
+        {{ 'EXPLORER.TRANSACTION_INPUTS_MINING' | translate }}
+        <div class="numbersSearch" ng-repeat="output in transaction.outputs">
+          {{output.value}} bits
+        </div>
       </div>
-      <div ng-hide="input.address==null">
+      <div ng-hide="input.previous_output.hash=='0000000000000000000000000000000000000000000000000000000000000000'">
         <a class="btn-link" href="#!/explorer/adr/{{input.address}}">{{input.address}}</a>
-        <div class="numbersSearch">{{input.value}} bits</div>
+        <div class="numbersSearch" ng-repeat="transactionInputsValue in transactionInputsValues" ng-show="transactionInputsValue.hash==input.previous_output.hash && transactionInputsValue.address==input.address && transactionInputsValue.index == input.previous_output.index">
+          {{transactionInputsValue.value}} bits
+        </div>
       </div>
     </div>
   </div>
+
   <!--Output addresses-->
   <div class="col-sm-12 col-md-6 form-group noPaddingLeftRight">
     <label class="control-label">

@@ -18,54 +18,54 @@
 				<span class="assetBoxTextInfo">
 					<div>
 						<span class="checked"><span>
-					</div>
-					<span class="assetBoxSymbolName">ETP</span>
-					<span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
-					<span class="assetBoxValue">{{balance['total-unspent']/100000000}}</span>
-					<span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
-					<span class="assetBoxValue">{{balance['total-frozen']/100000000}}</span>
-				</span>
-			</dd>
-		</a>
-	</div>
-
-	<!--Display all the addresses if the user choose to let it manually-->
-	<div class="col-xs-12 noPaddingLeftRight" ng-hide=autoSelectAddress>
-		<div class="radioButtonAddress noPaddingLeftRight" ng-repeat="address in addresses | orderBy:sortType:sortReverse" ng-click="selectAddress('selectionAddress',address.address)" ng-hide="(address.balance == 0)">
-			<dd class="panel addressBox noPaddingLeftRight col-xs-1">
-				<input type="radio" name="radioDeposit" id={{address}} checked value="hideCustomDate"/>
-				<label for={{address}}>
-
-					<div class="addressBoxSymbolImgDeposit">
-						<img class="assetSymbol assetSymbolDeposit" src="favicon.png" alt=""/>
-					</div>
-					<div class="addressBoxTextInfoDeposit">
-						<span class="addressBoxNameDeposit">New address</span>
-						<span class="addressBoxAddressDeposit">{{address.address}}</span>
-						<span class="col-xs-6 noPaddingLeftRight">
-							<span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
-							<span class="assetBoxValue">{{address.balance/100000000 }}</span>
-						</span>
-						<span class="col-xs-6 noPaddingLeftRight">
-							<span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
-							<span class="assetBoxValue">{{address.frozen/100000000 }}</span>
-						</span>
-					</div>
-				</label>
-			</dd>
+						</div>
+						<span class="assetBoxSymbolName">ETP</span>
+						<span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
+						<span class="assetBoxValue">{{balance['total-unspent']/100000000}}</span>
+						<span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
+						<span class="assetBoxValue">{{balance['total-frozen']/100000000}}</span>
+					</span>
+				</dd>
+			</a>
 		</div>
-	</div>
-	<!--Interest rates table-->
-	<!--<div class="balanceAndInterestRates">
 
-	<div class="col-sm-5">
-	<table class="info_table">
-	<tr><th>{{ 'DEPOSIT.PERIOD' | translate }}</th><th>{{ 'DEPOSIT.INTEREST_RATE' | translate }}</th><th>{{ 'DEPOSIT.ANNUAL_RATE' | translate }}</th></tr>
-	<tr ng-class="{'selected_row' : period_select == deposit_option}" ng-repeat="(deposit_option, interest_rate) in deposit_options">
-	<td>{{deposit_option | translate}}</td>
-	<td>{{interest_rate[0] * 100 | number : 2}} %</td>
-	<td>{{interest_rate[1] * 100 | number : 2}} %</td>
-</tr>
+		<!--Display all the addresses if the user choose to let it manually-->
+		<div class="col-xs-12 noPaddingLeftRight" ng-hide=autoSelectAddress>
+			<div class="radioButtonAddress noPaddingLeftRight" ng-repeat="address in addresses | orderBy:sortType:sortReverse" ng-click="selectAddress('selectionAddress',address.address)" ng-hide="(address.balance == 0)">
+				<dd class="panel addressBox noPaddingLeftRight col-xs-1">
+					<input type="radio" name="radioDeposit" id={{address}} checked value="hideCustomDate"/>
+					<label for={{address}}>
+
+						<div class="addressBoxSymbolImgDeposit">
+							<img class="assetSymbol assetSymbolDeposit" src="favicon.png" alt=""/>
+						</div>
+						<div class="addressBoxTextInfoDeposit">
+							<span class="addressBoxNameDeposit">New address</span>
+							<span class="addressBoxAddressDeposit">{{address.address}}</span>
+							<span class="col-xs-6 noPaddingLeftRight">
+								<span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
+								<span class="assetBoxValue">{{address.balance/100000000 }}</span>
+							</span>
+							<span class="col-xs-6 noPaddingLeftRight">
+								<span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
+								<span class="assetBoxValue">{{address.frozen/100000000 }}</span>
+							</span>
+						</div>
+					</label>
+				</dd>
+			</div>
+		</div>
+		<!--Interest rates table-->
+		<!--<div class="balanceAndInterestRates">
+
+		<div class="col-sm-5">
+		<table class="info_table">
+		<tr><th>{{ 'DEPOSIT.PERIOD' | translate }}</th><th>{{ 'DEPOSIT.INTEREST_RATE' | translate }}</th><th>{{ 'DEPOSIT.ANNUAL_RATE' | translate }}</th></tr>
+		<tr ng-class="{'selected_row' : period_select == deposit_option}" ng-repeat="(deposit_option, interest_rate) in deposit_options">
+		<td>{{deposit_option | translate}}</td>
+		<td>{{interest_rate[0] * 100 | number : 2}} %</td>
+		<td>{{interest_rate[1] * 100 | number : 2}} %</td>
+	</tr>
 </table>
 </div>
 </div>-->
@@ -106,12 +106,6 @@
 		</div>
 	</div>
 
-
-
-
-
-
-
 	<!--Checkbox to deposit to a specify address-->
 	<div class="form-group col-xs-12 depositAddressCheckbox">
 		<div class="checkboxCircle">
@@ -129,46 +123,38 @@
 		</div>
 	</div>
 
-	<!--<div class="form-group col-md-12">
-	<label for="address_option" class="control-label">{{ 'DEPOSIT.ADDRESS_OPTION' | translate }}</label>
-	<input type="checkbox" class="form-control pull-right" name="address_option" ng-model="address_option">
-	<input type="text" class="form-control" name="deposit_address" ng-model="deposit_address" ng-show="address_option">
-</div>-->
-
-
-
-<!--Password-->
-<div  class="form-group col-xs-12 noPaddingLeftRight">
-	<div class="form-group col-md-6 ">
-		<label for="password" class="control-label">
-			{{ 'TRANSFER_PASSWORD' | translate }}
-		</label>
-		<input type="password" class="form-control" name="password" id="" autocomplete="new-password" ng-model="password" required="">
+	<!--Password-->
+	<div  class="form-group col-xs-12 noPaddingLeftRight">
+		<div class="form-group col-md-6 ">
+			<label for="password" class="control-label">
+				{{ 'TRANSFER_PASSWORD' | translate }}
+			</label>
+			<input type="password" class="form-control" name="password" id="" autocomplete="new-password" ng-model="password" required="">
+		</div>
 	</div>
-</div>
 
-<!--Total deposit + profits-->
-<div  class="form-group col-xs-12" ng-show="deposit_options[period_select][0]*value">
-	<div class="col-xs-12 noPaddingLeftRight">
-		<label for="password" class="control-label">
-			{{ 'DEPOSIT_TOTAL_DUE' | translate }}
-		</label>
+	<!--Total deposit + profits-->
+	<div  class="form-group col-xs-12" ng-show="deposit_options[period_select][0]*value">
+		<div class="col-xs-12 noPaddingLeftRight">
+			<label for="password" class="control-label">
+				{{ 'DEPOSIT_TOTAL_DUE' | translate }}
+			</label>
+		</div>
+		<div class="col-xs-12 noPaddingLeftRight">
+			<span class="totalDue" >
+				{{value+(deposit_options[period_select][0]*value) | number : 4}}
+			</span>
+			<span class="profit" >
+				(+{{deposit_options[period_select][0]*value | number : 4}})
+			</span>
+		</div>
 	</div>
-	<div class="col-xs-12 noPaddingLeftRight">
-		<span class="totalDue" >
-			{{value+(deposit_options[period_select][0]*value) | number : 4}}
-		</span>
-		<span class="profit" >
-			(+{{deposit_options[period_select][0]*value | number : 4}})
-		</span>
-	</div>
-</div>
 
-<!--Submit button-->
-<div  class="col-xs-12">
-	<div class="col-md-4 col-lg-3 noPaddingLeftRight">
-		<button class="btn btn-success" type="submit" id="transferBtn" ng-click="deposit()">{{ 'DEPOSIT.SEND' | translate }}</button>
+	<!--Submit button-->
+	<div  class="col-xs-12">
+		<div class="col-md-4 col-lg-3 noPaddingLeftRight">
+			<button class="btn btn-success" type="submit" id="transferBtn" ng-click="deposit()">{{ 'DEPOSIT.SEND' | translate }}</button>
+		</div>
 	</div>
-</div>
 </form>
 </div>
