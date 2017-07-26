@@ -41,14 +41,24 @@
 
   <div>
     <span class="headline">{{ 'NAV_HISTORY' | translate }}   </span>
-
-    <label class="selectdiv">
+    <span>
+      <button class="btn btn-default dropdown-togglen" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <img class="languageFlag" alt="" />
+        {{assetType}}
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu assetTypeDropdown" aria-labelledby="dropdownMenu1">
+        <li><a ng-click="filterOnAsset('ETP')">ETP</a></li>
+        <li ng-repeat="asset in assets"><a ng-click="filterOnAsset(asset.symbol)">{{asset.symbol}}</a></li>
+      </ul>
+    </span>
+    <!--<label class="selectdiv">
       <select class="btn btn-link smallButton" type="button" id="dropdownHistory">
-        <option>ETP</option>
-        <option ng-repeat="asset in assets">{{asset.symbol}}</option>
+        <option>{{assetType}}</option>
+        <option ng-repeat="asset in assets" ng-click="changeAsset(asset)">{{asset.symbol}}</option>
         <span class="caret"></span>
       </select>
-    </label>
+    </label>-->
 
   </div>
   <br/>
@@ -114,63 +124,66 @@
       <div class="no_transaction_message" ng-show="transactions.length==0">
         {{'MESSAGES.NO_LISTED_TRANSACTIONS' | translate}}
       </div>
-      <table class="col-md-12" ng-hide="transactions.length==0">
-        <tr>
-          <td>
+      <div class="col-md-12 noPaddingLeftRight" ng-hide="transactions.length==0">
+          <div class="col-md-2 noPaddingLeftRight">
             {{'HISTORY_TRANSACTION_DATE' | translate}}
-          </td>
-          <td>
+          </div>
+          <div class="col-md-3 noPaddingLeftRight">
             {{'HISTORY_TRANSACTION_FROM' | translate}}
-          </td>
-          <td>
+          </div>
+          <div class="col-md-1 noPaddingLeftRight">
 
-          </td>
-          <td>
+          </div>
+          <div class="col-md-3 noPaddingLeftRight">
             {{'HISTORY_TRANSACTION_TO' | translate}}
-          </td>
-          <td>
+          </div>
+          <div class="col-md-1 noPaddingLeftRight">
             {{'HISTORY_TRANSACTION_AMOUNT' | translate}}
-          </td>
-          <td>
+          </div>
+          <div>
 
-          </td>
-        </tr>
-        <tr class="transactionLine" ng-repeat="transaction in transactions" ng-show= "dateRangeFilter(transaction.timestamp, startDateUpdated, endDateUpdated)">
-          <td class="transactionBoxLargeTime noPaddingLeftRight col-md-2">
+          </div>
+      </div>
+        <div class="transactionBoxLarge" dir-paginate="transaction in transactions | orderBy:'height':1 | itemsPerPage: 10" ng-show= "dateRangeFilter(transaction.timestamp, startDateUpdated, endDateUpdated) && (transaction.type==assetType)">
+        <!--<tr class="transactionLine" ng-repeat="transaction in transactions" ng-show= "dateRangeFilter(transaction.timestamp, startDateUpdated, endDateUpdated)">-->
+
+          <div class="transactionBoxLargeTime noPaddingLeftRight col-md-2">
             {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT' | translate) }}
-          </td>
-          <td class="transactionBoxLargeAddress noPaddingLeftRight col-md-3">
+          </div>
+          <div class="transactionBoxLargeAddress noPaddingLeftRight col-md-3">
             <div ng-repeat="recipent in transaction.recipents" ng-if="transaction.direction=='receive'" class="address">{{recipent.address}}</div>
             <div ng-if="transaction.direction=='send'" class="address">My account</div>
             <div ng-if="transaction.direction=='issue'" class="address">Creation new asset</div>
-          </td>
-          <td class="noPaddingLeftRight col-md-1">
+          </div>
+          <div class="noPaddingLeftRight col-md-1">
             <span class="glyphicon glyphicon-arrow-right receiveSign" ng-if="transaction.direction=='receive'"></span>
             <span class="glyphicon glyphicon-arrow-right sendSign" ng-if="transaction.direction=='send'"></span>
             <span class="glyphicon glyphicon-plus issueSign" ng-if="transaction.direction=='issue'"></span>
-          </td>
+          </div>
           <!--Recipent-->
-          <td class="transactionBoxLargeAddress noPaddingLeftRight col-md-3">
+          <div class="transactionBoxLargeAddress noPaddingLeftRight col-md-3">
             <div ng-repeat="recipent in transaction.recipents" class="address">{{recipent.address}}</div>
-          </td>
+          </div>
 
           <!--Amount-->
-          <td class="noPaddingLeftRight col-md-1 right-align">
+          <div class="noPaddingLeftRight col-md-1 right-align">
+            <span ng-if="transaction.direction!='send'">+</span>
+            <span ng-if="transaction.direction=='send'">-</span>
             {{transaction.value | assetformat : transaction.decimal_number}}
-          </td>
+          </div>
 
-          <!--Type (ETP,...)
-          <div class="col-md-3">
+          <!--Type (ETP,...)-->
+        <div class="col-md-1">
           {{transaction.type}}
-        </div>-->
+        </div>
 
         <!--Transaction code-->
-        <td class="col-md-1 hash">
+        <div class="col-md-1 hash">
           <a class="btn-link linkToExplorerButton" href="#!/explorer/tx/{{transaction.hash}}">{{'HISTORY_TRANSACTION_CHECK' | translate}}</a>
-        </td>
-      </tr>
-    </table>
-    <!--Pagination TODO <dir-pagination-controls></dir-pagination-controls> -->
+        </div>
+      </div>
+
+    <dir-pagination-controls></dir-pagination-controls>
   </div>
 
   <!--Display the history in div for small screens-->

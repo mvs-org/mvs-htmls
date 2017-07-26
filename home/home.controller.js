@@ -1015,6 +1015,7 @@
     $scope.balance = {};
     $scope.transactions = [];
 
+
     NProgress.start();
 
 
@@ -1028,11 +1029,19 @@
     $scope.setDates = setDates;
     $scope.displayUpdatedDates = displayUpdatedDates;
 
+
+    $scope.assetType = 'ETP';
+    $scope.filterOnAsset = filterOnAsset;
+
+
+    function filterOnAsset (asset) {
+      $scope.assetType = asset;
+    }
+
     //Define the time period to use and show the dates From ... To ... if the Custom button is selected
     function setDates(period, startDate, endDate)
     {
       switch (period) {
-
         case 'week':
         $scope.showDates=false;
         $scope.endDate = new Date();

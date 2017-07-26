@@ -738,6 +738,12 @@ textarea, select, input[type]:not([type=search]):not([type=submit]) {
     text-decoration: underline;
 }
 
+.assetTypeDropdown {
+  position: relative;
+
+
+}
+
 /********************My assets**************************/
 .assetBox {
   background-color: $lightGrey;

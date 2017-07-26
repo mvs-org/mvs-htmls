@@ -14,7 +14,8 @@
     function MetaverseService($http, localStorageService) {
         var service = {};
 
-        var SERVER = window.location.hostname + ':8820';
+        //var SERVER = window.location.hostname + ':3000';
+        var SERVER = window.location.hostname + ':8820'; //TO KEEP
         var RPC_URL = 'http://' + SERVER + '/rpc';
 
 
@@ -56,6 +57,8 @@
         //Chain
         service.FetchHeight = FetchHeight;
         service.FetchTx = FetchTx;
+        service.FetchHeader = FetchHeader;
+        service.GetBlock = GetBlock;
 
         //Misc
         service.Query = Query;
@@ -467,6 +470,41 @@
             return _send('fetch-tx', [hash]);
         }
 
+
+        /**
+         * @api {post} /rpc
+         * @apiName
+         * @apiGroup
+         *
+         * @apiDescription
+         *
+         * @apiParam {Const} method fetch-tx
+         * @apiParam {List} params []
+         *
+         **/
+        function FetchHeader(block_height) {
+            return _send('fetch-header', ['-t', block_height]);
+        }
+
+
+        /**
+         * @api {post} /rpc
+         * @apiName
+         * @apiGroup
+         *
+         * @apiDescription
+         *
+         * @apiParam {Const} method fetch-tx
+         * @apiParam {List} params []
+         *
+         **/
+        function GetBlock(block_hash) {
+            return _send('getblock', [block_hash, '--json=true']);
+        }
+
+
+
+
         /**
          * @api {post} /rpc Create asset
          * @apiName Create a new unissued asset
@@ -746,6 +784,20 @@
                                             });
                                             transaction.value += parseInt(output['etp-value']);
                                         }
+                                        /*if(transaction.direction==='receive' && output.own==='true'){
+                                            transaction.recipents.push({
+                                                "address_input": output.address,
+                                                "address_output": "Me ("+output.address+")",
+                                                "value": parseInt(output.value)
+                                            });
+                                            transaction.value += parseInt(output['etp-value']);
+                                        } else if(transaction.direction==='send' && output.own==='false'){
+                                            transaction.recipents.push({
+                                                "address": output.address,
+                                                "value": parseInt(output.value)
+                                            });
+                                            transaction.value += parseInt(output['etp-value']);
+                                        }*/
                                     });
                                     if(transaction.value)
                                         transactions.push(transaction);
