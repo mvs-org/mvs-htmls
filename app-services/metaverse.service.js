@@ -513,7 +513,7 @@
          * @apiDescription Delete an asset. The asset will be deleted definitely
          *
          * @apiParam {Const} method delete
-         * @apiParam {List} params [username, password,symbol]
+         * @apiParam {List} params ['-s', symbol, username, password]
          *
          **/
         function Delete(symbol) {
