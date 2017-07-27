@@ -34,11 +34,13 @@
   <div class="col-md-3">{{asset.address}}</div>
 </div>
 <div ng-show="asset.status=='unissued'">
-  <a href="" ng-click="issue(asset.symbol)"><div class="btn btn-primary">Issue</div></a>
+  <a class="col-sm-4 col-xl-4" href="" ng-click="issue(asset.symbol)"><div class="btn btn-primary">Issue</div></a>
+  <a class="col-sm-8 col-xl-8" href="#!/asset/details/" ng-click="deleteAsset()"><div class="btn btn-danger">{{'ASSET_DELETE_ASSET' | translate}}</div></a>
 </div>
 <div ng-show="asset.status=='issued'">
   <a href="#!/asset/transfer/{{asset.symbol}}/{{asset.address}}"><input class="btn btn-success" value="{{'TRANSFER_SEND' | translate}}"></a>
 </div>
+<br/>
 
 </div>
 <div class="headline"><em></em>{{ 'NAV_ASSETS' | translate }}</div>

@@ -514,6 +514,7 @@
         $scope.symbol = $stateParams.symbol;
         $scope.assets = [];
         $scope.issue = issue;
+        $scope.deleteAsset = deleteAsset;
 
         //Load assets
         NProgress.start();
@@ -569,7 +570,22 @@
                     }
                 });
         }
-    }
+
+        //Delete a not issued Asset
+        function deleteAsset() {
+          MetaverseService.Delete($scope.symbol)
+          .then( (response) => {
+            NProgress.done();
+            if (typeof response.success !== 'undefined' && response.success) {
+              $translate('MESSAGES.DELETE_SUCCESS').then( (data) => FlashService.Success(data) );
+              $scope.asset.symbol='';
+            } else {
+              //Asset could not be delete
+              $translate('MESSAGES.ASSETS_DELETE_ERROR').then( (data) =>  FlashService.Error(data));
+            }
+          });
+        }
+      }
 
     function CreateAssetController(MetaverseService, $rootScope, $scope, FlashService, localStorageService, $location, $translate) {
 
