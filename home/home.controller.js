@@ -96,7 +96,7 @@
             } else if ($scope.deposit_options[$scope.period_select] == undefined) {
                 $translate('MESSAGES.INVALID_TIME_PERIOD').then( (data) => FlashService.Error(data) );
             } else {
-                var deposit_value = ($rootScope.factor == "FACTOR_SATOSHI") ? $scope.value : $scope.value * 100000000;
+                var deposit_value = ($rootScope.factor == "FACTOR_SATOSHI") ? $scope.value : ("" + $scope.value * 100000000).split(".")[0];
                 MetaverseService.Deposit($scope.deposit_options[$scope.period_select][2], deposit_value, $scope.password, ($scope.address_option) ? $scope.deposit_address : undefined)
                     .then( (response) => {
                         NProgress.done();
