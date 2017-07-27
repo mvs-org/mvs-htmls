@@ -329,6 +329,7 @@ _____  ._______  ___.___ _______
 ***************/
 .btn {
   height: 40px;
+  width: 100%;
   padding: 10px 12px;
   opacity: 1;
   border-radius: $radiusButtons;
@@ -736,6 +737,12 @@ textarea, select, input[type]:not([type=search]):not([type=submit]) {
 /********************Assets*****************************/
 .tabsMenu > li.active > a{
     text-decoration: underline;
+}
+
+.assetTypeButton {
+  width: 100px;
+  color: $blueGeneralColor !important;
+  border-width: 0;
 }
 
 .assetTypeDropdown {

@@ -14,7 +14,12 @@
   .controller('ETPController', ETPController)
   .controller('DepositController', DepositController)
   .controller('ExplorerController', ExplorerController)
-  .controller('MiningController', MiningController);
+  .controller('MiningController', MiningController)
+  .directive('myCustomer', function() {
+    return {
+      template: 'Name: {{customer.name}} Address: {{customer.address}}'
+    };
+  });
 
   function MenuController($location, $rootScope){
 
@@ -279,7 +284,7 @@
       } else if ($scope.deposit_options[$scope.period_select] == undefined) {
         $translate('MESSAGES.INVALID_TIME_PERIOD').then( (data) => FlashService.Error(data) );
       } else {
-        var deposit_value = ($rootScope.factor == "FACTOR_SATOSHI") ? $scope.value : $scope.value * 100000000;
+        var deposit_value = ($rootScope.factor == "FACTOR_SATOSHI") ? $scope.value : ("" + $scope.value * 100000000).split(".")[0];
         MetaverseService.Deposit($scope.deposit_options[$scope.period_select][2], deposit_value, $scope.password, ($scope.address_option) ? $scope.deposit_address : undefined)
         .then( (response) => {
           NProgress.done();
@@ -586,7 +591,7 @@
 
   }
 
-  function AccountController(MetaverseService, $translate, $rootScope, $scope, FlashService, $location, localStorageService) {
+  function AccountController(MetaverseService, $translate, $rootScope, $scope, FlashService, $location, localStorageService, $window) {
 
     $scope.addresses = [];
     $scope.showprivatekey = showprivatekey;
@@ -712,6 +717,41 @@
       MetaverseService.debug = (state == 1);
       $scope.debugState = MetaverseService.debug;
     }
+
+    /*$scope.copyToClipboard=copyToClipboard;
+
+    function copyToClipboard(toCopy) {
+      var body = angular.element($window.document.body);
+              var textarea = angular.element('<textarea/>');
+              textarea.css({
+                  position: 'fixed',
+                  opacity: '0'
+              });
+
+              function copy(toCopy) {
+                  textarea.val(toCopy);
+                  body.append(textarea);
+                  textarea[0].select();
+
+                  try {
+                      var successful = document.execCommand('copy');
+                      if (!successful) throw successful;
+                  } catch (err) {
+                      console.log("failed to copy", toCopy);
+                  }
+                  textarea.remove();
+              }
+
+              return {
+                  restrict: 'A',
+                  link: function (scope, element, attrs) {
+                      element.bind('click', function (e) {
+                          copy(attrs.copyToClipboard);
+                      });
+                  }
+              }
+            }*/
+
 
     listBalances();
 
@@ -869,6 +909,7 @@
     $scope.symbol = $stateParams.symbol;
     $scope.assets = [];
     $scope.issue = issue;
+    $scope.deleteAsset = deleteAsset;
 
     //Load assets
     NProgress.start();
@@ -921,6 +962,21 @@
         } else {
           //Asset could not be loaded
           $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) =>  FlashService.Error(data));
+        }
+      });
+    }
+
+    //Delete a not issued Asset
+    function deleteAsset() {
+      MetaverseService.Delete($scope.symbol)
+      .then( (response) => {
+        NProgress.done();
+        if (typeof response.success !== 'undefined' && response.success) {
+          $translate('MESSAGES.DELETE_SUCCESS').then( (data) => FlashService.Success(data) );
+          $scope.asset.symbol='';
+        } else {
+          //Asset could not be delete
+          $translate('MESSAGES.ASSETS_DELETE_ERROR').then( (data) =>  FlashService.Error(data));
         }
       });
     }
@@ -1028,6 +1084,7 @@
 
     $scope.setDates = setDates;
     $scope.displayUpdatedDates = displayUpdatedDates;
+    $scope.showHistory = false;
 
 
     $scope.assetType = 'ETP';
@@ -1084,6 +1141,7 @@
     function displayUpdatedDates() {
       $scope.startDateUpdated = $scope.startDate;
       $scope.endDateUpdated = $scope.endDate;
+      $scope.showHistory = true;
     }
 
 

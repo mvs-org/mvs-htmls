@@ -42,7 +42,7 @@
   <div>
     <span class="headline">{{ 'NAV_HISTORY' | translate }}   </span>
     <span>
-      <button class="btn btn-default dropdown-togglen" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <button class="btn btn-default dropdown-togglen assetTypeButton" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
         <img class="languageFlag" alt="" />
         {{assetType}}
         <span class="caret"></span>
@@ -112,6 +112,8 @@
     </div>
   </form>
 
+
+
   <!--Display Transactions history-->
   <div class="col-xs-12 noPaddingLeftRight">
     <br/>
@@ -121,10 +123,10 @@
     <br/>
     <!--Display the history in a table for large screens-->
     <div class="transactionBoxLarge hidden-xs hidden-sm">
-      <div class="no_transaction_message" ng-show="transactions.length==0">
+      <div class="no_transaction_message" ng-show="transactions.length==0 && showHistory">
         {{'MESSAGES.NO_LISTED_TRANSACTIONS' | translate}}
       </div>
-      <div class="col-md-12 noPaddingLeftRight" ng-hide="transactions.length==0">
+      <div class="col-md-12 noPaddingLeftRight" ng-show="transactions.length!=0 && showHistory">
           <div class="col-md-2 noPaddingLeftRight">
             {{'HISTORY_TRANSACTION_DATE' | translate}}
           </div>
@@ -183,7 +185,7 @@
         </div>
       </div>
 
-    <dir-pagination-controls></dir-pagination-controls>
+    <dir-pagination-controls ng-show="showHistory"></dir-pagination-controls>
   </div>
 
   <!--Display the history in div for small screens-->
