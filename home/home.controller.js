@@ -1090,6 +1090,7 @@
 
     function filterOnAsset (asset) {
       $scope.assetType = asset;
+      //displayUpdatedDates();
     }
 
     //Define the time period to use and show the dates From ... To ... if the Custom button is selected
@@ -1122,6 +1123,7 @@
         $scope.startDate = new Date();
         $scope.endDate = new Date();
       }
+      //displayUpdatedDates();
     }
 
 

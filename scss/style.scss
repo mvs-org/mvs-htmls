@@ -735,7 +735,7 @@ textarea, select, input[type]:not([type=search]):not([type=submit]) {
 
 
 /********************Assets*****************************/
-.tabsMenu > li.active > a{
+.tabsMenu > li.active > a {
     text-decoration: underline;
 }
 
@@ -745,6 +745,17 @@ textarea, select, input[type]:not([type=search]):not([type=submit]) {
   background-color: transparent !important;
   border-width: 0;
   padding-top: 10px;
+}
+
+.pagination > li > a {
+  color: $successButtonColor !important;
+  border-width: 0 !important;
+  border-radius: 6px;
+}
+
+.pagination > .active > a {
+  color: white !important;
+  background-color: $successButtonColor !important;
 }
 
 
@@ -1040,6 +1051,31 @@ textarea, select, input[type]:not([type=search]):not([type=submit]) {
   float:left;
   font-size: 14px;
   padding-top:4px;
+}
+
+//QR Code
+.modal-dialog {
+
+}
+
+.modal-content {
+  height: 420px;
+  width: 400px;
+}
+
+.qrCodePopUp {
+  height: 300px;
+  width: 300px;
+  margin-left: 50px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+
+}
+
+.addressQRCode {
+  text-align: center;
+    font-size: 18px;
+
 }
 
 

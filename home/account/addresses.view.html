@@ -2,11 +2,14 @@
   {{ 'NAV_ETP' | translate }}
   <a href="#!/deposit" class="btn btn-success smallButton">{{ 'DEPOSIT.HEADLINE' | translate }}</a>
 </div>
-<br/>
-<div class="checkboxCircle">
-  <input type="checkbox" ng-model="displayEmptyAdresses" id="checkboxCircleAdresses">
-  <label for="checkboxCircleAdresses"></label>
-  <span class="textCheckbox">{{ 'ADDRESSES_HIDE_EMPTY' | translate }}</span>
+
+<div class="modal fade" id="showqrmodal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content panel">
+      <div class="qrCodePopUp" id="modal_qr"></div>
+      <div class="addressQRCode" id="modal_address"></div>
+    </div>
+  </div>
 </div>
 
 <br/>
