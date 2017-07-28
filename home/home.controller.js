@@ -15,11 +15,7 @@
   .controller('DepositController', DepositController)
   .controller('ExplorerController', ExplorerController)
   .controller('MiningController', MiningController)
-  .directive('myCustomer', function() {
-    return {
-      template: 'Name: {{customer.name}} Address: {{customer.address}}'
-    };
-  });
+
 
   function MenuController($location, $rootScope){
 
@@ -370,7 +366,7 @@
     init();
 
     /************TEST FROM HERE*************/
-    function loadFrozenHistory() {
+    /*function loadFrozenHistory() {
       MetaverseService.ListTxs()
         .then(function(response) {
             var transactions = [];
@@ -395,7 +391,7 @@
                 });
               }
 
-              loadFrozenHistory();
+              loadFrozenHistory();*/
   }
 
 
@@ -1070,6 +1066,7 @@
     $scope.assets = [];
     $scope.balance = {};
     $scope.transactions = [];
+    $scope.transactionsFiltered = [];
 
 
     NProgress.start();
@@ -1137,11 +1134,17 @@
     }
 
 
-    //Update the startDate and endDate when the Submit button is clicked
+    //Update the startDate, endDate and list of transactions when the Submit button is clicked
     function displayUpdatedDates() {
       $scope.startDateUpdated = $scope.startDate;
       $scope.endDateUpdated = $scope.endDate;
       $scope.showHistory = true;
+      $scope.transactionsFiltered = [];
+      $scope.transactions.forEach(function(e) {
+        if ($scope.dateRangeFilter(e.timestamp, $scope.startDateUpdated, $scope.endDateUpdated) && e.type==$scope.assetType) {
+          $scope.transactionsFiltered.push(e);
+        }
+      });
     }
 
 

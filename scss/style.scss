@@ -570,7 +570,7 @@ textarea, select, input[type]:not([type=search]):not([type=submit]) {
 .leftnav {
   background-color: $lightGrey;
   width: $leftMenuWidth;
-  min-height: 700px;
+  min-height: 1000px;
   height: 100%;
   left: 0px;
   float: left;
@@ -740,16 +740,14 @@ textarea, select, input[type]:not([type=search]):not([type=submit]) {
 }
 
 .assetTypeButton {
-  width: 100px;
+  width: auto;
   color: $blueGeneralColor !important;
+  background-color: transparent !important;
   border-width: 0;
+  padding-top: 10px;
 }
 
-.assetTypeDropdown {
-  position: relative;
 
-
-}
 
 /********************My assets**************************/
 .assetBox {
@@ -905,11 +903,11 @@ textarea, select, input[type]:not([type=search]):not([type=submit]) {
 }
 
 .receiveSign {
-  color:red;
+  color: green;
 }
 
 .sendSign {
-  color: green;
+  color:red;
 }
 
 .issueSign {
@@ -936,14 +934,14 @@ textarea, select, input[type]:not([type=search]):not([type=submit]) {
 }
 
 .linkToExplorerButton {
-  text-align: center;
+  text-align: left;
   color: $successButtonColor !important;
 }
 
 //Display of the history for small screens
 .transactionBoxSmall {
   margin-top: 15px;
-  height: 120px;
+  height: 100px;
   border-bottom: 1px solid $mediumGrey;
   //font-family: 'PingFangSC-Regular', 'PingFang SC';
 }
