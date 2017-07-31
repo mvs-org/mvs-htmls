@@ -458,8 +458,8 @@ _____  ._______  ___.___ _______
 
 
 /*********** End Buttons ****************/
-textarea, select, input[type]:not([type=search]):not([type=submit]) {
-  background-color : $lightGrey !important;
+.form-group textarea, select, input[type]:not([type=search]):not([type=submit]) {
+  background-color : $lightGrey;
   border-width: 0;
 }
 
@@ -1181,6 +1181,32 @@ html,body {
 .consoleFooter {
 
 }
+
+.console {
+  background-color: transparent;
+}
+
+.console_query {
+  margin-top: 10px;
+  //color: $blueGeneralColor;
+
+}
+
+.console_answer {
+  margin-top: 10px;
+  color: green;
+}
+
+.forminput {
+  margin-top: 10px;
+  background-color: transparent !important;
+  border-width: 0;
+  height: 100px;
+  width: 100%;
+
+}
+
+
 
 
 /*****************Search Pages*************/

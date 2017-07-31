@@ -212,6 +212,7 @@
   "MESSAGES.INVALID_TIME_PERIOD" : "时间段无效。",
   "CONSOLE.INSERT_PROMPT" : "请输入相关内容",
   "CONSOLE.SEND" : "输入",
+  "CONSOLE.CONNECTION" : "connection...",
   "MESSAGES.ASSETS_TRANSFER_SUCCESS" : "资产交易已经发送到网络中",
   "MESSAGES.ASSETS_TRANSFER_ERROR" : "无法发送资产",
   "MESSAGES.TRANSACTIONS_LOAD_ERROR" : "无法加载交易列表",

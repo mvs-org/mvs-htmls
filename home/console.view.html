@@ -1,24 +1,28 @@
 <div class="content">
   <div class="headline">{{ 'HEADLINE_CONSOLE' | translate }}</div>
-  <div class="console" id="consolelog">
+  </br/>
+  <!--<div class="console" id="consolelog">-->
+    <div class="console_query" >
+      <span class="span1" ng-hide="connected">{{ 'CONSOLE.CONNECTION' | translate }}</span>
+    </div>
+
     <div ng-repeat="log in consolelog">
-      <div class="console_b">
-        <span class="span1"><p>{{log.query}}</p><em></em></span>
+      <div class="console_query">
+        <span class="span1">{{log.query}}</span>
       </div>
-      <div class="console_a" >
-        <span class="span1"><pre>{{log.answer}}</pre><em></em></span>
+      <div class="console_answer" >
+        <span class="span1">{{log.answer}}</span>
       </div>
     </div>
+    <input type="text" ng-model="querystring" ng-keyup="$event.keyCode == 13 && query()" class="forminput" id="inputField" placeholder="{{ 'CONSOLE.INSERT_PROMPT' | translate }}">
   </div>
-  <footer class="consoleFooter navbar-fixed-bottom">
+  <!--<footer class="consoleFooter navbar-fixed-bottom">
     <form>
-      <div class="col-md-9">
-        <input type="text" ng-model="querystring" class="forminput" id="" placeholder="{{ 'CONSOLE.INSERT_PROMPT' | translate }}">
-      </div>
       <div class="col-md-3">
         <input class="btn btn-success" type="submit" ng-click="query()" value="{{ 'CONSOLE.SEND' | translate }}">
       </div>
     </form>
-  </footer>
-</div>
+  </footer>-->
+
+
 <link rel="stylesheet" href="css/mining.css">

@@ -1244,7 +1244,9 @@
     //To test the Console view with Grunt:
     //var ws = new WebSocket('ws://test4.metaverse.live:8820/ws');
 
+    $("#inputField").focus();
 
+    $scope.connected = false;
 
     ws.onmessage = (ev) => {
       NProgress.done();
@@ -1252,6 +1254,7 @@
         query: $scope.querystring,
         answer: ev.data
       });
+      $scope.connected = true;
       $scope.querystring = '';
       $scope.$apply();
       scrolldown();
@@ -1260,12 +1263,13 @@
     $scope.querystring = '';
     $scope.consolelog = [];
 
+    /*To put the results in a window that we can scrolldown, with ID = consolelog
     function scrolldown() {
       window.setTimeout( () => {
         var elem = document.getElementById('consolelog');
         elem.scrollTop = elem.scrollHeight;
       }, 100);
-    }
+    }*/
 
     $scope.query = () => {
       NProgress.start();
