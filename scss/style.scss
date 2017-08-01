@@ -501,11 +501,7 @@ _____  ._______  ___.___ _______
 }
 
 /***********Top bar***********/
-.header{
-  display: flex;
-  flex-flow: row wrap;
-  height: 50px;
-}
+
 
 //Logo Metaverse top bar
 .logoMetaverseSmall {
@@ -529,16 +525,16 @@ _____  ._______  ___.___ _______
 //Research div, including the texbox and the button
 .research {
   flex-flow: row;
-  margin-top: 8px
+  margin-top: 10px
 }
 
 .researchTextBox{
-  width: 75%;
   height: 30px;
-  display:inline;
+  display: inline-block;
   border-radius: 6px;
   margin-right: 8px;
 }
+
 
 .header .own {
   float:left;
@@ -633,6 +629,7 @@ _____  ._______  ___.___ _______
 
 .dropdown-menu {
   top: auto;
+  left: auto;
 }
 
 
@@ -659,6 +656,7 @@ _____  ._______  ___.___ _______
   font-weight: bold;
   color: #333333;
   font-kerning: normal;
+  display: inline-block;
 
 }
 
@@ -733,30 +731,6 @@ _____  ._______  ___.___ _______
   margin: 10px;
 }
 
-
-/********************Assets*****************************/
-.tabsMenu > li.active > a {
-    text-decoration: underline;
-}
-
-.assetTypeButton {
-  width: auto;
-  color: $blueGeneralColor !important;
-  background-color: transparent !important;
-  border-width: 0;
-  padding-top: 10px;
-}
-
-.pagination > li > a {
-  color: $successButtonColor !important;
-  border-width: 0 !important;
-  border-radius: 6px;
-}
-
-.pagination > .active > a {
-  color: white !important;
-  background-color: $successButtonColor !important;
-}
 
 
 
@@ -860,29 +834,35 @@ _____  ._______  ___.___ _______
 
 
 /********************Home page*************************/
-//Select asset type button
-.selectdiv {
-  position: relative;
-  /*Don't really need this just for demo styling*/
-  width: 100px;
-  align-items: inline-block;
+.tabsMenu > li.active > a {
+    text-decoration: underline;
 }
-.selectdiv:after {
-    content: '\f078';
-    font: normal normal normal 17px/1 FontAwesome;
-    position: relative;
-    left: -25px;
-    top: 6px;
-    height: 34px;
-    padding: 15px 0px 0px 8px;
-    color: $blueGeneralColor;
+
+.selectAssetType {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 16px;
+
 }
-.selectdiv select {
-  /*Remove the by default arrow*/
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+
+.assetTypeButton {
+  width: auto;
+  color: $blueGeneralColor !important;
+  background-color: transparent !important;
+  border-width: 0;
 }
+
+.pagination > li > a {
+  color: $successButtonColor !important;
+  border-width: 0 !important;
+  border-radius: 6px;
+}
+
+.pagination > .active > a {
+  color: white !important;
+  background-color: $successButtonColor !important;
+}
+
 
 .radioButton {
   margin-bottom: 20px;
@@ -890,11 +870,6 @@ _____  ._______  ___.___ _______
 
 .oneRadioButton {
 
-}
-
-.customDates {
-  margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 .calendarInput {

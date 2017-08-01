@@ -1,5 +1,5 @@
 <div ng-show="asset.symbol">
-  <div class="headline"><em></em>{{ 'HEADLINE_ASSETS_DETAILS' | translate }}</div>
+  <div class="headline">{{ 'HEADLINE_ASSETS_DETAILS' | translate }}</div>
   <div class="row">
     <div class="col-md-3">{{'ASSET_ASSET_CREATE_SYMBOL' | translate}}:</div>
     <div class="col-md-3">{{asset.symbol}}</div>
@@ -35,11 +35,11 @@
     <a href="#!/asset/transfer/{{asset.symbol}}/{{asset.address}}"><input class="btn btn-success" value="{{'TRANSFER_SEND' | translate}}"></a>
   </div>
 </div>
-<div class="headline"><em></em>{{ 'NAV_ASSETS' | translate }}</div>
+<div class="headline">{{ 'NAV_ASSETS' | translate }}</div>
 <div>
   <ul class="nav nav-pills tabsMenu">
-    <li role="presentation"><a href="#!/asset/details/" class="btn-link">My assets</a></li>
-    <li role="presentation" class="active"><a href="#!/asset/all" class="btn-link">All assets</a></li>
+    <li role="presentation"><a href="#!/asset/details/" class="btn-link">{{'ASSET_MY_ASSETS' | translate}}</a></li>
+    <li role="presentation" class="active"><a href="#!/asset/all" class="btn-link">{{'ASSET_ALL_ASSETS' | translate}}</a></li>
   </ul>
 </div>
 <br/>

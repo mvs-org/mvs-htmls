@@ -8,12 +8,29 @@
     </div>
     <div class="form-group research col-xs-offset-0 col-xs-10 col-sm-offset-2 col-sm-7 col-md-offset-2 col-md-5 col-lg-offset-4 col-lg-4">
       <!--Search TextBox-->
-      <input type="search" class="form-control researchTextBox" ng-model="stringToSearch" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
-      <!--Search button-->
+      <div class="col-xs-10 col-md-10 noPaddingLeftRight">
+        <input type="search" class="form-control researchTextBox" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
+      </div>
+      <!--Search button large screen-->
+      <div class="col-xs-2 hidden-xs">
+        <input type="submit" class="btn btn-success smallButton" value="{{ 'HEADER_SEARCH' | translate }}" ng-click="vm.search(stringToSearch)"></input>
+      </div>
+      <!--Search button small screen-->
+      <div class="col-xs-2 visible-xs">
+        <button type="submit" class="btn btn-success smallButton visible-xs" ng-click="vm.search(stringToSearch)">
+          <span class="glyphicon glyphicon-search"></span>
+          <span class="submit-text"></span>
+        </button>
+      </div>
       <!--<a href="#!/explorer/search/{{search}}" class="btn btn-success smallButton hidden-xs">{{ 'HEADER_SEARCH' | translate }}</a>
+btn btn-success smallButton
+
       <a href="#!/explorer/search/{{search}}" class="btn btn-success smallButton hidden-sm hidden-md hidden-lg hidden-xl"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>-->
-      <input type="submit" class="btn btn-success smallButton" value="{{ 'HEADER_SEARCH' | translate }}" ng-click="vm.search(stringToSearch)"></input>
-      <!--ng-model="vm.username">-->
+
+
+
+
+
     </div>
     <div class="pull-right col-xs-2 col-sm-3 col-md-5 col-lg-4">
       <div class="header-right">
@@ -22,12 +39,10 @@
         <!--Setup button-->
         <div class="own hidden-xs">
           <a href="#!/transfer" class="btn btn-success smallButton">{{ 'HEADER_TRANSFER' | translate }}</a>
-          <!--<a href="#!/account/details"><img src="images/icon-settings.png" alt="" class="install"/></a>-->
         </div>
         <!--Logout button-->
         <div class="own hidden-xs">
           <a href="#!/login" class="btn-link smallButton logoutButton">{{ 'HEADER_LOGOUT' | translate }}</a>
-          <!--Previous Logout<a href="#!/login" class="own glyphicon glyphicon-log-out huge red"></a>-->
         </div>
       </div>
     </div>
@@ -37,14 +52,14 @@
         <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-        <li><a href="#!/account/addresses" class="btn">{{ 'NAV_ACCOUNT' | translate }}</a></li>
+        <li><a href="#!/home" class="btn">{{ 'NAV_WALLET' | translate }}</a></li>
         <li><a href="#!/asset/details/" class="btn">{{ 'NAV_ASSETS' | translate }}</a></li>
         <li><a href="#!/account/details" class="btn">{{ 'NAV_ACCOUNT_SETTING' | translate }}</a></li>
+        <li><a href="#!/transfer" class="btn">{{ 'HEADER_TRANSFER' | translate }}</a></li>
         <div class="menuLine"></div>
         <li><a href="#!/console" class="btn">{{ 'NAV_CONSOLE' | translate }}</a></li>
         <li><a href="#!/mining" class="btn">{{ 'NAV_MINING' | translate }}</a></li>
         <li class="divider" role="separator"></li>
-        <li><a href="#!/account/details" class="btn">{{ 'HEADER_TRANSFER' | translate }}</a></li>
         <li><a href="#!/login" class="btn">{{ 'HEADER_LOGOUT' | translate }}</a></li>
       </ul>
     </div>
