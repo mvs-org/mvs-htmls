@@ -458,7 +458,7 @@ _____  ._______  ___.___ _______
 
 
 /*********** End Buttons ****************/
-.form-group textarea, select, input[type]:not([type=search]):not([type=submit]) {
+.form-group select, .form-group textarea, .form-group input[type]:not([type=search]):not([type=submit]) {
   background-color : $lightGrey;
   border-width: 0;
 }
@@ -1222,3 +1222,6 @@ h2 {
   margin-bottom: 20px;
 
 }
+
+
+/*************Calendar***************/

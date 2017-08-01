@@ -79,31 +79,28 @@
         <input type="radio" name="radio" id="threeMonths" ng-click="setDates('threeMonths')"/>
         <label for="threeMonths">{{ 'HISTORY_THREE_MONTHS' | translate }}</label>
       </span>
-      <!--Custom option TODO
       <span class="oneRadioButton">
         <input type="radio" name="radio" id="custom" ng-click="setDates('custom')"/>
         <label for="custom">{{ 'HISTORY_CUSTOM' | translate }}</label>
-      </span>-->
+      </span>
     </div>
 
-    <!--Custom option TODO
     <div ng-show="showDates" class="customDates">
       <div class="col-xs-6 noPaddingLeftRight">
         <div>{{ 'HISTORY_START_DATE' | translate }}</div>
-        <div data-date-format="dd-mm-yyyy">
-          <input class="calendarInput" value="14-07-2017" type="text">
+        <div class="form-group" data-date-format="('GENERAL.DATE_FORMAT_DAY' | translate)">
+          <input class="form-control calendarInput" ng-model="startDate" type="date">
           <span class="add-on"><i class="icon-calendar"></i></span>
         </div>
       </div>
       <div class="col-xs-6 noPaddingLeftRight">
         <div>{{ 'HISTORY_END_DATE' | translate }}</div>
-        <div data-date-format="dd-mm-yyyy">
-          <input class="calendarInput" value="21-07-2017" type="text">
+        <div class="form-group" data-date-format="('GENERAL.DATE_FORMAT_DAY' | translate)">
+          <input class="form-control calendarInput" ng-model="endDate" type="date">
           <span class="add-on"><i class="icon-calendar"></i></span>
         </div>
       </div>
     </div>
-  -->
 
     <div class="col-xs-4 col-sm-2 noPaddingLeftRight">
       <br/>

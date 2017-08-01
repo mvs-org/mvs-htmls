@@ -105,6 +105,7 @@
   "SETTINGS.NEW_PASSWORD_REPEAT" : "Passwort wiederholen",
   "SETTINGS.EXPORT_ACCOUNT" : "Export account",
   "GENERAL.DATE_FORMAT" : "dd.MM.yyyy HH:mm:ss",
+  "GENERAL.DATE_FORMAT_DAY" : "dd.MM.yyyy",
   "MESSAGES.PASSWORD_NEEDED_FOR_PRIVATE_KEY" : "Um ein Backup Ihres privaten Schlüssels zu erhalten müssen Sie Ihr Passwort eingeben.",
   "MESSAGES.WRONG_PASSWORD" : "Das eingegebene Passwort stimmt nicht mir Ihrem Account Passwort überein.",
   "LOGIN.ENTER_ACCOUNT_NAME" : "Geben Sie Ihren Account Namen ein",

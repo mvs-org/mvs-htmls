@@ -1069,12 +1069,14 @@
     $scope.transactionsFiltered = [];
 
 
+
+
     NProgress.start();
 
 
     $scope.showDates = false;
 
-    $scope.startDate = new Date()-(7*86400000); //By default, display 1 week
+    $scope.startDate = new Date(new Date()-(7*86400000)); //By default, display 1 week
     $scope.endDate = new Date();
     $scope.startDateUpdated = new Date();
     $scope.endDateUpdated = new Date();
@@ -1100,19 +1102,19 @@
         case 'week':
         $scope.showDates=false;
         $scope.endDate = new Date();
-        $scope.startDate = $scope.endDate-(7*86400000);//8640000 millisecond/day
+        $scope.startDate = new Date($scope.endDate-(7*86400000));//8640000 millisecond/day
         break;
 
         case 'month':
         $scope.showDates=false;
         $scope.endDate = new Date();
-        $scope.startDate = $scope.endDate-(30*86400000);
+        $scope.startDate = new Date($scope.endDate-(30*86400000));
         break;
 
         case 'threeMonths':
         $scope.showDates=false;
         $scope.endDate = new Date();
-        $scope.startDate = $scope.endDate-(90*86400000);
+        $scope.startDate = new Date($scope.endDate-(90*86400000));
         break;
 
         case 'custom':
@@ -1240,9 +1242,9 @@
 
   function ConsoleController(MetaverseService, $rootScope, $scope) {
 
-    var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
+    //var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
     //To test the Console view with Grunt:
-    //var ws = new WebSocket('ws://test4.metaverse.live:8820/ws');
+    var ws = new WebSocket('ws://test4.metaverse.live:8820/ws');
 
     $("#inputField").focus();
 

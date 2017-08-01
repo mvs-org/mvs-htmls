@@ -105,6 +105,7 @@
   "SETTINGS.NEW_PASSWORD_REPEAT" : "Repeat new password",
   "SETTINGS.EXPORT_ACCOUNT" : "Export account",
   "GENERAL.DATE_FORMAT" : "MM/dd/yyyy HH:mm:ss",
+  "GENERAL.DATE_FORMAT_DAY" : "MM/dd/yyyy",
   "MESSAGES.PASSWORD_NEEDED_FOR_PRIVATE_KEY" : "To get a backup of your private key you first need to enter your account password.",
   "MESSAGES.WRONG_PASSWORD" : "The provided password is invalid.",
   "LOGIN.ENTER_ACCOUNT_NAME" : "Enter your account name",
