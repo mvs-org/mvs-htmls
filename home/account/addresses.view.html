@@ -15,9 +15,6 @@
 <br/>
 <div class="mainContent" >
 
-
-
-
   <!--Display all the ETP adresses-->
   <div ng-repeat="address in addresses | orderBy:sortType:sortReverse" ng-hide="(displayEmptyAdresses == true && address.balance == 0)">
     <dd class="panel addressBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
@@ -31,9 +28,9 @@
           <span class="qrCode">
             <a class="btn btn-link addressLinkButton" ng-click="showqr(address.address)" alt="receive"><img src="images/qrcode.png" alt="" /> {{ 'ADDRESSES_QR_CODE' | translate }}</a>
           </span>
-          <span class="copyAddress">
+          <!--<span class="copyAddress">
             <a class="btn btn-link addressLinkButton"><img src="images/copy-address.png" alt="" /> {{ 'ADDRESSES_COPY_ADDRESS' | translate }}</a>
-          </span>
+          </span>-->
         </div>
         <div class=addressText>
           <span class="addressBoxName">{{ 'ADDRESSES_CREATE_NEW_ADDRESS' | translate }}</span>

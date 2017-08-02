@@ -123,10 +123,32 @@
       }
     }
 
+    $scope.asset = '';
+    $scope.assetFactor = 1;
+
+    //Loads a given asset
+    function loadasset(symbol) {
+      MetaverseService.GetAsset(symbol)
+      .then( (response) => {
+        NProgress.done();
+        if (typeof response.success !== 'undefined' && response.success) {
+          //console.log(response.data.assets[0].maximum_supply);
+          $scope.asset = response.data.assets[0];
+          for (var i = 0, len = $scope.asset.decimal_number; i < len; i++) {
+            $scope.assetFactor = $scope.assetFactor*10;
+          }
+        } else {
+          //Redirect user to the assets page
+          $location.path('/asset/details/');
+          //Asset could not be loaded
+          $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) =>  FlashService.Error(data));
+        }
+      });
+    }
+
 
     //Used to find the value of an Input
     function searchInputValue(transaction_hash, address, index) {
-      //console.log(transaction_hash);
       if ( typeof transaction_hash !== 'undefined') {
         MetaverseService.FetchTx(transaction_hash)
         .then( (response) => {
@@ -137,11 +159,26 @@
           } else {
             response.data.transaction.outputs.forEach(function(e) {
               if(e.address == address && e.index == index) {
-                var input = {
-                  "address" : address,
-                  "value" : e.value,
-                  "hash" : transaction_hash,
-                  "index" : e.index,
+                if(e.attachment.type=='etp') {
+                  var input = {
+                    "address" : address,
+                    "value" : e.value,
+                    "hash" : transaction_hash,
+                    "index" : e.index,
+                    "type" : e.attachment.type
+                  }
+                } else {
+                  loadasset(e.attachment.symbol);
+                  var input = {
+                    "address" : address,
+                    "value" : e.value,
+                    "hash" : transaction_hash,
+                    "index" : e.index,
+                    "type" : e.attachment.type,
+                    "quantity" : e.attachment.quantity,
+                    "symbol" : e.attachment.symbol,
+                    "decimal_number" :  $scope.asset.decimal_number
+                  }
                 }
                 $scope.transactionInputsValues.push(input);
               }
@@ -150,6 +187,8 @@
         });
       }
     }
+
+
 
     //Used if we search a Block
     function blockInfo() {
@@ -347,6 +386,7 @@
       NProgress.start();
       MetaverseService.ListBalances()
       .then( (response) => {
+        console.log(response);
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.addresses = [];
           response.data.balances.forEach( (e) => {
@@ -1353,7 +1393,7 @@
       $scope.connected = true;
       $scope.querystring = '';
       $scope.$apply();
-      scrolldown();
+      //scrolldown();
     };
 
     $scope.querystring = '';

@@ -34,7 +34,8 @@
 					</div>
 					<span class="assetBoxSymbolName">{{asset.symbol}}</span>
 					<span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
-					<span class="assetBoxValue">{{asset.quantity | assetformat : asset.decimal_number}}</span>
+					<span class="assetBoxValue" ng-if="asset.quantity==undefined">0</span>
+          <span class="assetBoxValue" ng-if="asset.quantity!=undefined">{{asset.quantity | assetformat : asset.decimal_number}}</span>
 					<!--<span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
 					<span class="assetBoxValue">{{balance['total-frozen']/100000000}}</span>-->
 				</span>

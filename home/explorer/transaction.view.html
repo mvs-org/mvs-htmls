@@ -1,5 +1,5 @@
 <div class="content" ng-show=exists>
-  <span class="headline">{{ 'EXPLORER_HEADLINE_TRANSACTION' | translate }}ss</span>
+  <span class="headline">{{ 'EXPLORER_HEADLINE_TRANSACTION' | translate }}</span>
   <div class="col-md-12 noPaddingLeftRight">
     <h2>{{search}}</h2>
   </div>
@@ -19,7 +19,8 @@
       <div ng-hide="input.previous_output.hash=='0000000000000000000000000000000000000000000000000000000000000000'">
         <a class="btn-link" href="#!/explorer/adr/{{input.address}}">{{input.address}}</a>
         <div class="numbersSearch" ng-repeat="transactionInputsValue in transactionInputsValues" ng-show="transactionInputsValue.hash==input.previous_output.hash && transactionInputsValue.address==input.address && transactionInputsValue.index == input.previous_output.index">
-          {{transactionInputsValue.value}} bits
+          <div class="numbersSearch" ng-show="transactionInputsValue.type=='etp'">{{transactionInputsValue.value/100000000}} ETP</div>
+          <div class="numbersSearch" ng-hide="transactionInputsValue.type=='etp'">{{transactionInputsValue.quantity/assetFactor}} {{transactionInputsValue.symbol}}</div>
         </div>
       </div>
     </div>
@@ -32,7 +33,8 @@
     </label>
     <div ng-repeat="output in transaction.outputs">
       <a class="btn-link" href="#!/explorer/adr/{{output.address}}">{{output.address}}</a>
-      <div class="numbersSearch">{{output.value}} bits</div>
+      <div class="numbersSearch" ng-show="output.attachment.type=='etp'">{{output.value/100000000}} ETP</div>
+      <div class="numbersSearch" ng-hide="output.attachment.type=='etp'">{{output.attachment.quantity/assetFactor}} {{output.attachment.symbol}}</div>
     </div>
   </div>
   <div class="col-md-12"></div>
