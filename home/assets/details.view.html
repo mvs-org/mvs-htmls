@@ -55,7 +55,7 @@
     <a class="col-xs-6 col-xl-6" href="#!/asset/details/" ng-click="deleteAsset()"><div class="btn btn-danger">{{'ASSET_DELETE_ASSET' | translate}}</div></a>
   </div>
   <div ng-show="asset.status=='issued'" class="col-xs-12 col-sm-6 col-md-4">
-    <a href="#!/asset/transfer/{{asset.symbol}}/{{asset.address}}"><input class="btn btn-success" value="{{'TRANSFER_SEND' | translate}}"></a>
+    <a href="#!/transfer/{{asset.symbol}}/{{asset.address}}"><input class="btn btn-success" value="{{'TRANSFER_SEND' | translate}}"></a>
   </div>
 </div>
 
@@ -73,7 +73,7 @@
   <div class="mainContent1">
     <div class="row assetBoxWrapper">
       <dl id="outer_wrap">
-        <a href="#!/asset/details/{{asset.symbol}}" ng-repeat="asset in assets">
+        <a href="#!/asset/details/{{asset.symbol}}" ng-repeat="asset in assets | orderBy:'symbol'">
           <dd class="panel assetBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
             <span class="assetBoxSymbolImg"><img class="assetSymbol" src="favicon.png" alt=""/></span>
             <span class="assetBoxTextInfo">

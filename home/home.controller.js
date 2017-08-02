@@ -430,6 +430,27 @@
       });
     }
 
+    $scope.symbol = 'ETP';
+
+    $scope.assetsIssued = [];
+
+    MetaverseService.ListAssets()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        response.data.assets.forEach( (e) => {
+          if(e.status=='unspent') {
+            $scope.assetsIssued.push({
+              "symbol": e.symbol,
+              "quantity": e.quantity,
+              "decimal_number": e.decimal_number
+            });
+          }
+        });
+      } else {
+        $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+      }
+    });
+
     function changeFactor(factor) {
       switch (factor) {
         case 'satoshi':
@@ -755,23 +776,97 @@
 
   function TransferAssetController(MetaverseService, $stateParams, $rootScope, $scope, $translate, $location, localStorageService, FlashService) {
 
-    $scope.symbol = $stateParams.symbol;
+    //$scope.symbol = $stateParams.symbol;
+    $scope.symbol = $location.path().split('/')[2];
     $scope.sender_address = $stateParams.sender_address;
     $scope.sendasset = sendasset;
     $scope.sendassetfrom = sendassetfrom;
 
+    $scope.underlineAuto='underline';
+    $scope.underlineManual='none';
+    $scope.selectAddress = selectAddress;         //Selection of a specific address
+    $scope.selectAddressMem = '';                 //Keep in memory the specific address previously selected (if the user go to Auto and come back to Manual)
+    $scope.autoSelectAddress=true;                //Automatically select the address
 
+    $scope.symbol = $location.path().split('/')[2];
+
+    $scope.assetsIssued = [];
+
+    MetaverseService.ListAssets()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        response.data.assets.forEach( (e) => {
+          if(e.status=='unspent') {
+            $scope.assetsIssued.push({
+              "symbol": e.symbol,
+              "quantity": e.quantity,
+              "decimal_number": e.decimal_number
+            });
+          }
+        });
+      } else {
+        $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+      }
+    });
+
+
+    function selectAssetType (symbol) {
+      $scope.symbol = symbol;
+    }
+
+
+    function selectAddress(type, address) {
+      switch(type) {
+        case 'auto':
+        $scope.autoSelectAddress=true;
+        $scope.underlineAuto='underline';
+        $scope.underlineManual='none';
+        $scope.sendfrom='';
+        break;
+
+        case 'manual':
+        $scope.autoSelectAddress=false;
+        $scope.underlineAuto='none';
+        $scope.underlineManual='underline';
+        $scope.sendfrom=$scope.selectAddressMem;
+        break;
+
+        case 'selectionAddress':
+        $scope.autoSelectAddress=false;
+        $scope.underlineAuto='none';
+        $scope.underlineManual='underline';
+        $scope.sendfrom=address;
+        $scope.selectAddressMem=address;
+        break;
+
+        default:
+        $scope.autoSelectAddress=true;
+        $scope.underlineAuto='underline';
+        $scope.underlineManual='none';
+        $scope.sendfrom='';
+      }
+    }
+
+
+
+
+    //Loads a given asset
     function loadasset(symbol) {
       MetaverseService.GetAsset(symbol)
       .then( (response) => {
         NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.asset = response.data.assets[0];
+          $scope.assetsIssued.forEach( (a) => {
+            if (a.symbol == symbol) {
+              $scope.asset.quantity = a.quantity;
+            }
+          });
         } else {
           //Redirect user to the assets page
           $location.path('/asset/details/');
-          //Show asset load error
-          $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+          //Asset could not be loaded
+          $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) =>  FlashService.Error(data));
         }
       });
     }

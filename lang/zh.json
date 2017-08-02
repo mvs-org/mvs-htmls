@@ -62,6 +62,7 @@
   "ADDRESS" : "地址",
   "BALANCE" : "余额",
   "STATUS" : "状态",
+  "QUANTITY" : "总量",
   "BLOCK" : "区块",
   "ASSET_TYPE" : "资产",
   "ISSUER" : "发布资产",

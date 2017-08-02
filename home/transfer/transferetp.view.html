@@ -1,5 +1,20 @@
 <div class="content">
-	<span class="headline">{{ 'HEADLINE_ETP_TRANSFER' | translate }}</span>
+<span class="headline">{{ 'HEADLINE_ETP_TRANSFER' | translate }}</span>
+
+<!--Select type of Asset-->
+<div class="selectAssetType">
+	<button class="dropdown-togglen assetTypeButton" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+		{{symbol}}
+		<span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+		<li><a ng-click="selectAssetType('ETP')" href="#!/transfer/ETP" >ETP</a></li>
+		<li class="divider" role="separator"></li>
+		<li ng-repeat="asset in assetsIssued | orderBy:'symbol'"><a ng-click="selectAssetType(asset.symbol)" href="#!/transfer/{{asset.symbol}}/" >{{asset.symbol}}</a></li>
+	</ul>
+</div>
+
+
 	<!--Navigation Manual/Auto selection of addresse-->
 	<div class="col-xs-12 noPaddingLeftRight">
 		<ul class="nav nav-pills tabsMenu">
@@ -19,7 +34,7 @@
 
 	<!--Display the total ETP in automatic selection-->
 	<div class="col-xs-12 noPaddingLeftRight" ng-show=autoSelectAddress>
-		<a href="#!/account/addresses">
+		<a>
 			<dd class="panel assetBox assetBoxChecked col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
 				<span class="assetBoxSymbolImg"><img class="assetSymbol" src="favicon.png" alt=""/></span>
 				<span class="assetBoxTextInfo">

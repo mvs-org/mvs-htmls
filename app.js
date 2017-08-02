@@ -156,16 +156,16 @@
                 controllerAs: 'vm'
             })
 
-            .state('home.asset.transfer', {
-                url: "/asset/transfer/:symbol/:sender_address",
-                templateUrl: "home/assets/transfer.view.html",
+            .state('home.transferasset', {
+                url: "/transfer/:symbol/:sender_address",
+                templateUrl: "home/transfer/transferasset.view.html",
                 controller: 'TransferAssetController',
                 controllerAs: 'vm'
             })
 
-            .state('home.transfer', {
-                url: "/transfer",
-                templateUrl: "home/transfer.view.html",
+            .state('home.transferetp', {
+                url: "/transfer/ETP",
+                templateUrl: "home/transfer/transferetp.view.html",
                 controller: 'ETPController',
                 controllerAs: 'vm'
             })
