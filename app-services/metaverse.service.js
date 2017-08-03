@@ -32,6 +32,7 @@
         service.GetNewAddress = GetNewAddress;
         service.Send = Send;
         service.SendFrom = SendFrom;
+        service.SendMore = SendMore;
         service.ListTxs = ListTxs;
         service.ChangePassword = ChangePassword;
         service.ResetPassword = ResetPassword;
@@ -388,9 +389,18 @@
          *    }
          * }
          **/
-        function SendMore(recipent, quantity) {
+        function SendMore(recipentsQuery) {
             var credentials = localStorageService.get('credentials');
-            return _send('sendmore', [credentials.user, credentials.password, recipent, quantity]);
+            var query = [];
+            var recipent = '';
+            query.push(credentials.user);
+            query.push(credentials.password);
+            recipentsQuery.forEach( (e) => {
+              recipent = e.address + ':' + e.value;
+              query.push('-r');
+              query.push(recipent);
+            });
+            return _send('sendmore', query);
         }
 
         /**
@@ -634,7 +644,8 @@
         function Deposit(deposit_period, amount, password, address) {
             var credentials = localStorageService.get('credentials');
             if (address != undefined) {
-                return _send('deposit', ['-d', deposit_period, '-a', address, credentials.user, password, amount]);
+              console.log(['-d', deposit_period, '-a', address, credentials.user, password, amount]);
+                return _send('deposit', array);
             } else {
                 return _send('deposit', ['-d', deposit_period, credentials.user, password, amount]);
             }
