@@ -7,7 +7,7 @@
       <div class="row assetBoxWrapper">
         <dl id="outer_wrap">
           <!--ETP Balance-->
-          <a href="#!/account/addresses">
+          <a href="#!/home/addresses">
             <dd class="panel assetBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
               <span class="assetBoxSymbolImg"><img class="assetSymbol" src="favicon.png" alt=""/></span>
               <span class="assetBoxTextInfo">
@@ -160,7 +160,7 @@
           <div class="noPaddingLeftRight col-md-1">
             <span class="glyphicon glyphicon-arrow-down receiveSign" ng-if="transaction.direction=='receive'"></span>
             <span class="glyphicon glyphicon-arrow-up sendSign" ng-if="transaction.direction=='send'"></span>
-            <span class="glyphicon glyphicon-plus issueSign" ng-if="transaction.direction=='issue'"></span>
+            <span class="glyphicon glyphicon-arrow-down issueSign" ng-if="transaction.direction=='issue'"></span>
           </div>
 
           <!--Amount-->

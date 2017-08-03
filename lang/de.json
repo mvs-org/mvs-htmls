@@ -48,6 +48,8 @@
   "TRANSFER_QUANTITY" : "Anzahl",
   "TRANSFER_SENDER" : "Sender",
   "TRANSFER_RECIPENT" : "Enpfänger",
+  "TRANSFER_ADD_RECIPENT" : "Add recipent",
+  "TRANSFER_REMOVE_RECIPENT" : "Remove recipent",
   "TRANSFER_FEE" : "Gebühr",
   "TRANSFER_MESSAGE" : "Nachricht",
   "TRANSFER_PASSWORD" : "Passwort",

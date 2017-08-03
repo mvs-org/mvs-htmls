@@ -61,6 +61,9 @@ _____  ._______  ___.___ _______
       opacity: 0.8;
       text-decoration: none;
     }
+    &:focus {
+      text-decoration: none;
+    }
 
   } @else if $type == 'language' {
     padding-top: 6px;
@@ -657,6 +660,7 @@ _____  ._______  ___.___ _______
   color: #333333;
   font-kerning: normal;
   display: inline-block;
+  padding-bottom: 10px;
 
 }
 
@@ -785,7 +789,7 @@ _____  ._______  ___.___ _______
   float:left;
   line-height:12px;
   font-size: 12px;
-  padding-top: 8px;
+  padding-top: 6px;
 }
 
 .assetBoxValue {
@@ -976,9 +980,15 @@ _____  ._______  ___.___ _______
 }
 
 .addressBoxTextInfo {
-  width: 80%;
+  width: 90%;
   display: inline-block;
   float: right;
+}
+
+.addressBoxTextInfoAddresses {
+  text-align: left;
+  margin-left: 34px;
+  margin-top: 38px;
 }
 
 .copyAndQrCode {
@@ -1072,7 +1082,7 @@ _____  ._______  ___.___ _______
 .addressBoxTextInfoDeposit {
   text-align: left;
   margin-left: 34px;
-  margin-top: 12px;
+  margin-top: 24px;
 }
 
 .addressBoxNameDeposit {
@@ -1080,7 +1090,7 @@ _____  ._______  ___.___ _______
   width: 100%;
   font-size: 14px;
   height: 0px;
-  line-height: 14px;
+  line-height: 24px;
 }
 
 .addressBoxBalanceDeposit {
@@ -1136,7 +1146,7 @@ _____  ._______  ___.___ _______
   border-radius: 6px;
 }
 
-.checked :before{
+.checked :before {
   position: absolute;
   content: '\2714';
   height: 0px;
@@ -1144,6 +1154,19 @@ _____  ._______  ___.___ _______
   font-size:20px;
   top: 0;
   right: 10px;
+}
+
+.addRecipent {
+  margin-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.addRecipentButton {
+  width: auto;
+}
+
+.transferRecipent {
+  margin-bottom: 0;
 }
 
 

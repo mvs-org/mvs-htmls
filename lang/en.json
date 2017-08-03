@@ -48,6 +48,8 @@
   "TRANSFER_QUANTITY" : "Quantity",
   "TRANSFER_SENDER" : "Sender",
   "TRANSFER_RECIPENT" : "Recipent",
+  "TRANSFER_ADD_RECIPENT" : "Add recipent",
+  "TRANSFER_REMOVE_RECIPENT" : "Remove recipent",
   "TRANSFER_FEE" : "Fee",
   "TRANSFER_MESSAGE" : "Message",
   "TRANSFER_PASSWORD" : "Password",

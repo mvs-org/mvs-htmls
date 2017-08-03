@@ -29,13 +29,12 @@
 			</a>
 		</div>
 
-		<!--Display all the addresses if the user choose to let it manually-->
+		<!--Display all the addresses if the user choose to select it manually-->
 		<div class="col-xs-12 noPaddingLeftRight" ng-hide=autoSelectAddress>
 			<div class="radioButtonAddress noPaddingLeftRight" ng-repeat="address in addresses | orderBy:sortType:sortReverse" ng-click="selectAddress('selectionAddress',address.address)" ng-hide="(address.balance == 0)">
 				<dd class="panel addressBox noPaddingLeftRight col-xs-1">
-					<input type="radio" name="radioDeposit" id={{address}} checked value="hideCustomDate"/>
+					<input type="radio" name="radioDeposit" id={{address}} value="hideCustomDate"/>
 					<label for={{address}}>
-
 						<div class="addressBoxSymbolImgDeposit">
 							<img class="assetSymbol assetSymbolDeposit" src="favicon.png" alt=""/>
 						</div>

@@ -13,7 +13,8 @@
       <div ng-show="input.previous_output.hash=='0000000000000000000000000000000000000000000000000000000000000000'">   <!--When NULL, coming from Mining-->
         {{ 'EXPLORER.TRANSACTION_INPUTS_MINING' | translate }}
         <div class="numbersSearch" ng-repeat="output in transaction.outputs">
-          {{output.value}} bits
+          <div class="numbersSearch" ng-show="output.attachment.type=='etp'">{{output.value/100000000}} ETP</div>
+          <div class="numbersSearch" ng-hide="output.attachment.type=='etp'">{{output.attachment.quantity/assetFactor}} {{output.attachment.symbol}}</div>
         </div>
       </div>
       <div ng-hide="input.previous_output.hash=='0000000000000000000000000000000000000000000000000000000000000000'">

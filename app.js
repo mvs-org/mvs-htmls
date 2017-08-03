@@ -80,9 +80,9 @@
                 controllerAs: 'vm'
             })
 
-            .state('home.account.addresses', {
-                url: "/account/addresses",
-                templateUrl: "home/account/addresses.view.html",
+            .state('home.addresses', {
+                url: "/home/addresses",
+                templateUrl: "home/addresses.view.html",
                 controller: 'AccountController',
                 controllerAs: 'vm'
             })

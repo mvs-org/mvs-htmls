@@ -40,6 +40,9 @@
     $scope.exists = false;
     $scope.transactionInputsValues = [];
 
+    $scope.asset = '';
+    $scope.assetFactor = 100000000;   //By default, ETP factor
+
 
 
     //define if the research is a Hash, a Transaction, a Block or an Asset
@@ -100,6 +103,7 @@
         NProgress.start();
         MetaverseService.FetchTx(transaction_hash)
         .then( (response) => {
+          console.log(response);
           if (typeof response == 'undefined' || typeof response.success == 'undefined' || response.success == false) {
             $translate('MESSAGES.TRANSACTION_NOT_FOUND').then( (data) => {
               FlashService.Error(data, true);
@@ -107,6 +111,12 @@
           } else {
             $scope.transaction = response.data.transaction;
             $scope.exists = true;
+
+            $scope.transaction.outputs.forEach(function(e) {
+              if(e.attachment.type!='etp') {
+                loadasset(e.attachment.symbol);
+              }
+            });
 
             //Search for the value of the input and put it in $scope.transactionInputsValues
             $scope.transactionInputsValues = [];
@@ -123,20 +133,22 @@
       }
     }
 
-    $scope.asset = '';
-    $scope.assetFactor = 1;
+
 
     //Loads a given asset
     function loadasset(symbol) {
+
       MetaverseService.GetAsset(symbol)
       .then( (response) => {
         NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
           //console.log(response.data.assets[0].maximum_supply);
           $scope.asset = response.data.assets[0];
+          $scope.assetFactor = 1;
           for (var i = 0, len = $scope.asset.decimal_number; i < len; i++) {
             $scope.assetFactor = $scope.assetFactor*10;
           }
+          console.log($scope.assetFactor);
         } else {
           //Redirect user to the assets page
           $location.path('/asset/details/');
@@ -168,7 +180,7 @@
                     "type" : e.attachment.type
                   }
                 } else {
-                  loadasset(e.attachment.symbol);
+                  //loadasset(e.attachment.symbol); //already calculated when this asset is an output
                   var input = {
                     "address" : address,
                     "value" : e.value,
@@ -453,7 +465,10 @@
     $scope.underlineManual='none';
     $scope.selectAddress = selectAddress;         //Selection of a specific address
     $scope.selectAddressMem = '';                 //Keep in memory the specific address previously selected (if the user go to Auto and come back to Manual)
-    $scope.autoSelectAddress=true;                //Automatically select the address
+    $scope.autoSelectAddress = true;              //Automatically select the address
+    $scope.selectAddressAvailable = true;         //If we send to more than 1 recipent, sendfrom is not available
+
+    $scope.recipents = [];
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -468,6 +483,8 @@
         if (response.success)
         $scope.from_addresses = response.data.balances;
       });
+      $scope.recipents = [];
+      $scope.recipents.push({'index': 1, 'address': '', 'value': ''})
     }
 
     $scope.symbol = 'ETP';
@@ -574,63 +591,147 @@
 
 
 
+    $scope.addRecipent = function() {
+      $scope.recipents.push({'index': $scope.recipents.length+1, 'address': '', 'value': ''});
+      $scope.autoSelectAddress = true;
+      $scope.underlineAuto='underline';
+      $scope.underlineManual='none';
+      $scope.sendfrom='';
+      $scope.selectAddressAvailable = false;
+    }
+
+    $scope.removeRecipent = function() {
+      $scope.recipents.splice($scope.recipents.length-1, 1);
+      if($scope.recipents.length==1) {
+        $scope.selectAddressAvailable = true;
+      }
+    }
 
 
     //Transfers ETP
     function transfer() {
+      var transactionOK=true;
       //Check for unimplemented parameters
-      if ($scope.fee !== '' || $scope.message !== '') {
+      $scope.recipents.forEach( (e) => {
+        console.log(e);
+        if (e.address === '') { //Check for recipent address
+          $translate('MESSAGES.TRANSACTION_RECIPENT_ADDRESS_NEEDED').then( (data) => FlashService.Error(data) );
+          transactionOK = false;
+        } else if (e.value === '') { //Check for transaction value
+          $translate('MESSAGES.TRANSACTION_VALUE_NEEDED').then( (data) => FlashService.Error(data) );
+          transactionOK = false;
+        }
+      });
+      if (transactionOK === false) {
+        //error already handle
+      } else if ($scope.fee !== '' || $scope.message !== '') {
         FlashService.Error('Sorry, only basic transfer works so far.');
       } else if ($scope.password === '') { //Check for empty password
         $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
-      } else if ($scope.sendto === '') { //Check for recipent address
-        $translate('MESSAGES.TRANSACTION_RECIPENT_ADDRESS_NEEDED').then( (data) => FlashService.Error(data) );
-      } else if ($scope.value === '') { //Check for transaction value
-        $translate('MESSAGES.TRANSACTION_VALUE_NEEDED').then( (data) => FlashService.Error(data) );
       } else {
         //Check for password
         if (localStorageService.get('credentials').password != $scope.password) {
           $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
-        } else { //Start transaction
-          NProgress.start();
-          var value = $scope.value;
-          switch ($rootScope.factor) {
-            case 'FACTOR_SATOSHI':
-            break;
-            case 'FACTOR_ETP':
-            value *= 100000000;
-            break;
-            default:
-            $translate('MESSAGES.TRANSFER_ERROR').then( (data) => FlashService.Error(data) );
-            return;
-          }
-
-          value = Math.round(value);
-
-          var SendPromise = ($scope.sendfrom) ? MetaverseService.SendFrom($scope.sendfrom, $scope.sendto, value, $scope.password) : MetaverseService.Send($scope.sendto, value, $scope.password);
-          //console.log($scope.sendfrom);
-          SendPromise
-          .then( (response) => {
-            NProgress.done();
-            if (typeof response.success !== 'undefined' && response.success) {
-              //Transaction was successful
-              $translate('MESSAGES.TRANSFER_SUCCESS').then( (data) => FlashService.Success(data + response.data.transaction.hash) );
-              init();
-            } else {
-              //Transaction problem
-              $translate('MESSAGES.TRANSFER_ERROR').then( (data) => {
-                if (response.message != undefined) {
-                  FlashService.Error(data + " " + response.message);
-                } else {
-                  FlashService.Error(data);
-                }
-              });
-              $scope.password = '';
-            }
-          });
+        } else if ($scope.recipents.length == 1) { //Start transaction for 1 recipent
+          transferOne();
+        } else {  //Start transaction with more than 1 recipent
+          transferMore();
         }
       }
       $window.scrollTo(0,0);
+    }
+
+
+
+    function transferOne() {
+      NProgress.start();
+      var value = '';
+      var sendTo = '';
+      $scope.recipents.forEach( (e) => {
+        value = e.value;
+        sendTo = e.address;
+      });
+
+      switch ($rootScope.factor) {
+        case 'FACTOR_SATOSHI':
+        break;
+        case 'FACTOR_ETP':
+        value *= 100000000;
+        break;
+        default:
+        $translate('MESSAGES.TRANSFER_ERROR').then( (data) => FlashService.Error(data) );
+        return;
+      }
+
+      value = Math.round(value);
+
+      var SendPromise = ($scope.sendfrom) ? MetaverseService.SendFrom($scope.sendfrom, sendTo, value, $scope.password) : MetaverseService.Send(sendTo, value, $scope.password);
+      //console.log($scope.sendfrom);
+      SendPromise
+      .then( (response) => {
+        NProgress.done();
+        if (typeof response.success !== 'undefined' && response.success) {
+          //Transaction was successful
+          $translate('MESSAGES.TRANSFER_SUCCESS').then( (data) => FlashService.Success(data + response.data.transaction.hash) );
+          init();
+        } else {
+          //Transaction problem
+          $translate('MESSAGES.TRANSFER_ERROR').then( (data) => {
+            if (response.message != undefined) {
+              FlashService.Error(data + " " + response.message);
+            } else {
+              FlashService.Error(data);
+            }
+          });
+          $scope.password = '';
+        }
+      });
+    }
+
+
+    function transferMore() {
+      NProgress.start();
+      var recipentsQuery = [];    //data that will be used for the query
+
+      $scope.recipents.forEach( (e) => {
+        var value = e.value;
+        switch ($rootScope.factor) {
+          case 'FACTOR_SATOSHI':
+            break;
+          case 'FACTOR_ETP':
+            value *= 100000000;
+            break;
+          default:
+            $translate('MESSAGES.TRANSFER_ERROR').then( (data) => FlashService.Error(data) );
+            return;
+        }
+        value = Math.round(value);
+        recipentsQuery.push({
+          "address": e.address,
+          "value": value
+        });
+      });
+
+      var SendPromise = MetaverseService.SendMore(recipentsQuery);
+      SendPromise
+      .then( (response) => {
+        NProgress.done();
+        if (typeof response.success !== 'undefined' && response.success) {
+          //Transaction was successful
+          $translate('MESSAGES.TRANSFER_SUCCESS').then( (data) => FlashService.Success(data + response.data.transaction.hash) );
+          init();
+        } else {
+          //Transaction problem
+          $translate('MESSAGES.TRANSFER_ERROR').then( (data) => {
+            if (response.message != undefined) {
+              FlashService.Error(data + " " + response.message);
+            } else {
+              FlashService.Error(data);
+            }
+          });
+          $scope.password = '';
+        }
+      });
     }
 
     //Load a list of all transactions
@@ -700,6 +801,7 @@
       MetaverseService.ListBalances()
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
+          console.log(response);
           $scope.addresses = [];
           response.data.balances.forEach( (e) => {
             $scope.addresses.push({
