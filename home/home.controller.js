@@ -41,7 +41,6 @@
     $scope.transactionInputsValues = [];
 
     $scope.asset = '';
-    $scope.assetFactor = 100000000;   //By default, ETP factor
 
 
 
@@ -103,7 +102,6 @@
         NProgress.start();
         MetaverseService.FetchTx(transaction_hash)
         .then( (response) => {
-          console.log(response);
           if (typeof response == 'undefined' || typeof response.success == 'undefined' || response.success == false) {
             $translate('MESSAGES.TRANSACTION_NOT_FOUND').then( (data) => {
               FlashService.Error(data, true);
@@ -142,13 +140,7 @@
       .then( (response) => {
         NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
-          //console.log(response.data.assets[0].maximum_supply);
           $scope.asset = response.data.assets[0];
-          $scope.assetFactor = 1;
-          for (var i = 0, len = $scope.asset.decimal_number; i < len; i++) {
-            $scope.assetFactor = $scope.assetFactor*10;
-          }
-          console.log($scope.assetFactor);
         } else {
           //Redirect user to the assets page
           $location.path('/asset/details/');
@@ -398,7 +390,6 @@
       NProgress.start();
       MetaverseService.ListBalances()
       .then( (response) => {
-        console.log(response);
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.addresses = [];
           response.data.balances.forEach( (e) => {
@@ -613,7 +604,6 @@
       var transactionOK=true;
       //Check for unimplemented parameters
       $scope.recipents.forEach( (e) => {
-        console.log(e);
         if (e.address === '') { //Check for recipent address
           $translate('MESSAGES.TRANSACTION_RECIPENT_ADDRESS_NEEDED').then( (data) => FlashService.Error(data) );
           transactionOK = false;
@@ -666,7 +656,6 @@
       value = Math.round(value);
 
       var SendPromise = ($scope.sendfrom) ? MetaverseService.SendFrom($scope.sendfrom, sendTo, value, $scope.password) : MetaverseService.Send(sendTo, value, $scope.password);
-      //console.log($scope.sendfrom);
       SendPromise
       .then( (response) => {
         NProgress.done();
@@ -765,6 +754,13 @@
     $scope.sortType = 'balance';
     $scope.sortReverse = true;
 
+    $scope.buttonCopyToClipboard = new Clipboard('.btn');
+
+    $scope.enableEditAddressName = enableEditAddressName;
+    $scope.endEditAddressName = endEditAddressName;
+    $scope.newName = 'New Address';
+
+
     function setOrder(order) {
       if ($scope.sortType == order) {
         $scope.sortReverse = !$scope.sortReverse;
@@ -795,20 +791,51 @@
       $('#showqrmodal').modal('show');
     }
 
+    //Enable the edition of the Address Name
+    function enableEditAddressName(address) {
+      $scope.addresses.forEach( (e) => {
+        if (e.address == address) {
+          $scope.newName = e.name;
+          e.edit = true;
+        }
+      });
+    }
+
+    function endEditAddressName(address, newName) {
+      localStorage.setItem(address,newName);
+      $scope.addresses.forEach( (e) => {
+        if (e.address == address) {
+          e.name = newName;
+          e.edit = false;
+        }
+      });
+    }
+
     //Load the addresses and their balances
     function listBalances() {
       NProgress.start();
       MetaverseService.ListBalances()
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
-          console.log(response);
           $scope.addresses = [];
           response.data.balances.forEach( (e) => {
+            var name = localStorage.getItem(e.balance.address);
+            if (name == undefined) {
+              name = "New Address";
+            }
             $scope.addresses.push({
               "balance": parseInt(e.balance.unspent),
               "address": e.balance.address,
-              "frozen": e.balance.frozen
+              "frozen": e.balance.frozen,
+              "name": name,
+              "edit": false
             });
+
+            //To display the name of the address saved in the cookies
+            /*$scope.addressesNames[e.balance.address] = {
+              "name": name,
+              "edit": false
+            };*/
           });
         }
         NProgress.done();
@@ -922,7 +949,6 @@
     $scope.symbol = $location.path().split('/')[2];
     $scope.sender_address = $stateParams.sender_address;
     $scope.sendasset = sendasset;
-    $scope.sendassetfrom = sendassetfrom;
 
     $scope.underlineAuto='underline';
     $scope.underlineManual='none';
@@ -933,6 +959,21 @@
     $scope.symbol = $location.path().split('/')[2];
 
     $scope.assetsIssued = [];
+
+    $scope.allAddresses = [];                     //Contains the list of all the addresses
+    $scope.assetAddresses = [];                    //Contrain the asset balance of each address
+    $scope.listBalances = listBalances;
+    $scope.listAssetBalances = listAssetBalances;
+
+    // Initializes all transaction parameters with empty strings.
+    function init() {
+      $scope.sendfrom = '';
+      $scope.sendto = '';
+      $scope.fee = '';
+      $scope.message = '';
+      $scope.value = '';
+      $scope.password = '';
+    }
 
     MetaverseService.ListAssets()
     .then( (response) => {
@@ -990,6 +1031,44 @@
     }
 
 
+    //We first load the list of all the addresses
+    function listBalances() {
+      NProgress.start();
+      MetaverseService.ListBalances()
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.allAddresses = [];
+          response.data.balances.forEach( (e) => {
+            $scope.allAddresses.push({
+              "address": e.balance.address
+            });
+          });
+          listAssetBalances();
+        } else {
+          $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) =>  FlashService.Error(data));
+        }
+        NProgress.done();
+      });
+    }
+
+    listBalances();
+
+    function listAssetBalances() {
+      NProgress.start();
+      NProgress.start();
+      $scope.assetAddresses = [];
+      $scope.allAddresses.forEach( (e) => {
+        MetaverseService.GetAddressAsset(e.address)
+        .then( (response) => {
+          if (typeof response.success !== 'undefined' && response.success && response.data.assets != '') {    //If the address doesn't contain any asset, we don't need it
+            response.data.assets.forEach( (a) => {
+              $scope.assetAddresses.push(a);
+            });
+          }
+        });
+      });
+      NProgress.done();
+    }
 
 
     //Loads a given asset
@@ -1023,8 +1102,10 @@
       } else {
         //Modify number to fit to number of decimals defined for asset
         quantity*=Math.pow(10,$scope.asset.decimal_number);
-        MetaverseService.SendAsset(recipent_address, symbol, quantity)
+        var SendPromise = ($scope.sendfrom) ? MetaverseService.SendAssetFrom($scope.sendfrom, recipent_address, symbol, quantity) : MetaverseService.SendAsset(recipent_address, symbol, quantity);
+        SendPromise
         .then( (response) => {
+          console.log(response);
           NProgress.done();
           if (typeof response.success !== 'undefined' && response.success) {
             $translate('MESSAGES.ASSETS_TRANSFER_SUCCESS').then( (data) => {
@@ -1034,40 +1115,13 @@
             });
           } else {
             //Show asset load error
-            $translate('MESSAGES.ASSETS_TRANSFER_ERROR').then( (data) => FlashService.Error(data) );
-
+            $translate('MESSAGES.ASSETS_TRANSFER_ERROR').then( (data) => FlashService.Error(data + " " + response.message) );
           }
         });
       }
     }
 
-    function sendassetfrom(sender_address, recipent_address, symbol, quantity) {
-      if (localStorageService.get('credentials').password != $scope.password) {
-        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
-      } else if ($scope.recipent_address == undefined || $scope.recipent_address.length != 34) {
-        $translate('MESSAGES.TRANSACTION_RECIPENT_ADDRESS_NEEDED').then( (data) => FlashService.Error(data) );
-      } else if ($scope.quantity == undefined || !($scope.quantity > 0)) {
-        $translate('MESSAGES.TRANSACTION_VALUE_NEEDED').then( (data) => FlashService.Error(data) );
-      } else {
-        MetaverseService.SendAssetFrom(sender_address, recipent_address, symbol, quantity)
-        .then( (response) => {
-          NProgress.done();
-          if (typeof response.success !== 'undefined' && response.success) {
-
-            $translate('MESSAGES.ASSETS_TRANSFER_SUCCESS').then( (data) => {
-              FlashService.Success(data, true);
-              //Redirect user to the assets page
-              $location.path('/asset/details/');
-            });
-          } else {
-            //Show asset load error
-            $translate('MESSAGES.ASSETS_TRANSFER_ERROR').then( (data) => FlashService.Error(data) );
-
-          }
-        });
-      }
-    }
-
+    init();
     loadasset($scope.symbol);
 
   }
@@ -1227,6 +1281,7 @@
       $scope.symbol = '';
       $scope.description = '';
       $scope.max_supply = '';
+      $scope.decimals = '';
       $scope.password = '';
     }
 
@@ -1290,7 +1345,7 @@
               $location.path('/home');
             });
           } else{
-            FlashService.Error(response.message);
+            FlashService.Error(data + " " + response.message);
           }
         });
       }
@@ -1478,9 +1533,9 @@
 
   function ConsoleController(MetaverseService, $rootScope, $scope) {
 
-    //var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
+    var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
     //To test the Console view with Grunt:
-    var ws = new WebSocket('ws://test4.metaverse.live:8820/ws');
+    //var ws = new WebSocket('ws://test4.metaverse.live:8820/ws');
 
     $("#inputField").focus();
 

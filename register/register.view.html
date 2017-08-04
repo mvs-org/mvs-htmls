@@ -13,18 +13,18 @@
         <h2><b>{{ 'REGISTER.NEW_USER' | translate }}</b></h2>
         <!--Account name-->
         <div class="form-group">
-          <p>{{ 'REGISTER.CHOOSE_ACCOUNT_NAME' | translate }}: <i>*</i></p>
-          <input type="text" ng-model="vm.user.username" required class="form-control">
+          <label for="username" class="control-label">{{ 'REGISTER.CHOOSE_ACCOUNT_NAME' | translate }}</label>
+          <input type="text" name="username" ng-model="vm.user.username" required class="form-control">
         </div>
         <!--Password-->
         <div class="form-group">
-          <p>{{ 'REGISTER.CHOOSE_PASSWORD' | translate }}: <i>*</i></p>
-          <input type="password" ng-model="vm.user.password" required class="form-control">
+          <label for="password" class="control-label">{{ 'REGISTER.CHOOSE_PASSWORD' | translate }}</label>
+          <input type="password" name="password" ng-model="vm.user.password" required class="form-control">
         </div>
         <!--Re-enter password-->
         <div class="form-group">
-          <p >{{ 'REGISTER.REPEAT_PASSWORD' | translate }}: <i>*</i></p>
-          <input type="password" ng-model="vm.user.password_repeat" class="form-control">
+          <label for="password" class="control-label">{{ 'REGISTER.REPEAT_PASSWORD' | translate }}</label>
+          <input type="password" ng-model="vm.user.password_repeat" required class="form-control">
         </div>
         <!--Import account-->
         <div class="form-group">
@@ -35,9 +35,9 @@
           </div>
           <br/>
           <div ng-show="do_import">
-            <p>{{ 'REGISTER.IMPORT_PHRASE' | translate }}: <i>*</i></p>
+            <p>{{ 'REGISTER.IMPORT_PHRASE' | translate }}</p>
             <textarea class="form-group" ng-model="import_phrase" rows="3" style="width:100%"></textarea>
-            <p>{{ 'REGISTER.IMPORT_ADDRESS_COUNT' | translate }}<i>*</i></p>
+            <p>{{ 'REGISTER.IMPORT_ADDRESS_COUNT' | translate }}</p>
             <input type="number" ng-model="address_count" min="1" required>
           </div>
         </div>
@@ -56,18 +56,18 @@
       <div ng-show="vm.registered">
         <h1>{{ "REGISTER.SIGNUP_THANK_YOU" | translate}}</h1>
         <br><br>
-        <div class="form-group">{{ "REGISTER.PRIVATE_KEY_MNEMONIC" | translate}}:<br></div>
-        <div><b class="form-group mnemonic_red col-xs-12 col-sm-12 col-md-12">{{vm.registered.privatekey}}</b></div>
+        <div class="form-group">{{ "REGISTER.PRIVATE_KEY_MNEMONIC" | translate}}:</div>
+        <div>
+          <b class="form-group mnemonic_red col-xs-12 col-sm-12 col-md-12">{{vm.registered.privatekey}}</b>
+        </div>
         <br><br>
-        <div>{{ "REGISTER.PRIVATE_KEY_MNEMONIC_INFO" | translate}}</div>
-        <br><br>
+        <div class="form-group">{{ "REGISTER.PRIVATE_KEY_MNEMONIC_INFO" | translate}}</div>
         <div class="checkboxCircle">
           <input type="checkbox" ng-model="vm.registered.read" id="checkboxAgree">
           <label for="checkboxAgree"></label>
           <span class="importAccountText">{{ "REGISTER.SIGNUP_MNEMONIC_AGREE" | translate}}</span>
         </div>
         <div ng-show="vm.registered.read">
-          <br/>
           <br/>
           <div class="col-xs-6 col-sm-4 col-md-4 noPaddingLeftRight">
             <a href="#!/login" class="btn btn-success">{{ 'REGISTER.LOGIN_BUTTON' | translate }}</a>

@@ -40,7 +40,8 @@
   </div>
   <div class="form-group">
     <label for="decimals" class="control-label">{{ 'ASSET_ASSET_CREATE_DIGITS' | translate }}</label>
-    <select type="number" class="form-control" name="decimals" required placeholder="" ng-model="decimals">
+    <select type="number" class="form-control" name="decimals" required placeholder="" required ng-model="decimals">
+      <option value=""></option>
       <option value="0">0</option>
       <option value="1">1</option>
       <option value="2">2</option>
@@ -65,7 +66,7 @@
   </div>
   <div class="form-group">
     <label for="password" class="control-label">{{ 'ASSET_ASSET_CREATE_PASSWORD' | translate }}</label>
-    <input type="password" class="form-control" name="password" placeholder="" ng-class="{ 'border-danger' : (error.password && password)}" ng-model="password" autocomplete="new-password">
+    <input type="password" class="form-control" name="password" placeholder="" required ng-class="{ 'border-danger' : (error.password && password)}" ng-model="password" autocomplete="new-password">
   </div>
 </br>
 <input type="submit" class="btn btn-success" ng-click="createasset()" value="{{ 'ASSET_ASSET_CREATE_SUBMIT_BUTTON' | translate }}">

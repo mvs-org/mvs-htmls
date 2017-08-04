@@ -1,11 +1,11 @@
-<span class="headline">{{ 'HEADLINE_ACCOUNTSETTINGS' | translate }}</span>
+<span class="headline">{{ 'NAV_ACCOUNT_SETTING' | translate }}</span>
 <!--<div class="exportAccount">
   <button class="btn btn-success smallButton">{{ 'SETTINGS.GET_PRIVATE_KEY' | translate }}
   </button>
 </div>-->
 <div>
   <ul class="nav nav-pills tabsMenu">
-    <li role="presentation"><a href="#!/account/details" class="btn-link">{{ 'SETTINGS.ACCOUNT_DETAILS' | translate }}</a></li>
+    <li role="presentation"><a href="#!/account/details" class="btn-link">{{ 'SETTINGS.CHANGE_PASSWORD' | translate }}</a></li>
     <li role="presentation" class="active"><a href="#!/account/privatekey" class="btn-link">{{ 'SETTINGS.PRIVATE_KEY' | translate }}</a></li>
   </ul>
 </div>
@@ -14,11 +14,11 @@
     <br/>
     <form ng-hide="privatekey">
       <div class="form-group">
-        <label for="password" class="control-label">{{ 'SETTINGS_BACKUP_PASSWORD' | translate }}：<span class="red big">*</span></label>
+        <label for="password" class="control-label">{{ 'SETTINGS_BACKUP_PASSWORD' | translate }}</label>
         <input type="password" class="form-control" name="password" id="" ng-model="privatekey_password" autocomplete="off">
       </div>
       <div class="form-group">
-        <label for="password" class="control-label">{{ 'SETTINGS.MNEMONIC_LAST_WORD' | translate }}：<span class="red big">*</span></label>
+        <label for="password" class="control-label">{{ 'SETTINGS.MNEMONIC_LAST_WORD' | translate }}</label>
         <input type="password" class="form-control" name="password" id="" ng-model="privatekey_last_word" autocomplete="off">
       </div>
       </br>
@@ -32,9 +32,6 @@
       <div>
         <textarea name="privatekey" class="form-group mnemonic_red col-xs-12 col-sm-12 col-md-12" ng-model="privatekey" rows="5" cols="" placeholder="">{{vm.registered.privatekey}}</textarea>
       </div>
-      <!--<div class="col-sm-10">
-        <textarea name="privatekey" class="form-control" ng-model="privatekey" rows="5" cols="" placeholder=""></textarea>
-      </div>-->
     </div>
   </div>
 </div>

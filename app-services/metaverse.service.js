@@ -50,6 +50,7 @@
         service.ListAssets = ListAssets;
         service.ListAllAssets = ListAllAssets;
         service.GetAsset = GetAsset;
+        service.GetAddressAsset = GetAddressAsset;
         service.SendAssetFrom = SendAssetFrom;
         service.SendAsset = SendAsset;
         service.Issue = Issue;
@@ -612,6 +613,22 @@
         function GetAsset(symbol) {
             var credentials = localStorageService.get('credentials');
             return _send('getasset', [credentials.user, credentials.password, symbol]);
+        }
+
+
+        /**
+         * @api {post} /rpc Get asset
+         * @apiName Get asset
+         * @apiGroup Assets
+         *
+         * @apiDescription Gets details about an asset.
+         *
+         * @apiParam {Const} method getasset
+         * @apiParam {List} params [username, password, symbol]
+         *
+         **/
+        function GetAddressAsset(address) {
+            return _send('getaddressasset', [address]);
         }
 
         /**

@@ -55,41 +55,41 @@
     <a class="col-xs-6 col-xl-6" href="#!/asset/details/" ng-click="deleteAsset()"><div class="btn btn-danger">{{'ASSET_DELETE_ASSET' | translate}}</div></a>
   </div>
   <div ng-show="asset.status=='issued'" class="col-xs-12 col-sm-6 col-md-4">
-    <a href="#!/transfer/{{asset.symbol}}/{{asset.address}}"><input class="btn btn-success" value="{{'TRANSFER_SEND' | translate}}"></a>
+    <a href="#!/transfer/{{asset.symbol}}/"><input class="btn btn-success" value="{{'TRANSFER_SEND' | translate}}"></a>
   </div>
 </div>
 
 <!--My Assets-->
 <div ng-show="asset.symbol == null">
-<span class="headline"><em></em>{{ 'HEADLINE_ASSETS' | translate }}</span>
-<div>
-  <ul class="nav nav-pills tabsMenu">
-    <li role="presentation" class="active"><a href="#!/asset/details/" class="btn-link">{{'ASSET_MY_ASSETS' | translate}}</a></li>
-    <li role="presentation"><a href="#!/asset/all" class="btn-link">{{'ASSET_ALL_ASSETS' | translate}}</a></li>
-  </ul>
-</div>
-<br/>
-<div class=" ">
-  <div class="mainContent1">
-    <div class="row assetBoxWrapper">
-      <dl id="outer_wrap">
-        <a href="#!/asset/details/{{asset.symbol}}" ng-repeat="asset in assets | orderBy:'symbol'">
-          <dd class="panel assetBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
-            <span class="assetBoxSymbolImg"><img class="assetSymbol" src="favicon.png" alt=""/></span>
-            <span class="assetBoxTextInfo">
-              <span class="assetBoxSymbolName">{{asset.symbol}}</span>
-              <span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
-              <span class="assetBoxValue">{{asset.quantity | assetformat : asset.decimal_number}}</span>
-              <span class="assetBoxTitle">{{ 'STATUS' | translate }}</span>
-              <span class="assetBoxValue">{{asset.status}}</span>
-            </span>
-          </dd>
-        </a>
-        <div class="createAsset col-xs-12 col-sm-12 col-md-12">
-          <a href="#!/asset/create" class="btn-link"><span class="glyphicon glyphicon-plus"></span> {{ 'ASSET_ASSET_DETAILS_CREATE' | translate }}</a>
-        </div>
-      </dl>
+  <span class="headline"><em></em>{{ 'HEADLINE_ASSETS' | translate }}</span>
+  <div>
+    <ul class="nav nav-pills tabsMenu">
+      <li role="presentation" class="active"><a href="#!/asset/details/" class="btn-link">{{'ASSET_MY_ASSETS' | translate}}</a></li>
+      <li role="presentation"><a href="#!/asset/all" class="btn-link">{{'ASSET_ALL_ASSETS' | translate}}</a></li>
+    </ul>
+  </div>
+  <br/>
+  <div class=" ">
+    <div class="mainContent1">
+      <div class="row assetBoxWrapper">
+        <dl id="outer_wrap">
+          <a href="#!/asset/details/{{asset.symbol}}" ng-repeat="asset in assets | orderBy:'symbol'">
+            <dd class="panel assetBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
+              <span class="assetBoxSymbolImg"><img class="assetSymbol" src="favicon.png" alt=""/></span>
+              <span class="assetBoxTextInfo">
+                <span class="assetBoxSymbolName">{{asset.symbol}}</span>
+                <span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
+                <span class="assetBoxValue">{{asset.quantity | assetformat : asset.decimal_number}}</span>
+                <span class="assetBoxTitle">{{ 'STATUS' | translate }}</span>
+                <span class="assetBoxValue">{{asset.status}}</span>
+              </span>
+            </dd>
+          </a>
+          <div class="createAsset col-xs-12 col-sm-12 col-md-12">
+            <a href="#!/asset/create" class="btn-link"><span class="glyphicon glyphicon-plus"></span> {{ 'ASSET_ASSET_DETAILS_CREATE' | translate }}</a>
+          </div>
+        </dl>
+      </div>
     </div>
   </div>
-</div>
 </div>

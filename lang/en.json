@@ -103,7 +103,7 @@
   "SETTINGS.DEBUG_DISABLE" : "Disable Debugger",
   "SETTINGS.MNEMONIC_LOAD_ERROR" : "Could not load mnemonic. Please check your input.",
   "SETTINGS.MNEMONIC_LAST_WORD" : "Last word of your nnemonic",
-  "SETTINGS.CHANGE_PASSWORD" : "Change your account password",
+  "SETTINGS.CHANGE_PASSWORD" : "Change password",
   "SETTINGS.CHANGE_PASSWORD_BUTTON" : "Change",
   "SETTINGS.PASSWORD" : "Current password",
   "SETTINGS.NEW_PASSWORD" : "New password",

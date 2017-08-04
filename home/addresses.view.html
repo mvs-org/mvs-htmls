@@ -31,32 +31,49 @@
 
 
         <div class="addressBoxTextInfo">
+          <!--Display the QR in a pop-up-->
           <div class="copyAndQrCode">
             <span class="qrCode">
               <a class="btn btn-link addressLinkButton" ng-click="showqr(address.address)" alt="receive"><img src="images/qrcode.png" alt="" /> {{ 'ADDRESSES_QR_CODE' | translate }}</a>
             </span>
-            <!--<span class="copyAddress">
-            <a class="btn btn-link addressLinkButton"><img src="images/copy-address.png" alt="" /> {{ 'ADDRESSES_COPY_ADDRESS' | translate }}</a>
-          </span>-->
+
+            <!--Copy the address to clipboard-->
+            <span class="copyAddress">
+              <button class="btn btn-link addressLinkButton" data-clipboard-text="{{address.address}}">
+                <img src="images/copy-address.png" alt="" /> {{ 'ADDRESSES_COPY_ADDRESS' | translate }}
+              </button>
+            </span>
         </div>
         <div class="addressBoxTextInfoAddresses">
-          <!--<span class="addressBoxNameDeposit">New address</span>
-          <span class="addressBoxAddressDeposit">{{address.address}}</span>-->
-          <span class="addressBoxNameDeposit">{{address.address}}</span>
+
+          <!--Display editable name of the address-->
+          <div ng-hide="address.edit">
+            <span class="addressBoxName" readonly="true" id="editAddressName">{{address.name}}</span>
+            <button class="glyphicon glyphicon-pencil editAddressNameButton" ng-click="enableEditAddressName(address.address)"></button>
+          </div>
+          <!--Display for editing-->
+          <div class="input-group" ng-show="address.edit">
+            <input type="text" ng-model="newName" class="form-control addressBoxName" id="editAddressNameEditing">
+            <span class="input-group-addon editAddressName">
+              <button class="glyphicon glyphicon-pencil editAddressNameButtonEditing" ng-click="endEditAddressName(address.address, newName)"></button>
+            </span>
+          </div>
+
+          <!--Address-->
+          <span class="col-xs-12 noPaddingLeftRight addressBoxAddressDeposit">{{address.address}}</span>
+
+          <!--Balance-->
           <span class="col-xs-6 noPaddingLeftRight">
             <span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
             <span class="assetBoxValue">{{address.balance/100000000 }}</span>
           </span>
+
+          <!--Frozen-->
           <span class="col-xs-6 noPaddingLeftRight">
             <span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
             <span class="assetBoxValue">{{address.frozen/100000000 }}</span>
           </span>
         </div>
-        <!--<<div class=addressText>
-        <span class="addressBoxName">{{address.address}}</span>
-        <span class="addressBoxValue">{{address.balance/100000000 }} ETP</span>
-        span class="addressBoxAddress">{{address.address}}</span>
-      </div>-->
     </div>
   </dd>
 </div>

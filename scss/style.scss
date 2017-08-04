@@ -198,7 +198,7 @@ _____  ._______  ___.___ _______
             display: none;
             ~ label {
                 position: relative;
-                line-height: 2.5em;
+                //line-height: 2.5em;
                 text-indent: 3.25em;
                 cursor: pointer;
                 user-select: none;
@@ -385,9 +385,9 @@ _____  ._______  ___.___ _______
 }
 
 .addressLinkButton {
-  padding: 6px;
-  padding-left: 10px;
-  font-family: 'PingFangSC-Thin', 'PingFang SC Thin', 'PingFang SC';
+  //padding: 6px;
+  //padding-left: 10px;
+  //font-family: 'PingFangSC-Thin', 'PingFang SC Thin', 'PingFang SC';
 }
 
 .createAddressButton {
@@ -397,12 +397,10 @@ _____  ._______  ___.___ _______
 
 .checkboxCircle {
 	background: white;
-
   margin: 0px;
   -webkit-border-radius: 50px;
   -moz-border-radius: 50px;
   border-radius: 50px;
-
   position: relative;
   outline: 0;
 }
@@ -988,7 +986,7 @@ _____  ._______  ___.___ _______
 .addressBoxTextInfoAddresses {
   text-align: left;
   margin-left: 34px;
-  margin-top: 38px;
+  margin-top: 34px;
 }
 
 .copyAndQrCode {
@@ -1011,16 +1009,34 @@ _____  ._______  ___.___ _______
   font-size: 14px;
 }
 
+.editAddressName {
+  padding: 0;
+}
+
+.editAddressNameButton {
+  background-color: transparent;
+  border-width: 0;
+  display: inline;
+}
+
+.editAddressNameButtonEditing {
+  background-color: transparent;
+  border-width: 0;
+}
+
 
 .addressText {
   padding-top: 36px;
 }
 
 .addressBoxName {
-  width: 100%;
   color: $blueGeneralColor;
   float:left;
   font-size: 14px;
+  background-color: transparent;
+  height: 26px;
+  display: inline;
+
 }
 
 .addressBoxValue {
@@ -1087,10 +1103,18 @@ _____  ._______  ___.___ _______
 
 .addressBoxNameDeposit {
   color: $blueGeneralColor;
-  width: 100%;
+  width: auto;
   font-size: 14px;
-  height: 0px;
+  height: 24px;
   line-height: 24px;
+  border-width: 0;
+  padding: 0;
+  background-color: transparent;
+  display: inline;
+}
+
+.addressBoxNameUpdate {
+  display: inline;
 }
 
 .addressBoxBalanceDeposit {
@@ -1222,4 +1246,7 @@ h2 {
 }
 
 
-/*************Calendar***************/
+/*************Explorer***************/
+.explorerTransaction {
+  padding-top: 10px;
+}

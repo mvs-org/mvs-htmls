@@ -9,7 +9,7 @@
     <div class="form-group research col-xs-offset-0 col-xs-10 col-sm-offset-2 col-sm-7 col-md-offset-2 col-md-5 col-lg-offset-4 col-lg-4">
       <!--Search TextBox-->
       <div class="col-xs-10 col-md-10 noPaddingLeftRight">
-        <input type="search" class="form-control researchTextBox" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
+        <input type="search" name="search" class="form-control researchTextBox" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}" autocomplete="on">
       </div>
       <!--Search button large screen-->
       <div class="col-xs-2 hidden-xs">

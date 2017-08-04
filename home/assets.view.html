@@ -150,9 +150,9 @@
           </div>-->
 
           <!--Recipent-->
-          <div class="transactionBoxLargeAddress noPaddingLeftRight col-md-5 col-lg-4">
+          <div ng-repeat="recipent in transaction.recipents" class="transactionBoxLargeAddress noPaddingLeftRight col-md-5 col-lg-4">
             <a class="btn-link linkToExplorerButton" href="#!/explorer/adr/{{recipent.address}}">
-              <div ng-repeat="recipent in transaction.recipents" class="address">{{recipent.address}}</div>
+              <div class="address">{{recipent.address}}</div>
             </a>
           </div>
 

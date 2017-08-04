@@ -9,19 +9,21 @@
     <label class="control-label">
       {{ 'EXPLORER.TRANSACTION_INPUTS' | translate }}
     </label>
-    <div ng-repeat="input in transaction.inputs">
+    <div ng-repeat="input in transaction.inputs" class="explorerTransaction">
       <div ng-show="input.previous_output.hash=='0000000000000000000000000000000000000000000000000000000000000000'">   <!--When NULL, coming from Mining-->
         {{ 'EXPLORER.TRANSACTION_INPUTS_MINING' | translate }}
         <div class="numbersSearch" ng-repeat="output in transaction.outputs">
           <div class="numbersSearch" ng-show="output.attachment.type=='etp'">{{output.value/100000000}} ETP</div>
-          <div class="numbersSearch" ng-hide="output.attachment.type=='etp'">{{output.attachment.quantity/assetFactor}} {{output.attachment.symbol}}</div>
+          <div class="numbersSearch" ng-hide="output.attachment.type=='etp'">{{output.attachment.quantity | assetformat : asset.decimal_number}} {{output.attachment.symbol}}</div>
         </div>
       </div>
       <div ng-hide="input.previous_output.hash=='0000000000000000000000000000000000000000000000000000000000000000'">
         <a class="btn-link" href="#!/explorer/adr/{{input.address}}">{{input.address}}</a>
         <div class="numbersSearch" ng-repeat="transactionInputsValue in transactionInputsValues" ng-show="transactionInputsValue.hash==input.previous_output.hash && transactionInputsValue.address==input.address && transactionInputsValue.index == input.previous_output.index">
-          <div class="numbersSearch" ng-show="transactionInputsValue.type=='etp'">{{transactionInputsValue.value/100000000}} ETP</div>
-          <div class="numbersSearch" ng-hide="transactionInputsValue.type=='etp'">{{transactionInputsValue.quantity/assetFactor}} {{transactionInputsValue.symbol}}</div>
+          <span class="numbersSearch" ng-show="transactionInputsValue.type=='etp'">{{transactionInputsValue.value/100000000}} ETP</span>
+          <span class="numbersSearch" ng-hide="transactionInputsValue.type=='etp'">{{transactionInputsValue.quantity | assetformat : asset.decimal_number}} {{transactionInputsValue.symbol}}</span>
+          <a class="btn-link" href="#!/explorer/tx/{{transactionInputsValue.hash}}">See input transaction</a>
+
         </div>
       </div>
     </div>
@@ -32,10 +34,10 @@
     <label class="control-label">
       {{ 'EXPLORER.TRANSACTION_OUTPUTS' | translate }}
     </label>
-    <div ng-repeat="output in transaction.outputs">
+    <div ng-repeat="output in transaction.outputs" class="explorerTransaction">
       <a class="btn-link" href="#!/explorer/adr/{{output.address}}">{{output.address}}</a>
       <div class="numbersSearch" ng-show="output.attachment.type=='etp'">{{output.value/100000000}} ETP</div>
-      <div class="numbersSearch" ng-hide="output.attachment.type=='etp'">{{output.attachment.quantity/assetFactor}} {{output.attachment.symbol}}</div>
+      <div class="numbersSearch" ng-hide="output.attachment.type=='etp'">{{output.attachment.quantity | assetformat : asset.decimal_number}} {{output.attachment.symbol}}</div>
     </div>
   </div>
   <div class="col-md-12"></div>
