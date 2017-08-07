@@ -8,37 +8,40 @@
     <img src="img/metaverse_logo.png" alt="" class="logoMetaverseLogin"/>
   </div>
   <form class="col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6"; style="margin-top: 50px;">
-      <!--To register-->
-      <div ng-hide="vm.registered">
-        <h2><b>{{ 'REGISTER.NEW_USER' | translate }}</b></h2>
-        <!--Account name-->
-        <div class="form-group">
-          <label for="username" class="control-label">{{ 'REGISTER.CHOOSE_ACCOUNT_NAME' | translate }}</label>
-          <input type="text" name="username" ng-model="vm.user.username" required class="form-control">
+    <!--To register-->
+    <div ng-hide="vm.registered">
+      <h2><b>{{ 'REGISTER.NEW_USER' | translate }}</b></h2>
+      <!--Account name-->
+      <div class="form-group">
+        <label for="username" class="control-label">{{ 'REGISTER.CHOOSE_ACCOUNT_NAME' | translate }}</label>
+        <input type="text" name="username" ng-model="vm.user.username" required class="form-control">
+      </div>
+      <!--Password-->
+      <div class="form-group">
+        <label for="password" class="control-label">{{ 'REGISTER.CHOOSE_PASSWORD' | translate }}</label>
+        <input type="password" name="password" ng-model="vm.user.password" required class="form-control">
+      </div>
+      <!--Re-enter password-->
+      <div class="form-group">
+        <label for="password" class="control-label">{{ 'REGISTER.REPEAT_PASSWORD' | translate }}</label>
+        <input class="form-control" type="password" ng-model="vm.user.password_repeat" required>
+      </div>
+      <!--Import account-->
+      <div class="form-group">
+        <div class="checkboxCircle">
+          <input type="checkbox" ng-model="do_import" id="checkboxImport">
+          <label for="checkboxImport"></label>
+          <span class="importAccountText">{{ 'REGISTER.DO_IMPORT' | translate }}:</span>
         </div>
-        <!--Password-->
-        <div class="form-group">
-          <label for="password" class="control-label">{{ 'REGISTER.CHOOSE_PASSWORD' | translate }}</label>
-          <input type="password" name="password" ng-model="vm.user.password" required class="form-control">
-        </div>
-        <!--Re-enter password-->
-        <div class="form-group">
-          <label for="password" class="control-label">{{ 'REGISTER.REPEAT_PASSWORD' | translate }}</label>
-          <input type="password" ng-model="vm.user.password_repeat" required class="form-control">
-        </div>
-        <!--Import account-->
-        <div class="form-group">
-          <div class="checkboxCircle">
-            <input type="checkbox" ng-model="do_import" id="checkboxImport">
-            <label for="checkboxImport"></label>
-            <span class="importAccountText">{{ 'REGISTER.DO_IMPORT' | translate }}:</span>
+        <br/>
+        <div ng-show="do_import">
+          <div class="form-group">
+            <label for="importPhrase" class="control-label">{{ 'REGISTER.IMPORT_PHRASE' | translate }}</label>
+            <textarea class="form-control" type="number" name="importPhrase" ng-model="import_phrase" rows="3" required></textarea>
           </div>
-          <br/>
-          <div ng-show="do_import">
-            <p>{{ 'REGISTER.IMPORT_PHRASE' | translate }}</p>
-            <textarea class="form-group" ng-model="import_phrase" rows="3" style="width:100%"></textarea>
-            <p>{{ 'REGISTER.IMPORT_ADDRESS_COUNT' | translate }}</p>
-            <input type="number" ng-model="address_count" min="1" required>
+          <div class="form-group">
+            <label for="nbrAdr" class="control-label">{{ 'REGISTER.IMPORT_ADDRESS_COUNT' | translate }}</label>
+            <input type="number" name="nbrAdr" ng-model="address_count" min="1" required class="form-control">
           </div>
         </div>
         <!--Submit and Cancel buttons-->
@@ -74,5 +77,5 @@
           </div>
         </div>
       </div>
-  </form>
-</div>
+    </form>
+  </div>

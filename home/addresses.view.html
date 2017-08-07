@@ -18,7 +18,6 @@
       </div>
     </div>
   </div>
-
   <br/>
   <div class="mainContent" >
 
@@ -29,17 +28,16 @@
           <img class="assetSymbol" src="favicon.png" alt=""/>
         </span>
 
-
         <div class="addressBoxTextInfo">
           <!--Display the QR in a pop-up-->
           <div class="copyAndQrCode">
             <span class="qrCode">
-              <a class="btn btn-link addressLinkButton" ng-click="showqr(address.address)" alt="receive"><img src="images/qrcode.png" alt="" /> {{ 'ADDRESSES_QR_CODE' | translate }}</a>
+              <a id="element" class="btn btn-link addressLinkButton" ng-click="showqr(address.address)" alt="receive"><img src="images/qrcode.png" alt="" /> {{ 'ADDRESSES_QR_CODE' | translate }}</a>
             </span>
 
             <!--Copy the address to clipboard-->
             <span class="copyAddress">
-              <button class="btn btn-link addressLinkButton" data-clipboard-text="{{address.address}}">
+              <button class="btn btn-link addressLinkButton" popover-trigger="'outsideClick'" data-clipboard-text="{{address.address}}" data-toggle="popover" data-placement="top" data-content="Address copied!" role="button">
                 <img src="images/copy-address.png" alt="" /> {{ 'ADDRESSES_COPY_ADDRESS' | translate }}
               </button>
             </span>
@@ -49,13 +47,13 @@
           <!--Display editable name of the address-->
           <div ng-hide="address.edit">
             <span class="addressBoxName" readonly="true" id="editAddressName">{{address.name}}</span>
-            <button class="glyphicon glyphicon-pencil editAddressNameButton" ng-click="enableEditAddressName(address.address)"></button>
+            <button class="glyphicon glyphicon-pencil editAddressNameButton" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit name" ng-click="enableEditAddressName(address.address)"></button>
           </div>
-          <!--Display for editing-->
+          <!--Display while editing-->
           <div class="input-group" ng-show="address.edit">
-            <input type="text" ng-model="newName" class="form-control addressBoxName" id="editAddressNameEditing">
+            <input type="text" ng-model="newName" class="form-control addressBoxNameUpdate" id="editAddressNameEditing" maxlength="40" ng-keyup="$event.keyCode == 13 && endEditAddressName(address.address, newName)">
             <span class="input-group-addon editAddressName">
-              <button class="glyphicon glyphicon-pencil editAddressNameButtonEditing" ng-click="endEditAddressName(address.address, newName)"></button>
+              <button class="glyphicon glyphicon-floppy-saved editAddressNameButtonEditing" ng-click="endEditAddressName(address.address, newName)"></button>
             </span>
           </div>
 

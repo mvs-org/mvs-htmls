@@ -46,7 +46,6 @@
 
     //define if the research is a Hash, a Transaction, a Block or an Asset
     function defineTypeSearch () {
-      //console.log($scope.search);
       if ($scope.typeSearch=='' || $scope.typeSearch=='noresult') {
         //nothing to do
       } else if ($scope.typeSearch === 'tx') {
@@ -567,9 +566,15 @@
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.addresses = [];
           response.data.balances.forEach( (e) => {
+            var name = "New address";
+            if (localStorage.getItem(e.balance.address) != undefined) {
+              name = localStorage.getItem(e.balance.address);
+            }
+            console.log(localStorage.getItem(e.balance.address));
             $scope.addresses.push({
               "balance": parseInt(e.balance.unspent),
               "address": e.balance.address,
+              "name": name,
               "frozen": e.balance.frozen
             });
           });
@@ -904,41 +909,6 @@
       $scope.debugState = MetaverseService.debug;
     }
 
-    /*$scope.copyToClipboard=copyToClipboard;
-
-    function copyToClipboard(toCopy) {
-      var body = angular.element($window.document.body);
-              var textarea = angular.element('<textarea/>');
-              textarea.css({
-                  position: 'fixed',
-                  opacity: '0'
-              });
-
-              function copy(toCopy) {
-                  textarea.val(toCopy);
-                  body.append(textarea);
-                  textarea[0].select();
-
-                  try {
-                      var successful = document.execCommand('copy');
-                      if (!successful) throw successful;
-                  } catch (err) {
-                      console.log("failed to copy", toCopy);
-                  }
-                  textarea.remove();
-              }
-
-              return {
-                  restrict: 'A',
-                  link: function (scope, element, attrs) {
-                      element.bind('click', function (e) {
-                          copy(attrs.copyToClipboard);
-                      });
-                  }
-              }
-            }*/
-
-
     listBalances();
 
   }
@@ -1062,6 +1032,12 @@
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success && response.data.assets != '') {    //If the address doesn't contain any asset, we don't need it
             response.data.assets.forEach( (a) => {
+              var name = "New address";
+              if (localStorage.getItem(a.address) != undefined) {
+                name = localStorage.getItem(a.address);
+              }
+              a.name = name;
+              console.log(a);
               $scope.assetAddresses.push(a);
             });
           }
@@ -1533,9 +1509,9 @@
 
   function ConsoleController(MetaverseService, $rootScope, $scope) {
 
-    var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
+    //var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
     //To test the Console view with Grunt:
-    //var ws = new WebSocket('ws://test4.metaverse.live:8820/ws');
+    var ws = new WebSocket('ws://test4.metaverse.live:8820/ws');
 
     $("#inputField").focus();
 
@@ -1573,6 +1549,21 @@
   }
 
   function HomeController(MetaverseService, $rootScope, $scope, localStorageService, $interval, $translate, $location) {
+
+    $(function () {
+        $("[data-toggle='tooltip']").tooltip();
+    });
+
+    $(function () {
+        $("[data-toggle='popover']").popover();
+    });
+
+    $('body').on('click', function (e) {
+      //Hide the popover after click somewhere else, only for buttons
+      if ($(e.target).data('toggle') !== 'popover' && $(e.target).parents('.popover.in').length === 0) {
+          $('[data-toggle="popover"]').popover('hide');
+      }
+    });
 
     var vm = this;
     vm.account = localStorageService.get('credentials').user;

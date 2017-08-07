@@ -53,9 +53,8 @@
                 <img class="assetSymbol assetSymbolDeposit" src="favicon.png" alt=""/>
               </div>
               <div class="addressBoxTextInfoDeposit">
-
-
-                <span class="addressBoxNameDeposit">{{asset.address}}</span>
+                <span class="addressBoxNameDeposit">{{asset.name}}</span>
+                <span class="addressBoxAddressDeposit">{{asset.address}}</span>
                 <span class="col-xs-6 noPaddingLeftRight">
                   <span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
                   <span class="assetBoxValue">{{asset.quantity | assetformat : asset.decimal_number}}</span>

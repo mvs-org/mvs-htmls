@@ -13,5 +13,5 @@
       <span class="span1">{{log.answer}}</span>
     </div>
   </div>
-  <input type="text" ng-show="connected" ng-model="querystring" ng-keyup="$event.keyCode == 13 && query()" class="forminput" id="inputField" placeholder="{{ 'CONSOLE.INSERT_PROMPT' | translate }}">
+  <input type="text" rows="5" ng-show="connected" ng-model="querystring" ng-keyup="$event.keyCode == 13 && query()" class="forminput" id="inputField" placeholder="{{ 'CONSOLE.INSERT_PROMPT' | translate }}">
 </div>

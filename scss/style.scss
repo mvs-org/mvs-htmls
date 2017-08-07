@@ -408,13 +408,13 @@ _____  ._______  ___.___ _______
 .checkboxCircle label {
   cursor: pointer;
   position: absolute;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   -webkit-border-radius: 50px;
   -moz-border-radius: 50px;
   border-radius: 50px;
   left: -2px;
-  top: 4px;
+  top: -1px;
 
   -webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
   -moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
@@ -428,8 +428,8 @@ _____  ._______  ___.___ _______
   opacity: 0;
 	content: '';
 	position: absolute;
-	width: 12px;
-	height: 12px;
+	width: 14px;
+	height: 14px;
 	background: $blueGeneralColor;
 	-webkit-border-radius: 50px;
 	-moz-border-radius: 50px;
@@ -1114,7 +1114,15 @@ _____  ._______  ___.___ _______
 }
 
 .addressBoxNameUpdate {
+  color: $blueGeneralColor;
+  float:left;
+  font-size: 14px;
+  background-color: transparent;
+  height: 26px;
   display: inline;
+  padding-top: 0;
+  padding-bottom: 0;
+
 }
 
 .addressBoxBalanceDeposit {
@@ -1223,8 +1231,8 @@ html,body {
   margin-top: 10px;
   background-color: transparent !important;
   border-width: 0;
-  height: 100px;
   width: 100%;
+  vertical-align: top;
 
 }
 
