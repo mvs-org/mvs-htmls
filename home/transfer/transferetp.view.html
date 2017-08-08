@@ -24,115 +24,107 @@
 		</ul>
 	</div>
 
-
-	<!--<div class="form-group">
-	<label for="from_address" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
-	<select class="form-control" name="period" ng-model="from_address">
-	<option value="">{{'TRANSFER_FROM_ADDRESS_AUTOMATIC'|translate}}</option>
-	<option ng-repeat="address in from_addresses" value="{{address.balance.address}}">{{address.balance.address}} ({{(address.balance.unspent-address.balance.frozen)/100000000}} ETP)</option>
-</select>
-</div>-->
-
-<!--Display the total ETP in automatic selection-->
-<div class="col-xs-12 noPaddingLeftRight" ng-show=autoSelectAddress>
-	<a>
-		<dd class="panel assetBox assetBoxChecked col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
-			<span class="assetBoxSymbolImg"><img class="assetSymbol" src="favicon.png" alt=""/></span>
-			<span class="assetBoxTextInfo">
-				<div>
-					<span class="checked"><span>
-					</div>
-					<span class="assetBoxSymbolName">ETP</span>
-					<span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
-					<span class="assetBoxValue">{{balance['total-unspent']/100000000}}</span>
-					<span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
-					<span class="assetBoxValue">{{balance['total-frozen']/100000000}}</span>
-				</span>
-			</dd>
-		</a>
-	</div>
-
-	<!--Display all the addresses if the user choose to let it manually-->
-	<div class="col-xs-12 noPaddingLeftRight" ng-hide=autoSelectAddress>
-		<div class="radioButtonAddress noPaddingLeftRight" ng-repeat="address in addresses | orderBy:sortType:sortReverse" ng-click="selectAddress('selectionAddress',address.address)" ng-hide="(address.balance == 0)">
-			<dd class="panel addressBox noPaddingLeftRight col-xs-1">
-				<input type="radio" name="radioDeposit" id={{address.address}} value="hideCustomDate"/>
-				<label for={{address.address}}>
-					<div class="addressBoxSymbolImgDeposit">
-						<img class="assetSymbol assetSymbolDeposit" src="favicon.png" alt=""/>
-					</div>
-					<div class="addressBoxTextInfoDeposit">
-						<span class="addressBoxNameDeposit">{{address.name}}</span>
-						<span class="addressBoxAddressDeposit">{{address.address}}</span>
-						<span class="col-xs-6 noPaddingLeftRight">
-							<span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
-							<span class="assetBoxValue">{{address.balance/100000000 }}</span>
-						</span>
-						<span class="col-xs-6 noPaddingLeftRight">
-							<span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
-							<span class="assetBoxValue">{{address.frozen/100000000 }}</span>
-						</span>
-					</div>
-				</label>
-			</dd>
+	<!--Display the total ETP in automatic selection-->
+	<div class="col-xs-12 noPaddingLeftRight" ng-show=autoSelectAddress>
+		<a>
+			<dd class="panel assetBox assetBoxChecked col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+				<span class="assetBoxSymbolImg"><img class="assetSymbol" src="favicon.png" alt=""/></span>
+				<span class="assetBoxTextInfo">
+					<div>
+						<span class="checked"><span>
+						</div>
+						<span class="assetBoxSymbolName">ETP</span>
+						<span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
+						<span class="assetBoxValue">{{balance['total-unspent']/100000000}}</span>
+						<span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
+						<span class="assetBoxValue">{{balance['total-frozen']/100000000}}</span>
+					</span>
+				</dd>
+			</a>
 		</div>
-	</div>
 
-	<form class="row">
-		<!--Sender-->
-		<div class="col-md-12 form-group noPaddingLeftRight">
-			<br/>
-			<div class="col-md-6 form-group">
-				<label for="value" class="control-label">From address</label>
-				<input type="text" ng-hide="sendfrom==''" class="form-control" name="sender_address" id="" value="{{sendfrom}}" disabled>
-				<input type="text" ng-show="sendfrom==''" class="form-control" name="sender_address" id="" value="{{ 'DEPOSIT_SELECT_AUTO_ADRESS' | translate }}" disabled>
+		<!--Display all the addresses if the user choose to let it manually-->
+		<div class="col-xs-12 noPaddingLeftRight" ng-hide=autoSelectAddress>
+			<div class="radioButtonAddress noPaddingLeftRight" ng-repeat="address in addresses | orderBy:sortType:sortReverse" ng-click="selectAddress('selectionAddress',address.address)" ng-hide="(address.balance == 0)">
+				<dd class="panel addressBox noPaddingLeftRight col-xs-1">
+					<input type="radio" name="radioDeposit" id={{address.address}} value="hideCustomDate"/>
+					<label for={{address.address}}>
+						<div class="addressBoxSymbolImgDeposit">
+							<img class="assetSymbol assetSymbolDeposit" src="favicon.png" alt=""/>
+						</div>
+						<div class="addressBoxTextInfoDeposit">
+							<span class="addressBoxNameDeposit">{{address.name}}</span>
+							<span class="addressBoxAddressDeposit">{{address.address}}</span>
+							<span class="col-xs-6 noPaddingLeftRight">
+								<span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
+								<span class="assetBoxValue">{{address.balance/100000000 }}</span>
+							</span>
+							<span class="col-xs-6 noPaddingLeftRight">
+								<span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
+								<span class="assetBoxValue">{{address.frozen/100000000 }}</span>
+							</span>
+						</div>
+					</label>
+				</dd>
 			</div>
 		</div>
 
-		<!--Recipient(s)-->
-		<div class="col-md-12 form-group noPaddingLeftRight transferRecipent" ng-repeat="recipent in recipents | orderBy:'index'">
-			<div class="col-md-6 form-group transferRecipent">
-				<label for="recipent_address" class="control-label">{{ 'TRANSFER_RECIPENT_ADDRESS' | translate }}</label>
-				<input type="text" class="form-control" name="recipent_address" id="" ng-model="recipent.address" required>
-			</div>
-
-			<!--Amount-->
-			<div class="col-md-6 transferRecipent">
-				<div class="form-group">
-					<label for="value" class="control-label">{{ 'TRANSFER_VALUE' | translate }}</label>
-					<input type="number" min=0 step="0.00000001" max={{balance['total-unspent']/100000000}} required class="form-control" placeholder="0.00000000" name="value" ng-model="recipent.value" autocomplete="off">
-				</div>
-			</div>
-		</div>
-
-
-
-		<!--Add and Remove recipent button-->
-		<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
-			<div class="addRecipent col-xs-6 col-sm-6 col-md-6">
-				<button type="button" ng-click="addRecipent()" class="btn-link addRecipentButton"><span class="glyphicon glyphicon-plus"></span> {{ 'TRANSFER_ADD_RECIPENT' | translate }}</button>
-			</div>
-			<div class="addRecipent col-xs-6 col-sm-6 col-md-6">
-				<button type="button" ng-click="removeRecipent()" class="btn-link addRecipentButton" ng-show="recipents.length>1"><span class="glyphicon glyphicon-minus"></span> {{ 'TRANSFER_REMOVE_RECIPENT' | translate }}</button>
-			</div>
-		</div>
-
-		<!--Password-->
-		<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
-			<div class="col-xs-12 col-sm-12 col-md-6">
-				<div class="form-group">
-					<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
-					<input type="password" class="form-control" name="password" id="" required autocomplete="new-password" ng-model="password">
-				</div>
-			</div>
-		</div>
-
-		<!--Submit button-->
-		<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
-			<div class="col-xs-12 col-sm-6 col-md-3 ">
+		<form class="row">
+			<!--Sender-->
+			<div class="col-md-12 form-group noPaddingLeftRight">
 				<br/>
-				<button type="submit" class="btn btn-success" id="transferBtn" ng-click="transfer()">{{ 'TRANSFER_SEND' | translate }}</button>
+				<div class="col-md-6 form-group">
+					<label for="value" class="control-label">From address</label>
+					<input type="text" ng-hide="sendfrom==''" class="form-control" name="sender_address" id="" value="{{sendfrom}}" disabled>
+					<input type="text" ng-show="sendfrom==''" class="form-control" name="sender_address" id="" value="{{ 'DEPOSIT_SELECT_AUTO_ADRESS' | translate }}" disabled>
+				</div>
 			</div>
-		</div>
-	</form>
+
+			<!--Recipient(s)-->
+			<div class="col-md-12 form-group noPaddingLeftRight transferRecipent" ng-repeat="recipent in recipents | orderBy:'index'">
+				<div class="col-md-6 form-group transferRecipent">
+					<label for="recipent_address" class="control-label">{{ 'TRANSFER_RECIPENT_ADDRESS' | translate }}</label>
+					<input type="text" class="form-control" name="recipent_address" id="" ng-model="recipent.address" required>
+				</div>
+
+				<!--Amount-->
+				<div class="col-md-6 transferRecipent">
+					<div class="form-group">
+						<label for="value" class="control-label">{{ 'TRANSFER_VALUE' | translate }}</label>
+						<input type="number" min=0 step="0.00000001" max={{balance['total-unspent']/100000000}} required class="form-control" placeholder="0.00000000" name="value" ng-model="recipent.value" autocomplete="off">
+					</div>
+				</div>
+			</div>
+
+
+
+			<!--Add and Remove recipent button-->
+			<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
+				<div class="addRecipent col-xs-6 col-sm-6 col-md-6">
+					<button type="button" ng-click="addRecipent()" class="btn-link addRecipentButton"><span class="glyphicon glyphicon-plus"></span> {{ 'TRANSFER_ADD_RECIPENT' | translate }}</button>
+				</div>
+				<div class="addRecipent col-xs-6 col-sm-6 col-md-6">
+					<button type="button" ng-click="removeRecipent()" class="btn-link addRecipentButton" ng-show="recipents.length>1"><span class="glyphicon glyphicon-minus"></span> {{ 'TRANSFER_REMOVE_RECIPENT' | translate }}</button>
+				</div>
+			</div>
+
+			<!--Password-->
+			<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
+				<div class="col-xs-12 col-sm-12 col-md-6">
+					<div class="form-group">
+						<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
+						<input type="password" class="form-control" name="password" id="" required autocomplete="new-password" ng-model="password">
+					</div>
+				</div>
+			</div>
+
+			<!--Submit button-->
+			<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
+				<div class="col-xs-12 col-sm-6 col-md-3 ">
+					<br/>
+					<button type="submit" class="btn btn-success" id="transferBtn" ng-click="transfer()">{{ 'TRANSFER_SEND' | translate }}</button>
+				</div>
+			</div>
+		</form>
+	</div>
 </div>
