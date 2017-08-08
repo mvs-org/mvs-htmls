@@ -17,10 +17,10 @@
 
 	<!--Navigation Manual/Auto selection of addresse-->
 	<div class="col-xs-12 noPaddingLeftRight">
-		<ul class="nav nav-pills tabsMenu">
+		<ul class="nav nav-pills tabsMenu" >
 			<li role="presentation"><a class="btn btn-link" ng-click="selectAddress('auto','')" ng-style="{ 'text-decoration' : underlineAuto}">{{ 'DEPOSIT_SELECT_AUTO_ADRESS' | translate }}</a></li>
 			<li role="presentation" ng-show="selectAddressAvailable"><a class="btn btn-link" ng-click="selectAddress('manual','')" ng-style="{ 'text-decoration' : underlineManual}" >{{ 'DEPOSIT_SELECT_MANUAL_ADDRESS' | translate }}</a></li>
-			<li role="presentation" ng-hide="selectAddressAvailable"><a class="btn btn-link disabled" data-toggle="tooltip" data-placement="top" title="" data-original-title="Selection of input address not available for multi-recipent queries" ng-style="{ 'text-decoration' : underlineManual}">{{ 'DEPOSIT_SELECT_MANUAL_ADDRESS' | translate }}</a></li>
+			<li role="presentation" ng-hide="selectAddressAvailable" bs-tooltip data-placement="top" title="{{ 'TRANSFER_SELECT_INPUT_MULTI_RECIPENT' | translate }}"><a class="btn btn-link disabled" ng-style="{ 'text-decoration' : underlineManual}">{{ 'DEPOSIT_SELECT_MANUAL_ADDRESS' | translate }}</a></li>
 		</ul>
 	</div>
 

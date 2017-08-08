@@ -5,6 +5,7 @@
   .controller('HomeController', HomeController)
   .controller('MenuController', MenuController)
   .controller('ConsoleController', ConsoleController)
+  .controller('AddressesController', AddressesController)
   .controller('AccountController', AccountController)
   .controller('TransferAssetController', TransferAssetController)
   .controller('CreateAssetController', CreateAssetController)
@@ -15,6 +16,31 @@
   .controller('DepositController', DepositController)
   .controller('ExplorerController', ExplorerController)
   .controller('MiningController', MiningController)
+  .directive('bsTooltip', function() {
+    return {
+      restrict: 'A',
+      link: function(scope, element, attrs){
+          $(element).hover(function(){
+              // on mouseenter
+              $(element).tooltip('show');
+          }, function(){
+              // on mouseleave
+              $(element).tooltip('hide');
+          });
+      }
+    };
+  })
+  .directive('bsPopover', function($compile, $timeout){
+    return function(scope, element) {
+      $(element).popover();
+      $('body').on('click', function (e) {
+        //Hide the popover after click somewhere else, only for buttons
+        if ($(e.target).data('toggle') !== 'popover' && $(e.target).parents('.popover.in').length === 0) {
+            $(element).popover('hide');
+        }
+      });
+   }
+  })
 
 
   function MenuController($location, $rootScope){
@@ -567,10 +593,9 @@
           $scope.addresses = [];
           response.data.balances.forEach( (e) => {
             var name = "New address";
-            if (localStorage.getItem(e.balance.address) != undefined) {
-              name = localStorage.getItem(e.balance.address);
+            if (localStorageService.get(e.balance.address) != undefined) {
+              name = localStorageService.get(e.balance.address);
             }
-            console.log(localStorage.getItem(e.balance.address));
             $scope.addresses.push({
               "balance": parseInt(e.balance.unspent),
               "address": e.balance.address,
@@ -646,7 +671,6 @@
         value = e.value;
         sendTo = e.address;
       });
-
       switch ($rootScope.factor) {
         case 'FACTOR_SATOSHI':
         break;
@@ -657,9 +681,7 @@
         $translate('MESSAGES.TRANSFER_ERROR').then( (data) => FlashService.Error(data) );
         return;
       }
-
       value = Math.round(value);
-
       var SendPromise = ($scope.sendfrom) ? MetaverseService.SendFrom($scope.sendfrom, sendTo, value, $scope.password) : MetaverseService.Send(sendTo, value, $scope.password);
       SendPromise
       .then( (response) => {
@@ -743,41 +765,19 @@
 
   }
 
-  function AccountController(MetaverseService, $translate, $rootScope, $scope, FlashService, $location, localStorageService, $window) {
+
+
+  function AddressesController(MetaverseService, $translate, $rootScope, $scope, FlashService, $location, localStorageService, $window) {
+
 
     $scope.addresses = [];
-    $scope.showprivatekey = showprivatekey;
     $scope.getnewaddress = getnewaddress;
-    $scope.changepassword = changepassword;
-    $scope.accountname = localStorageService.get('credentials').user;
-    $scope.debugState = MetaverseService.debug;
-
-    $scope.setDeugger = setDeugger;
     $scope.showqr = showqr;
-    $scope.setOrder = setOrder;
-
-    $scope.sortType = 'balance';
-    $scope.sortReverse = true;
-
     $scope.buttonCopyToClipboard = new Clipboard('.btn');
 
     $scope.enableEditAddressName = enableEditAddressName;
     $scope.endEditAddressName = endEditAddressName;
     $scope.newName = 'New Address';
-
-
-    function setOrder(order) {
-      if ($scope.sortType == order) {
-        $scope.sortReverse = !$scope.sortReverse;
-      } else {
-        switch (order) {
-          case 'address':
-          case 'balance':
-          $scope.sortType = order;
-          break;
-        }
-      }
-    }
 
 
     //Shows a modal of the address incl. a qr code
@@ -795,8 +795,7 @@
       });
       $('#showqrmodal').modal('show');
     }
-
-    //Enable the edition of the Address Name
+      //Enable the edition of the Address Name
     function enableEditAddressName(address) {
       $scope.addresses.forEach( (e) => {
         if (e.address == address) {
@@ -805,47 +804,40 @@
         }
       });
     }
-
+      //Save the edited name in the local storage
     function endEditAddressName(address, newName) {
-      localStorage.setItem(address,newName);
+      localStorageService.set(address,newName);
       $scope.addresses.forEach( (e) => {
         if (e.address == address) {
           e.name = newName;
           e.edit = false;
-        }
-      });
+      }
+    });
     }
-
-    //Load the addresses and their balances
+      //Load the addresses and their balances
     function listBalances() {
       NProgress.start();
-      MetaverseService.ListBalances()
-      .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
-          $scope.addresses = [];
-          response.data.balances.forEach( (e) => {
-            var name = localStorage.getItem(e.balance.address);
-            if (name == undefined) {
-              name = "New Address";
-            }
-            $scope.addresses.push({
-              "balance": parseInt(e.balance.unspent),
-              "address": e.balance.address,
-              "frozen": e.balance.frozen,
-              "name": name,
-              "edit": false
+        MetaverseService.ListBalances()
+        .then( (response) => {
+          if (typeof response.success !== 'undefined' && response.success) {
+            $scope.addresses = [];
+            response.data.balances.forEach( (e) => {
+              var name = localStorageService.get(e.balance.address);
+              if (name == undefined) {
+                name = "New Address";
+              }
+              $scope.addresses.push({
+                "balance": parseInt(e.balance.unspent),
+                "address": e.balance.address,
+                "frozen": e.balance.frozen,
+                "name": name,
+                "edit": false
+              });
             });
-
-            //To display the name of the address saved in the cookies
-            /*$scope.addressesNames[e.balance.address] = {
-              "name": name,
-              "edit": false
-            };*/
-          });
-        }
-        NProgress.done();
-      });
-    }
+          }
+          NProgress.done();
+        });
+      }
 
     function getnewaddress() {
       MetaverseService.GetNewAddress()
@@ -856,6 +848,18 @@
         }
       });
     }
+
+    listBalances();
+  }
+
+  function AccountController(MetaverseService, $translate, $rootScope, $scope, FlashService, $location, localStorageService, $window) {
+
+    $scope.showprivatekey = showprivatekey;
+    $scope.changepassword = changepassword;
+    $scope.accountname = localStorageService.get('credentials').user;
+    $scope.debugState = MetaverseService.debug;
+
+    $scope.setDeugger = setDeugger;
 
     function showprivatekey(password, last_word) {
       if (password == undefined) {
@@ -908,8 +912,6 @@
       MetaverseService.debug = (state == 1);
       $scope.debugState = MetaverseService.debug;
     }
-
-    listBalances();
 
   }
 
@@ -1025,7 +1027,6 @@
 
     function listAssetBalances() {
       NProgress.start();
-      NProgress.start();
       $scope.assetAddresses = [];
       $scope.allAddresses.forEach( (e) => {
         MetaverseService.GetAddressAsset(e.address)
@@ -1033,11 +1034,10 @@
           if (typeof response.success !== 'undefined' && response.success && response.data.assets != '') {    //If the address doesn't contain any asset, we don't need it
             response.data.assets.forEach( (a) => {
               var name = "New address";
-              if (localStorage.getItem(a.address) != undefined) {
-                name = localStorage.getItem(a.address);
+              if (localStorageService.get(a.address) != undefined) {
+                name = localStorageService.get(a.address);
               }
               a.name = name;
-              console.log(a);
               $scope.assetAddresses.push(a);
             });
           }
@@ -1081,7 +1081,6 @@
         var SendPromise = ($scope.sendfrom) ? MetaverseService.SendAssetFrom($scope.sendfrom, recipent_address, symbol, quantity) : MetaverseService.SendAsset(recipent_address, symbol, quantity);
         SendPromise
         .then( (response) => {
-          console.log(response);
           NProgress.done();
           if (typeof response.success !== 'undefined' && response.success) {
             $translate('MESSAGES.ASSETS_TRANSFER_SUCCESS').then( (data) => {
@@ -1550,20 +1549,7 @@
 
   function HomeController(MetaverseService, $rootScope, $scope, localStorageService, $interval, $translate, $location) {
 
-    $(function () {
-        $("[data-toggle='tooltip']").tooltip();
-    });
 
-    $(function () {
-        $("[data-toggle='popover']").popover();
-    });
-
-    $('body').on('click', function (e) {
-      //Hide the popover after click somewhere else, only for buttons
-      if ($(e.target).data('toggle') !== 'popover' && $(e.target).parents('.popover.in').length === 0) {
-          $('[data-toggle="popover"]').popover('hide');
-      }
-    });
 
     var vm = this;
     vm.account = localStorageService.get('credentials').user;
@@ -1653,5 +1639,9 @@
       $location.path('/explorer/noresult');
     }
   }
+
+
+
+
 
 })();

@@ -1,15 +1,18 @@
 <div class="content">
+
   <div class="headline">
     {{ 'NAV_ETP' | translate }}
     <a href="#!/deposit" class="btn btn-success smallButton">{{ 'DEPOSIT.HEADLINE' | translate }}</a>
   </div>
 
+  <!--Show/Hide empty addresses-->
   <div class="checkboxCircle">
     <input type="checkbox" ng-model="displayEmptyAdresses" id="checkboxCircleAdresses">
     <label for="checkboxCircleAdresses"></label>
     <span class="textCheckbox">{{ 'ADDRESSES_HIDE_EMPTY' | translate }}</span>
   </div>
 
+  <!--QR Code pop-up-->
   <div class="modal fade" id="showqrmodal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content panel">
@@ -19,35 +22,35 @@
     </div>
   </div>
   <br/>
-  <div class="mainContent" >
 
-    <!--Display all the ETP adresses-->
-    <div ng-repeat="address in addresses | orderBy:sortType:sortReverse" ng-hide="(displayEmptyAdresses == true && address.balance == 0)">
-      <dd class="panel addressBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
-        <span class="addressBoxSymbolImg">
-          <img class="assetSymbol" src="favicon.png" alt=""/>
-        </span>
+  <!--Display all the ETP adresses-->
+  <div ng-repeat="address in addresses | orderBy:'balance':true" ng-hide="(displayEmptyAdresses == true && address.balance == 0)">
+    <dd class="panel addressBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
 
-        <div class="addressBoxTextInfo">
-          <!--Display the QR in a pop-up-->
-          <div class="copyAndQrCode">
-            <span class="qrCode">
-              <a id="element" class="btn btn-link addressLinkButton" ng-click="showqr(address.address)" alt="receive"><img src="images/qrcode.png" alt="" /> {{ 'ADDRESSES_QR_CODE' | translate }}</a>
-            </span>
+      <!--Asset logo-->
+      <span class="addressBoxSymbolImg">
+        <img class="assetSymbol" src="favicon.png" alt=""/>
+      </span>
 
-            <!--Copy the address to clipboard-->
-            <span class="copyAddress">
-              <button class="btn btn-link addressLinkButton" popover-trigger="'outsideClick'" data-clipboard-text="{{address.address}}" data-toggle="popover" data-placement="top" data-content="Address copied!" role="button">
-                <img src="images/copy-address.png" alt="" /> {{ 'ADDRESSES_COPY_ADDRESS' | translate }}
-              </button>
-            </span>
+      <div class="addressBoxTextInfo">
+        <!--Display the QR in a pop-up-->
+        <div class="copyAndQrCode">
+          <span class="qrCode">
+            <a id="element" class="btn btn-link addressLinkButton" ng-click="showqr(address.address)" alt="receive"><img src="images/qrcode.png" alt="" />{{ 'ADDRESSES_QR_CODE' | translate }}</a>
+          </span>
+          <!--Copy the address to clipboard-->
+          <span class="copyAddress">
+            <button class="btn btn-link addressLinkButton" bs-popover data-clipboard-text="{{address.address}}" data-toggle="popover" data-placement="top" data-content="{{ 'ADDRESSES_POPOVER_COPIED' | translate }}" role="button">
+              <img src="images/copy-address.png" alt="" /> {{ 'ADDRESSES_COPY_ADDRESS' | translate }}
+            </button>
+          </span>
         </div>
-        <div class="addressBoxTextInfoAddresses">
 
+        <div class="addressBoxTextInfoAddresses">
           <!--Display editable name of the address-->
           <div ng-hide="address.edit">
             <span class="addressBoxName" readonly="true" id="editAddressName">{{address.name}}</span>
-            <button class="glyphicon glyphicon-pencil editAddressNameButton" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit name" ng-click="enableEditAddressName(address.address)"></button>
+            <button class="glyphicon glyphicon-pencil editAddressNameButton" bs-tooltip data-placement="top" title="{{ 'ADDRESSES_TOOLTIP_EDIT_NAME' | translate }}" ng-click="enableEditAddressName(address.address)"></button>
           </div>
           <!--Display while editing-->
           <div class="input-group" ng-show="address.edit">
@@ -72,15 +75,13 @@
             <span class="assetBoxValue">{{address.frozen/100000000 }}</span>
           </span>
         </div>
-    </div>
-  </dd>
-</div>
+      </div>
+    </dd>
+  </div>
 
-<div class="createAddress col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
-  <button ng-click="getnewaddress()" class="btn-link createAddressButton"><span class="glyphicon glyphicon-plus"></span> {{ 'ADDRESSES_CREATE_NEW_ADDRESS' | translate }}</button>
-</div>
+  <!--Get new address-->
+  <div class="createAddress col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
+    <button ng-click="getnewaddress()" class="btn-link createAddressButton"><span class="glyphicon glyphicon-plus"></span> {{ 'ADDRESSES_CREATE_NEW_ADDRESS' | translate }}</button>
+  </div>
 
-
-
-</div>
 </div>

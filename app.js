@@ -83,7 +83,7 @@
             .state('home.addresses', {
                 url: "/home/addresses",
                 templateUrl: "home/addresses.view.html",
-                controller: 'AccountController',
+                controller: 'AddressesController',
                 controllerAs: 'vm'
             })
 
