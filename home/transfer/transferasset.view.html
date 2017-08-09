@@ -45,10 +45,10 @@
 
       <!--Display all the addresses if the user choose to let it manually-->
       <div class="col-xs-12 noPaddingLeftRight" ng-hide=autoSelectAddress>
-        <div class="radioButtonAddress noPaddingLeftRight" ng-repeat="asset in assetAddresses" ng-click="selectAddress('selectionAddress',asset.address)" ng-show="(asset.symbol == symbol)">
+        <div class="radioButtonAddress noPaddingLeftRight" ng-repeat="asset in assetAddresses | orderBy:'quantity':true" ng-click="selectAddress('selectionAddress',asset.address)" ng-show="(asset.symbol == symbol)">
           <dd class="panel addressBox noPaddingLeftRight col-xs-1">
-            <input type="radio" name="radioDeposit" id={{asset.address}} value="hideCustomDate" checked/>
-            <label for={{asset.address}}>
+            <input type="radio" name="radioDeposit" id={{asset.symbol}}.{{asset.address}} value="hideCustomDate" checked/>
+            <label for={{asset.symbol}}.{{asset.address}}>
               <div class="addressBoxSymbolImgDeposit">
                 <img class="assetSymbol assetSymbolDeposit" src="favicon.png" alt=""/>
               </div>
@@ -69,8 +69,6 @@
       </div>
     </div>
 
-
-
     <form class="row">
       <!--Sender-->
       <div class="col-md-12 form-group noPaddingLeftRight">
@@ -85,7 +83,7 @@
       <!--Recipient-->
       <div class="col-md-6 form-group">
         <label for="recipent_address" class="control-label">{{ 'TRANSFER_RECIPENT_ADDRESS' | translate }}</label>
-        <input type="text" class="form-control" name="recipent_address" id="" ng-model="recipent_address" required autocomplete="off">
+        <input type="etpaddress" class="form-control" name="recipent_address" id="" ng-model="recipent_address" required autocomplete="off">
       </div>
 
       <!--Amount-->
@@ -103,8 +101,6 @@
           <input type="password" class="form-control" name="password" id="" autocomplete="new-password" required ng-model="password">
         </div>
       </div>
-
-
 
       <!--Submit button-->
       <div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">

@@ -125,7 +125,7 @@
             })
 
             .state('home.explorer.noresult', {
-                url: "/explorer/noresult",
+                url: "/explorer/noresult/:search",
                 templateUrl: "home/explorer/noresult.view.html",
                 controller: 'ExplorerController'
             })
@@ -169,6 +169,20 @@
                 controller: 'ETPController',
                 controllerAs: 'vm'
             })
+
+            /*.state('home.multisignature', {
+                url: "/transfer/multisignature",
+                templateUrl: "home/transfer/multisignature.view.html",
+                controller: 'ETPMultiSignController',
+                controllerAs: 'vm'
+            })
+
+            .state('home.createmultisignature', {
+                url: "/transfer/newmultisignature",
+                templateUrl: "home/transfer/createmultisignature.view.html",
+                controller: 'ETPMultiSignController',
+                controllerAs: 'vm'
+            })*/
 
             .state('home.deposit', {
                 url: "/deposit",

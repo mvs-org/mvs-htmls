@@ -138,17 +138,18 @@
         </div>
       </div>
       <div class="transactionBoxLarge col-md-12 noPaddingLeftRight" dir-paginate="transaction in transactionsFiltered | orderBy:'timestamp':true | itemsPerPage: 10">
-
         <!--Time-->
         <div class="transactionBoxLargeTime noPaddingLeftRight col-md-3 col-lg-2">
           {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT' | translate) }}
         </div>
 
         <!--Recipent-->
-        <div ng-repeat="recipent in transaction.recipents" class="transactionBoxLargeAddress noPaddingLeftRight col-md-5 col-lg-4">
-          <a class="btn-link linkToExplorerButton" href="#!/explorer/adr/{{recipent.address}}">
+        <div class="transactionBoxLargeAddress noPaddingLeftRight col-md-5 col-lg-4">
+          <div ng-repeat="recipent in transaction.recipents">
+            <a class="btn-link linkToExplorerButton" href="#!/explorer/adr/{{recipent.address}}">
             <div class="address">{{recipent.address}}</div>
-          </a>
+            </a>
+          </div>
         </div>
 
         <!--Direction-->

@@ -1,69 +1,69 @@
 <!--------------------------------------头部----------------------------------->
-<div class="panel">
-  <div class="header">
-    <div class="hidden-xs">
-      <a href="#!/home">
-        <img src="img/metaverse_logo.png" class="logoMetaverseSmall" alt="" />
-      </a>
+<div class="panel header">
+
+  <div class="hidden-xs">
+    <a href="#!/home">
+      <img src="img/metaverse_logo.png" class="logoMetaverseSmall" alt="" />
+    </a>
+  </div>
+  <div class="form-group research col-xs-offset-0 col-xs-10 col-sm-offset-2 col-sm-7 col-md-offset-2 col-md-5 col-lg-offset-4 col-lg-4">
+    <!--Search TextBox-->
+    <div class="col-xs-10 col-md-10 noPaddingLeftRight">
+      <input type="search" name="search" class="form-control researchTextBox" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
     </div>
-    <div class="form-group research col-xs-offset-0 col-xs-10 col-sm-offset-2 col-sm-7 col-md-offset-2 col-md-5 col-lg-offset-4 col-lg-4">
-      <!--Search TextBox-->
-      <div class="col-xs-10 col-md-10 noPaddingLeftRight">
-        <input type="search" name="search" class="form-control researchTextBox" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}" autocomplete="on">
-      </div>
-      <!--Search button large screen-->
-      <div class="col-xs-2 hidden-xs">
-        <input type="submit" class="btn btn-success smallButton" value="{{ 'HEADER_SEARCH' | translate }}" ng-click="vm.search(stringToSearch)"></input>
-      </div>
-      <!--Search button small screen-->
-      <div class="col-xs-2 visible-xs">
-        <button type="submit" class="btn btn-success smallButton visible-xs" ng-click="vm.search(stringToSearch)">
-          <span class="glyphicon glyphicon-search"></span>
-          <span class="submit-text"></span>
-        </button>
-      </div>
-      <!--<a href="#!/explorer/search/{{search}}" class="btn btn-success smallButton hidden-xs">{{ 'HEADER_SEARCH' | translate }}</a>
-btn btn-success smallButton
-
-      <a href="#!/explorer/search/{{search}}" class="btn btn-success smallButton hidden-sm hidden-md hidden-lg hidden-xl"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>-->
-
-
-
-
-
+    <!--Search button large screen-->
+    <div class="col-xs-2 hidden-xs">
+      <input type="submit" class="btn btn-success smallButton" value="{{ 'HEADER_SEARCH' | translate }}" ng-click="vm.search(stringToSearch)"></input>
     </div>
-    <div class="pull-right col-xs-2 col-sm-3 col-md-5 col-lg-4">
-      <div class="header-right">
-        <!--User name-->
-        <div class="own userName hidden-xs hidden-sm">{{vm.account}}</div>
-        <!--Setup button-->
-        <div class="own hidden-xs">
-          <a href="#!/transfer/ETP" class="btn btn-success smallButton">{{ 'HEADER_TRANSFER' | translate }}</a>
-        </div>
-        <!--Logout button-->
-        <div class="own hidden-xs">
-          <a href="#!/login" class="btn-link smallButton logoutButton">{{ 'HEADER_LOGOUT' | translate }}</a>
-        </div>
-      </div>
-    </div>
-    <!--Menu button for XS device-->
-    <div class="menuButtonSmallScreen pull-right visible-xs">
-      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuSmallScreen" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-        <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+    <!--Search button small screen-->
+    <div class="col-xs-2 visible-xs">
+      <button type="submit" class="btn btn-success smallButton visible-xs" ng-click="vm.search(stringToSearch)">
+        <span class="glyphicon glyphicon-search"></span>
+        <span class="submit-text"></span>
       </button>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-        <li><a href="#!/home" class="btn">{{ 'NAV_WALLET' | translate }}</a></li>
-        <li><a href="#!/asset/details/" class="btn">{{ 'NAV_ASSETS' | translate }}</a></li>
-        <li><a href="#!/account/details" class="btn">{{ 'NAV_ACCOUNT_SETTING' | translate }}</a></li>
-        <li><a href="#!/transfer/ETP" class="btn">{{ 'HEADER_TRANSFER' | translate }}</a></li>
-        <li class="divider" role="separator"></li>
-        <li><a href="#!/console" class="btn">{{ 'NAV_CONSOLE' | translate }}</a></li>
-        <li><a href="#!/mining" class="btn">{{ 'NAV_MINING' | translate }}</a></li>
-        <li class="divider" role="separator"></li>
-        <li><a href="#!/login" class="btn">{{ 'HEADER_LOGOUT' | translate }}</a></li>
-      </ul>
+    </div>
+    <!--<a href="#!/explorer/search/{{search}}" class="btn btn-success smallButton hidden-xs">{{ 'HEADER_SEARCH' | translate }}</a>
+    btn btn-success smallButton
+
+    <a href="#!/explorer/search/{{search}}" class="btn btn-success smallButton hidden-sm hidden-md hidden-lg hidden-xl"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>-->
+
+
+
+
+
+  </div>
+  <div class="pull-right col-xs-2 col-sm-3 col-md-5 col-lg-4">
+    <div class="header-right">
+      <!--User name-->
+      <div class="own userName hidden-xs hidden-sm">{{vm.account}}</div>
+      <!--Setup button-->
+      <div class="own hidden-xs">
+        <a href="#!/transfer/ETP" class="btn btn-success smallButton">{{ 'HEADER_TRANSFER' | translate }}</a>
+      </div>
+      <!--Logout button-->
+      <div class="own hidden-xs">
+        <a href="#!/login" class="btn-link smallButton logoutButton">{{ 'HEADER_LOGOUT' | translate }}</a>
+      </div>
     </div>
   </div>
+  <!--Menu button for XS device-->
+  <div class="menuButtonSmallScreen pull-right visible-xs">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuSmallScreen" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+      <li><a href="#!/home" class="btn">{{ 'NAV_WALLET' | translate }}</a></li>
+      <li><a href="#!/asset/details/" class="btn">{{ 'NAV_ASSETS' | translate }}</a></li>
+      <li><a href="#!/account/details" class="btn">{{ 'NAV_ACCOUNT_SETTING' | translate }}</a></li>
+      <li><a href="#!/transfer/ETP" class="btn">{{ 'HEADER_TRANSFER' | translate }}</a></li>
+      <li class="divider" role="separator"></li>
+      <li><a href="#!/console" class="btn">{{ 'NAV_CONSOLE' | translate }}</a></li>
+      <li><a href="#!/mining" class="btn">{{ 'NAV_MINING' | translate }}</a></li>
+      <li class="divider" role="separator"></li>
+      <li><a href="#!/login" class="btn">{{ 'HEADER_LOGOUT' | translate }}</a></li>
+    </ul>
+  </div>
+</div>
 </div>
 <!---------------------------------内容------------------------------------------------->
 
@@ -101,17 +101,16 @@ btn btn-success smallButton
     </div>
     <!--Display the current version-->
     <!--<div class="version">{{ 'METAVERSE_VERSION' | translate }} <<<version>>>
-    </div>-->
-  </div>
-  <div class="admin">
-    <div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
-      <div class="" ng-bind="flash.message">
-      </div>
+  </div>-->
+</div>
+<div class="admin">
+  <div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
+    <div class="" ng-bind="flash.message">
     </div>
-    <ui-view/>
   </div>
+  <ui-view/>
   <!--<footer class="greybg">
-    <span>{{ 'CONNECTION_PEERS' | translate }}:</span> <span></span>
-    <div class="footerRight"> <span>{{ 'CONNECTION_BLOCKS' | translate }}:</span> <span>{{height}}</span> </div>
+  <span>{{ 'CONNECTION_PEERS' | translate }}:</span> <span></span>
+  <div class="footerRight"> <span>{{ 'CONNECTION_BLOCKS' | translate }}:</span> <span>{{height}}</span> </div>
   </footer>-->
 </div>

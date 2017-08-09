@@ -30,10 +30,6 @@
         service.ListBalances = ListBalances;
         service.GetAccount = GetAccount;
         service.GetNewAddress = GetNewAddress;
-        service.Send = Send;
-        service.SendFrom = SendFrom;
-        service.SendMore = SendMore;
-        service.ListTxs = ListTxs;
         service.ChangePassword = ChangePassword;
         service.ResetPassword = ResetPassword;
 
@@ -44,6 +40,16 @@
         service.Start = Start;
         service.Stop = Stop;
         service.GetMiningInfo = GetMiningInfo;
+
+        //ETP
+        service.Send = Send;
+        service.SendFrom = SendFrom;
+        service.SendMore = SendMore;
+        service.ListTxs = ListTxs;
+        service.GetPublicKey = GetPublicKey;
+        service.GetNewMultiSig = GetNewMultiSig;
+        service.ListMultiSig = ListMultiSig;
+        service.SendFromMultiSig = SendFromMultiSig;
 
         //Asset
         service.CreateAsset = CreateAsset;
@@ -62,6 +68,7 @@
         service.FetchTx = FetchTx;
         service.FetchHeader = FetchHeader;
         service.GetBlock = GetBlock;
+        service.ListTxsAddress = ListTxsAddress;
 
         //Misc
         service.Query = Query;
@@ -269,6 +276,11 @@
             return _send('listtxs', [credentials.user, credentials.password]);
         }
 
+        function ListTxsAddress(address) {
+            var credentials = localStorageService.get('credentials');
+            return _send('listtxs', [credentials.user, credentials.password, '-a', address]);
+        }
+
         /**
          * @api {post} /rpc Send
          * @apiName Send
@@ -390,13 +402,13 @@
          *    }
          * }
          **/
-        function SendMore(recipentsQuery) {
+        function SendMore(recipents) {
             var credentials = localStorageService.get('credentials');
             var query = [];
             var recipent = '';
             query.push(credentials.user);
             query.push(credentials.password);
-            recipentsQuery.forEach( (e) => {
+            recipents.forEach( (e) => {
               recipent = e.address + ':' + e.value;
               query.push('-r');
               query.push(recipent);
@@ -683,6 +695,44 @@
             var credentials = localStorageService.get('credentials');
             return _send('sendassetfrom', [credentials.user, credentials.password, sender_address, recipent_address, symbol, quantity]);
         }
+
+
+        function GetPublicKey(address) {
+            var credentials = localStorageService.get('credentials');
+            return _send('getpublickey', [credentials.user, credentials.password, address]);
+        }
+
+        function GetNewMultiSig(signaturenum, publickeynum, selfpublickey, recipents) {
+            var credentials = localStorageService.get('credentials');
+            var query = [];
+            query.push('-m');
+            query.push(signaturenum);
+            query.push('-n');
+            query.push(publickeynum);
+            query.push('-s');
+            query.push(selfpublickey);
+            recipents.forEach( (e) => {
+              query.push('-k');
+              query.push(e.publicKey);
+            });
+            query.push(credentials.user);
+            query.push(credentials.password);
+            console.log(query);
+            return _send('getnewmultisig', query);
+        }
+
+        function ListMultiSig() {
+          var credentials = localStorageService.get('credentials');
+          return _send('listmultisig', [credentials.user, credentials.password]);
+        }
+
+
+        function SendFromMultiSig(fromAddress, toAddress, amount) {
+          var credentials = localStorageService.get('credentials');
+          return _send('sendfrommultisig', [credentials.user, credentials.password, fromAddress, toAddress, amount]);
+        }
+
+
 
         function CheckAccount(user, password) {
             //To check if account exists we can simply check the accounts balance
