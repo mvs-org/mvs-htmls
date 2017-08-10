@@ -9,7 +9,7 @@
           <!--ETP Balance-->
           <a href="#!/home/addresses">
             <dd class="panel assetBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
-              <span class="assetBoxSymbolImg"><img class="assetSymbol" src="favicon.png" alt=""/></span>
+              <span class="assetBoxSymbolImg"><img class="assetSymbol" src="images/favicon.png" alt=""/></span>
               <span class="assetBoxTextInfo">
                 <span class="assetBoxSymbolName">ETP</span>
                 <span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
@@ -22,7 +22,7 @@
           <!--All others assets balance-->
           <a href="#!/asset/details/{{asset.symbol}}" ng-repeat="asset in assets | orderBy:['-status','symbol']">
             <dd class="panel assetBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
-              <span class="assetBoxSymbolImg"><img class="assetSymbol" src="favicon.png" alt=""/></span>
+              <span class="assetBoxSymbolImg"><img class="assetSymbol" src="images/favicon.png" alt=""/></span>
               <span class="assetBoxTextInfo">
                 <span class="assetBoxSymbolName">{{asset.symbol}}</span>
                 <span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
