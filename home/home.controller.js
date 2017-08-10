@@ -870,9 +870,7 @@
       MetaverseService.GetPublicKey(address)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
-          console.log(response);
           $scope.publicKey = response.data['public-key'];
-          console.log($scope.publicKey);
           /*$scope.addresses = [];
           response.data.balances.forEach( (e) => {
             var name = "New address";
@@ -901,8 +899,8 @@
     }
 
     function getNewMultisign() {
-      console.log($scope.cosigners);
-      console.log($scope.nbrCosignersRequired);
+      //console.log($scope.cosigners);
+      //console.log($scope.nbrCosignersRequired);
       NProgress.start();
       if ($scope.sendfrom == '') {
         FlashService.Error('Please select an address');
@@ -914,8 +912,8 @@
         MetaverseService.GetNewMultiSig($scope.nbrCosignersRequired, $scope.cosigners.length+1, $scope.publicKey, $scope.cosigners)
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success) {
-            console.log("Success!");
-            console.log(response);
+            //console.log("Success!");
+            //console.log(response);
             /*$scope.addresses = [];
             response.data.balances.forEach( (e) => {
               var name = "New address";
@@ -930,8 +928,8 @@
               });*/
 
           } else {
-            console.log("Fail...");
-            console.log(response);
+            //console.log("Fail...");
+            //console.log(response);
           }
         });
       }
@@ -955,16 +953,16 @@
         MetaverseService.ListMultiSig($scope.nbrCosignersRequired, $scope.cosigners.length+1, $scope.publicKey, $scope.cosigners)
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success) {
-            console.log("Success!");
-            console.log(response);
+            //console.log("Success!");
+            //console.log(response);
             //$scope.listMultiSig = response.data;
             response.data.multisig.forEach( (e) => {
               var name = "New address";
               if (localStorageService.get(e.address) != undefined) {
                 name = localStorageService.get(e.address);
               }
-              console.log(e);
-              console.log(e["public-keys"]);
+              //console.log(e);
+              //console.log(e["public-keys"]);
               $scope.listMultiSig.push({
                 "index": e.index,
                 "m": e.m,
@@ -977,8 +975,8 @@
               });
             });
           } else {
-            console.log("Fail...");
-            console.log(response);
+            //console.log("Fail...");
+            //console.log(response);
           }
         });
       }
@@ -988,7 +986,7 @@
     function transferMultiSig() {
       MetaverseService.SendFromMultiSig('36pgRzGKUfVbDdyKK7R52dERkv281FY6FK', 'tEPoUt8GsK6j9rqworo5KjorhkscS3oxiM', 10)
       .then( (response) => {
-        console.log(response);
+        //console.log(response);
       });
     }
 
@@ -1672,7 +1670,7 @@
       if (err) {
         $translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
       } else {
-        console.log(transactions);
+        //console.log(transactions);
         $scope.transactions = transactions;
       }
       NProgress.done();

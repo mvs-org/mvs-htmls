@@ -42,7 +42,7 @@
                   $location.path('/login');
               });
           } else {
-            $translate('MESSAGES.IMPORT_ERROR').then( (data) => FlashService.Error(data) );
+            $translate('MESSAGES.IMPORT_ERROR').then( (data) => FlashService.Error(data + " " + response.message) );
           }
         });
       }

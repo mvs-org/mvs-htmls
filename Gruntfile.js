@@ -43,10 +43,11 @@ module.exports = function(grunt) {
                     './min/app.css': [
                         './node_modules/bootstrap/dist/css/bootstrap.min.css',
                         './node_modules/nprogress/nprogress.css',
-                        './css/admin.css',
+                        //'./css/admin.css',
                         './node_modules/font-awesome/css/font-awesome.min.css',
                         './css/calendar.css',
-                        './css/mining.css'
+                        './css/mining.css',
+                        './css/style.css'
                     ]
                 }
             }
@@ -74,6 +75,7 @@ module.exports = function(grunt) {
                     './node_modules/nprogress/nprogress.js',
                     './js/calendar.js',
                     './js/qrcode.min.js',
+                    './js/clipboard.js',
                 ],
                 dest: './min/libs.min.js'
             },
