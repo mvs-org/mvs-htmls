@@ -718,17 +718,18 @@
     }
 
     //Load a list of all transactions
-    MetaverseHelperService.LoadTransactions( (err, transactions) => {
+    /*MetaverseHelperService.LoadTransactions( (err, transactions) => {
       if (err) {
         $translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
       } else {
         $scope.transactions = transactions;
       }
       NProgress.done();
-    }, 'etp');
+    }, 'etp');*/
 
     //Initialize
     init();
+    NProgress.done();
 
   }
 
@@ -1591,6 +1592,7 @@
 
     function filterOnAsset (asset) {
       $scope.assetType = asset;
+      displayUpdatedDates();
     }
 
     //Define the time period to use and show the dates From ... To ... if the Custom button is selected
@@ -1650,9 +1652,6 @@
     }
 
 
-
-
-
     //Load users ETP balance
     MetaverseHelperService.GetBalance( (err, balance, message) => {
       if (err)
@@ -1676,13 +1675,11 @@
     function loadTransactions(min, max) {
       var page = min;
       for (; (page<max) && (!$scope.stopLoad); page++) {
-        console.log("Loading page "+page);
+        //console.log("Loading page "+page);
         MetaverseHelperService.LoadTransactions( (err, transactions) => {
           if (err) {
             $translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
           } else {
-            //console.log(transactions);
-            //$scope.transactions = transactions;
             if (transactions.length == 0) {
               $scope.stopLoad = true;
             } else {

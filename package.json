@@ -4,7 +4,7 @@
   "version": "0.6.11",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mvs-live/mvs-htmls.git"
+    "url": "https://github.com/mvs-org/mvs-htmls.git"
   },
   "dependencies": {
     "angular": "^1.6.1",

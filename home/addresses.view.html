@@ -36,7 +36,9 @@
         <!--Display the QR in a pop-up-->
         <div class="copyAndQrCode">
           <span class="qrCode">
-            <a id="element" class="btn btn-link addressLinkButton" ng-click="showqr(address.address)" alt="receive"><img src="images/qrcode.png" alt="" />{{ 'ADDRESSES_QR_CODE' | translate }}</a>
+            <button id="element" class="btn btn-link addressLinkButton" ng-click="showqr(address.address)" alt="receive">
+              <img src="images/qrcode.png" alt="" /> {{ 'ADDRESSES_QR_CODE' | translate }}
+            </button>
           </span>
           <!--Copy the address to clipboard-->
           <span class="copyAddress">
