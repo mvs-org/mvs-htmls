@@ -182,14 +182,14 @@
         </div>
       </div>
 
-
-    </div>
-    <div class="paginationHistory">
-      <dir-pagination-controls  ng-show="showHistory"></dir-pagination-controls>
-      <span>
-        <input ng-hide="stopLoad" type="button" class="btn btn-success smallButton" value="Load more" ng-click="loadMore()"></input>
-        <input ng-show="stopLoad" type="button" class="btn btn-success smallButton" bs-popover data-clipboard-text="Test" data-toggle="popover" data-placement="top" data-content="{{ 'HISTORY_ALL_LOADED' | translate }}" value="Load more" ng-click="loadMore()"></input>
-      </span>
+      <!--Pagination and Load more button-->
+      <div class="paginationHistory">
+        <dir-pagination-controls  ng-show="showHistory"></dir-pagination-controls>
+        <span>
+          <input ng-hide="stopLoad" type="button" class="btn btn-success smallButton" value="Load more" ng-click="loadMore()"></input>
+          <input ng-show="stopLoad" type="button" class="btn btn-success smallButton" bs-popover data-clipboard-text="Test" data-toggle="popover" data-placement="top" data-content="{{ 'HISTORY_ALL_LOADED' | translate }}" value="Load more" ng-click="loadMore()"></input>
+        </span>
+      </div>
     </div>
 
     <!--Display the history in div for small screens-->
@@ -219,6 +219,10 @@
         <div class="transactionBoxSmallLinkToExplorer col-xs-2 col-sm-2">
           <a class="btn-link linkToExplorerButton" href="#!/explorer/tx/{{transaction.hash}}">{{'HISTORY_TRANSACTION_CHECK' | translate}}</a>
         </div>
+      </div>
+      <div>
+        <input ng-hide="stopLoad" type="button" class="btn btn-success" value="Load more" ng-click="loadMore()"></input>
+        <input ng-show="stopLoad" type="button" class="btn btn-success" bs-popover data-clipboard-text="Test" data-toggle="popover" data-placement="top" data-content="{{ 'HISTORY_ALL_LOADED' | translate }}" value="Load more" ng-click="loadMore()"></input>
       </div>
     </div>
   </div>

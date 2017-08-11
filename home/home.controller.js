@@ -1855,7 +1855,7 @@
 
 
     function defineTypeSearch(search) {
-      if (search === '') {                 //empty research
+      if (search === ' ') {                 //empty research
         $location.path('/noresult');
       } else if (search.length === 64) {
         $location.path('/explorer/tx/' + search);
