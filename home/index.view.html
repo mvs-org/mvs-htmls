@@ -1,6 +1,5 @@
 <!--------------------------------------头部----------------------------------->
 <div class="panel header">
-
   <div class="hidden-xs">
     <a href="#!/home">
       <img src="images/metaverse_logo.png" class="logoMetaverseSmall" alt="" />
@@ -88,7 +87,9 @@
       <!--Language button-->
       <div>
         <button class="btn btn-default dropdown-toggle languageButton" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          <img class="languageFlag" src="images/{{ 'LANG_CODE' | translate }}.png" alt="" />
+          <!--<img class="languageFlag" src="images/{{ 'LANG_CODE' | translate }}.png" alt="" />-->
+          <img class="languageFlag" src="images/en.png" ng-show="('LANG_CODE' | translate)=='en'" alt="" />
+          <img class="languageFlag" src="images/zh.png" ng-show="('LANG_CODE' | translate)=='zh'" alt="" />
           Language
           <span class="caret"></span>
         </button>
@@ -97,6 +98,11 @@
           <li><a ng-click="vm.changeLang('en_US')"><img class="languageFlag" src="images/en.png" alt="" /> English</a></li>
           <!--<li><a ng-click="vm.changeLang('de_DE')"><img class="languageFlag" src="images/en.png" alt="" /> Deutsch</a></li>-->
         </ul>
+      </div>
+      <div class="blockHeight">
+        <br/>
+        <span>{{ 'CONNECTION_BLOCKS' | translate }}:</span>
+        <span>{{height}}</span>
       </div>
     </div>
     <!--Display the current version-->
@@ -109,8 +115,4 @@
     </div>
   </div>
   <ui-view/>
-  <!--<footer class="greybg">
-  <span>{{ 'CONNECTION_PEERS' | translate }}:</span> <span></span>
-  <div class="footerRight"> <span>{{ 'CONNECTION_BLOCKS' | translate }}:</span> <span>{{height}}</span> </div>
-  </footer>-->
 </div>

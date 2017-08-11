@@ -271,9 +271,10 @@
          * @apiParam {List} params [username, password]
          *
          **/
-        function ListTxs() {
+        function ListTxs(page) {
             var credentials = localStorageService.get('credentials');
-            return _send('listtxs', [credentials.user, credentials.password]);
+            //return _send('listtxs', ['-i', page, '-l', 1, credentials.user, credentials.password]);
+            return _send('listtxs', ['-i', page, credentials.user, credentials.password]);
         }
 
         function ListTxsAddress(address) {
@@ -578,7 +579,7 @@
          **/
         function Delete(symbol) {
             var credentials = localStorageService.get('credentials');
-            return _send('deleteasset', ['-s', symbol, credentials.user, credentials.password]);
+            return _send('deleteunissuedasset', ['-s', symbol, credentials.user, credentials.password]);
         }
 
         /**
@@ -848,12 +849,11 @@
             }
         }
 
-        function LoadTransactions(callback, type) {
-
-            MetaverseService.ListTxs()
+        function LoadTransactions(callback, type, page) {
+            MetaverseService.ListTxs(page)
                 .then(function(response) {
-                    var transactions = [];
-                    if (typeof response.success !== 'undefined' && response.success) {
+                  var transactions = [];
+                    if ( response.success !== 'undefined' && response.success) {
                         if (response.data.transactions == undefined) {
                             console.log('unable to load transactions.');
                             callback(1);
@@ -880,20 +880,6 @@
                                             });
                                             transaction.value += parseInt(output['etp-value']);
                                         }
-                                        /*if(transaction.direction==='receive' && output.own==='true'){
-                                            transaction.recipents.push({
-                                                "address_input": output.address,
-                                                "address_output": "Me ("+output.address+")",
-                                                "value": parseInt(output.value)
-                                            });
-                                            transaction.value += parseInt(output['etp-value']);
-                                        } else if(transaction.direction==='send' && output.own==='false'){
-                                            transaction.recipents.push({
-                                                "address": output.address,
-                                                "value": parseInt(output.value)
-                                            });
-                                            transaction.value += parseInt(output['etp-value']);
-                                        }*/
                                     });
                                     if(transaction.value)
                                         transactions.push(transaction);
@@ -945,6 +931,7 @@
                         });
                     }
                 });
+
         }
 
     }

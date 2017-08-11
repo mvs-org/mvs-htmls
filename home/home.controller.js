@@ -1583,6 +1583,11 @@
     $scope.assetType = 'ETP';
     $scope.filterOnAsset = filterOnAsset;
 
+    $scope.loadTransactions = loadTransactions;
+    $scope.loadMore = loadMore;
+    $scope.stopLoad = false;
+    $scope.page = 3;          //By default, we load the 2 first pages
+
 
     function filterOnAsset (asset) {
       $scope.assetType = asset;
@@ -1618,7 +1623,7 @@
         $scope.startDate = new Date();
         $scope.endDate = new Date();
       }
-      //displayUpdatedDates();
+      displayUpdatedDates();
     }
 
 
@@ -1657,6 +1662,7 @@
       }
     });
 
+
     MetaverseService.ListAssets()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
@@ -1666,15 +1672,42 @@
       }
     });
 
-    MetaverseHelperService.LoadTransactions( (err, transactions) => {
-      if (err) {
-        $translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
-      } else {
-        //console.log(transactions);
-        $scope.transactions = transactions;
+
+    function loadTransactions(min, max) {
+      var page = min;
+      for (; (page<max) && (!$scope.stopLoad); page++) {
+        console.log("Loading page "+page);
+        MetaverseHelperService.LoadTransactions( (err, transactions) => {
+          if (err) {
+            $translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+          } else {
+            //console.log(transactions);
+            //$scope.transactions = transactions;
+            if (transactions.length == 0) {
+              $scope.stopLoad = true;
+            } else {
+              transactions.forEach(function(e) {
+                $scope.transactions.push(e);
+              });
+            }
+            displayUpdatedDates();
+          }
+          NProgress.done();
+        }, 'asset', page);
       }
-      NProgress.done();
-    });
+    }
+
+
+    loadTransactions(1, 3);
+
+    function loadMore() {
+      if(!$scope.stopLoad) {
+        $scope.page = $scope.page+1;
+        loadTransactions($scope.page - 1, $scope.page);
+      }
+    }
+
+
   }
 
 
@@ -1777,12 +1810,12 @@
 
   function HomeController(MetaverseService, $rootScope, $scope, localStorageService, $interval, $translate, $location) {
 
-
-
     var vm = this;
     vm.account = localStorageService.get('credentials').user;
     $scope.height = '';
     $scope.assets = [];
+    $scope.language = localStorageService.get('language');
+
 
     $scope.menu = {
       account: {
@@ -1795,22 +1828,22 @@
 
     //Change Language
     vm.changeLang = (key) => $translate.use(key)
-    .then(  (key) => localStorageService.set('language',key) )
+    .then( (key) => localStorageService.set('language', key)  )
     .catch( (error) => console.log("Cannot change language.") );
 
 
 
-    /*function updateHeight() {
+    function updateHeight() {
       MetaverseService.FetchHeight()
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.height = response.data;
         }
       });
-    }*/
+    }
 
-    //updateHeight();
-    //$interval( () => updateHeight(), 10000);
+    updateHeight();
+    $interval( () => updateHeight(), 10000);
 
     $scope.show_account_menu = () => {
       $scope.menu.account.show = 1 - $scope.menu.account.show;
@@ -1826,7 +1859,7 @@
 
     function defineTypeSearch(search) {
       if (search === '') {                 //empty research
-        $location.path('/explorer');
+        $location.path('/noresult');
       } else if (search.length === 64) {
         $location.path('/explorer/tx/' + search);
       } else if (search.length === 34) {
@@ -1867,9 +1900,4 @@
       $location.path('/explorer/noresult/'+search);
     }
   }
-
-
-
-
-
 })();

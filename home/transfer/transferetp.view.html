@@ -75,7 +75,7 @@
 			<div class="col-md-12 form-group noPaddingLeftRight">
 				<br/>
 				<div class="col-md-6 form-group">
-					<label for="value" class="control-label">From address</label>
+					<label for="value" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
 					<input type="etpaddress" ng-hide="sendfrom==''" class="form-control" name="sender_address" id="" value="{{sendfrom}}" disabled>
 					<input type="etpaddress" ng-show="sendfrom==''" class="form-control" name="sender_address" id="" value="{{ 'DEPOSIT_SELECT_AUTO_ADRESS' | translate }}" disabled>
 				</div>

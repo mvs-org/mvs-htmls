@@ -925,6 +925,14 @@ _____  ._______  ___.___ _______
   color: $successButtonColor !important;
 }
 
+.pagination {
+  display: inline;
+}
+
+.paginationHistory {
+  padding-top: 250px;
+}
+
 //Display of the history for small screens
 .transactionBoxSmall {
   margin-top: 15px;
@@ -1266,4 +1274,9 @@ h2 {
   font-weight: 400;
   font-style: normal;
   font-size: 12px;
+}
+
+
+.blockHeight {
+  padding-left: 20px;
 }

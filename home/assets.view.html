@@ -93,13 +93,18 @@
           <span class="add-on"><i class="icon-calendar"></i></span>
         </div>
       </div>
+      <div class="col-xs-4 col-sm-2 noPaddingLeftRight">
+
+        <input type="submit" class="btn btn-success" value="{{ 'HISTORY_SUBMIT' | translate }}" ng-click="displayUpdatedDates()"></input>
+
+      </div>
     </div>
 
-    <div class="col-xs-4 col-sm-2 noPaddingLeftRight">
+    <!--<div class="col-xs-4 col-sm-2 noPaddingLeftRight">
       <br/>
       <input type="submit" class="btn btn-success" value="{{ 'HISTORY_SUBMIT' | translate }}" ng-click="displayUpdatedDates()"></input>
       <br/>
-    </div>
+    </div>-->
   </form>
 
 
@@ -177,7 +182,14 @@
         </div>
       </div>
 
-      <dir-pagination-controls ng-show="showHistory"></dir-pagination-controls>
+
+    </div>
+    <div class="paginationHistory">
+      <dir-pagination-controls  ng-show="showHistory"></dir-pagination-controls>
+      <span>
+        <input ng-hide="stopLoad" type="button" class="btn btn-success smallButton" value="Load more" ng-click="loadMore()"></input>
+        <input ng-show="stopLoad" type="button" class="btn btn-success smallButton" bs-popover data-clipboard-text="Test" data-toggle="popover" data-placement="top" data-content="{{ 'HISTORY_ALL_LOADED' | translate }}" value="Load more" ng-click="loadMore()"></input>
+      </span>
     </div>
 
     <!--Display the history in div for small screens-->
