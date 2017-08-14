@@ -228,7 +228,7 @@
   "MESSAGES.INVALID_TIME_PERIOD" : "The time period is not valid.",
   "CONSOLE.INSERT_PROMPT" : "Enter your command here.",
   "CONSOLE.SEND" : "Send",
-  "CONSOLE.CONNECTION" : "connection...",
+  "CONSOLE.CONNECTION" : "connecting...",
   "MESSAGES.ASSETS_TRANSFER_SUCCESS" : "Asset transaction has been transmitted to the network.",
   "MESSAGES.ASSETS_TRANSFER_ERROR" : "Could not send asset.",
   "MESSAGES.TRANSACTIONS_LOAD_ERROR" : "Could not load transaction list.",

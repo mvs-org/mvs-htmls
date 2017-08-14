@@ -40,7 +40,8 @@
   <br/>
 
   <div>
-    <div class="headline">{{ 'NAV_HISTORY' | translate }}   </div>
+    <!--<div class="headline">{{ 'NAV_HISTORY' | translate }}   </div>-->
+    <div class="headline">{{ 'HEADLINE_TRANSACTIONS' | translate }}   </div>
     <div class="selectAssetType">
       <button class="dropdown-togglen assetTypeButton" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
         <img class="languageFlag" alt="" />
@@ -48,18 +49,18 @@
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li><a ng-click="filterOnAsset('All')">All</a></li>
         <li><a ng-click="filterOnAsset('ETP')">ETP</a></li>
         <li class="divider" role="separator"></li>
         <li ng-repeat="asset in assets | orderBy:'symbol'" ng-show="asset.status=='unspent'"><a ng-click="filterOnAsset(asset.symbol)">{{asset.symbol}}</a></li>
       </ul>
     </div>
   </div>
-  <br/>
 
 
-  <form>
+  <!--<form>
     <!--<div>{{ 'HISTORY_TIME_PERIOD' | translate }}</div>-->
-    <div class="radioButton noPaddingLeftRight col-md-12">
+    <!--<div class="radioButton noPaddingLeftRight col-md-12">
       <span class="oneRadioButton">
         <input type="radio" name="radio" id="oneWeek" checked value="hideCustomDate" ng-click="setDates('week')"/>
         <label for="oneWeek">{{ 'HISTORY_ONE_WEEK' | translate }}</label>
@@ -105,23 +106,23 @@
       <input type="submit" class="btn btn-success" value="{{ 'HISTORY_SUBMIT' | translate }}" ng-click="displayUpdatedDates()"></input>
       <br/>
     </div>-->
-  </form>
+  <!--</form>-->
 
 
 
   <!--Display Transactions history-->
-  <div class="col-xs-12 noPaddingLeftRight" ng-show="showHistory">
-    <br/>
-    <div class="headline">
+  <div class="col-xs-12 noPaddingLeftRight">
+
+    <!--<div class="headline">
       {{ 'HEADLINE_TRANSACTIONS' | translate }}
-    </div>
-    <br/>
+    </div>-->
+
     <!--Display the history in a table for large screens-->
     <div class="transactionBoxLarge hidden-xs hidden-sm">
-      <div class="no_transaction_message" ng-show="transactions.length==0">
+      <div class="no_transaction_message" ng-show="transactionsFiltered.length==0">
         {{'MESSAGES.NO_LISTED_TRANSACTIONS' | translate}}
       </div>
-      <div class="col-md-12 noPaddingLeftRight" ng-show="transactions.length!=0">
+      <div class="col-md-12 noPaddingLeftRight" ng-show="transactionsFiltered.length!=0">
         <div class="col-md-3 col-lg-2 noPaddingLeftRight">
           {{'HISTORY_TRANSACTION_DATE' | translate}}
         </div>
@@ -184,7 +185,7 @@
 
       <!--Pagination and Load more button-->
       <div class="paginationHistory">
-        <dir-pagination-controls  ng-show="showHistory"></dir-pagination-controls>
+        <dir-pagination-controls></dir-pagination-controls>
         <span>
           <input ng-hide="stopLoad" type="button" class="btn btn-success smallButton" value="Load more" ng-click="loadMore()"></input>
           <input ng-show="stopLoad" type="button" class="btn btn-success smallButton" bs-popover data-clipboard-text="Test" data-toggle="popover" data-placement="top" data-content="{{ 'HISTORY_ALL_LOADED' | translate }}" value="Load more" ng-click="loadMore()"></input>
@@ -194,7 +195,7 @@
 
     <!--Display the history in div for small screens-->
     <div class="visible-xs visible-sm">
-      <div class="no_transaction_message" ng-show="transactions.length==0">
+      <div class="no_transaction_message" ng-show="transactionsFiltered.length==0">
         {{'MESSAGES.NO_LISTED_TRANSACTIONS' | translate}}
       </div>
       <div class="transactionBoxSmall" ng-repeat="transaction in transactionsFiltered | orderBy:'timestamp':true">
@@ -207,7 +208,7 @@
           <div class="transactionBoxSmallAddress">
             <span class="glyphicon glyphicon-arrow-down receiveSign" ng-if="transaction.direction=='receive'"></span>
             <span class="glyphicon glyphicon-arrow-up sendSign" ng-if="transaction.direction=='send'"></span>
-            <span class="glyphicon glyphicon-plus issueSign" ng-if="transaction.direction=='issue'"></span>
+            <span class="glyphicon glyphicon-arrow-down issueSign" ng-if="transaction.direction=='issue'"></span>
             <a class="btn-link linkToExplorerButton" href="#!/explorer/adr/{{recipent.address}}">
               <span ng-repeat="recipent in transaction.recipents" class="address">{{recipent.address}}</span>
             </a>

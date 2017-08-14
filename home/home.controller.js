@@ -112,7 +112,7 @@
             });
           } else {
             $translate('MESSAGES.TRANSACTION_NOT_FOUND').then( (data) => {
-              FlashService.Error(data, true);
+              FlashService.Error(data);
               $location.path('/explorer');
             });
           }
@@ -130,7 +130,7 @@
         .then( (response) => {
           if (typeof response == 'undefined' || typeof response.success == 'undefined' || response.success == false) {
             $translate('MESSAGES.TRANSACTION_NOT_FOUND').then( (data) => {
-              FlashService.Error(data, true);
+              FlashService.Error(data);
             });
           } else {
             $scope.transaction = response.data.transaction;
@@ -184,7 +184,7 @@
         .then( (response) => {
           if (typeof response == 'undefined' || typeof response.success == 'undefined' || response.success == false) {
             $translate('MESSAGES.TRANSACTION_NOT_FOUND').then( (data) => {
-              FlashService.Error(data, true);
+              FlashService.Error(data);
             });
           } else {
             response.data.transaction.outputs.forEach(function(e) {
@@ -231,7 +231,7 @@
         .then( (response) => {
           if (typeof response == 'undefined' || typeof response.success == 'undefined' || response.success == false) {
             $translate('MESSAGES.BLOCK_NOT_FOUND').then( (data) => {
-              FlashService.Error(data, true);
+              FlashService.Error(data);
             });
           } else {
             blockInfoTxs(response.data.result.hash);
@@ -260,7 +260,7 @@
       .then( (response) => {
         if (typeof response == 'undefined' || typeof response.success == 'undefined' || response.success == false) {
           $translate('MESSAGES.TRANSACTION_NOT_FOUND').then( (data) => {
-            FlashService.Error(data, true);
+            FlashService.Error(data);
             $location.path('/explorer');
           });
         } else {
@@ -1076,7 +1076,7 @@
       MetaverseService.GetNewAddress()
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
-          FlashService.Success('Created new address: ' + response.data, true);
+          FlashService.Success('Created new address: ' + response.data);
           listBalances();
         }
       });
@@ -1576,12 +1576,12 @@
     $scope.startDateUpdated = new Date();
     $scope.endDateUpdated = new Date();
 
-    $scope.setDates = setDates;
-    $scope.displayUpdatedDates = displayUpdatedDates;
-    $scope.showHistory = false;
+    //$scope.setDates = setDates;
+    //$scope.displayUpdatedDates = displayUpdatedDates;
+    //$scope.showHistory = false;
 
 
-    $scope.assetType = 'ETP';
+    $scope.assetType = 'All';
     $scope.filterOnAsset = filterOnAsset;
 
     $scope.loadTransactions = loadTransactions;
@@ -1592,11 +1592,25 @@
 
     function filterOnAsset (asset) {
       $scope.assetType = asset;
-      displayUpdatedDates();
+      filterTransactions();
+      //displayUpdatedDates();
+    }
+
+    function filterTransactions() {
+      $scope.transactionsFiltered = [];
+      if ($scope.assetType == 'All') {
+        $scope.transactionsFiltered = $scope.transactions;
+      } else {
+        $scope.transactions.forEach(function(e) {
+          if (e.type==$scope.assetType) {
+            $scope.transactionsFiltered.push(e);
+          }
+        });
+      }
     }
 
     //Define the time period to use and show the dates From ... To ... if the Custom button is selected
-    function setDates(period, startDate, endDate)
+    /*function setDates(period, startDate, endDate)
     {
       switch (period) {
         case 'week':
@@ -1626,20 +1640,20 @@
         $scope.endDate = new Date();
       }
       displayUpdatedDates();
-    }
+    }*/
 
 
 
-    $scope.dateRangeFilter = function (transaction, startDate, endDate) {
+    /*$scope.dateRangeFilter = function (transaction, startDate, endDate) {
       if (transaction >= startDate && transaction <= endDate) {
         return true;
       }
       return false;
-    }
+    }*/
 
 
     //Update the startDate, endDate and list of transactions when the Submit button is clicked
-    function displayUpdatedDates() {
+    /*function displayUpdatedDates() {
       $scope.startDateUpdated = $scope.startDate;
       $scope.endDateUpdated = $scope.endDate;
       $scope.showHistory = true;
@@ -1649,7 +1663,8 @@
           $scope.transactionsFiltered.push(e);
         }
       });
-    }
+    }*/
+
 
 
     //Load users ETP balance
@@ -1687,7 +1702,8 @@
                 $scope.transactions.push(e);
               });
             }
-            displayUpdatedDates();
+            //displayUpdatedDates();
+            filterTransactions();
           }
           NProgress.done();
         }, 'asset', page);

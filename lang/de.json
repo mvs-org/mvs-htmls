@@ -228,7 +228,7 @@
   "MESSAGES.INVALID_TIME_PERIOD" : "Ungültiger Zeitraum.",
   "CONSOLE.INSERT_PROMPT" : "Geben Sie hier einen Behehl ein.",
   "CONSOLE.SEND" : "Send",
-  "CONSOLE.CONNECTION" : "connection...",
+  "CONSOLE.CONNECTION" : "connecting...",
   "MESSAGES.ASSETS_TRANSFER_SUCCESS" : "Asset Transaktion wurde an das Netzwerk gesendet.",
   "MESSAGES.ASSETS_TRANSFER_ERROR" : "Asset wurde nicht gesendet.",
   "MESSAGES.TRANSACTIONS_LOAD_ERROR" : "Transaktionen konnten nicht geladen werden.",

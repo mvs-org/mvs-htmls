@@ -733,15 +733,14 @@
           return _send('sendfrommultisig', [credentials.user, credentials.password, fromAddress, toAddress, amount]);
         }
 
-
-
         function CheckAccount(user, password) {
             //To check if account exists we can simply check the accounts balance
             return _send('getbalance', [user, password]);
         }
 
         function ImportAccount(user, password, phrase, address_count) {
-            return this.Query('importaccount --accoutname ' + user + ' --password ' + password + ' -i' + address_count + ' ' + phrase);
+          return _send('importaccount', ['-n', user, '-p', password, '-i', address_count, phrase]);
+            //return this.Query('importaccount --accoutname ' + user + ' --password ' + password + ' -i' + address_count + ' ' + phrase);
         }
 
         function Query(string) {
