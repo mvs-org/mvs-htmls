@@ -7,31 +7,49 @@
       <div class="row assetBoxWrapper">
         <dl id="outer_wrap">
           <!--ETP Balance-->
-          <a href="#!/home/addresses">
+
             <dd class="panel assetBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
-              <span class="assetBoxSymbolImg"><img class="assetSymbol" src="images/favicon.png" alt=""/></span>
+              <span class="assetBoxSymbolImg">
+                <img class="assetSymbol" src="images/favicon.jpg" alt=""/>
+              </span>
               <span class="assetBoxTextInfo">
-                <span class="assetBoxSymbolName">ETP</span>
+                <a href="#!/addresses" class="assetBoxSymbolName btn-link">ETP</a>
                 <span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
                 <span class="assetBoxValue">{{balance['total-unspent']/100000000}}</span>
                 <span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
                 <span class="assetBoxValue">{{balance['total-frozen']/100000000}}</span>
+                <span class="sendAndReceive">
+                  <a class="sendAndReceiveText" href="#!/transfer/ETP"><span class="glyphicon glyphicon-arrow-up"></span>{{ 'ASSETS_SEND' | translate}}</a>
+                </span>
+                <span class="sendAndReceive">
+                  <a class="sendAndReceiveText" href="#!/addresses"><span class="glyphicon glyphicon-arrow-down"></span>{{ 'ASSETS_RECEIVE' | translate}}</a>
+                </span>
               </span>
             </dd>
-          </a>
+
           <!--All others assets balance-->
-          <a href="#!/asset/details/{{asset.symbol}}" ng-repeat="asset in assets | orderBy:['-status','symbol']">
+          <div ng-repeat="asset in assets | orderBy:['-status','symbol']">
             <dd class="panel assetBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
-              <span class="assetBoxSymbolImg"><img class="assetSymbol" src="images/favicon.png" alt=""/></span>
+              <span class="assetBoxSymbolImg">
+                <img class="assetSymbol" src="images/favicon.jpg" alt=""/>
+              </span>
               <span class="assetBoxTextInfo">
-                <span class="assetBoxSymbolName">{{asset.symbol}}</span>
+                <a href="#!/asset/details/{{asset.symbol}}" class="assetBoxSymbolName btn-link">{{asset.symbol}}</a>
                 <span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
                 <span class="assetBoxValue">{{asset.quantity | assetformat : asset.decimal_number}}</span>
                 <span class="assetBoxTitle">{{ 'STATUS' | translate }}</span>
                 <span class="assetBoxValue">{{asset.status}}</span>
+                <span class="sendAndReceiveBox" ng-show="asset.status == 'unspent'">
+                  <span class="sendAndReceive">
+                    <a class="sendAndReceiveText" href="#!/transfer/{{asset.symbol}}/"><span class="glyphicon glyphicon-arrow-up"></span>{{ 'ASSETS_SEND' | translate}}</a>
+                  </span>
+                  <span class="sendAndReceive">
+                    <a class="sendAndReceiveText" href="#!/addresses"><span class="glyphicon glyphicon-arrow-down"></span>{{ 'ASSETS_RECEIVE' | translate}}</a>
+                  </span>
+                </span>
               </span>
             </dd>
-          </a>
+          </div>
         </dl>
       </div>
 
@@ -51,7 +69,7 @@
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
         <li><a ng-click="filterOnAsset('All')">All</a></li>
         <li><a ng-click="filterOnAsset('ETP')">ETP</a></li>
-        <li class="divider" role="separator"></li>
+        <li class="divider" role="separator" ng-show="assets.length>0"></li>
         <li ng-repeat="asset in assets | orderBy:'symbol'" ng-show="asset.status=='unspent'"><a ng-click="filterOnAsset(asset.symbol)">{{asset.symbol}}</a></li>
       </ul>
     </div>
@@ -123,17 +141,14 @@
         {{'MESSAGES.NO_LISTED_TRANSACTIONS' | translate}}
       </div>
       <div class="col-md-12 noPaddingLeftRight" ng-show="transactionsFiltered.length!=0">
-        <div class="col-md-3 col-lg-2 noPaddingLeftRight">
+        <div class="col-md-2 col-lg-2 noPaddingLeftRight">
           {{'HISTORY_TRANSACTION_DATE' | translate}}
         </div>
 
-        <div class="col-md-5 col-lg-4 noPaddingLeftRight">
-          {{'HISTORY_TRANSACTION_TO' | translate}}
+        <div class="col-md-6 col-lg-6 noPaddingLeftRight">
+          {{'HISTORY_TRANSACTION_HASH' | translate}}
         </div>
-        <div class="col-md-1 noPaddingLeftRight">
-
-        </div>
-        <div class="col-md-1 noPaddingLeftRight">
+        <div class="col-md-2 noPaddingLeftRight">
           {{'HISTORY_TRANSACTION_AMOUNT' | translate}}
         </div>
         <div class="col-md-1 noPaddingLeftRight">
@@ -145,50 +160,49 @@
       </div>
       <div class="transactionBoxLarge col-md-12 noPaddingLeftRight" dir-paginate="transaction in transactionsFiltered | orderBy:'timestamp':true | itemsPerPage: 10">
         <!--Time-->
-        <div class="transactionBoxLargeTime noPaddingLeftRight col-md-3 col-lg-2">
-          {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT' | translate) }}
+        <div class="transactionBoxLargeTime noPaddingLeftRight col-md-2 col-lg-2">
+            {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT' | translate) }}
         </div>
 
-        <!--Recipent-->
-        <div class="transactionBoxLargeAddress noPaddingLeftRight col-md-5 col-lg-4">
-          <div ng-repeat="recipent in transaction.recipents">
-            <a class="btn-link linkToExplorerButton" href="#!/explorer/adr/{{recipent.address}}">
-            <div class="address">{{recipent.address}}</div>
+        <!--Transaction Hash-->
+        <div class="transactionBoxLargeAddress noPaddingLeftRight col-md-6 col-lg-6">
+            <a class="btn-link linkToExplorerButton" href="#!/explorer/tx/{{transaction.hash}}">
+            <div class="address">{{transaction.hash}}</div>
             </a>
-          </div>
         </div>
 
         <!--Direction-->
-        <div class="noPaddingLeftRight col-md-1">
-          <span class="glyphicon glyphicon-arrow-down receiveSign" ng-if="transaction.direction=='receive'"></span>
-          <span class="glyphicon glyphicon-arrow-up sendSign" ng-if="transaction.direction=='send'"></span>
-          <span class="glyphicon glyphicon-arrow-down issueSign" ng-if="transaction.direction=='issue'"></span>
+        <div class="noPaddingLeftRight col-md-2">
+            <span class="glyphicon glyphicon-arrow-down receiveSign" ng-if="transaction.direction=='receive'"></span>
+            <span class="glyphicon glyphicon-arrow-up sendSign" ng-if="transaction.direction=='send'"></span>
+            <span class="glyphicon glyphicon-arrow-down issueSign" ng-if="transaction.direction=='issue'"></span>
+            <!--<span ng-if="transaction.direction!='send'">+</span>
+            <span ng-if="transaction.direction=='send'">-</span>
+            {{transaction.value | assetformat : transaction.decimal_number}}-->
+            <span ng-if="transaction.direction!='send'">+</span>
+            <span ng-if="transaction.direction=='send'">-</span>
+            {{transaction.value | assetformat : transaction.decimal_number}}
         </div>
 
-        <!--Amount-->
-        <div class="noPaddingLeftRight col-md-1 right-align">
-          <span ng-if="transaction.direction!='send'">+</span>
-          <span ng-if="transaction.direction=='send'">-</span>
-          {{transaction.value | assetformat : transaction.decimal_number}}
-        </div>
 
         <!--Type (ETP,...)-->
         <div class="noPaddingLeftRight col-md-1">
-          {{transaction.type}}
+            {{transaction.type}}
         </div>
 
         <!--Transaction code-->
         <div class="noPaddingLeftRight col-md-1 hash">
-          <a class="btn-link linkToExplorerButton" href="#!/explorer/tx/{{transaction.hash}}">{{'HISTORY_TRANSACTION_CHECK' | translate}}</a>
-        </div>
+            <a class="btn-link linkToExplorerButton" href="#!/explorer/tx/{{transaction.hash}}">{{'HISTORY_TRANSACTION_CHECK' | translate}}</a>
+          </div>
       </div>
 
-      <!--Pagination and Load more button-->
+      <!--Pagination and  more button-->
       <div class="paginationHistory">
         <dir-pagination-controls></dir-pagination-controls>
         <span>
-          <input ng-hide="stopLoad" type="button" class="btn btn-success smallButton" value="Load more" ng-click="loadMore()"></input>
-          <input ng-show="stopLoad" type="button" class="btn btn-success smallButton" bs-popover data-clipboard-text="Test" data-toggle="popover" data-placement="top" data-content="{{ 'HISTORY_ALL_LOADED' | translate }}" value="Load more" ng-click="loadMore()"></input>
+          <input ng-hide="stopLoad" type="button" class="btn btn-success smallButton" value="{{'HISTORY_LOAD_MORE' | translate}}" ng-click="loadMore()"></input>
+          <!--<input ng-show="stopLoad" type="button" class="btn btn-success smallButton" bs-popover data-toggle="popover" data-placement="top" data-container="body" data-content="{{ 'HISTORY_ALL_LOADED' | translate }}" value="Load more" ng-click="loadMore()"></input>-->
+          <div>  </div><div class="textAllLoaded control-label" ng-show="stopLoad">{{ 'HISTORY_ALL_LOADED' | translate }}</div>
         </span>
       </div>
     </div>
@@ -209,21 +223,23 @@
             <span class="glyphicon glyphicon-arrow-down receiveSign" ng-if="transaction.direction=='receive'"></span>
             <span class="glyphicon glyphicon-arrow-up sendSign" ng-if="transaction.direction=='send'"></span>
             <span class="glyphicon glyphicon-arrow-down issueSign" ng-if="transaction.direction=='issue'"></span>
-            <a class="btn-link linkToExplorerButton" href="#!/explorer/adr/{{recipent.address}}">
-              <span ng-repeat="recipent in transaction.recipents" class="address">{{recipent.address}}</span>
+            <a class="btn-link-menu linkToExplorerButton" href="#!/explorer/tx/{{transaction.hash}}">
+              <span ng-repeat="recipent in transaction.recipents" class="address">{{transaction.hash}}</span>
             </a>
           </div>
           <div class="transactionBoxSmallTime">
             {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT' | translate) }}
           </div>
         </div>
-        <div class="transactionBoxSmallLinkToExplorer col-xs-2 col-sm-2">
-          <a class="btn-link linkToExplorerButton" href="#!/explorer/tx/{{transaction.hash}}">{{'HISTORY_TRANSACTION_CHECK' | translate}}</a>
-        </div>
+        <!--<div class="transactionBoxSmallLinkToExplorer col-xs-2 col-sm-2">
+          <a class="btn-link-menu linkToExplorerButton" href="#!/explorer/tx/{{transaction.hash}}">{{'HISTORY_TRANSACTION_CHECK' | translate}}</a>
+        </div>-->
       </div>
       <div>
         <input ng-hide="stopLoad" type="button" class="btn btn-success" value="Load more" ng-click="loadMore()"></input>
-        <input ng-show="stopLoad" type="button" class="btn btn-success" bs-popover data-clipboard-text="Test" data-toggle="popover" data-placement="top" data-content="{{ 'HISTORY_ALL_LOADED' | translate }}" value="Load more" ng-click="loadMore()"></input>
+      </div>
+      <div ng-show="stopLoad">
+        {{ 'HISTORY_ALL_LOADED' | translate }}
       </div>
     </div>
   </div>

@@ -1,11 +1,15 @@
 <div class="content">
-  <span class="headline">
-    <div ng-hide="isMining">ETP {{ 'HEADLINE_MINING' | translate }}</div>
-    <div ng-show="isMining" style="isMiningText">{{ 'MINING_IS_MINING' | translate }}
-      <div class="miningSpinner">
-      </div>
+  <div class="headline">{{ 'NAV_PRO' | translate }}</div>
+  <div>
+    <ul class="nav nav-pills tabsMenu">
+      <li role="presentation" class="active"><a href="#!/advanced/mining" class="btn-link-menu">{{'NAV_MINING' | translate}}</a></li>
+      <li role="presentation"><a href="#!/advanced/console" class="btn-link-menu">{{'NAV_CONSOLE' | translate}}</a></li>
+    </ul>
+  </div>
+  <h4 ng-show="isMining" style="isMiningText">{{ 'MINING_IS_MINING' | translate }}
+    <div class="miningSpinner">
     </div>
-  </span>
+  </h4>
   <div class="mining">
     <div class="row">
       <!--View recommended configuration-->

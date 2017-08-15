@@ -81,7 +81,7 @@
             })
 
             .state('home.addresses', {
-                url: "/home/addresses",
+                url: "/addresses",
                 templateUrl: "home/addresses.view.html",
                 controller: 'AddressesController',
                 controllerAs: 'vm'
@@ -101,7 +101,7 @@
             })
 
             .state('home.explorer.search', {
-                url: "/explorer",
+                url: "/explorer/search/:search",
                 templateUrl: "home/explorer/search.view.html",
                 controller: 'ExplorerController'
             })
@@ -192,13 +192,13 @@
             })
 
             .state('home.mining', {
-                url: "/mining",
+                url: "/advanced/mining",
                 templateUrl: "home/mining.view.html",
                 controller: 'MiningController'
             })
 
             .state('home.console', {
-                url: "/console",
+                url: "/advanced/console",
                 templateUrl: "home/console.view.html",
                 controller: 'ConsoleController'
             });

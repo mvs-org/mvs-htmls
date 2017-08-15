@@ -2,19 +2,19 @@
 	<span class="headline">{{ 'DEPOSIT.HEADLINE' | translate }}</span>
 
 	<!--Navigation Manual/Auto selection of addresse-->
-	<div class="col-xs-12 noPaddingLeftRight">
+	<!--<div class="col-xs-12 noPaddingLeftRight">
 		<ul class="nav nav-pills tabsMenu">
-			<li role="presentation"><a class="btn btn-link" ng-click="selectAddress('auto','')" ng-style="{ 'text-decoration' : underlineAuto}">{{ 'DEPOSIT_SELECT_AUTO_ADRESS' | translate }}</a></li>
-			<li role="presentation" bs-tooltip data-placement="top" title="Function not available yet"><a class="btn btn-link disabled" ng-click="selectAddress('manual','')" ng-style="{ 'text-decoration' : underlineManual}">{{ 'DEPOSIT_SELECT_MANUAL_ADDRESS' | translate }}</a></li>
+			<li role="presentation"><a class="btn btn-link-menu" ng-click="selectAddress('auto','')" ng-style="{ 'text-decoration' : underlineAuto}">{{ 'DEPOSIT_SELECT_AUTO_ADRESS' | translate }}</a></li>
+			<li role="presentation" bs-tooltip data-placement="top" title="Function not available yet"><a class="btn btn-link-menu disabled" ng-click="selectAddress('manual','')" ng-style="{ 'text-decoration' : underlineManual}">{{ 'DEPOSIT_SELECT_MANUAL_ADDRESS' | translate }}</a></li>
 		</ul>
-	</div>
+	</div>-->
 
 
 	<!--Display the total ETP in automatic selection-->
 	<div class="col-xs-12 noPaddingLeftRight" ng-show=autoSelectAddress>
 		<a href="">
 			<dd class="panel assetBox assetBoxChecked col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
-				<span class="assetBoxSymbolImg"><img class="assetSymbol" src="images/favicon.png" alt=""/></span>
+				<span class="assetBoxSymbolImg"><img class="assetSymbol" src="images/favicon.jpg" alt=""/></span>
 				<span class="assetBoxTextInfo">
 					<div>
 						<span class="checked"><span>
@@ -36,7 +36,7 @@
 					<input type="radio" name="radioDeposit" id={{address}} value="hideCustomDate"/>
 					<label for={{address}}>
 						<div class="addressBoxSymbolImgDeposit">
-							<img class="assetSymbol assetSymbolDeposit" src="images/favicon.png" alt=""/>
+							<img class="assetSymbol assetSymbolDeposit" src="images/favicon.jpg" alt=""/>
 						</div>
 						<div class="addressBoxTextInfoDeposit">
 							<span class="addressBoxNameDeposit">New address</span>

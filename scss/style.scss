@@ -6,6 +6,7 @@ $veryDarkGrey: #5E5E5E; //user for text in assets
 $successButtonColor:rgba(235, 68, 90, 1); //used for Login,research
 $infoButtonColor:rgba(52, 125, 237, 100); //used for Register
 $linkButtonColor:#347DED;
+$linkButtonMenuColor:rgba(235, 68, 90, 1);
 $blueGeneralColor:#347DED;
 $secondaryButtonColor: white;
 $radiusButtons: 6px;
@@ -357,6 +358,10 @@ _____  ._______  ___.___ _______
     @include btn-theme($linkButtonColor, 'link');
 }
 
+.btn-link-menu {
+    @include btn-theme($linkButtonMenuColor, 'link');
+}
+
 //Secondary buttons have a white background, the color is the one of the text
 .btn-secondary {
   @include btn-theme($successButtonColor, 'secondary');
@@ -368,6 +373,12 @@ _____  ._______  ___.___ _______
 
 .languageButtonRegister, .languageButtonRegister:focus, .languageButtonRegister:hover {
   @include btn-theme(transparent, 'language');
+}
+
+.languageButtonHeader {
+  background-color: transparent;
+  border-width: 0;
+  padding: 0;
 }
 
 
@@ -508,9 +519,14 @@ _____  ._______  ___.___ _______
 .logoMetaverseSmall {
   width: 90px;
   height: 34px;
-  position: absolute;
+  //position: absolute;
   left: 27px;
-  top: 8px;
+  margin-top: 8px;
+  margin-right: 20px;
+}
+
+.linkLogo {
+  padding: 0 !important;
 }
 
 .header {
@@ -521,6 +537,11 @@ _____  ._______  ___.___ _______
   border-top: 1px solid $mediumGrey;
   border-bottom: 1px solid $mediumGrey;
   border-radius: 0px;
+}
+
+.headerBox {
+  margin-left: 30px;
+  margin-right: 30px;
 }
 
 //Research div, including the texbox and the button
@@ -543,17 +564,29 @@ _____  ._______  ___.___ _______
   font-size: 24px;
 }
 
-.header-right {
+/*.header-right {
   float:right;
   display:inline;
   padding-right: 5px;
   padding-left: 5px;
   margin-top: 6px;
+}*/
+
+.header-right {
+  float:right;
+  display:inline-block;
+  padding-right: 5px;
+  padding-left: 5px;
+  margin-top: 6px;
+  position: absolute;
+
+
 }
 
 .userName {
   padding-right: 12px;
-  margin-top: 4px;
+  font-size: 20px;
+
 }
 
 
@@ -645,7 +678,13 @@ _____  ._______  ___.___ _______
 .admin {
   overflow:hidden;
   min-height:700px;
-  padding: 20px;
+  padding-top: 60px;
+}
+
+.fullPageWidth {
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .headline {
@@ -682,6 +721,10 @@ _____  ._______  ___.___ _______
 .noPaddingLeftRight {
   padding-left: 0px;
   padding-right: 0px;
+}
+
+.uppercase {
+  text-transform: uppercase;
 }
 
 
@@ -739,7 +782,7 @@ _____  ._______  ___.___ _______
 .assetBox {
   background-color: $lightGrey;
   width: 265px;
-  height: 120px;
+  height: 130px;
   margin: 10px;
   border-radius: 0px;
 
@@ -747,15 +790,21 @@ _____  ._______  ___.___ _______
 
 //Contains the logo of the asset
 .assetBoxSymbolImg {
-  width: 30%;
-  height: 120px;
-  margin-left: 10px;
-
+  margin-left: 6px;
+  position: absolute;
+  margin-top: 36px;
+  width: 48px;
+  height: 48px;
+  background-color: white;
+  -webkit-border-radius: 150px;
+  -moz-border-radius: 150px;
 }
+
+
 
 .assetSymbol {
   position: absolute;
-  margin-top: 40px;
+  margin: 4px;
   width: 40px;
   height: 40px;
   background-color: white;
@@ -773,6 +822,7 @@ _____  ._______  ___.___ _______
   width: 100%;
   color: $blueGeneralColor;
   padding-top:14px;
+  padding-bottom: 6px;
   float:left;
   line-height:16px;
   font-size: 16px;
@@ -786,7 +836,7 @@ _____  ._______  ___.___ _______
   float:left;
   line-height:12px;
   font-size: 12px;
-  padding-top: 6px;
+  padding-top: 0px;
 }
 
 .assetBoxValue {
@@ -795,6 +845,7 @@ _____  ._______  ___.___ _______
   float:left;
   line-height:16px;
   font-size: 16px;
+  padding-bottom: 6px;
 }
 
 
@@ -844,6 +895,21 @@ _____  ._______  ___.___ _______
   font-size: 16px;
 
 }
+
+.sendAndReceiveBox {
+
+}
+
+.sendAndReceive {
+  padding-right: 10px;
+}
+
+.sendAndReceiveText {
+  color: $veryDarkGrey !important;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+
 
 .assetTypeButton {
   width: auto;
@@ -929,7 +995,7 @@ _____  ._______  ___.___ _______
 }
 
 .paginationHistory {
-  padding-top: 250px;
+  //padding-top: 200px;
 }
 
 //Display of the history for small screens
@@ -961,7 +1027,6 @@ _____  ._______  ___.___ _______
 .transactionBoxSmallLinkToExplorer {
   padding-top: 50px;
 }
-
 
 /**********************ETP Addresses*******************/
 .textCheckbox {

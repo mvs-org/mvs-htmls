@@ -45,7 +45,7 @@ module.exports = function(grunt) {
                         './node_modules/nprogress/nprogress.css',
                         './node_modules/font-awesome/css/font-awesome.min.css',
                         //'./css/calendar.css',
-                        './css/mining.css',
+                        //'./css/mining.css',
                         './css/style.css'
                     ]
                 }

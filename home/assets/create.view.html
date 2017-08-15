@@ -43,21 +43,25 @@
     <select type="number" class="form-control" name="decimals" required placeholder="" required ng-model="decimals">
       <option value=""></option>
       <option value="0">0</option>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-      <option value="6">6</option>
-      <option value="7">7</option>
-      <option value="8">8</option>
-      <option value="9">9</option>
-      <option value="10">10</option>
-      <option value="11">11</option>
-      <option value="12">12</option>
-      <option value="13">13</option>
-      <option value="14">14</option>
-      <!--<option value="15">15</option>-->
+      <option value="1" ng-show="max_supply<=1000000000000000000">1</option>
+      <option value="2" ng-show="max_supply<=100000000000000000">2</option>
+      <option value="3" ng-show="max_supply<=10000000000000000">3</option>
+      <option value="4" ng-show="max_supply<=1000000000000000">4</option>
+      <option value="5" ng-show="max_supply<=100000000000000">5</option>
+      <option value="6" ng-show="max_supply<=10000000000000">6</option>
+      <option value="7" ng-show="max_supply<=1000000000000">7</option>
+      <option value="8" ng-show="max_supply<=100000000000">8</option>
+      <option value="9" ng-show="max_supply<=10000000000">9</option>
+      <option value="10" ng-show="max_supply<=1000000000">10</option>
+      <option value="11" ng-show="max_supply<=100000000">11</option>
+      <option value="12" ng-show="max_supply<=10000000">12</option>
+      <option value="13" ng-show="max_supply<=1000000">13</option>
+      <option value="14" ng-show="max_supply<=100000">14</option>
+      <option value="15" ng-show="max_supply<=10000">15</option>
+      <option value="16" ng-show="max_supply<=1000">16</option>
+      <option value="17" ng-show="max_supply<=100">17</option>
+      <option value="18" ng-show="max_supply<=10">18</option>
+      <option value="19" ng-show="max_supply<=1">19</option>
     </select>
   </div>
   <div class="form-group">

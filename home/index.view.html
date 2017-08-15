@@ -1,52 +1,123 @@
+<nav class="header navbar navbar-default navbar-fixed-top">
+  <div class="fullPageWidth headerBox">
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="headerBox" ng-controller="MenuController">
+
+      <ul class="nav navbar-nav">
+        <li role="presentation"><a href="#!/home" class="linkLogo hidden-xs hidden-sm"><img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" /></a></li>
+        <li role="presentation"><a href="#!/home" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='home'}">{{ 'NAV_WALLET' | translate }}</span></a></li>
+        <li role="presentation"><a href="#!/asset/details/" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='asset'}">{{ 'NAV_ASSETS' | translate }}</span></a></li>
+        <li role="presentation"><a href="#!/addresses" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='addresses'}">{{ 'NAV_ACCOUNT_ADDRESSES' | translate }}</span></a></li>
+        <li role="presentation"><a href="#!/deposit" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='deposit'}">{{ 'NAV_DEPOSIT' | translate }}</span></a></li>
+        <li role="presentation"><a href="#!/account/details" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='account'}">{{ 'NAV_ACCOUNT_SETTING' | translate }}</span></a></li>
+        <li role="presentation"><a href="#!/advanced/mining" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='advanced'}">{{ 'NAV_PRO' | translate }}</span></a></li>
+        <li role="presentation" class="visible-xs visible-sm"><a href="#!/explorer/search/" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='explorer'}">{{ 'NAV_EXPLORER' | translate }}</span></a></li>
+        <!--<li role="presentation"><a href="#!/mining" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='mining'}">{{ 'NAV_MINING' | translate }}</span></a></li>-->
+        <form class="navbar-form navbar-left hidden-xs hidden-sm">
+          <div class="form-group">
+            <input type="search" name="search" class="form-control researchTextBox" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
+          </div>
+          <input type="submit" class="btn btn-success smallButton" value="{{ 'HEADER_SEARCH' | translate }}" ng-click="vm.search(stringToSearch)"></input>
+        </form>
+
+        <li role="presentation"></li>
+      </ul>
+
+      <!--Right header-->
+      <ul class="nav navbar-nav navbar-right">
+        <form class="navbar-form">
+          <!--User name-->
+          <span class="userName hidden-xs hidden-sm hidden-md">{{vm.account}}</span>
+          <!--Transfer button-->
+          <span class="">
+            <a href="#!/transfer/ETP" class="btn btn-success smallButton">{{ 'HEADER_TRANSFER' | translate }}</a>
+          </span>
+          <!--Logout button-->
+          <span class="">
+            <a href="#!/login" class="btn-link smallButton logoutButton">{{ 'HEADER_LOGOUT' | translate }}</a>
+          </span>
+          <!--Language button-->
+          <span>
+            <button class="languageButtonHeader" type="button" ng-click="vm.changeLang('zh_ZH')" ng-show="('LANG_CODE' | translate)=='en'" alt="">
+              <img class="languageFlag" src="images/zh.png" />
+            </button>
+            <button class="languageButtonHeader" type="button" ng-click="vm.changeLang('en_US')" ng-show="('LANG_CODE' | translate)=='zh'">
+              <img class="languageFlag" alt="" src="images/en.png"/>
+            </button>
+            <!--<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <li><a ng-click="vm.changeLang('zh_ZH')"><img class="languageFlag" src="images/zh.png" alt="" /> 中文</a></li>
+              <li><a ng-click="vm.changeLang('en_US')"><img class="languageFlag" src="images/en.png" alt="" /> English</a></li>
+              <li><a ng-click="vm.changeLang('de_DE')"><img class="languageFlag" src="images/en.png" alt="" /> Deutsch</a></li>-->
+            <!--</ul>-->
+          </span>
+        </form>
+      </ul>
+      <!--Menu button for XS device-->
+      <!--<div class="menuButtonSmallScreen pull-right visible-xs">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuSmallScreen" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <li><a href="#!/home" class="btn">{{ 'NAV_WALLET' | translate }}</a></li>
+          <li><a href="#!/asset/details/" class="btn">{{ 'NAV_ASSETS' | translate }}</a></li>
+          <li><a href="#!/account/details" class="btn">{{ 'NAV_ACCOUNT_SETTING' | translate }}</a></li>
+          <li><a href="#!/transfer/ETP" class="btn">{{ 'HEADER_TRANSFER' | translate }}</a></li>
+          <li class="divider" role="separator"></li>
+          <li><a href="#!/console" class="btn">{{ 'NAV_CONSOLE' | translate }}</a></li>
+          <li><a href="#!/mining" class="btn">{{ 'NAV_MINING' | translate }}</a></li>
+          <li class="divider" role="separator"></li>
+          <li><a href="#!/login" class="btn">{{ 'HEADER_LOGOUT' | translate }}</a></li>
+        </ul>
+      </div>-->
+    </div>
+  </div>
+</div>
+</nav>
+
+
+
+
+
 <!--------------------------------------头部----------------------------------->
-<div class="panel header">
+<!--<div class="panel header">
   <div class="hidden-xs">
     <a href="#!/home">
-      <img src="images/metaverse_logo.png" class="logoMetaverseSmall" alt="" />
+      <img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" />
     </a>
   </div>
   <div class="form-group research col-xs-offset-0 col-xs-10 col-sm-offset-2 col-sm-7 col-md-offset-2 col-md-5 col-lg-offset-4 col-lg-4">
     <!--Search TextBox-->
-    <div class="col-xs-10 col-md-10 noPaddingLeftRight">
+    <!--<div class="col-xs-10 col-md-10 noPaddingLeftRight">
       <input type="search" name="search" class="form-control researchTextBox" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
     </div>
     <!--Search button large screen-->
-    <div class="col-xs-2 hidden-xs">
+    <!--<div class="col-xs-2 hidden-xs">
       <input type="submit" class="btn btn-success smallButton" value="{{ 'HEADER_SEARCH' | translate }}" ng-click="vm.search(stringToSearch)"></input>
     </div>
     <!--Search button small screen-->
-    <div class="col-xs-2 visible-xs">
+    <!--<div class="col-xs-2 visible-xs">
       <button type="submit" class="btn btn-success smallButton visible-xs" ng-click="vm.search(stringToSearch)">
         <span class="glyphicon glyphicon-search"></span>
         <span class="submit-text"></span>
       </button>
     </div>
-    <!--<a href="#!/explorer/search/{{search}}" class="btn btn-success smallButton hidden-xs">{{ 'HEADER_SEARCH' | translate }}</a>
-    btn btn-success smallButton
-
-    <a href="#!/explorer/search/{{search}}" class="btn btn-success smallButton hidden-sm hidden-md hidden-lg hidden-xl"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>-->
-
-
-
-
-
   </div>
   <div class="pull-right col-xs-2 col-sm-3 col-md-5 col-lg-4">
     <div class="header-right">
       <!--User name-->
-      <div class="own userName hidden-xs hidden-sm">{{vm.account}}</div>
+      <!--<div class="own userName hidden-xs hidden-sm">{{vm.account}}</div>
       <!--Setup button-->
-      <div class="own hidden-xs">
+      <!--<div class="own hidden-xs">
         <a href="#!/transfer/ETP" class="btn btn-success smallButton">{{ 'HEADER_TRANSFER' | translate }}</a>
       </div>
       <!--Logout button-->
-      <div class="own hidden-xs">
+      <!--<div class="own hidden-xs">
         <a href="#!/login" class="btn-link smallButton logoutButton">{{ 'HEADER_LOGOUT' | translate }}</a>
       </div>
     </div>
   </div>
   <!--Menu button for XS device-->
-  <div class="menuButtonSmallScreen pull-right visible-xs">
+  <!--<div class="menuButtonSmallScreen pull-right visible-xs">
     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuSmallScreen" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
     </button>
@@ -61,15 +132,15 @@
       <li class="divider" role="separator"></li>
       <li><a href="#!/login" class="btn">{{ 'HEADER_LOGOUT' | translate }}</a></li>
     </ul>
-  </div>
-</div>
+  </div>-->
+<!--</div>
 </div>
 <!---------------------------------内容------------------------------------------------->
 
-<div class="layout">
+<!--<div class="layout">
   <div class="leftnav greybg hidden-xs" ng-controller="MenuController">
     <!--Left Main menu-->
-    <div class="leftMenu" id="sub-header">
+    <!--<div class="leftMenu" id="sub-header">
       <ul class="nav nav-pills nav-stacked">
         <li role="presentation"><a href="#!/home" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='home'}">{{ 'NAV_WALLET' | translate }}</span></a></li>
         <li role="presentation"><a href="#!/asset/details/" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='asset'}">{{ 'NAV_ASSETS' | translate }}</span></a></li>
@@ -77,7 +148,6 @@
         <li class="dropdown-header">{{ 'NAV_PRO' | translate }}</li>
         <div class="menuLine">
         </div>
-        <!--<li role="presentation"><a href="#!/console" class="leftMenuButtons"><span ng-show="selectedMenu.main==='console'">xx</span>{{ 'NAV_CONSOLE' | translate }}</a></li>-->
         <li role="presentation"><a href="#!/console" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='console'}">{{ 'NAV_CONSOLE' | translate }}</span></a></li>
         <li role="presentation"><a href="#!/mining" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='mining'}">{{ 'NAV_MINING' | translate }}</span></a></li>
 
@@ -85,9 +155,8 @@
       <br/>
       <br/>
       <!--Language button-->
-      <div>
+      <!--<div>
         <button class="btn btn-default dropdown-toggle languageButton" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          <!--<img class="languageFlag" src="images/{{ 'LANG_CODE' | translate }}.png" alt="" />-->
           <img class="languageFlag" src="images/en.png" ng-show="('LANG_CODE' | translate)=='en'" alt="" />
           <img class="languageFlag" src="images/zh.png" ng-show="('LANG_CODE' | translate)=='zh'" alt="" />
           Language
@@ -96,8 +165,8 @@
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
           <li><a ng-click="vm.changeLang('zh_ZH')"><img class="languageFlag" src="images/zh.png" alt="" /> 中文</a></li>
           <li><a ng-click="vm.changeLang('en_US')"><img class="languageFlag" src="images/en.png" alt="" /> English</a></li>
-          <!--<li><a ng-click="vm.changeLang('de_DE')"><img class="languageFlag" src="images/en.png" alt="" /> Deutsch</a></li>-->
-        </ul>
+          <li><a ng-click="vm.changeLang('de_DE')"><img class="languageFlag" src="images/en.png" alt="" /> Deutsch</a></li>-->
+      <!--  </ul>
       </div>
       <div class="blockHeight">
         <br/>
@@ -108,8 +177,8 @@
     <!--Display the current version-->
     <!--<div class="version">{{ 'METAVERSE_VERSION' | translate }} <<<version>>>
   </div>-->
-</div>
-<div class="admin">
+<!--</div>-->
+<div class="admin fullPageWidth">
   <div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
     <div class="" ng-bind="flash.message">
     </div>

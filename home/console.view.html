@@ -1,5 +1,11 @@
 <div class="content">
-  <div class="headline">{{ 'HEADLINE_CONSOLE' | translate }}</div>
+  <div class="headline">{{ 'NAV_PRO' | translate }}</div>
+  <div>
+    <ul class="nav nav-pills tabsMenu">
+      <li role="presentation"><a href="#!/advanced/mining" class="btn-link-menu">{{'NAV_MINING' | translate}}</a></li>
+      <li role="presentation" class="active"><a href="#!/advanced/console" class="btn-link-menu">{{'NAV_CONSOLE' | translate}}</a></li>
+    </ul>
+  </div>
   <br/>
   <div class="console_query" >
     <span class="span1" ng-hide="connected">{{ 'CONSOLE.CONNECTION' | translate }}</span>

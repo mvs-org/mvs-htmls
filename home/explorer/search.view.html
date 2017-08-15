@@ -1,0 +1,15 @@
+<div class="content">
+  <span class="headline">{{ 'EXPLORER.NAV_ITEM' | translate }}</span>
+
+  <!--Search TextBox-->
+  <div class="form-group">
+    <div class="col-xs-12 col-md-12 noPaddingLeftRight">
+      <br/>
+      <input type="text" name="text" class="form-control" ng-model="stringToSearchNoresult" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
+    </div>
+    <div class="col-xs-4 col-sm-2 noPaddingLeftRight">
+      <br/>
+      <input type="submit" class="btn btn-success" value="{{ 'HEADER_SEARCH' | translate }}" ng-click="vm.search(stringToSearchNoresult)"></input>
+    </div>
+  </div>
+</div>

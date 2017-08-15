@@ -73,7 +73,7 @@
 
     //define if the research is a Hash, a Transaction, a Block or an Asset
     function defineTypeSearch () {
-      if ($scope.typeSearch=='' || $scope.typeSearch=='noresult') {
+      if ($scope.typeSearch=='' || $scope.typeSearch=='noresult' || $scope.typeSearch=='search') {
         //nothing to do
       } else if ($scope.typeSearch === 'tx') {
         searchTransaction();
@@ -1489,10 +1489,12 @@
     function init() {
       $scope.symbol = '';
       $scope.description = '';
-      $scope.max_supply = '';
+      $scope.max_supply = 0;
       $scope.decimals = '';
       $scope.password = '';
     }
+
+    init();
 
     //Check if the form is submittable
     function checkready() {
@@ -1554,7 +1556,7 @@
               $location.path('/home');
             });
           } else{
-            FlashService.Error(data + " " + response.message);
+            FlashService.Error(response.message);
           }
         });
       }
@@ -1690,18 +1692,17 @@
     function loadTransactions(min, max) {
       var page = min;
       for (; (page<max) && (!$scope.stopLoad); page++) {
-        //console.log("Loading page "+page);
         MetaverseHelperService.LoadTransactions( (err, transactions) => {
           if (err) {
             $translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
           } else {
-            if (transactions.length == 0) {
+            console.log(transactions);
+            if ((transactions.lastpage == true) || (transactions.lastpage == undefined)) {     //All the transactions have been loaded
               $scope.stopLoad = true;
-            } else {
-              transactions.forEach(function(e) {
-                $scope.transactions.push(e);
-              });
             }
+            transactions.forEach(function(e) {
+              $scope.transactions.push(e);
+            });
             //displayUpdatedDates();
             filterTransactions();
           }

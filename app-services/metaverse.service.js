@@ -853,6 +853,11 @@
                 .then(function(response) {
                   var transactions = [];
                     if ( response.success !== 'undefined' && response.success) {
+                      if(response.data.current_page==response.data.total_page){
+                        transactions.lastpage = true;
+                      } else {
+                        transactions.lastpage = false;
+                      }
                         if (response.data.transactions == undefined) {
                             console.log('unable to load transactions.');
                             callback(1);
@@ -875,13 +880,16 @@
                                         if((transaction.direction==='receive' && output.own==='true') || (transaction.direction==='send' && output.own==='false')){
                                             transaction.recipents.push({
                                                 "address": output.address,
-                                                "value": parseInt(output.value)
+                                                "value": parseInt(output['etp-value'])
                                             });
                                             transaction.value += parseInt(output['etp-value']);
                                         }
                                     });
-                                    if(transaction.value)
-                                        transactions.push(transaction);
+                                    if(transaction.value) {
+                                      transactions.push(transaction);
+                                    } else {
+                                      //console.log(transaction);
+                                    }
                                     break;
                                 case TX_TYPE_ASSET:
                                     //Asset transactions
@@ -896,8 +904,11 @@
                                             transaction.decimal_number=output.attachment.decimal_number;
                                         }
                                     });
-                                    if(transaction.value)
-                                        transactions.push(transaction);
+                                    if(transaction.value) {
+                                      transactions.push(transaction);
+                                    } else {
+                                      //console.log(transaction);
+                                    }
                                     break;
                                 case TX_TYPE_ISSUE:
                                     //Asset issue tx
@@ -906,15 +917,18 @@
                                         if(output.own==='true' && output.attachment.type==='asset-issue'){
                                             transaction.recipents.push({
                                                 "address": output.address,
-                                                "value": parseInt(output.attachment.quantity)
+                                                "value": parseInt(output.attachment.maximum_supply)
                                             });
                                             transaction.value += parseInt(output.attachment.maximum_supply);
                                             transaction.type = output.attachment.symbol;
                                             transaction.decimal_number=output.attachment.decimal_number;
                                         }
                                     });
-                                    if(transaction.value)
-                                        transactions.push(transaction);
+                                    if(transaction.value) {
+                                      transactions.push(transaction);
+                                    } else {
+                                      //console.log(transaction);
+                                    }
                                 }
                             });
                             //Return transaction list
@@ -923,8 +937,10 @@
                             //Empty transaction list
                             callback(null, []);
                         }
+                    } else if (response.error = "no record in this page") {
+                      //Empty transaction list
+                      callback(null, []);
                     } else {
-
                         $translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then(function(data) {
                             callback(1, null, data);
                         });

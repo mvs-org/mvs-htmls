@@ -1,8 +1,8 @@
 <div class="headline">{{ 'NAV_ASSETS' | translate }}</div>
 <div>
   <ul class="nav nav-pills tabsMenu">
-    <li role="presentation"><a href="#!/asset/details/" class="btn-link">{{'ASSET_MY_ASSETS' | translate}}</a></li>
-    <li role="presentation" class="active"><a href="#!/asset/all" class="btn-link">{{'ASSET_ALL_ASSETS' | translate}}</a></li>
+    <li role="presentation"><a href="#!/asset/details/" class="btn-link-menu">{{'ASSET_MY_ASSETS' | translate}}</a></li>
+    <li role="presentation" class="active"><a href="#!/asset/all" class="btn-link-menu">{{'ASSET_ALL_ASSETS' | translate}}</a></li>
   </ul>
 </div>
 <br/>
@@ -12,7 +12,7 @@
       <dl id="outer_wrap">
         <a href="#!/asset/details/{{asset.symbol}}" ng-repeat="asset in assets | orderBy:'symbol'">
           <dd class="panel assetBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
-            <span class="assetBoxSymbolImg"><img class="assetSymbol" src="images/favicon.png" alt=""/></span>
+            <span class="assetBoxSymbolImg"><img class="assetSymbol" src="images/favicon.jpg" alt=""/></span>
             <span class="assetBoxTextInfo">
               <span class="assetBoxSymbolName">{{asset.symbol}}</span>
               <span class="assetBoxTitle">{{ 'QUANTITY' | translate }}</span>
