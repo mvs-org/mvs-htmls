@@ -1047,6 +1047,11 @@ _____  ._______  ___.___ _______
   padding-top: 50px;
 }
 
+.textAllLoaded {
+  height: 26px;
+  line-height: 2.5em;
+}
+
 /**********************ETP Addresses*******************/
 .textCheckbox {
   padding-left: 10px;
@@ -1249,6 +1254,7 @@ _____  ._______  ___.___ _______
     float:left;
     color: $darkGrey;
     line-height: 14px;
+    padding-bottom: 8px;
 }
 
 //Select period

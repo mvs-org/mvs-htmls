@@ -145,8 +145,9 @@
             //Search for the value of the input and put it in $scope.transactionInputsValues
             $scope.transactionInputsValues = [];
             response.data.transaction.inputs.forEach(function(e) {
+              console.log(e);
               if (e.previous_output.hash != '0000000000000000000000000000000000000000000000000000000000000000') {
-                searchInputValue(e.previous_output.hash, e.address, e.previous_output.index);
+                //searchInputValue(e.previous_output.hash, e.address, e.previous_output.index); Remove, too slow
               } else {
                 //console.log("It's coming from Deposit interests or Mining");
               }
@@ -1696,7 +1697,6 @@
           if (err) {
             $translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
           } else {
-            console.log(transactions);
             if ((transactions.lastpage == true) || (transactions.lastpage == undefined)) {     //All the transactions have been loaded
               $scope.stopLoad = true;
             }
