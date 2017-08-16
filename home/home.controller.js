@@ -1821,7 +1821,7 @@
 
   }
 
-  function HomeController(MetaverseService, $rootScope, $scope, localStorageService, $interval, $translate, $location) {
+  function HomeController(MetaverseService, $rootScope, $scope, localStorageService, $interval, $translate, $location, $filter) {
 
     var vm = this;
     vm.account = localStorageService.get('credentials').user;
@@ -1873,6 +1873,8 @@
     function defineTypeSearch(search) {
       if (search === ' ') {                 //empty research
         $location.path('/noresult');
+      } else if ($filter('uppercase')(search) === 'ETP') {
+        $location.path('/addresses');
       } else if (search.length === 64) {
         $location.path('/explorer/tx/' + search);
       } else if (search.length === 34) {
@@ -1889,6 +1891,7 @@
 
     //Used to get the full list of Assets
     function loadListAssets(search) {
+      var path = '/explorer/noresult/'+search;
       NProgress.start();
       MetaverseService.ListAllAssets()
       .then( (response) => {
@@ -1896,21 +1899,19 @@
         if (typeof response.success !== 'undefined' && response.success) {
           response.data.assets.forEach(function(e) {
             //If we found the research in the list of Assets, et redirect to its page
-            if (search == e.symbol) {
-              $location.path('/asset/details/');
+            if ($filter('uppercase')(search) == e.symbol) {
+              path = '/asset/details/'+search;
             }
           });
         } else {
           $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => {
             //Show asset load error
             FlashService.Error(data);
-            //Redirect user to the search page
-            $location.path('/explorer/noresult/'+search);
           } );
         }
+        $location.path(path);
       });
       NProgress.done();
-      $location.path('/explorer/noresult/'+search);
     }
   }
 })();
