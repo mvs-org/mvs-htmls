@@ -544,6 +544,25 @@ _____  ._______  ___.___ _______
   margin-right: 30px;
 }
 
+.headerSearch {
+  height:100px;
+  overflow:hidden;
+  margin:0 auto;
+  background-color: $lightGrey;
+  border-top: 1px solid $mediumGrey;
+  border-bottom: 1px solid $mediumGrey;
+  border-radius: 0px;
+}
+
+.headerBoxSearch {
+  margin-top: 50px;
+}
+
+.headerSearchSmallDevice {
+  height: 0;
+  margin-bottom: 0;
+}
+
 //Research div, including the texbox and the button
 .research {
   flex-flow: row;
@@ -555,6 +574,9 @@ _____  ._______  ___.___ _______
   display: inline-block;
   border-radius: 6px;
   margin-right: 8px;
+  width: 80%;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 
@@ -678,7 +700,7 @@ _____  ._______  ___.___ _______
 .admin {
   overflow:hidden;
   min-height:700px;
-  padding-top: 60px;
+  padding-top: 10px;
 }
 
 .fullPageWidth {
@@ -707,15 +729,14 @@ _____  ._______  ___.___ _______
 
 //Loading spinner, on the top right
 #nprogress .spinner-icon {
+//.spinner-icon {
   width: 26px;
   height: 26px;
-  border: dotted 4px transparent;
-  border-bottom-color: rgba(73,155,234,1);
-  border-right-color: rgba(221,227,32,1);
-  border-top-color: rgba(227,34,34,1);
-
+  background-image:url("../images/loading-spinner.png");
+  background-size: 26px 26px;
+  border: 0;
   -webkit-animation: nprogress-spinner 1000ms linear infinite;
-  animation: nprogress-spinner 1000ms linear infinite;
+          animation: nprogress-spinner 1000ms linear infinite;
 }
 
 .noPaddingLeftRight {
@@ -730,18 +751,18 @@ _____  ._______  ___.___ _______
 
 /****************Mining view****************/
 
-
 //Spinner when miningTable
 .miningSpinner {
   display: inline-block;
   width: 26px;
   height: 26px;
-  border-radius: 50%;
+  background-image:url("../images/loading-spinner.png");
+  background-size: 26px 26px;
   margin-left: 10px;
-  border: dotted 4px transparent;
-  border-bottom-color: rgba(73,155,234,1);
-  border-right-color: rgba(221,227,32,1);
-  border-top-color: rgba(227,34,34,1);
+  //border: dotted 4px transparent;
+  //border-bottom-color: rgba(73,155,234,1);
+  //border-right-color: rgba(221,227,32,1);
+  //border-top-color: rgba(227,34,34,1);
   -webkit-animation: nprogress-spinner 1000ms linear infinite;
   animation: nprogress-spinner 1000ms linear infinite;
 
@@ -807,9 +828,7 @@ _____  ._______  ___.___ _______
   margin: 4px;
   width: 40px;
   height: 40px;
-  background-color: white;
-  -webkit-border-radius: 150px;
-  -moz-border-radius: 150px;
+  background-color: transparent;
 }
 
 .assetBoxTextInfo {
@@ -1163,7 +1182,25 @@ _____  ._______  ___.___ _______
 }
 
 .assetSymbolDeposit {
-  margin-left: -21px;
+  position: absolute;
+  margin-left: -44px;
+  margin-top: 4px;
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  -webkit-border-radius: 150px;
+  -moz-border-radius: 150px;
+}
+
+.assetSymbolImgDeposit {
+  margin-left: 16px;
+  position: absolute;
+  margin-top: 36px;
+  width: 48px;
+  height: 48px;
+  background-color: white;
+  -webkit-border-radius: 150px;
+  -moz-border-radius: 150px;
 }
 
 .addressBoxTextInfoDeposit {

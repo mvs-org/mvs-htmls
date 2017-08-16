@@ -1,9 +1,24 @@
+<!--Search navbar-->
+<nav class="headerSearch navbar navbar-default hidden-xs">
+  <div class="hidden-xs hidden-sm col-xs-0 col-sm-0 col-md-2 col-lg-3">a</div>
+  <div class="col-md-8 col-lg-6 headerBoxSearch">
+    <form class="">
+      <input type="search" name="search" class="form-control researchTextBox navbar-form" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
+      <input type="submit" class="btn btn-success smallButton" value="{{ 'HEADER_SEARCH' | translate }}" ng-click="vm.search(stringToSearch)"></input>
+    </form>
+  </div>
+</nav>
+
+<!--Empty header for xs device to make the page start at the right height-->
+<nav class="headerSearchSmallDevice navbar navbar-default visible-xs">
+
+</nav>
+
+<!--Main navbar-->
 <nav class="header navbar navbar-default navbar-fixed-top">
   <div class="fullPageWidth headerBox">
-    <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="headerBox" ng-controller="MenuController">
-
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav hidden-xs">
         <li role="presentation"><a href="#!/home" class="linkLogo hidden-xs hidden-sm"><img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" /></a></li>
         <li role="presentation"><a href="#!/home" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='home'}">{{ 'NAV_WALLET' | translate }}</span></a></li>
         <li role="presentation"><a href="#!/asset/details/" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='asset'}">{{ 'NAV_ASSETS' | translate }}</span></a></li>
@@ -11,20 +26,20 @@
         <li role="presentation"><a href="#!/deposit" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='deposit'}">{{ 'NAV_DEPOSIT' | translate }}</span></a></li>
         <li role="presentation"><a href="#!/account/details" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='account'}">{{ 'NAV_ACCOUNT_SETTING' | translate }}</span></a></li>
         <li role="presentation"><a href="#!/advanced/mining" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='advanced'}">{{ 'NAV_PRO' | translate }}</span></a></li>
-        <li role="presentation" class="visible-xs visible-sm"><a href="#!/explorer/search/" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='explorer'}">{{ 'NAV_EXPLORER' | translate }}</span></a></li>
+        <!--<li role="presentation" class="visible-xs visible-sm"><a href="#!/explorer/search/" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='explorer'}">{{ 'NAV_EXPLORER' | translate }}</span></a></li>-->
         <!--<li role="presentation"><a href="#!/mining" class="leftMenuButtons"><span ng-class="{redMenu: selectedMenu.main==='mining'}">{{ 'NAV_MINING' | translate }}</span></a></li>-->
-        <form class="navbar-form navbar-left hidden-xs hidden-sm">
+
+
+        <!--<form class="navbar-form navbar-left hidden-xs hidden-sm col-md-4 col-lg-4">
           <div class="form-group">
             <input type="search" name="search" class="form-control researchTextBox" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
           </div>
           <input type="submit" class="btn btn-success smallButton" value="{{ 'HEADER_SEARCH' | translate }}" ng-click="vm.search(stringToSearch)"></input>
-        </form>
-
-        <li role="presentation"></li>
+        </form>-->
       </ul>
 
       <!--Right header-->
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right hidden-xs">
         <form class="navbar-form">
           <!--User name-->
           <span class="userName hidden-xs hidden-sm hidden-md">{{vm.account}}</span>
@@ -52,14 +67,23 @@
           </span>
         </form>
       </ul>
+      <!--Search for XS device-->
+      <div class="visible-xs col-xs-10">
+        <form class="">
+          <input type="search" name="search" class="form-control researchTextBox navbar-form" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
+          <input type="submit" class="btn btn-success smallButton" value="{{ 'HEADER_SEARCH' | translate }}" ng-click="vm.search(stringToSearch)"></input>
+        </form>
+      </div>
       <!--Menu button for XS device-->
-      <!--<div class="menuButtonSmallScreen pull-right visible-xs">
+      <div class="menuButtonSmallScreen pull-right visible-xs">
         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuSmallScreen" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
           <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
           <li><a href="#!/home" class="btn">{{ 'NAV_WALLET' | translate }}</a></li>
           <li><a href="#!/asset/details/" class="btn">{{ 'NAV_ASSETS' | translate }}</a></li>
+          <li><a href="#!/aaddresses" class="btn">{{ 'NAV_ACCOUNT_ADDRESSES' | translate }}</a></li>
+          <li><a href="#!/deposit" class="btn">{{ 'NAV_DEPOSIT' | translate }}</a></li>
           <li><a href="#!/account/details" class="btn">{{ 'NAV_ACCOUNT_SETTING' | translate }}</a></li>
           <li><a href="#!/transfer/ETP" class="btn">{{ 'HEADER_TRANSFER' | translate }}</a></li>
           <li class="divider" role="separator"></li>
@@ -68,11 +92,12 @@
           <li class="divider" role="separator"></li>
           <li><a href="#!/login" class="btn">{{ 'HEADER_LOGOUT' | translate }}</a></li>
         </ul>
-      </div>-->
+      </div>
     </div>
   </div>
 </div>
 </nav>
+
 
 
 

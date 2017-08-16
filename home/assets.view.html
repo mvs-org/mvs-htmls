@@ -215,14 +215,14 @@
       <div class="transactionBoxSmall" ng-repeat="transaction in transactionsFiltered | orderBy:'timestamp':true">
         <div class="transactionBoxSmallInfo col-xs-10 col-sm-10">
           <div class="transactionBoxSmallAmount">
+            <span class="glyphicon glyphicon-arrow-down receiveSign" ng-if="transaction.direction=='receive'"></span>
+            <span class="glyphicon glyphicon-arrow-up sendSign" ng-if="transaction.direction=='send'"></span>
+            <span class="glyphicon glyphicon-arrow-down issueSign" ng-if="transaction.direction=='issue'"></span>
             <span ng-if="transaction.direction!='send'">+</span>
             <span ng-if="transaction.direction=='send'">-</span>
             <span>{{transaction.value | assetformat : transaction.decimal_number}} {{transaction.type}}</span>
           </div>
           <div class="transactionBoxSmallAddress">
-            <span class="glyphicon glyphicon-arrow-down receiveSign" ng-if="transaction.direction=='receive'"></span>
-            <span class="glyphicon glyphicon-arrow-up sendSign" ng-if="transaction.direction=='send'"></span>
-            <span class="glyphicon glyphicon-arrow-down issueSign" ng-if="transaction.direction=='issue'"></span>
             <a class="btn-link-menu linkToExplorerButton" href="#!/explorer/tx/{{transaction.hash}}">
               <span ng-repeat="recipent in transaction.recipents" class="address">{{transaction.hash}}</span>
             </a>
