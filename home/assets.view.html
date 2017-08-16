@@ -6,8 +6,8 @@
     <div class="mainContent1">
       <div class="row assetBoxWrapper">
         <dl id="outer_wrap">
-          <!--ETP Balance-->
 
+            <!--ETP Balance-->
             <dd class="panel assetBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
               <span class="assetBoxSymbolImg">
                 <img class="assetSymbol" src="images/favicon.jpg" alt=""/>
@@ -52,7 +52,6 @@
           </div>
         </dl>
       </div>
-
     </div>
   </form>
   <br/>
@@ -75,7 +74,7 @@
     </div>
   </div>
 
-
+  <!--Filter on date-->
   <!--<form>
     <!--<div>{{ 'HISTORY_TIME_PERIOD' | translate }}</div>-->
     <!--<div class="radioButton noPaddingLeftRight col-md-12">
@@ -176,14 +175,10 @@
             <span class="glyphicon glyphicon-arrow-down receiveSign" ng-if="transaction.direction=='receive'"></span>
             <span class="glyphicon glyphicon-arrow-up sendSign" ng-if="transaction.direction=='send'"></span>
             <span class="glyphicon glyphicon-arrow-down issueSign" ng-if="transaction.direction=='issue'"></span>
-            <!--<span ng-if="transaction.direction!='send'">+</span>
-            <span ng-if="transaction.direction=='send'">-</span>
-            {{transaction.value | assetformat : transaction.decimal_number}}-->
             <span ng-if="transaction.direction!='send'">+</span>
             <span ng-if="transaction.direction=='send'">-</span>
             {{transaction.value | assetformat : transaction.decimal_number}}
         </div>
-
 
         <!--Type (ETP,...)-->
         <div class="noPaddingLeftRight col-md-1">

@@ -22,6 +22,7 @@
         <div>
           <a class="btn-link" href="#!/explorer/tx/{{input.previous_output.hash}}" bs-tooltip data-placement="top" title="{{ 'EXPLORER.TRANSACTION_HASH' | translate }}">{{input.previous_output.hash}}</a>
         </div>
+        <!--Display the input value, removed since too slow-->
         <!--<div class="numbersSearch" ng-repeat="transactionInputsValue in transactionInputsValues" ng-show="transactionInputsValue.hash==input.previous_output.hash && transactionInputsValue.address==input.address && transactionInputsValue.index == input.previous_output.index">
           <span class="numbersSearch" ng-show="transactionInputsValue.type=='etp'">{{transactionInputsValue.value/100000000}} ETP</span>
           <span class="numbersSearch" ng-hide="transactionInputsValue.type=='etp'">{{transactionInputsValue.quantity | assetformat : asset.decimal_number}} {{transactionInputsValue.symbol}}</span>

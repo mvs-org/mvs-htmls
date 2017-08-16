@@ -145,9 +145,8 @@
             //Search for the value of the input and put it in $scope.transactionInputsValues
             $scope.transactionInputsValues = [];
             response.data.transaction.inputs.forEach(function(e) {
-              console.log(e);
               if (e.previous_output.hash != '0000000000000000000000000000000000000000000000000000000000000000') {
-                //searchInputValue(e.previous_output.hash, e.address, e.previous_output.index); Remove, too slow
+                //searchInputValue(e.previous_output.hash, e.address, e.previous_output.index); Removed, too slow
               } else {
                 //console.log("It's coming from Deposit interests or Mining");
               }

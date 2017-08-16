@@ -674,8 +674,7 @@
         function Deposit(deposit_period, amount, password, address) {
             var credentials = localStorageService.get('credentials');
             if (address != undefined) {
-              console.log(['-d', deposit_period, '-a', address, credentials.user, password, amount]);
-                return _send('deposit', array);
+                return _send('deposit', ['-d', deposit_period, '-a', address, credentials.user, password, amount]);
             } else {
                 return _send('deposit', ['-d', deposit_period, credentials.user, password, amount]);
             }
@@ -718,7 +717,6 @@
             });
             query.push(credentials.user);
             query.push(credentials.password);
-            console.log(query);
             return _send('getnewmultisig', query);
         }
 
