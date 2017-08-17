@@ -142,6 +142,13 @@
                 controllerAs: 'vm'
             })
 
+            .state('home.asset.myassets', {
+                url: "/asset/myassets",
+                templateUrl: "home/assets/myassets.view.html",
+                controller: 'ShowAssetsController',
+                controllerAs: 'vm'
+            })
+
             .state('home.asset.details', {
                 url: "/asset/details/:symbol",
                 templateUrl: "home/assets/details.view.html",
@@ -202,7 +209,8 @@
                 templateUrl: "home/console.view.html",
                 controller: 'ConsoleController'
             });
-        $urlRouterProvider.otherwise("/login");
+
+        $urlRouterProvider.otherwise("/home");
     };
 
     run.$inject = ['$rootScope', '$location', 'localStorageService', '$translate'];

@@ -169,7 +169,7 @@
           $scope.asset = response.data.assets[0];
         } else {
           //Redirect user to the assets page
-          $location.path('/asset/details/');
+          $location.path('/asset/myassets');
           //Asset could not be loaded
           $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) =>  FlashService.Error(data));
         }
@@ -1294,7 +1294,7 @@
           });
         } else {
           //Redirect user to the assets page
-          $location.path('/asset/details/');
+          $location.path('/asset/myassets');
           //Asset could not be loaded
           $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) =>  FlashService.Error(data));
         }
@@ -1319,7 +1319,7 @@
             $translate('MESSAGES.ASSETS_TRANSFER_SUCCESS').then( (data) => {
               FlashService.Success(data + response.data.transaction.hash, true);
               //Redirect user to the assets page
-              $location.path('/asset/details/');
+              $location.path('/asset/myassets');
             });
           } else {
             //Show asset load error
@@ -1353,7 +1353,7 @@
           //Show asset load error
           FlashService.Error(data);
           //Redirect user to the assets page
-          $location.path('/asset/details/');
+          $location.path('/asset/myassets');
         } );
       }
     });
@@ -1417,7 +1417,7 @@
         $scope.assets = response.data.assets;
       } else {
         //Redirect user to the assets page
-        $location.path('/asset/details/');
+        $location.path('/asset/myassets');
         //Show asset load error
         $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
       }
