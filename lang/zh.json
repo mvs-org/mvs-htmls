@@ -61,6 +61,7 @@
   "TRANSFER_NO_OF_CONFIRMATIONS" : "确认数",
   "TRANSFER_BACK_ASSETS" : "返回",
   "TRANSFER_SELECT_INPUT_MULTI_RECIPENT": "同时发送到多个地址时此功能不可用",
+  "TRANSFER_MEMO" : "Memo",
   "BALANCE_CONFIRMED": "已确认数量",
   "BALANCE_UNCONFIRMED": "未确认数量",
   "DATE_CREATED" : "创建时间",

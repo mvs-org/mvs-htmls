@@ -460,6 +460,7 @@
     $scope.selectAddressMem = '';                 //Keep in memory the specific address previously selected (if the user go to Auto and come back to Manual)
     $scope.autoSelectAddress = true;              //Automatically select the address
     $scope.selectAddressAvailable = true;         //If we send to more than 1 recipent, sendfrom is not available
+    $scope.memo = '';
 
     $scope.recipents = [];
 
@@ -471,6 +472,7 @@
       $scope.message = '';
       $scope.value = '';
       $scope.password = '';
+      $scope.memo = '';
       MetaverseService.ListBalances(true)
       .then( (response) => {
         if (response.success)
@@ -652,7 +654,7 @@
         return;
       }
       value = Math.round(value);
-      var SendPromise = ($scope.sendfrom) ? MetaverseService.SendFrom($scope.sendfrom, sendTo, value, $scope.password) : MetaverseService.Send(sendTo, value, $scope.password);
+      var SendPromise = ($scope.sendfrom) ? MetaverseService.SendFrom($scope.sendfrom, sendTo, value, $scope.memo) : MetaverseService.Send(sendTo, value, $scope.memo);
       SendPromise
       .then( (response) => {
         NProgress.done();

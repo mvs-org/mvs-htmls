@@ -61,6 +61,7 @@
   "TRANSFER_NO_OF_CONFIRMATIONS" : "Bestätigungen",
   "TRANSFER_BACK_ASSETS" : "Back to Assets",
   "TRANSFER_SELECT_INPUT_MULTI_RECIPENT": "Selection of input address not available for multi-recipents transactions",
+  "TRANSFER_MEMO" : "Memo",
   "BALANCE_CONFIRMED": "verfügbar",
   "BALANCE_UNCONFIRMED": "in Bestätigung",
   "DATE_CREATED" : "Erstellt am",
