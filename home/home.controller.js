@@ -59,6 +59,7 @@
 
   function ExplorerController(MetaverseService, MetaverseHelperService, $location, $stateParams, $rootScope, $scope, FlashService, localStorageService, $translate, $window) {
 
+    $window.scrollTo(0,0);
     $scope.typeSearch = $location.path().split('/')[2];
     $scope.search = $location.path().split('/')[3];
     $scope.transactionsAddressSearch = [];
@@ -88,7 +89,7 @@
 
 
     defineTypeSearch();
-    $window.scrollTo(0,0);
+
 
     //Used if we search an Address
     function searchAddress () {
@@ -280,6 +281,7 @@
 
   function DepositController(MetaverseService, MetaverseHelperService, $rootScope, $scope, FlashService, localStorageService, $translate, $window) {
 
+    $window.scrollTo(0,0);
     $scope.changeFactor = changeFactor;
     $scope.deposit = deposit;
     $scope.selectAddress = selectAddress;         //Selection of a specific address
@@ -443,6 +445,7 @@
   */
   function ETPController(MetaverseService, MetaverseHelperService, $rootScope, $scope, FlashService, localStorageService, $translate, $window) {
 
+    $window.scrollTo(0,0);
     //Start loading animation
     NProgress.start();
 
@@ -739,6 +742,7 @@
   */
   function ETPMultiSignController(MetaverseService, MetaverseHelperService, $rootScope, $scope, FlashService, localStorageService, $translate, $window) {
 
+    $window.scrollTo(0,0);
     //Start loading animation
     NProgress.start();
 
@@ -1002,7 +1006,7 @@
 
   function AddressesController(MetaverseService, $translate, $rootScope, $scope, FlashService, $location, localStorageService, $window) {
 
-
+    $window.scrollTo(0,0);
     $scope.addresses = [];
     $scope.getnewaddress = getnewaddress;
     $scope.showqr = showqr;
@@ -1010,6 +1014,7 @@
 
     $scope.enableEditAddressName = enableEditAddressName;
     $scope.endEditAddressName = endEditAddressName;
+    $scope.cancelEditAddressName = cancelEditAddressName;
     $scope.newName = 'New Address';
 
 
@@ -1028,49 +1033,63 @@
       });
       $('#showqrmodal').modal('show');
     }
-      //Enable the edition of the Address Name
+
+    //Enable the edition of the Address Name
     function enableEditAddressName(address) {
       $scope.addresses.forEach( (e) => {
         if (e.address == address) {
-          $scope.newName = e.name;
+          e.newName = e.name;
           e.edit = true;
         }
       });
     }
-      //Save the edited name in the local storage
+
+    //Save the edited name in the local storage
     function endEditAddressName(address, newName) {
       localStorageService.set(address,newName);
       $scope.addresses.forEach( (e) => {
         if (e.address == address) {
           e.name = newName;
           e.edit = false;
-      }
-    });
+        }
+      });
     }
-      //Load the addresses and their balances
+
+    //Cancel the edition
+    function cancelEditAddressName(address) {
+      $scope.addresses.forEach( (e) => {
+        if (e.address == address) {
+          e.newName = e.name;
+          e.edit = false;
+        }
+      });
+    }
+
+
+    //Load the addresses and their balances
     function listBalances() {
       NProgress.start();
-        MetaverseService.ListBalances()
-        .then( (response) => {
-          if (typeof response.success !== 'undefined' && response.success) {
-            $scope.addresses = [];
-            response.data.balances.forEach( (e) => {
-              var name = localStorageService.get(e.balance.address);
-              if (name == undefined) {
-                name = "New Address";
-              }
-              $scope.addresses.push({
-                "balance": parseInt(e.balance.unspent),
-                "address": e.balance.address,
-                "frozen": e.balance.frozen,
-                "name": name,
-                "edit": false
-              });
+      MetaverseService.ListBalances()
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.addresses = [];
+          response.data.balances.forEach( (e) => {
+            var name = localStorageService.get(e.balance.address);
+            if (name == undefined) {
+              name = "New Address";
+            }
+            $scope.addresses.push({
+              "balance": parseInt(e.balance.unspent),
+              "address": e.balance.address,
+              "frozen": e.balance.frozen,
+              "name": name,
+              "edit": false
             });
-          }
-          NProgress.done();
-        });
-      }
+          });
+        }
+        NProgress.done();
+      });
+    }
 
     function getnewaddress() {
       MetaverseService.GetNewAddress()
@@ -1087,6 +1106,7 @@
 
   function AccountController(MetaverseService, $translate, $rootScope, $scope, FlashService, $location, localStorageService, $window) {
 
+    $window.scrollTo(0,0);
     $scope.showprivatekey = showprivatekey;
     $scope.changepassword = changepassword;
     $scope.accountname = localStorageService.get('credentials').user;
@@ -1145,11 +1165,11 @@
       MetaverseService.debug = (state == 1);
       $scope.debugState = MetaverseService.debug;
     }
-
   }
 
-  function TransferAssetController(MetaverseService, $stateParams, $rootScope, $scope, $translate, $location, localStorageService, FlashService) {
+  function TransferAssetController(MetaverseService, $stateParams, $rootScope, $scope, $translate, $location, localStorageService, FlashService, $window) {
 
+    $window.scrollTo(0,0);
     //$scope.symbol = $stateParams.symbol;
     $scope.symbol = $location.path().split('/')[2];
     $scope.sender_address = $stateParams.sender_address;
@@ -1334,8 +1354,9 @@
 
   }
 
-  function ShowAllAssetsController(MetaverseService, $rootScope, $scope, $location, FlashService, $translate, $stateParams) {
+  function ShowAllAssetsController(MetaverseService, $rootScope, $scope, $location, FlashService, $translate, $stateParams, $window) {
 
+    $window.scrollTo(0,0);
     $scope.symbol = $stateParams.symbol;
     $scope.assets = [];
     $scope.issue = issue;
@@ -1400,12 +1421,22 @@
   }
 
 
-  function ShowAssetsController(MetaverseService, $rootScope, $scope, FlashService, $translate, $stateParams, $location) {
+  function ShowAssetsController(MetaverseService, $rootScope, $scope, localStorageService, FlashService, $translate, $stateParams, $location, $window) {
 
+    $window.scrollTo(0,0);
     $scope.symbol = $stateParams.symbol;
     $scope.assets = [];
     $scope.issue = issue;
     $scope.deleteAsset = deleteAsset;
+    $scope.editMaxSupply = false;
+    $scope.enableEditAssetMaxSupply = enableEditAssetMaxSupply;
+    $scope.endEditAssetMaxSupply = endEditAssetMaxSupply;
+    $scope.cancelEditAssetMaxSupply = cancelEditAssetMaxSupply;
+    $scope.initial_maximum_supply = 0;  //the maximum supply in the blockchain, we keep it to detect modifications
+    $scope.current_maximum_supply = 0;  //the maximum supply shown in the view, after modification
+    $scope.new_maximum_supply = 0;      //the maximum supply when the user is editing it
+    $scope.owner = false;               //true if the user is the owner of this asset
+
 
     //Load assets
     NProgress.start();
@@ -1415,6 +1446,11 @@
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.assets = [];
         $scope.assets = response.data.assets;
+        //If asset is defined -> load it
+        if ($scope.symbol != undefined && $scope.symbol != "") {
+          NProgress.start();
+          loadasset($scope.symbol);
+        }
       } else {
         //Redirect user to the assets page
         $location.path('/asset/myassets');
@@ -1423,11 +1459,7 @@
       }
     });
 
-    //If asset is defined -> load it
-    if ($scope.symbol != undefined && $scope.symbol != "") {
-      NProgress.start();
-      loadasset($scope.symbol);
-    }
+
 
     function issue(symbol) {
       NProgress.start();
@@ -1450,6 +1482,12 @@
         NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.asset = response.data.assets[0];
+          if ($scope.asset.issuer == localStorageService.get('credentials').user) {
+            $scope.owner = true;
+          }
+          $scope.initial_maximum_supply = parseFloat($scope.asset.maximum_supply)/Math.pow(10,$scope.asset.decimal_number);
+          $scope.current_maximum_supply = $scope.initial_maximum_supply;
+          $scope.new_maximum_supply = $scope.initial_maximum_supply;
           $scope.assets.forEach( (a) => {
             if (a.symbol == symbol) {
               $scope.asset.quantity = a.quantity;
@@ -1476,10 +1514,28 @@
         }
       });
     }
+
+    //Enable the edition of the Address Name
+    function enableEditAssetMaxSupply() {
+      $scope.editMaxSupply = true;
+    }
+
+    //Save the edited name in the local storage
+    function endEditAssetMaxSupply(new_maximum_supply) {
+      $scope.current_maximum_supply = new_maximum_supply;
+      $scope.editMaxSupply = false;
+    }
+
+    //Cancel the change
+    function cancelEditAssetMaxSupply() {
+      $scope.new_maximum_supply = $scope.current_maximum_supply;
+      $scope.editMaxSupply = false;
+    }
   }
 
-  function CreateAssetController(MetaverseService, $rootScope, $scope, FlashService, localStorageService, $location, $translate) {
+  function CreateAssetController(MetaverseService, $rootScope, $scope, FlashService, localStorageService, $location, $translate, $window) {
 
+    $window.scrollTo(0,0);
     //This object contains all form errors
     $scope.error = {};
     //Function to create a new asset
@@ -1545,6 +1601,7 @@
       } else {
         NProgress.start();
         //Let Metaverse create an local asset
+        console.log($scope.max_supply);
         MetaverseService.CreateAsset($scope.symbol, $scope.max_supply, $scope.decimals, $scope.description)
         .then( (response) => {
           NProgress.done();
@@ -1564,8 +1621,9 @@
   }
 
 
-  function AssetsController(MetaverseHelperService, MetaverseService, $rootScope, $scope, $location, $translate, FlashService) {
+  function AssetsController(MetaverseHelperService, MetaverseService, $rootScope, $scope, $location, $translate, FlashService, $window) {
 
+    $window.scrollTo(0,0);
     $scope.assets = [];
     $scope.balance = {};
     $scope.transactions = [];
@@ -1724,8 +1782,9 @@
   }
 
 
-  function MiningController(MetaverseService, $rootScope, $scope, FlashService, $translate) {
+  function MiningController(MetaverseService, $rootScope, $scope, FlashService, $translate, $window) {
 
+    $window.scrollTo(0,0);
     $scope.start = StartMining;
     $scope.stop = StopMining;
     $scope.status = {};
@@ -1780,11 +1839,13 @@
 
   }
 
-  function ConsoleController(MetaverseService, $rootScope, $scope) {
+  function ConsoleController(MetaverseService, $rootScope, $scope, $window) {
 
-    var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
+    $window.scrollTo(0,0);
+    //var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
     //To test the Console view with Grunt:
     //var ws = new WebSocket('ws://test4.metaverse.live:8820/ws');
+    var ws = new WebSocket('ws://localhost:8820/ws');
 
     $("#inputField").focus();
 

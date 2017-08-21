@@ -20,11 +20,28 @@
     <tbody>
       <tr class="row">
         <td class="assetDataColumn">{{'BALANCE' | translate}}:</td>
-        <td class="assetValueColumn">{{asset.quantity | assetformat : asset.decimal_number}}</td>
+        <td class="assetValueColumn" ng-show="asset.quantity != undefined">{{asset.quantity | assetformat : asset.decimal_number}}</td>
+        <td class="assetValueColumn" ng-hide="asset.quantity != undefined">0</td>
       </tr>
       <tr class="row">
         <td class="assetDataColumn">{{'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate}}:</td>
-        <td class="assetValueColumn">{{asset.maximum_supply | assetformat : asset.decimal_number}}</td>
+        <td class="assetValueColumn">
+          <!--Display editable name of the address-->
+          <span ng-hide="editMaxSupply">
+            <span>{{current_maximum_supply}}</span>
+            <button ng-show="owner" class="glyphicon glyphicon-plus-sign editAddressNameButton" bs-tooltip data-placement="top" title="{{ 'ASSET_ASSET_DETAILS_TOOLTIP_INCREASE_SUPPLY' | translate }}" ng-click="enableEditAssetMaxSupply()"></button>
+          </span>
+          <!--Display while editing-->
+          <span class="input-group" ng-show="editMaxSupply">
+            <input type="number" ng-model="new_maximum_supply" class="form-control maxSupplyUpdateTextBox" min="0" ng-keyup="$event.keyCode == 13 && endEditAssetMaxSupply(new_maximum_supply)">
+            <span class="input-group-addon editAddressName">
+              <button class="glyphicon glyphicon-floppy-saved editAddressNameButtonEditing" ng-click="endEditAssetMaxSupply(new_maximum_supply)"></button>
+            </span>
+            <span class="input-group-addon editAddressName">
+              <button class="glyphicon glyphicon-remove editAddressNameButtonEditing" ng-click="cancelEditAssetMaxSupply()"></button>
+            </span>
+          </span>
+        </td>
       </tr>
       <tr class="row">
         <td class="assetDataColumn">{{'ASSET_ASSET_CREATE_DIGITS' | translate}}:</td>
@@ -55,5 +72,8 @@
     <a class="col-xs-6 col-xl-6" href="#!/asset/details/" ng-click="deleteAsset()"><div class="btn btn-danger">{{'ASSET_DELETE_ASSET' | translate}}</div></a>
   </div>
   <div ng-show="asset.status=='issued'" class="col-xs-12 col-sm-6 col-md-4">
-    <a href="#!/transfer/{{asset.symbol}}/"><input class="btn btn-success" value="{{'TRANSFER_SEND' | translate}}"></a>
+    <a ng-hide="(initial_maximum_supply != current_maximum_supply)" class="col-xs-6 col-xl-6" href="#!/transfer/{{asset.symbol}}/"><input class="btn btn-info" value="{{'TRANSFER_SEND' | translate}}"></a>
+    <a ng-hide="(initial_maximum_supply != current_maximum_supply)" class="col-xs-6 col-xl-6" href="#!/asset/myassets"><input class="btn btn-link" value="{{'TRANSFER_BACK_ASSETS' | translate}}"></a>
+    <a ng-show="(initial_maximum_supply != current_maximum_supply)" class="col-xs-6 col-xl-6" href="#!/asset/myassets"><input class="btn btn-success" value="{{'ASSET_ASSET_DETAILS_SUBMIT' | translate}}"></a>
+    <a ng-show="(initial_maximum_supply != current_maximum_supply)" class="col-xs-6 col-xl-6" href="#!/asset/myassets"><input class="btn btn-link" value="{{'ASSET_ASSET_DETAILS_CANCEL' | translate}}"></a>
   </div>

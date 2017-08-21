@@ -55,9 +55,12 @@
           </div>
           <!--Display while editing-->
           <div class="input-group" ng-show="address.edit">
-            <input type="text" ng-model="newName" class="form-control addressBoxNameUpdate" id="editAddressNameEditing" maxlength="40" ng-keyup="$event.keyCode == 13 && endEditAddressName(address.address, newName)">
+            <input type="text" ng-model="address.newName" class="form-control addressBoxNameUpdate" id="editAddressNameEditing" maxlength="40" ng-keyup="$event.keyCode == 13 && endEditAddressName(address.address, address.newName)">
             <span class="input-group-addon editAddressName">
-              <button class="glyphicon glyphicon-floppy-saved editAddressNameButtonEditing" ng-click="endEditAddressName(address.address, newName)"></button>
+              <button class="glyphicon glyphicon-floppy-saved editAddressNameButtonEditing" ng-click="endEditAddressName(address.address, address.newName)"></button>
+            </span>
+            <span class="input-group-addon editAddressName">
+              <button class="glyphicon glyphicon-remove editAddressNameButtonEditing" ng-click="cancelEditAddressName(address.address)"></button>
             </span>
           </div>
 

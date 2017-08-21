@@ -700,7 +700,10 @@ _____  ._______  ___.___ _______
 .admin {
   overflow:hidden;
   min-height:700px;
-  padding-top: 10px;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .fullPageWidth {
@@ -872,6 +875,15 @@ _____  ._______  ___.___ _______
   margin: 10px;
 }
 
+.maxSupplyUpdateTextBox {
+  font-size: 14px;
+  background-color: transparent;
+  height: 24px;
+  display: inline;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 //Table to check one asset
 .currentAsset {
   font-weight: 200;
@@ -885,13 +897,13 @@ _____  ._______  ___.___ _______
 }
 
 .assetDataColumn {
+  height: 24px;
   width: 160px;
   text-align: right;
   padding-right: 20px;
-  //font-family: 'PingFangSC-Regular', 'PingFang SC';
   font-weight: 400;
   font-style: normal;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .assetValueColumn {
