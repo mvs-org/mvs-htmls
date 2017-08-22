@@ -11,14 +11,26 @@
 
     <!--Form via HTML5 and SCSS-->
     <form class="form-horizontal" role="form">
+      <!--Symbol-->
       <div class="form-group">
         <label for="symbol" class="control-label">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</label>
         <input type="text" class="form-control uppercase" name="symbol" required placeholder="" ng-model="symbol" autocomplete="off">
       </div>
+      <!--Maximum supply-->
       <div class="form-group">
         <label for="max_supply" class="control-label">{{ 'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate }}</label>
         <input type="number" min="0" class="form-control" name="max_supply" required placeholder="" ng-model="max_supply" autocomplete="off">
       </div>
+      <!--Secondary Offering-->
+      <div class="form-group">
+        <label for="second_offering" class="control-label">{{ 'ASSET_ASSET_CREATE_SECONDARY_OFFERING' | translate }}</label>
+        <!--<input type="number" min="0" class="form-control" name="secondary_offering" placeholder="" ng-model="secondary_offering" autocomplete="off">-->
+        <select type="number" min="0" class="form-control" name="secondary_offering" placeholder="" ng-model="secondary_offering" autocomplete="off">
+          <option value="0">0</option>
+          <option ng-repeat="n in range(51,100)" value="{{n}}">{{n}}</option>
+        </select>
+      </div>
+      <!--Decimals-->
       <div class="form-group">
         <label for="decimals" class="control-label">{{ 'ASSET_ASSET_CREATE_DIGITS' | translate }}</label>
         <select type="number" class="form-control" name="decimals" required placeholder="" required ng-model="decimals">
@@ -45,10 +57,12 @@
           <option value="19" ng-show="max_supply<=1">19</option>
         </select>
       </div>
+      <!--Description-->
       <div class="form-group">
         <label for="description" class="control-label">{{ 'ASSET_ASSET_CREATE_DESCRIPTION' | translate }}</label>
         <textarea class="form-control" name="description" required rows="4" cols="35" ng-model="description" autocomplete="off"></textarea>
       </div>
+      <!--Password-->
       <div class="form-group">
         <label for="password" class="control-label">{{ 'ASSET_ASSET_CREATE_PASSWORD' | translate }}</label>
         <input type="password" class="form-control" name="password" placeholder="" required ng-class="{ 'border-danger' : (error.password && password)}" ng-model="password" autocomplete="new-password">

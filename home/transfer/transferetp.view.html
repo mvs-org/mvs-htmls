@@ -12,7 +12,7 @@
 			<li class="divider" role="separator"></li>
 			<li ng-repeat="asset in assetsIssued | orderBy:'symbol'"><a ng-click="selectAssetType(asset.symbol)" href="#!/transfer/{{asset.symbol}}/" >{{asset.symbol}}</a></li>
 		</ul>
-		<!--<a href="#!/transfer/multisignature" class="btn btn-success smallButton">Go to multi-signature</a>-->
+		<a href="#!/transfer/multisignature" class="btn btn-success smallButton">Go to multi-signature</a>
 	</div>
 
 	<!--Navigation Manual/Auto selection of addresse-->

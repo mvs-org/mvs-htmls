@@ -13,7 +13,7 @@
                 <img class="assetSymbol" src="images/favicon.jpg" alt=""/>
               </span>
               <span class="assetBoxTextInfo">
-                <a href="#!/addresses" class="assetBoxSymbolName btn-link">ETP</a>
+                <a href="#!/addresses/myaddresses" class="assetBoxSymbolName btn-link">ETP</a>
                 <span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
                 <span class="assetBoxValue">{{balance['total-unspent']/100000000}}</span>
                 <span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
@@ -22,7 +22,7 @@
                   <a class="sendAndReceiveText" href="#!/transfer/ETP"><span class="glyphicon glyphicon-arrow-up"></span>{{ 'ASSETS_SEND' | translate}}</a>
                 </span>
                 <span class="sendAndReceive">
-                  <a class="sendAndReceiveText" href="#!/addresses"><span class="glyphicon glyphicon-arrow-down"></span>{{ 'ASSETS_RECEIVE' | translate}}</a>
+                  <a class="sendAndReceiveText" href="#!/addresses/myaddresses"><span class="glyphicon glyphicon-arrow-down"></span>{{ 'ASSETS_RECEIVE' | translate}}</a>
                 </span>
               </span>
             </dd>
@@ -44,7 +44,7 @@
                     <a class="sendAndReceiveText" href="#!/transfer/{{asset.symbol}}/"><span class="glyphicon glyphicon-arrow-up"></span>{{ 'ASSETS_SEND' | translate}}</a>
                   </span>
                   <span class="sendAndReceive">
-                    <a class="sendAndReceiveText" href="#!/addresses"><span class="glyphicon glyphicon-arrow-down"></span>{{ 'ASSETS_RECEIVE' | translate}}</a>
+                    <a class="sendAndReceiveText" href="#!/addresses/myaddresses"><span class="glyphicon glyphicon-arrow-down"></span>{{ 'ASSETS_RECEIVE' | translate}}</a>
                   </span>
                 </span>
               </span>

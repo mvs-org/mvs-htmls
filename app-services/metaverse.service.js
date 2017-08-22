@@ -60,6 +60,7 @@
         service.SendAssetFrom = SendAssetFrom;
         service.SendAsset = SendAsset;
         service.Issue = Issue;
+        service.SecondIssue = SecondIssue;
         service.Delete = Delete;
 
 
@@ -319,9 +320,13 @@
          *    }
          * }
          **/
-        function Send(recipent, quantity) {
+        function Send(recipent, quantity, memo) {
             var credentials = localStorageService.get('credentials');
-            return _send('send', [credentials.user, credentials.password, recipent, quantity]);
+            if(memo == '') {
+              return _send('send', [credentials.user, credentials.password, recipent, quantity]);
+            } else {
+              return _send('send', [credentials.user, credentials.password, recipent, quantity, '-m', memo]);
+            }
         }
 
         /**
@@ -361,9 +366,13 @@
          *    }
          * }
          **/
-        function SendFrom(sender, recipent, quantity) {
+        function SendFrom(sender, recipent, quantity, memo) {
             var credentials = localStorageService.get('credentials');
-            return _send('sendfrom', [credentials.user, credentials.password, sender, recipent, quantity]);
+            if(memo == '') {
+              return _send('sendfrom', [credentials.user, credentials.password, sender, recipent, quantity]);
+            } else {
+              return _send('sendfrom', [credentials.user, credentials.password, sender, recipent, quantity, '-m', memo]);
+            }
         }
 
         /**
@@ -542,10 +551,10 @@
          * @apiParam {List} params [username, password,'-s',symbol,'-v',max_supply,'-n',decimal_number, '-d',description]
          *
          **/
-        function CreateAsset(symbol, max_supply, decimal_number, description) {
+        function CreateAsset(symbol, max_supply, secondary_offering, decimal_number, description) {
             max_supply*=Math.pow(10,decimal_number);
             var credentials = localStorageService.get('credentials');
-            return _send('createasset', [credentials.user, credentials.password, '-s', symbol, '-v', max_supply, '-n',decimal_number, '-d', description]);
+            return _send('createasset', [credentials.user, credentials.password, '-s', symbol, '-v', max_supply, '-r', secondary_offering, '-n',decimal_number, '-d', description]);
         }
 
         /**
@@ -561,8 +570,15 @@
          *
          **/
         function Issue(symbol) {
-            var credentials = localStorageService.get('credentials');
-            return _send('issue', [credentials.user, credentials.password, symbol]);
+          var credentials = localStorageService.get('credentials');
+          return _send('issue', [credentials.user, credentials.password, symbol]);
+        }
+
+
+
+        function SecondIssue(symbol, increase_maximum_supply) {
+          var credentials = localStorageService.get('credentials');
+          return _send('secondissue', [credentials.user, credentials.password, symbol, increase_maximum_supply]);
         }
 
 

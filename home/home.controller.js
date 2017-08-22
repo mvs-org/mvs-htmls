@@ -754,7 +754,7 @@
     $scope.underlineManual='none';
     $scope.selectAddress = selectAddress;         //Selection of a specific address
     $scope.selectAddressMem = '';                 //Keep in memory the specific address previously selected (if the user go to Auto and come back to Manual)
-    $scope.autoSelectAddress = true;              //Automatically select the address
+    $scope.autoSelectAddress = false;              //Automatically select the address
 
     $scope.displayEmptyAdresses = false;
 
@@ -909,34 +909,42 @@
       //console.log($scope.cosigners);
       //console.log($scope.nbrCosignersRequired);
       NProgress.start();
-      if ($scope.sendfrom == '') {
-        FlashService.Error('Please select an address');
-      //TODO} else if ($scope.cosigners == []) {
-        //FlashService.Error('Please select at least one co-signer');
+      var transactionOK=true;
+      //Check for unimplemented parameters
+      $scope.cosigners.forEach( (e) => {
+        if (e.publicKey.length != 66) { //Check for public keys
+          $translate('MESSAGES.CREATE_MULTISIGNATURE_WRONG_PUBLIC_KEY').then( (data) => FlashService.Error(data + ' ' + e.index) );
+          transactionOK = false;
+        }
+      });
+
+      if (transactionOK == false) {
+        //error already handle
+        $window.scrollTo(0,0);
       } else if ($scope.password === '') { //Check for empty password
         $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
       } else {
-        MetaverseService.GetNewMultiSig($scope.nbrCosignersRequired, $scope.cosigners.length+1, $scope.publicKey, $scope.cosigners)
+        var SendPromise = MetaverseService.GetNewMultiSig($scope.nbrCosignersRequired, $scope.cosigners.length+1, $scope.publicKey, $scope.cosigners);
+        SendPromise
         .then( (response) => {
+          $window.scrollTo(0,0);
+          NProgress.done();
+          console.log(response);
           if (typeof response.success !== 'undefined' && response.success) {
-            //console.log("Success!");
-            //console.log(response);
-            /*$scope.addresses = [];
-            response.data.balances.forEach( (e) => {
-              var name = "New address";
-              if (localStorageService.get(e.balance.address) != undefined) {
-                name = localStorageService.get(e.balance.address);
-              }
-              $scope.addresses.push({
-                "balance": parseInt(e.balance.unspent),
-                "address": e.balance.address,
-                "name": name,
-                "frozen": e.balance.frozen
-              });*/
-
+            //Creation was successful
+            $translate('MESSAGES.CREATE_MULTISIGNATURE_SUCCESS').then( (data) => FlashService.Success(data) );
+            init();
           } else {
-            //console.log("Fail...");
-            //console.log(response);
+            //Transaction problem
+            $translate('MESSAGES.CREATE_MULTISIGNATURE_ERROR').then( (data) => {
+
+              if (response.message != undefined) {
+                FlashService.Error(data + " " + response.message);
+              } else {
+                FlashService.Error(data);
+              }
+            });
+            $scope.password = '';
           }
         });
       }
@@ -945,6 +953,7 @@
 
     //Used to dynamically update the number of signature required
     $scope.getNumber = function(num) {
+      console.log(new Array(num));
       return new Array(num);
     }
 
@@ -957,19 +966,14 @@
       } else if ($scope.password === '') { //Check for empty password
         $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
       } else {
-        MetaverseService.ListMultiSig($scope.nbrCosignersRequired, $scope.cosigners.length+1, $scope.publicKey, $scope.cosigners)
+        MetaverseService.ListMultiSig()
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success) {
-            //console.log("Success!");
-            //console.log(response);
-            //$scope.listMultiSig = response.data;
             response.data.multisig.forEach( (e) => {
               var name = "New address";
               if (localStorageService.get(e.address) != undefined) {
                 name = localStorageService.get(e.address);
               }
-              //console.log(e);
-              //console.log(e["public-keys"]);
               $scope.listMultiSig.push({
                 "index": e.index,
                 "m": e.m,
@@ -982,8 +986,7 @@
               });
             });
           } else {
-            //console.log("Fail...");
-            //console.log(response);
+            //Fail
           }
         });
       }
@@ -1018,6 +1021,17 @@
     $scope.endEditAddressName = endEditAddressName;
     $scope.cancelEditAddressName = cancelEditAddressName;
     $scope.newName = 'New Address';
+
+
+    function init() {
+      if(($location.path().split('/')[2]) == 'multisignatureaddresses') {
+        listMultiSign();
+      } else if(($location.path().split('/')[2]) == 'myaddresses') {
+        listBalances();
+      }
+    }
+
+    init();
 
 
     //Shows a modal of the address incl. a qr code
@@ -1103,7 +1117,41 @@
       });
     }
 
-    listBalances();
+
+    function listMultiSign() {
+      NProgress.start();
+      if ($scope.sendfrom == '') {
+        FlashService.Error('Please select an address');
+      } else if ($scope.password === '') { //Check for empty password
+        $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
+      } else {
+        MetaverseService.ListMultiSig()
+        .then( (response) => {
+          if (typeof response.success !== 'undefined' && response.success) {
+            response.data.multisig.forEach( (e) => {
+              var name = localStorageService.get(e.address);
+              if (name == undefined) {
+                name = "New Address";
+              }
+              $scope.addresses.push({
+                "index": e.index,
+                "m": e.m,
+                "n": e.n,
+                "selfpublickey": e["self-publickey"],
+                "description": e.description,
+                "address": e.address,
+                "name": name,
+                "publicKeys": e["public-keys"],
+                "edit": false
+              });
+            });
+          } else {
+            //Fail
+          }
+        });
+      }
+      NProgress.done();
+    }
   }
 
   function AccountController(MetaverseService, $translate, $rootScope, $scope, FlashService, $location, localStorageService, $window) {
@@ -1429,14 +1477,13 @@
     $scope.symbol = $stateParams.symbol;
     $scope.assets = [];
     $scope.issue = issue;
+    $scope.secondIssue = secondIssue;
     $scope.deleteAsset = deleteAsset;
     $scope.editMaxSupply = false;
     $scope.enableEditAssetMaxSupply = enableEditAssetMaxSupply;
     $scope.endEditAssetMaxSupply = endEditAssetMaxSupply;
     $scope.cancelEditAssetMaxSupply = cancelEditAssetMaxSupply;
-    $scope.initial_maximum_supply = 0;  //the maximum supply in the blockchain, we keep it to detect modifications
-    $scope.current_maximum_supply = 0;  //the maximum supply shown in the view, after modification
-    $scope.new_maximum_supply = 0;      //the maximum supply when the user is editing it
+    $scope.increase_maximum_supply = 0;  //the maximum supply increase
     $scope.owner = false;               //true if the user is the owner of this asset
 
 
@@ -1472,6 +1519,26 @@
           $translate('MESSAGES.ASSETS_ISSUE_SUCCESS').then( (data) => FlashService.Success(data) );
         } else {
           $translate('MESSAGES.ASSETS_ISSUE_ERROR').then( (data) => FlashService.Error(data) );
+        }
+        NProgress.done();
+      });
+    }
+
+
+    function secondIssue(symbol, increase_maximum_supply, decimal_number) {
+      NProgress.start();
+      increase_maximum_supply*=Math.pow(10,decimal_number);
+      if(increase_maximum_supply < 0) {
+        $translate('MESSAGES.ASSETS_SECOND_ISSUE_ERROR').then( (data) => FlashService.Error(data) );
+      }
+      MetaverseService.SecondIssue(symbol, increase_maximum_supply)
+      .then( (response) => {
+        console.log(response);
+        if (typeof response.success !== 'undefined' && response.success) {
+          loadasset($scope.symbol);
+          $translate('MESSAGES.ASSETS_SECOND_ISSUE_SUCCESS').then( (data) => FlashService.Success(data) );
+        } else {
+          $translate('MESSAGES.ASSETS_SECOND_ISSUE_ERROR').then( (data) => FlashService.Error(data + ' ' + response.message) );
         }
         NProgress.done();
       });
@@ -1548,6 +1615,7 @@
       $scope.symbol = '';
       $scope.description = '';
       $scope.max_supply = 0;
+      $scope.secondary_offering = 0;
       $scope.decimals = '';
       $scope.password = '';
     }
@@ -1596,6 +1664,16 @@
       checkready();
     });
 
+    //Define the range used for the secondary offering
+    $scope.range = function(min, max, step) {
+      step = step || 1;
+      var input = [];
+      for (var i = min; i <= max; i += step) {
+          input.push(i);
+      }
+      return input;
+    };
+
     //Create asset function
     function createasset() {
       if (localStorageService.get('credentials').password != $scope.password) {
@@ -1603,8 +1681,7 @@
       } else {
         NProgress.start();
         //Let Metaverse create an local asset
-        console.log($scope.max_supply);
-        MetaverseService.CreateAsset($scope.symbol, $scope.max_supply, $scope.decimals, $scope.description)
+        MetaverseService.CreateAsset($scope.symbol, $scope.max_supply, $scope.secondary_offering, $scope.decimals, $scope.description)
         .then( (response) => {
           NProgress.done();
           if (typeof response.success !== 'undefined' && response.success) {
@@ -1844,10 +1921,10 @@
   function ConsoleController(MetaverseService, $rootScope, $scope, $window) {
 
     $window.scrollTo(0,0);
-    //var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
+    var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
     //To test the Console view with Grunt:
     //var ws = new WebSocket('ws://test4.metaverse.live:8820/ws');
-    var ws = new WebSocket('ws://localhost:8820/ws');
+    //var ws = new WebSocket('ws://localhost:8820/ws');
 
     $("#inputField").focus();
 
@@ -1937,7 +2014,7 @@
       if (search === ' ') {                 //empty research
         $location.path('/noresult');
       } else if ($filter('uppercase')(search) === 'ETP') {
-        $location.path('/addresses');
+        $location.path('/addresses/myaddresses');
       } else if (search.length === 64) {
         $location.path('/explorer/tx/' + search);
       } else if (search.length === 34) {

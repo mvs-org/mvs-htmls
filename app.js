@@ -80,9 +80,29 @@
                 controllerAs: 'vm'
             })
 
+            /*.state('home.account.subscribe', {
+                url: "/account/subscribe",
+                templateUrl: "home/account/subscribe.view.html",
+                controller: 'AccountController',
+                controllerAs: 'vm'
+            })*/
+
+
             .state('home.addresses', {
-                url: "/addresses",
-                templateUrl: "home/addresses.view.html",
+                templateUrl: "home/addresses/index.view.html",
+                controller: 'AddressesController'
+            })
+
+            .state('home.addresses.myaddresses', {
+                url: "/addresses/myaddresses",
+                templateUrl: "home/addresses/myaddresses.view.html",
+                controller: 'AddressesController',
+                controllerAs: 'vm'
+            })
+
+            .state('home.addresses.multisigaddresses', {
+                url: "/addresses/multisignatureaddresses",
+                templateUrl: "home/addresses/multisigaddresses.view.html",
                 controller: 'AddressesController',
                 controllerAs: 'vm'
             })
@@ -177,7 +197,7 @@
                 controllerAs: 'vm'
             })
 
-            /*.state('home.multisignature', {
+            .state('home.multisignature', {
                 url: "/transfer/multisignature",
                 templateUrl: "home/transfer/multisignature.view.html",
                 controller: 'ETPMultiSignController',
@@ -189,7 +209,7 @@
                 templateUrl: "home/transfer/createmultisignature.view.html",
                 controller: 'ETPMultiSignController',
                 controllerAs: 'vm'
-            })*/
+            })
 
             .state('home.deposit', {
                 url: "/deposit",

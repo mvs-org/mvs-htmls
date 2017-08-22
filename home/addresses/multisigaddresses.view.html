@@ -1,8 +1,14 @@
-<div class="content">
-  <div class="headline">
-    {{ 'NAV_ACCOUNT_ADDRESSES' | translate }}
-    <!--<a href="#!/deposit" class="btn btn-success smallButton">{{ 'DEPOSIT.HEADLINE' | translate }}</a>-->
-  </div>
+
+<div class="headline">
+  {{ 'NAV_ACCOUNT_ADDRESSES' | translate }}
+  <!--<a href="#!/deposit" class="btn btn-success smallButton">{{ 'DEPOSIT.HEADLINE' | translate }}</a>-->
+</div>
+<div>
+  <ul class="nav nav-pills tabsMenu">
+    <li role="presentation"><a href="#!/addresses/myaddresses" class="btn-link-menu">{{ 'ADDRESSES_MY_ADDRESSES' | translate }}</a></li>
+    <li role="presentation" class="active"><a href="#!/addresses/multisignatureaddresses" class="btn-link-menu">{{ 'ADDRESSES_MULTISIG_ADDRESSES' | translate }}</a></li>
+  </ul>
+</div>
 
   <!--Show/Hide empty addresses-->
   <div class="checkboxCircle">
@@ -22,8 +28,8 @@
   </div>
   <br/>
 
-  <!--Display all the ETP adresses-->
-  <div ng-repeat="address in addresses | orderBy:'balance':true" ng-hide="(displayEmptyAdresses == true && address.balance == 0)">
+  <!--Display all the multi-signature adresses-->
+  <div ng-repeat="address in addresses" ng-hide="(displayEmptyAdresses == true && addresses.balance == 0)">
     <dd class="panel addressBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
 
       <!--Asset logo-->
@@ -69,23 +75,21 @@
 
           <!--Balance-->
           <span class="col-xs-6 noPaddingLeftRight">
-            <span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
-            <span class="assetBoxValue">{{address.balance/100000000 }}</span>
+            <span class="assetBoxTitle">{{ 'TRANSFER_MULTISIGNATURE_PEOPLE_INVOLVED' | translate }}</span>
+            <span class="assetBoxValue">{{address.n}}</span>
           </span>
 
           <!--Frozen-->
           <span class="col-xs-6 noPaddingLeftRight">
-            <span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
-            <span class="assetBoxValue">{{address.frozen/100000000 }}</span>
+            <span class="assetBoxTitle">{{ 'TRANSFER_MULTISIGNATURE_NBR_SIGN' | translate }}</span>
+            <span class="assetBoxValue">{{address.m}}</span>
           </span>
         </div>
       </div>
     </dd>
   </div>
 
-  <!--Get new address-->
-  <div class="createAddress col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
-    <button ng-click="getnewaddress()" class="btn-link createAddressButton"><span class="glyphicon glyphicon-plus"></span> {{ 'ADDRESSES_CREATE_NEW_ADDRESS' | translate }}</button>
-  </div>
-
-</div>
+  <!--Create a new multisignatures-->
+	<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
+		<a href="#!/transfer/newmultisignature" class="btn btn-link smallButton"><span class="glyphicon glyphicon-plus"></span> {{ 'TRANSFER_MULTISIGNATURE_ADD' | translate }}</a>
+	</div>
