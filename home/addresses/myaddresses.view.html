@@ -42,13 +42,13 @@
         <div class="copyAndQrCode">
           <span class="qrCode">
             <button id="element" class="btn btn-link addressLinkButton" ng-click="showqr(address.address)" alt="receive">
-              <img src="images/qrcode.png" alt="" /> {{ 'ADDRESSES_QR_CODE' | translate }}
+              <span class="glyphicon glyphicon-qrcode"></span> {{ 'ADDRESSES_QR_CODE' | translate }}
             </button>
           </span>
           <!--Copy the address to clipboard-->
           <span class="copyAddress">
             <button class="btn btn-link addressLinkButton" bs-popover data-clipboard-text="{{address.address}}" data-toggle="popover" data-placement="top" data-content="{{ 'ADDRESSES_POPOVER_COPIED' | translate }}" role="button">
-              <img src="images/copy-address.png" alt="" /> {{ 'ADDRESSES_COPY_ADDRESS' | translate }}
+              <span class="glyphicon glyphicon-file"></span> {{ 'ADDRESSES_COPY_ADDRESS' | translate }}
             </button>
           </span>
         </div>

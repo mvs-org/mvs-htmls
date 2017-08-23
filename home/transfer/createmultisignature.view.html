@@ -68,12 +68,12 @@
 			<br/>
 			<div class="col-md-6 form-group">
 				<label for="value" class="control-label">{{ 'CREATE_MULTISIGNATURE_MY_ADDRESS' | translate }}</label>
-				<input type="text" ng-hide="sendfrom==''" class="form-control" name="sender_address" id="" value="{{sendfrom}}" disabled>
-				<input type="text" ng-show="sendfrom==''" class="form-control" name="sender_address" id="" value="{{ 'CREATE_MULTISIGNATURE_PLEASE_SELECT_ADDRESS' | translate }}" disabled>
+				<input type="text" ng-hide="sendfrom==''" class="form-control" name="sender_address" id="" value="{{sendfrom}}">
+				<input type="text" ng-show="sendfrom==''" class="form-control" name="sender_address" id="" value="{{ 'CREATE_MULTISIGNATURE_PLEASE_SELECT_ADDRESS' | translate }}">
 			</div>
 			<div class="col-md-6 form-group">
 				<label for="publicKey" class="control-label">{{ 'CREATE_MULTISIGNATURE_MY_PUBLIC_KEY' | translate }}</label>
-				<input type="multisig" class="form-control" name="publicKey" id="" ng-model="publicKey" disabled>
+				<input type="multisig" class="form-control" name="publicKey" id="" ng-model="publicKey">
 			</div>
 		</div>
 

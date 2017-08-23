@@ -204,6 +204,13 @@
                 controllerAs: 'vm'
             })
 
+            .state('home.sign', {
+                url: "/transfer/sign",
+                templateUrl: "home/transfer/sign.view.html",
+                controller: 'ETPMultiSignController',
+                controllerAs: 'vm'
+            })
+
             .state('home.createmultisignature', {
                 url: "/transfer/newmultisignature",
                 templateUrl: "home/transfer/createmultisignature.view.html",

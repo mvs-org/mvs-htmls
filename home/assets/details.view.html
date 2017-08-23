@@ -35,7 +35,7 @@
           <span class="input-group" ng-show="editMaxSupply">
             <input type="number" ng-model="increase_maximum_supply" class="form-control maxSupplyUpdateTextBox" min="0" ng-keyup="$event.keyCode == 13 && endEditAssetMaxSupply(new_maximum_supply)">
             <span class="input-group-addon editAddressName">
-              <button class="glyphicon glyphicon-floppy-saved editAddressNameButtonEditing" ng-click="endEditAssetMaxSupply(new_maximum_supply)"></button>
+              <button class="glyphicon glyphicon-floppy-saved editAddressNameButtonEditing" ng-click="endEditAssetMaxSupply()"></button>
             </span>
             <span class="input-group-addon editAddressName">
               <button class="glyphicon glyphicon-remove editAddressNameButtonEditing" ng-click="cancelEditAssetMaxSupply()"></button>

@@ -771,7 +771,10 @@
     $scope.listMultiSig = [];
     $scope.selectedMutliSigAddress = [];
     $scope.setMultiSigAddress = setMultiSigAddress;
-    $scope.transferMultiSig = transferMultiSig;
+    $scope.createMultisigTx = createMultisigTx;
+    $scope.transferSuccess = false;                 //Change to True after a successful transaction
+    $scope.resultCreateTx = '';
+    $scope.signMultisigTx = signMultisigTx;
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -792,6 +795,8 @@
       $scope.cosigners.push({'index': 1, 'publicKey': ''});
       $scope.nbrCosignersRequired = 0;
       $scope.selectedMutliSigAddress = [];
+      $scope.transferSuccess = false;
+      $scope.resultCreateTx = '';
     }
 
     $scope.symbol = 'ETP';
@@ -937,7 +942,6 @@
           } else {
             //Transaction problem
             $translate('MESSAGES.CREATE_MULTISIGNATURE_ERROR').then( (data) => {
-
               if (response.message != undefined) {
                 FlashService.Error(data + " " + response.message);
               } else {
@@ -993,12 +997,73 @@
       NProgress.done();
     }
 
-    function transferMultiSig() {
-      MetaverseService.SendFromMultiSig('36pgRzGKUfVbDdyKK7R52dERkv281FY6FK', 'tEPoUt8GsK6j9rqworo5KjorhkscS3oxiM', 10)
+    function createMultisigTx(sendFrom, sendTo, quantity) {
+      switch ($rootScope.factor) {
+        case 'FACTOR_SATOSHI':
+        break;
+        case 'FACTOR_ETP':
+        quantity *= 100000000;
+        break;
+        default:
+        $translate('MESSAGES.TRANSFER_ERROR').then( (data) => FlashService.Error(data) );
+        return;
+      }
+      quantity = Math.round(quantity);
+      MetaverseService.CreateMultisigTx(sendFrom, sendTo, quantity)
       .then( (response) => {
-        //console.log(response);
+        console.log(response);
+        NProgress.done();
+        if (typeof response.success !== 'undefined' && response.success) {
+          //Transaction was successful
+          $translate('MESSAGES.CREATE_MULTISIGNATURE_SUCCESS').then( (data) => FlashService.Success(data) );
+          init();
+          $scope.transferSuccess = true;
+          $scope.resultCreateTx = response.data;
+        } else {
+          //Transaction problem
+          $translate('MESSAGES.CREATE_MULTISIGNATURE_ERROR').then( (data) => {
+            if (response.message != undefined) {
+              FlashService.Error(data + " " + response.message);
+            } else {
+              FlashService.Error(data);
+            }
+          });
+          $scope.password = '';
+        }
       });
+      $window.scrollTo(0,0);
     }
+
+    function signMultisigTx(message, lastTx) {
+      MetaverseService.SignMultisigTx(message, lastTx)
+      .then( (response) => {
+        console.log(response);
+        NProgress.done();
+        if (typeof response.success !== 'undefined' && response.success) {
+          //Transaction was successful
+          if(lastTx) {
+            $translate('MESSAGES.SIGN_AND_BROADCAST_SUCCESS').then( (data) => FlashService.Success(data) );
+          } else {
+            $translate('MESSAGES.SIGN_SUCCESS').then( (data) => FlashService.Success(data) );
+          }
+          init();
+          $scope.transferSuccess = true;
+          $scope.resultSignTx = response.data;
+        } else {
+          //Transaction problem
+          $translate('MESSAGES.SIGN_ERROR').then( (data) => {
+            if (response.message != undefined) {
+              FlashService.Error(data + " " + response.message);
+            } else {
+              FlashService.Error(data);
+            }
+          });
+          $scope.password = '';
+        }
+      });
+      $window.scrollTo(0,0);
+    }
+
 
     listMultiSign();
 
@@ -1590,14 +1655,13 @@
     }
 
     //Save the edited name in the local storage
-    function endEditAssetMaxSupply(new_maximum_supply) {
-      $scope.current_maximum_supply = new_maximum_supply;
+    function endEditAssetMaxSupply() {
       $scope.editMaxSupply = false;
     }
 
     //Cancel the change
     function cancelEditAssetMaxSupply() {
-      $scope.new_maximum_supply = $scope.current_maximum_supply;
+      $scope.increase_maximum_supply = 0;
       $scope.editMaxSupply = false;
     }
   }

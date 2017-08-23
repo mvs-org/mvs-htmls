@@ -1,121 +1,150 @@
 <div class="content">
 	<span class="headline">{{ 'HEADLINE_ETP_TRANSFER_MULTISIGNATURE' | translate }}</span>
-	<!--<a href="#!/transfer/newmultisignature" class="btn btn-success smallButton">New</a>-->
-
-	<!--Display all the Multi signatures-->
-	<div class="col-xs-12 noPaddingLeftRight">
-		<div class="radioButtonAddress noPaddingLeftRight" ng-repeat="multiSig in listMultiSig" ng-click="selectAddress('selectionAddress', multiSig.address); setMultiSigAddress(multiSig)">
-			<dd class="panel addressBox noPaddingLeftRight col-xs-1">
-				<input type="radio" name="radioDeposit" id={{multiSig.address}} value="hideCustomDate"/>
-				<label for={{multiSig.address}}>
-					<div class="assetSymbolImgDeposit">
-						<img class="assetSymbolDeposit" src="images/favicon.jpg" alt=""/>
-					</div>
-					<div class="addressBoxTextInfoDeposit">
-						<span class="addressBoxNameDeposit">{{multiSig.name}}</span>
-						<span class="addressBoxAddressDeposit">{{multiSig.address}}</span>
-						<span class="col-xs-6 noPaddingLeftRight">
-							<span class="assetBoxTitle">{{ 'TRANSFER_MULTISIGNATURE_PEOPLE_INVOLVED' | translate }}</span>
-							<span class="assetBoxValue">{{multiSig.n}}</span>
-						</span>
-						<span class="col-xs-6 noPaddingLeftRight">
-							<span class="assetBoxTitle">{{ 'TRANSFER_MULTISIGNATURE_NBR_SIGN' | translate }}</span>
-							<span class="assetBoxValue">{{multiSig.m}}</span>
-						</span>
-					</div>
-				</label>
-			</dd>
+	<!--Before sending a transaction-->
+	<div ng-hide="transferSuccess">
+		<div>
+		  <ul class="nav nav-pills tabsMenu">
+		    <li role="presentation" class="active"><a href="#!/transfer/multisignature" class="btn-link-menu">{{ 'NAV_TRANSFER_MULTISIGNATURE_INIT' | translate }}</a></li>
+		    <li role="presentation"><a href="#!/transfer/sign" class="btn-link-menu">{{ 'NAV_TRANSFER_MULTISIGNATURE_SIGN' | translate }}</a></li>
+		  </ul>
 		</div>
-	</div>
-
-	<!--Create a new multisignatures-->
-	<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
-		<a href="#!/transfer/newmultisignature" class="btn btn-link smallButton"><span class="glyphicon glyphicon-plus"></span>{{ 'TRANSFER_MULTISIGNATURE_ADD' | translate }}</a>
-	</div>
-
-
-	<form class="row">
-
-		<!--Address infos-->
-		<div class="col-md-12 form-group noPaddingLeftRight" ng-show="selectedMutliSigAddress != ''">
-			<br/>
-				<label for="addressInfo" class="control-label">{{ 'TRANSFER_MULTISIGNATURE_ADDRESS_INFO' | translate }}</label>
-				<table>
-					<tbody>
-		      <tr class="row">
-		        <td class="multiSigDataColumn">Address</td>
-		        <td class="assetValueColumn">{{selectedMutliSigAddress.address}}</td>
-		      </tr>
-
-		      <tr class="row">
-		        <td class="multiSigDataColumn">Number of people involed</td>
-		        <td class="assetValueColumn">{{selectedMutliSigAddress.n}}</td>
-		      </tr>
-		      <tr class="row">
-		        <td class="multiSigDataColumn">Number of signatures required</td>
-		        <td class="assetValueColumn">{{selectedMutliSigAddress.m}}</td>
-		      </tr>
-					<tr class="row">
-						<td class="multiSigDataColumn">My Public key</td>
-						<td class="assetValueColumn">{{selectedMutliSigAddress.selfpublickey}}</td>
-					</tr>
-					<tr class="row" ng-repeat="publicKey in selectedMutliSigAddress.publicKeys" ng-hide="publicKey == selectedMutliSigAddress.selfpublickey">
-						<td class="multiSigDataColumn">Others Public keys</td>
-						<td class="assetValueColumn" >
-							{{publicKey}}
-						</td>
-					</tr>
-		      <tr class="row">
-		        <td class="multiSigDataColumn">Description</td>
-		        <td class="assetValueColumn">{{selectedMutliSigAddress.description}}</td>
-		      </tr>
-		    </tody>
-			</table>
-		</div>
-
-		<!--Sender-->
-		<div class="col-md-12 form-group noPaddingLeftRight">
-			<br ng-hide="selectedMutliSigAddress != ''"/>
-			<div class="col-md-6 form-group">
-				<label for="value" class="control-label">Active address</label>
-				<input type="text" ng-hide="sendfrom==''" class="form-control" name="sender_address" id="" value="{{sendfrom}}" disabled>
-				<input type="text" ng-show="sendfrom==''" class="form-control" name="sender_address" id="" value="{{ 'DEPOSIT_SELECT_AUTO_ADRESS' | translate }}" disabled>
+		<!--Display all the Multi signatures-->
+		<div class="col-xs-12 noPaddingLeftRight">
+			<div class="radioButtonAddress noPaddingLeftRight" ng-repeat="multiSig in listMultiSig" ng-click="selectAddress('selectionAddress', multiSig.address); setMultiSigAddress(multiSig)">
+				<dd class="panel addressBox noPaddingLeftRight col-xs-1">
+					<input type="radio" name="radioDeposit" id={{multiSig.address}} value="hideCustomDate"/>
+					<label for={{multiSig.address}}>
+						<div class="assetSymbolImgDeposit">
+							<img class="assetSymbolDeposit" src="images/favicon.jpg" alt=""/>
+						</div>
+						<div class="addressBoxTextInfoDeposit">
+							<span class="addressBoxNameDeposit">{{multiSig.name}}</span>
+							<span class="addressBoxAddressDeposit">{{multiSig.address}}</span>
+							<span class="col-xs-6 noPaddingLeftRight">
+								<span class="assetBoxTitle">{{ 'TRANSFER_MULTISIGNATURE_PEOPLE_INVOLVED' | translate }}</span>
+								<span class="assetBoxValue">{{multiSig.n}}</span>
+							</span>
+							<span class="col-xs-6 noPaddingLeftRight">
+								<span class="assetBoxTitle">{{ 'TRANSFER_MULTISIGNATURE_NBR_SIGN' | translate }}</span>
+								<span class="assetBoxValue">{{multiSig.m}}</span>
+							</span>
+						</div>
+					</label>
+				</dd>
 			</div>
 		</div>
 
-		<!--Recipient(s)-->
-		<div class="col-md-12 form-group noPaddingLeftRight transferRecipent" ng-repeat="recipent in recipents | orderBy:'index'">
+		<!--Create a new multisignatures-->
+		<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
+			<a href="#!/transfer/newmultisignature" class="btn btn-link smallButton"><span class="glyphicon glyphicon-plus"></span>{{ 'TRANSFER_MULTISIGNATURE_ADD' | translate }}</a>
+		</div>
+
+
+		<form class="row">
+
+			<!--Address infos-->
+			<div class="col-md-12 form-group noPaddingLeftRight" ng-show="selectedMutliSigAddress != ''">
+				<br/>
+					<label for="addressInfo" class="control-label">{{ 'TRANSFER_MULTISIGNATURE_ADDRESS_INFO' | translate }}</label>
+					<table>
+						<tbody>
+			      <tr class="row">
+			        <td class="multiSigDataColumn">Address</td>
+			        <td class="assetValueColumn">{{selectedMutliSigAddress.address}}</td>
+			      </tr>
+
+			      <tr class="row">
+			        <td class="multiSigDataColumn">Number of people involed</td>
+			        <td class="assetValueColumn">{{selectedMutliSigAddress.n}}</td>
+			      </tr>
+			      <tr class="row">
+			        <td class="multiSigDataColumn">Number of signatures required</td>
+			        <td class="assetValueColumn">{{selectedMutliSigAddress.m}}</td>
+			      </tr>
+						<tr class="row">
+							<td class="multiSigDataColumn">My Public key</td>
+							<td class="assetValueColumn">{{selectedMutliSigAddress.selfpublickey}}</td>
+						</tr>
+						<tr class="row" ng-repeat="publicKey in selectedMutliSigAddress.publicKeys" ng-hide="publicKey == selectedMutliSigAddress.selfpublickey">
+							<td class="multiSigDataColumn">Others Public keys</td>
+							<td class="assetValueColumn" >
+								{{publicKey}}
+							</td>
+						</tr>
+			      <tr class="row">
+			        <td class="multiSigDataColumn">Description</td>
+			        <td class="assetValueColumn">{{selectedMutliSigAddress.description}}</td>
+			      </tr>
+			    </tody>
+				</table>
+			</div>
+
+			<!--Sender-->
+			<div class="col-md-12 form-group noPaddingLeftRight">
+				<br ng-hide="selectedMutliSigAddress != ''"/>
+				<div class="col-md-6 form-group">
+					<label for="value" class="control-label">Active address</label>
+					<input type="text" ng-hide="sendfrom==''" class="form-control" name="sender_address" id="" value="{{sendfrom}}" disabled>
+					<input type="text" ng-show="sendfrom==''" class="form-control" name="sender_address" id="" value="{{ 'DEPOSIT_SELECT_AUTO_ADRESS' | translate }}" disabled>
+				</div>
+			</div>
+
+			<!--Recipient(s)-->
 			<div class="col-md-6 form-group transferRecipent">
 				<label for="recipent_address" class="control-label">{{ 'TRANSFER_RECIPENT_ADDRESS' | translate }}</label>
-				<input type="text" class="form-control" name="recipent_address" id="" ng-model="recipent.address" required>
+				<input type="text" class="form-control" name="recipent_address" id="" ng-model="sendTo" required>
 			</div>
 
 			<!--Amount-->
 			<div class="col-md-6 transferRecipent">
 				<div class="form-group">
 					<label for="value" class="control-label">{{ 'TRANSFER_VALUE' | translate }}</label>
-					<input type="number" min=0 step="0.00000001" max={{balance['total-unspent']/100000000}} required class="form-control" placeholder="0.00000000" name="value" ng-model="recipent.value" autocomplete="off">
+					<input type="number" min=0 step="0.00000001" max={{balance['total-unspent']/100000000}} required class="form-control" placeholder="0.00000000" name="value" ng-model="quantity" autocomplete="off">
 				</div>
 			</div>
-		</div>
 
 
-		<!--Password-->
-		<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
-			<div class="col-xs-12 col-sm-12 col-md-6">
-				<div class="form-group">
-					<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
-					<input type="password" class="form-control" name="password" id="" required autocomplete="new-password" ng-model="password">
+
+			<!--Password-->
+			<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
+				<div class="col-xs-12 col-sm-12 col-md-6">
+					<div class="form-group">
+						<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
+						<input type="password" class="form-control" name="password" id="" required autocomplete="new-password" ng-model="password">
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<!--Submit button-->
-		<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
-			<div class="col-xs-12 col-sm-6 col-md-3 ">
-				<br/>
-				<button type="submit" class="btn btn-success" id="transferBtn" ng-click="transferMultiSig()">{{ 'TRANSFER_SEND' | translate }}</button>
+			<!--Submit button-->
+			<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
+				<div class="col-xs-12 col-sm-6 col-md-3 ">
+					<br/>
+					<button type="submit" class="btn btn-success" id="transferBtn" ng-click="createMultisigTx(sendfrom, sendTo, quantity)">{{ 'TRANSFER_SEND' | translate }}</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<!--After sending a transaction successfully-->
+	<div ng-show="transferSuccess">
+		<div class="form-group">{{ 'TRANSFER_MULTISIGNATURE_SUCCESS' | translate}}</div>
+		<div class="form-group">
+			<button class="btn btn-success smallButton" bs-popover data-clipboard-text="TEST" data-toggle="popover" data-placement="top" data-content="{{ 'TRANSFER_MULTISIGNATURE_POPOVER_COPIED' | translate }}" role="button">
+				<span class="glyphicon glyphicon-file"></span>  {{ 'TRANSFER_MULTISIGNATURE_COPY_BUTTON' | translate }}
+			</button>
+		</div>
+		<textarea class="form-control" rows="5">{{resultCreateTx}}</textarea>
+		<br>
+		<div class="checkboxCircle">
+			<input type="checkbox" ng-model="fileSaved" id="checkboxAgree">
+			<label for="checkboxAgree"></label>
+			<span class="">{{ 'TRANSFER_MULTISIGNATURE_I_HAVE_COPIED' | translate}}</span>
+		</div>
+		<div ng-show="fileSaved">
+			<br/>
+			<div class="col-xs-6 col-sm-4 col-md-4 noPaddingLeftRight">
+				<a href="#!/home" class="btn btn-success">{{ 'TRANSFER_MULTISIGNATURE_BACK_WALLET' | translate }}</a>
 			</div>
 		</div>
-	</form>
+	</div>
 </div>
