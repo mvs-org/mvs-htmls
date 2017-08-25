@@ -1224,6 +1224,7 @@
     $window.scrollTo(0,0);
     $scope.showprivatekey = showprivatekey;
     $scope.changepassword = changepassword;
+    $scope.exportAccount = exportAccount;
     $scope.accountname = localStorageService.get('credentials').user;
     $scope.debugState = MetaverseService.debug;
 
@@ -1279,6 +1280,36 @@
     function setDeugger(state) {
       MetaverseService.debug = (state == 1);
       $scope.debugState = MetaverseService.debug;
+    }
+
+    function exportAccount(password, last_word, path) {
+      if (localStorageService.get('credentials').password != password) {
+        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+      } else {
+        NProgress.start();
+        MetaverseService.ExportAccountAsFile(password, last_word, path)
+        .then( (response) => {
+          console.log(response);
+          if (typeof response.success !== 'undefined' && response.success) {
+            //Show success message
+            $translate('MESSAGES.EXPORT_ACCOUNT_FILE_SUCCESS').then( (data) => {
+              FlashService.Success(data);
+            });
+          } else {
+            //Show export error
+            console.log("In error");
+            $translate('MESSAGES.EXPORT_ACCOUNT_FILE_ERROR').then( (data) => {
+              if (response.message != undefined) {
+                FlashService.Error(data + " " + response.message);
+              } else {
+                FlashService.Error(data);
+              }
+            });
+          }
+          NProgress.done();
+        });
+        $window.scrollTo(0,0);
+      }
     }
   }
 

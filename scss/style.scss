@@ -512,6 +512,11 @@ _____  ._______  ___.___ _______
   padding-left: 10px;
 }
 
+.checkBoxImport {
+  height: 40px;
+  margin-bottom: 10px;
+}
+
 /***********Top bar***********/
 
 
@@ -574,7 +579,7 @@ _____  ._______  ___.___ _______
   display: inline-block;
   border-radius: 6px;
   margin-right: 8px;
-  width: 80%;
+  width: 70%;
   padding-top: 0;
   padding-bottom: 0;
 }
@@ -1350,12 +1355,33 @@ html,body {
 .console_query {
   margin-top: 10px;
   //color: $blueGeneralColor;
+  word-break: break-all;
+word-wrap: break-word;
 
 }
 
 .console_answer {
   margin-top: 10px;
   color: green;
+  word-break: break-all;
+word-wrap: break-word;
+}
+
+.console_text {
+  display: block;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  line-height: 16px;
+  color: black;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  color: inherit;
+  font-family: inherit;
+  overflow: visible;
 }
 
 .forminput {
@@ -1404,6 +1430,15 @@ h2 {
 
 .blockHeight {
   padding-left: 20px;
+  padding-top: 16px;
+  color: $darkGrey;
+}
+
+.blockHeightSmall {
+  padding-top: 16px;
+  padding-left: 0;
+  padding-right: 0;
+  left: -10px;
 }
 
 .warningText {

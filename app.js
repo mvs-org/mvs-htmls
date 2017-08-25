@@ -80,6 +80,13 @@
                 controllerAs: 'vm'
             })
 
+            .state('home.account.export', {
+                url: "/account/export",
+                templateUrl: "home/account/export.view.html",
+                controller: 'AccountController',
+                controllerAs: 'vm'
+            })
+
             /*.state('home.account.subscribe', {
                 url: "/account/subscribe",
                 templateUrl: "home/account/subscribe.view.html",

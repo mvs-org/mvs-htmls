@@ -32,6 +32,8 @@
         service.GetNewAddress = GetNewAddress;
         service.ChangePassword = ChangePassword;
         service.ResetPassword = ResetPassword;
+        service.ExportAccountAsFile = ExportAccountAsFile;
+        service.ImportAccountFromFile = ImportAccountFromFile;
 
 
         service.SERVER = SERVER;
@@ -156,7 +158,17 @@
          *
          **/
         function ResetPassword(username, password, mnemonic) {
-            return _send('changepasswdext', ['-n', username, '-p', password, mnemonic]);
+          return _send('changepasswdext', ['-n', username, '-p', password, mnemonic]);
+        }
+
+
+        function ExportAccountAsFile(password, last_word, path) {
+          var credentials = localStorageService.get('credentials');
+          return _send('exportaccountasfile', [credentials.user, password, last_word, path]);
+        }
+
+        function ImportAccountFromFile(path, password) {
+          return _send('importaccountfromfile', [path, password]);
         }
 
 

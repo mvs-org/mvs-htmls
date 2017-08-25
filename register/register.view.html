@@ -3,37 +3,63 @@
     <div class="" ng-bind="flash.message">
     </div>
   </div>
-  <div class="text-center padding-big-top">
-    <img src="images/metaverse_logo.jpg" alt="" class="logoMetaverseLogin"/>
+  <!--Language button-->
+  <div class="col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
+    <div class="pull-right">
+      <button class="btn btn-default dropdown-toggle languageButton languageButtonRegister" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <!--<img class="languageFlag" src="images/{{ 'LANG_CODE' | translate }}.png" alt="" />-->
+        <img class="languageFlag" src="images/en.png" ng-show="('LANG_CODE' | translate)=='en'" alt="" />
+        <img class="languageFlag" src="images/zh.png" ng-show="('LANG_CODE' | translate)=='zh'" alt="" />
+        Language
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li><a ng-click="vm.changeLang('zh_ZH')"><img class="languageFlag" src="images/zh.png" alt="" /> 中文</a></li>
+        <li><a ng-click="vm.changeLang('en_US')"><img class="languageFlag" src="images/en.png" alt="" /> English</a></li>
+        <!--<li><a ng-click="vm.changeLang('de_DE')"><img class="languageFlag" src="images/en.png" alt="" /> Deutsch</a></li>-->
+      </ul>
+    </div>
   </div>
-  <form class="col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6"; style="margin-top: 50px;">
+  <form class="col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
     <!--To register-->
+    <img class="center-block logoMetaverseLogin" src="images/metaverse_logo.jpg" alt=""/>
     <div ng-hide="vm.registered">
       <h2><b>{{ 'REGISTER.NEW_USER' | translate }}</b></h2>
+      <div class="form-group checkBoxImport">
+        <div class="checkboxCircle col-xs-6 noPaddingLeftRight">
+          <input type="checkbox" ng-model="import_from_phrase" id="checkboxImportFromKey" ng-click="import_from_file = false">
+          <label for="checkboxImportFromKey"></label>
+          <span class="importAccountText">{{ 'REGISTER.IMPORT_FROM_KEY' | translate }}</span>
+        </div>
+        <div class="checkboxCircle col-xs-6 noPaddingLeftRight">
+          <input type="checkbox" ng-model="import_from_file" id="checkboxImportFromFile" ng-click="import_from_phrase = false">
+          <label for="checkboxImportFromFile"></label>
+          <span class="importAccountText">{{ 'REGISTER.IMPORT_FROM_FILE' | translate }}</span>
+        </div>
+      </div>
       <!--Account name-->
-      <div class="form-group">
+      <div class="form-group" ng-hide="import_from_file">
         <label for="username" class="control-label">{{ 'REGISTER.CHOOSE_ACCOUNT_NAME' | translate }}</label>
         <input type="text" name="username" ng-model="vm.user.username" required class="form-control">
       </div>
       <!--Password-->
       <div class="form-group">
-        <label for="password" class="control-label">{{ 'REGISTER.CHOOSE_PASSWORD' | translate }}</label>
+        <label ng-hide="import_from_file" for="password" class="control-label">{{ 'REGISTER.CHOOSE_PASSWORD' | translate }}</label>
+        <label ng-show="import_from_file" for="password" class="control-label">{{ 'LOGIN.ENTER_ACCOUNT_PASSWORD' | translate }}</label>
         <input type="password" name="password" ng-model="vm.user.password" required class="form-control">
       </div>
       <!--Re-enter password-->
-      <div class="form-group">
+      <div class="form-group" ng-hide="import_from_file">
         <label for="password" class="control-label">{{ 'REGISTER.REPEAT_PASSWORD' | translate }}</label>
         <input class="form-control" type="password" ng-model="vm.user.password_repeat" required>
       </div>
+
+
       <!--Import account-->
       <div class="form-group">
-        <div class="checkboxCircle">
-          <input type="checkbox" ng-model="do_import" id="checkboxImport">
-          <label for="checkboxImport"></label>
-          <span class="importAccountText">{{ 'REGISTER.DO_IMPORT' | translate }}:</span>
-        </div>
-        <br/>
-        <div ng-show="do_import">
+
+        <!--When import from Private key-->
+        <div ng-show="import_from_phrase">
           <div class="form-group">
             <label for="importPhrase" class="control-label">{{ 'REGISTER.IMPORT_PHRASE' | translate }}</label>
             <textarea class="form-control" type="text" name="importPhrase" ng-model="import_phrase" rows="3" required></textarea>
@@ -43,7 +69,16 @@
             <input type="number" name="nbrAdr" ng-model="address_count" min="1" required class="form-control">
           </div>
         </div>
+
+        <!--When import from a file-->
+        <div ng-show="import_from_file">
+          <div class="form-group">
+            <label for="path" class="control-label">{{ 'REGISTER.IMPORT_FILE_PATH' | translate }}</label>
+            <input type="text" name="path" ng-model="path" required class="form-control">
+          </div>
+        </div>
       </div>
+
       <!--Submit and Cancel buttons-->
       <div class="form-group">
         <div class="col-xs-6 col-sm-4 col-md-4">

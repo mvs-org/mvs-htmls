@@ -49,30 +49,30 @@
 					<table>
 						<tbody>
 			      <tr class="row">
-			        <td class="multiSigDataColumn">Address</td>
+			        <td class="multiSigDataColumn">{{ 'TRANSFER_MULTISIGNATURE_ADDRESS_INFO_ADDRESS' | translate }}</td>
 			        <td class="assetValueColumn">{{selectedMutliSigAddress.address}}</td>
 			      </tr>
 
 			      <tr class="row">
-			        <td class="multiSigDataColumn">Number of people involed</td>
+			        <td class="multiSigDataColumn">{{ 'TRANSFER_MULTISIGNATURE_ADDRESS_INFO_NBR_PEOPLE_INVOLVED' | translate }}</td>
 			        <td class="assetValueColumn">{{selectedMutliSigAddress.n}}</td>
 			      </tr>
 			      <tr class="row">
-			        <td class="multiSigDataColumn">Number of signatures required</td>
+			        <td class="multiSigDataColumn">{{ 'TRANSFER_MULTISIGNATURE_ADDRESS_INFO_NBR_SIGN_REQ' | translate }}</td>
 			        <td class="assetValueColumn">{{selectedMutliSigAddress.m}}</td>
 			      </tr>
 						<tr class="row">
-							<td class="multiSigDataColumn">My Public key</td>
+							<td class="multiSigDataColumn">{{ 'TRANSFER_MULTISIGNATURE_ADDRESS_INFO_MY_PUBLIC_KEY' | translate }}</td>
 							<td class="assetValueColumn">{{selectedMutliSigAddress.selfpublickey}}</td>
 						</tr>
 						<tr class="row" ng-repeat="publicKey in selectedMutliSigAddress.publicKeys" ng-hide="publicKey == selectedMutliSigAddress.selfpublickey">
-							<td class="multiSigDataColumn">Others Public keys</td>
+							<td class="multiSigDataColumn">{{ 'TRANSFER_MULTISIGNATURE_ADDRESS_INFO_OTHERS_PUBLIC_KEY' | translate }}</td>
 							<td class="assetValueColumn" >
 								{{publicKey}}
 							</td>
 						</tr>
 			      <tr class="row">
-			        <td class="multiSigDataColumn">Description</td>
+			        <td class="multiSigDataColumn">{{ 'TRANSFER_MULTISIGNATURE_ADDRESS_INFO_DESCRIPTION' | translate }}</td>
 			        <td class="assetValueColumn">{{selectedMutliSigAddress.description}}</td>
 			      </tr>
 			    </tody>
@@ -83,7 +83,7 @@
 			<div class="col-md-12 form-group noPaddingLeftRight">
 				<br ng-hide="selectedMutliSigAddress != ''"/>
 				<div class="col-md-6 form-group">
-					<label for="value" class="control-label">Active address</label>
+					<label for="value" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
 					<input type="text" ng-hide="sendfrom==''" class="form-control" name="sender_address" id="" value="{{sendfrom}}" disabled>
 					<input type="text" ng-show="sendfrom==''" class="form-control" name="sender_address" id="" value="{{ 'DEPOSIT_SELECT_AUTO_ADRESS' | translate }}" disabled>
 				</div>

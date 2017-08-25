@@ -1,7 +1,10 @@
 <!--Search navbar-->
 <nav class="headerSearch navbar navbar-default hidden-xs">
-  <div class="hidden-xs hidden-sm col-xs-0 col-sm-0 col-md-2 col-lg-3">a</div>
-  <div class="col-md-8 col-lg-6 headerBoxSearch">
+  <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 blockHeight headerBoxSearch">
+    <span>{{ 'CONNECTION_BLOCKS' | translate }}:</span>
+    <span>{{height}}</span>
+  </div>
+  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-7 headerBoxSearch">
     <form class="">
       <input type="search" name="search" class="form-control researchTextBox navbar-form" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
       <input type="submit" class="btn btn-success smallButton" value="{{ 'HEADER_SEARCH' | translate }}" ng-click="vm.search(stringToSearch)"></input>
@@ -68,7 +71,11 @@
         </form>
       </ul>
       <!--Search for XS device-->
-      <div class="visible-xs col-xs-10">
+      <div class="visible-xs col-xs-3 blockHeightSmall">
+        <span>{{ 'CONNECTION_BLOCKS' | translate }}:</span>
+        <span>{{height}}</span>
+      </div>
+      <div class="visible-xs col-xs-9">
         <form class="">
           <input type="search" name="search" class="form-control researchTextBox navbar-form" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
           <input type="submit" class="btn btn-success smallButton" value="{{ 'HEADER_SEARCH' | translate }}" ng-click="vm.search(stringToSearch)"></input>

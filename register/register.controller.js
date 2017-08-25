@@ -6,6 +6,7 @@
   .controller('RegisterController', RegisterController);
 
   RegisterController.$inject = ['MetaverseService','$scope', '$location', '$rootScope', 'FlashService', '$translate'];
+
   function RegisterController(MetaverseService, $scope, $location, $rootScope, FlashService, $translate) {
     var vm = this;
 
@@ -14,10 +15,14 @@
       username: ''
     };
 
+    vm.changeLang = (key) => $translate.use(key)
+        .then(  (key) => localStorageService.set('language',key) )
+        .catch( (error) => console.log("Cannot change language.") );
+
     function register() {
       NProgress.start();
       setTimeout( () => NProgress.done() , 500);
-      if(vm.user.username==undefined || vm.user.username==''){
+      if((vm.user.username==undefined || vm.user.username=='') && !$scope.import_from_file) {
         $translate('MESSAGES.NO_ACCOUNTNAME_PROVIDED').then( (data) => FlashService.Error(data) );
         return;
       }
@@ -29,11 +34,11 @@
         $translate('MESSAGES.PASSWORD_SHORT').then( (data) => FlashService.Error(data) );
         return;
       }
-      else if(vm.user.password_repeat!=vm.user.password){
+      else if((vm.user.password_repeat!=vm.user.password) && !$scope.import_from_file){
         $translate('MESSAGES.PASSWORD_NOT_MATCH').then( (data) => FlashService.Error(data) );
         return;
       }
-      if($scope.do_import){ //Import account from phrase
+      if($scope.import_from_phrase){ //Import account from phrase
         MetaverseService.ImportAccount(vm.user.username, vm.user.password, $scope.import_phrase, $scope.address_count)
         .then(function (response) {
           if ( typeof response.success !== 'undefined' && response.success) {
@@ -42,11 +47,34 @@
                   $location.path('/login');
               });
           } else {
-            $translate('MESSAGES.IMPORT_ERROR').then( (data) => FlashService.Error(data + " " + response.message) );
+            $translate('MESSAGES.IMPORT_ERROR').then( (data) => {
+              if (response.message != undefined) {
+                FlashService.Error(data + " " + response.message);
+              } else {
+                FlashService.Error(data);
+              }
+            });
           }
         });
-      }
-      else{ //Create a new account
+      } else if($scope.import_from_file){ //Import account from file
+        MetaverseService.ImportAccountFromFile($scope.path, vm.user.password)
+        .then(function (response) {
+          if ( typeof response.success !== 'undefined' && response.success) {
+              $translate('MESSAGES.IMPORT_SUCCESS').then( (data) => {
+                  FlashService.Success(data,true);
+                  $location.path('/login');
+              });
+          } else {
+            $translate('MESSAGES.IMPORT_ERROR').then( (data) => {
+              if (response.message != undefined) {
+                FlashService.Error(data + " " + response.message);
+              } else {
+                FlashService.Error(data);
+              }
+            });
+          }
+        });
+      } else { //Create a new account
         MetaverseService.GetNewAccount(vm.user.username, vm.user.password)
         .then( (response) => {
           if ( typeof response.success !== 'undefined' && response.success) {
