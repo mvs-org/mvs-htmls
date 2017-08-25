@@ -279,9 +279,10 @@
   }
 
 
-  function DepositController(MetaverseService, MetaverseHelperService, $rootScope, $scope, FlashService, localStorageService, $translate, $window) {
+  function DepositController(MetaverseService, MetaverseHelperService, $rootScope, $scope, FlashService, localStorageService, $translate, $window, $location, $filter) {
 
     $window.scrollTo(0,0);
+    $scope.symbol = $filter('uppercase')($location.path().split('/')[2]);
     $scope.changeFactor = changeFactor;
     $scope.deposit = deposit;
     $scope.selectAddress = selectAddress;         //Selection of a specific address
@@ -290,6 +291,8 @@
     $scope.underlineAuto='underline';
     $scope.underlineManual='none';
     $scope.period_select=undefined;
+    $scope.assetsIssued = [];
+    $scope.balance = [];
 
     function init() {
       $scope.sendfrom = '';
@@ -300,6 +303,32 @@
     }
 
     $scope.isNumber = angular.isNumber;
+
+
+    MetaverseService.ListAssets()
+    .then( (response) => {
+      console.log(response);
+      if (typeof response.success !== 'undefined' && response.success) {
+        response.data.assets.forEach( (e) => {
+          if(e.status=='unspent') {
+            $scope.assetsIssued.push({
+              "symbol": e.symbol
+            });
+            if(e.symbol == $scope.symbol) {
+              $scope.balance['total-unspent'] = e.quantity,
+              $scope.balance['total-frozen'] = e.quantity,
+              $scope.decimal_number = e.decimal_number
+            }
+          }
+        });
+      } else {
+        $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+      }
+      if($scope.symbol == 'ETP') {
+        loadEtpBalance();
+      }
+    });
+
 
     $scope.deposit_options = {
       "DEPOSIT.PERIOD.WEEK": [0.001, 0.05, 7],
@@ -351,8 +380,11 @@
       } else if ($scope.deposit_options[$scope.period_select] == undefined) {
         $translate('MESSAGES.INVALID_TIME_PERIOD').then( (data) => FlashService.Error(data) );
       } else {
-        var deposit_value = ($rootScope.factor == "FACTOR_SATOSHI") ? $scope.value : ("" + $scope.value * 100000000).split(".")[0];
-        MetaverseService.Deposit($scope.deposit_options[$scope.period_select][2], deposit_value, $scope.password, ($scope.address_option) ? $scope.deposit_address : undefined)
+        var deposit_value = ("" + $scope.value * Math.pow(10,$scope.decimal_number)).split(".")[0];
+
+
+        var SendPromise = ($scope.symbol == 'ETP') ? MetaverseService.Deposit($scope.deposit_options[$scope.period_select][2], deposit_value, $scope.password, ($scope.address_option) ? $scope.deposit_address : undefined) : MetaverseService.FrozenAsset($scope.deposit_options[$scope.period_select][2], deposit_value, $scope.password, $scope.symbol, ($scope.address_option) ? $scope.deposit_address : undefined);
+        SendPromise
         .then( (response) => {
           NProgress.done();
           if (typeof response.success !== 'undefined' && response.success && response.data.error == undefined) {
@@ -405,16 +437,19 @@
     }
 
     //Load users ETP balance
-    MetaverseHelperService.GetBalance( (err, balance, message) => {
-      if (err)
-      FlashService.Error(message);
-      else {
-        $scope.balance = balance;
-      }
-    });
+    function loadEtpBalance() {
+      MetaverseHelperService.GetBalance( (err, balance, message) => {
+        if (err)
+        FlashService.Error(message);
+        else {
+          $scope.balance = balance;
+          $scope.decimal_number = 8;
+        }
+      });
+    }
 
     //Load the addresses and their balances
-    function listBalances() {
+    /*function listBalances() {
       NProgress.start();
       MetaverseService.ListBalances()
       .then( (response) => {
@@ -431,9 +466,9 @@
         }
         NProgress.done();
       });
-    }
+    }*/
 
-    listBalances();
+
     init();
 
   }
@@ -1313,11 +1348,12 @@
     }
   }
 
-  function TransferAssetController(MetaverseService, $stateParams, $rootScope, $scope, $translate, $location, localStorageService, FlashService, $window) {
+  function TransferAssetController(MetaverseService, $stateParams, $rootScope, $scope, $translate, $location, localStorageService, FlashService, $window, $filter) {
 
     $window.scrollTo(0,0);
     //$scope.symbol = $stateParams.symbol;
-    $scope.symbol = $location.path().split('/')[2];
+    $scope.symbol = $filter('uppercase')($location.path().split('/')[2]);
+    console.log($scope.symbol);
     $scope.sender_address = $stateParams.sender_address;
     $scope.sendasset = sendasset;
 
@@ -1326,8 +1362,6 @@
     $scope.selectAddress = selectAddress;         //Selection of a specific address
     $scope.selectAddressMem = '';                 //Keep in memory the specific address previously selected (if the user go to Auto and come back to Manual)
     $scope.autoSelectAddress=true;                //Automatically select the address
-
-    $scope.symbol = $location.path().split('/')[2];
 
     $scope.assetsIssued = [];
 

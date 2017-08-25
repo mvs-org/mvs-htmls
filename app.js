@@ -226,7 +226,7 @@
             })
 
             .state('home.deposit', {
-                url: "/deposit",
+                url: "/deposit/:symbol",
                 templateUrl: "home/deposit.view.html",
                 controller: 'DepositController',
                 controllerAs: 'vm'

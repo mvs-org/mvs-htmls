@@ -77,6 +77,7 @@
         //Misc
         service.Query = Query;
         service.Deposit = Deposit;
+        service.FrozenAsset = FrozenAsset;
 
         return service;
 
@@ -706,6 +707,16 @@
                 return _send('deposit', ['-d', deposit_period, '-a', address, credentials.user, password, amount]);
             } else {
                 return _send('deposit', ['-d', deposit_period, credentials.user, password, amount]);
+            }
+        }
+
+        function FrozenAsset(deposit_period, amount, password, symbol, address) {
+            var credentials = localStorageService.get('credentials');
+            deposit_period *= 60*60*24;  //convert from day to second
+            if (address != undefined) {
+                return _send('frozenasset', ['-d', address, credentials.user, password, symbol, amount, deposit_period]);
+            } else {
+                return _send('frozenasset', [credentials.user, password, symbol, amount, deposit_period]);
             }
         }
 
