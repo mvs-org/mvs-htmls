@@ -5,7 +5,7 @@
   "HEADER_LOGOUT": "退出账户",
   "HEADER_SEARCH": "查询",
   "HEADER_SEARCH_PLACEHOLDER": "区块序号 / 交易哈希 / 地址 / 资产",
-  "NAV_HOME":      "主页",
+  "NAV_HOME":      "首页",
   "NAV_WALLET":      "钱包",
   "NAV_ACCOUNT":   "我的账户",
   "NAV_ACCOUNT_ADDRESSES" : "地址",
