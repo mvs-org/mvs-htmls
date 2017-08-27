@@ -16,7 +16,6 @@
   .controller('ETPMultiSignController', ETPMultiSignController)
   .controller('DepositController', DepositController)
   .controller('ExplorerController', ExplorerController)
-  .controller('MiningController', MiningController)
   .directive('bsTooltip', function() {
     return {
       restrict: 'A',
@@ -1539,7 +1538,7 @@
     $window.scrollTo(0,0);
     $scope.symbol = $stateParams.symbol;
     $scope.assets = [];
-    $scope.issue = issue;
+    //$scope.issue = issue;
 
     //Load assets
     NProgress.start();
@@ -1549,6 +1548,9 @@
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.assets = [];
         $scope.assets = response.data.assets;
+        $scope.assets.forEach( (a) => {
+          $scope.asset.details = false;
+        });
       } else {
         $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => {
           //Show asset load error
@@ -1560,12 +1562,12 @@
     });
 
     //If asset is defined -> load it
-    if ($scope.symbol != undefined && $scope.symbol != "") {
+    /*if ($scope.symbol != undefined && $scope.symbol != "") {
       NProgress.start();
       loadasset($scope.symbol);
-    }
+    }*/
 
-    function issue(symbol) {
+    /*function issue(symbol) {
       NProgress.start();
       MetaverseService.Issue(symbol)
       .then( (response) => {
@@ -1577,10 +1579,10 @@
         }
         NProgress.done();
       });
-    }
+    }*/
 
     //Loads a given asset
-    function loadasset(symbol) {
+    /*function loadasset(symbol) {
       NProgress.start();
       MetaverseService.GetAsset(symbol)
       .then( (response) => {
@@ -1597,7 +1599,7 @@
         }
       });
       NProgress.done();
-    }
+    }*/
   }
 
 
@@ -1674,7 +1676,7 @@
       });
     }
 
-    //Loads a given asset
+    //Loads a given asset, used in the page asset/details
     function loadasset(symbol) {
       MetaverseService.GetAsset(symbol)
       .then( (response) => {
@@ -1687,6 +1689,7 @@
           $scope.initial_maximum_supply = parseFloat($scope.asset.maximum_supply)/Math.pow(10,$scope.asset.decimal_number);
           $scope.current_maximum_supply = $scope.initial_maximum_supply;
           $scope.new_maximum_supply = $scope.initial_maximum_supply;
+          $scope.details = false;
           $scope.assets.forEach( (a) => {
             if (a.symbol == symbol) {
               $scope.asset.quantity = a.quantity;
@@ -1700,13 +1703,12 @@
     }
 
     //Delete a not issued Asset
-    function deleteAsset() {
-      MetaverseService.Delete($scope.symbol)
+    function deleteAsset(symbol) {
+      MetaverseService.Delete(symbol)
       .then( (response) => {
         NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
           $translate('MESSAGES.DELETE_SUCCESS').then( (data) => FlashService.Success(data) );
-          $scope.asset.symbol='';
         } else {
           //Asset could not be delete
           $translate('MESSAGES.ASSETS_DELETE_ERROR').then( (data) =>  FlashService.Error(data));
@@ -1849,7 +1851,7 @@
     //$scope.showHistory = false;
 
 
-    $scope.assetType = 'All';
+    $scope.assetType = 'ALL';
     $scope.filterOnAsset = filterOnAsset;
 
     $scope.loadTransactions = loadTransactions;
@@ -1866,7 +1868,7 @@
 
     function filterTransactions() {
       $scope.transactionsFiltered = [];
-      if ($scope.assetType == 'All') {
+      if ($scope.assetType == 'ALL') {
         $scope.transactionsFiltered = $scope.transactions;
       } else {
         $scope.transactions.forEach(function(e) {
@@ -1989,10 +1991,48 @@
 
   }
 
-
-  function MiningController(MetaverseService, $rootScope, $scope, FlashService, $translate, $window) {
+  function ConsoleController(MetaverseService, $rootScope, FlashService, $translate, $scope, $window) {
 
     $window.scrollTo(0,0);
+    //var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
+    //To test the Console view with Grunt:
+    //var ws = new WebSocket('ws://test4.metaverse.live:8820/ws');
+    var ws = new WebSocket('ws://localhost:8820/ws');
+
+    $("#inputField").focus();
+
+    $scope.connected = false;
+
+    ws.onmessage = (ev) => {
+      NProgress.done();
+      $scope.consolelog.push({
+        query: $scope.querystring,
+        answer: ev.data
+      });
+      $scope.connected = true;
+      $scope.querystring = '';
+      $scope.$apply();
+      //scrolldown();
+    };
+
+    $scope.querystring = '';
+    $scope.consolelog = [];
+
+    /*To put the results in a window that we can scrolldown, with ID = consolelog
+    function scrolldown() {
+      window.setTimeout( () => {
+        var elem = document.getElementById('consolelog');
+        elem.scrollTop = elem.scrollHeight;
+      }, 100);
+    }*/
+
+    $scope.query = () => {
+      NProgress.start();
+      ws.send($scope.querystring);
+    };
+
+
+    /***Mining***/
     $scope.start = StartMining;
     $scope.stop = StopMining;
     $scope.status = {};
@@ -2044,48 +2084,6 @@
     }
 
     GetMiningInfo();
-
-  }
-
-  function ConsoleController(MetaverseService, $rootScope, $scope, $window) {
-
-    $window.scrollTo(0,0);
-    var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
-    //To test the Console view with Grunt:
-    //var ws = new WebSocket('ws://test4.metaverse.live:8820/ws');
-    //var ws = new WebSocket('ws://localhost:8820/ws');
-
-    $("#inputField").focus();
-
-    $scope.connected = false;
-
-    ws.onmessage = (ev) => {
-      NProgress.done();
-      $scope.consolelog.push({
-        query: $scope.querystring,
-        answer: ev.data
-      });
-      $scope.connected = true;
-      $scope.querystring = '';
-      $scope.$apply();
-      //scrolldown();
-    };
-
-    $scope.querystring = '';
-    $scope.consolelog = [];
-
-    /*To put the results in a window that we can scrolldown, with ID = consolelog
-    function scrolldown() {
-      window.setTimeout( () => {
-        var elem = document.getElementById('consolelog');
-        elem.scrollTop = elem.scrollHeight;
-      }, 100);
-    }*/
-
-    $scope.query = () => {
-      NProgress.start();
-      ws.send($scope.querystring);
-    };
 
 
   }

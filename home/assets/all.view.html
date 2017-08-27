@@ -5,12 +5,67 @@
     <li role="presentation" class="active"><a href="#!/asset/all" class="btn-link-menu">{{'ASSET_ALL_ASSETS' | translate}}</a></li>
   </ul>
 </div>
-<br/>
 <div class=" ">
   <div class="mainContent1">
     <div class="row assetBoxWrapper">
       <dl id="outer_wrap">
-        <a href="#!/asset/details/{{asset.symbol}}" ng-repeat="asset in assets | orderBy:'symbol'">
+        <div class="col-xs-12 moreAssetsButton noPaddingLeftRight">
+          <a href="#!/asset/create" class="btn btn-link-black smallButton"><span class="glyphicon glyphicon-plus"></span> {{ 'ASSET_ASSET_DETAILS_CREATE' | translate }}</a>
+        </div>
+        <div dir-paginate="asset in assets | orderBy: ['-status','symbol'] | itemsPerPage: 10" >
+          <button class="assetBox col-xs-12 col-sm-12 col-md-12" ng-click="asset.details = !asset.details">
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+              <div class="assetBoxSymbolImg">
+                <img class="assetSymbol" src="images/favicon.jpg" alt=""/>
+              </div>
+              <div class="assetBoxSymbolName">
+                <a href="#!/asset/details/{{asset.symbol}}" class="btn-link-black">{{asset.symbol}}</a>
+              </div>
+            </div>
+            <div class="assetBoxBalance col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
+              <div class="assetBoxTitle">{{ 'ASSET_ALL_MAX_SUPPLY' | translate }}</div>
+              <div class="assetBoxValue overflow">{{asset.maximum_supply | assetformat : asset.decimal_number}}</div>
+            </div>
+            <div class="assetBoxFrozen col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 noPaddingLeftRight">
+              <div class="assetBoxTitle">{{ 'ASSET_ALL_ADDRESS' | translate }}</div>
+              <div class="assetBoxValue">{{asset.address}}</div>
+            </div>
+          </button>
+          <div ng-show="asset.details">
+            <div class="detailsOneLine backgroundGrey">
+              <span class="assetBoxTitle col-xs-offset-4 col-xs-2">{{ 'ASSET_ALL_ISSUER' | translate }}:</span>
+              <span class="assetBoxValue">{{asset.issuer}}</span>
+            </div>
+            <div class="detailsOneLine">
+              <span class="assetBoxTitle col-xs-offset-4 col-xs-2">{{ 'ASSET_ALL_DESCRIPTION' | translate }}:</span>
+              <span class="assetBoxValue">{{asset.description}}</span>
+            </div>
+            <div class="detailsOneLine backgroundGrey">
+              <span class="assetBoxTitle col-xs-offset-4 col-xs-2">{{ 'ASSET_ALL_NBR_DIGITS' | translate }}:</span>
+              <span class="assetBoxValue">{{asset.decimal_number}}</span>
+            </div>
+            <div class="detailsOneLine">
+              <span class="assetBoxTitle col-xs-offset-4 col-xs-2">{{ 'ASSET_ALL_STATUS' | translate }}:</span>
+              <span class="assetBoxValue">{{asset.status}}</span>
+            </div>
+            <br/>
+          </div>
+        </div>
+
+      </div>
+      <!--Pagination-->
+      <div class="col-xs-offset-5 col-sm-offset-5 col-md-offset-5 col-lg-offset-5 col-xl-offset-5">
+        <dir-pagination-controls></dir-pagination-controls>
+      </div>
+
+
+
+
+
+
+
+
+        <!--<a href="#!/asset/details/{{asset.symbol}}" ng-repeat="asset in assets | orderBy:'symbol'">
           <dd class="panel assetBox col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
             <span class="assetBoxSymbolImg"><img class="assetSymbol" src="images/favicon.jpg" alt=""/></span>
             <span class="assetBoxTextInfo">
@@ -21,7 +76,7 @@
               <span class="assetBoxValue">{{asset.status}}</span>
             </span>
           </dd>
-        </a>
+        </a>-->
       </dl>
     </div>
   </div>

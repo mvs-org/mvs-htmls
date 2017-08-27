@@ -17,6 +17,555 @@ body {
   font-family: 'PingFangSC';
 }
 
+h4 {
+  line-height: 40px;
+}
+
+/*
+Extra small devices (portrait phones, less than 544px)
+No media query since this is the default in Bootstrap because it is "mobile first"
+*/
+.headline {
+  font-size: 22px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+/*****************Home page*****************/
+.assetBox {
+  text-align: left;
+  background-color: transparent;
+  height: 50px;
+  margin: 5px;
+  border-radius: 4px;
+  border: solid 1px $lightGrey;
+  -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+}
+
+//Contains the logo of the asset
+.assetBoxSymbolImg {
+  margin-top: 6px;
+  width: 36px;
+  height: 36px;
+  background-color: white;
+  position: absolute;
+  display: inline-block;
+  -webkit-border-radius: 150px;
+  -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+}
+
+
+
+.assetSymbol {
+  margin: 4px;
+  width: 28px;
+  height: 28px;
+  background-color: transparent;
+}
+
+.assetBoxSymbolName {
+  width: 100px;
+  padding-top:10px;
+  padding-bottom: 6px;
+  margin-left: 70px;
+  font-size: 20px;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.assetBoxTitle {
+  height: 16px;
+  font-size: 12px;
+}
+
+.assetBoxValue {
+  height: 25px;
+  font-size: 14px;
+  padding-top: 4px;
+}
+
+.assetBoxBalance {
+  padding-top: 8px;
+  display: inline-block;
+}
+
+.assetBoxFrozen {
+  padding-top: 8px;
+  display: inline-block;
+}
+
+.assetBoxButtons {
+  text-align: right;
+  margin-top: 10px;
+  margin-right: 0px;
+}
+
+.assetBoxButton {
+  margin-left: 10px;
+  margin-right: 0px;
+  width: 70px !important;
+}
+
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::
+Bootstrap 4 breakpoints
+*/
+/* Small devices (landscape phones, 544px and up) */
+@media (min-width: 544px) {
+  .headline {
+    font-size: 26px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  /*****************Home page*****************/
+  .assetBox {
+    text-align: left;
+    background-color: transparent;
+    height: 50px;
+    margin: 5px;
+    border-radius: 4px;
+    border: solid 1px $lightGrey;
+    -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  }
+
+  //Contains the logo of the asset
+  .assetBoxSymbolImg {
+    margin-top: 6px;
+    width: 36px;
+    height: 36px;
+    background-color: white;
+    position: absolute;
+    display: inline-block;
+    -webkit-border-radius: 150px;
+    -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  }
+
+
+
+  .assetSymbol {
+    margin: 4px;
+    width: 28px;
+    height: 28px;
+    background-color: transparent;
+  }
+
+  .assetBoxSymbolName {
+    width: 120px;
+    padding-top:10px;
+    padding-bottom: 6px;
+    margin-left: 70px;
+    font-size: 20px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .assetBoxTitle {
+    height: 16px;
+    font-size: 12px;
+  }
+
+  .assetBoxValue {
+    height: 25px;
+    font-size: 14px;
+    padding-top: 4px;
+  }
+
+  .assetBoxBalance {
+    padding-top: 8px;
+    display: inline-block;
+  }
+
+  .assetBoxFrozen {
+    padding-top: 8px;
+    display: inline-block;
+  }
+
+  .assetBoxButtons {
+    text-align: right;
+    margin-top: 10px;
+    margin-right: 0px;
+  }
+
+  .assetBoxButton {
+    margin-left: 10px;
+    margin-right: 0px;
+    width: 70px !important;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+@media (min-width: 768px) {
+  .headline {
+    font-size: 26px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  /*****************Home page*****************/
+  .assetBox {
+    text-align: left;
+    background-color: transparent;
+    height: 50px;
+    margin: 5px;
+    border-radius: 4px;
+    border: solid 1px $lightGrey;
+    -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  }
+
+  //Contains the logo of the asset
+  .assetBoxSymbolImg {
+    margin-top: 6px;
+    width: 36px;
+    height: 36px;
+    background-color: white;
+    position: absolute;
+    display: inline-block;
+    -webkit-border-radius: 150px;
+    -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  }
+
+
+
+  .assetSymbol {
+    margin: 4px;
+    width: 28px;
+    height: 28px;
+    background-color: transparent;
+  }
+
+  .assetBoxSymbolName {
+    width: 150px;
+    padding-top:10px;
+    padding-bottom: 6px;
+    margin-left: 70px;
+    font-size: 20px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .assetBoxTitle {
+    height: 16px;
+    font-size: 12px;
+  }
+
+  .assetBoxValue {
+    height: 25px;
+    font-size: 14px;
+    padding-top: 4px;
+  }
+
+  .assetBoxBalance {
+    padding-top: 8px;
+    display: inline-block;
+  }
+
+  .assetBoxFrozen {
+    padding-top: 8px;
+    display: inline-block;
+  }
+
+  .assetBoxButtons {
+    text-align: right;
+    margin-top: 10px;
+    margin-right: 0px;
+  }
+
+  .assetBoxButton {
+    margin-left: 10px;
+    margin-right: 0px;
+    width: 70px !important;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .headline {
+    font-size: 26px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  /*****************Home page*****************/
+  .assetBox {
+    text-align: left;
+    background-color: transparent;
+    height: 50px;
+    margin: 5px;
+    border-radius: 4px;
+    border: solid 1px $lightGrey;
+    -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  }
+
+  //Contains the logo of the asset
+  .assetBoxSymbolImg {
+    margin-top: 6px;
+    width: 36px;
+    height: 36px;
+    background-color: white;
+    position: absolute;
+    display: inline-block;
+    -webkit-border-radius: 150px;
+    -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  }
+
+
+
+  .assetSymbol {
+    margin: 4px;
+    width: 28px;
+    height: 28px;
+    background-color: transparent;
+  }
+
+  .assetBoxSymbolName {
+    width: 200px;
+    padding-top:10px;
+    padding-bottom: 6px;
+    margin-left: 70px;
+    font-size: 20px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .assetBoxTitle {
+    height: 16px;
+    font-size: 12px;
+  }
+
+  .assetBoxValue {
+    height: 25px;
+    font-size: 14px;
+    padding-top: 4px;
+  }
+
+  .assetBoxBalance {
+    padding-top: 8px;
+    display: inline-block;
+  }
+
+  .assetBoxFrozen {
+    padding-top: 8px;
+    display: inline-block;
+  }
+
+  .assetBoxButtons {
+    text-align: right;
+    margin-top: 10px;
+    margin-right: 0px;
+  }
+
+  .assetBoxButton {
+    margin-left: 10px;
+    margin-right: 0px;
+    width: 70px !important;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .headline {
+    font-size: 36px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  /*****************Home page*****************/
+  .assetBox {
+    text-align: left;
+    background-color: transparent;
+    height: 60px;
+    margin: 5px;
+    border-radius: 4px;
+    border: solid 1px $lightGrey;
+    -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  }
+
+  //Contains the logo of the asset
+  .assetBoxSymbolImg {
+    margin-top: 8px;
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    position: absolute;
+    display: inline-block;
+    -webkit-border-radius: 150px;
+    -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  }
+
+
+
+  .assetSymbol {
+    margin: 4px;
+    width: 34px;
+    height: 34px;
+    background-color: transparent;
+  }
+
+  .assetBoxSymbolName {
+    width: 200px;
+    padding-top:10px;
+    padding-bottom: 6px;
+    margin-left: 70px;
+    font-size: 26px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .assetBoxTitle {
+    height: 16px;
+    font-size: 14px;
+  }
+
+  .assetBoxValue {
+    height: 25px;
+    font-size: 14px;
+    padding-top: 4px;
+  }
+
+  .assetBoxBalance {
+    padding-top: 8px;
+    display: inline-block;
+  }
+
+  .assetBoxFrozen {
+    padding-top: 8px;
+    display: inline-block;
+  }
+
+  .assetBoxButtons {
+    text-align: right;
+    margin-top: 14px;
+    margin-right: 0px;
+  }
+
+  .assetBoxButton {
+    margin-left: 10px;
+    margin-right: 4px;
+    width: 70px !important;
+  }
+}
+
+/* Extra extra large devices (large desktops, 1400px and up) */
+@media (min-width: 1400px) {
+  .headline {
+    font-size: 48px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  /*****************Home page*****************/
+  .assetBox {
+    text-align: left;
+    background-color: transparent;
+    height: 80px;
+    margin: 5px;
+    border-radius: 4px;
+    border: solid 1px $lightGrey;
+    -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  }
+
+  //Contains the logo of the asset
+  .assetBoxSymbolImg {
+    margin-top: 16px;
+    width: 48px;
+    height: 48px;
+    background-color: white;
+    position: absolute;
+    display: inline-block;
+    -webkit-border-radius: 150px;
+    -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  }
+
+
+
+  .assetSymbol {
+    margin: 4px;
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+  }
+
+  .assetBoxSymbolName {
+    width: 300px;
+    padding-top:14px;
+    padding-bottom: 6px;
+    margin-left: 70px;
+    font-size: 36px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .assetBoxTitle {
+    height: 20px;
+    font-size: 14px;
+  }
+
+  .assetBoxValue {
+    height: 25px;
+    font-size: 14px;
+    padding-top: 4px;
+  }
+
+  .assetBoxBalance {
+    padding-top: 18px;
+    display: inline-block;
+  }
+
+  .assetBoxFrozen {
+    padding-top: 18px;
+    display: inline-block;
+  }
+
+  .assetBoxButtons {
+    text-align: right;
+    margin-top: 24px;
+    margin-right: 10px;
+  }
+
+  .assetBoxButton {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 70px !important;
+  }
+
+}
+
 /****************** Mixin Functions
 _____  ._______  ___.___ _______
 /     \ |   \   \/  /|   |\      \
@@ -67,6 +616,20 @@ _____  ._______  ___.___ _______
       text-decoration: none;
     }
 
+  } @else if $type == 'link-menu' {
+    width: 100%;
+    color: $btn-color !important;
+    background-color: transparent !important;
+    font-size:120%;
+    line-height:1.2;
+    &:hover {
+      opacity: 0.8;
+      text-decoration: none;
+    }
+    &:focus {
+      text-decoration: none;
+    }
+
   } @else if $type == 'language' {
     padding-top: 6px;
     width: 134px;
@@ -95,80 +658,22 @@ _____  ._______  ___.___ _______
 /*** End Mixin ****/
 
 //Radio buttons to add in the Mixin
-.radioButton {
-    div {
-      overflow: hidden;
-    }
+.btn-radio-history {
+  overflow: hidden;
+  width: 40px;
+  color: $mediumGrey;
+  background-color: transparent !important;
+  border-width: 0 !important;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
 
-    span {
-      margin-right: 10px;
-    }
+  &:hover {
+    color: black;
+  }
+}
 
-    label {
-      width: 160px;
-      height: 36px;
-      color: $blueGeneralColor;
-      font-size: 14px;
-      border-radius: 6px;
-      border: 1px solid $blueGeneralColor;
-      font-weight: normal;
-      text-align: right;
-      padding-right: 20px;
-      margin-top: 10px;
-    }
-
-    input {
-        &:empty {
-            display: none;
-            ~ label {
-                position: relative;
-                line-height: 2.5em;
-                text-indent: 3.25em;
-                cursor: pointer;
-                user-select: none;
-
-                &:before {
-                    position: absolute;
-                    display: block;
-                    top: 0;
-                    bottom: 0;
-                    left: 0;
-                    content: '';
-                    width: 20px;
-                    border-radius: 3px 0 0 3px;
-                }
-            }
-        }
-
-        &:hover:not(:checked) ~ label {
-            opacity: 0.8;
-
-            &:before {
-                content: '\2714';
-                font-size: 20px;
-                text-indent: .9em;
-                color: $blueGeneralColor;
-            }
-        }
-
-        &:checked ~ label {
-            color: white;
-            background-color: $blueGeneralColor;
-
-            &:before {
-                content: '\2714';
-                font-size: 20px;
-                height: 20px;
-                text-indent: .9em;
-                color: white;
-                background-color: transparent;
-            }
-        }
-
-        &:focus ~ label:before {
-            opacity: 0.8;
-        }
-    }
+.selectedAsset {
+  color: black;
 }
 
 
@@ -360,7 +865,15 @@ _____  ._______  ___.___ _______
 }
 
 .btn-link-menu {
+    @include btn-theme(black, 'link-menu');
+}
+
+.btn-link-red {
     @include btn-theme($linkButtonMenuColor, 'link');
+}
+
+.btn-link-black {
+    @include btn-theme(black, 'link');
 }
 
 //Secondary buttons have a white background, the color is the one of the text
@@ -368,19 +881,18 @@ _____  ._______  ___.___ _______
   @include btn-theme($successButtonColor, 'secondary');
 }
 
-/*.languageButton, .languageButton:focus, .languageButton:hover {
-  @include btn-theme($darkGrey, 'language');
-}
-
-.languageButtonRegister, .languageButtonRegister:focus, .languageButtonRegister:hover {
-  @include btn-theme(transparent, 'language');
-}*/
-
 .languageButtonHeaderSmall {
   background-color: transparent;
   border-width: 0;
   padding: 0;
   margin-top: 18px;
+}
+
+.languageButtonXl {
+  background-color: transparent;
+  border-width: 0;
+  padding: 0 !important;
+  height: 14px !important;
 }
 
 .languageHeaderLarge {
@@ -479,6 +991,10 @@ _____  ._______  ___.___ _______
 
 .checkboxCircle :focus {
   outline: 0;
+}
+
+.moreAssetsButton {
+  text-align: right;
 }
 
 
@@ -671,7 +1187,7 @@ _____  ._______  ___.___ _______
 
 .userNameSpan {
   padding-top: 10px;
-  width: 100px;
+  width: 120px;
 }
 
 .userNameSpanXs {
@@ -754,18 +1270,7 @@ _____  ._______  ___.___ _______
   margin-right: auto;
 }
 
-.headline {
-  font-family: 'PingFang SC';
-  font-weight: 650;
-  font-style: normal;
-  font-size: 24px;
-  font-weight: bold;
-  color: #333333;
-  font-kerning: normal;
-  display: inline-block;
-  padding-bottom: 10px;
 
-}
 
 .layout {
   //display: inline-block;
@@ -854,72 +1359,8 @@ _____  ._______  ___.___ _______
 
 
 /********************My assets**************************/
-.assetBox {
-  background-color: $lightGrey;
-  width: 265px;
-  height: 130px;
-  margin: 10px;
-  border-radius: 0px;
-
-}
-
-//Contains the logo of the asset
-.assetBoxSymbolImg {
-  margin-left: 6px;
-  position: absolute;
-  margin-top: 36px;
-  width: 48px;
-  height: 48px;
-  background-color: white;
-  -webkit-border-radius: 150px;
-  -moz-border-radius: 150px;
-}
 
 
-
-.assetSymbol {
-  position: absolute;
-  margin: 4px;
-  width: 40px;
-  height: 40px;
-  background-color: transparent;
-}
-
-.assetBoxTextInfo {
-  width: 70%;
-  display: inline-block;
-  float: right;
-}
-
-.assetBoxSymbolName {
-  width: 100%;
-  color: $blueGeneralColor;
-  padding-top:14px;
-  padding-bottom: 6px;
-  float:left;
-  line-height:16px;
-  font-size: 16px;
-  text-overflow: ellipsis; //for CSS3
-  overflow: hidden; //for older browsers
-}
-
-.assetBoxTitle {
-  width: 100%;
-  color: $veryDarkGrey;
-  float:left;
-  line-height:12px;
-  font-size: 12px;
-  padding-top: 0px;
-}
-
-.assetBoxValue {
-  width: 100%;
-  color: $veryDarkGrey;
-  float:left;
-  line-height:16px;
-  font-size: 16px;
-  padding-bottom: 6px;
-}
 
 
 .createAsset {
@@ -974,7 +1415,9 @@ _____  ._______  ___.___ _______
 
 /********************Home page*************************/
 .tabsMenu > li.active > a {
-    text-decoration: underline;
+    //text-decoration: underline;
+    border-bottom: solid 2px $linkButtonMenuColor !important;
+    border-radius: 0;
 }
 
 .selectAssetType {
@@ -1026,16 +1469,11 @@ _____  ._______  ___.___ _______
 
 }
 
-.calendarInput {
-  width: 90%;
-
-}
 
 //History
 //Big screens
-.transactionListLarge {
-
-
+.loadMore {
+  display: inline-block;
 }
 
 .transactionLine {
@@ -1054,28 +1492,42 @@ _____  ._______  ___.___ _______
   color: blue;
 }
 
-
-//Display of the history for large screens
-.transactionBoxLarge {
-  color: $veryDarkGrey;
-  //font-family: 'PingFangSC-Regular', 'PingFang SC';
+.transactionsHistoryXl {
+  height: 470px;
 }
 
-.transactionBoxLargeTime {
+.transactionBoxHeader {
+  height: 40px;
+  background-color: $lightGrey;
+  border-width: 0;
+}
+
+.transactionBoxHeaderField {
+  padding-top: 10px;
+  font-size: 14px;
+  color: $darkGrey;
+}
+
+
+//Display of the history for large screens
+.transactionOneLine {
+  color: $veryDarkGrey;
+  height: 40px;
+  border-bottom: solid 1px;
+  border-color: $mediumGrey;
+}
+
+.transactionBoxField {
+  padding-top: 10px;
   font-size: 14px;
 }
 
-.transactionBoxLargeAddress {
-  font-size: 12px;
-}
-
-.transactionBoxLargeAmount {
-  font-size: 16px;
-}
-
-.linkToExplorerButton {
-  text-align: left;
-  color: $successButtonColor !important;
+.overflow {
+  width: 100%;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .pagination {
@@ -1083,6 +1535,7 @@ _____  ._______  ___.___ _______
 }
 
 .paginationHistory {
+  padding-left: 30%;
   //padding-top: 200px;
 }
 
@@ -1421,13 +1874,17 @@ word-wrap: break-word;
   line-height: 16px;
   color: black;
   word-break: break-all;
-  word-wrap: break-word;
   background-color: transparent;
   border: 0;
   border-radius: 0;
   color: inherit;
   font-family: inherit;
   overflow: visible;
+  white-space: pre-wrap;       /* css-3 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
 .forminput {
@@ -1489,4 +1946,9 @@ h2 {
 
 .warningText {
   color: red;
+}
+
+/***************All Assets page**************/
+.detailsOneLine {
+  line-height: 30px;
 }

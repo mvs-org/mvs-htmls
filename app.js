@@ -115,9 +115,9 @@
             })
 
 
-            .state('home.assets', {
+            .state('home.home', {
                 url: "/home",
-                templateUrl: "home/assets.view.html",
+                templateUrl: "home/home.view.html",
                 controller: 'AssetsController',
                 controllerAs: 'vm'
             })
@@ -232,14 +232,8 @@
                 controllerAs: 'vm'
             })
 
-            .state('home.mining', {
-                url: "/advanced/mining",
-                templateUrl: "home/mining.view.html",
-                controller: 'MiningController'
-            })
-
             .state('home.console', {
-                url: "/advanced/console",
+                url: "/advanced",
                 templateUrl: "home/console.view.html",
                 controller: 'ConsoleController'
             });
