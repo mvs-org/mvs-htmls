@@ -18,7 +18,7 @@
               <div class="assetBoxSymbolImg">
                 <img class="assetSymbol" src="images/favicon.jpg" alt=""/>
               </div>
-              <div class="assetBoxSymbolName">
+              <div class="assetBoxSymbolName overflow">
                 <a href="#!/asset/details/{{asset.symbol}}" class="btn-link-black">{{asset.symbol}}</a>
               </div>
             </div>
@@ -28,7 +28,7 @@
             </div>
             <div class="assetBoxFrozen col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 noPaddingLeftRight">
               <div class="assetBoxTitle">{{ 'ASSET_ALL_ADDRESS' | translate }}</div>
-              <div class="assetBoxValue">{{asset.address}}</div>
+              <div class="assetBoxValue overflow">{{asset.address}}</div>
             </div>
           </button>
           <div ng-show="asset.details">
@@ -48,7 +48,6 @@
               <span class="assetBoxTitle col-xs-offset-4 col-xs-2">{{ 'ASSET_ALL_STATUS' | translate }}:</span>
               <span class="assetBoxValue">{{asset.status}}</span>
             </div>
-            <br/>
           </div>
         </div>
 

@@ -2,7 +2,7 @@
 	<span class="headline">{{ 'HEADLINE_ETP_TRANSFER' | translate }}</span>
 
 	<!--Select type of Asset-->
-	<div class="selectAssetType">
+	<!--<div class="selectAssetType">
 		<button class="dropdown-togglen assetTypeButton" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 			{{symbol}}
 			<span class="caret"></span>
@@ -11,21 +11,22 @@
 			<li><a ng-click="selectAssetType('ETP')" href="#!/transfer/ETP" >ETP</a></li>
 			<li class="divider" role="separator"></li>
 			<li ng-repeat="asset in assetsIssued | orderBy:'symbol'"><a ng-click="selectAssetType(asset.symbol)" href="#!/transfer/{{asset.symbol}}/" >{{asset.symbol}}</a></li>
-		</ul>
+		</ul>-->
+	<div class="selectAssetType">
 		<a href="#!/transfer/multisignature" class="btn btn-success smallButton">{{ 'TRANSFER_GO_TO_MULTISIGNATURE' | translate }}</a>
 	</div>
 
 	<!--Navigation Manual/Auto selection of addresse-->
-	<div class="col-xs-12 noPaddingLeftRight">
+	<!--<div class="col-xs-12 noPaddingLeftRight">
 		<ul class="nav nav-pills tabsMenu" >
 			<li role="presentation"><a class="btn btn-link" ng-click="selectAddress('auto','')" ng-style="{ 'text-decoration' : underlineAuto}">{{ 'DEPOSIT_SELECT_AUTO_ADRESS' | translate }}</a></li>
 			<li role="presentation" ng-show="selectAddressAvailable"><a class="btn btn-link" ng-click="selectAddress('manual','')" ng-style="{ 'text-decoration' : underlineManual}" >{{ 'DEPOSIT_SELECT_MANUAL_ADDRESS' | translate }}</a></li>
 			<li role="presentation" ng-hide="selectAddressAvailable" bs-tooltip data-placement="top" title="{{ 'TRANSFER_SELECT_INPUT_MULTI_RECIPENT' | translate }}"><a class="btn btn-link disabled" ng-style="{ 'text-decoration' : underlineManual}">{{ 'DEPOSIT_SELECT_MANUAL_ADDRESS' | translate }}</a></li>
 		</ul>
-	</div>
+	</div>-->
 
 	<!--Display the total ETP in automatic selection-->
-	<div class="col-xs-12 noPaddingLeftRight" ng-show=autoSelectAddress>
+	<!--<div class="col-xs-12 noPaddingLeftRight" ng-show=autoSelectAddress>
 		<a>
 			<dd class="panel assetBox assetBoxChecked col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
 				<span class="assetBoxSymbolImg"><img class="assetSymbol" src="images/favicon.jpg" alt=""/></span>
@@ -41,10 +42,10 @@
 					</span>
 				</dd>
 			</a>
-		</div>
+		</div>-->
 
 		<!--Display all the addresses if the user choose to let it manually-->
-		<div class="col-xs-12 noPaddingLeftRight" ng-hide=autoSelectAddress>
+		<!--<div class="col-xs-12 noPaddingLeftRight" ng-hide=autoSelectAddress>
 			<div class="radioButtonAddress noPaddingLeftRight" ng-repeat="address in addresses | orderBy:'balance':true" ng-click="selectAddress('selectionAddress',address.address)" ng-hide="(address.balance == 0)">
 				<dd class="panel addressBox noPaddingLeftRight col-xs-1">
 					<input type="radio" name="radioDeposit" id={{address.address}} value="hideCustomDate"/>
@@ -52,9 +53,7 @@
 						<div class="assetSymbolImgDeposit">
 							<img class="assetSymbolDeposit" src="images/favicon.jpg" alt=""/>
 						</div>
-						<!--<div class="addressBoxSymbolImgDeposit">
-							<img class="assetSymbol assetSymbolDeposit" src="images/favicon.jpg" alt=""/>
-						</div>-->
+
 						<div class="addressBoxTextInfoDeposit">
 							<span class="addressBoxNameDeposit">{{address.name}}</span>
 							<span class="addressBoxAddressDeposit">{{address.address}}</span>
@@ -70,43 +69,54 @@
 					</label>
 				</dd>
 			</div>
-		</div>
+		</div>-->
 
 		<form class="row">
 			<!--Sender-->
 			<div class="col-md-12 form-group noPaddingLeftRight">
 				<br/>
 				<div class="col-md-6 form-group">
-					<label for="value" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
-					<input type="etpaddress" ng-hide="sendfrom==''" class="form-control" name="sender_address" id="" value="{{sendfrom}}" disabled>
-					<input type="etpaddress" ng-show="sendfrom==''" class="form-control" name="sender_address" id="" value="{{ 'DEPOSIT_SELECT_AUTO_ADRESS' | translate }}" disabled>
+					<label for="addresFrom" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
+					<select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom">
+						<option value="">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</option>
+						<option ng-repeat="address in addresses | orderBy:'balance':true" value="{{address.address}}">{{address.address}} - {{address.balance/100000000}} ETP</option>
+					</select>
 				</div>
 			</div>
 
 			<!--Recipient(s)-->
-			<div class="col-md-12 form-group noPaddingLeftRight transferRecipent" ng-repeat="recipent in recipents | orderBy:'index'">
-				<div class="col-md-6 form-group transferRecipent">
-					<label for="recipent_address" class="control-label">{{ 'TRANSFER_RECIPENT_ADDRESS' | translate }}</label>
-					<input type="etpaddress" class="form-control" name="recipent_address" id="" ng-model="recipent.address" required>
+			<div class="col-md-12 noPaddingLeftRight" ng-repeat="recipent in recipents | orderBy:'index'">
+				<div class="col-md-12 noPaddingLeftRight">
+					<div class="col-md-6 form-group">
+						<label for="recipent_address" class="control-label col-md-6 noPaddingLeftRight">{{ 'TRANSFER_RECIPENT_ADDRESS' | translate }} {{recipent.index}}</label>
+						<!--Add Recipent button, only on the first one-->
+						<div class="col-md-6 noPaddingLeftRight addRecipent" ng-show="recipent.index == 1">
+							<button type="button" ng-click="addRecipent()" class="btn-link-red addRecipentButton"><span class="glyphicon glyphicon-plus"></span> {{ 'TRANSFER_ADD_RECIPENT' | translate }}</button>
+						</div>
+
+
+						<div class="col-md-6 noPaddingLeftRight addRecipent" ng-show="(recipents.length>1) && (recipent.index == recipents.length)">
+							<button type="button" ng-click="removeRecipent()" class="btn-link-red addRecipentButton"><span class="glyphicon glyphicon-minus"></span> {{ 'TRANSFER_REMOVE_RECIPENT' | translate }}</button>
+						</div>
+						<input type="etpaddress" class="form-control" name="recipent_address" id="" ng-model="recipent.address" required>
+					</div>
 				</div>
 
 				<!--Amount-->
-				<div class="col-md-6 transferRecipent">
-					<div class="form-group">
-						<label for="value" class="control-label">{{ 'TRANSFER_VALUE' | translate }}</label>
-						<input type="number" min=0 step="0.00000001" max={{balance['total-unspent']/100000000}} required class="form-control" placeholder="0.00000000" name="value" ng-model="recipent.value" autocomplete="off">
+				<div class="col-md-12 form-group noPaddingLeftRight">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="value" class="control-label">{{ 'TRANSFER_VALUE' | translate }}</label>
+							<input type="number" min=0 step="0.00000001" max={{balance['total-unspent']/100000000}} required class="form-control" placeholder="0.00000000" name="value" ng-model="recipent.value" autocomplete="off">
+						</div>
 					</div>
 				</div>
 			</div>
 
 			<!--Add and Remove recipent button-->
 			<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
-				<div class="addRecipent col-xs-6 col-sm-6 col-md-6">
-					<button type="button" ng-click="addRecipent()" class="btn-link addRecipentButton"><span class="glyphicon glyphicon-plus"></span> {{ 'TRANSFER_ADD_RECIPENT' | translate }}</button>
-				</div>
-				<div class="addRecipent col-xs-6 col-sm-6 col-md-6">
-					<button type="button" ng-click="removeRecipent()" class="btn-link addRecipentButton" ng-show="recipents.length>1"><span class="glyphicon glyphicon-minus"></span> {{ 'TRANSFER_REMOVE_RECIPENT' | translate }}</button>
-				</div>
+
+
 			</div>
 
 			<!--Memo-->

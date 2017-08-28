@@ -21,6 +21,7 @@ h4 {
   line-height: 40px;
 }
 
+
 /*
 Extra small devices (portrait phones, less than 544px)
 No media query since this is the default in Bootstrap because it is "mobile first"
@@ -838,9 +839,9 @@ _____  ._______  ___.___ _______
 \/                              \/     \/
 ***************/
 .btn {
-  height: 40px;
+  height: 32px;
   width: 100%;
-  padding: 10px 12px;
+  padding: 6px 12px;
   opacity: 1;
   border-radius: $radiusButtons;
   font-family: 'PingFangSC';
@@ -926,6 +927,11 @@ _____  ._______  ___.___ _______
   //font-family: 'PingFangSC-Thin', 'PingFang SC Thin', 'PingFang SC';
 }
 
+.createAddress {
+  text-align: right;
+}
+
+
 .createAddressButton {
   width: auto;
   margin-top: 10px;
@@ -1000,12 +1006,18 @@ _____  ._______  ___.___ _______
 
 /*********** End Buttons ****************/
 .form-group select, .form-group textarea, .form-group input[type]:not([type=search]):not([type=submit]) {
-  background-color : $lightGrey;
-  border-width: 0;
+  background-color : white;
+  border-width: solid 1px $mediumGrey;
 }
 
 .form-group {
-  color: $veryDarkGrey;
+  //color: $veryDarkGrey;
+}
+
+.noPaddingTopBottomButton {
+  height: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 
@@ -1014,6 +1026,19 @@ _____  ._______  ___.___ _______
 .logoMetaverseLogin {
   width: 170px;
   height: 65px;
+}
+
+.loginTitle {
+  text-align: center;
+}
+
+.loginArea {
+  background-color: white;
+  border-radius: 10px;
+  margin-top: 10%;
+  padding-top: 3%;
+  padding-bottom: 3%;
+  margin-bottom: 10%;
 }
 
 .padding-big-top{
@@ -1028,11 +1053,24 @@ _____  ._______  ___.___ _______
 }
 
 .languageButtonLogin {
-  width: 144px;
-  height: 36px;
-  background-color: rgba(255, 255, 255, 0);
-  border-width: 1px;
-  border-color: rgba(121, 121, 121, 1);
+  width: 40px;
+  background-color: transparent;
+  border-width: 0;
+  padding: 0 !important;
+  height: 42px !important;
+}
+
+.headerLoginXs {
+  border-radius: 0;
+  border-width: 0;
+}
+
+.headerLoginXsLanguageButton {
+  text-align: right;
+}
+
+.loginButton {
+  padding-top: 20px;
 }
 
 
@@ -1250,6 +1288,10 @@ _____  ._______  ___.___ _______
 
 
 /****************Commun to all pages****************/
+.red {
+  color: $redGeneralColor;
+}
+
 .content{
   right: 0px;
   height:auto;
@@ -1367,6 +1409,13 @@ _____  ._______  ___.___ _______
   margin: 10px;
 }
 
+.createAssetPopupButtons {
+  width: 50%;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 30px;
+}
+
 .maxSupplyUpdateTextBox {
   font-size: 14px;
   background-color: transparent;
@@ -1395,9 +1444,8 @@ _____  ._______  ___.___ _______
 }
 
 .assetDataColumn {
-  height: 24px;
-  width: 160px;
-  text-align: right;
+  height: 32px;
+  text-align: left;
   padding-right: 20px;
   font-weight: 400;
   font-style: normal;
@@ -1523,7 +1571,7 @@ _____  ._______  ___.___ _______
 }
 
 .overflow {
-  width: 100%;
+  //width: 100%;
   display: inline-block;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1575,6 +1623,10 @@ _____  ._______  ___.___ _______
 }
 
 /**********************ETP Addresses*******************/
+.whiteSpace {
+  margin-bottom: 80px;
+}
+
 .textCheckbox {
   padding-left: 10px;
 }
@@ -1677,15 +1729,15 @@ _____  ._______  ___.___ _______
 }
 
 .modal-content {
-  height: 420px;
-  width: 400px;
+  height: 520px;
+  width: 500px;
 }
 
 .qrCodePopUp {
   height: 300px;
   width: 300px;
-  margin-left: 50px;
-  margin-top: 50px;
+  margin-left: 100px;
+  margin-top: 100px;
   margin-bottom: 20px;
 
 }
@@ -1785,7 +1837,7 @@ _____  ._______  ___.___ _______
 }
 
 .quickResponse {
-  color: $blueGeneralColor;
+  color: $redGeneralColor;
   margin-top: 30px;
 }
 
@@ -1802,6 +1854,18 @@ _____  ._______  ___.___ _______
 .profit {
   font-size: 18px;
   color: $blueGeneralColor;
+}
+
+.selected_row {
+  background-color: $lightGrey;
+}
+
+.headerInterestRateTable {
+  background-color: $mediumGrey;
+}
+
+.fieldInterestRateTable {
+  padding-left: 20px;
 }
 
 
@@ -1824,16 +1888,11 @@ _____  ._______  ___.___ _______
 }
 
 .addRecipent {
-  margin-bottom: 20px;
-  margin-bottom: 20px;
+  text-align: right;
 }
 
 .addRecipentButton {
   width: auto;
-}
-
-.transferRecipent {
-  margin-bottom: 0;
 }
 
 
@@ -1855,7 +1914,7 @@ html,body {
   margin-top: 10px;
   //color: $blueGeneralColor;
   word-break: break-all;
-word-wrap: break-word;
+  word-wrap: break-word;
 
 }
 
@@ -1901,9 +1960,7 @@ word-wrap: break-word;
 
 /*****************Search Pages*************/
 .numbersSearch {
-  font-weight: 400;
-  font-style: normal;
-  font-size: 16px
+  font-size: 14px
 }
 
 h2 {
@@ -1917,6 +1974,25 @@ h2 {
 /*************Explorer***************/
 .explorerTransaction {
   padding-top: 10px;
+  height: 30px;
+}
+
+.explorerRightInfo {
+  text-align: right;
+}
+
+.explorerScript {
+  word-break: break-all;
+  word-wrap: break-word;
+  font-size: 12px;
+}
+
+.blockNumber {
+  text-align: right;
+}
+
+.center {
+  text-align: center;
 }
 
 
@@ -1951,4 +2027,13 @@ h2 {
 /***************All Assets page**************/
 .detailsOneLine {
   line-height: 30px;
+}
+
+/**************Assets details*****************/
+.sendAssetButton {
+  text-align: right;
+}
+
+.maxSupply {
+  padding-right: 20px;
 }

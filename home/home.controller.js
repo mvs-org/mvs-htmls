@@ -136,7 +136,12 @@
             $scope.transaction = response.data.transaction;
             $scope.exists = true;
 
+            $scope.transaction.inputs.forEach(function(e) {
+              e.display = false;
+            });
+
             $scope.transaction.outputs.forEach(function(e) {
+              e.display = false;
               if(e.attachment.type!='etp') {
                 loadasset(e.attachment.symbol);
               }
@@ -1108,7 +1113,7 @@
 
 
 
-  function AddressesController(MetaverseService, $translate, $rootScope, $scope, FlashService, $location, localStorageService, $window) {
+  function AddressesController(MetaverseHelperService, MetaverseService, $translate, $rootScope, $scope, FlashService, $location, localStorageService, $window) {
 
     $window.scrollTo(0,0);
     $scope.addresses = [];
@@ -1120,6 +1125,8 @@
     $scope.endEditAddressName = endEditAddressName;
     $scope.cancelEditAddressName = cancelEditAddressName;
     $scope.newName = 'New Address';
+
+    $scope.balance = {};
 
 
     function init() {
@@ -1251,6 +1258,16 @@
       }
       NProgress.done();
     }
+
+
+    //Load users ETP balance
+    MetaverseHelperService.GetBalance( (err, balance, message) => {
+      if (err)
+      FlashService.Error(message);
+      else {
+        $scope.balance = balance;
+      }
+    });
   }
 
   function AccountController(MetaverseService, $translate, $rootScope, $scope, FlashService, $location, localStorageService, $window) {
@@ -1465,12 +1482,14 @@
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success && response.data.assets != '') {    //If the address doesn't contain any asset, we don't need it
             response.data.assets.forEach( (a) => {
-              var name = "New address";
-              if (localStorageService.get(a.address) != undefined) {
-                name = localStorageService.get(a.address);
+              if(a.symbol == $scope.symbol) {
+                var name = "New address";
+                if (localStorageService.get(a.address) != undefined) {
+                  name = localStorageService.get(a.address);
+                }
+                a.name = name;
+                $scope.assetAddresses.push(a);
               }
-              a.name = name;
-              $scope.assetAddresses.push(a);
             });
           }
         });
@@ -1603,7 +1622,7 @@
   }
 
 
-  function ShowAssetsController(MetaverseService, $rootScope, $scope, localStorageService, FlashService, $translate, $stateParams, $location, $window) {
+  function ShowAssetsController(MetaverseService, $rootScope, $scope, localStorageService, FlashService, $translate, $stateParams, $location, $window, ngDialog) {
 
     $window.scrollTo(0,0);
     $scope.symbol = $stateParams.symbol;
@@ -1617,6 +1636,32 @@
     $scope.cancelEditAssetMaxSupply = cancelEditAssetMaxSupply;
     $scope.increase_maximum_supply = 0;  //the maximum supply increase
     $scope.owner = false;               //true if the user is the owner of this asset
+
+    $scope.listBalances = listBalances;
+    $scope.listAssetBalances = listAssetBalances;
+    $scope.enableEditAddressName = enableEditAddressName;
+    $scope.endEditAddressName = endEditAddressName;
+    $scope.cancelEditAddressName = cancelEditAddressName;
+    $scope.showqr = showqr;
+    $scope.buttonCopyToClipboard = new Clipboard('.btn');
+
+
+    //Shows a modal of the address incl. a qr code
+    function showqr(address) {
+      $('#showqrmodal').modal();
+      $("#modal_address").html(address);
+      $('#modal_qr').html('');
+      var qrcode = new QRCode(document.getElementById("modal_qr"), {
+        text: address,
+        width: 300,
+        height: 300,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+      $('#showqrmodal').modal('show');
+    }
+
 
 
     //Load assets
@@ -1702,6 +1747,85 @@
       });
     }
 
+
+    //We first load the list of all the addresses
+    function listBalances() {
+      NProgress.start();
+      MetaverseService.ListBalances()
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.allAddresses = [];
+          response.data.balances.forEach( (e) => {
+            $scope.allAddresses.push({
+              "address": e.balance.address
+            });
+          });
+          listAssetBalances();
+        } else {
+          $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) =>  FlashService.Error(data));
+        }
+        NProgress.done();
+      });
+    }
+
+    listBalances();
+
+    function listAssetBalances() {
+      NProgress.start();
+      $scope.assetAddresses = [];
+      $scope.allAddresses.forEach( (e) => {
+        MetaverseService.GetAddressAsset(e.address)
+        .then( (response) => {
+          if (typeof response.success !== 'undefined' && response.success && response.data.assets != '') {    //If the address doesn't contain any asset, we don't need it
+            response.data.assets.forEach( (a) => {
+              if(a.symbol == $scope.symbol) {
+                var name = "New address";
+                if (localStorageService.get(a.address) != undefined) {
+                  name = localStorageService.get(a.address);
+                }
+                a.name = name;
+                a.edit = false;
+                $scope.assetAddresses.push(a);
+              }
+            });
+          }
+        });
+      });
+      NProgress.done();
+    }
+
+    //Enable the edition of the Address Name
+    function enableEditAddressName(address) {
+      $scope.assetAddresses.forEach( (e) => {
+        if (e.address == address) {
+          e.newName = e.name;
+          e.edit = true;
+        }
+      });
+    }
+
+    //Save the edited name in the local storage
+    function endEditAddressName(address, newName) {
+      localStorageService.set(address,newName);
+      $scope.assetAddresses.forEach( (e) => {
+        if (e.address == address) {
+          e.name = newName;
+          e.edit = false;
+        }
+      });
+    }
+
+    //Cancel the edition
+    function cancelEditAddressName(address) {
+      $scope.assetAddresses.forEach( (e) => {
+        if (e.address == address) {
+          e.newName = e.name;
+          e.edit = false;
+        }
+      });
+    }
+
+
     //Delete a not issued Asset
     function deleteAsset(symbol) {
       MetaverseService.Delete(symbol)
@@ -1731,15 +1855,21 @@
       $scope.increase_maximum_supply = 0;
       $scope.editMaxSupply = false;
     }
+
+    //Close the pop-up after asset creation
+    $scope.closeAll = function () {
+      ngDialog.closeAll();
+    };
   }
 
-  function CreateAssetController(MetaverseService, $rootScope, $scope, FlashService, localStorageService, $location, $translate, $window) {
+  function CreateAssetController(MetaverseService, $rootScope, $scope, FlashService, localStorageService, $location, $translate, $window, ngDialog) {
 
     $window.scrollTo(0,0);
     //This object contains all form errors
     $scope.error = {};
     //Function to create a new asset
     $scope.createasset = createasset;
+    $scope.popupIssue = popupIssue;
 
     //Initialize form data
     function init() {
@@ -1817,10 +1947,12 @@
           NProgress.done();
           if (typeof response.success !== 'undefined' && response.success) {
             //Show success message
+            popupIssue($scope.symbol);
             $translate('MESSAGES.ASSSET_CREATED_LOCAL_SUCCESS').then( (data) => {
               FlashService.Success(data, true);
+
               //Redirect user to the assets page
-              $location.path('/home');
+              //$location.path('/home');
             });
           } else{
             FlashService.Error(response.message);
@@ -1828,6 +1960,21 @@
         });
       }
     }
+
+    $scope.closeAll = function () {
+      ngDialog.closeAll();
+    };
+
+    function popupIssue(symbol) {
+      ngDialog.open({
+          template: '<h2 class="center">{{ \'ASSET_CREATE_SUCCESS_TITLE\' | translate }}</h2><div>{{ \'ASSET_CREATE_SUCCESS_TEXT1\' | translate }}</div><div>{{ \'ASSET_CREATE_SUCCESS_TEXT2\' | translate }}</div><div>{{ \'ASSET_CREATE_SUCCESS_TEXT3\' | translate }}</div><button class="btn btn-link-red createAssetPopupButtons" ng-click="closeAll()"><a href="#!/asset/myassets">{{ \'ASSET_CREATE_SUCCESS_CANCEL_BUTTON\' | translate }}</a></button><button class="btn btn-success createAssetPopupButtons" ng-click="issue(symbol);closeAll()">{{ \'ASSET_CREATE_SUCCESS_ISSUE_NOW\' | translate }}</button>',
+          plain: true,
+          controller: 'ShowAssetsController'
+      });
+    }
+
+
+
   }
 
 
@@ -1994,10 +2141,10 @@
   function ConsoleController(MetaverseService, $rootScope, FlashService, $translate, $scope, $window) {
 
     $window.scrollTo(0,0);
-    //var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
+    var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
     //To test the Console view with Grunt:
     //var ws = new WebSocket('ws://test4.metaverse.live:8820/ws');
-    var ws = new WebSocket('ws://localhost:8820/ws');
+    //var ws = new WebSocket('ws://localhost:8820/ws');
 
     $("#inputField").focus();
 
