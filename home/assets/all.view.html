@@ -15,9 +15,7 @@
         <div dir-paginate="asset in assets | orderBy: ['-status','symbol'] | itemsPerPage: 10" >
           <button class="assetBox col-xs-12 col-sm-12 col-md-12" ng-click="asset.details = !asset.details">
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-              <div class="assetBoxSymbolImg">
-                <img class="assetSymbol" src="images/favicon.jpg" alt=""/>
-              </div>
+              <span class="assetLogo">资</span>
               <div class="assetBoxSymbolName overflow">
                 <a href="#!/asset/details/{{asset.symbol}}" class="btn-link-black">{{asset.symbol}}</a>
               </div>

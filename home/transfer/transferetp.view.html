@@ -79,7 +79,7 @@
 					<label for="addresFrom" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
 					<select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom">
 						<option value="">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</option>
-						<option ng-repeat="address in addresses | orderBy:'balance':true" value="{{address.address}}">{{address.address}} - {{address.balance/100000000}} ETP</option>
+						<option ng-repeat="address in addresses | orderBy:'balance':true" value="{{address.address}}">{{address.address}}</option>
 					</select>
 				</div>
 			</div>

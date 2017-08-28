@@ -9,7 +9,7 @@
 		  </ul>
 		</div>
 		<!--Display all the Multi signatures-->
-		<div class="col-xs-12 noPaddingLeftRight">
+		<!--<div class="col-xs-12 noPaddingLeftRight">
 			<div class="radioButtonAddress noPaddingLeftRight" ng-repeat="multiSig in listMultiSig" ng-click="selectAddress('selectionAddress', multiSig.address); setMultiSigAddress(multiSig)">
 				<dd class="panel addressBox noPaddingLeftRight col-xs-1">
 					<input type="radio" name="radioDeposit" id={{multiSig.address}} value="hideCustomDate"/>
@@ -31,19 +31,21 @@
 						</div>
 					</label>
 				</dd>
-			</div>
+			</div>-->
 		</div>
 
 		<!--Create a new multisignatures-->
-		<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
-			<a href="#!/transfer/newmultisignature" class="btn btn-link smallButton"><span class="glyphicon glyphicon-plus"></span>{{ 'TRANSFER_MULTISIGNATURE_ADD' | translate }}</a>
-		</div>
+
 
 
 		<form class="row">
+			<br/>
+			<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
+				<a href="#!/transfer/newmultisignature" class="btn btn-link-black smallButton"><span class="glyphicon glyphicon-plus"></span>{{ 'TRANSFER_MULTISIGNATURE_ADD' | translate }}</a>
+			</div>
 
 			<!--Address infos-->
-			<div class="col-md-12 form-group noPaddingLeftRight" ng-show="selectedMutliSigAddress != ''">
+			<!--<div class="col-md-12 form-group noPaddingLeftRight" ng-show="selectedMutliSigAddress != ''">
 				<br/>
 					<label for="addressInfo" class="control-label">{{ 'TRANSFER_MULTISIGNATURE_ADDRESS_INFO' | translate }}</label>
 					<table>
@@ -77,27 +79,30 @@
 			      </tr>
 			    </tody>
 				</table>
-			</div>
+			</div>-->
 
 			<!--Sender-->
 			<div class="col-md-12 form-group noPaddingLeftRight">
 				<br ng-hide="selectedMutliSigAddress != ''"/>
 				<div class="col-md-6 form-group">
-					<label for="value" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
-					<input type="text" ng-hide="sendfrom==''" class="form-control" name="sender_address" id="" value="{{sendfrom}}" disabled>
-					<input type="text" ng-show="sendfrom==''" class="form-control" name="sender_address" id="" value="{{ 'DEPOSIT_SELECT_AUTO_ADRESS' | translate }}" disabled>
+					<label for="addresFrom" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
+					<select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" required>
+						<option ng-repeat="multiSig in listMultiSig | orderBy:'balance':true" value="{{address.address}}">{{multiSig.address}} - {{multiSig.name}}</option>
+					</select>
 				</div>
 			</div>
 
 			<!--Recipient(s)-->
-			<div class="col-md-6 form-group transferRecipent">
-				<label for="recipent_address" class="control-label">{{ 'TRANSFER_RECIPENT_ADDRESS' | translate }}</label>
-				<input type="text" class="form-control" name="recipent_address" id="" ng-model="sendTo" required>
+			<div class="col-md-12 form-group">
+				<div class="col-md-6 noPaddingLeftRight">
+					<label for="recipent_address" class="control-label">{{ 'TRANSFER_RECIPENT_ADDRESS' | translate }}</label>
+					<input type="text" class="form-control" name="recipent_address" id="" ng-model="sendTo" required>
+				</div>
 			</div>
 
 			<!--Amount-->
-			<div class="col-md-6 transferRecipent">
-				<div class="form-group">
+			<div class="col-md-12 form-group">
+				<div class="col-md-6 noPaddingLeftRight">
 					<label for="value" class="control-label">{{ 'TRANSFER_VALUE' | translate }}</label>
 					<input type="number" min=0 step="0.00000001" max={{balance['total-unspent']/100000000}} required class="form-control" placeholder="0.00000000" name="value" ng-model="quantity" autocomplete="off">
 				</div>
@@ -106,8 +111,8 @@
 
 
 			<!--Password-->
-			<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
-				<div class="col-xs-12 col-sm-12 col-md-6">
+			<div class="col-md-12 form-group">
+				<div class="col-md-6 noPaddingLeftRight">
 					<div class="form-group">
 						<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
 						<input type="password" class="form-control" name="password" id="" required autocomplete="new-password" ng-model="password">
@@ -116,8 +121,8 @@
 			</div>
 
 			<!--Submit button-->
-			<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
-				<div class="col-xs-12 col-sm-6 col-md-3 ">
+			<div class="col-md-12 form-group">
+				<div class="col-md-6 noPaddingLeftRight">
 					<br/>
 					<button type="submit" class="btn btn-success" id="transferBtn" ng-click="createMultisigTx(sendfrom, sendTo, quantity)">{{ 'TRANSFER_SEND' | translate }}</button>
 				</div>

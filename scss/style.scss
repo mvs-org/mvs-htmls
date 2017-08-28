@@ -1517,6 +1517,14 @@ _____  ._______  ___.___ _______
 
 }
 
+.assetLogo {
+  position: absolute;
+  font-size: 24px;
+  padding-left: 8px;
+  text-align: center;
+  padding-top: 11px;
+}
+
 
 //History
 //Big screens
@@ -1598,7 +1606,7 @@ _____  ._______  ___.___ _______
 .transactionBoxSmallAmount {
   color: $veryDarkGrey;
   font-weight: 200;
-  font-size: 28px;
+  font-size: 20px;
 }
 
 .transactionBoxSmallAddress {
