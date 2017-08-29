@@ -23,12 +23,15 @@
           <a class="btn-link" href="#!/explorer/adr/{{input.address}}" bs-tooltip data-placement="top" title="{{ 'ADDRESS' | translate }}">{{input.address}}</a>
         </div>
         <div class="explorerRightInfo col-xs-5 col-sm-4 col-md-4 col-lg-3 col-xl-3 noPaddingLeftRight">
-          <a href="#!/explorer/tx/{{input.previous_output.hash}}">
+          <!--<a href="#!/explorer/tx/{{input.previous_output.hash}}">
             <button class="btn-link-black smallButton noPaddingTopBottomButton" bs-tooltip data-placement="top" title="{{ 'EXPLORER.TRANSACTION_PREVIOUS' | translate }}">
               <span class="glyphicon glyphicon-transfer"></span>
             </button>
-          </a>
+          </a>-->
           <button class="btn-link-black smallButton noPaddingTopBottomButton" ng-click="input.display = !input.display">{{ 'EXPLORER.TRANSACTION_SCRIPT' | translate }}</button>
+        </div>
+        <div class="col-md-1 col-lg-1 col-xl-1 hidden-xs hidden-sm" ng-show="input.first">
+          <span class="btn-link-black glyphicon glyphicon-arrow-right"></span>
         </div>
         <!--Display the input value, removed since too slow-->
         <!--<div class="numbersSearch" ng-repeat="transactionInputsValue in transactionInputsValues" ng-show="transactionInputsValue.hash==input.previous_output.hash && transactionInputsValue.address==input.address && transactionInputsValue.index == input.previous_output.index">
@@ -41,8 +44,8 @@
         <div class="explorerScript">
           {{input.script}}
         </div>
-
       </div>
+
     </div>
   </div>
 
@@ -62,7 +65,7 @@
           <button class="btn-link-black smallButton noPaddingTopBottomButton" ng-click="output.display = !output.display">{{ 'EXPLORER.TRANSACTION_SCRIPT' | translate }}</button>
         </div>
       </div>
-      <div ng-show="output.display">
+      <div ng-show="output.display" class="col-sm-12 col-md-11 form-group noPaddingLeftRight">
         <div class="explorerScript">
           {{output.script}}
         </div>

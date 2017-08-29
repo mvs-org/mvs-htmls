@@ -71,7 +71,7 @@
   "NAV_TRANSFER_MULTISIGNATURE_INIT" : "Create a transaction",
   "NAV_TRANSFER_MULTISIGNATURE_SIGN" : "Sign a transaction",
   "TRANSFER_GO_TO_MULTISIGNATURE" : "Multi-signature transaction",
-  "TRANSFER_MULTISIGNATURE_ADD" : "Create new multi-signature",
+  "TRANSFER_MULTISIGNATURE_ADD" : "Create new multi-signature address",
   "TRANSFER_MULTISIGNATURE_PEOPLE_INVOLVED" : "People involved",
   "TRANSFER_MULTISIGNATURE_NBR_SIGN" : "Nbr of sign. required",
   "TRANSFER_MULTISIGNATURE_ADDRESS_INFO" : "Address info",

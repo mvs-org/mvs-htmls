@@ -86,7 +86,8 @@ module.exports = function(grunt) {
                     './node_modules/angular-local-storage/dist/angular-local-storage.min.js',
                     './node_modules/angular-translate/dist/angular-translate.min.js',
                     './node_modules/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js',
-                    './node_modules/angular-utils-pagination/dirPagination.js'
+                    './node_modules/angular-utils-pagination/dirPagination.js',
+                    './node_modules/ng-dialog/js/ngDialog.min.js'
                 ],
                 dest: './min/framework.min.js'
             },

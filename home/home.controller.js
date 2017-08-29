@@ -135,9 +135,16 @@
           } else {
             $scope.transaction = response.data.transaction;
             $scope.exists = true;
+            var first = true;
 
             $scope.transaction.inputs.forEach(function(e) {
               e.display = false;
+              if(first) {
+                e.first = true;
+                first=false;
+              } else {
+                e.first=false;
+              }
             });
 
             $scope.transaction.outputs.forEach(function(e) {
@@ -311,7 +318,6 @@
 
     MetaverseService.ListAssets()
     .then( (response) => {
-      console.log(response);
       if (typeof response.success !== 'undefined' && response.success) {
         response.data.assets.forEach( (e) => {
           if(e.status=='unspent') {
@@ -973,7 +979,6 @@
         .then( (response) => {
           $window.scrollTo(0,0);
           NProgress.done();
-          console.log(response);
           if (typeof response.success !== 'undefined' && response.success) {
             //Creation was successful
             $translate('MESSAGES.CREATE_MULTISIGNATURE_SUCCESS').then( (data) => FlashService.Success(data) );
@@ -1049,7 +1054,6 @@
       quantity = Math.round(quantity);
       MetaverseService.CreateMultisigTx(sendFrom, sendTo, quantity)
       .then( (response) => {
-        console.log(response);
         NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
           //Transaction was successful
@@ -1075,7 +1079,6 @@
     function signMultisigTx(message, lastTx) {
       MetaverseService.SignMultisigTx(message, lastTx)
       .then( (response) => {
-        console.log(response);
         NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
           //Transaction was successful
@@ -1339,7 +1342,6 @@
         NProgress.start();
         MetaverseService.ExportAccountAsFile(password, last_word, path)
         .then( (response) => {
-          console.log(response);
           if (typeof response.success !== 'undefined' && response.success) {
             //Show success message
             $translate('MESSAGES.EXPORT_ACCOUNT_FILE_SUCCESS').then( (data) => {
@@ -1347,7 +1349,6 @@
             });
           } else {
             //Show export error
-            console.log("In error");
             $translate('MESSAGES.EXPORT_ACCOUNT_FILE_ERROR').then( (data) => {
               if (response.message != undefined) {
                 FlashService.Error(data + " " + response.message);
@@ -1368,7 +1369,6 @@
     $window.scrollTo(0,0);
     //$scope.symbol = $stateParams.symbol;
     $scope.symbol = $filter('uppercase')($location.path().split('/')[2]);
-    console.log($scope.symbol);
     $scope.sender_address = $stateParams.sender_address;
     $scope.sendasset = sendasset;
 
@@ -1709,7 +1709,6 @@
       }
       MetaverseService.SecondIssue(symbol, increase_maximum_supply)
       .then( (response) => {
-        console.log(response);
         if (typeof response.success !== 'undefined' && response.success) {
           loadasset($scope.symbol);
           $translate('MESSAGES.ASSETS_SECOND_ISSUE_SUCCESS').then( (data) => FlashService.Success(data) );
