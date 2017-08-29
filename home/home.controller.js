@@ -996,7 +996,6 @@
 
     //Used to dynamically update the number of signature required
     $scope.getNumber = function(num) {
-      console.log(new Array(num));
       return new Array(num);
     }
 

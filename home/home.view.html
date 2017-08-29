@@ -2,72 +2,65 @@
   <div class="headline">{{ 'NAV_HOME' | translate }}</div>
 </br>
 <div class="body-content">
-  <form method="post" class="form-x" action="">
+  <form method="post" class="form-x col-xs-12 noPaddingLeftRight" action="">
     <div class="mainContent1">
-      <div class="row">
-        <dl id="outer_wrap">
-
-            <!--ETP Balance-->
-            <dd class="assetBox col-xs-12 col-sm-12 col-md-12" >
-              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                <div class="assetBoxSymbolImg">
-                  <img class="assetSymbol" src="images/favicon.jpg" alt=""/>
-                </div>
-                <div class="assetBoxSymbolName">
-                  <a href="#!/addresses/myaddresses" class="btn-link-black">ETP</a>
-                </div>
-              </div>
-              <div class="assetBoxBalance col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 noPaddingLeftRight">
-                <div class="assetBoxTitle">{{ 'BALANCE' | translate }}</div>
-                <div class="assetBoxValue overflow">{{balance['total-unspent']/100000000}}</div>
-              </div>
-              <div class="assetBoxFrozen col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 noPaddingLeftRight">
-                <div class="assetBoxTitle">{{ 'FROZEN' | translate}}</div>
-                <div class="assetBoxValue">{{balance['total-frozen']/100000000}}</div>
-              </div>
-              <div class="assetBoxButtons">
-                <a href="#!/deposit/ETP" class="btn btn-link-red smallButton assetBoxButton">{{ 'DEPOSIT.HEADLINE' | translate}}</a>
-                <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/ETP">{{ 'ASSETS_SEND' | translate}}</a>
-              </div>
-            </dd>
-
-          <!--All others assets balance-->
-          <div dir-paginate="asset in assets | orderBy:['-status','symbol'] | itemsPerPage: 5" pagination-id="paginationAssets">
-            <dd class="assetBox col-xs-12 col-sm-12 col-md-12" >
-              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                <span class="assetLogo">资</span>
-                <div class="assetBoxSymbolName">
-                  <a href="#!/asset/details/{{asset.symbol}}" class="btn-link-black overflow">{{asset.symbol}}</a>
-                </div>
-              </div>
-              <div class="assetBoxBalance col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 noPaddingLeftRight">
-                <div class="assetBoxTitle">{{ 'BALANCE' | translate }}</div>
-                <div class="assetBoxValue overflow">{{asset.quantity | assetformat : asset.decimal_number}}</div>
-              </div>
-              <div class="assetBoxFrozen col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 noPaddingLeftRight">
-                <div class="assetBoxTitle">{{ 'FROZEN' | translate}}</div>
-                <div class="assetBoxValue">{{asset.status}}</div>
-              </div>
-              <div ng-show="asset.status == 'unspent'" class="assetBoxButtons">
-                <a href="#!/deposit/{{asset.symbol}}" class="btn btn-link-red smallButton assetBoxButton">{{ 'DEPOSIT.HEADLINE' | translate}}</a>
-                <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/{{asset.symbol}}/">{{ 'ASSETS_SEND' | translate}}</a>
-              </div>
-            </dd>
+      <dl id="outer_wrap">
+        <!--ETP Balance-->
+        <dd class="assetBox col-xs-12 col-sm-12 col-md-12" >
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+            <div class="assetBoxSymbolImg">
+              <img class="assetSymbol" src="images/favicon.jpg" alt=""/>
+            </div>
+            <div class="assetBoxSymbolName">
+              <a href="#!/addresses/myaddresses" class="btn-link-black">ETP</a>
+            </div>
           </div>
-        </dl>
-        <div class="col-xs-12 moreAssetsButton noPaddingLeftRight">
-          <a href="#!/addresses/myaddresses" class="btn btn-link-black smallButton">{{ 'NAV_MORE_ASSETS' | translate}} >></a>
+          <div class="assetBoxBalance col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 noPaddingLeftRight">
+            <div class="assetBoxTitle">{{ 'BALANCE' | translate }}</div>
+            <div class="assetBoxValue overflow">{{balance['total-unspent']/100000000}}</div>
+          </div>
+          <div class="assetBoxFrozen col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 noPaddingLeftRight">
+            <div class="assetBoxTitle">{{ 'FROZEN' | translate}}</div>
+            <div class="assetBoxValue">{{balance['total-frozen']/100000000}}</div>
+          </div>
+          <div class="assetBoxButtons">
+            <a href="#!/deposit/ETP" class="btn btn-link-red smallButton assetBoxButton">{{ 'DEPOSIT.HEADLINE' | translate}}</a>
+            <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/ETP">{{ 'ASSETS_SEND' | translate}}</a>
+          </div>
+        </dd>
+        <!--All others assets balance-->
+        <div dir-paginate="asset in assets | orderBy:['-status','symbol'] | itemsPerPage: 5" pagination-id="paginationAssets">
+          <dd class="assetBox col-xs-12 col-sm-12 col-md-12" >
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+              <span class="assetLogo">资</span>
+              <div class="assetBoxSymbolName">
+                <a href="#!/asset/details/{{asset.symbol}}" class="btn-link-black overflow">{{asset.symbol}}</a>
+              </div>
+            </div>
+            <div class="assetBoxBalance col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 noPaddingLeftRight">
+              <div class="assetBoxTitle">{{ 'BALANCE' | translate }}</div>
+              <div class="assetBoxValue overflow">{{asset.quantity | assetformat : asset.decimal_number}}</div>
+            </div>
+            <div class="assetBoxFrozen col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 noPaddingLeftRight">
+              <div class="assetBoxTitle">{{ 'FROZEN' | translate}}</div>
+              <div class="assetBoxValue">{{asset.status}}</div>
+            </div>
+            <div ng-show="asset.status == 'unspent'" class="assetBoxButtons">
+              <a href="#!/deposit/{{asset.symbol}}" class="btn btn-link-red smallButton assetBoxButton">{{ 'DEPOSIT.HEADLINE' | translate}}</a>
+              <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/{{asset.symbol}}/">{{ 'ASSETS_SEND' | translate}}</a>
+            </div>
+          </dd>
         </div>
-        <div class="col-xs-offset-5 col-sm-offset-5 col-md-offset-5 col-lg-offset-5 col-xl-offset-5">
-          <dir-pagination-controls pagination-id="paginationAssets"></dir-pagination-controls>
-        </div>
+      </dl>
+      <div class="col-xs-12 moreAssetsButton noPaddingLeftRight">
+        <a href="#!/addresses/myaddresses" class="btn btn-link-black smallButton">{{ 'NAV_MORE_ASSETS' | translate}} <span class="glyphicon glyphicon-arrow-right"></span></a>
+      </div>
+      <div class="col-xs-offset-5 col-sm-offset-5 col-md-offset-5 col-lg-offset-5 col-xl-offset-5">
+        <dir-pagination-controls pagination-id="paginationAssets"></dir-pagination-controls>
       </div>
     </div>
+
   </form>
-  <br/>
-
-
-
 
   <div>
     <!--<div class="headline">{{ 'NAV_HISTORY' | translate }}   </div>-->

@@ -93,8 +93,7 @@
 						<div class="col-md-6 noPaddingLeftRight addRecipent" ng-show="recipent.index == 1">
 							<button type="button" ng-click="addRecipent()" class="btn-link-red addRecipentButton"><span class="glyphicon glyphicon-plus"></span> {{ 'TRANSFER_ADD_RECIPENT' | translate }}</button>
 						</div>
-
-
+						<!--Remove Recipent button, on the last one-->
 						<div class="col-md-6 noPaddingLeftRight addRecipent" ng-show="(recipents.length>1) && (recipent.index == recipents.length)">
 							<button type="button" ng-click="removeRecipent()" class="btn-link-red addRecipentButton"><span class="glyphicon glyphicon-minus"></span> {{ 'TRANSFER_REMOVE_RECIPENT' | translate }}</button>
 						</div>

@@ -2,7 +2,7 @@
   <div class="headline col-md-12 noPaddingLeftRight">{{ 'NAV_PRO' | translate }}</div>
 
   <!--Console large screens-->
-  <div class="col-sm-12 col-md-6 hidden-xs hidden-sm">
+  <div class="col-sm-12 col-md-8 hidden-xs hidden-sm">
     <h4>{{ 'NAV_CONSOLE' | translate }}</h4>
     <div class="console_query" >
       <span class="span1" ng-hide="connected">{{ 'CONSOLE.CONNECTION' | translate }}</span>
@@ -20,7 +20,7 @@
   </div>
 
   <!--Mining-->
-  <div class="mining col-sm-12 col-md-6">
+  <div class="mining col-sm-12 col-md-4">
     <h4 ng-hide="isMining">{{ 'NAV_MINING' | translate }}</h4>
     <h4 ng-show="isMining" style="isMiningText">{{ 'MINING_IS_MINING' | translate }}
       <div class="miningSpinner">
@@ -60,6 +60,7 @@
         </div>
       </div>
     </div>
+    <br/><br/>
   </div>
 
   <!--Console small screens-->

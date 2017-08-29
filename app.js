@@ -107,12 +107,12 @@
                 controllerAs: 'vm'
             })
 
-            .state('home.addresses.multisigaddresses', {
+            /*.state('home.addresses.multisigaddresses', {
                 url: "/addresses/multisignatureaddresses",
                 templateUrl: "home/addresses/multisigaddresses.view.html",
                 controller: 'AddressesController',
                 controllerAs: 'vm'
-            })
+            })*/
 
 
             .state('home.home', {

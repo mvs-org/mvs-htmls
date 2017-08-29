@@ -39,15 +39,18 @@
   <div class="whiteSpace">
     <br/>
   </div>
-  <div class="col-xs-12">
-    <div class="checkboxCircle col-xs-6 noPaddingLeftRight">
-      <input type="checkbox" ng-model="displayEmptyAdresses" id="checkboxCircleAdresses">
-      <label for="checkboxCircleAdresses"></label>
-      <span class="textCheckbox">{{ 'ADDRESSES_HIDE_EMPTY' | translate }}</span>
+  <div class="col-xs-12 noPaddingLeftRight">
+    <div class="col-xs-6">
+      <div class="checkboxCircle">
+        <input type="checkbox" ng-model="displayEmptyAdresses" id="checkboxCircleAdresses">
+        <label for="checkboxCircleAdresses"></label>
+        <span class="textCheckbox">{{ 'ADDRESSES_HIDE_EMPTY' | translate }}</span>
+      </div>
     </div>
     <!--Get new address-->
     <div class="createAddress col-xs-6 noPaddingLeftRight">
-      <button ng-click="getnewaddress()" class="btn-link-black createAddressButton"><span class="glyphicon glyphicon-plus"></span> {{ 'ADDRESSES_CREATE_NEW_ADDRESS' | translate }}</button>
+      <a href="#!/transfer/newmultisignature" class="btn-link-black smallButton"><span class="glyphicon glyphicon-plus"></span>{{ 'TRANSFER_MULTISIGNATURE_ADD' | translate }}</a>
+      <button ng-click="getnewaddress()" class="btn-link-black smallButton"><span class="glyphicon glyphicon-plus"></span> {{ 'ADDRESSES_CREATE_NEW_ADDRESS' | translate }}</button>
     </div>
   </div>
 

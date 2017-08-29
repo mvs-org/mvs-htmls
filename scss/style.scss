@@ -68,6 +68,14 @@ No media query since this is the default in Bootstrap because it is "mobile firs
   background-color: transparent;
 }
 
+.assetLogo {
+  position: absolute;
+  font-size: 24px;
+  padding-left: 8px;
+  text-align: center;
+  padding-top: 11px;
+}
+
 .assetBoxSymbolName {
   width: 100px;
   padding-top:10px;
@@ -160,6 +168,14 @@ Bootstrap 4 breakpoints
     background-color: transparent;
   }
 
+  .assetLogo {
+    position: absolute;
+    font-size: 24px;
+    padding-left: 8px;
+    text-align: center;
+    padding-top: 11px;
+  }
+
   .assetBoxSymbolName {
     width: 120px;
     padding-top:10px;
@@ -248,6 +264,14 @@ Bootstrap 4 breakpoints
     width: 28px;
     height: 28px;
     background-color: transparent;
+  }
+
+  .assetLogo {
+    position: absolute;
+    font-size: 24px;
+    padding-left: 8px;
+    text-align: center;
+    padding-top: 11px;
   }
 
   .assetBoxSymbolName {
@@ -340,6 +364,14 @@ Bootstrap 4 breakpoints
     background-color: transparent;
   }
 
+  .assetLogo {
+    position: absolute;
+    font-size: 24px;
+    padding-left: 8px;
+    text-align: center;
+    padding-top: 11px;
+  }
+
   .assetBoxSymbolName {
     width: 200px;
     padding-top:10px;
@@ -369,7 +401,7 @@ Bootstrap 4 breakpoints
   }
 
   .assetBoxFrozen {
-    padding-top: 8px;
+    padding-top: 12px;
     display: inline-block;
   }
 
@@ -430,6 +462,14 @@ Bootstrap 4 breakpoints
     background-color: transparent;
   }
 
+  .assetLogo {
+    position: absolute;
+    font-size: 26px;
+    padding-left: 8px;
+    text-align: center;
+    padding-top: 10px;
+  }
+
   .assetBoxSymbolName {
     width: 200px;
     padding-top:10px;
@@ -459,7 +499,7 @@ Bootstrap 4 breakpoints
   }
 
   .assetBoxFrozen {
-    padding-top: 8px;
+    padding-top: 12px;
     display: inline-block;
   }
 
@@ -518,6 +558,14 @@ Bootstrap 4 breakpoints
     width: 40px;
     height: 40px;
     background-color: transparent;
+  }
+
+  .assetLogo {
+    position: absolute;
+    font-size: 26px;
+    padding-left: 8px;
+    text-align: center;
+    padding-top: 10px;
   }
 
   .assetBoxSymbolName {
@@ -929,12 +977,6 @@ _____  ._______  ___.___ _______
 
 .createAddress {
   text-align: right;
-}
-
-
-.createAddressButton {
-  width: auto;
-  margin-top: 10px;
 }
 
 .checkboxCircle {
@@ -1516,15 +1558,6 @@ _____  ._______  ___.___ _______
 .oneRadioButton {
 
 }
-
-.assetLogo {
-  position: absolute;
-  font-size: 24px;
-  padding-left: 8px;
-  text-align: center;
-  padding-top: 11px;
-}
-
 
 //History
 //Big screens

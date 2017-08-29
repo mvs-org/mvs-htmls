@@ -40,9 +40,6 @@
 
 		<form class="row">
 			<br/>
-			<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
-				<a href="#!/transfer/newmultisignature" class="btn btn-link-black smallButton"><span class="glyphicon glyphicon-plus"></span>{{ 'TRANSFER_MULTISIGNATURE_ADD' | translate }}</a>
-			</div>
 
 			<!--Address infos-->
 			<!--<div class="col-md-12 form-group noPaddingLeftRight" ng-show="selectedMutliSigAddress != ''">
@@ -82,12 +79,15 @@
 			</div>-->
 
 			<!--Sender-->
-			<div class="col-md-12 form-group noPaddingLeftRight">
+			<div class="col-md-12 form-group">
 				<br ng-hide="selectedMutliSigAddress != ''"/>
-				<div class="col-md-6 form-group">
-					<label for="addresFrom" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
+				<div class="col-md-6 noPaddingLeftRight">
+					<label for="addressFrom" class="control-label col-md-6 noPaddingLeftRight">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
+					<div class="createAddress col-md-6 noPaddingLeftRight">
+						<a href="#!/transfer/newmultisignature" class="btn-link-black smallButton"><span class="glyphicon glyphicon-plus"></span>{{ 'TRANSFER_MULTISIGNATURE_ADD' | translate }}</a>
+					</div>
 					<select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" required>
-						<option ng-repeat="multiSig in listMultiSig | orderBy:'balance':true" value="{{address.address}}">{{multiSig.address}} - {{multiSig.name}}</option>
+						<option ng-repeat="multiSig in listMultiSig | orderBy:'balance':true" value="{{multiSig.address}}">{{multiSig.address}}</option>
 					</select>
 				</div>
 			</div>
@@ -121,8 +121,8 @@
 			</div>
 
 			<!--Submit button-->
-			<div class="col-md-12 form-group">
-				<div class="col-md-6 noPaddingLeftRight">
+			<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
+				<div class="col-xs-12 col-sm-6 col-md-3">
 					<br/>
 					<button type="submit" class="btn btn-success" id="transferBtn" ng-click="createMultisigTx(sendfrom, sendTo, quantity)">{{ 'TRANSFER_SEND' | translate }}</button>
 				</div>
@@ -147,7 +147,7 @@
 		</div>
 		<div ng-show="fileSaved">
 			<br/>
-			<div class="col-xs-6 col-sm-4 col-md-4 noPaddingLeftRight">
+			<div class="col-xs-12 col-sm-6 col-md-3 ">
 				<a href="#!/home" class="btn btn-success">{{ 'TRANSFER_MULTISIGNATURE_BACK_WALLET' | translate }}</a>
 			</div>
 		</div>
