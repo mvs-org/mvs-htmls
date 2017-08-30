@@ -62,3 +62,27 @@
     </form>
   </div>
 </form>
+
+
+<script type="text/ng-template" id="templateId">
+  <h2 class="center">
+    {{ 'ASSET_CREATE_SUCCESS_TITLE' | translate }}
+  </h2>
+  <div>
+    {{ 'ASSET_CREATE_SUCCESS_TEXT1' | translate }}
+  </div>
+  <div>
+    {{ 'ASSET_CREATE_SUCCESS_TEXT2' | translate }}
+  </div>
+  <div>
+    {{ 'ASSET_CREATE_SUCCESS_TEXT3' | translate }}
+  </div>
+  <div class="popupButtons">
+    <button class="btn btn-link-red createAssetPopupButtons col-xs-6" ng-click="closeAll()">
+      <a href="#!/asset/myassets">{{ 'ASSET_CREATE_SUCCESS_CANCEL_BUTTON' | translate }}</a>
+    </button>
+    <button class="btn btn-success createAssetPopupButtons col-xs-6" ng-click="issue(symbol);closeAll()">
+      {{ 'ASSET_CREATE_SUCCESS_ISSUE_NOW' | translate }}
+    </button>
+  </div>
+</script>

@@ -11,7 +11,7 @@
       <div class="assetBoxWrapper">
         <dl id="outer_wrap">
           <div class="col-xs-12 moreAssetsButton noPaddingLeftRight">
-            <a href="#!/asset/create" class="btn btn-link-black smallButton"><span class="glyphicon glyphicon-plus"></span> {{ 'ASSET_ASSET_DETAILS_CREATE' | translate }}</a>
+            <a href="#!/asset/create" class="btn-link-black smallButton"><span class="glyphicon glyphicon-plus"></span> {{ 'ASSET_ASSET_DETAILS_CREATE' | translate }}</a>
           </div>
           <div dir-paginate="asset in assets | orderBy: ['-status','symbol'] | itemsPerPage: 10">
             <div class="assetBox col-xs-12 col-sm-12 col-md-12">
@@ -30,7 +30,7 @@
                 <div class="assetBoxValue">{{asset.status}}</div>
               </div>
               <div ng-show="asset.status=='unissued'" class="assetBoxButtons">
-                <a href="#!/asset/details/" ng-click="deleteAsset(asset.symbol)" class="btn btn-link-red smallButton assetBoxButton">{{'ASSET_DELETE_ASSET' | translate}}</a>
+                <a href="#!/asset/details/" ng-click="deleteAsset(asset.symbol)" class="btn-link-red smallButton assetBoxButton">{{'ASSET_DELETE_ASSET' | translate}}</a>
                 <a href="" ng-click="issue(asset.symbol)" class="btn btn-success smallButton assetBoxButton">{{'ASSET_ISSUE' | translate}}</a>
               </div>
               <div ng-hide="asset.status=='unissued'" class="assetBoxButtons">

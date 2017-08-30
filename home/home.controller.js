@@ -1754,6 +1754,7 @@
 
 
     function issue(symbol) {
+      console.log(symbol);
       NProgress.start();
       MetaverseService.Issue(symbol)
       .then( (response) => {
@@ -1943,6 +1944,7 @@
     //Function to create a new asset
     $scope.createasset = createasset;
     $scope.popupIssue = popupIssue;
+    $scope.issue = issue;
 
     //Initialize form data
     function init() {
@@ -2042,10 +2044,29 @@
     };
 
     function popupIssue(symbol) {
+      $scope.symbol = symbol;
       ngDialog.open({
-          template: '<h2 class="center">{{ \'ASSET_CREATE_SUCCESS_TITLE\' | translate }}</h2><div>{{ \'ASSET_CREATE_SUCCESS_TEXT1\' | translate }}</div><div>{{ \'ASSET_CREATE_SUCCESS_TEXT2\' | translate }}</div><div>{{ \'ASSET_CREATE_SUCCESS_TEXT3\' | translate }}</div><button class="btn btn-link-red createAssetPopupButtons" ng-click="closeAll()"><a href="#!/asset/myassets">{{ \'ASSET_CREATE_SUCCESS_CANCEL_BUTTON\' | translate }}</a></button><button class="btn btn-success createAssetPopupButtons" ng-click="issue(symbol);closeAll()">{{ \'ASSET_CREATE_SUCCESS_ISSUE_NOW\' | translate }}</button>',
-          plain: true,
-          controller: 'ShowAssetsController'
+          template: 'templateId',
+          scope: $scope
+      });
+
+    }
+
+
+    function issue(symbol) {
+      console.log(symbol);
+      NProgress.start();
+      MetaverseService.Issue(symbol)
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          loadasset($scope.symbol);
+          $translate('MESSAGES.ASSETS_ISSUE_SUCCESS').then( (data) => FlashService.Success(data) );
+          $window.scrollTo(0,0);
+        } else {
+          $translate('MESSAGES.ASSETS_ISSUE_ERROR').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
+        }
+        NProgress.done();
       });
     }
 

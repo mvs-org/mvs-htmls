@@ -44,6 +44,8 @@ module.exports = function(grunt) {
                         './node_modules/bootstrap/dist/css/bootstrap.min.css',
                         './node_modules/nprogress/nprogress.css',
                         './node_modules/font-awesome/css/font-awesome.min.css',
+                        './node_modules/ng-dialog/css/ngDialog.min.css',
+                        './node_modules/ng-dialog/css/ngDialog-theme-default.min.css',
                         //'./css/calendar.css',
                         //'./css/mining.css',
                         './css/style.css'
