@@ -132,6 +132,7 @@
             $translate('MESSAGES.TRANSACTION_NOT_FOUND').then( (data) => {
               FlashService.Error(data);
             });
+            $window.scrollTo(0,0);
           } else {
             $scope.transaction = response.data.transaction;
             $scope.exists = true;
@@ -245,6 +246,7 @@
             $translate('MESSAGES.BLOCK_NOT_FOUND').then( (data) => {
               FlashService.Error(data);
             });
+            $window.scrollTo(0,0);
           } else {
             blockInfoTxs(response.data.result.hash);
             $scope.exists = true;
@@ -381,14 +383,19 @@
 
       if ($scope.password == '') { //Check for empty password
         $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else if ($scope.sendfrom !== '' ) {
         FlashService.Error('Sorry, select the input address is not available for Deposits yet.');
+        $window.scrollTo(0,0);
       } else if ($scope.password != credentials.password) {
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else if (!($scope.value > 0)) {
         $translate('MESSAGES.INVALID_VALUE').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else if ($scope.deposit_options[$scope.period_select] == undefined) {
         $translate('MESSAGES.INVALID_TIME_PERIOD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else {
         var deposit_value = ("" + $scope.value * Math.pow(10,$scope.decimal_number)).split(".")[0];
 
@@ -401,16 +408,17 @@
             init();
             //Transaction was successful
             $translate('MESSAGES.DEPOSIT_SUCCESS').then( (data) => FlashService.Success(data + response.data.transaction.hash) );
+            $window.scrollTo(0,0);
             init();
           } else {
 
             //Transaction problem
             $translate('MESSAGES.DEPOSIT_ERROR').then( (data) => FlashService.Error(data) );
+            $window.scrollTo(0,0);
             $scope.password = '';
           }
         });
       }
-      $window.scrollTo(0,0);
     }
 
 
@@ -449,9 +457,10 @@
     //Load users ETP balance
     function loadEtpBalance() {
       MetaverseHelperService.GetBalance( (err, balance, message) => {
-        if (err)
+        if (err) {
         FlashService.Error(message);
-        else {
+          $window.scrollTo(0,0);
+        } else {
           $scope.balance = balance;
           $scope.decimal_number = 8;
         }
@@ -545,6 +554,7 @@
         });
       } else {
         $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       }
     });
 
@@ -601,9 +611,10 @@
 
     //Load users ETP balance
     MetaverseHelperService.GetBalance( (err, balance, message) => {
-      if (err)
-      FlashService.Error(message);
-      else {
+      if (err) {
+        FlashService.Error(message);
+        $window.scrollTo(0,0);
+      } else {
         $scope.balance = balance;
       }
     });
@@ -653,9 +664,11 @@
       $scope.recipents.forEach( (e) => {
         if (e.address === '') { //Check for recipent address
           $translate('MESSAGES.TRANSACTION_RECIPENT_ADDRESS_NEEDED').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
           transactionOK = false;
         } else if (e.value === '') { //Check for transaction value
           $translate('MESSAGES.TRANSACTION_VALUE_NEEDED').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
           transactionOK = false;
         }
       });
@@ -663,12 +676,15 @@
         //error already handle
       } else if ($scope.fee !== '' || $scope.message !== '') {
         FlashService.Error('Sorry, only basic transfer works so far.');
+        $window.scrollTo(0,0);
       } else if ($scope.password === '') { //Check for empty password
         $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else {
         //Check for password
         if (localStorageService.get('credentials').password != $scope.password) {
           $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
         } else if ($scope.recipents.length == 1) { //Start transaction for 1 recipent
           transferOne();
         } else {  //Start transaction with more than 1 recipent
@@ -706,6 +722,7 @@
         if (typeof response.success !== 'undefined' && response.success) {
           //Transaction was successful
           $translate('MESSAGES.TRANSFER_SUCCESS').then( (data) => FlashService.Success(data + response.data.transaction.hash) );
+          $window.scrollTo(0,0);
           init();
         } else {
           //Transaction problem
@@ -716,6 +733,7 @@
               FlashService.Error(data);
             }
           });
+          $window.scrollTo(0,0);
           $scope.password = '';
         }
       });
@@ -752,6 +770,7 @@
         if (typeof response.success !== 'undefined' && response.success) {
           //Transaction was successful
           $translate('MESSAGES.TRANSFER_SUCCESS').then( (data) => FlashService.Success(data + response.data.transaction.hash) );
+          $window.scrollTo(0,0);
           init();
         } else {
           //Transaction problem
@@ -762,6 +781,7 @@
               FlashService.Error(data);
             }
           });
+          $window.scrollTo(0,0);
           $scope.password = '';
         }
       });
@@ -891,9 +911,10 @@
 
     //Load users ETP balance
     MetaverseHelperService.GetBalance( (err, balance, message) => {
-      if (err)
-      FlashService.Error(message);
-      else {
+      if (err) {
+        FlashService.Error(message);
+        $window.scrollTo(0,0);
+      } else {
         $scope.balance = balance;
       }
     });
@@ -964,6 +985,7 @@
       $scope.cosigners.forEach( (e) => {
         if (e.publicKey.length != 66) { //Check for public keys
           $translate('MESSAGES.CREATE_MULTISIGNATURE_WRONG_PUBLIC_KEY').then( (data) => FlashService.Error(data + ' ' + e.index) );
+          $window.scrollTo(0,0);
           transactionOK = false;
         }
       });
@@ -982,14 +1004,17 @@
           if (typeof response.success !== 'undefined' && response.success) {
             //Creation was successful
             $translate('MESSAGES.CREATE_MULTISIGNATURE_SUCCESS').then( (data) => FlashService.Success(data) );
+            $window.scrollTo(0,0);
             init();
           } else {
             //Transaction problem
             $translate('MESSAGES.CREATE_MULTISIGNATURE_ERROR').then( (data) => {
               if (response.message != undefined) {
                 FlashService.Error(data + " " + response.message);
+                $window.scrollTo(0,0);
               } else {
                 FlashService.Error(data);
+                $window.scrollTo(0,0);
               }
             });
             $scope.password = '';
@@ -1010,8 +1035,10 @@
       NProgress.start();
       if ($scope.sendfrom == '') {
         FlashService.Error('Please select an address');
+        $window.scrollTo(0,0);
       } else if ($scope.password === '') { //Check for empty password
         $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else {
         MetaverseService.ListMultiSig()
         .then( (response) => {
@@ -1058,6 +1085,7 @@
         if (typeof response.success !== 'undefined' && response.success) {
           //Transaction was successful
           $translate('MESSAGES.CREATE_MULTISIGNATURE_SUCCESS').then( (data) => FlashService.Success(data) );
+          $window.scrollTo(0,0);
           init();
           $scope.transferSuccess = true;
           $scope.resultCreateTx = response.data;
@@ -1066,14 +1094,15 @@
           $translate('MESSAGES.CREATE_MULTISIGNATURE_ERROR').then( (data) => {
             if (response.message != undefined) {
               FlashService.Error(data + " " + response.message);
+              $window.scrollTo(0,0);
             } else {
               FlashService.Error(data);
+              $window.scrollTo(0,0);
             }
           });
           $scope.password = '';
         }
       });
-      $window.scrollTo(0,0);
     }
 
     function signMultisigTx(message, lastTx) {
@@ -1084,8 +1113,10 @@
           //Transaction was successful
           if(lastTx) {
             $translate('MESSAGES.SIGN_AND_BROADCAST_SUCCESS').then( (data) => FlashService.Success(data) );
+            $window.scrollTo(0,0);
           } else {
             $translate('MESSAGES.SIGN_SUCCESS').then( (data) => FlashService.Success(data) );
+            $window.scrollTo(0,0);
           }
           init();
           $scope.transferSuccess = true;
@@ -1099,10 +1130,10 @@
               FlashService.Error(data);
             }
           });
+          $window.scrollTo(0,0);
           $scope.password = '';
         }
       });
-      $window.scrollTo(0,0);
     }
 
 
@@ -1119,6 +1150,10 @@
 
     $window.scrollTo(0,0);
     $scope.addresses = [];
+    $scope.addressesFiltered = [];
+    $scope.addressesDisplay = [];
+    $scope.displayEmpty = displayEmpty;
+    $scope.hideEmpty = hideEmpty;
     $scope.getnewaddress = getnewaddress;
     $scope.showqr = showqr;
     $scope.buttonCopyToClipboard = new Clipboard('.btn');
@@ -1210,9 +1245,23 @@
               "edit": false
             });
           });
+          $scope.addressesDisplay = $scope.addresses;
+          $scope.addresses.forEach( (a) => {
+            if(a.balance != 0) {
+              $scope.addressesFiltered.push(a);
+            }
+          });
         }
         NProgress.done();
       });
+    }
+
+    function displayEmpty() {
+      $scope.addressesDisplay = $scope.addresses;
+    }
+
+    function hideEmpty() {
+      $scope.addressesDisplay = $scope.addressesFiltered;
     }
 
     function getnewaddress() {
@@ -1220,6 +1269,7 @@
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           FlashService.Success('Created new address: ' + response.data);
+          $window.scrollTo(0,0);
           listBalances();
         }
       });
@@ -1230,8 +1280,10 @@
       NProgress.start();
       if ($scope.sendfrom == '') {
         FlashService.Error('Please select an address');
+        $window.scrollTo(0,0);
       } else if ($scope.password === '') { //Check for empty password
         $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else {
         MetaverseService.ListMultiSig()
         .then( (response) => {
@@ -1264,9 +1316,10 @@
 
     //Load users ETP balance
     MetaverseHelperService.GetBalance( (err, balance, message) => {
-      if (err)
-      FlashService.Error(message);
-      else {
+      if (err) {
+        FlashService.Error(message);
+        $window.scrollTo(0,0);
+      } else {
         $scope.balance = balance;
       }
     });
@@ -1286,8 +1339,10 @@
     function showprivatekey(password, last_word) {
       if (password == undefined) {
         $translate('MESSAGES.PASSWORD_NEEDED_FOR_PRIVATE_KEY').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else if (localStorageService.get('credentials').password != password) {
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else {
         NProgress.start();
         MetaverseService.GetAccount(last_word)
@@ -1297,6 +1352,7 @@
           } else {
             //Show mnemonic load error
             $translate('SETTINGS.MNEMONIC_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+            $window.scrollTo(0,0);
           }
           NProgress.done();
         });
@@ -1306,10 +1362,13 @@
     function changepassword(password, new_password, new_password_repeat) {
       if (password == undefined || localStorageService.get('credentials').password != password) {
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else if (new_password == undefined || new_password.length < 6) {
         $translate('MESSAGES.PASSWORD_SHORT').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else if (new_password != new_password_repeat) {
         $translate('MESSAGES.PASSWORD_NOT_MATCH').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else {
         NProgress.start();
         MetaverseService.ChangePassword(new_password)
@@ -1323,6 +1382,7 @@
           } else {
             //Show change password error
             $translate('SETTINGS.CHANGE_PASSWORD_ERROR').then( (data) => FlashService.Error(data) );
+            $window.scrollTo(0,0);
           }
           NProgress.done();
         });
@@ -1338,6 +1398,7 @@
     function exportAccount(password, last_word, path) {
       if (localStorageService.get('credentials').password != password) {
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else {
         NProgress.start();
         MetaverseService.ExportAccountAsFile(password, last_word, path)
@@ -1347,6 +1408,7 @@
             $translate('MESSAGES.EXPORT_ACCOUNT_FILE_SUCCESS').then( (data) => {
               FlashService.Success(data);
             });
+            $window.scrollTo(0,0);
           } else {
             //Show export error
             $translate('MESSAGES.EXPORT_ACCOUNT_FILE_ERROR').then( (data) => {
@@ -1356,10 +1418,10 @@
                 FlashService.Error(data);
               }
             });
+            $window.scrollTo(0,0);
           }
           NProgress.done();
         });
-        $window.scrollTo(0,0);
       }
     }
   }
@@ -1466,6 +1528,7 @@
           listAssetBalances();
         } else {
           $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) =>  FlashService.Error(data));
+          $window.scrollTo(0,0);
         }
         NProgress.done();
       });
@@ -1521,10 +1584,13 @@
     function sendasset(recipent_address, symbol, quantity) {
       if (localStorageService.get('credentials').password != $scope.password) {
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else if ($scope.recipent_address == undefined || $scope.recipent_address.length != 34) {
         $translate('MESSAGES.TRANSACTION_RECIPENT_ADDRESS_NEEDED').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else if ($scope.quantity == undefined || !($scope.quantity > 0)) {
         $translate('MESSAGES.TRANSACTION_VALUE_NEEDED').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else {
         //Modify number to fit to number of decimals defined for asset
         quantity*=Math.pow(10,$scope.asset.decimal_number);
@@ -1541,6 +1607,7 @@
           } else {
             //Show asset load error
             $translate('MESSAGES.ASSETS_TRANSFER_ERROR').then( (data) => FlashService.Error(data + " " + response.message) );
+            $window.scrollTo(0,0);
           }
         });
       }
@@ -1693,8 +1760,10 @@
         if (typeof response.success !== 'undefined' && response.success) {
           loadasset($scope.symbol);
           $translate('MESSAGES.ASSETS_ISSUE_SUCCESS').then( (data) => FlashService.Success(data) );
+          $window.scrollTo(0,0);
         } else {
           $translate('MESSAGES.ASSETS_ISSUE_ERROR').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
         }
         NProgress.done();
       });
@@ -1712,8 +1781,10 @@
         if (typeof response.success !== 'undefined' && response.success) {
           loadasset($scope.symbol);
           $translate('MESSAGES.ASSETS_SECOND_ISSUE_SUCCESS').then( (data) => FlashService.Success(data) );
+          $window.scrollTo(0,0);
         } else {
           $translate('MESSAGES.ASSETS_SECOND_ISSUE_ERROR').then( (data) => FlashService.Error(data + ' ' + response.message) );
+          $window.scrollTo(0,0);
         }
         NProgress.done();
       });
@@ -1741,6 +1812,7 @@
         } else {
           //Asset could not be loaded
           $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) =>  FlashService.Error(data));
+          $window.scrollTo(0,0);
         }
       });
     }
@@ -1761,6 +1833,7 @@
           listAssetBalances();
         } else {
           $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) =>  FlashService.Error(data));
+          $window.scrollTo(0,0);
         }
         NProgress.done();
       });
@@ -1831,9 +1904,11 @@
         NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
           $translate('MESSAGES.DELETE_SUCCESS').then( (data) => FlashService.Success(data) );
+          $window.scrollTo(0,0);
         } else {
           //Asset could not be delete
           $translate('MESSAGES.ASSETS_DELETE_ERROR').then( (data) =>  FlashService.Error(data));
+          $window.scrollTo(0,0);
         }
       });
     }
@@ -1937,6 +2012,7 @@
     function createasset() {
       if (localStorageService.get('credentials').password != $scope.password) {
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else {
         NProgress.start();
         //Let Metaverse create an local asset
@@ -1952,8 +2028,10 @@
               //Redirect user to the assets page
               //$location.path('/home');
             });
+            $window.scrollTo(0,0);
           } else{
             FlashService.Error(response.message);
+            $window.scrollTo(0,0);
           }
         });
       }
@@ -2108,6 +2186,7 @@
         MetaverseHelperService.LoadTransactions( (err, transactions) => {
           if (err) {
             $translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+            $window.scrollTo(0,0);
           } else {
             if ((transactions.lastpage == true) || (transactions.lastpage == undefined)) {     //All the transactions have been loaded
               $scope.stopLoad = true;
@@ -2154,10 +2233,18 @@
         query: $scope.querystring,
         answer: ev.data
       });
-      $scope.connected = true;
+      console.log($scope.connected);
+
+
+
+
       $scope.querystring = '';
       $scope.$apply();
       //scrolldown();
+      if ($scope.connected) {
+        window.scrollTo(0,document.body.scrollHeight);
+      }
+      $scope.connected = true;
     };
 
     $scope.querystring = '';
@@ -2195,6 +2282,7 @@
           $scope.isMining = (response.data['mining-info'].status === 'true');  //Convert string to boolean
         } else {
           $translate('MESSAGES.MINING_STATUS_ERROR').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
         }
       });
     }
@@ -2207,9 +2295,11 @@
         NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
           $translate('MESSAGES.MINING_START_SUCCESS').then( (data) => FlashService.Success(data) );
+          $window.scrollTo(0,0);
           GetMiningInfo();
         } else {
           $translate('MESSAGES.MINING_START_ERROR').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
         }
       });
     }
@@ -2221,9 +2311,11 @@
         NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
           $translate('MESSAGES.MINING_STOP_SUCCESS').then( (data) => FlashService.Success(data) );
+          $window.scrollTo(0,0);
           GetMiningInfo();
         } else {
           $translate('MESSAGES.MINING_STOP_ERROR').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
         }
       });
     }
@@ -2320,6 +2412,7 @@
             //Show asset load error
             FlashService.Error(data);
           } );
+          $window.scrollTo(0,0);
         }
         $location.path(path);
       });

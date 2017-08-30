@@ -9,7 +9,7 @@
     }
   </style>
   <!--Alert Invalid login credentials-->
-  <div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
+  <div class="alert alertLogin" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
     <div class="" ng-bind="flash.message">
     </div>
   </div>

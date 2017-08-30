@@ -87,7 +87,7 @@
 						<a href="#!/transfer/newmultisignature" class="btn-link-black smallButton"><span class="glyphicon glyphicon-plus"></span>{{ 'TRANSFER_MULTISIGNATURE_ADD' | translate }}</a>
 					</div>
 					<select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" required>
-						<option ng-repeat="multiSig in listMultiSig | orderBy:'balance':true" value="{{multiSig.address}}">{{multiSig.address}}</option>
+						<option ng-repeat="multiSig in listMultiSig | orderBy:'balance':true" value="{{multiSig.address}}">{{multiSig.address}} - {{multiSig.balance}} ETP</option>
 					</select>
 				</div>
 			</div>

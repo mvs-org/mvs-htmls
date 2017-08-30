@@ -28,10 +28,11 @@
         <td class="assetValueColumn col-md-3 noPaddingLeftRight">
           <!--Display the maximum supply-->
           <span>{{current_maximum_supply}}</span>
-          <button ng-show="owner && asset.status=='issued'" class="glyphicon glyphicon-plus-sign editAddressNameButton" bs-tooltip data-placement="top" title="{{ 'ASSET_ASSET_DETAILS_TOOLTIP_INCREASE_SUPPLY' | translate }}" ng-click="enableEditAssetMaxSupply()"></button>
-          <span ng-show="increase_maximum_supply != 0 && !editMaxSupply">{{increase_maximum_supply}}</span>
+          <!--Secondary Offering-->
+          <!--<button ng-show="owner && asset.status=='issued'" class="glyphicon glyphicon-plus-sign editAddressNameButton" bs-tooltip data-placement="top" title="{{ 'ASSET_ASSET_DETAILS_TOOLTIP_INCREASE_SUPPLY' | translate }}" ng-click="enableEditAssetMaxSupply()"></button>
+          <span ng-show="increase_maximum_supply != 0 && !editMaxSupply">{{increase_maximum_supply}}</span>-->
           <!--Display while editing-->
-          <div class=" editMaxSupplyBox">
+          <!--<div class=" editMaxSupplyBox">
             <span class="input-group" ng-show="editMaxSupply">
               <input type="number" ng-model="increase_maximum_supply" class="form-control maxSupplyUpdateTextBox" min="0" ng-keyup="$event.keyCode == 13 && endEditAssetMaxSupply(new_maximum_supply)">
               <span class="input-group-addon editAddressName">
@@ -41,18 +42,19 @@
                 <button class="glyphicon glyphicon-remove editAddressNameButtonEditing" ng-click="cancelEditAssetMaxSupply()"></button>
               </span>
             </span>
-          </div>
+          </div>-->
         </td>
-        <td class="sendAssetButton col-md-6">
+        <!--Validation Secondary issuing button-->
+        <!--<td class="sendAssetButton col-md-6">
           <a ng-show="(increase_maximum_supply != 0)" ng-click="secondIssue(asset.symbol, increase_maximum_supply, asset.decimal_number)">
             <button class="btn btn-success smallButton">{{'ASSET_ASSET_DETAILS_SUBMIT' | translate}}</button>
           </a>
-        </td>
+        </td>-->
       </tr>
-      <tr class="row">
+      <!--<tr class="row">
         <td class="assetDataColumn">{{'ASSET_ASSET_CREATE_SECONDARY_OFFERING' | translate}}</td>
         <td class="assetValueColumn">{{asset.secondissue_assetshare_threshold}}</td>
-      </tr>
+      </tr>-->
       <tr class="row">
         <td class="assetDataColumn">{{'ASSET_ASSET_CREATE_DIGITS' | translate}}</td>
         <td class="assetValueColumn">{{asset.decimal_number}}</td>
@@ -123,7 +125,7 @@
           </span>
         </div>
 
-        <span class="col-xs-12 noPaddingLeftRight addressBoxAddressDeposit">{{asset.address}}</span>
+        <span class="col-xs-12 noPaddingLeftRight addressBoxAddressDeposit overflow">{{asset.address}}</span>
 
       </div>
       <div class="assetBoxBalance col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">

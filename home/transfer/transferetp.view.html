@@ -12,9 +12,10 @@
 			<li class="divider" role="separator"></li>
 			<li ng-repeat="asset in assetsIssued | orderBy:'symbol'"><a ng-click="selectAssetType(asset.symbol)" href="#!/transfer/{{asset.symbol}}/" >{{asset.symbol}}</a></li>
 		</ul>-->
-	<div class="selectAssetType">
+
+	<!--<div class="selectAssetType">
 		<a href="#!/transfer/multisignature" class="btn btn-success smallButton">{{ 'TRANSFER_GO_TO_MULTISIGNATURE' | translate }}</a>
-	</div>
+	</div>-->
 
 	<!--Navigation Manual/Auto selection of addresse-->
 	<!--<div class="col-xs-12 noPaddingLeftRight">
@@ -79,7 +80,7 @@
 					<label for="addresFrom" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
 					<select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom">
 						<option value="">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</option>
-						<option ng-repeat="address in addresses | orderBy:'balance':true" value="{{address.address}}">{{address.address}}</option>
+						<option ng-show="address.balance != 0" ng-repeat="address in addresses | orderBy:'balance':true" value="{{address.address}}">{{address.address}} - {{address.balance/100000000}} ETP</option>
 					</select>
 				</div>
 			</div>

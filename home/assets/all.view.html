@@ -14,7 +14,7 @@
         </div>
         <div dir-paginate="asset in assets | orderBy: ['-status','symbol'] | itemsPerPage: 10" >
           <button class="assetBox col-xs-12 col-sm-12 col-md-12" ng-click="asset.details = !asset.details">
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
               <span class="assetLogo">资</span>
               <div class="assetBoxSymbolName overflow">
                 <a href="#!/asset/details/{{asset.symbol}}" class="btn-link-black">{{asset.symbol}}</a>
@@ -24,26 +24,26 @@
               <div class="assetBoxTitle">{{ 'ASSET_ALL_MAX_SUPPLY' | translate }}</div>
               <div class="assetBoxValue overflow">{{asset.maximum_supply | assetformat : asset.decimal_number}}</div>
             </div>
-            <div class="assetBoxFrozen col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 noPaddingLeftRight">
+            <div class="assetBoxFrozen col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 noPaddingLeftRight">
               <div class="assetBoxTitle">{{ 'ASSET_ALL_ADDRESS' | translate }}</div>
               <div class="assetBoxValue overflow">{{asset.address}}</div>
             </div>
           </button>
           <div ng-show="asset.details">
             <div class="detailsOneLine backgroundGrey">
-              <span class="assetBoxTitle col-xs-offset-4 col-xs-2">{{ 'ASSET_ALL_ISSUER' | translate }}:</span>
+              <span class="assetBoxTitle col-xs-offset-5 col-xs-2 noPaddingLeftRight">{{ 'ASSET_ALL_ISSUER' | translate }}:</span>
               <span class="assetBoxValue">{{asset.issuer}}</span>
             </div>
             <div class="detailsOneLine">
-              <span class="assetBoxTitle col-xs-offset-4 col-xs-2">{{ 'ASSET_ALL_DESCRIPTION' | translate }}:</span>
+              <span class="assetBoxTitle col-xs-offset-5 col-xs-2 noPaddingLeftRight">{{ 'ASSET_ALL_DESCRIPTION' | translate }}:</span>
               <span class="assetBoxValue">{{asset.description}}</span>
             </div>
             <div class="detailsOneLine backgroundGrey">
-              <span class="assetBoxTitle col-xs-offset-4 col-xs-2">{{ 'ASSET_ALL_NBR_DIGITS' | translate }}:</span>
+              <span class="assetBoxTitle col-xs-offset-5 col-xs-2 noPaddingLeftRight">{{ 'ASSET_ALL_NBR_DIGITS' | translate }}:</span>
               <span class="assetBoxValue">{{asset.decimal_number}}</span>
             </div>
             <div class="detailsOneLine">
-              <span class="assetBoxTitle col-xs-offset-4 col-xs-2">{{ 'ASSET_ALL_STATUS' | translate }}:</span>
+              <span class="assetBoxTitle col-xs-offset-5 col-xs-2 noPaddingLeftRight">{{ 'ASSET_ALL_STATUS' | translate }}:</span>
               <span class="assetBoxValue">{{asset.status}}</span>
             </div>
           </div>

@@ -12,6 +12,7 @@ $blueGeneralColor:#347DED;
 $secondaryButtonColor: white;
 $radiusButtons: 6px;
 $off-wht: rgba(white,.4);
+$headerHeight: 65px;
 
 body {
   font-family: 'PingFangSC';
@@ -30,6 +31,10 @@ No media query since this is the default in Bootstrap because it is "mobile firs
   font-size: 22px;
   display: inline-block;
   margin-bottom: 10px;
+}
+
+.secondHeadline {
+  padding-top: 50px;
 }
 
 /*****************Home page*****************/
@@ -76,11 +81,23 @@ No media query since this is the default in Bootstrap because it is "mobile firs
   padding-top: 11px;
 }
 
-.assetBoxSymbolName {
-  width: 100px;
+.assetBoxSymbolNameETP {
+  //width: 100px;
   padding-top:10px;
   padding-bottom: 6px;
-  margin-left: 70px;
+  padding-left: 70px;
+  font-size: 20px;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.assetBoxSymbolName {
+  //width: 100px;
+  padding-top:10px;
+  padding-bottom: 6px;
+  padding-left: 70px;
   font-size: 20px;
   display: inline-block;
   text-overflow: ellipsis;
@@ -109,6 +126,11 @@ No media query since this is the default in Bootstrap because it is "mobile firs
   display: inline-block;
 }
 
+.assetBoxCopy {
+  padding-top: 10px;
+  display: inline-block;
+}
+
 .assetBoxButtons {
   text-align: right;
   margin-top: 10px;
@@ -130,6 +152,10 @@ Bootstrap 4 breakpoints
     font-size: 26px;
     display: inline-block;
     margin-bottom: 10px;
+  }
+
+  .secondHeadline {
+    padding-top: 50px;
   }
 
   /*****************Home page*****************/
@@ -173,15 +199,27 @@ Bootstrap 4 breakpoints
     font-size: 24px;
     padding-left: 8px;
     text-align: center;
-    padding-top: 11px;
+    padding-top: 7px;
+  }
+
+  .assetBoxSymbolNameETP {
+    //width: 200px;
+    padding-top:11px;
+    padding-bottom: 6px;
+    padding-left: 70px;
+    font-size: 20px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   .assetBoxSymbolName {
-    width: 120px;
-    padding-top:10px;
+    //width: 200px;
+    padding-top:12px;
     padding-bottom: 6px;
-    margin-left: 70px;
-    font-size: 20px;
+    padding-left: 70px;
+    font-size: 16px;
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -206,6 +244,11 @@ Bootstrap 4 breakpoints
 
   .assetBoxFrozen {
     padding-top: 8px;
+    display: inline-block;
+  }
+
+  .assetBoxCopy {
+    padding-top: 10px;
     display: inline-block;
   }
 
@@ -230,6 +273,10 @@ Bootstrap 4 breakpoints
     margin-bottom: 10px;
   }
 
+  .secondHeadline {
+    padding-top: 50px;
+  }
+
   /*****************Home page*****************/
   .assetBox {
     text-align: left;
@@ -271,15 +318,27 @@ Bootstrap 4 breakpoints
     font-size: 24px;
     padding-left: 8px;
     text-align: center;
-    padding-top: 11px;
+    padding-top: 7px;
+  }
+
+  .assetBoxSymbolNameETP {
+    //width: 200px;
+    padding-top:11px;
+    padding-bottom: 6px;
+    padding-left: 70px;
+    font-size: 20px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   .assetBoxSymbolName {
-    width: 150px;
-    padding-top:10px;
+    //width: 200px;
+    padding-top:12px;
     padding-bottom: 6px;
-    margin-left: 70px;
-    font-size: 20px;
+    padding-left: 70px;
+    font-size: 16px;
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -304,6 +363,11 @@ Bootstrap 4 breakpoints
 
   .assetBoxFrozen {
     padding-top: 8px;
+    display: inline-block;
+  }
+
+  .assetBoxCopy {
+    padding-top: 10px;
     display: inline-block;
   }
 
@@ -328,6 +392,10 @@ Bootstrap 4 breakpoints
     margin-bottom: 10px;
   }
 
+  .secondHeadline {
+    padding-top: 50px;
+  }
+
   /*****************Home page*****************/
   .assetBox {
     text-align: left;
@@ -369,15 +437,27 @@ Bootstrap 4 breakpoints
     font-size: 24px;
     padding-left: 8px;
     text-align: center;
-    padding-top: 11px;
+    padding-top: 7px;
+  }
+
+  .assetBoxSymbolNameETP {
+    //width: 200px;
+    padding-top:11px;
+    padding-bottom: 6px;
+    padding-left: 70px;
+    font-size: 20px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   .assetBoxSymbolName {
-    width: 200px;
-    padding-top:10px;
+    //width: 200px;
+    padding-top:12px;
     padding-bottom: 6px;
-    margin-left: 70px;
-    font-size: 20px;
+    padding-left: 70px;
+    font-size: 16px;
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -405,6 +485,11 @@ Bootstrap 4 breakpoints
     display: inline-block;
   }
 
+  .assetBoxCopy {
+    padding-top: 10px;
+    display: inline-block;
+  }
+
   .assetBoxButtons {
     text-align: right;
     margin-top: 10px;
@@ -424,6 +509,10 @@ Bootstrap 4 breakpoints
     font-size: 36px;
     display: inline-block;
     margin-bottom: 10px;
+  }
+
+  .secondHeadline {
+    padding-top: 50px;
   }
 
   /*****************Home page*****************/
@@ -470,12 +559,24 @@ Bootstrap 4 breakpoints
     padding-top: 10px;
   }
 
-  .assetBoxSymbolName {
-    width: 200px;
+  .assetBoxSymbolNameETP {
+    //width: 200px;
     padding-top:10px;
     padding-bottom: 6px;
-    margin-left: 70px;
+    padding-left: 70px;
     font-size: 26px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .assetBoxSymbolName {
+    //width: 200px;
+    padding-top:16px;
+    padding-bottom: 6px;
+    padding-left: 70px;
+    font-size: 18px;
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -503,6 +604,11 @@ Bootstrap 4 breakpoints
     display: inline-block;
   }
 
+  .assetBoxCopy {
+    padding-top: 14px;
+    display: inline-block;
+  }
+
   .assetBoxButtons {
     text-align: right;
     margin-top: 14px;
@@ -522,6 +628,10 @@ Bootstrap 4 breakpoints
     font-size: 48px;
     display: inline-block;
     margin-bottom: 10px;
+  }
+
+  .secondHeadline {
+    padding-top: 50px;
   }
 
   /*****************Home page*****************/
@@ -565,15 +675,27 @@ Bootstrap 4 breakpoints
     font-size: 26px;
     padding-left: 8px;
     text-align: center;
-    padding-top: 10px;
+    padding-top: 20px;
+  }
+
+  .assetBoxSymbolNameETP {
+    //width: 300px;
+    padding-top:14px;
+    padding-bottom: 6px;
+    padding-left: 70px;
+    font-size: 36px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   .assetBoxSymbolName {
-    width: 300px;
-    padding-top:14px;
+    //width: 300px;
+    padding-top:24px;
     padding-bottom: 6px;
-    margin-left: 70px;
-    font-size: 36px;
+    padding-left: 70px;
+    font-size: 18px;
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -598,6 +720,11 @@ Bootstrap 4 breakpoints
 
   .assetBoxFrozen {
     padding-top: 18px;
+    display: inline-block;
+  }
+
+  .assetBoxCopy {
+    padding-top: 22px;
     display: inline-block;
   }
 
@@ -1064,6 +1191,10 @@ _____  ._______  ___.___ _______
 
 
 /*****************Login page****************/
+.alertLogin {
+    margin-top: $headerHeight;
+}
+
 //Logo Metaverse Login and Register pages
 .logoMetaverseLogin {
   width: 170px;
@@ -1551,6 +1682,9 @@ _____  ._______  ___.___ _______
   background-color: $successButtonColor !important;
 }
 
+.no_transaction_message{
+  padding-top: 20px;
+}
 
 .radioButton {
   margin-bottom: 20px;
@@ -1613,7 +1747,7 @@ _____  ._______  ___.___ _______
 }
 
 .overflow {
-  //width: 100%;
+  width: 100%;
   display: inline-block;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1745,8 +1879,12 @@ _____  ._______  ___.___ _______
   float:left;
   font-size: 14px;
   background-color: transparent;
-  height: 26px;
+  height: 22px;
   display: inline;
+  max-width: calc(100% - 30px);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 
 }
 
@@ -2069,7 +2207,10 @@ h2 {
 /***************All Assets page**************/
 .detailsOneLine {
   line-height: 30px;
+  padding-left: 10px;
 }
+
+
 
 /**************Assets details*****************/
 .sendAssetButton {
