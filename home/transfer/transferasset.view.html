@@ -37,7 +37,7 @@
           <label for="addressFrom" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
           <select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom">
             <option value="" ng-show="(asset.symbol == symbol)">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</option>
-            <option ng-repeat="asset in assetAddresses | orderBy:'quantity':true" value="{{asset.address}}">{{asset.address}} - {{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
+            <option ng-repeat="asset in assetAddresses | orderBy:'quantity':true" value="{{asset.address}}">{{asset.address}} --- {{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
             <!-- - {{asset.name}} - {{asset.quantity | assetformat : asset.decimal_number}}-->
           </select>
         </div>
