@@ -12,15 +12,15 @@
   </div>-->
 
   <!--ETP Balance-->
-  <div class="assetBox col-xs-12 col-sm-12 col-md-12" >
-    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
-      <div class="assetBoxSymbolImg">
-        <img class="assetSymbol" src="images/favicon.jpg" alt=""/>
-      </div>
-      <div class="assetBoxSymbolNameETP">
-        <a href="#!/addresses/myaddresses" class="btn-link-black">ETP</a>
-      </div>
-    </div>
+  <div class="assetBox C-assetBox col-xs-12 col-sm-12 col-md-12 " >
+    <!--<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">-->
+      <!--<div class="assetBoxSymbolImg">-->
+        <!--<img class="assetSymbol" src="images/favicon.jpg" alt=""/>-->
+      <!--</div>-->
+      <!--<div class="assetBoxSymbolNameETP">-->
+        <!--<a href="#!/addresses/myaddresses" class="btn-link-black">ETP</a>-->
+      <!--</div>-->
+    <!--</div>-->
     <div class="assetBoxBalance col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
       <div class="assetBoxTitle">{{ 'BALANCE' | translate }}</div>
       <div class="assetBoxValue overflow">{{balance['total-unspent']/100000000}}</div>
@@ -39,7 +39,7 @@
   <div class="whiteSpace">
     <br/>
   </div>
-  <div class="col-xs-12 noPaddingLeftRight">
+  <div class="col-xs-12 noPaddingLeftRight spe-addrbox">
     <div class="col-xs-6">
       <div class="checkboxCircle">
         <input type="checkbox" ng-model="displayEmptyAdresses" id="checkboxCircleAdresses" ng-click="!displayEmptyAdresses && displayEmpty() ; displayEmptyAdresses && hideEmpty()" >
@@ -69,12 +69,12 @@
 
   <!--Display all the ETP adresses-->
   <div dir-paginate="address in addressesDisplay | orderBy:'balance':true | itemsPerPage: 10" ng-hide="(displayEmptyAdresses == true && address.balance == 0)" ng-model='chkMonitor'>
-    <dd class="assetBox col-xs-12 col-sm-12 col-md-12" >
+    <dd class="assetBoxAdd assetBox col-xs-12 col-sm-12 col-md-12" >
       <div class="assetBoxBalance col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
         <!--Display editable name of the address-->
         <div ng-hide="address.edit">
           <span class="addressBoxName" readonly="true" id="editAddressName">{{address.name}}</span>
-          <button class="glyphicon glyphicon-pencil editAddressNameButton" bs-tooltip data-placement="top" title="{{ 'ADDRESSES_TOOLTIP_EDIT_NAME' | translate }}" ng-click="enableEditAddressName(address.address)"></button>
+          <button class="fa fa-edit editAddressNameButton" bs-tooltip data-placement="top" title="{{ 'ADDRESSES_TOOLTIP_EDIT_NAME' | translate }}" ng-click="enableEditAddressName(address.address)"></button>
         </div>
         <!--Display while editing-->
         <div class="input-group" ng-show="address.edit">
@@ -101,7 +101,7 @@
       <div class="assetBoxCopy col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
         <span class="copyAddress">
           <button class="btn btn-link-black addressLinkButton" bs-popover data-clipboard-text="{{address.address}}" data-toggle="popover" data-placement="top" data-content="{{ 'ADDRESSES_POPOVER_COPIED' | translate }}" role="button">
-            <span class="glyphicon glyphicon-copy"></span> {{ 'ADDRESSES_COPY_ADDRESS' | translate }}
+            <span class="glyphicon fa fa-copy"></span> {{ 'ADDRESSES_COPY_ADDRESS' | translate }}
           </button>
         </span>
       </div>

@@ -25,6 +25,7 @@
   "NAV_DEPOSIT" : "Deposit",
   "NAV_HISTORY" : "History",
   "NAV_PRO" : "Advanced",
+  "USER_SETTING" : "Account settings",
   "NAV_EXPLORER" : "Explorer",
   "MINING_START":      "Start mining",
   "MINING_END":      "End mining",

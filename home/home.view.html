@@ -16,7 +16,7 @@
           </div>
           <div class="assetBoxBalance col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 noPaddingLeftRight">
             <div class="assetBoxTitle">{{ 'BALANCE' | translate }}</div>
-            <div class="assetBoxValue overflow">{{balance['total-unspent']/100000000}}</div>
+            <div class="assetBoxValue overflow money-y">{{balance['total-unspent']/100000000}}</div>
           </div>
           <div class="assetBoxFrozen col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 noPaddingLeftRight">
             <div class="assetBoxTitle">{{ 'FROZEN' | translate}}</div>
@@ -52,7 +52,7 @@
         </div>
       </dl>
       <div class="col-xs-12 moreAssetsButton noPaddingLeftRight">
-        <a href="#!/asset/myassets" class="btn btn-link-black smallButton">{{ 'NAV_MORE_ASSETS' | translate}} <span class="glyphicon glyphicon-arrow-right"></span></a>
+        <a href="#!/asset/myassets" class="btn smallButton spe-ricon">{{ 'NAV_MORE_ASSETS' | translate}} <span class="glyphicon fa fa-angle-double-right"></span></a>
       </div>
       <div class="col-xs-offset-5 col-sm-offset-5 col-md-offset-5 col-lg-offset-5 col-xl-offset-5">
         <dir-pagination-controls pagination-id="paginationAssets"></dir-pagination-controls>
@@ -82,9 +82,9 @@
 
   </div>
 
-  <ul class="nav nav-tabs hidden-xs hidden-sm">
-    <li role="presentation"><a class="btn btn-radio-history" ng-click="filterOnAsset('ALL')" ng-class="{selectedAsset: assetType=='ALL'}">ALL</a></li>
-    <li role="presentation"><a class="btn btn-radio-history" ng-click="filterOnAsset('ETP')" ng-class="{selectedAsset: assetType=='ETP'}">ETP</a></li>
+  <ul class="nav nav-tabs hidden-xs hidden-sm eeee">
+    <li role="presentation"><a class="btn-radio-history" ng-click="filterOnAsset('ALL')" ng-class="{selectedAsset: assetType=='ALL'}">ALL</a></li>
+    <li role="presentation"><a class="btn-radio-history" ng-click="filterOnAsset('ETP')" ng-class="{selectedAsset: assetType=='ETP'}">ETP</a></li>
     <li class="divider" role="separator" ng-show="assets.length>0"></li>
     <li role="presentation" ng-repeat="asset in assets | orderBy:'symbol'" ng-show="asset.status=='unspent'">
       <a ng-click="filterOnAsset(asset.symbol)" class="btn btn-radio-history" ng-class="{selectedAsset: assetType==asset.symbol}">{{asset.symbol}}</a>
@@ -122,26 +122,26 @@
       </div>
       <div class="transactionOneLine col-md-12 noPaddingLeftRight" dir-paginate="transaction in transactionsFiltered | orderBy:'timestamp':true | itemsPerPage: 10"  pagination-id="paginationRecord">
         <!--Time-->
-        <div class="transactionBoxField noPaddingLeftRight col-md-2 col-lg-1">
+        <div class="date-day transactionBoxField noPaddingLeftRight col-md-2 col-lg-1">
             {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT_DAY' | translate) }}
         </div>
 
         <!--Time-->
-        <div class="transactionBoxField noPaddingLeftRight col-md-2 col-lg-1">
+        <div class="date-cdetail transactionBoxField noPaddingLeftRight col-md-2 col-lg-1">
             {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT_HOUR' | translate) }}
         </div>
 
         <!--Transaction Hash-->
         <div class="transactionBoxField noPaddingLeftRight col-md-4 col-lg-6">
-            <a class="btn-link" href="#!/explorer/tx/{{transaction.hash}}">
+            <a class="btn-link spe-blueft" href="#!/explorer/tx/{{transaction.hash}}">
             <div class="overflow">{{transaction.hash}}</div>
             </a>
         </div>
 
         <!--Value-->
         <div class="noPaddingLeftRight transactionBoxField col-md-2 col-lg-2">
-            <span ng-show="transaction.direction!='send'" class="receiveSign overflow">+{{transaction.value | assetformat : transaction.decimal_number}}</span>
-            <span ng-show="transaction.direction=='send'" class="sendSign overflow">-{{transaction.value | assetformat : transaction.decimal_number}}</span>
+            <span ng-show="transaction.direction!='send'" class="receiveSign overflow"><span class="p-empty">+</span>{{transaction.value | assetformat : transaction.decimal_number}}</span>
+            <span ng-show="transaction.direction=='send'" class="sendSign overflow"><span class="p-empty">-</span>{{transaction.value | assetformat : transaction.decimal_number}}</span>
         </div>
 
         <!--Type (ETP,...)-->
@@ -158,7 +158,7 @@
       <dir-pagination-controls pagination-id="paginationRecord"></dir-pagination-controls>
     </div>
     <div>
-      <div class="loadMore hidden-xs hidden-sm">
+      <div class="loadMore hidden-xs hidden-sm hide">
         <input ng-hide="stopLoad" type="button" class="btn btn-success smallButton" value="{{'HISTORY_LOAD_MORE' | translate}}" ng-click="loadMore()"></input>
         <!--<input ng-show="stopLoad" type="button" class="btn btn-success smallButton" bs-popover data-toggle="popover" data-placement="top" data-container="body" data-content="{{ 'HISTORY_ALL_LOADED' | translate }}" value="Load more" ng-click="loadMore()"></input>-->
         <div class="textAllLoaded control-label" ng-show="stopLoad">{{ 'HISTORY_ALL_LOADED' | translate }}</div>

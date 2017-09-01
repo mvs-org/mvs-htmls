@@ -25,6 +25,7 @@
   "NAV_DEPOSIT" : "存款",
   "NAV_HISTORY" : "交易查询",
   "NAV_PRO" : "高级",
+  "USER_SETTING" : "账户设置",
   "NAV_EXPLORER" : "浏览器",
   "MINING_START":      "开始挖矿",
   "MINING_END":      "停止挖矿",
