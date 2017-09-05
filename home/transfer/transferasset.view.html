@@ -36,9 +36,9 @@
         <div class="col-md-6 noPaddingLeftRight">
           <label for="addressFrom" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
           <select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom">
-            <option value="" ng-show="(asset.symbol == symbol)">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</option>
-            <option ng-repeat="asset in assetAddresses | orderBy:'quantity':true" value="{{asset.address}}">{{asset.address}} --- {{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
-            <!-- - {{asset.name}} - {{asset.quantity | assetformat : asset.decimal_number}}-->
+            <option value="" ng-show="(asset.symbol == symbol)" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-click="availBalance(asset.quantity)">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</option>
+            <option ng-repeat="asset in assetAddresses | orderBy:'quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-click="availBalance(asset.quantity)">{{asset.address}}</option>
+            <!--{{asset.address}} - {{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}-->
           </select>
         </div>
       </div>
@@ -55,7 +55,11 @@
       <div class="col-md-12 form-group">
         <div class="col-md-6 noPaddingLeftRight">
           <div class="form-group">
-            <label for="value" class="control-label">{{ 'TRANSFER_VALUE' | translate }}</label>
+            <label for="value" class="control-label col-md-6 noPaddingLeftRight">{{ 'TRANSFER_VALUE' | translate }}</label>
+            <!--AvailableBalance-->
+            <div class="col-md-6 noPaddingLeftRight addRecipent">
+              <button type="button" class="btn-link-red addRecipentButton" ng-click="sendAll()">{{ 'TRANSFER_AMOUNT_AVALAIBLE' | translate }}: {{availableBalance | assetformat : asset.decimal_number}}</button>
+            </div>
             <input type="number" ng-model="quantity" name="quantity" min=0 required class="form-control" placeholder="0" autocomplete="off">
           </div>
         </div>

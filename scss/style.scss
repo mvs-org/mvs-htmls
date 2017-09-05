@@ -1423,6 +1423,10 @@ _____  ._______  ___.___ _______
   color: black !important;
 }
 
+.selectedLanguage {
+  text-decoration: underline;
+}
+
 
 /***********Left Menu***********/
 .dropdown-header {
@@ -1769,6 +1773,9 @@ _____  ._______  ___.___ _______
 
 .paginationHistory {
   padding-left: 30%;
+  width: auto ;
+  margin-left: auto ;
+  margin-right: auto ;
   //padding-top: 200px;
 }
 

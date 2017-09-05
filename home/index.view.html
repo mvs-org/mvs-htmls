@@ -8,7 +8,7 @@
   <div class="fullPageWidth headerBox">
     <div class="headerBox" ng-controller="MenuController">
       <ul class="nav navbar-nav">
-        <li role="presentation"><a href="#!/home" class="linkLogo hidden-xs hidden-sm"><img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" /></a></li>
+        <li role="presentation"><div class="linkLogo hidden-xs hidden-sm"><a href="#!/home" ><img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" /></a></div></li>
         <li role="presentation"><a href="#!/home" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='home'}">{{ 'NAV_HOME' | translate }}</span></a></li>
         <li role="presentation"><a href="#!/addresses/myaddresses" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='addresses'}">{{ 'NAV_ACCOUNT_ADDRESSES' | translate }}</span></a></li>
         <li role="presentation"><a href="#!/asset/myassets" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='asset'}">{{ 'NAV_ASSETS' | translate }}</span></a></li>
@@ -57,12 +57,21 @@
 
           <!--Language button Large screens-->
           <span class="topMenuButtonRight languageHeaderLarge">
-            <p>
-              <button class="btn-link-black smallButton languageButtonXl" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
+            <p ng-show="('LANG_CODE' | translate)=='zh'">
+              <button class="selectedLanguage btn-link-black smallButton languageButtonXl" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
                 中文
               </button>
               /
               <button class="btn-link-black smallButton languageButtonXl" type="button" ng-click="vm.changeLang('en_US')">
+                EN
+              </button>
+            </p>
+            <p ng-show="('LANG_CODE' | translate)=='en'">
+              <button class="btn-link-black smallButton languageButtonXl" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
+                中文
+              </button>
+              /
+              <button class="selectedLanguage btn-link-black smallButton languageButtonXl" type="button" ng-click="vm.changeLang('en_US')">
                 EN
               </button>
             </p>
