@@ -540,6 +540,10 @@
 
     $scope.assetsIssued = [];
 
+    $scope.availBalance = availBalance;
+    $scope.availableBalance = 0;
+    $scope.sendAll = sendAll;
+
     MetaverseService.ListAssets()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
@@ -616,6 +620,7 @@
         $window.scrollTo(0,0);
       } else {
         $scope.balance = balance;
+        $scope.availableBalance = balance['total-unspent'];
       }
     });
 
@@ -785,6 +790,14 @@
           $scope.password = '';
         }
       });
+    }
+
+    function availBalance(balance) {
+      $scope.availableBalance = balance;
+    }
+
+    function sendAll() {
+      $scope.recipents[0].value = $scope.availableBalance/100000000;
     }
 
     //Load a list of all transactions
@@ -1447,6 +1460,10 @@
     $scope.listBalances = listBalances;
     $scope.listAssetBalances = listAssetBalances;
 
+    $scope.availBalance = availBalance;
+    $scope.availableBalance = 0;
+    $scope.sendAll = sendAll;
+
     // Initializes all transaction parameters with empty strings.
     function init() {
       $scope.sendfrom = '';
@@ -1570,6 +1587,7 @@
           $scope.assetsIssued.forEach( (a) => {
             if (a.symbol == symbol) {
               $scope.asset.quantity = a.quantity;
+              $scope.availableBalance = a.quantity;
             }
           });
         } else {
@@ -1611,6 +1629,16 @@
           }
         });
       }
+    }
+
+    function availBalance(balance) {
+      $scope.availableBalance = balance;
+    }
+
+    function sendAll() {
+      console.log($scope.asset.decimal_number);
+      //$scope.quantity = $scope.availableBalance/$scope.asset.decimal_number;
+      $scope.quantity = parseFloat($scope.availableBalance)/Math.pow(10,$scope.asset.decimal_number);
     }
 
     init();

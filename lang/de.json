@@ -69,6 +69,7 @@
   "TRANSFER_MEMO" : "Memo",
   "TRANSFER_ASSET_FEE_START" : "The asset transfer requires at least",
   "TRANSFER_ASSET_FEE_END" : "ETP for miners, so please make sure there is anough ETP in the account.",
+  "TRANSFER_AMOUNT_AVALAIBLE" : "Available",
   "NAV_TRANSFER_MULTISIGNATURE_INIT" : "Create a transaction",
   "NAV_TRANSFER_MULTISIGNATURE_SIGN" : "Sign a transaction",
   "TRANSFER_GO_TO_MULTISIGNATURE" : "Multi-signature transaction",
