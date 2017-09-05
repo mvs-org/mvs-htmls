@@ -58,7 +58,7 @@
   </div>
 
 
-  <form class="loginArea col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
+  <form class="loginArea rgArea">
     <!--To register-->
     <div ng-hide="vm.registered">
       <h1 class="loginTitle">{{ 'REGISTER.NEW_USER' | translate }}</h1>
@@ -66,31 +66,31 @@
         <div class="checkboxCircle">
           <input type="checkbox" ng-model="import_from_phrase" id="checkboxImportFromKey" ng-click="import_from_file = false">
           <label class="control-label" for="checkboxImportFromKey"></label>
-          <span class="importAccountText">{{ 'REGISTER.IMPORT_FROM_KEY' | translate }}</span>
+          <span class="importAccountText comm-ft">{{ 'REGISTER.IMPORT_FROM_KEY' | translate }}</span>
         </div>
       </div>
       <div class="form-group checkBoxImport col-xs-12 col-sm-6">
         <div class="checkboxCircle">
           <input type="checkbox" ng-model="import_from_file" id="checkboxImportFromFile" ng-click="import_from_phrase = false">
           <label class="control-label" for="checkboxImportFromFile"></label>
-          <span class="importAccountText">{{ 'REGISTER.IMPORT_FROM_FILE' | translate }}</span>
+          <span class="importAccountText comm-ft">{{ 'REGISTER.IMPORT_FROM_FILE' | translate }}</span>
         </div>
       </div>
 
       <!--Account name-->
       <div class="form-group col-xs-12" ng-hide="import_from_file">
-        <label for="username" class="control-label">{{ 'REGISTER.CHOOSE_ACCOUNT_NAME' | translate }}</label>
+        <label for="username" class="control-label comm-ft">{{ 'REGISTER.CHOOSE_ACCOUNT_NAME' | translate }}</label>
         <input type="text" name="username" ng-model="vm.user.username" required class="form-control">
       </div>
       <!--Password-->
       <div class="form-group col-xs-12">
-        <label ng-hide="import_from_file" for="password" class="control-label">{{ 'REGISTER.CHOOSE_PASSWORD' | translate }}</label>
-        <label ng-show="import_from_file" for="password" class="control-label">{{ 'LOGIN.ENTER_ACCOUNT_PASSWORD' | translate }}</label>
+        <label ng-hide="import_from_file" for="password" class="control-label comm-ft">{{ 'REGISTER.CHOOSE_PASSWORD' | translate }}</label>
+        <label ng-show="import_from_file" for="password" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_PASSWORD' | translate }}</label>
         <input type="password" name="password" ng-model="vm.user.password" required class="form-control">
       </div>
       <!--Re-enter password-->
       <div class="form-group col-xs-12" ng-hide="import_from_file">
-        <label for="password" class="control-label">{{ 'REGISTER.REPEAT_PASSWORD' | translate }}</label>
+        <label for="password" class="control-label comm-ft">{{ 'REGISTER.REPEAT_PASSWORD' | translate }}</label>
         <input class="form-control" type="password" ng-model="vm.user.password_repeat" required>
       </div>
 
@@ -121,7 +121,7 @@
 
       <!--Submit and Cancel buttons-->
       <div class="form-group col-xs-12">
-        <div class="col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6">
+        <div class="lr-btnbox text-center">
           <button class="btn btn-success" ng-click="vm.register()" type="submit" ng-disabled="form.$invalid || vm.dataLoading">{{ 'REGISTER.REGISTER_BUTTON' | translate }}</button>
         </div>
         <br/><br/><br/>

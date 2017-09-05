@@ -1,58 +1,115 @@
 $topSpace: 80px;
 $lightGrey:rgba(242, 242, 242, 1); //used for background
+$lightGrey02:#f4f4f4; //used for background
 $mediumGrey:rgba(200, 200, 200, 1); //used for borders
+$mediumGreyddd:#ddd; //used for borders
 $darkGrey:rgba(121, 121, 121, 1); //used for language button
+$darkGrey02:#8a8f92; //used for language button
 $veryDarkGrey: #5E5E5E; //user for text in assets
 $redGeneralColor:#f75368;//used for all non-buttons
+$redGeneralColor02:#ff697c;//used for all non-buttons
 $successButtonColor:#f75368; //used for Login,research
 $infoButtonColor:rgba(52, 125, 237, 100); //used for Register
 $linkButtonColor:#347DED;
 $linkButtonMenuColor:#f75368;
 $blueGeneralColor:#347DED;
+$blackColorfont:#323232;
 $secondaryButtonColor: white;
 $radiusButtons: 6px;
 $off-wht: rgba(white,.4);
 $headerHeight: 65px;
 
-body {
-  font-family: 'PingFangSC';
+body, h1,h2,h3,h4 {
+  font-family: 'PingFangSC,\5FAE\8F6F\96C5\9ED1';
 }
 
 h4 {
   line-height: 40px;
 }
 
-select option {
-  background: white !important;
-  color: black !important;
+.btn {
+  border-radius: 8px !important;
 }
 
+/*reset other style */
+/*reset wallet home list style */
+
+.nav-tabs>li {
+   margin-bottom: 0;
+}
+.nav>li>a {
+  padding: 0;
+  font-size:16px;
+  text-align: center;
+  color: #afb2b4;
+  margin: 0 15px 10px 0;
+  font-weight: 500;
+}
+.nav>li>a.selectedAsset{
+  font-weight: 700;
+  color: #000;
+}
+.nav-tabs {
+  border-bottom: none;
+}
+
+.nav-pills{
+  margin-top: 40px;
+  border-bottom: 1px solid #f3f3f3;
+}
+.nav-pills>li>a {
+  border-radius: 4px;
+  font-size: 20px;
+  font-weight: 400;
+  text-align: center;
+  color: #666666 !important;
+  padding-bottom: 10px;
+  margin: 0 40px 0 0;
+  width: auto;
+}
+.AStitle-tabs .tabsMenu > li.active > a{
+  color: #323232 !important;
+}
+/*reset other style  end*/
 
 /*
 Extra small devices (portrait phones, less than 544px)
 No media query since this is the default in Bootstrap because it is "mobile first"
 */
 .headline {
-  font-size: 22px;
-  display: inline-block;
+  //font-size: 22px;
+  //display: inline-block;
   margin-bottom: 10px;
+
+  font-size: 48px;
+  font-weight: 100;
+  color: #323232;
 }
 
 .secondHeadline {
-  padding-top: 50px;
+  padding-top: 200px !important;
 }
 
 /*****************Home page*****************/
 .assetBox {
   text-align: left;
   background-color: transparent;
-  height: 50px;
-  margin: 5px;
-  border-radius: 4px;
+  //height: 50px;
+  margin: 10px 0;
+  //border-radius: 4px;
   border: solid 1px $lightGrey;
-  -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-  -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-  box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  //max-width: 1165px;
+  height: 80px;
+  //margin: 10px 0;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px 0 rgba(35, 35, 35, 0.1);
+  border: solid 1px rgba(151, 151, 151, 0.09);
+  outline: none;
 }
 
 //Contains the logo of the asset
@@ -64,45 +121,84 @@ No media query since this is the default in Bootstrap because it is "mobile firs
   position: absolute;
   display: inline-block;
   -webkit-border-radius: 150px;
-  -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-  -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-  box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
+  -moz-box-shadow:   0 1px 2px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
 }
 
 
+.assetBox .assetLogo {
+  //width: 45px;
+  //height: 45px;
+  //left: 15px;
+  //line-height: 45px;
+  //margin-top: 0;
+  width: 40px;
+  /* height: 45px; */
+  /* left: 15px; */
+  line-height: 45px;
+  text-align: center;
+  display: inline-block;
+}
 
 .assetSymbol {
-  margin: 4px;
+  //margin: 4px;
   width: 28px;
   height: 28px;
+  margin: 3px;
   background-color: transparent;
 }
 
 .assetLogo {
-  position: absolute;
+  //position: absolute;
+  //font-size: 24px;
+  //padding-left: 8px;
+  //text-align: center;
+  //padding-top: 11px;
+  width: 34px;
+  height: 34px;
   font-size: 24px;
-  padding-left: 8px;
+  font-weight: 500;
   text-align: center;
-  padding-top: 11px;
+  color: #323232;
+  //top: 3px;
+  //position: relative;
+  //left: 6px;
 }
 
 .assetBoxSymbolNameETP {
   //width: 100px;
-  padding-top:10px;
-  padding-bottom: 6px;
-  padding-left: 70px;
-  font-size: 20px;
+  //padding-top:10px;
+  //padding-bottom: 6px;
+  padding-left: 55px !important;
+  font-size: 36px;
   display: inline-block;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
-
+.assetBoxSymbolNameETP .btn-link-black {
+  margin-left: 15px;
+}
+.assetBoxSymbolNameETP .btn-link-black, .assetBox .assetBoxSymbolName {
+  //font-weight: lighter;
+  font-size: 28px;
+  //padding: 10px 0 0 70px;
+}
+.assetBox .assetBoxSymbolName {
+  padding: 6px 0 0 70px;
+}
+.assetBoxButtons.ng-hide{
+  //display: block !important;
+}
 .assetBoxSymbolName {
   //width: 100px;
   padding-top:10px;
   padding-bottom: 6px;
-  padding-left: 70px;
+  //padding-left: 70px;
   font-size: 20px;
   display: inline-block;
   text-overflow: ellipsis;
@@ -113,24 +209,29 @@ No media query since this is the default in Bootstrap because it is "mobile firs
 .assetBoxTitle {
   height: 16px;
   font-size: 12px;
+  color: #666;
 }
 
 .assetBoxValue {
   height: 25px;
-  font-size: 14px;
+  font-size: 18px;
   padding-top: 4px;
 }
-
+.assetvcode{
+  font-size: 14px !important;
+}
 .assetBoxBalance {
   padding-top: 8px;
   display: inline-block;
 }
 
 .assetBoxFrozen {
-  padding-top: 8px;
+  padding-top: 6px !important;
   display: inline-block;
 }
-
+.money-y{
+  font-weight: 500 !important;
+}
 .assetBoxCopy {
   padding-top: 10px;
   display: inline-block;
@@ -138,7 +239,7 @@ No media query since this is the default in Bootstrap because it is "mobile firs
 
 .assetBoxButtons {
   text-align: right;
-  margin-top: 10px;
+  //margin-top: 10px;
   margin-right: 0px;
 }
 
@@ -154,9 +255,9 @@ Bootstrap 4 breakpoints
 /* Small devices (landscape phones, 544px and up) */
 @media (min-width: 544px) {
   .headline {
-    font-size: 26px;
-    display: inline-block;
-    margin-bottom: 10px;
+    //font-size: 26px;
+    //display: inline-block;
+    //margin-bottom: 10px;
   }
 
   .secondHeadline {
@@ -165,54 +266,64 @@ Bootstrap 4 breakpoints
 
   /*****************Home page*****************/
   .assetBox {
-    text-align: left;
-    background-color: transparent;
-    height: 50px;
-    margin: 5px;
-    border-radius: 4px;
-    border: solid 1px $lightGrey;
-    -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //text-align: left;
+    //background-color: transparent;
+    //height: 50px;
+    //margin: 5px;
+    //border-radius: 4px;
+    //border: solid 1px $lightGrey;
+    //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //width: 1165px;
+    height: 80px;
+    margin: 10px 0;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 2px 0 rgba(35, 35, 35, 0.1);
+    border: solid 1px rgba(151, 151, 151, 0.09);
   }
 
   //Contains the logo of the asset
   .assetBoxSymbolImg {
-    margin-top: 6px;
+    //margin-top: 6px;
     width: 36px;
     height: 36px;
     background-color: white;
     position: absolute;
     display: inline-block;
-    -webkit-border-radius: 150px;
-    -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //-webkit-border-radius: 150px;
+    //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow:   0 1px 2px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
   }
 
 
 
   .assetSymbol {
-    margin: 4px;
+    //margin: 4px;
     width: 28px;
     height: 28px;
     background-color: transparent;
   }
 
-  .assetLogo {
-    position: absolute;
-    font-size: 24px;
-    padding-left: 8px;
-    text-align: center;
-    padding-top: 7px;
-  }
+  //.assetLogo {
+  //  position: absolute;
+  //  font-size: 24px;
+  //  padding-left: 8px;
+  //  text-align: center;
+  //  padding-top: 7px;
+  //}
 
   .assetBoxSymbolNameETP {
     //width: 200px;
-    padding-top:11px;
-    padding-bottom: 6px;
-    padding-left: 70px;
-    font-size: 20px;
+    //padding-top:11px;
+    //padding-bottom: 6px;
+    //padding-left: 70px;
+    font-size: 36px;
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -223,7 +334,7 @@ Bootstrap 4 breakpoints
     //width: 200px;
     padding-top:12px;
     padding-bottom: 6px;
-    padding-left: 70px;
+    //padding-left: 70px;
     font-size: 16px;
     display: inline-block;
     text-overflow: ellipsis;
@@ -238,12 +349,12 @@ Bootstrap 4 breakpoints
 
   .assetBoxValue {
     height: 25px;
-    font-size: 14px;
+    font-size: 18px;
     padding-top: 4px;
   }
 
   .assetBoxBalance {
-    padding-top: 8px;
+    padding-top: 6px;
     display: inline-block;
   }
 
@@ -273,9 +384,9 @@ Bootstrap 4 breakpoints
 /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
 @media (min-width: 768px) {
   .headline {
-    font-size: 26px;
-    display: inline-block;
-    margin-bottom: 10px;
+    //font-size: 26px;
+    //display: inline-block;
+    //margin-bottom: 10px;
   }
 
   .secondHeadline {
@@ -286,52 +397,59 @@ Bootstrap 4 breakpoints
   .assetBox {
     text-align: left;
     background-color: transparent;
-    height: 50px;
+    //height: 50px;
     margin: 5px;
     border-radius: 4px;
-    border: solid 1px $lightGrey;
-    -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //border: solid 1px $lightGrey;
+    //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+
+    background-color: #ffffff;
+    box-shadow: 0 1px 2px 0 rgba(35, 35, 35, 0.1);
+    border: solid 1px rgba(151, 151, 151, 0.09);
   }
 
   //Contains the logo of the asset
   .assetBoxSymbolImg {
-    margin-top: 6px;
+    //margin-top: 6px;
     width: 36px;
     height: 36px;
     background-color: white;
     position: absolute;
     display: inline-block;
     -webkit-border-radius: 150px;
-    -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow:   0 1px 2px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
   }
 
 
 
   .assetSymbol {
-    margin: 4px;
+    //margin: 4px;
     width: 28px;
     height: 28px;
     background-color: transparent;
   }
-
-  .assetLogo {
-    position: absolute;
-    font-size: 24px;
-    padding-left: 8px;
-    text-align: center;
-    padding-top: 7px;
-  }
+  //
+  //.assetLogo {
+  //  position: absolute;
+  //  font-size: 24px;
+  //  padding-left: 8px;
+  //  text-align: center;
+  //  padding-top: 7px;
+  //}
 
   .assetBoxSymbolNameETP {
     //width: 200px;
-    padding-top:11px;
-    padding-bottom: 6px;
+    //padding-top:11px;
+    //padding-bottom: 6px;
     padding-left: 70px;
-    font-size: 20px;
+    font-size: 36px;
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -357,12 +475,12 @@ Bootstrap 4 breakpoints
 
   .assetBoxValue {
     height: 25px;
-    font-size: 14px;
+    font-size: 18px;
     padding-top: 4px;
   }
 
   .assetBoxBalance {
-    padding-top: 8px;
+    padding-top: 6px;
     display: inline-block;
   }
 
@@ -392,9 +510,9 @@ Bootstrap 4 breakpoints
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
   .headline {
-    font-size: 26px;
-    display: inline-block;
-    margin-bottom: 10px;
+    //font-size: 26px;
+    //display: inline-block;
+    //margin-bottom: 10px;
   }
 
   .secondHeadline {
@@ -403,54 +521,57 @@ Bootstrap 4 breakpoints
 
   /*****************Home page*****************/
   .assetBox {
-    text-align: left;
-    background-color: transparent;
-    height: 50px;
-    margin: 5px;
-    border-radius: 4px;
-    border: solid 1px $lightGrey;
-    -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //text-align: left;
+    //background-color: transparent;
+    ////height: 50px;
+    //margin: 5px;
+    //border-radius: 4px;
+    //border: solid 1px $lightGrey;
+    //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
   }
 
   //Contains the logo of the asset
   .assetBoxSymbolImg {
-    margin-top: 6px;
+    //margin-top: 6px;
     width: 36px;
     height: 36px;
     background-color: white;
     position: absolute;
     display: inline-block;
     -webkit-border-radius: 150px;
-    -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow:   0 1px 2px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
   }
 
 
 
   .assetSymbol {
-    margin: 4px;
+    //margin: 4px;
     width: 28px;
     height: 28px;
     background-color: transparent;
   }
 
-  .assetLogo {
-    position: absolute;
-    font-size: 24px;
-    padding-left: 8px;
-    text-align: center;
-    padding-top: 7px;
-  }
+  //.assetLogo {
+  //  position: absolute;
+  //  font-size: 24px;
+  //  padding-left: 8px;
+  //  text-align: center;
+  //  padding-top: 7px;
+  //}
 
   .assetBoxSymbolNameETP {
     //width: 200px;
-    padding-top:11px;
-    padding-bottom: 6px;
+    //padding-top:11px;
+    //padding-bottom: 6px;
     padding-left: 70px;
-    font-size: 20px;
+    font-size:36px;
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -476,12 +597,12 @@ Bootstrap 4 breakpoints
 
   .assetBoxValue {
     height: 25px;
-    font-size: 14px;
+    font-size: 18px;
     padding-top: 4px;
   }
 
   .assetBoxBalance {
-    padding-top: 8px;
+    padding-top: 6px;
     display: inline-block;
   }
 
@@ -511,9 +632,9 @@ Bootstrap 4 breakpoints
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
   .headline {
-    font-size: 36px;
-    display: inline-block;
-    margin-bottom: 10px;
+    //font-size: 36px;
+    //display: inline-block;
+    //margin-bottom: 10px;
   }
 
   .secondHeadline {
@@ -522,29 +643,42 @@ Bootstrap 4 breakpoints
 
   /*****************Home page*****************/
   .assetBox {
-    text-align: left;
-    background-color: transparent;
-    height: 60px;
-    margin: 5px;
-    border-radius: 4px;
-    border: solid 1px $lightGrey;
-    -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //text-align: left;
+    //background-color: transparent;
+    //height: 60px;
+    //margin: 5px;
+    //border-radius: 4px;
+    //border: solid 1px $lightGrey;
+    //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //width: 1165px;
+    height: 80px;
+    margin: 10px 0;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 2px 0 rgba(35, 35, 35, 0.1);
+    border: solid 1px rgba(151, 151, 151, 0.09);
+   color: #323232;
+    font-size: 14px;
+    padding: 15px;
   }
 
   //Contains the logo of the asset
   .assetBoxSymbolImg {
-    margin-top: 8px;
+    //margin-top: 8px;
     width: 40px;
     height: 40px;
     background-color: white;
     position: absolute;
     display: inline-block;
     -webkit-border-radius: 150px;
-    -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow:   0 1px 2px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
   }
 
 
@@ -556,20 +690,20 @@ Bootstrap 4 breakpoints
     background-color: transparent;
   }
 
-  .assetLogo {
-    position: absolute;
-    font-size: 26px;
-    padding-left: 8px;
-    text-align: center;
-    padding-top: 10px;
-  }
+  //.assetLogo {
+  //  position: absolute;
+  //  font-size: 26px;
+  //  padding-left: 8px;
+  //  text-align: center;
+  //  padding-top: 10px;
+  //}
 
   .assetBoxSymbolNameETP {
     //width: 200px;
-    padding-top:10px;
-    padding-bottom: 6px;
-    padding-left: 70px;
-    font-size: 26px;
+    //padding-top:10px;
+    //padding-bottom: 6px;
+    //padding-left: 70px;
+    font-size: 36px;
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -595,12 +729,12 @@ Bootstrap 4 breakpoints
 
   .assetBoxValue {
     height: 25px;
-    font-size: 14px;
+    font-size: 18px;
     padding-top: 4px;
   }
 
   .assetBoxBalance {
-    padding-top: 8px;
+    padding-top: 6px;
     display: inline-block;
   }
 
@@ -630,9 +764,9 @@ Bootstrap 4 breakpoints
 /* Extra extra large devices (large desktops, 1400px and up) */
 @media (min-width: 1400px) {
   .headline {
-    font-size: 48px;
-    display: inline-block;
-    margin-bottom: 10px;
+    //font-size: 48px;
+    //display: inline-block;
+    //margin-bottom: 10px;
   }
 
   .secondHeadline {
@@ -647,46 +781,53 @@ Bootstrap 4 breakpoints
     margin: 5px;
     border-radius: 4px;
     border: solid 1px $lightGrey;
-    -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+
+    background-color: #ffffff;
+    box-shadow: 0 1px 2px 0 rgba(35, 35, 35, 0.1);
+    border: solid 1px rgba(151, 151, 151, 0.09);
   }
 
   //Contains the logo of the asset
   .assetBoxSymbolImg {
-    margin-top: 16px;
+    margin-top: 0;
     width: 48px;
     height: 48px;
     background-color: white;
     position: absolute;
     display: inline-block;
     -webkit-border-radius: 150px;
-    -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow:   0 1px 2px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
   }
 
 
 
   .assetSymbol {
-    margin: 4px;
+    //margin: 4px;
     width: 40px;
     height: 40px;
     background-color: transparent;
   }
 
-  .assetLogo {
-    position: absolute;
-    font-size: 26px;
-    padding-left: 8px;
-    text-align: center;
-    padding-top: 20px;
-  }
+  //.assetLogo {
+  //  position: absolute;
+  //  font-size: 26px;
+  //  padding-left: 8px;
+  //  text-align: center;
+  //  padding-top: 20px;
+  //}
 
   .assetBoxSymbolNameETP {
     //width: 300px;
-    padding-top:14px;
-    padding-bottom: 6px;
+    //padding-top:14px;
+    //padding-bottom: 6px;
     padding-left: 70px;
     font-size: 36px;
     display: inline-block;
@@ -697,7 +838,7 @@ Bootstrap 4 breakpoints
 
   .assetBoxSymbolName {
     //width: 300px;
-    padding-top:24px;
+    //padding-top:24px;
     padding-bottom: 6px;
     padding-left: 70px;
     font-size: 18px;
@@ -714,17 +855,17 @@ Bootstrap 4 breakpoints
 
   .assetBoxValue {
     height: 25px;
-    font-size: 14px;
+    font-size: 18px;
     padding-top: 4px;
   }
 
   .assetBoxBalance {
-    padding-top: 18px;
+    padding-top: 6px;
     display: inline-block;
   }
 
   .assetBoxFrozen {
-    padding-top: 18px;
+    //padding-top: 18px;
     display: inline-block;
   }
 
@@ -735,7 +876,7 @@ Bootstrap 4 breakpoints
 
   .assetBoxButtons {
     text-align: right;
-    margin-top: 24px;
+    //margin-top: 24px;
     margin-right: 10px;
   }
 
@@ -747,6 +888,17 @@ Bootstrap 4 breakpoints
 
 }
 
+
+
+.assetBoxWrapper  .col-lg-5 {
+  width: 30%;
+}
+.assetBoxWrapper .col-xs-offset-5 {
+  margin-left: 30%;
+  width: 100px;
+  height: auto;
+  font-size: 16px;
+}
 /****************** Mixin Functions
 _____  ._______  ___.___ _______
 /     \ |   \   \/  /|   |\      \
@@ -758,7 +910,7 @@ _____  ._______  ___.___ _______
 @mixin btn-theme($btn-color, $type) {
   @if $type == 'standard' {
     width: 100%;
-    border-color: darken($btn-color, 20%) !important;
+    //border-color: darken($btn-color, 20%) !important;
     background-color: $btn-color !important;
     &:hover {
       background-color: darken($btn-color, 6%);
@@ -795,6 +947,7 @@ _____  ._______  ___.___ _______
     }
     &:focus {
       text-decoration: none;
+      color: red !important;
     }
 
   } @else if $type == 'link-menu' {
@@ -871,14 +1024,10 @@ _____  ._______  ___.___ _______
       margin: 0px;
       border-radius: 0px;
 
-
-
       color: $mediumGrey;
       font-size: 14px;
-
       font-weight: normal;
       text-align: right;
-
     }
 
     input {
@@ -1034,6 +1183,7 @@ _____  ._______  ___.___ _______
 }
 
 .btn-success {
+  border: none;
   @include btn-theme($successButtonColor, 'standard');
 }
 
@@ -1054,7 +1204,7 @@ _____  ._______  ___.___ _______
 }
 
 .btn-link-black {
-    @include btn-theme(black, 'link');
+    @include btn-theme(#252628, 'link');
 }
 
 //Secondary buttons have a white background, the color is the one of the text
@@ -1093,6 +1243,7 @@ _____  ._______  ___.___ _______
   padding: 6px 12px;
   height: 30px;
   width: auto;
+  border: none;
 }
 
 .menuButton {
@@ -1100,7 +1251,11 @@ _____  ._______  ___.___ _______
   font-size: 14px;
   padding: 0;
 }
-
+.spe-ricon{
+  font-size: 20px;
+  text-align: center;
+  color: #323232;
+}
 .addressLinkButton {
   //padding: 6px;
   //padding-left: 10px;
@@ -1119,6 +1274,7 @@ _____  ._______  ___.___ _______
   border-radius: 50px;
   position: relative;
   outline: 0;
+
 }
 
 .checkboxCircle label {
@@ -1126,41 +1282,55 @@ _____  ._______  ___.___ _______
   position: absolute;
   width: 24px;
   height: 24px;
-  -webkit-border-radius: 50px;
-  -moz-border-radius: 50px;
-  border-radius: 50px;
+  //-webkit-border-radius: 50px;
+  //-moz-border-radius: 50px;
+  //border-radius: 50px;
   left: -5px;
   top: 2px;
+  background: #fff;
+  //-webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
+  //-moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
+  //box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
 
-  -webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
-  -moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
-  box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
-
-  background: $lightGrey;
+  //background: $lightGrey;
   outline: 0;
 }
-
+//, .depositAddressCheckbox .checkboxCircle label
 .checkboxCircle label:after {
   opacity: 0;
 	content: '';
 	position: absolute;
-	width: 14px;
-	height: 14px;
-	background: $blueGeneralColor;
-	-webkit-border-radius: 50px;
-	-moz-border-radius: 50px;
-	border-radius: 50px;
-	top: 4px;
-	left: 5px;
-	-webkit-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
-	-moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
-	box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+	//width: 14px;
+	//height: 14px;
+	//background: $blueGeneralColor;
+    //background: url("/images/checkbx.png");
+	//-webkit-border-radius: 50px;
+	//-moz-border-radius: 50px;
+	//border-radius: 50px;
+	//top: 4px;
+	//left: 5px;
+  width: 20px;
+  height: 20px;
+  background: url(/images/checkbx.png) no-repeat;
+  top: 0;
+  left: 2px;
+  outline: 0;
+  background-size: 80%;
+	//-webkit-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+	//-moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+	//box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
   outline: 0;
 }
-
+.depositAddressCheckbox .checkboxCircle label{
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  border: solid 1px #ff697c;
+  top: 0;
+}
 .checkboxCircle label:hover::after {
-	filter: alpha(opacity=30);
-	opacity: 0.3;
+  filter: alpha(opacity=30);
+  opacity: 0.3;
   outline: 0;
 }
 
@@ -1178,6 +1348,20 @@ _____  ._______  ___.___ _______
 }
 
 
+
+.spe-addrbox .checkboxCircle label{
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  border: solid 1px #ff697c;
+}
+
+.spe-addrbox  .checkboxCircle label:after {
+
+}
+.spe-addrbox{
+ margin: 50px 0 10px;
+}
 /*********** End Buttons ****************/
 .form-group select, .form-group textarea, .form-group input[type]:not([type=search]):not([type=submit]) {
   background-color : white;
@@ -1209,15 +1393,57 @@ _____  ._______  ___.___ _______
 .loginTitle {
   text-align: center;
   margin-bottom: 60px;
+  font-size: 48px;
+  font-weight: 100;
 }
 
 .loginArea {
   background-color: white;
   border-radius: 10px;
-  margin-top: 10%;
-  padding-top: 3%;
-  padding-bottom: 3%;
-  margin-bottom: 10%;
+  padding: 55px;
+  margin: 165px auto 0;
+  width: 436px;
+  height: 570px;
+  //margin-top: 10%;
+  //padding-top: 3%;
+  //padding-bottom: 3%;
+  //margin-bottom: 10%;
+}
+.rgArea{
+  min-height: 700px;
+  height: auto;
+  display: table;
+
+}
+.comm-ft{
+  color: #666;
+  font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+.loginArea .form-group {
+  margin: 0 0 20px;
+  padding: 0;
+}
+
+.form-control {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.lr-btnbox button.btn{
+  margin-top: 44px;
+  width: 240px;
+  height: 30px;
+  border-radius: 8px;
+  border: none;
+}
+.rg-btnbox{
+  margin: 68px 0 20px;
+}
+
+.rg-btnbox .btn:hover{
+ color: #75c6ff  !important;
 }
 
 .padding-big-top{
@@ -1266,7 +1492,7 @@ _____  ._______  ___.___ _______
 /***********Top bar***********/
 //Logo Metaverse top bar
 .logoMetaverseSmall {
-  width: 90px;
+  width: 97px;
   height: 34px;
   //position: absolute;
   left: 27px;
@@ -1423,10 +1649,6 @@ _____  ._______  ___.___ _______
   color: black !important;
 }
 
-.selectedLanguage {
-  text-decoration: underline;
-}
-
 
 /***********Left Menu***********/
 .dropdown-header {
@@ -1446,9 +1668,10 @@ _____  ._______  ___.___ _______
 }
 
 .selectedMenu {
-  color: black !important;
-  border-bottom: solid 3px;
-  border-color: $redGeneralColor;
+  color: #222222 !important;
+  border-bottom: solid 4px;
+  border-color: $redGeneralColor02;
+  font-size: 16px;
 }
 
 .navbar-right {
@@ -1653,8 +1876,12 @@ _____  ._______  ___.___ _______
     //text-decoration: underline;
     border-bottom: solid 2px $linkButtonMenuColor !important;
     border-radius: 0;
+    color:#323232 !important;
 }
-
+form label {
+  color:#323232;
+  font-weight: 400;
+}
 .selectAssetType {
   display: inline-block;
   margin-left: 10px;
@@ -1687,14 +1914,35 @@ _____  ._______  ___.___ _______
 .pagination > li > a {
   color: $successButtonColor !important;
   border-width: 0 !important;
-  border-radius: 6px;
+  border-radius: 4px;
 }
 
 .pagination > .active > a {
   color: white !important;
-  background-color: $successButtonColor !important;
+  //background-color: $successButtonColor !important;
+  width: 24px;
+  height: 24px;
+  background-color: #f75368;
+  line-height: 24px;
+  text-align: center;
+  padding: 0;
 }
-
+.pagination>li>a, .pagination>li>span {
+  position: relative;
+  float: left;
+  //padding:2px 15px;
+  padding: 0;
+  margin: 0 15px;
+  width: 24px;
+  height: 24px;
+  margin-left: -1px;
+  line-height: 24px;
+  color: #333 !important;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  text-align: center;
+}
 .no_transaction_message{
   padding-top: 20px;
 }
@@ -1718,31 +1966,35 @@ _____  ._______  ___.___ _______
 }
 
 .receiveSign {
-  color: green;
+  color: #2cd109;
 }
 
 .sendSign {
-  color:red;
+  color: #f75368;
 }
 
 .issueSign {
   color: blue;
 }
-
+.p-empty{
+  margin-right:5px;
+}
 .transactionsHistoryXl {
   height: 470px;
 }
 
 .transactionBoxHeader {
   height: 40px;
-  background-color: $lightGrey;
+  line-height: 40px;
+  background-color: $lightGrey02;
   border-width: 0;
+  padding: 0 20px;
 }
 
 .transactionBoxHeaderField {
-  padding-top: 10px;
   font-size: 14px;
-  color: $darkGrey;
+  color: $darkGrey02;
+
 }
 
 
@@ -1751,31 +2003,39 @@ _____  ._______  ___.___ _______
   color: $veryDarkGrey;
   height: 40px;
   border-bottom: solid 1px;
-  border-color: $mediumGrey;
+  border-color: $mediumGreyddd;
 }
 
 .transactionBoxField {
   padding-top: 10px;
   font-size: 14px;
 }
-
+.date-day{
+  color: #3d4449;
+}
+.date-cdetail{
+  color: #8a8f92;
+}
+.spe-blueft{
+  color: #27a7ea !important;
+}
 .overflow {
-  width: 100%;
-  display: inline-block;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+  //width: 100%;
+  //display: inline-block;
+  //text-overflow: ellipsis;
+  //white-space: nowrap;
+  //overflow: hidden;
 }
 
 .pagination {
-  display: inline;
+  //display: inline;
 }
+.paginationl>li:first-child a{
+  color:red !important
 
+}
 .paginationHistory {
   padding-left: 30%;
-  width: auto ;
-  margin-left: auto ;
-  margin-right: auto ;
   //padding-top: 200px;
 }
 
@@ -1878,6 +2138,7 @@ _____  ._______  ___.___ _______
   background-color: transparent;
   border-width: 0;
   display: inline;
+  font-size: 18px;
 }
 
 .editAddressNameButtonEditing {
@@ -2022,7 +2283,7 @@ _____  ._______  ___.___ _______
 
 .addressBoxAddressDeposit {
     float:left;
-    color: $darkGrey;
+    color: #666;
     line-height: 14px;
     padding-bottom: 8px;
 }
@@ -2057,11 +2318,14 @@ _____  ._______  ___.___ _______
 }
 
 .headerInterestRateTable {
-  background-color: $mediumGrey;
+  background-color: #f2f2f2;
+  height: 40px;
 }
 
 .fieldInterestRateTable {
   padding-left: 20px;
+  height: 40px;
+  border-bottom: 1px solid #f2f2f2;
 }
 
 
@@ -2222,7 +2486,7 @@ h2 {
 
 /***************All Assets page**************/
 .detailsOneLine {
-  line-height: 30px;
+  line-height: 45px;
   padding-left: 10px;
 }
 
@@ -2235,4 +2499,131 @@ h2 {
 
 .maxSupply {
   padding-right: 20px;
+}
+
+
+.ng-valid-step  .form-control {
+  display: block;
+  //width: 90% !important;
+}
+.fullPageWidth .form-group {
+  margin-bottom: 20px;
+}
+.creatAssetBtnbox .btn{
+  width: 200px;
+}
+
+.form-spebox input[type=submit]{
+  margin-top:60px;
+}
+/**************Advanced details*****************/
+.wk-title{
+  font-size: 14px;
+  color: #666666;
+  font-weight: 300;
+  margin-left: 15px;
+}
+.wk-countbox{
+  color:$blackColorfont ;
+}
+.wk-countbox .wd-t{
+  width: 50px;
+}
+.color66{
+  color: #666;
+}
+.wk-beginning{
+  width: 200px;
+  height: 30px;
+  line-height: 16px;
+  border-radius: 8px;
+  background-color: #f75368;
+}
+
+
+.form-spebox .form-control {
+  width: 460px;
+  height: 34px;
+  border-radius: 4px;
+}
+/**************myaddresses*****************/
+.C-assetBox{
+  box-shadow:none;
+  border: none;
+}
+.C-assetBox .assetBoxTitle{
+   font-size: 14px !important;
+ }
+.C-assetBox .assetBoxValue{
+  font-size: 20px !important;
+}
+.spe-addrbox .textCheckbox {
+  font-size: 18px;
+}
+.spe-addrbox .glyphicon{
+  font-weight: lighter;
+  font-size: 12px;
+}
+.assetBoxAdd {
+  border-left:5px solid #ff697c;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px 0 rgba(35, 35, 35, 0.1);
+}
+.assetBoxAdd .addressBoxName {
+  color:#323232;
+  font-size: 20px;
+  width: 200px;
+}
+.assetBoxAdd  .assetBoxValue{
+  font-size: 18px !important;
+  padding-top: 5px;
+}
+.assetBoxAdd  .addressBoxAddressDeposit {
+  padding-top: 8px;
+}
+.assetBoxAdd .assetBoxBalance {
+  padding-top: 0;
+}
+
+
+.fullPageWidth .spe-addrgroup .form-group {
+  margin-bottom: 10px;
+}
+.spe-addrgroup{
+  margin-bottom: 30px;
+}
+
+#inputField{
+  padding: 8px 0;
+}
+.ngdialog.ngdialog-theme-default .ngdialog-content{
+  padding: 2em  3em !important;
+}
+.ngdialog1-aria-labelledby, .ngdialog3-aria-labelledby{
+  margin-bottom: 30px !important;
+}
+.it-list{
+  line-height: 2;
+}
+.onsume_bit-num{
+  color: $redGeneralColor02;
+}
+
+.popover-content {
+  padding: 9px 7px !important;
+  min-width: 100px;
+}
+
+
+/** asset detail**/
+.assetBoxdetail{
+  overflow: hidden;
+  width: 100%;
+  padding: 20px 0;
+  margin: 5px;
+  background: #f2f2f2;
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-close{
+  right: 4px !important;
 }

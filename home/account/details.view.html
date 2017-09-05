@@ -7,10 +7,10 @@
   </ul>
 </div>
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-6 form-spebox">
     <br/>
-    <form ng-hide="privatekey">
-      <div class="form-group">
+    <form ng-hide="privatekey"  class="form-spebox">
+      <div class="form-group ">
         <label for="password" class="control-label">{{ 'SETTINGS.PASSWORD' | translate }}</label>
         <input type="password" class="form-control" name="password" id="" ng-model="chpwd_password" autocomplete="off">
       </div>
@@ -19,11 +19,11 @@
         <input type="password" class="form-control" name="password" id="" ng-model="chpwd_new_password" autocomplete="off">
       </div>
       <div class="form-group">
-        <label for="password" class="control-label">{{ 'SETTINGS.NEW_PASSWORD_REPEAT' | translate }}</label>
+        <label for="password" eclass="control-label">{{ 'SETTINGS.NEW_PASSWORD_REPEAT' | translate }}</label>
         <input type="password" class="form-control" name="password" id="" ng-model="chpwd_new_password_repeat" autocomplete="off">
       </div>
       <br/>
-      <div class="row col-md-6">
+      <div class="row col-md-6 comm-btnbox">
         <input type="submit" ng-click="changepassword(chpwd_password, chpwd_new_password, chpwd_new_password_repeat)" value="{{ 'SETTINGS.CHANGE_PASSWORD_BUTTON' | translate }}" class="btn btn-success  col-xs-12 col-sm-6 col-md-12">
       </div>
     </form>
