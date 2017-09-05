@@ -72,12 +72,16 @@
 			</div>
 		</div>-->
 
-		<form class="row">
+		<form class="ddbr row">
 			<!--Sender-->
 			<div class="col-md-12 form-group noPaddingLeftRight">
 				<br/>
 				<div class="col-md-6 form-group">
+<<<<<<< Updated upstream
 					<label for="addressFrom" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
+=======
+					<label for="addresFrom" class=" ddd control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
+>>>>>>> Stashed changes
 					<select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom">
 						<!--<option value="">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }} --- {{balance['total-unspent']/100000000}} ETP</option>
 						<option ng-show="address.balance != 0" ng-repeat="address in addresses | orderBy:'balance':true" value="{{address.address}}">{{address.address}} --- {{address.balance/100000000}} ETP</option>-->
@@ -88,7 +92,7 @@
 			</div>
 
 			<!--Recipient(s)-->
-			<div class="col-md-12 noPaddingLeftRight" ng-repeat="recipent in recipents | orderBy:'index'">
+			<div class="spe-addrgroup col-md-12 noPaddingLeftRight" ng-repeat="recipent in recipents | orderBy:'index'">
 				<div class="col-md-12 noPaddingLeftRight">
 					<div class="col-md-6 form-group">
 						<label for="recipent_address" class="control-label col-md-6 noPaddingLeftRight">{{ 'TRANSFER_RECIPENT_ADDRESS' | translate }} {{recipent.index}}</label>

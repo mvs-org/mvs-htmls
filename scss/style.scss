@@ -22,9 +22,7 @@ $headerHeight: 65px;
 body, h1,h2,h3,h4 {
   font-family: 'PingFangSC,\5FAE\8F6F\96C5\9ED1';
 }
-body {
-  min-width: 1080px;
-}
+
 h4 {
   line-height: 40px;
 }
@@ -44,11 +42,12 @@ h4 {
   font-size:16px;
   text-align: center;
   color: #afb2b4;
-  margin: 0 40px 10px 0;
+  margin: 0 15px 10px 0;
   font-weight: 500;
 }
 .nav>li>a.selectedAsset{
-  font-weight: 400;
+  font-weight: 700;
+  color: #000;
 }
 .nav-tabs {
   border-bottom: none;
@@ -88,7 +87,7 @@ No media query since this is the default in Bootstrap because it is "mobile firs
 }
 
 .secondHeadline {
-  padding-top: 100px !important;
+  padding-top: 200px !important;
 }
 
 /*****************Home page*****************/
@@ -110,6 +109,7 @@ No media query since this is the default in Bootstrap because it is "mobile firs
   background-color: #ffffff;
   box-shadow: 0 1px 2px 0 rgba(35, 35, 35, 0.1);
   border: solid 1px rgba(151, 151, 151, 0.09);
+  outline: none;
 }
 
 //Contains the logo of the asset
@@ -130,6 +130,19 @@ No media query since this is the default in Bootstrap because it is "mobile firs
 }
 
 
+.assetBox .assetLogo {
+  //width: 45px;
+  //height: 45px;
+  //left: 15px;
+  //line-height: 45px;
+  //margin-top: 0;
+  width: 40px;
+  /* height: 45px; */
+  /* left: 15px; */
+  line-height: 45px;
+  text-align: center;
+  display: inline-block;
+}
 
 .assetSymbol {
   //margin: 4px;
@@ -151,9 +164,9 @@ No media query since this is the default in Bootstrap because it is "mobile firs
   font-weight: 500;
   text-align: center;
   color: #323232;
-  top: 3px;
-  position: relative;
-  left: 6px;
+  //top: 3px;
+  //position: relative;
+  //left: 6px;
 }
 
 .assetBoxSymbolNameETP {
@@ -168,13 +181,24 @@ No media query since this is the default in Bootstrap because it is "mobile firs
   overflow: hidden;
 }
 .assetBoxSymbolNameETP .btn-link-black {
-  font-weight: lighter;
+  margin-left: 15px;
+}
+.assetBoxSymbolNameETP .btn-link-black, .assetBox .assetBoxSymbolName {
+  //font-weight: lighter;
+  font-size: 28px;
+  //padding: 10px 0 0 70px;
+}
+.assetBox .assetBoxSymbolName {
+  padding: 6px 0 0 70px;
+}
+.assetBoxButtons.ng-hide{
+  //display: block !important;
 }
 .assetBoxSymbolName {
   //width: 100px;
   padding-top:10px;
   padding-bottom: 6px;
-  padding-left: 70px;
+  //padding-left: 70px;
   font-size: 20px;
   display: inline-block;
   text-overflow: ellipsis;
@@ -185,6 +209,7 @@ No media query since this is the default in Bootstrap because it is "mobile firs
 .assetBoxTitle {
   height: 16px;
   font-size: 12px;
+  color: #666;
 }
 
 .assetBoxValue {
@@ -201,7 +226,7 @@ No media query since this is the default in Bootstrap because it is "mobile firs
 }
 
 .assetBoxFrozen {
-  padding-top: 8px;
+  padding-top: 6px !important;
   display: inline-block;
 }
 .money-y{
@@ -214,7 +239,7 @@ No media query since this is the default in Bootstrap because it is "mobile firs
 
 .assetBoxButtons {
   text-align: right;
-  margin-top: 10px;
+  //margin-top: 10px;
   margin-right: 0px;
 }
 
@@ -261,7 +286,7 @@ Bootstrap 4 breakpoints
 
   //Contains the logo of the asset
   .assetBoxSymbolImg {
-    margin-top: 6px;
+    //margin-top: 6px;
     width: 36px;
     height: 36px;
     background-color: white;
@@ -297,7 +322,7 @@ Bootstrap 4 breakpoints
     //width: 200px;
     //padding-top:11px;
     //padding-bottom: 6px;
-    padding-left: 70px;
+    //padding-left: 70px;
     font-size: 36px;
     display: inline-block;
     text-overflow: ellipsis;
@@ -309,7 +334,7 @@ Bootstrap 4 breakpoints
     //width: 200px;
     padding-top:12px;
     padding-bottom: 6px;
-    padding-left: 70px;
+    //padding-left: 70px;
     font-size: 16px;
     display: inline-block;
     text-overflow: ellipsis;
@@ -329,7 +354,7 @@ Bootstrap 4 breakpoints
   }
 
   .assetBoxBalance {
-    padding-top: 8px;
+    padding-top: 6px;
     display: inline-block;
   }
 
@@ -387,7 +412,7 @@ Bootstrap 4 breakpoints
 
   //Contains the logo of the asset
   .assetBoxSymbolImg {
-    margin-top: 6px;
+    //margin-top: 6px;
     width: 36px;
     height: 36px;
     background-color: white;
@@ -455,7 +480,7 @@ Bootstrap 4 breakpoints
   }
 
   .assetBoxBalance {
-    padding-top: 8px;
+    padding-top: 6px;
     display: inline-block;
   }
 
@@ -509,7 +534,7 @@ Bootstrap 4 breakpoints
 
   //Contains the logo of the asset
   .assetBoxSymbolImg {
-    margin-top: 6px;
+    //margin-top: 6px;
     width: 36px;
     height: 36px;
     background-color: white;
@@ -577,7 +602,7 @@ Bootstrap 4 breakpoints
   }
 
   .assetBoxBalance {
-    padding-top: 8px;
+    padding-top: 6px;
     display: inline-block;
   }
 
@@ -629,7 +654,6 @@ Bootstrap 4 breakpoints
     //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
     //width: 1165px;
     height: 80px;
-    //line-height: 80px;
     margin: 10px 0;
     border-radius: 8px;
     background-color: #ffffff;
@@ -637,14 +661,12 @@ Bootstrap 4 breakpoints
     border: solid 1px rgba(151, 151, 151, 0.09);
    color: #323232;
     font-size: 14px;
-    //display: table-cell;
-    //vertical-align: middle;
     padding: 15px;
   }
 
   //Contains the logo of the asset
   .assetBoxSymbolImg {
-    margin-top: 8px;
+    //margin-top: 8px;
     width: 40px;
     height: 40px;
     background-color: white;
@@ -680,7 +702,7 @@ Bootstrap 4 breakpoints
     //width: 200px;
     //padding-top:10px;
     //padding-bottom: 6px;
-    padding-left: 70px;
+    //padding-left: 70px;
     font-size: 36px;
     display: inline-block;
     text-overflow: ellipsis;
@@ -712,7 +734,7 @@ Bootstrap 4 breakpoints
   }
 
   .assetBoxBalance {
-    padding-top: 8px;
+    padding-top: 6px;
     display: inline-block;
   }
 
@@ -770,7 +792,7 @@ Bootstrap 4 breakpoints
 
   //Contains the logo of the asset
   .assetBoxSymbolImg {
-    margin-top: 16px;
+    margin-top: 0;
     width: 48px;
     height: 48px;
     background-color: white;
@@ -816,7 +838,7 @@ Bootstrap 4 breakpoints
 
   .assetBoxSymbolName {
     //width: 300px;
-    padding-top:24px;
+    //padding-top:24px;
     padding-bottom: 6px;
     padding-left: 70px;
     font-size: 18px;
@@ -838,12 +860,12 @@ Bootstrap 4 breakpoints
   }
 
   .assetBoxBalance {
-    padding-top: 18px;
+    padding-top: 6px;
     display: inline-block;
   }
 
   .assetBoxFrozen {
-    padding-top: 18px;
+    //padding-top: 18px;
     display: inline-block;
   }
 
@@ -854,7 +876,7 @@ Bootstrap 4 breakpoints
 
   .assetBoxButtons {
     text-align: right;
-    margin-top: 24px;
+    //margin-top: 24px;
     margin-right: 10px;
   }
 
@@ -866,6 +888,17 @@ Bootstrap 4 breakpoints
 
 }
 
+
+
+.assetBoxWrapper  .col-lg-5 {
+  width: 30%;
+}
+.assetBoxWrapper .col-xs-offset-5 {
+  margin-left: 30%;
+  width: 100px;
+  height: auto;
+  font-size: 16px;
+}
 /****************** Mixin Functions
 _____  ._______  ___.___ _______
 /     \ |   \   \/  /|   |\      \
@@ -914,6 +947,7 @@ _____  ._______  ___.___ _______
     }
     &:focus {
       text-decoration: none;
+      color: red !important;
     }
 
   } @else if $type == 'link-menu' {
@@ -1240,6 +1274,7 @@ _____  ._______  ___.___ _______
   border-radius: 50px;
   position: relative;
   outline: 0;
+
 }
 
 .checkboxCircle label {
@@ -1247,41 +1282,55 @@ _____  ._______  ___.___ _______
   position: absolute;
   width: 24px;
   height: 24px;
-  -webkit-border-radius: 50px;
-  -moz-border-radius: 50px;
-  border-radius: 50px;
+  //-webkit-border-radius: 50px;
+  //-moz-border-radius: 50px;
+  //border-radius: 50px;
   left: -5px;
   top: 2px;
+  background: #fff;
+  //-webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
+  //-moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
+  //box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
 
-  -webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
-  -moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
-  box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
-
-  background: $lightGrey;
+  //background: $lightGrey;
   outline: 0;
 }
-
+//, .depositAddressCheckbox .checkboxCircle label
 .checkboxCircle label:after {
   opacity: 0;
 	content: '';
 	position: absolute;
-	width: 14px;
-	height: 14px;
-	background: $blueGeneralColor;
-	-webkit-border-radius: 50px;
-	-moz-border-radius: 50px;
-	border-radius: 50px;
-	top: 4px;
-	left: 5px;
-	-webkit-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
-	-moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
-	box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+	//width: 14px;
+	//height: 14px;
+	//background: $blueGeneralColor;
+    //background: url("/images/checkbx.png");
+	//-webkit-border-radius: 50px;
+	//-moz-border-radius: 50px;
+	//border-radius: 50px;
+	//top: 4px;
+	//left: 5px;
+  width: 20px;
+  height: 20px;
+  background: url(/images/checkbx.png) no-repeat;
+  top: 0;
+  left: 2px;
+  outline: 0;
+  background-size: 80%;
+	//-webkit-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+	//-moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+	//box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
   outline: 0;
 }
-
+.depositAddressCheckbox .checkboxCircle label{
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  border: solid 1px #ff697c;
+  top: 0;
+}
 .checkboxCircle label:hover::after {
-	filter: alpha(opacity=30);
-	opacity: 0.3;
+  filter: alpha(opacity=30);
+  opacity: 0.3;
   outline: 0;
 }
 
@@ -1310,7 +1359,9 @@ _____  ._______  ___.___ _______
 .spe-addrbox  .checkboxCircle label:after {
 
 }
-
+.spe-addrbox{
+ margin: 50px 0 10px;
+}
 /*********** End Buttons ****************/
 .form-group select, .form-group textarea, .form-group input[type]:not([type=search]):not([type=submit]) {
   background-color : white;
@@ -1969,11 +2020,11 @@ form label {
   color: #27a7ea !important;
 }
 .overflow {
-  width: 100%;
-  display: inline-block;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+  //width: 100%;
+  //display: inline-block;
+  //text-overflow: ellipsis;
+  //white-space: nowrap;
+  //overflow: hidden;
 }
 
 .pagination {
@@ -2267,11 +2318,14 @@ form label {
 }
 
 .headerInterestRateTable {
-  background-color: $mediumGrey;
+  background-color: #f2f2f2;
+  height: 40px;
 }
 
 .fieldInterestRateTable {
   padding-left: 20px;
+  height: 40px;
+  border-bottom: 1px solid #f2f2f2;
 }
 
 
@@ -2432,7 +2486,7 @@ h2 {
 
 /***************All Assets page**************/
 .detailsOneLine {
-  line-height: 30px;
+  line-height: 45px;
   padding-left: 10px;
 }
 
@@ -2448,7 +2502,10 @@ h2 {
 }
 
 
-
+.ng-valid-step  .form-control {
+  display: block;
+  //width: 90% !important;
+}
 .fullPageWidth .form-group {
   margin-bottom: 20px;
 }
@@ -2478,6 +2535,7 @@ h2 {
 .wk-beginning{
   width: 200px;
   height: 30px;
+  line-height: 16px;
   border-radius: 8px;
   background-color: #f75368;
 }
@@ -2525,4 +2583,47 @@ h2 {
 }
 .assetBoxAdd .assetBoxBalance {
   padding-top: 0;
+}
+
+
+.fullPageWidth .spe-addrgroup .form-group {
+  margin-bottom: 10px;
+}
+.spe-addrgroup{
+  margin-bottom: 30px;
+}
+
+#inputField{
+  padding: 8px 0;
+}
+.ngdialog.ngdialog-theme-default .ngdialog-content{
+  padding: 2em  3em !important;
+}
+.ngdialog1-aria-labelledby, .ngdialog3-aria-labelledby{
+  margin-bottom: 30px !important;
+}
+.it-list{
+  line-height: 2;
+}
+.onsume_bit-num{
+  color: $redGeneralColor02;
+}
+
+.popover-content {
+  padding: 9px 7px !important;
+  min-width: 100px;
+}
+
+
+/** asset detail**/
+.assetBoxdetail{
+  overflow: hidden;
+  width: 100%;
+  padding: 20px 0;
+  margin: 5px;
+  background: #f2f2f2;
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-close{
+  right: 4px !important;
 }

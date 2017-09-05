@@ -31,7 +31,7 @@
         <div dir-paginate="asset in assets | orderBy:['-status','symbol'] | itemsPerPage: 5" pagination-id="paginationAssets">
           <dd class="assetBox col-xs-12 col-sm-12 col-md-12" >
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-              <span class="assetLogo">资</span>
+              <span class="assetBoxSymbolImg assetLogo">资</span>
               <div class="assetBoxSymbolName overflow">
                 <a href="#!/asset/details/{{asset.symbol}}" class="btn-link-black ">{{asset.symbol}}</a>
               </div>
@@ -45,7 +45,7 @@
               <div class="assetBoxValue">{{asset.status}}</div>
             </div>
             <div ng-show="asset.status == 'unspent'" class="assetBoxButtons">
-              <!--<a href="#!/deposit/{{asset.symbol}}" class="btn btn-link-red smallButton assetBoxButton">{{ 'DEPOSIT.HEADLINE' | translate}}</a>-->
+              <a href="#!/deposit/{{asset.symbol}}" class="btn btn-link-red smallButton assetBoxButton">{{ 'DEPOSIT.HEADLINE' | translate}}</a>
               <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/{{asset.symbol}}/">{{ 'ASSETS_SEND' | translate}}</a>
             </div>
           </dd>
@@ -54,9 +54,15 @@
       <div class="col-xs-12 moreAssetsButton noPaddingLeftRight">
         <a href="#!/asset/myassets" class="btn smallButton spe-ricon">{{ 'NAV_MORE_ASSETS' | translate}} <span class="glyphicon fa fa-angle-double-right"></span></a>
       </div>
+<<<<<<< Updated upstream
       <div class="paginationHistory">
         <dir-pagination-controls pagination-id="paginationAssets"></dir-pagination-controls>
       </div>
+=======
+      <!--<div class="col-xs-offset-5 col-sm-offset-5 col-md-offset-5 col-lg-offset-5 col-xl-offset-5">-->
+        <!--<dir-pagination-controls pagination-id="paginationAssets"></dir-pagination-controls>-->
+      <!--</div>-->
+>>>>>>> Stashed changes
     </div>
 
   </form>
@@ -82,7 +88,7 @@
 
   </div>
 
-  <ul class="nav nav-tabs hidden-xs hidden-sm eeee">
+  <ul class="nav nav-tabs hidden-xs hidden-sm">
     <li role="presentation"><a class="btn-radio-history" ng-click="filterOnAsset('ALL')" ng-class="{selectedAsset: assetType=='ALL'}">ALL</a></li>
     <li role="presentation"><a class="btn-radio-history" ng-click="filterOnAsset('ETP')" ng-class="{selectedAsset: assetType=='ETP'}">ETP</a></li>
     <li class="divider" role="separator" ng-show="assets.length>0"></li>
