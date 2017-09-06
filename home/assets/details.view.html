@@ -86,7 +86,7 @@
   <br/>
   <div ng-show="asset.status=='unissued'" class="col-xs-12 col-sm-6 col-md-4">
     <a class="col-xs-6 col-xl-6" href="" ng-click="issue(asset.symbol)"><div class="btn btn-info">{{'ASSET_ISSUE' | translate}}</div></a>
-    <a class="col-xs-6 col-xl-6" href="#!/asset/details/" ng-click="deleteAsset()"><div class="btn btn-danger">{{'ASSET_DELETE_ASSET' | translate}}</div></a>
+    <a class="col-xs-6 col-xl-6" href="" ng-click="deleteAsset(asset.symbol)"><div class="btn btn-danger">{{'ASSET_DELETE_ASSET' | translate}}</div></a>
   </div>
   <div ng-show="asset.status=='issued'" class="col-xs-12 col-sm-6 col-md-4">
     <!--<a ng-hide="(increase_maximum_supply != 0)" class="col-xs-6 col-xl-6" href="#!/transfer/{{asset.symbol}}/"><input class="btn btn-info" value="{{'TRANSFER_SEND' | translate}}"></a>-->
@@ -112,7 +112,7 @@
         <!--Display editable name of the address-->
         <div ng-hide="asset.edit">
           <span class="addressBoxName" readonly="true" id="editAddressName">{{asset.name}}</span>
-          <button class="glyphicon glyphicon-pencil editAddressNameButton" bs-tooltip data-placement="top" title="{{ 'ADDRESSES_TOOLTIP_EDIT_NAME' | translate }}" ng-click="enableEditAddressName(asset.address)"></button>
+          <button class="fa fa-edit editAddressNameButton" bs-tooltip data-placement="top" title="{{ 'ADDRESSES_TOOLTIP_EDIT_NAME' | translate }}" ng-click="enableEditAddressName(asset.address)"></button>
         </div>
         <!--Display while editing-->
         <div class="input-group" ng-show="asset.edit">

@@ -62,18 +62,22 @@
     <!--To register-->
     <div ng-hide="vm.registered">
       <h1 class="loginTitle">{{ 'REGISTER.NEW_USER' | translate }}</h1>
-      <div class="form-group checkBoxImport col-xs-12 col-sm-6">
+      <div class="form-group checkBoxImport spe-addrbox col-xs-12 col-sm-6">
         <div class="checkboxCircle">
-          <input type="checkbox" ng-model="import_from_phrase" id="checkboxImportFromKey" ng-click="import_from_file = false">
-          <label class="control-label" for="checkboxImportFromKey"></label>
-          <span class="importAccountText comm-ft">{{ 'REGISTER.IMPORT_FROM_KEY' | translate }}</span>
+          <div class="checkbox-box">
+            <input type="checkbox" ng-model="import_from_file" id="checkboxImportFromFile" ng-click="import_from_phrase = false">
+            <label class="control-label" for="checkboxImportFromFile"></label>
+          </div>
+          <span class="importAccountText comm-ft">{{ 'REGISTER.IMPORT_FROM_FILE' | translate }}</span>
         </div>
       </div>
-      <div class="form-group checkBoxImport col-xs-12 col-sm-6">
+      <div class="form-group checkBoxImport spe-addrbox col-xs-12 col-sm-6">
         <div class="checkboxCircle">
-          <input type="checkbox" ng-model="import_from_file" id="checkboxImportFromFile" ng-click="import_from_phrase = false">
-          <label class="control-label" for="checkboxImportFromFile"></label>
-          <span class="importAccountText comm-ft">{{ 'REGISTER.IMPORT_FROM_FILE' | translate }}</span>
+            <div class="checkbox-box">
+              <input type="checkbox" ng-model="import_from_phrase" id="checkboxImportFromKey" ng-click="import_from_file = false">
+              <label class="control-label" for="checkboxImportFromKey"></label>
+            </div>
+          <span class="importAccountText comm-ft">{{ 'REGISTER.IMPORT_FROM_KEY' | translate }}</span>
         </div>
       </div>
 
@@ -142,14 +146,16 @@
       </div>
       <br><br>
       <div class="form-group col-xs-12">{{ "REGISTER.PRIVATE_KEY_MNEMONIC_INFO" | translate}}</div>
-      <div class="form-group col-xs-12">
+      <div class="form-group col-xs-12 spe-addrbox">
         <div class="checkboxCircle">
-          <input type="checkbox" ng-model="vm.registered.read" id="checkboxAgree">
-          <label for="checkboxAgree"></label>
+          <div class="checkbox-box">
+            <input type="checkbox" ng-model="vm.registered.read" id="checkboxAgree">
+            <label for="checkboxAgree"></label>
+          </div>
           <span class="importAccountText">{{ "REGISTER.SIGNUP_MNEMONIC_AGREE" | translate}}</span>
         </div>
       </div>
-      <div class="form-group col-xs-12" ng-show="vm.registered.read">
+      <div class="form-group col-xs-12 noPaddingLeftRight" ng-show="vm.registered.read">
         <br/>
         <div class="col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6">
           <a href="#!/login" class="btn btn-success">{{ 'REGISTER.LOGIN_BUTTON' | translate }}</a>

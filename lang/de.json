@@ -306,6 +306,8 @@
   "MESSAGES.INVALID_VALUE" : "Sie müssen einen gültigen Wert angeben.",
   "MESSAGES.DEPOSIT_ERROR" : "Anlage konnte nicht durchgeführt werden.",
   "MESSAGES.INVALID_TIME_PERIOD" : "Ungültiger Zeitraum.",
+  "MESSAGES.CONTAINS_SPACE" : "Please do not put any space in the path.",
+  "MESSAGES.ASSETS_CREATE_ERROR" : "Impossible to create this asset.",
   "CONSOLE.INSERT_PROMPT" : "Geben Sie hier einen Behehl ein.",
   "CONSOLE.SEND" : "Send",
   "CONSOLE.CONNECTION" : "connecting...",

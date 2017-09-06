@@ -16,7 +16,7 @@
           <div dir-paginate="asset in assets | orderBy: ['-status','symbol'] | itemsPerPage: 10">
             <div class="assetBox col-xs-12 col-sm-12 col-md-12">
               <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-               <div class="assetBoxSymbolImg"> <span class="assetLogo">资</span></div>
+               <div class="assetBoxSymbolImg spe-zdyal"><span class="assetLogo">资</span></div>
                 <div class="assetBoxSymbolName overflow">
                   <a href="#!/asset/details/{{asset.symbol}}" class="btn-link-black">{{asset.symbol}}</a>
                 </div>
@@ -30,7 +30,7 @@
                 <div class="assetBoxValue">{{asset.status}}</div>
               </div>
               <div ng-show="asset.status=='unissued'" class="assetBoxButtons">
-                <a href="#!/asset/details/" ng-click="deleteAsset(asset.symbol)" class="btn-link-red smallButton assetBoxButton">{{'ASSET_DELETE_ASSET' | translate}}</a>
+                <a href="" ng-click="deleteAsset(asset.symbol)" class="btn-link-red smallButton assetBoxButton">{{'ASSET_DELETE_ASSET' | translate}}</a>
                 <a href="" ng-click="issue(asset.symbol)" class="btn btn-success smallButton assetBoxButton">{{'ASSET_ISSUE' | translate}}</a>
               </div>
               <div ng-hide="asset.status=='unissued'" class="assetBoxButtons">

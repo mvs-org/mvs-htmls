@@ -144,6 +144,30 @@ module.exports = function(grunt) {
                 src: 'min/*.css',
                 dest: 'dist'
             },
+            eot:{
+                expand: true,
+                cwd: 'css/',
+                src: '*.eot',
+                dest: 'dist/min/'
+            },
+            svg:{
+                expand: true,
+                cwd: 'css/',
+                src: '*.svg',
+                dest: 'dist/min/'
+            },
+            ttf:{
+                expand: true,
+                cwd: 'css/',
+                src: '*.ttf',
+                dest: 'dist/min/'
+            },
+            woff:{
+                expand: true,
+                cwd: 'css/',
+                src: '*.woff',
+                dest: 'dist/min/'
+            },
             fontawesome:{
                 expand: true,
                 cwd: 'node_modules/font-awesome/fonts/',

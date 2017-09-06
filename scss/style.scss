@@ -19,9 +19,25 @@ $radiusButtons: 6px;
 $off-wht: rgba(white,.4);
 $headerHeight: 65px;
 
-body, h1,h2,h3,h4 {
-  font-family: 'PingFangSC,\5FAE\8F6F\96C5\9ED1';
+
+@font-face{
+    font-family: spepingfang;
+    src: url('pingfang.ttf'),
+    url('pingfang.woff'),
+    url('pingfang.svg'),
+    url('pingfang.eot'); /* IE9 */
+
 }
+
+// body,h1,h2,h3,h4, .headline {
+* {
+  font-family:'spepingfang',Arial,sans-serif,Tahoma,Arial,sans-serif;
+  font-weight: 700 !important;
+}
+
+
+
+
 
 h4 {
   line-height: 40px;
@@ -139,9 +155,10 @@ No media query since this is the default in Bootstrap because it is "mobile firs
   width: 40px;
   /* height: 45px; */
   /* left: 15px; */
-  line-height: 45px;
+  line-height: 40px;
   text-align: center;
   display: inline-block;
+
 }
 
 .assetSymbol {
@@ -183,10 +200,14 @@ No media query since this is the default in Bootstrap because it is "mobile firs
 .assetBoxSymbolNameETP .btn-link-black {
   margin-left: 15px;
 }
-.assetBoxSymbolNameETP .btn-link-black, .assetBox .assetBoxSymbolName {
+.assetBoxSymbolNameETP .btn-link-black {
   //font-weight: lighter;
   font-size: 28px;
   //padding: 10px 0 0 70px;
+}
+.assetBox .assetBoxSymbolName {
+  font-size: 24px;
+  height: 44px;
 }
 .assetBox .assetBoxSymbolName {
   padding: 6px 0 0 70px;
@@ -195,7 +216,7 @@ No media query since this is the default in Bootstrap because it is "mobile firs
   //display: block !important;
 }
 .assetBoxSymbolName {
-  //width: 100px;
+  width: 100%;
   padding-top:10px;
   padding-bottom: 6px;
   //padding-left: 70px;
@@ -213,7 +234,7 @@ No media query since this is the default in Bootstrap because it is "mobile firs
 }
 
 .assetBoxValue {
-  height: 25px;
+  height: 26px;
   font-size: 18px;
   padding-top: 4px;
 }
@@ -221,16 +242,14 @@ No media query since this is the default in Bootstrap because it is "mobile firs
   font-size: 14px !important;
 }
 .assetBoxBalance {
-  padding-top: 8px;
   display: inline-block;
 }
 
 .assetBoxFrozen {
-  padding-top: 6px !important;
   display: inline-block;
 }
 .money-y{
-  font-weight: 500 !important;
+  // font-weight: 500 !important;
 }
 .assetBoxCopy {
   padding-top: 10px;
@@ -348,18 +367,16 @@ Bootstrap 4 breakpoints
   }
 
   .assetBoxValue {
-    height: 25px;
+    height: 26px;
     font-size: 18px;
     padding-top: 4px;
   }
 
   .assetBoxBalance {
-    padding-top: 6px;
     display: inline-block;
   }
 
   .assetBoxFrozen {
-    padding-top: 8px;
     display: inline-block;
   }
 
@@ -474,18 +491,16 @@ Bootstrap 4 breakpoints
   }
 
   .assetBoxValue {
-    height: 25px;
+    height: 26px;
     font-size: 18px;
     padding-top: 4px;
   }
 
   .assetBoxBalance {
-    padding-top: 6px;
     display: inline-block;
   }
 
   .assetBoxFrozen {
-    padding-top: 8px;
     display: inline-block;
   }
 
@@ -596,18 +611,16 @@ Bootstrap 4 breakpoints
   }
 
   .assetBoxValue {
-    height: 25px;
+    height: 26px;
     font-size: 18px;
     padding-top: 4px;
   }
 
   .assetBoxBalance {
-    padding-top: 6px;
     display: inline-block;
   }
 
   .assetBoxFrozen {
-    padding-top: 8px;
     display: inline-block;
   }
 
@@ -728,18 +741,16 @@ Bootstrap 4 breakpoints
   }
 
   .assetBoxValue {
-    height: 25px;
+    height: 26px;
     font-size: 18px;
     padding-top: 4px;
   }
 
   .assetBoxBalance {
-    padding-top: 6px;
     display: inline-block;
   }
 
   .assetBoxFrozen {
-    padding-top: 8px;
     display: inline-block;
   }
 
@@ -854,18 +865,16 @@ Bootstrap 4 breakpoints
   }
 
   .assetBoxValue {
-    height: 25px;
+    height: 26px;
     font-size: 18px;
     padding-top: 4px;
   }
 
   .assetBoxBalance {
-    padding-top: 6px;
     display: inline-block;
   }
 
   .assetBoxFrozen {
-    //padding-top: 18px;
     display: inline-block;
   }
 
@@ -894,10 +903,12 @@ Bootstrap 4 breakpoints
   width: 30%;
 }
 .assetBoxWrapper .col-xs-offset-5 {
-  margin-left: 30%;
-  width: 100px;
+  margin: 0 20px 0 15%;
+  width: 260px;
   height: auto;
   font-size: 16px;
+  text-align: right;
+  display: block;
 }
 /****************** Mixin Functions
 _____  ._______  ___.___ _______
@@ -973,7 +984,6 @@ _____  ._______  ___.___ _______
     background-color: transparent !important;
     border: solid;
     border-width: 1px;
-    font-family: 'PingFangSC';
     font-weight: 400;
     font-size: 13px;
     text-align: center;
@@ -1173,7 +1183,6 @@ _____  ._______  ___.___ _______
   padding: 6px 12px;
   opacity: 1;
   border-radius: $radiusButtons;
-  font-family: 'PingFangSC';
   /** added mixin **/
   @include trans(0.2s ease-in-out);
 }
@@ -1277,7 +1286,9 @@ _____  ._______  ___.___ _______
 
 }
 
-.checkboxCircle label {
+// .checkboxCircle label
+.checkboxCircle .checkbox-box
+{
   cursor: pointer;
   position: absolute;
   width: 24px;
@@ -1285,8 +1296,8 @@ _____  ._______  ___.___ _______
   //-webkit-border-radius: 50px;
   //-moz-border-radius: 50px;
   //border-radius: 50px;
-  left: -5px;
-  top: 2px;
+  left: -2px;
+  // margin-top: 4px;
   background: #fff;
   //-webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
   //-moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
@@ -1354,13 +1365,23 @@ _____  ._______  ___.___ _______
   height: 20px;
   border-radius: 2px;
   border: solid 1px #ff697c;
+  position: absolute;
+  left: -2px;
+  top: 1px;
+  background: #fff;
+  cursor: pointer;
 }
-
+.checkbox-box{
+    float: left;
+}
 .spe-addrbox  .checkboxCircle label:after {
 
 }
 .spe-addrbox{
  margin: 50px 0 10px;
+}
+.mainContent1{
+  overflow: hidden;
 }
 /*********** End Buttons ****************/
 .form-group select, .form-group textarea, .form-group input[type]:not([type=search]):not([type=submit]) {
@@ -1402,18 +1423,27 @@ _____  ._______  ___.___ _______
   border-radius: 10px;
   padding: 55px;
   margin: 165px auto 0;
-  width: 436px;
+  width: 520px;
   height: 570px;
   //margin-top: 10%;
   //padding-top: 3%;
   //padding-bottom: 3%;
   //margin-bottom: 10%;
 }
+.depositAddressCheckbox .textCheckbox {
+    padding-left: 20px;
+}
+.depositAddressCheckbox  .checkboxCircle .checkbox-box {
+    left: -10px;
+  }
 .rgArea{
   min-height: 700px;
   height: auto;
   display: table;
 
+}
+.cccom-top{
+  margin-top: 5px;
 }
 .comm-ft{
   color: #666;
@@ -1429,6 +1459,7 @@ _____  ._______  ___.___ _______
 .form-control {
   -webkit-box-shadow: none;
   box-shadow: none;
+  height: 36px;
 }
 
 .lr-btnbox button.btn{
@@ -1481,7 +1512,10 @@ _____  ._______  ___.___ _______
 
 /******************Register page*************/
 .importAccountText {
-  padding-left: 10px;
+    margin: 0 0 0 30px;
+  // top: -2px;
+  // position: relative;
+  // left: 5px;
 }
 
 .checkBoxImport {
@@ -1543,7 +1577,7 @@ _____  ._______  ___.___ _______
 
 .searchArea {
   padding-top: 5px;
-
+  width: 190px;
 }
 
 .headerBoxSearchXs {
@@ -1647,6 +1681,11 @@ _____  ._______  ___.___ _______
 
 .menuButtonXs {
   color: black !important;
+}
+
+.selectedLanguage {
+  font-weight: 900 !important;
+  color: $redGeneralColor !important;
 }
 
 
@@ -1861,7 +1900,6 @@ _____  ._______  ___.___ _______
 .assetValueColumn {
   width: auto;
   margin-left: 10px;
-  font-family: 'PingFang SC';
   font-weight: 200;
 
 }
@@ -1899,7 +1937,6 @@ form label {
 
 .sendAndReceiveText {
   color: $veryDarkGrey !important;
-  font-family: 'PingFangSC';
 }
 
 
@@ -1959,6 +1996,13 @@ form label {
 //Big screens
 .loadMore {
   display: inline-block;
+  position: relative;
+  left: 420px;
+  top: -54px;
+}
+
+.loadMoreLess10 {
+  padding-top: 10px;
 }
 
 .transactionLine {
@@ -1980,7 +2024,8 @@ form label {
   margin-right:5px;
 }
 .transactionsHistoryXl {
-  height: 470px;
+  margin-bottom: 10px;
+  overflow: hidden;
 }
 
 .transactionBoxHeader {
@@ -2022,9 +2067,9 @@ form label {
 .overflow {
   //width: 100%;
   //display: inline-block;
-  //text-overflow: ellipsis;
-  //white-space: nowrap;
-  //overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .pagination {
@@ -2138,7 +2183,9 @@ form label {
   background-color: transparent;
   border-width: 0;
   display: inline;
-  font-size: 18px;
+  font-size: 20px;
+  position: relative;
+  top: 3px;
 }
 
 .editAddressNameButtonEditing {
@@ -2146,7 +2193,9 @@ form label {
   border-width: 0;
 }
 
-
+.ast-wd{
+  width: 224px;
+}
 .addressText {
   padding-top: 36px;
 }
@@ -2282,6 +2331,7 @@ form label {
 }
 
 .addressBoxAddressDeposit {
+  width: 100%;
     float:left;
     color: #666;
     line-height: 14px;
@@ -2543,7 +2593,7 @@ h2 {
 
 .form-spebox .form-control {
   width: 460px;
-  height: 34px;
+  height: 36px;
   border-radius: 4px;
 }
 /**************myaddresses*****************/
@@ -2551,14 +2601,28 @@ h2 {
   box-shadow:none;
   border: none;
 }
+.fr{
+      float: right;
+}
+.boxbox{
+  float: left;
+  margin-top: 6px;
+}
+
+.first-atbox .assetBoxButtons{
+    margin-top: 10px;
+}
 .C-assetBox .assetBoxTitle{
    font-size: 14px !important;
  }
 .C-assetBox .assetBoxValue{
   font-size: 20px !important;
 }
-.spe-addrbox .textCheckbox {
+.spe-addrbox .spe-tc.textCheckbox {
   font-size: 18px;
+  position: relative;
+  top: -1px;
+  left: 14px;
 }
 .spe-addrbox .glyphicon{
   font-weight: lighter;
@@ -2626,4 +2690,8 @@ h2 {
 
 .ngdialog.ngdialog-theme-default .ngdialog-close{
   right: 4px !important;
+}
+
+.comm-btnbox{
+  width:240px !important
 }

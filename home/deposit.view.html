@@ -153,10 +153,12 @@
 
 
 	<!--Checkbox to deposit to a specify address-->
-	<div class="form-group col-xs-12 depositAddressCheckbox">
+	<div class="form-group col-xs-12 spe-addrbox depositAddressCheckbox">
 		<div class="checkboxCircle">
-			<input type="checkbox" name="address_option" ng-model="address_option" id="checkboxCircleDeposit">
-			<label for="checkboxCircleDeposit"></label>
+			<div class="checkbox-box">
+					<input type="checkbox" name="address_option" ng-model="address_option" id="checkboxCircleDeposit">
+					<label for="checkboxCircleDeposit"></label>
+			</div>
 			<span class="textCheckbox">{{ 'DEPOSIT.ADDRESS_OPTION' | translate }}</span>
 		</div>
 	</div>

@@ -307,6 +307,8 @@
   "MESSAGES.INVALID_VALUE" : "The amount you entered is not valid.",
   "MESSAGES.DEPOSIT_ERROR" : "The deposit failed.",
   "MESSAGES.INVALID_TIME_PERIOD" : "The time period is not valid.",
+  "MESSAGES.CONTAINS_SPACE" : "Please do not put any space in the path.",
+  "MESSAGES.ASSETS_CREATE_ERROR" : "Impossible to create this asset.",
   "CONSOLE.INSERT_PROMPT" : "Enter your command here.",
   "CONSOLE.SEND" : "Send",
   "CONSOLE.CONNECTION" : "connecting...",

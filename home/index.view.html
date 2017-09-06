@@ -14,7 +14,7 @@
         <li role="presentation"><a href="#!/asset/myassets" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='asset'}">{{ 'NAV_ASSETS' | translate }}</span></a></li>
         <!--<li role="presentation"><a href="#!/deposit/ETP" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='deposit'}">{{ 'NAV_DEPOSIT' | translate }}</span></a></li>-->
         <!--<li role="presentation"><a href="#!/account/details" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='account'}">{{ 'NAV_ACCOUNT_SETTING' | translate }}</span></a></li>-->
-        <li role="presentation"> <a href="#!/account/details" class="xxx topMenuButtonLeft">{{ 'USER_SETTING' | translate }}</span></a></li>
+        <li role="presentation"> <a href="#!/account/details" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='account'}">{{ 'USER_SETTING' | translate }}</span></a></li>
         <li role="presentation"><a href="#!/advanced" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='advanced'}">{{ 'NAV_PRO' | translate }}</span></a></li>
         <!--<li role="presentation" class="visible-xs visible-sm"><a href="#!/explorer/search/" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='explorer'}">{{ 'NAV_EXPLORER' | translate }}</span></a></li>-->
 
@@ -58,13 +58,10 @@
 
           <!--Language button Large screens-->
           <span class="topMenuButtonRight languageHeaderLarge">
-<<<<<<< Updated upstream
             <p ng-show="('LANG_CODE' | translate)=='zh'">
-              <button class="selectedLanguage btn-link-black smallButton languageButtonXl" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
-=======
+              <button class="btn-link-black smallButton languageButtonXl" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
             <p>
-              <button class="lang-cn btn-link-black smallButton languageButtonXl" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
->>>>>>> Stashed changes
+              <button class="selectedLanguage btn-link-black smallButton languageButtonXl" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
                 中文
               </button>
               /

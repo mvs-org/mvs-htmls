@@ -792,8 +792,16 @@
       });
     }
 
-    function availBalance(balance) {
-      $scope.availableBalance = balance;
+    function availBalance(address) {
+      if(address == '') {
+        $scope.availableBalance = $scope.balance['total-available'];
+      } else {
+        $scope.addresses.forEach( (a) => {
+          if(a.address == address) {
+            $scope.availableBalance = a.balance - a.frozen;
+          }
+        });
+      }
     }
 
     function sendAll() {
@@ -1259,6 +1267,7 @@
             });
           });
           $scope.addressesDisplay = $scope.addresses;
+          $scope.addressesFiltered = [];
           $scope.addresses.forEach( (a) => {
             if(a.balance != 0) {
               $scope.addressesFiltered.push(a);
@@ -1411,6 +1420,9 @@
     function exportAccount(password, last_word, path) {
       if (localStorageService.get('credentials').password != password) {
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else if (path.split(" ").length > 1){
+        $translate('MESSAGES.CONTAINS_SPACE').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else {
         NProgress.start();
@@ -1631,12 +1643,20 @@
       }
     }
 
-    function availBalance(balance) {
-      $scope.availableBalance = balance;
+    function availBalance(address) {
+      if (address == '') {
+        $scope.availableBalance = $scope.asset.quantity;
+      } else {
+        $scope.assetAddresses.forEach( (a) => {
+          if(a.address == address) {
+            $scope.availableBalance = a.quantity; // - a.frozen;
+          }
+        });
+      }
     }
 
+
     function sendAll() {
-      console.log($scope.asset.decimal_number);
       //$scope.quantity = $scope.availableBalance/$scope.asset.decimal_number;
       $scope.quantity = parseFloat($scope.availableBalance)/Math.pow(10,$scope.asset.decimal_number);
     }
@@ -1782,7 +1802,6 @@
 
 
     function issue(symbol) {
-      console.log(symbol);
       NProgress.start();
       MetaverseService.Issue(symbol)
       .then( (response) => {
@@ -1932,8 +1951,9 @@
       .then( (response) => {
         NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
-          $translate('MESSAGES.DELETE_SUCCESS').then( (data) => FlashService.Success(data) );
+          $translate('MESSAGES.ASSETS_DELETE_SUCCESS').then( (data) => FlashService.Success(data, true) );
           $window.scrollTo(0,0);
+          $location.path('/asset/myassets');
         } else {
           //Asset could not be delete
           $translate('MESSAGES.ASSETS_DELETE_ERROR').then( (data) =>  FlashService.Error(data));
@@ -2056,11 +2076,12 @@
               FlashService.Success(data, true);
 
               //Redirect user to the assets page
-              //$location.path('/home');
+              //$location.path('/asset/myassets');
             });
             $window.scrollTo(0,0);
           } else{
-            FlashService.Error(response.message);
+            $translate('MESSAGES.ASSETS_CREATE_ERROR').then( (data) => FlashService.Error(data) );
+            //$translate('MESSAGES.ASSETS_CREATE_ERROR').then( (data) => FlashService.Error(data + ' ' + response.message) );
             $window.scrollTo(0,0);
           }
         });
@@ -2082,7 +2103,6 @@
 
 
     function issue(symbol) {
-      console.log(symbol);
       NProgress.start();
       MetaverseService.Issue(symbol)
       .then( (response) => {
