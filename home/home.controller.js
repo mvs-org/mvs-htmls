@@ -317,7 +317,6 @@
 
     $scope.isNumber = angular.isNumber;
 
-
     MetaverseService.ListAssets()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
@@ -340,6 +339,7 @@
         loadEtpBalance();
       }
     });
+
 
 
     $scope.deposit_options = {
@@ -1408,7 +1408,6 @@
           }
           NProgress.done();
         });
-
       }
     }
 
@@ -1416,6 +1415,7 @@
       MetaverseService.debug = (state == 1);
       $scope.debugState = MetaverseService.debug;
     }
+
 
     function exportAccount(password, last_word, path) {
       if (localStorageService.get('credentials').password != password) {

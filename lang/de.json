@@ -305,6 +305,8 @@
   "MESSAGES.DEPOSIT_SUCCESS" : "Anlage erfolgreich. Der Hash der Transaktion lautet: ",
   "MESSAGES.INVALID_VALUE" : "Sie müssen einen gültigen Wert angeben.",
   "MESSAGES.DEPOSIT_ERROR" : "Anlage konnte nicht durchgeführt werden.",
+  "MESSAGES.ASSETS_DELETE_ERROR" : "The asset could not be deleted",
+  "MESSAGES.DELETE_SUCCESS" : "The asset has been deleted",
   "MESSAGES.INVALID_TIME_PERIOD" : "Ungültiger Zeitraum.",
   "MESSAGES.CONTAINS_SPACE" : "Please do not put any space in the path.",
   "MESSAGES.ASSETS_CREATE_ERROR" : "Impossible to create this asset.",
