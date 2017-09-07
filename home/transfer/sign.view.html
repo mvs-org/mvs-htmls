@@ -1,0 +1,60 @@
+<div class="content">
+	<span class="headline">{{ 'HEADLINE_ETP_TRANSFER_MULTISIGNATURE' | translate }}</span>
+	<!--Before sending a transaction-->
+	<div ng-hide="transferSuccess">
+		<div>
+		  <ul class="nav nav-pills tabsMenu">
+		    <li role="presentation"><a href="#!/transfer/multisignature" class="btn-link-menu">{{ 'NAV_TRANSFER_MULTISIGNATURE_INIT' | translate }}</a></li>
+		    <li role="presentation" class="active"><a href="#!/transfer/sign" class="btn-link-menu">{{ 'NAV_TRANSFER_MULTISIGNATURE_SIGN' | translate }}</a></li>
+		  </ul>
+		</div>
+		<br/>
+		<div class="form-group">{{ 'TRANSFER_SIGN_HEADER' | translate}}:</div>
+		<textarea class="form-control" ng-model="transaction" rows="5"></textarea>
+		<br>
+		<div class="checkboxCircle">
+			<input type="checkbox" ng-model="lastTx" id="checkboxAgree">
+			<label for="checkboxAgree"></label>
+			<span class="">{{ 'TRANSFER_SIGN_IS_LAST_TRANSACTION' | translate}}</span>
+		</div>
+		<div class="col-xs-6 col-sm-3 col-md-3 noPaddingLeftRight">
+			<br/>
+			<button type="submit" class="btn btn-success" ng-click="signMultisigTx(transaction, lastTx)">{{ 'TRANSFER_SIGN_SIGN_BUTTON' | translate }}</button>
+		</div>
+		<div class="col-xs-6 col-sm-3 col-md-3 noPaddingLeftRight">
+			<br/>
+			<a href="#!/home" class="btn btn-link-red">{{ 'TRANSFER_MULTISIGNATURE_BACK_WALLET' | translate }}</a>
+		</div>
+	</div>
+
+	<!--After the signature-->
+	<div ng-show="transferSuccess">
+		<!--After signing NOT the last transaction-->
+		<div ng-hide="lastTx">
+			<div class="form-group"><b class="warningText">{{ 'TRANSFER_SIGN_SUCCESS' | translate}}</b></div>
+			<div class="form-group">
+				<button class="btn btn-success smallButton" bs-popover data-clipboard-text="{{resultSignTx}}" data-toggle="popover" data-placement="top" data-content="{{ 'TRANSFER_MULTISIGNATURE_POPOVER_COPIED' | translate }}" role="button">
+					<span class="glyphicon glyphicon-file"></span>  {{ 'TRANSFER_MULTISIGNATURE_COPY_BUTTON' | translate }}
+				</button>
+			</div>
+			<textarea class="form-control" rows="5">{{resultSignTx}}</textarea>
+			<br>
+			<div class="checkboxCircle">
+				<input type="checkbox" ng-model="fileSaved" id="checkboxAgreeSaved">
+				<label for="checkboxAgreeSaved"></label>
+				<span class="">{{ 'TRANSFER_MULTISIGNATURE_I_HAVE_COPIED' | translate}}</span>
+			</div>
+			<div ng-show="fileSaved">
+				<br/>
+				<div class="col-xs-6 col-sm-4 col-md-4 noPaddingLeftRight">
+					<a href="#!/home" class="btn btn-success">{{ 'TRANSFER_MULTISIGNATURE_BACK_WALLET' | translate }}</a>
+				</div>
+			</div>
+		</div>
+		<!--After signing the last transaction-->
+		<div ng-show="lastTx">
+			<div class="form-group">{{ 'TRANSFER_SIGN_LAST_TX_SUCCESS' | translate}}</div>
+		</div>
+
+	</div>
+</div>

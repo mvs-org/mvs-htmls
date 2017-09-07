@@ -14,7 +14,8 @@
     function MetaverseService($http, localStorageService) {
         var service = {};
 
-        var SERVER = window.location.hostname + ':8820';
+        //var SERVER = window.location.hostname + ':3000';
+        var SERVER = window.location.hostname + ':8820'; //TO KEEP
         var RPC_URL = 'http://' + SERVER + '/rpc';
 
 
@@ -29,11 +30,10 @@
         service.ListBalances = ListBalances;
         service.GetAccount = GetAccount;
         service.GetNewAddress = GetNewAddress;
-        service.Send = Send;
-        service.SendFrom = SendFrom;
-        service.ListTxs = ListTxs;
         service.ChangePassword = ChangePassword;
         service.ResetPassword = ResetPassword;
+        service.ExportAccountAsFile = ExportAccountAsFile;
+        service.ImportAccountFromFile = ImportAccountFromFile;
 
 
         service.SERVER = SERVER;
@@ -43,24 +43,41 @@
         service.Stop = Stop;
         service.GetMiningInfo = GetMiningInfo;
 
+        //ETP
+        service.Send = Send;
+        service.SendFrom = SendFrom;
+        service.SendMore = SendMore;
+        service.ListTxs = ListTxs;
+        service.GetPublicKey = GetPublicKey;
+        service.GetNewMultiSig = GetNewMultiSig;
+        service.ListMultiSig = ListMultiSig;
+        service.CreateMultisigTx = CreateMultisigTx;
+        service.SignMultisigTx = SignMultisigTx
+
         //Asset
         service.CreateAsset = CreateAsset;
         service.ListAssets = ListAssets;
         service.ListAllAssets = ListAllAssets;
         service.GetAsset = GetAsset;
+        service.GetAddressAsset = GetAddressAsset;
         service.SendAssetFrom = SendAssetFrom;
         service.SendAsset = SendAsset;
         service.Issue = Issue;
+        service.SecondIssue = SecondIssue;
         service.Delete = Delete;
 
 
         //Chain
         service.FetchHeight = FetchHeight;
         service.FetchTx = FetchTx;
+        service.FetchHeader = FetchHeader;
+        service.GetBlock = GetBlock;
+        service.ListTxsAddress = ListTxsAddress;
 
         //Misc
         service.Query = Query;
         service.Deposit = Deposit;
+        service.FrozenAsset = FrozenAsset;
 
         return service;
 
@@ -142,7 +159,17 @@
          *
          **/
         function ResetPassword(username, password, mnemonic) {
-            return _send('changepasswdext', ['-n', username, '-p', password, mnemonic]);
+          return _send('changepasswdext', ['-n', username, '-p', password, mnemonic]);
+        }
+
+
+        function ExportAccountAsFile(password, last_word, path) {
+          var credentials = localStorageService.get('credentials');
+          return _send('exportaccountasfile', [credentials.user, password, last_word, path]);
+        }
+
+        function ImportAccountFromFile(path, password) {
+          return _send('importaccountfromfile', [path, password]);
         }
 
 
@@ -259,9 +286,15 @@
          * @apiParam {List} params [username, password]
          *
          **/
-        function ListTxs() {
+        function ListTxs(page) {
             var credentials = localStorageService.get('credentials');
-            return _send('listtxs', [credentials.user, credentials.password]);
+            //return _send('listtxs', ['-i', page, '-l', 1, credentials.user, credentials.password]);
+            return _send('listtxs', ['-i', page, credentials.user, credentials.password]);
+        }
+
+        function ListTxsAddress(address) {
+            var credentials = localStorageService.get('credentials');
+            return _send('listtxs', [credentials.user, credentials.password, '-a', address]);
         }
 
         /**
@@ -301,9 +334,13 @@
          *    }
          * }
          **/
-        function Send(recipent, quantity) {
+        function Send(recipent, quantity, memo) {
             var credentials = localStorageService.get('credentials');
-            return _send('send', [credentials.user, credentials.password, recipent, quantity]);
+            if(memo == '') {
+              return _send('send', [credentials.user, credentials.password, recipent, quantity]);
+            } else {
+              return _send('send', [credentials.user, credentials.password, recipent, quantity, '-m', memo]);
+            }
         }
 
         /**
@@ -343,9 +380,13 @@
          *    }
          * }
          **/
-        function SendFrom(sender, recipent, quantity) {
+        function SendFrom(sender, recipent, quantity, memo) {
             var credentials = localStorageService.get('credentials');
-            return _send('sendfrom', [credentials.user, credentials.password, sender, recipent, quantity]);
+            if(memo == '') {
+              return _send('sendfrom', [credentials.user, credentials.password, sender, recipent, quantity]);
+            } else {
+              return _send('sendfrom', [credentials.user, credentials.password, sender, recipent, quantity, '-m', memo]);
+            }
         }
 
         /**
@@ -385,9 +426,18 @@
          *    }
          * }
          **/
-        function SendMore(recipent, quantity) {
+        function SendMore(recipents) {
             var credentials = localStorageService.get('credentials');
-            return _send('sendmore', [credentials.user, credentials.password, recipent, quantity]);
+            var query = [];
+            var recipent = '';
+            query.push(credentials.user);
+            query.push(credentials.password);
+            recipents.forEach( (e) => {
+              recipent = e.address + ':' + e.value;
+              query.push('-r');
+              query.push(recipent);
+            });
+            return _send('sendmore', query);
         }
 
         /**
@@ -468,6 +518,41 @@
             return _send('fetch-tx', [hash]);
         }
 
+
+        /**
+         * @api {post} /rpc
+         * @apiName
+         * @apiGroup
+         *
+         * @apiDescription
+         *
+         * @apiParam {Const} method fetch-tx
+         * @apiParam {List} params []
+         *
+         **/
+        function FetchHeader(block_height) {
+            return _send('fetch-header', ['-t', block_height]);
+        }
+
+
+        /**
+         * @api {post} /rpc
+         * @apiName
+         * @apiGroup
+         *
+         * @apiDescription
+         *
+         * @apiParam {Const} method fetch-tx
+         * @apiParam {List} params []
+         *
+         **/
+        function GetBlock(block_hash) {
+            return _send('getblock', [block_hash, '--json=true']);
+        }
+
+
+
+
         /**
          * @api {post} /rpc Create asset
          * @apiName Create a new unissued asset
@@ -480,10 +565,11 @@
          * @apiParam {List} params [username, password,'-s',symbol,'-v',max_supply,'-n',decimal_number, '-d',description]
          *
          **/
-        function CreateAsset(symbol, max_supply, decimal_number, description) {
+        function CreateAsset(symbol, max_supply, secondary_offering, decimal_number, description) {
             max_supply*=Math.pow(10,decimal_number);
             var credentials = localStorageService.get('credentials');
             return _send('createasset', [credentials.user, credentials.password, '-s', symbol, '-v', max_supply, '-n',decimal_number, '-d', description]);
+            //return _send('createasset', [credentials.user, credentials.password, '-s', symbol, '-v', max_supply, '-r', secondary_offering, '-n',decimal_number, '-d', description]);
         }
 
         /**
@@ -499,8 +585,32 @@
          *
          **/
         function Issue(symbol) {
+          var credentials = localStorageService.get('credentials');
+          return _send('issue', [credentials.user, credentials.password, symbol]);
+        }
+
+
+
+        function SecondIssue(symbol, increase_maximum_supply) {
+          var credentials = localStorageService.get('credentials');
+          return _send('secondissue', [credentials.user, credentials.password, symbol, increase_maximum_supply]);
+        }
+
+
+        /**
+         * @api {post} /rpc Delete asset
+         * @apiName Delete an asset
+         * @apiGroup Assets
+         *
+         * @apiDescription Delete an asset. The asset will be deleted definitely
+         *
+         * @apiParam {Const} method delete
+         * @apiParam {List} params ['-s', symbol, username, password]
+         *
+         **/
+        function Delete(symbol) {
             var credentials = localStorageService.get('credentials');
-            return _send('issue', [credentials.user, credentials.password, symbol]);
+            return _send('deleteunissuedasset', ['-s', symbol, credentials.user, credentials.password]);
         }
 
 
@@ -567,6 +677,22 @@
             return _send('getasset', [credentials.user, credentials.password, symbol]);
         }
 
+
+        /**
+         * @api {post} /rpc Get asset
+         * @apiName Get asset
+         * @apiGroup Assets
+         *
+         * @apiDescription Gets details about an asset.
+         *
+         * @apiParam {Const} method getasset
+         * @apiParam {List} params [username, password, symbol]
+         *
+         **/
+        function GetAddressAsset(address) {
+            return _send('getaddressasset', [address]);
+        }
+
         /**
          * @api {post} /rpc Send asset
          * @apiName Send asset
@@ -603,6 +729,16 @@
             }
         }
 
+        function FrozenAsset(deposit_period, amount, password, symbol, address) {
+            var credentials = localStorageService.get('credentials');
+            deposit_period *= 60*60*24;  //convert from day to second
+            if (address != undefined) {
+                return _send('frozenasset', ['-d', address, credentials.user, password, symbol, amount, deposit_period]);
+            } else {
+                return _send('frozenasset', [credentials.user, password, symbol, amount, deposit_period]);
+            }
+        }
+
         /**
          * @api {post} /rpc Send asset from
          * @apiName Send asset from
@@ -619,13 +755,58 @@
             return _send('sendassetfrom', [credentials.user, credentials.password, sender_address, recipent_address, symbol, quantity]);
         }
 
+
+        function GetPublicKey(address) {
+            var credentials = localStorageService.get('credentials');
+            return _send('getpublickey', [credentials.user, credentials.password, address]);
+        }
+
+        function GetNewMultiSig(signaturenum, publickeynum, selfpublickey, recipents) {
+            var credentials = localStorageService.get('credentials');
+            var query = [];
+            query.push('-m');
+            query.push(signaturenum);
+            query.push('-n');
+            query.push(publickeynum);
+            query.push('-s');
+            query.push(selfpublickey);
+            recipents.forEach( (e) => {
+              query.push('-k');
+              query.push(e.publicKey);
+            });
+            query.push(credentials.user);
+            query.push(credentials.password);
+            return _send('getnewmultisig', query);
+        }
+
+        function ListMultiSig() {
+          var credentials = localStorageService.get('credentials');
+          return _send('listmultisig', [credentials.user, credentials.password]);
+        }
+
+
+        function CreateMultisigTx(fromAddress, toAddress, amount) {
+          var credentials = localStorageService.get('credentials');
+          return _send('createmultisigtx', [credentials.user, credentials.password, fromAddress, toAddress, amount]);
+        }
+
+        function SignMultisigTx(message, lastTx) {
+          var credentials = localStorageService.get('credentials');
+          if(lastTx) {
+            return _send('signmultisigtx', [credentials.user, credentials.password, message, '-b']);
+          } else {
+            return _send('signmultisigtx', [credentials.user, credentials.password, message]);
+          }
+        }
+
         function CheckAccount(user, password) {
             //To check if account exists we can simply check the accounts balance
             return _send('getbalance', [user, password]);
         }
 
         function ImportAccount(user, password, phrase, address_count) {
-            return this.Query('importaccount --accoutname ' + user + ' --password ' + password + ' -i' + address_count + ' ' + phrase);
+          return _send('importaccount', ['-n', user, '-p', password, '-i', address_count, phrase]);
+            //return this.Query('importaccount --accoutname ' + user + ' --password ' + password + ' -i' + address_count + ' ' + phrase);
         }
 
         function Query(string) {
@@ -733,12 +914,16 @@
             }
         }
 
-        function LoadTransactions(callback, type) {
-
-            MetaverseService.ListTxs()
+        function LoadTransactions(callback, type, page) {
+            MetaverseService.ListTxs(page)
                 .then(function(response) {
-                    var transactions = [];
-                    if (typeof response.success !== 'undefined' && response.success) {
+                  var transactions = [];
+                    if ( response.success !== 'undefined' && response.success) {
+                      if(response.data.current_page==response.data.total_page){
+                        transactions.lastpage = true;
+                      } else {
+                        transactions.lastpage = false;
+                      }
                         if (response.data.transactions == undefined) {
                             console.log('unable to load transactions.');
                             callback(1);
@@ -761,13 +946,16 @@
                                         if((transaction.direction==='receive' && output.own==='true') || (transaction.direction==='send' && output.own==='false')){
                                             transaction.recipents.push({
                                                 "address": output.address,
-                                                "value": parseInt(output.value)
+                                                "value": parseInt(output['etp-value'])
                                             });
                                             transaction.value += parseInt(output['etp-value']);
                                         }
                                     });
-                                    if(transaction.value)
-                                        transactions.push(transaction);
+                                    if(transaction.value) {
+                                      transactions.push(transaction);
+                                    } else {
+                                      //console.log(transaction);
+                                    }
                                     break;
                                 case TX_TYPE_ASSET:
                                     //Asset transactions
@@ -782,8 +970,11 @@
                                             transaction.decimal_number=output.attachment.decimal_number;
                                         }
                                     });
-                                    if(transaction.value)
-                                        transactions.push(transaction);
+                                    if(transaction.value) {
+                                      transactions.push(transaction);
+                                    } else {
+                                      //console.log(transaction);
+                                    }
                                     break;
                                 case TX_TYPE_ISSUE:
                                     //Asset issue tx
@@ -792,15 +983,18 @@
                                         if(output.own==='true' && output.attachment.type==='asset-issue'){
                                             transaction.recipents.push({
                                                 "address": output.address,
-                                                "value": parseInt(output.attachment.quantity)
+                                                "value": parseInt(output.attachment.maximum_supply)
                                             });
                                             transaction.value += parseInt(output.attachment.maximum_supply);
                                             transaction.type = output.attachment.symbol;
                                             transaction.decimal_number=output.attachment.decimal_number;
                                         }
                                     });
-                                    if(transaction.value)
-                                        transactions.push(transaction);
+                                    if(transaction.value) {
+                                      transactions.push(transaction);
+                                    } else {
+                                      //console.log(transaction);
+                                    }
                                 }
                             });
                             //Return transaction list
@@ -809,13 +1003,16 @@
                             //Empty transaction list
                             callback(null, []);
                         }
+                    } else if (response.error = "no record in this page") {
+                      //Empty transaction list
+                      callback(null, []);
                     } else {
-
                         $translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then(function(data) {
                             callback(1, null, data);
                         });
                     }
                 });
+
         }
 
     }

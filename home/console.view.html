@@ -1,22 +1,92 @@
 <div class="content">
-  <div class="headline"><em></em>{{ 'HEADLINE_CONSOLE' | translate }}</div>
-<div class="console" id="consolelog">
-  <div ng-repeat="log in consolelog">
-    <div class="console_b">
-        <span class="span1"><p>{{log.query}}</p><em></em></span>
+  <div class="headline col-md-12 noPaddingLeftRight">{{ 'NAV_PRO' | translate }}</div>
+
+  <!--Console large screens-->
+  <div class="col-sm-12 col-md-8 hidden-xs hidden-sm">
+    <h4>{{ 'NAV_CONSOLE' | translate }}</h4>
+    <div class="console_query" >
+      <span class="span1" ng-hide="connected">{{ 'CONSOLE.CONNECTION' | translate }}</span>
     </div>
-    <div class="console_a" >
-        <span class="span1"><pre>{{log.answer}}</pre><em></em></span>
+
+    <div ng-repeat="log in consolelog">
+      <div class="console_query">
+        <span class="console_text">{{log.query}}</span>
+      </div>
+      <div class="console_answer" >
+        <pre class="console_text">{{log.answer}}</pre>
+      </div>
+    </div>
+    <input type="text" rows="5" ng-show="connected" ng-model="querystring" ng-keyup="$event.keyCode == 13 && query()" class="forminput" id="inputField" placeholder="{{ 'CONSOLE.INSERT_PROMPT' | translate }}">
+  </div>
+
+  <!--Mining-->
+  <div class="mining col-sm-12 col-md-4">
+    <div>
+      <h4 ng-hide="isMining">{{ 'NAV_MINING' | translate }}
+        <span ng-hide="isMining" class="miningEnd wk-title">{{ 'MINING_NOT_RECOMMENDED' | translate }}   </span>
+      </h4>
+      <h4 ng-show="isMining" style="isMiningText">{{ 'MINING_IS_MINING' | translate }}
+        <div class="miningSpinner">
+        </div>
+      </h4>
+
+    </div>
+
+
+
+    <div ng-show="isMining" class="miningEnd">{{ 'MINING_HOW_STOP' | translate }}</div>
+    <div class="row">
+      <!--Table for mining Rate, Difficulty and Height-->
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        <table class="table miningTable wk-countbox">
+          <tbody>
+            <tr>
+              <td class="wd-t">{{ 'MINING_RATE' | translate }}</td>
+              <td class="color66">{{status.rate}}</td>
+            </tr>
+            <tr>
+              <td class="wd-t">{{ 'MINING_DIFFICULTY' | translate }}</td>
+              <td class="color66">{{status.difficulty}}</td>
+            </tr>
+            <tr>
+              <td class="wd-t">{{ 'MINING_HEIGHT' | translate }}</td>
+              <td class="color66">{{status.height}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <!--Mining buttons-->
+        <div>
+          <!--Play button, when not mining-->
+          <button class="btn btn-success wk-beginning" ng-click="start()" ng-hide="isMining">
+             {{ 'MINING_START' | translate }}
+          </button>
+          <!--Pause button, when mining-->
+          <button class="btn btn-secondary wk-beginning" ng-click="stop()" ng-show="isMining">
+            {{ 'MINING_END' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <br/><br/>
+  </div>
+
+  <!--Console small screens-->
+  <div class="col-sm-12 col-md-6 hidden-md hidden-lg hidden-xl">
+    <h4>{{ 'NAV_CONSOLE' | translate }}</h4>
+    <div class="console_query" >
+      <span class="span1" ng-hide="connected">{{ 'CONSOLE.CONNECTION' | translate }}</span>
+    </div>
+
+    <div ng-repeat="log in consolelog">
+      <div class="console_query">
+        <span class="console_text">{{log.query}}</span>
+      </div>
+      <div class="console_answer" >
+        <pre class="console_text">{{log.answer}}</pre>
+      </div>
+    </div>
+    <div class="form-group">
+      <input type="text" rows="5" ng-show="connected" ng-model="querystring" ng-keyup="$event.keyCode == 13 && query()" class="form-control" id="inputField" placeholder="{{ 'CONSOLE.INSERT_PROMPT' | translate }}">
     </div>
   </div>
 </div>
-<div class="consoleInput">
-    <form>
-      <div class="input_1">
-        <input type="text" ng-model="querystring" class="forminput" id="" placeholder="{{ 'CONSOLE.INSERT_PROMPT' | translate }}">
-      </div>
-      <input class="input_2 btn btn-primary" type="submit" ng-click="query()" value="{{ 'CONSOLE.SEND' | translate }}">
-    </form>
-</div>
-</div>
-<link rel="stylesheet" href="css/mining.css">

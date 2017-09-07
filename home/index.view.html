@@ -1,69 +1,166 @@
-<!--------------------------------------头部----------------------------------->
-<div class="panel">
-  <div class="header">
-    <div class="logo">
-      <h1><img src="images/logo-black.png" class="logo" alt="" /></h1>
-    </div>
-    <div class="header-right">
-      <div class="own">{{vm.account}}</div>
-<div class="own">
-      <a href="#!/account/details"><img src="images/icon-settings.png" alt="" class="install"/></a>
+<!--Empty header for xs device to make the page start at the right height-->
+<div class="headerBlankLargeScreens hidden-xs">
+
 </div>
-      <a href="#!/login" class="own glyphicon glyphicon-log-out huge red"></a>
 
-    </div>
-  </div>
-</div>
-<!---------------------------------内容------------------------------------------------->
+<!--Main navbar-->
+<nav class="header navbar navbar-default navbar-fixed-top hidden-xs">
+  <div class="qq fullPageWidth headerBox">
+    <div class="headerBox" ng-controller="MenuController">
+      <ul class="nav navbar-nav">
+        <li role="presentation"><div class="linkLogo hidden-xs hidden-sm"><a href="#!/home" ><img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" /></a></div></li>
+        <li role="presentation"><a href="#!/home" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='home'}">{{ 'NAV_HOME' | translate }}</span></a></li>
+        <li role="presentation"><a href="#!/addresses/myaddresses" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='addresses'}">{{ 'NAV_ACCOUNT_ADDRESSES' | translate }}</span></a></li>
+        <li role="presentation"><a href="#!/asset/myassets" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='asset'}">{{ 'NAV_ASSETS' | translate }}</span></a></li>
+        <!--<li role="presentation"><a href="#!/deposit/ETP" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='deposit'}">{{ 'NAV_DEPOSIT' | translate }}</span></a></li>-->
+        <!--<li role="presentation"><a href="#!/account/details" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='account'}">{{ 'NAV_ACCOUNT_SETTING' | translate }}</span></a></li>-->
+        <li role="presentation"> <a href="#!/account/details" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='account'}">{{ 'USER_SETTING' | translate }}</span></a></li>
+        <li role="presentation"><a href="#!/advanced" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='advanced'}">{{ 'NAV_PRO' | translate }}</span></a></li>
+        <!--<li role="presentation" class="visible-xs visible-sm"><a href="#!/explorer/search/" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='explorer'}">{{ 'NAV_EXPLORER' | translate }}</span></a></li>-->
 
-<div class="layout">
-  <div class="centent">
-
-    <div class="leftnav greybg"> <a href="#!/assets" class="current">
-      <a href="#!/assets" class="current">
-      <h2 class="leftnav-home"><em class="em3"></em><span>{{ 'NAV_HOME' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></h2>
-      </a>
-      <h2 class="leftnav-account" ng-click="show_account_menu()"><a class="current" ><em class="em1"></em><span>{{ 'NAV_ACCOUNT' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></a></h2>
-      <ul class="accountUl" ng-show="menu.account.show">
-        <li><a href="#!/account/addresses" class="current">{{ 'NAV_ACCOUNT_ADDRESSES' | translate }}</a></li>
-        <li><a href="#!/account/details" class="current">{{ 'NAV_ACCOUNT_SETTING' | translate }}</a></li>
-        <!-- <li><a class="current">{{ 'NAV_DIGITAL_IDENTITY' | translate }}</a></li> -->
-      </ul>
-      <h2 class="leftnav-assets" ng-click="show_assets_menu()"><em class="em1"></em><span>{{ 'NAV_ASSETS' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></h2>
-      <ul class="assetUl" ng-show="menu.assets.show">
-        <li><a href="#!/transfer" class="current">{{ 'NAV_ETP' | translate }}</a></li>
-        <li><a href="#!/asset/details/" class="current">{{ 'NAV_ASSET_DETAILS' | translate }}</a></li>
-        <li><a href="#!/asset/create" class="current">{{ 'NAV_ASSET_CREATE' | translate }}</a></li>
-        <li><a href="#!/asset/all" class="current">{{ 'NAV_ASSET_ALL' | translate }}</a></li>
-      </ul>
-
-      <a href="#!/mining" class="current">
-        <h2 class="leftnav-mining"><em class="em3"></em><span>{{ 'NAV_MINING' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></h2>
-      </a>
-      <a href="#!/deposit" class="current">
-        <h2 class="leftnav-deposit"><em class="em4"></em><span>{{ 'NAV_DEPOSIT' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></h2>
-      </a>
-      <a href="#!/console" class="current">
-      <h2 class="leftnav-console"><em class="em4"></em><span>{{ 'NAV_CONSOLE' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></h2>
-      </a>
-      <a href="#!/explorer" class="current">
-        <h2 class="leftnav-explorer"><em class="em4"></em><span>{{ 'EXPLORER.NAV_ITEM' | translate }}</span><em class="em2"><img src="images/icon-arrow.png" width="9" height="15"></em></h2>
-      </a>
-      <p>{{ 'METAVERSE_VERSION' | translate }} <<<version>>></p>
-    </div>
-    <div class="admin">
-      <div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
-        <div class="" ng-bind="flash.message">
-        </div>
+        <!--<form class="navbar-form navbar-left hidden-xs hidden-sm col-md-4 col-lg-4">
+        <div class="form-group">
+        <input type="search" name="search" class="form-control researchTextBox" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
       </div>
-      <ui-view/>
+      <input type="submit" class="btn btn-success smallButton" value="{{ 'HEADER_SEARCH' | translate }}" ng-click="vm.search(stringToSearch)"></input>
+    </form>-->
+      </ul>
+
+      <!--Right header-->
+      <ul class="nav navbar-nav navbar-right">
+        <form class="navbar-form">
+
+          <!--Search big screen-->
+          <p class="hidden-xs hidden-sm hidden-md topMenuButtonRight headerBoxSearchLarge">
+            <span class="input-group searchArea">
+              <input type="search" name="search" class="form-control researchTextBox navbar-form" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
+              <span class="input-group-addon researchButton">
+                <button type="submit" class="btn-link smallButton menuButton topMenuButtonRight glyphicon glyphicon-search" value="" ng-click="vm.search(stringToSearch)"></button>
+              </span>
+            </span>
+          </p>
+
+          <!--Search small screen-->
+          <span class="hidden-lg hidden-xl researchButton topMenuButtonRight">
+            <p>
+              <a href="#!/explorer/search/" class="btn-link smallButton menuButton glyphicon glyphicon-search"></a>
+            </p>
+          </span>
+
+
+          <!--Block height-->
+          <span class="hidden-xs hidden-sm topMenuButtonRight">
+            <p>
+              <span>{{ 'CONNECTION_BLOCKS' | translate }}:</span>
+              <span>{{height}}</span>
+            </p>
+          </span>
+
+          <!--Language button Large screens-->
+          <span class="topMenuButtonRight languageHeaderLarge">
+            <p ng-show="('LANG_CODE' | translate)=='zh'">
+              <button class="btn-link-black smallButton languageButtonXl" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
+            <p>
+              <button class="selectedLanguage btn-link-black smallButton languageButtonXl" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
+                中文
+              </button>
+              /
+              <button class="lang-en btn-link-black smallButton languageButtonXl" type="button" ng-click="vm.changeLang('en_US')">
+                EN
+              </button>
+            </p>
+            <p ng-show="('LANG_CODE' | translate)=='en'">
+              <button class="btn-link-black smallButton languageButtonXl" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
+                中文
+              </button>
+              /
+              <button class="selectedLanguage btn-link-black smallButton languageButtonXl" type="button" ng-click="vm.changeLang('en_US')">
+                EN
+              </button>
+            </p>
+          </span>
+
+          <!--User name-->
+          <span class="">
+            <a href="#!/account/details" class="btn-link smallButton menuButton userName">
+              <p class="userNameSpan topMenuButtonRight">{{vm.account}}</p>
+            </a>
+          </span>
+
+
+          <!--Logout button-->
+          <span class="topMenuButtonRight">
+            <a href="#!/login" class="btn-link smallButton menuButton">
+              <p>
+                {{ 'HEADER_LOGOUT' | translate }} <span class="glyphicon glyphicon-log-out"></span>
+              </p>
+            </a>
+          </span>
+        </form>
+      </ul>
     </div>
-    <footer class="greybg">
-      <span>{{ 'CONNECTION_PEERS' | translate }}:</span> <span></span>
-      <div class="footerRight"> <span>{{ 'CONNECTION_BLOCKS' | translate }}:</span> <span>{{height}}</span> </div>
-    </footer>
   </div>
+</nav>
+
+<!--Menu button for XS device-->
+<div class="panel">
+  <div class="header visible-xs">
+
+    <!--Search very small screen-->
+    <div class="col-xs-4">
+      <div class="input-group headerBoxSearchXs headerButtonXs">
+        <input type="search" name="search" class="form-control researchTextBox navbar-form" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
+        <span class="input-group-addon researchButton">
+          <button type="submit" class="btn-link smallButton menuButton topMenuButtonRight glyphicon glyphicon-search" value="" ng-click="vm.search(stringToSearch)"></button>
+        </span>
+      </div>
+    </div>
 
 
+
+    <!--User name-->
+    <span class="col-xs-5 headerButtonXs">
+      <a href="#!/account/details" class="btn-link smallButton menuButton userName">
+        <p class="userNameSpanXs topMenuButtonRight">{{vm.account}}</p>
+      </a>
+    </span>
+
+    <!--Language button Small screens-->
+    <span class="languageHeaderLarge col-xs-2">
+      <button class="languageButtonHeaderSmall" type="button" ng-click="vm.changeLang('zh_ZH')" ng-show="('LANG_CODE' | translate)=='en'" alt="">
+        <img class="languageFlag" src="images/zh.png" />
+      </button>
+      <button class="languageButtonHeaderSmall" type="button" ng-click="vm.changeLang('en_US')" ng-show="('LANG_CODE' | translate)=='zh'">
+        <img class="languageFlag" alt="" src="images/en.png"/>
+      </button>
+    </span>
+
+    <!--Menu button for XS device-->
+    <div class="menuButtonSmallScreen pull-right noPaddingLeftRight">
+      <button class="btn btn-link dropdown-toggle menuButtonXs" type="button" id="dropdownMenuSmallScreen" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+
+        <li role="presentation"><a href="#!/home" class="btn">{{ 'NAV_HOME' | translate }}</a></li>
+        <li role="presentation"><a href="#!/addresses/myaddresses" class="btn">{{ 'NAV_ACCOUNT_ADDRESSES' | translate }}</a></li>
+        <li role="presentation"><a href="#!/deposit/ETP" class="btn">{{ 'NAV_DEPOSIT' | translate }}</a></li>
+        <li class="divider" role="separator"></li>
+        <li role="presentation"><a href="#!/advanced" class="btn">{{ 'NAV_PRO' | translate }}</a></li>
+        <li class="divider" role="separator"></li>
+        <li role="presentation"><a href="#!/login" class="btn">{{ 'HEADER_LOGOUT' | translate }}</a></li>
+      </ul>
+    </div></div>
 </div>
+
+<div class="admin fullPageWidth">
+  <div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
+    <div class="" ng-bind="flash.message">
+    </div>
   </div>
+  <ui-view/>
+</div>
+<div class="footerRight">
+  <span class="hidden-md hidden-lg hidden-xl blockSmallScreen">{{ 'CONNECTION_BLOCKS' | translate }}: {{height}}</span>
+  <span>{{ 'METAVERSE_VERSION' | translate }} <<<version>>></span>
+</div>

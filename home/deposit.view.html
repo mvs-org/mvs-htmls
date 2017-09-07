@@ -1,56 +1,218 @@
 <div class="content">
-	<span class="headline"><em></em>{{ 'DEPOSIT.HEADLINE' | translate }}</span>
-				<div class="">
-					<div class="row">
-						<form>
-						<div class="col-sm-5">
-							<div class="form-group">
-								<label for="recipent_address" class="control-label">{{ 'DEPOSIT.PERIOD' | translate }}：<span class="red big">*</span></label>
-                <select class="form-control" name="period" ng-model="period_select" required>
-                  <option ng-repeat="(deposit_option, interest_rate) in deposit_options" value="{{deposit_option}}">{{deposit_option | translate}}</option>
-                </select>
-							</div>
+	<span class="headline col-sm-12 noPaddingLeftRight">{{ 'DEPOSIT.HEADLINE' | translate }}</span>
 
-							<div class="form-group">
+	<!--Select type of Asset-->
+	<!--<div class="selectAssetType">
+		<button class="dropdown-togglen assetTypeButton" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+			{{symbol}}
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+			<li><a ng-click="selectAssetType('ETP')" href="#!/deposit/ETP" >ETP</a></li>
+			<li class="divider" role="separator"></li>
+			<li ng-repeat="asset in assetsIssued | orderBy:'symbol'"><a ng-click="selectAssetType(asset.symbol)" href="#!/deposit/{{asset.symbol}}" >{{asset.symbol}}</a></li>
+		</ul>
+	</div>-->
 
-								<span class="dropdown">
-								<label for="value" class="control-label">{{ 'TRANSFER_VALUE' | translate }}：<span class="red big">*</span>
-                </label>
-								<div class="input-group">
-								<span class="input-group-addon clickable" data-toggle="dropdown">{{factor | translate}}</span>
-								<ul class="dropdown-menu clickable">
-									<li><a ng-click="changeFactor('etp')">{{ 'FACTOR_ETP' | translate }}</a></li>
-									<li><a ng-click="changeFactor('satoshi')">{{ 'FACTOR_SATOSHI' | translate }}</a></li>
-								</ul>
-									<input type="text" class="form-control" name="value" ng-model="value" autocomplete="off" required="">
-								</div>
+	<!--Navigation Manual/Auto selection of addresse-->
+	<!--<div class="col-xs-12 noPaddingLeftRight">
+		<ul class="nav nav-pills tabsMenu">
+			<li role="presentation"><a class="btn btn-link-menu" ng-click="selectAddress('auto','')" ng-style="{ 'text-decoration' : underlineAuto}">{{ 'DEPOSIT_SELECT_AUTO_ADRESS' | translate }}</a></li>
+			<li role="presentation" bs-tooltip data-placement="top" title="Function not available yet"><a class="btn btn-link-menu disabled" ng-click="selectAddress('manual','')" ng-style="{ 'text-decoration' : underlineManual}">{{ 'DEPOSIT_SELECT_MANUAL_ADDRESS' | translate }}</a></li>
+		</ul>
+	</div>-->
+
+
+	<!--Display the balance-->
+	<!--<div class="col-xs-12 noPaddingLeftRight" ng-show=autoSelectAddress>
+		<a href="">
+			<dd class="panel assetBox assetBoxChecked col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
+				<span class="assetBoxSymbolImg"><img class="assetSymbol" src="images/favicon.jpg" alt=""/></span>
+				<span class="assetBoxTextInfo">
+					<div>
+						<span class="checked"><span>
+						</div>
+						<span class="assetBoxSymbolName">{{symbol}}</span>
+						<span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
+						<span class="assetBoxValue">{{balance['total-unspent'] | assetformat : decimal_number}}</span>
+						<span ng-show="symbol == 'ETP'" class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
+						<span ng-show="symbol == 'ETP'" class="assetBoxValue">{{balance['total-frozen'] | assetformat : decimal_number}}</span>
+					</span>
+				</dd>
+			</a>
+		</div>-->
+
+		<!--Display all the addresses if the user choose to select it manually-->
+		<!--<div class="col-xs-12 noPaddingLeftRight" ng-hide=autoSelectAddress>
+			<div class="radioButtonAddress noPaddingLeftRight" ng-repeat="address in addresses | orderBy:sortType:sortReverse" ng-click="selectAddress('selectionAddress',address.address)" ng-hide="(address.balance == 0)">
+				<dd class="panel addressBox noPaddingLeftRight col-xs-1">
+					<input type="radio" name="radioDeposit" id={{address}} value="hideCustomDate"/>
+					<label for={{address}}>
+						<div class="addressBoxSymbolImgDeposit">
+							<img class="assetSymbol assetSymbolDeposit" src="images/favicon.jpg" alt=""/>
+						</div>
+						<div class="addressBoxTextInfoDeposit">
+							<span class="addressBoxNameDeposit">New address</span>
+							<span class="addressBoxAddressDeposit">{{address.address}}</span>
+							<span class="col-xs-6 noPaddingLeftRight">
+								<span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
+								<span class="assetBoxValue">{{address.balance/100000000 }}</span>
 							</span>
-							</div>
-              <p><span class="quick_response positive" ng-show="deposit_options[period_select][0]*value">{{ 'DEPOSIT.PROFIT' | translate }}: {{deposit_options[period_select][0]*value | number : 4}} {{factor | translate}}</span></p>
-              <div class="form-group">
-								<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}：<span class="red big">*</span></label>
-									<input type="password" class="form-control" name="password" id="" autocomplete="new-password" ng-model="password" required="">
-							</div>
-              <div class="form-group">
-								<label for="address_option" class="control-label">{{ 'DEPOSIT.ADDRESS_OPTION' | translate }}</label>
-								<input type="checkbox" class="form-control pull-right" name="address_option" ng-model="address_option">
-                <input type="text" class="form-control" name="deposit_address" ng-model="deposit_address" ng-show="address_option">
-							</div>
-							<button type="submit" id="transferBtn" ng-click="deposit()">{{ 'DEPOSIT.SEND' | translate }}</button>
+							<span class="col-xs-6 noPaddingLeftRight">
+								<span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
+								<span class="assetBoxValue">{{address.frozen/100000000 }}</span>
+							</span>
 						</div>
-						<div class="col-sm-1"></div>
-						<div class="col-sm-5">
-              <table class="info_table">
-                <tr><th>{{ 'DEPOSIT.PERIOD' | translate }}</th><th>{{ 'DEPOSIT.INTEREST_RATE' | translate }}</th><th>{{ 'DEPOSIT.ANNUAL_RATE' | translate }}</th></tr>
-                <tr ng-class="{'selected_row' : period_select == deposit_option}" ng-repeat="(deposit_option, interest_rate) in deposit_options">
-                  <td>{{deposit_option | translate}}</td>
-                  <td>{{interest_rate[0] * 100 | number : 2}} %</td>
-                  <td>{{interest_rate[1] * 100 | number : 2}} %</td>
-                </tr>
-              </table>
-						</div>
-					</form>
-					</div>
-
+					</label>
+				</dd>
 			</div>
+		</div>-->
+		<!--Interest rates table-->
+		<!--<div class="balanceAndInterestRates">
+
+		<div class="col-sm-5">
+		<table class="info_table">
+		<tr><th>{{ 'DEPOSIT.PERIOD' | translate }}</th><th>{{ 'DEPOSIT.INTEREST_RATE' | translate }}</th><th>{{ 'DEPOSIT.ANNUAL_RATE' | translate }}</th></tr>
+		<tr ng-class="{'selected_row' : period_select == deposit_option}" ng-repeat="(deposit_option, interest_rate) in deposit_options">
+		<td>{{deposit_option | translate}}</td>
+		<td>{{interest_rate[0] * 100 | number : 2}} %</td>
+		<td>{{interest_rate[1] * 100 | number : 2}} %</td>
+	</tr>
+</table>
+</div>
+</div>-->
+
+
+
+<form class="col-xs-12 col-md-6">
+	<!--Amount-->
+	<div class="form-group">
+		<label for="value" class="control-label">
+			{{ 'TRANSFER_VALUE' | translate }}
+		</label>
+		<input type="number" min="0" step="0.00000001" max="{{balance['total-unspent']/100000000}}" class="form-control" name="value" placeholder="0.00000000" ng-model="value" autocomplete="off" required="">
+	</div>
+
+	<div class="form-group">
+		<label for="recipent_address" class="control-label">{{ 'DEPOSIT.PERIOD' | translate }}</label>
+		<select class="form-control" name="period" ng-model="period_select" required>
+			<option ng-repeat="(deposit_option, interest_rate) in deposit_options" value="{{deposit_option}}">
+				{{deposit_option | translate}}
+				{{ 'DEPOSIT.INTEREST_RATE' | translate }}: {{interest_rate[0] * 100 | number : 2}} %
+			</option>
+		</select>
+	</div>
+
+	<!--Appear when an amount and a period are selected, display the profits-->
+	<div class="form-group quickResponse">
+		<span class="" ng-show="deposit_options[period_select][0]*value">
+			{{ 'DEPOSIT.PROFIT' | translate }}: {{deposit_options[period_select][0]*value | number : 4}} {{factor | translate}}
+		</span>
+	</div>
+
+	<!--Interest rates table small screens-->
+	<div class="info_table col-xs-12 visible-xs visible-sm noPaddingLeftRight">
+		<label class="control-label">
+			{{ 'DEPOSIT.INTEREST_RATE_TABLE_HEADER' | translate }}
+		</label>
+
+		<table class="col-xs-12 noPaddingLeftRight" id="interestRateTable">
+			<tr class="headerInterestRateTable">
+				<th class="fieldInterestRateTable">{{ 'DEPOSIT.PERIOD' | translate }}</th>
+				<th class="fieldInterestRateTable">{{ 'DEPOSIT.INTEREST_RATE' | translate }}</th>
+				<th class="fieldInterestRateTable">{{ 'DEPOSIT.ANNUAL_RATE' | translate }}</th>
+			</tr>
+			<tr ng-class="{'selected_row' : period_select == deposit_option}" ng-repeat="(deposit_option, interest_rate) in deposit_options">
+				<td class="fieldInterestRateTable">{{deposit_option | translate}}</td>
+				<td class="fieldInterestRateTable">{{interest_rate[0] * 100 | number : 2}} %</td>
+				<td class="fieldInterestRateTable">{{interest_rate[1] * 100 | number : 2}} %</td>
+			</tr>
+		</table>
+	</div>
+
+
+
+		<!--Selection of the time period-->
+		<!--<div class="col-xs-12 noPaddingLeftRight">
+			<div class="radioButtonPeriodDeposit">
+				<span class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-2" ng-repeat="(deposit_option, interest_rate) in deposit_options" value="{{deposit_option}}">
+					<input type="radio" name="radioPeriodDeposit" id={{deposit_option}} value="hideCustomDate" ng-click="setDepositPeriod(deposit_option)"/>
+					<label for={{deposit_option}}>
+						<span class="periodDeposit">
+							{{deposit_option | translate}}
+						</span>
+						<span class="interestDeposit">
+							{{'DEPOSIT.INTEREST_RATE' | translate}}: {{interest_rate[0] * 100 | number : 2}} %
+						</span>
+					</label>
+				</span>
+			</div>
+		</div></div>-->
+
+
+
+
+	<!--Checkbox to deposit to a specify address-->
+	<div class="form-group col-xs-12 spe-addrbox depositAddressCheckbox">
+		<div class="checkboxCircle">
+			<div class="checkbox-box">
+					<input type="checkbox" name="address_option" ng-model="address_option" id="checkboxCircleDeposit">
+					<label for="checkboxCircleDeposit"></label>
+			</div>
+			<span class="textCheckbox">{{ 'DEPOSIT.ADDRESS_OPTION' | translate }}</span>
+		</div>
+	</div>
+	<div class="form-group col-xs-12 noPaddingLeftRight" ng-show="address_option">
+		<label for="deposit_address" class="control-label">
+			{{ 'DEPOSIT_ADDRESS_TO_DEPOSIT' | translate }}
+		</label>
+		<input type="etpaddress" class="form-control" name="deposit_address" ng-model="deposit_address">
+	</div>
+
+	<!--Password-->
+	<div  class="form-group col-xs-12 noPaddingLeftRight">
+		<label for="password" class="control-label">
+			{{ 'TRANSFER_PASSWORD' | translate }}
+		</label>
+		<input type="password" class="form-control" name="password" id="" autocomplete="new-password" ng-model="password" required>
+	</div>
+
+	<!--Total deposit + profits-->
+	<div  class="form-group col-xs-12 noPaddingLeftRight" ng-show="deposit_options[period_select][0]*value">
+		<label for="password" class="control-label">
+			{{ 'DEPOSIT_TOTAL_DUE' | translate }}
+		</label>
+		<span class="totalDue" >
+			{{value+(deposit_options[period_select][0]*value) | number : 4}}
+		</span>
+		<span class="profit" >
+			(+{{deposit_options[period_select][0]*value | number : 4}})
+		</span>
+	</div>
+
+	<!--Submit button-->
+	<div  class="col-xs-12 col-md-6 noPaddingLeftRight">
+		<button class="btn btn-success" type="submit" id="transferBtn" ng-click="deposit()">{{ 'DEPOSIT.SEND' | translate }}</button>
+	</div>
+</form>
+
+<!--Interest rates table large screens-->
+<div class="info_table col-md-offset-1 col-xs-12 col-md-5 hidden-xs hidden-sm noPaddingLeftRight">
+	<label class="control-label">
+		{{ 'DEPOSIT.INTEREST_RATE_TABLE_HEADER' | translate }}
+	</label>
+
+	<table class="col-xs-12 noPaddingLeftRight" id="interestRateTable">
+		<tr class="headerInterestRateTable">
+			<th class="fieldInterestRateTable">{{ 'DEPOSIT.PERIOD' | translate }}</th>
+			<th class="fieldInterestRateTable">{{ 'DEPOSIT.INTEREST_RATE' | translate }}</th>
+			<th class="fieldInterestRateTable">{{ 'DEPOSIT.ANNUAL_RATE' | translate }}</th>
+		</tr>
+		<tr ng-class="{'selected_row' : period_select == deposit_option}" ng-repeat="(deposit_option, interest_rate) in deposit_options">
+			<td class="fieldInterestRateTable">{{deposit_option | translate}}</td>
+			<td class="fieldInterestRateTable">{{interest_rate[0] * 100 | number : 2}} %</td>
+			<td class="fieldInterestRateTable">{{interest_rate[1] * 100 | number : 2}} %</td>
+		</tr>
+	</table>
+</div>
 </div>

@@ -1,0 +1,96 @@
+<div class="content" ng-show=exists>
+  <span class="headline">{{ 'EXPLORER_HEADLINE_BLOCK' | translate }}</span>
+  <div class="col-md-12 noPaddingLeftRight">
+    <h2>{{search}}</h2>
+  </div>
+
+  <!--Hash-->
+  <div class="col-md-12 form-group noPaddingLeftRight">
+    <label class="control-label">
+      {{ 'EXPLORER.TRANSACTION_HASH' | translate }}
+    </label>
+    <div>
+      {{blockInfos.hash}}
+    </div>
+  </div>
+
+  <!--Number of transactions-->
+  <div class="col-md-12 form-group noPaddingLeftRight">
+    <label class="control-label">
+      {{ 'EXPLORER_BLOCK_NB_TRANSACTIONS' | translate }}
+    </label>
+    <div>
+      {{transaction_count}}
+    </div>
+  </div>
+
+  <!--Nonce-->
+  <div class="col-md-12 form-group noPaddingLeftRight">
+    <label class="control-label">
+      {{ 'EXPLORER_BLOCK_NONCE' | translate }}
+    </label>
+    <div>
+      {{blockInfos.nonce}}
+    </div>
+  </div>
+
+  <!--Mix hash-->
+  <div class="col-md-12 form-group noPaddingLeftRight">
+    <label class="control-label">
+      {{ 'EXPLORER_BLOCK_MIX_HASH' | translate }}
+    </label>
+    <div>
+      {{blockInfos.mixhash}}
+    </div>
+  </div>
+
+  <!--Version-->
+  <div class="col-md-12 form-group noPaddingLeftRight">
+    <label class="control-label">
+      {{ 'EXPLORER_BLOCK_VERSION' | translate }}
+    </label>
+    <div>
+      {{blockInfos.version}}
+    </div>
+  </div>
+
+  <!--Merkle tree hash-->
+  <div class="col-md-12 form-group noPaddingLeftRight">
+    <label class="control-label">
+      {{ 'EXPLORER_BLOCK_MERKLE_TREE_HASH' | translate }}
+    </label>
+    <div>
+      {{blockInfos.merkle_tree_hash}}
+    </div>
+  </div>
+
+  <!--Previous block hash-->
+  <div class="col-md-12 form-group noPaddingLeftRight">
+    <label class="control-label">
+      {{ 'EXPLORER_BLOCK_PREVIOUS_HASH' | translate }}
+    </label>
+    <div>
+      {{blockInfos.previous_block_hash}}
+    </div>
+  </div>
+
+  <!--Previous block hash-->
+  <div class="col-md-12 form-group noPaddingLeftRight">
+    <label class="control-label">
+      {{ 'EXPLORER_BLOCK_TIME' | translate }}
+    </label>
+    <div>
+      {{blockInfos.timestamp | date: ('GENERAL.DATE_FORMAT' | translate) }}
+    </div>
+  </div>
+
+  <!--Transactions-->
+  <div class="col-md-12 form-group noPaddingLeftRight">
+    <label class="control-label">
+      {{ 'EXPLORER_BLOCK_TRANSACTIONS' | translate }}
+    </label>
+    <div ng-repeat="transaction in transactionsPerBlock">
+      <a class="btn-link" href="#!/explorer/tx/{{transaction.hash}}">{{transaction.hash}}</a>
+    </div>
+  </div>
+</div>

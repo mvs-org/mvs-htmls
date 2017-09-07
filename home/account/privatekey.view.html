@@ -1,0 +1,34 @@
+<div>
+  <ul class="nav nav-pills tabsMenu">
+    <li role="presentation"><a href="#!/account/details" class="btn-link-menu">{{ 'SETTINGS.CHANGE_PASSWORD' | translate }}</a></li>
+    <li role="presentation" class="active"><a href="#!/account/privatekey" class="btn-link-menu">{{ 'SETTINGS.PRIVATE_KEY' | translate }}</a></li>
+    <li role="presentation"><a href="#!/account/export" class="btn-link-menu">{{ 'SETTINGS.EXPORT' | translate }}</a></li>
+    <!--<li role="presentation"><a href="#!/account/subscribe" class="btn-link-menu">{{ 'NAV_ACCOUNT_SUBSCRIBE' | translate }}</a></li>-->
+  </ul>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <br/>
+    <form ng-hide="privatekey"  class="form-spebox">
+      <div class="form-group">
+        <label for="password" class="control-label">{{ 'SETTINGS_BACKUP_PASSWORD' | translate }}</label>
+        <input type="password" class="form-control" name="password" id="" ng-model="privatekey_password" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label for="password" class="control-label">{{ 'SETTINGS.MNEMONIC_LAST_WORD' | translate }}</label>
+        <input type="password" class="form-control" name="password" id="" ng-model="privatekey_last_word" autocomplete="off">
+      </div>
+      </br>
+      <div class="row col-md-6">
+        <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="{{ 'SETTINGS_BACKUP_ACCOUNT' | translate }}" class="btn btn-success">
+      </div>
+
+    </form>
+    <div class="form-group" ng-show="privatekey">
+      <label for="privatekey" class="col-sm-12 control-label">{{ 'SETTINGS_PRIVATE_KEY' | translate }}</label>
+      <div>
+        <textarea name="privatekey" class="form-group mnemonic_red col-xs-12 col-sm-12 col-md-12" ng-model="privatekey" rows="5" cols="" placeholder="">{{vm.registered.privatekey}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>

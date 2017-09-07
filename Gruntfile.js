@@ -43,10 +43,12 @@ module.exports = function(grunt) {
                     './min/app.css': [
                         './node_modules/bootstrap/dist/css/bootstrap.min.css',
                         './node_modules/nprogress/nprogress.css',
-                        './css/admin.css',
                         './node_modules/font-awesome/css/font-awesome.min.css',
-                        './css/calendar.css',
-                        './css/mining.css'
+                        './node_modules/ng-dialog/css/ngDialog.min.css',
+                        './node_modules/ng-dialog/css/ngDialog-theme-default.min.css',
+                        //'./css/calendar.css',
+                        //'./css/mining.css',
+                        './css/style.css'
                     ]
                 }
             }
@@ -72,8 +74,9 @@ module.exports = function(grunt) {
                     './node_modules/jquery/dist/jquery.min.js',
                     './node_modules/bootstrap/dist/js/bootstrap.min.js',
                     './node_modules/nprogress/nprogress.js',
-                    './js/calendar.js',
+                    //'./js/calendar.js',
                     './js/qrcode.min.js',
+                    './js/clipboard.js',
                 ],
                 dest: './min/libs.min.js'
             },
@@ -85,7 +88,8 @@ module.exports = function(grunt) {
                     './node_modules/angular-local-storage/dist/angular-local-storage.min.js',
                     './node_modules/angular-translate/dist/angular-translate.min.js',
                     './node_modules/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js',
-                    './node_modules/angular-utils-pagination/dirPagination.js'
+                    './node_modules/angular-utils-pagination/dirPagination.js',
+                    './node_modules/ng-dialog/js/ngDialog.min.js'
                 ],
                 dest: './min/framework.min.js'
             },
@@ -140,6 +144,30 @@ module.exports = function(grunt) {
                 src: 'min/*.css',
                 dest: 'dist'
             },
+            eot:{
+                expand: true,
+                cwd: 'css/',
+                src: '*.eot',
+                dest: 'dist/min/'
+            },
+            svg:{
+                expand: true,
+                cwd: 'css/',
+                src: '*.svg',
+                dest: 'dist/min/'
+            },
+            ttf:{
+                expand: true,
+                cwd: 'css/',
+                src: '*.ttf',
+                dest: 'dist/min/'
+            },
+            woff:{
+                expand: true,
+                cwd: 'css/',
+                src: '*.woff',
+                dest: 'dist/min/'
+            },
             fontawesome:{
                 expand: true,
                 cwd: 'node_modules/font-awesome/fonts/',
@@ -192,6 +220,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-babel');
     grunt.loadNpmTasks('grunt-ng-annotate');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.registerTask('default', ['browserSync', 'watch']);
+    grunt.registerTask('default', ['browserSync', 'sass', 'watch']);
     grunt.registerTask('build', ['clean','ngAnnotate', 'concat', 'babel', 'uglify', 'cssmin', 'copy','revPackage','string-replace']);
 };

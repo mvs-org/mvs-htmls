@@ -1,67 +1,166 @@
 <div class="bg">
-  <div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
+  <style>
+    body {
+      background: url("../images/background_login.png") no-repeat center center fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    }
+  </style>
+  <div class="alert alertLogin" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
     <div class="" ng-bind="flash.message">
     </div>
   </div>
-<div class="container">
-            <div class="registerBox lightgreybg" >
-                <div class="text-center margin-big padding-big-top">
-                	<img src="images/logo-black.png" alt="" />
-                </div>
-                <div class="registerUser" style="padding:0 20px;">
-                  <div ng-hide="vm.registered">
-				        <div>
-							<p>{{ 'REGISTER.CHOOSE_ACCOUNT_NAME' | translate }}: <i>*</i></p>
-				        	<p class="hint1"></p>
-				        	<span class="span1"></span>
-                    <input type="text" ng-model="vm.user.username" required>
-				        </div>
-				        <div>
-							<p>{{ 'REGISTER.CHOOSE_PASSWORD' | translate }}: <i>*</i></p>
-				        	<p class="hint2"></p>
-				        	<span class="span2"></span>
-				            <input type="password" ng-model="vm.user.password" required>
-				         </div>
-				         <div>
-							 <p >{{ 'REGISTER.REPEAT_PASSWORD' | translate }}: <i>*</i></p>
-				         	<p class="hint3"></p>
-				         	<span class="span3"></span>
-				            <input type="password" ng-model="vm.user.password_repeat">
-                    <p >{{ 'REGISTER.DO_IMPORT' | translate }}:<input type="checkbox" ng-model="do_import"></p>
-                       <span class="span3"></span>
-                  <div ng-show="do_import">
-                  <p>{{ 'REGISTER.IMPORT_PHRASE' | translate }}: <i>*</i></p>
-				        	<p class="hint2"></p>
-				        	<span class="span2"></span>
-				            <textarea ng-model="import_phrase" rows="3"></textarea>
-                    <p>{{ 'REGISTER.IMPORT_ADDRESS_COUNT' | translate }}: <i>*</i></p>
-                    <p class="hint3"></p>
-                    <span class="span3"></span>
-                    <input type="number" ng-model="address_count" min="1" required>
-                  </div>
-				        </div>
-				        <div class="submit">
-                    <a href="#!/login" class="btn btn-default">{{ 'REGISTER.LOGIN_BUTTON' | translate }}</a>
-                    <button ng-click="vm.register()" type="submit" class="newBtn" ng-disabled="form.$invalid || vm.dataLoading">{{ 'REGISTER.REGISTGER_BUTTON' | translate }}</button>
-				        </div>
-                </div>
-                <br>
-                <div ng-show="vm.registered">
-                  <h1>{{ "REGISTER.SIGNUP_THANK_YOU" | translate}}</h1>
-                  <br><br>
-                  <div>{{ "REGISTER.PRIVATE_KEY_MNEMONIC" | translate}}:<br> <b class="mnemonic_red">{{vm.registered.privatekey}}</b></div>
-                  <br><br>
-                  <div>{{ "REGISTER.PRIVATE_KEY_MNEMONIC_INFO" | translate}}</div>
-                  <br><br>
-                  <label><input type="checkbox" ng-model="vm.registered.read">{{ "REGISTER.SIGNUP_MNEMONIC_AGREE" | translate}}</label>
-                  <div ng-show="vm.registered.read">
-                    <br>
-                    <a href="#!/login" class="btn btn-default">{{ 'REGISTER.LOGIN_BUTTON' | translate }}</a>
-                  </div>
 
-                </div>
-              </div>
 
+  <!--Main navbar-->
+  <nav class="header navbar navbar-default navbar-fixed-top hidden-xs">
+    <div class="fullPageWidth headerBox">
+      <div class="headerBox" ng-controller="MenuController">
+        <ul class="nav navbar-nav">
+          <li role="presentation"><a href="#!/login" class="linkLogo"><img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" /></a></li>
+        </ul>
+          <!--Right header-->
+        <ul class="nav navbar-nav navbar-right">
+          <form class="navbar-form">
+              <!--Language button Large screens-->
+            <button class="btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
+              中文
+            </button>
+            /
+            <button class="btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('en_US')">
+              EN
+            </button>
+          </form>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!--Language button Small screens-->
+  <div class="panel headerLoginXs">
+    <div class="header visible-xs">
+      <div class="col-xs-6">
+        <a href="#!/login" class="linkLogo"><img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" /></a>
+      </div>
+      <div class="col-xs-6 headerLoginXsLanguageButton">
+        <span class="languageHeaderLarge ">
+          <button class="languageButtonHeaderSmall" type="button" ng-click="vm.changeLang('zh_ZH')" ng-show="('LANG_CODE' | translate)=='en'" alt="">
+            <img class="languageFlag" src="images/zh.png" />
+          </button>
+          <button class="languageButtonHeaderSmall" type="button" ng-click="vm.changeLang('en_US')" ng-show="('LANG_CODE' | translate)=='zh'">
+            <img class="languageFlag" alt="" src="images/en.png"/>
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+
+
+  <form class="loginArea rgArea">
+    <!--To register-->
+    <div ng-hide="vm.registered">
+      <h1 class="loginTitle">{{ 'REGISTER.NEW_USER' | translate }}</h1>
+      <div class="form-group checkBoxImport spe-addrbox col-xs-12 col-sm-6">
+        <div class="checkboxCircle">
+          <div class="checkbox-box">
+            <input type="checkbox" ng-model="import_from_file" id="checkboxImportFromFile" ng-click="import_from_phrase = false">
+            <label class="control-label" for="checkboxImportFromFile"></label>
+          </div>
+          <span class="importAccountText comm-ft">{{ 'REGISTER.IMPORT_FROM_FILE' | translate }}</span>
+        </div>
+      </div>
+      <div class="form-group checkBoxImport spe-addrbox col-xs-12 col-sm-6">
+        <div class="checkboxCircle">
+            <div class="checkbox-box">
+              <input type="checkbox" ng-model="import_from_phrase" id="checkboxImportFromKey" ng-click="import_from_file = false">
+              <label class="control-label" for="checkboxImportFromKey"></label>
             </div>
-</div>
+          <span class="importAccountText comm-ft">{{ 'REGISTER.IMPORT_FROM_KEY' | translate }}</span>
+        </div>
+      </div>
+
+      <!--Account name-->
+      <div class="form-group col-xs-12" ng-hide="import_from_file">
+        <label for="username" class="control-label comm-ft">{{ 'REGISTER.CHOOSE_ACCOUNT_NAME' | translate }}</label>
+        <input type="text" name="username" ng-model="vm.user.username" required class="form-control">
+      </div>
+      <!--Password-->
+      <div class="form-group col-xs-12">
+        <label ng-hide="import_from_file" for="password" class="control-label comm-ft">{{ 'REGISTER.CHOOSE_PASSWORD' | translate }}</label>
+        <label ng-show="import_from_file" for="password" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_PASSWORD' | translate }}</label>
+        <input type="password" name="password" ng-model="vm.user.password" required class="form-control">
+      </div>
+      <!--Re-enter password-->
+      <div class="form-group col-xs-12" ng-hide="import_from_file">
+        <label for="password" class="control-label comm-ft">{{ 'REGISTER.REPEAT_PASSWORD' | translate }}</label>
+        <input class="form-control" type="password" ng-model="vm.user.password_repeat" required>
+      </div>
+
+
+      <!--Import account-->
+      <div class="form-group col-xs-12">
+
+        <!--When import from Private key-->
+        <div ng-show="import_from_phrase">
+          <div class="form-group">
+            <label for="importPhrase" class="control-label">{{ 'REGISTER.IMPORT_PHRASE' | translate }}</label>
+            <textarea class="form-control" type="text" name="importPhrase" ng-model="import_phrase" rows="3" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="nbrAdr" class="control-label">{{ 'REGISTER.IMPORT_ADDRESS_COUNT' | translate }}</label>
+            <input type="number" name="nbrAdr" ng-model="address_count" min="1" required class="form-control">
+          </div>
+        </div>
+
+        <!--When import from a file-->
+        <div ng-show="import_from_file">
+          <div class="form-group">
+            <label for="path" class="control-label">{{ 'REGISTER.IMPORT_FILE_PATH' | translate }}</label>
+            <input type="text" name="path" ng-model="path" required class="form-control">
+          </div>
+        </div>
+      </div>
+
+      <!--Submit and Cancel buttons-->
+      <div class="form-group col-xs-12">
+        <div class="lr-btnbox text-center">
+          <button class="btn btn-success" ng-click="vm.register()" type="submit" ng-disabled="form.$invalid || vm.dataLoading">{{ 'REGISTER.REGISTER_BUTTON' | translate }}</button>
+        </div>
+        <br/><br/><br/>
+        <div class="col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6">
+          <a href="#!/login" class="btn btn-link-red col-xs-6 col-sm-4 col-md-4">{{ 'REGISTER.LOGIN_BUTTON' | translate }}</a>
+        </div>
+      </div>
+    </div>
+    <!--After validation: -->
+    <div ng-show="vm.registered">
+      <h1 class="loginTitle">{{ "REGISTER.SIGNUP_THANK_YOU" | translate}}</h1>
+      <br><br>
+      <div class="form-group col-xs-12">
+        {{ "REGISTER.PRIVATE_KEY_MNEMONIC" | translate}}:
+      </div>
+      <div class="form-group col-xs-12">
+        <b class="mnemonic_red col-xs-12 col-sm-12 col-md-12">{{vm.registered.privatekey}}</b>
+      </div>
+      <br><br>
+      <div class="form-group col-xs-12">{{ "REGISTER.PRIVATE_KEY_MNEMONIC_INFO" | translate}}</div>
+      <div class="form-group col-xs-12 spe-addrbox">
+        <div class="checkboxCircle">
+          <div class="checkbox-box">
+            <input type="checkbox" ng-model="vm.registered.read" id="checkboxAgree">
+            <label for="checkboxAgree"></label>
+          </div>
+          <span class="importAccountText">{{ "REGISTER.SIGNUP_MNEMONIC_AGREE" | translate}}</span>
+        </div>
+      </div>
+      <div class="form-group col-xs-12 noPaddingLeftRight" ng-show="vm.registered.read">
+        <br/>
+        <div class="col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6">
+          <a href="#!/login" class="btn btn-success">{{ 'REGISTER.LOGIN_BUTTON' | translate }}</a>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>

@@ -1,45 +1,101 @@
-<div class="bg"></div>
-<div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
-  <div class="" ng-bind="flash.message">
-  </div>
-</div>
-    <form >
-    <div class="lightgreybg loginbox">
-
-        <div class="text-center margin-big padding-big-top">
-        	<img src="images/logo-black.png" class="logo" alt="" />
-        </div>
-        <br><br>
-        <div class="row">
-          <div class="col-md-12">
-          <div class="form-group">
-            	<label for="username" class="control-label">{{ 'LOGIN.ENTER_ACCOUNT_NAME' | translate }}<i>*</i></label>
-              <input type="text" name="username" class="form-control" ng-model="vm.username">
-          </div>
-          <div class="form-group">
-            	<label for="password" class="control-label">{{ 'LOGIN.ENTER_ACCOUNT_PASSWORD' | translate }}<i>*</i></label>
-              <input type="password" name="password" class="form-control" ng-model="vm.password">
-          </div>
-
-<br><br>
-          <button type="submit" class="btn btn-success" ng-disabled="form.$invalid || vm.dataLoading" ng-click="vm.login()">{{ 'LOGIN.LOGIN_BUTTON' | translate }}</button>
-          <a href="#!/register" class="btn btn-info">{{ 'LOGIN.REGISTGER_BUTTON' | translate }}</a>
-          <span class="dropdown">
-            <button class="btn btn-primary" type="button" data-toggle="dropdown">
-              Language
-              <span class="glyphicon glyphicon-flag" ></span></button>
-  <ul class="dropdown-menu">
-    <li><a ng-click="vm.changeLang('zh_ZH')">中文</a></li>
-    <li><a ng-click="vm.changeLang('en_US')">English</a></li>
-    <li><a ng-click="vm.changeLang('de_DE')">Deutsch</a></li>
-  </ul>
-  </span>
-  <br><br>
-
-        </div>
-
-
-      </div>
-</div>
+<div class="loginPage">
+  <style>
+    body {
+      background: url("../images/background_login.png") no-repeat center center fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    }
+  </style>
+  <!--Alert Invalid login credentials-->
+  <div class="alert alertLogin" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
+    <div class="" ng-bind="flash.message">
     </div>
-    </form>
+  </div>
+
+  <!--Main navbar-->
+  <nav class="header navbar navbar-default navbar-fixed-top hidden-xs">
+    <div class="fullPageWidth headerBox">
+      <div class="headerBox" ng-controller="MenuController">
+        <ul class="nav navbar-nav">
+          <li role="presentation"><a href="#!/login" class="linkLogo"><img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" /></a></li>
+        </ul>
+
+        <!--Right header-->
+        <ul class="nav navbar-nav navbar-right">
+          <form class="navbar-form">
+
+            <!--Language button Large screens-->
+            <button class="btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
+              中文
+            </button>
+            /
+            <button class="btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('en_US')">
+              EN
+            </button>
+          </form>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!--Language button Small screens-->
+  <div class="panel headerLoginXs">
+    <div class="header visible-xs">
+      <div class="col-xs-6">
+        <a href="#!/login" class="linkLogo"><img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" /></a>
+      </div>
+      <div class="col-xs-6 headerLoginXsLanguageButton">
+        <span class="languageHeaderLarge ">
+          <button class="languageButtonHeaderSmall" type="button" ng-click="vm.changeLang('zh_ZH')" ng-show="('LANG_CODE' | translate)=='en'" alt="">
+            <img class="languageFlag" src="images/zh.png" />
+          </button>
+          <button class="languageButtonHeaderSmall" type="button" ng-click="vm.changeLang('en_US')" ng-show="('LANG_CODE' | translate)=='zh'">
+            <img class="languageFlag" alt="" src="images/en.png"/>
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+
+
+  <!--Register area-->
+  <form class="loginArea">
+    <!--Logo-->
+
+    <h1 class="loginTitle">{{ 'LOGIN.TITLE' | translate }}</h1>
+    <div class="form-group">
+      <!--Username-->
+      <div class="form-group col-xs-12">
+        <label for="username" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_NAME' | translate }}</label>
+        <input type="text" name="username" class="form-control" ng-model="vm.username">
+      </div>
+      <!--Password-->
+      <div class="form-group col-xs-12">
+        <label for="password" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_PASSWORD' | translate }}</label>
+        <input type="password" name="password" class="form-control" ng-model="vm.password">
+      </div>
+      <br>
+      <!--Login button-->
+      <div class="form-group col-xs-12 loginButton">
+        <div class="lr-btnbox text-center">
+          <button type="submit" class="btn btn-success" ng-disabled="form.$invalid || vm.dataLoading" ng-click="vm.login()">{{ 'LOGIN.LOGIN_BUTTON' | translate }}</button>
+        </div>
+      </div>
+      <br/><br/><br/>
+      <!--Register button-->
+      <div class="form-group col-xs-12">
+        <div class="lr-btnbox  rg-btnbox text-center">
+          <a href="#!/register" class="btn btn-link-red">{{ 'LOGIN.REGISTER_BUTTON' | translate }}</a>
+        </div>
+      </div>
+      <!--Help button-->
+      <!--<div class="col-md-4 col-sm-4 col-xs-6 col-xs-offset-6 col-sm-offset-0 col-md-offset-0 pull-right">
+      <button type="button" class="btn btn-link" style="width:100%">无法登录？</button>
+      TODO
+    </div>-->
+      <br><br>
+    </div>
+  </form>
+</div>

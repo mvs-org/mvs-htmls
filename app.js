@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('app', ['ui.router', 'ngCookies', 'LocalStorageModule', 'pascalprecht.translate', 'angularUtils.directives.dirPagination'])
+    angular.module('app', ['ui.router', 'ngCookies', 'LocalStorageModule', 'pascalprecht.translate', 'angularUtils.directives.dirPagination', 'ngDialog'])
         .config(config)
   	    .filter('assetformat',function(){
 			      return function(input, asset_type){
@@ -73,17 +73,51 @@
                 controllerAs: 'vm'
             })
 
-            .state('home.account.addresses', {
-                url: "/account/addresses",
-                templateUrl: "home/account/addresses.view.html",
+            .state('home.account.privatekey', {
+                url: "/account/privatekey",
+                templateUrl: "home/account/privatekey.view.html",
                 controller: 'AccountController',
                 controllerAs: 'vm'
             })
 
+            .state('home.account.export', {
+                url: "/account/export",
+                templateUrl: "home/account/export.view.html",
+                controller: 'AccountController',
+                controllerAs: 'vm'
+            })
 
-            .state('home.assets', {
-                url: "/assets",
-                templateUrl: "home/assets.view.html",
+            /*.state('home.account.subscribe', {
+                url: "/account/subscribe",
+                templateUrl: "home/account/subscribe.view.html",
+                controller: 'AccountController',
+                controllerAs: 'vm'
+            })*/
+
+
+            .state('home.addresses', {
+                templateUrl: "home/addresses/index.view.html",
+                controller: 'AddressesController'
+            })
+
+            .state('home.addresses.myaddresses', {
+                url: "/addresses/myaddresses",
+                templateUrl: "home/addresses/myaddresses.view.html",
+                controller: 'AddressesController',
+                controllerAs: 'vm'
+            })
+
+            /*.state('home.addresses.multisigaddresses', {
+                url: "/addresses/multisignatureaddresses",
+                templateUrl: "home/addresses/multisigaddresses.view.html",
+                controller: 'AddressesController',
+                controllerAs: 'vm'
+            })*/
+
+
+            .state('home.home', {
+                url: "/home",
+                templateUrl: "home/home.view.html",
                 controller: 'AssetsController',
                 controllerAs: 'vm'
             })
@@ -94,7 +128,7 @@
             })
 
             .state('home.explorer.search', {
-                url: "/explorer",
+                url: "/explorer/search/:search",
                 templateUrl: "home/explorer/search.view.html",
                 controller: 'ExplorerController'
             })
@@ -102,6 +136,24 @@
             .state('home.explorer.transaction', {
                 url: "/explorer/tx/:hash",
                 templateUrl: "home/explorer/transaction.view.html",
+                controller: 'ExplorerController'
+            })
+
+            .state('home.explorer.address', {
+                url: "/explorer/adr/:address",
+                templateUrl: "home/explorer/address.view.html",
+                controller: 'ExplorerController'
+            })
+
+            .state('home.explorer.block', {
+                url: "/explorer/blk/:block",
+                templateUrl: "home/explorer/block.view.html",
+                controller: 'ExplorerController'
+            })
+
+            .state('home.explorer.noresult', {
+                url: "/explorer/noresult/:search",
+                templateUrl: "home/explorer/noresult.view.html",
                 controller: 'ExplorerController'
             })
 
@@ -114,6 +166,13 @@
                 url: "/asset/all",
                 templateUrl: "home/assets/all.view.html",
                 controller: 'ShowAllAssetsController',
+                controllerAs: 'vm'
+            })
+
+            .state('home.asset.myassets', {
+                url: "/asset/myassets",
+                templateUrl: "home/assets/myassets.view.html",
+                controller: 'ShowAssetsController',
                 controllerAs: 'vm'
             })
 
@@ -131,39 +190,55 @@
                 controllerAs: 'vm'
             })
 
-            .state('home.asset.transfer', {
-                url: "/asset/transfer/:symbol/:sender_address",
-                templateUrl: "home/assets/transfer.view.html",
+            .state('home.transferasset', {
+                url: "/transfer/:symbol/:sender_address",
+                templateUrl: "home/transfer/transferasset.view.html",
                 controller: 'TransferAssetController',
                 controllerAs: 'vm'
             })
 
-            .state('home.transfer', {
-                url: "/transfer",
-                templateUrl: "home/transfer.view.html",
+            .state('home.transferetp', {
+                url: "/transfer/ETP",
+                templateUrl: "home/transfer/transferetp.view.html",
                 controller: 'ETPController',
                 controllerAs: 'vm'
             })
 
+            .state('home.multisignature', {
+                url: "/transfer/multisignature",
+                templateUrl: "home/transfer/multisignature.view.html",
+                controller: 'ETPMultiSignController',
+                controllerAs: 'vm'
+            })
+
+            .state('home.sign', {
+                url: "/transfer/sign",
+                templateUrl: "home/transfer/sign.view.html",
+                controller: 'ETPMultiSignController',
+                controllerAs: 'vm'
+            })
+
+            .state('home.createmultisignature', {
+                url: "/transfer/newmultisignature",
+                templateUrl: "home/transfer/createmultisignature.view.html",
+                controller: 'ETPMultiSignController',
+                controllerAs: 'vm'
+            })
+
             .state('home.deposit', {
-                url: "/deposit",
+                url: "/deposit/:symbol",
                 templateUrl: "home/deposit.view.html",
                 controller: 'DepositController',
                 controllerAs: 'vm'
             })
 
-            .state('home.mining', {
-                url: "/mining",
-                templateUrl: "home/mining.view.html",
-                controller: 'MiningController'
-            })
-
             .state('home.console', {
-                url: "/console",
+                url: "/advanced",
                 templateUrl: "home/console.view.html",
                 controller: 'ConsoleController'
             });
-        $urlRouterProvider.otherwise("/login");
+
+        $urlRouterProvider.otherwise("/home");
     };
 
     run.$inject = ['$rootScope', '$location', 'localStorageService', '$translate'];

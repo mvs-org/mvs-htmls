@@ -1,0 +1,50 @@
+<!--My Assets-->
+  <span class="headline">{{ 'HEADLINE_ASSETS' | translate }}</span>
+  <div class="AStitle-tabs">
+    <ul class="nav nav-pills tabsMenu">
+      <li role="presentation" class="active"><a href="#!/asset/myassets" class="btn-link-menu">{{'ASSET_MY_ASSETS' | translate}}</a></li>
+      <li role="presentation"><a href="#!/asset/all" class="btn-link-menu">{{'ASSET_ALL_ASSETS' | translate}}</a></li>
+    </ul>
+  </div>
+  <div class=" ">
+    <div class="mainContent1">
+      <div class="assetBoxWrapper">
+        <dl id="outer_wrap">
+          <div class="col-xs-12 moreAssetsButton noPaddingLeftRight">
+            <a href="#!/asset/create" class="btn-link-black smallButton"><span class="glyphicon glyphicon-plus"></span> {{ 'ASSET_ASSET_DETAILS_CREATE' | translate }}</a>
+          </div>
+          <div dir-paginate="asset in assets | orderBy: ['-status','symbol'] | itemsPerPage: 10">
+            <div class="assetBox col-xs-12 col-sm-12 col-md-12">
+              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+               <div class="assetBoxSymbolImg spe-zdyal"><span class="assetLogo">资</span></div>
+                <div class="assetBoxSymbolName overflow">
+                  <a href="#!/asset/details/{{asset.symbol}}" class="btn-link-black">{{asset.symbol}}</a>
+                </div>
+              </div>
+              <div class="assetBoxBalance col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 noPaddingLeftRight">
+                <div class="assetBoxTitle">{{ 'BALANCE' | translate }}</div>
+                <div class="assetBoxValue overflow">{{asset.quantity | assetformat : asset.decimal_number}}</div>
+              </div>
+              <div class="assetBoxFrozen col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 noPaddingLeftRight">
+                <div class="assetBoxTitle">{{ 'STATUS' | translate }}</div>
+                <div class="assetBoxValue">{{asset.status}}</div>
+              </div>
+              <div ng-show="asset.status=='unissued'" class="assetBoxButtons">
+                <a href="" ng-click="deleteAsset(asset.symbol)" class="btn-link-red smallButton assetBoxButton">{{'ASSET_DELETE_ASSET' | translate}}</a>
+                <a href="" ng-click="issue(asset.symbol)" class="btn btn-success smallButton assetBoxButton">{{'ASSET_ISSUE' | translate}}</a>
+              </div>
+              <div ng-hide="asset.status=='unissued'" class="assetBoxButtons">
+                <!--<a href="#!/deposit/{{asset.symbol}}" class="btn btn-link-red smallButton assetBoxButton">{{ 'DEPOSIT.HEADLINE' | translate}}</a>-->
+                <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/{{asset.symbol}}/">{{ 'ASSETS_SEND' | translate}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Pagination-->
+        <div class="col-xs-offset-5 col-sm-offset-5 col-md-offset-5 col-lg-offset-5 col-xl-offset-5">
+          <dir-pagination-controls></dir-pagination-controls>
+        </div>
+      </dl>
+    </div>
+  </div>
+</div>

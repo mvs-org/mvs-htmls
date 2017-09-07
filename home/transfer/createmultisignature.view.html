@@ -1,0 +1,133 @@
+<div class="content">
+	<span class="headline">{{ 'HEADLINE_ETP_CREATE_MULTISIGNATURE' | translate }}</span>
+
+	<!--Navigation Manual/Auto selection of addresse-->
+	<!--<div class="col-xs-12 noPaddingLeftRight">
+		<ul class="nav nav-pills tabsMenu" >
+			<li role="presentation"><a class="btn btn-link" ng-click="selectAddress('auto','')" ng-style="{ 'text-decoration' : underlineAuto}">{{ 'DEPOSIT_SELECT_AUTO_ADRESS' | translate }}</a></li>
+			<li role="presentation"><a class="btn btn-link" ng-click="selectAddress('manual','')" ng-style="{ 'text-decoration' : underlineManual}" >{{ 'DEPOSIT_SELECT_MANUAL_ADDRESS' | translate }}</a></li>
+		</ul>
+	</div>-->
+
+<!--Display the total ETP in automatic selection-->
+<!--<div class="col-xs-12 noPaddingLeftRight" ng-show=autoSelectAddress>
+	<a>
+		<dd class="panel assetBox assetBoxChecked col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+			<span class="assetBoxSymbolImg"><img class="assetSymbol" src="images/favicon.jpg" alt=""/></span>
+			<span class="assetBoxTextInfo">
+				<div>
+					<span class="checked"><span>
+					</div>
+					<span class="assetBoxSymbolName">ETP</span>
+					<span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
+					<span class="assetBoxValue">{{balance['total-unspent']/100000000}}</span>
+					<span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
+					<span class="assetBoxValue">{{balance['total-frozen']/100000000}}</span>
+				</span>
+			</dd>
+		</a>
+	</div>-->
+
+	<!--Display all the addresses if the user choose to let it manually-->
+	<!--<div class="col-xs-12 noPaddingLeftRight" ng-hide=autoSelectAddress>-->
+		<!--Show/Hide empty addresses-->
+		<!--<div class="col-xs-12">
+			<div class="checkboxCircle">
+				<input type="checkbox" ng-model="displayEmptyAdresses" id="checkboxCircleAdresses">
+				<label for="checkboxCircleAdresses"></label>
+				<span class="textCheckbox">{{ 'ADDRESSES_HIDE_EMPTY' | translate }}</span>
+			</div>
+		</div>
+		<div class="radioButtonAddress noPaddingLeftRight" ng-repeat="address in addresses | orderBy:'balance':true" ng-click="selectAddress('selectionAddress',address.address)" ng-hide="(address.balance == 0)&&displayEmptyAdresses">
+			<dd class="panel addressBox noPaddingLeftRight col-xs-1">
+				<input type="radio" name="radioDeposit" id={{address.address}} value="hideCustomDate"/>
+				<label for={{address.address}}>
+					<div class="assetSymbolImgDeposit">
+						<img class="assetSymbolDeposit" src="images/favicon.jpg" alt=""/>
+					</div>
+					<div class="addressBoxTextInfoDeposit">
+						<span class="addressBoxNameDeposit">{{address.name}}</span>
+						<span class="addressBoxAddressDeposit">{{address.address}}</span>
+						<span class="col-xs-6 noPaddingLeftRight">
+							<span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
+							<span class="assetBoxValue">{{address.balance/100000000 }}</span>
+						</span>
+						<span class="col-xs-6 noPaddingLeftRight">
+							<span class="assetBoxTitle">{{ 'FROZEN' | translate}}</span>
+							<span class="assetBoxValue">{{address.frozen/100000000 }}</span>
+						</span>
+					</div>
+				</label>
+			</dd>
+		</div>
+	</div>-->
+
+	<form class="row">
+		<!--Sender-->
+		<div class="col-md-12 form-group">
+			<br/>
+			<div class="col-md-6 noPaddingLeftRight">
+				<label for="addressFrom" class="control-label">{{ 'CREATE_MULTISIGNATURE_MY_ADDRESS' | translate }}</label>
+				<select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" required>
+					<option ng-repeat="address in addresses | orderBy:'balance':true" ng-click="getPublicKey(address.address)" value="{{address.address}}">{{address.address}}</option>
+				</select>
+			</div>
+		</div>
+
+		<!--Sender key-->
+		<div class="col-md-12 form-group">
+			<div class="col-md-6 noPaddingLeftRight">
+				<label for="publicKey" class="control-label">{{ 'CREATE_MULTISIGNATURE_MY_PUBLIC_KEY' | translate }}</label>
+				<input type="multisig" class="form-control" name="publicKey" id="" ng-model="publicKey">
+			</div>
+		</div>
+
+		<!--Co-signers-->
+		<div class="col-md-12 form-group" ng-repeat="cosigner in cosigners | orderBy:'index'">
+			<div class="col-md-6 noPaddingLeftRight">
+				<label for="cosigner" class="control-label col-md-6 noPaddingLeftRight">{{ 'CREATE_MULTISIGNATURE_PUBLIC_KEY_OTHERS' | translate }} {{cosigner.index}}</label>
+				<!--Add Recipent button, only on the first one-->
+				<div class="col-md-6 noPaddingLeftRight addRecipent" ng-show="cosigner.index == 1">
+					<button type="button" ng-click="addCoSigner()" class="btn-link-red addRecipentButton"><span class="glyphicon glyphicon-plus"></span>{{ 'CREATE_MULTISIGNATURE_ADD_COSIGNER' | translate }}</button>
+				</div>
+				<!--Remove Recipent button, on the last one-->
+				<div class="col-md-6 noPaddingLeftRight addRecipent" ng-show="(cosigners.length>1) && (cosigner.index == cosigners.length)">
+					<button type="button" ng-click="removeCoSigner()" class="btn-link-red addRecipentButton"><span class="glyphicon glyphicon-minus"></span>{{ 'CREATE_MULTISIGNATURE_REMOVE_COSIGNER' | translate }}</button>
+				</div>
+				<input type="multisig" class="form-control" name="cosigner" id="" ng-model="cosigner.publicKey" required>
+			</div>
+		</div>
+
+		<div class="col-md-12 form-group">
+			<div class="col-md-6 noPaddingLeftRight">
+				<label for="nbrSign" class="control-label">{{ 'CREATE_MULTISIGNATURE_NBR_COSIGNER_REQUIRED' | translate }}</label>
+				<select type="number" class="form-control" name="nbrSign" required placeholder="" required ng-model="nbrCosignersRequired">
+		      <option ng-repeat="i in getNumber(cosigners.length) track by $index" value="{{$index+2}}">{{$index+2}}</option>
+		    </select>
+			</div>
+		</div>
+
+		<!--Password-->
+		<div class="col-md-12 form-group">
+			<div class="col-md-6 noPaddingLeftRight">
+				<div class="form-group">
+					<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
+					<input type="password" class="form-control" name="password" id="" required autocomplete="new-password" ng-model="password">
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
+			<!--Submit button-->
+			<div class="col-xs-12 col-sm-6 col-md-3">
+				<br/>
+				<button type="submit" class="btn btn-success" ng-click="getNewMultisign()">{{ 'CREATE_MULTISIGNATURE_CREATE' | translate }}</button>
+			</div>
+			<!--Return button-->
+			<div class="col-xs-12 col-sm-6 col-md-3">
+				<br/>
+				<a href="#!/transfer/multisignature" class="btn btn-link-red">{{ 'CREATE_MULTISIGNATURE_RETURN' | translate }}</a>
+			</div>
+		</div>
+	</form>
+</div>

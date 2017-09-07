@@ -35,7 +35,7 @@
                           });
                           setTimeout(  () => NProgress.done(), 500);
                           //Redirect user to home
-                          $location.path('/assets');
+                          $location.path('/home');
                       } else {
                           //Show login error message
                           setTimeout( () => NProgress.done(), 1000);
