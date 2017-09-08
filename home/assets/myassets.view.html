@@ -9,9 +9,9 @@
   <div class=" ">
     <div class="mainContent1">
       <div class="assetBoxWrapper">
-        <dl id="outer_wrap">
+        <dl class="noMarginTopBottom">
           <div class="col-xs-12 moreAssetsButton noPaddingLeftRight">
-            <a href="#!/asset/create" class="btn-link-black smallButton"><span class="glyphicon glyphicon-plus"></span> {{ 'ASSET_ASSET_DETAILS_CREATE' | translate }}</a>
+            <a href="#!/asset/create" class="btn btn-link-black smallButton"><span class="glyphicon glyphicon-plus"></span> {{ 'ASSET_ASSET_DETAILS_CREATE' | translate }}</a>
           </div>
           <div dir-paginate="asset in assets | orderBy: ['-status','symbol'] | itemsPerPage: 10">
             <div class="assetBox col-xs-12 col-sm-12 col-md-12">

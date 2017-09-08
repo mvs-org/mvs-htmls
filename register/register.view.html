@@ -19,7 +19,13 @@
     <div class="fullPageWidth headerBox">
       <div class="headerBox" ng-controller="MenuController">
         <ul class="nav navbar-nav">
-          <li role="presentation"><a href="#!/login" class="linkLogo"><img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" /></a></li>
+          <li role="presentation">
+            <div class="linkLogo">
+              <a href="#!/login">
+                <img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" />
+              </a>
+            </div>
+          </li>
         </ul>
           <!--Right header-->
         <ul class="nav navbar-nav navbar-right">
@@ -68,7 +74,7 @@
             <input type="checkbox" ng-model="import_from_file" id="checkboxImportFromFile" ng-click="import_from_phrase = false">
             <label class="control-label" for="checkboxImportFromFile"></label>
           </div>
-          <span class="importAccountText comm-ft">{{ 'REGISTER.IMPORT_FROM_FILE' | translate }}</span>
+          <span class="textCheckbox comm-ft">{{ 'REGISTER.IMPORT_FROM_FILE' | translate }}</span>
         </div>
       </div>
       <div class="form-group checkBoxImport spe-addrbox col-xs-12 col-sm-6">
@@ -77,7 +83,7 @@
               <input type="checkbox" ng-model="import_from_phrase" id="checkboxImportFromKey" ng-click="import_from_file = false">
               <label class="control-label" for="checkboxImportFromKey"></label>
             </div>
-          <span class="importAccountText comm-ft">{{ 'REGISTER.IMPORT_FROM_KEY' | translate }}</span>
+          <span class="textCheckbox comm-ft">{{ 'REGISTER.IMPORT_FROM_KEY' | translate }}</span>
         </div>
       </div>
 
@@ -105,11 +111,11 @@
         <!--When import from Private key-->
         <div ng-show="import_from_phrase">
           <div class="form-group">
-            <label for="importPhrase" class="control-label">{{ 'REGISTER.IMPORT_PHRASE' | translate }}</label>
+            <label for="importPhrase" class="control-label comm-ft">{{ 'REGISTER.IMPORT_PHRASE' | translate }}</label>
             <textarea class="form-control" type="text" name="importPhrase" ng-model="import_phrase" rows="3" required></textarea>
           </div>
           <div class="form-group">
-            <label for="nbrAdr" class="control-label">{{ 'REGISTER.IMPORT_ADDRESS_COUNT' | translate }}</label>
+            <label for="nbrAdr" class="control-label comm-ft">{{ 'REGISTER.IMPORT_ADDRESS_COUNT' | translate }}</label>
             <input type="number" name="nbrAdr" ng-model="address_count" min="1" required class="form-control">
           </div>
         </div>
@@ -117,7 +123,7 @@
         <!--When import from a file-->
         <div ng-show="import_from_file">
           <div class="form-group">
-            <label for="path" class="control-label">{{ 'REGISTER.IMPORT_FILE_PATH' | translate }}</label>
+            <label for="path" class="control-label comm-ft">{{ 'REGISTER.IMPORT_FILE_PATH' | translate }}</label>
             <input type="text" name="path" ng-model="path" required class="form-control">
           </div>
         </div>
@@ -138,21 +144,21 @@
     <div ng-show="vm.registered">
       <h1 class="loginTitle">{{ "REGISTER.SIGNUP_THANK_YOU" | translate}}</h1>
       <br><br>
-      <div class="form-group col-xs-12">
+      <div class="form-group col-xs-12 comm-ft">
         {{ "REGISTER.PRIVATE_KEY_MNEMONIC" | translate}}:
       </div>
       <div class="form-group col-xs-12">
         <b class="mnemonic_red col-xs-12 col-sm-12 col-md-12">{{vm.registered.privatekey}}</b>
       </div>
       <br><br>
-      <div class="form-group col-xs-12">{{ "REGISTER.PRIVATE_KEY_MNEMONIC_INFO" | translate}}</div>
+      <div class="form-group col-xs-12 comm-ft">{{ "REGISTER.PRIVATE_KEY_MNEMONIC_INFO" | translate}}</div>
       <div class="form-group col-xs-12 spe-addrbox">
         <div class="checkboxCircle">
           <div class="checkbox-box">
             <input type="checkbox" ng-model="vm.registered.read" id="checkboxAgree">
             <label for="checkboxAgree"></label>
           </div>
-          <span class="importAccountText">{{ "REGISTER.SIGNUP_MNEMONIC_AGREE" | translate}}</span>
+          <span class="textCheckbox comm-ft">{{ "REGISTER.SIGNUP_MNEMONIC_AGREE" | translate}}</span>
         </div>
       </div>
       <div class="form-group col-xs-12 noPaddingLeftRight" ng-show="vm.registered.read">

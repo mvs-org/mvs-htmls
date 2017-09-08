@@ -229,7 +229,7 @@
   "DEPOSIT.ADDRESS_OPTION" : "Deposit to a specified address",
   "DEPOSIT.PROFIT" : "Your profit",
   "DEPOSIT_SELECT_MANUAL_ADDRESS" : "Select manually an address",
-  "DEPOSIT_SELECT_AUTO_ADRESS" : "Select automatically an address",
+  "DEPOSIT_SELECT_AUTO_ADDRESS" : "Select automatically an address",
   "DEPOSIT_ADDRESS_TO_DEPOSIT" : "Address",
   "DEPOSIT_TOTAL_DUE" : "Total due",
   "HISTORY_ONE_WEEK" : "One week",

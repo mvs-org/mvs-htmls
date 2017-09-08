@@ -1,6 +1,7 @@
-<div class="headline defe">{{ 'NAV_ASSETS' | translate }}</div>
-<div>
-  <ul class="nav nav-pills tabsMenu ddd">
+
+<span class="headline defe">{{ 'NAV_ASSETS' | translate }}</span>
+<div class="AStitle-tabs">
+  <ul class="nav nav-pills tabsMenu">
     <li role="presentation"><a href="#!/asset/myassets" class="btn-link-menu">{{'ASSET_MY_ASSETS' | translate}}</a></li>
     <li role="presentation" class="active"><a href="#!/asset/all" class="btn-link-menu">{{'ASSET_ALL_ASSETS' | translate}}</a></li>
   </ul>
@@ -8,7 +9,7 @@
 <div class=" ">
   <div class="mainContent1">
     <div class="assetBoxWrapper">
-      <dl id="outer_wrap">
+      <dl class="noMarginTopBottom">
         <div class="col-xs-12 moreAssetsButton noPaddingLeftRight">
           <a href="#!/asset/create" class="btn btn-link-black smallButton"><span class="glyphicon glyphicon-plus"></span> {{ 'ASSET_ASSET_DETAILS_CREATE' | translate }}</a>
         </div>

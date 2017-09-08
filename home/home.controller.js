@@ -852,6 +852,8 @@
     $scope.getNewMultisign = getNewMultisign;
     $scope.nbrCosignersRequired = 0;
 
+    $scope.availableBalance = 0;
+
 
 
     $scope.listMultiSig = [];
@@ -870,6 +872,7 @@
       $scope.message = '';
       $scope.value = '';
       $scope.password = '';
+      $scope.availableBalance = 0;
       MetaverseService.ListBalances(true)
       .then( (response) => {
         if (response.success)
@@ -929,37 +932,6 @@
       $scope.selectedMutliSigAddress = mutliSig;
     }
 
-
-    //Load users ETP balance
-    MetaverseHelperService.GetBalance( (err, balance, message) => {
-      if (err) {
-        FlashService.Error(message);
-        $window.scrollTo(0,0);
-      } else {
-        $scope.balance = balance;
-      }
-    });
-
-    //Load the addresses and their balances
-    MetaverseService.ListBalances()
-    .then( (response) => {
-      if (typeof response.success !== 'undefined' && response.success) {
-        $scope.addresses = [];
-        response.data.balances.forEach( (e) => {
-          var name = "New address";
-          if (localStorageService.get(e.balance.address) != undefined) {
-            name = localStorageService.get(e.balance.address);
-          }
-          $scope.addresses.push({
-            "balance": parseInt(e.balance.unspent),
-            "address": e.balance.address,
-            "name": name,
-            "frozen": e.balance.frozen
-          });
-        });
-      }
-      NProgress.done();
-    });
 
 
     function getPublicKey(address) {
@@ -1050,41 +1022,67 @@
       return new Array(num);
     }
 
+    MetaverseHelperService.GetBalance( (err, balance, message) => {
+      if (err) {
+        FlashService.Error(message);
+        $window.scrollTo(0,0);
+      } else {
+        $scope.balance = balance;
+      }
+    });
 
 
     function listMultiSign() {
       NProgress.start();
-      if ($scope.sendfrom == '') {
-        FlashService.Error('Please select an address');
-        $window.scrollTo(0,0);
-      } else if ($scope.password === '') { //Check for empty password
-        $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else {
-        MetaverseService.ListMultiSig()
-        .then( (response) => {
-          if (typeof response.success !== 'undefined' && response.success) {
-            response.data.multisig.forEach( (e) => {
-              var name = "New address";
-              if (localStorageService.get(e.address) != undefined) {
-                name = localStorageService.get(e.address);
-              }
-              $scope.listMultiSig.push({
-                "index": e.index,
-                "m": e.m,
-                "n": e.n,
-                "selfpublickey": e["self-publickey"],
-                "description": e.description,
-                "address": e.address,
-                "name": name,
-                "publicKeys": e["public-keys"]
+      //Load users ETP balance
+      //Load the addresses and their balances
+      MetaverseService.ListBalances()
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.addresses = [];
+          response.data.balances.forEach( (e) => {
+            var name = "New address";
+            if (localStorageService.get(e.balance.address) != undefined) {
+              name = localStorageService.get(e.balance.address);
+            }
+            $scope.addresses[e.balance.address] = parseInt(e.balance.unspent);
+            /*$scope.addresses.push({
+              "balance": parseInt(e.balance.unspent),
+              "address": e.balance.address,
+              "name": name,
+              "frozen": e.balance.frozen
+            });*/
+          });
+
+          //After loading the balances, we load the multisig addresses
+          MetaverseService.ListMultiSig()
+          .then( (response) => {
+            if (typeof response.success !== 'undefined' && response.success) {
+              response.data.multisig.forEach( (e) => {
+                var name = "New address";
+                if (localStorageService.get(e.address) != undefined) {
+                  name = localStorageService.get(e.address);
+                }
+                var balance = '';
+                $scope.addresses.forEach
+                $scope.listMultiSig.push({
+                  "index": e.index,
+                  "m": e.m,
+                  "n": e.n,
+                  "selfpublickey": e["self-publickey"],
+                  "description": e.description,
+                  "address": e.address,
+                  "name": name,
+                  "balance": $scope.addresses[e.address],
+                  "publicKeys": e["public-keys"]
+                });
               });
-            });
-          } else {
-            //Fail
-          }
-        });
-      }
+            } else {
+              //Fail
+            }
+          });
+        }
+      });
       NProgress.done();
     }
 

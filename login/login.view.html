@@ -19,7 +19,13 @@
     <div class="fullPageWidth headerBox">
       <div class="headerBox" ng-controller="MenuController">
         <ul class="nav navbar-nav">
-          <li role="presentation"><a href="#!/login" class="linkLogo"><img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" /></a></li>
+          <li role="presentation">
+            <div class="linkLogo">
+              <a href="#!/login" class="linkLogo">
+                <img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" />
+              </a>
+            </li>
+          </div>
         </ul>
 
         <!--Right header-->
@@ -44,7 +50,11 @@
   <div class="panel headerLoginXs">
     <div class="header visible-xs">
       <div class="col-xs-6">
-        <a href="#!/login" class="linkLogo"><img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" /></a>
+        <div class="linkLogo">
+          <a href="#!/login">
+            <img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" />
+          </a>
+        </div>
       </div>
       <div class="col-xs-6 headerLoginXsLanguageButton">
         <span class="languageHeaderLarge ">
@@ -74,7 +84,7 @@
       <!--Password-->
       <div class="form-group col-xs-12">
         <label for="password" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_PASSWORD' | translate }}</label>
-        <input type="password" name="password" class="form-control" ng-model="vm.password">
+        <input type="password" name="password" autocomplete="new-password" class="form-control" ng-model="vm.password">
       </div>
       <br>
       <!--Login button-->

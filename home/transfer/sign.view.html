@@ -12,10 +12,14 @@
 		<div class="form-group">{{ 'TRANSFER_SIGN_HEADER' | translate}}:</div>
 		<textarea class="form-control" ng-model="transaction" rows="5"></textarea>
 		<br>
-		<div class="checkboxCircle">
-			<input type="checkbox" ng-model="lastTx" id="checkboxAgree">
-			<label for="checkboxAgree"></label>
-			<span class="">{{ 'TRANSFER_SIGN_IS_LAST_TRANSACTION' | translate}}</span>
+		<div class="col-xs-12 noPaddingLeftRight spe-addrbox">
+			<div class="checkboxCircle">
+				<div class="checkbox-box">
+					<input type="checkbox" checked ng-model="lastTx" id="checkboxAgree" ng-click="!displayEmptyAdresses && displayEmpty() ; displayEmptyAdresses && hideEmpty()"  >
+					<label for="checkboxAgree"></label>
+				</div>
+				<span class="textCheckbox">{{ 'TRANSFER_SIGN_IS_LAST_TRANSACTION' | translate}}</span>
+			</div>
 		</div>
 		<div class="col-xs-6 col-sm-3 col-md-3 noPaddingLeftRight">
 			<br/>

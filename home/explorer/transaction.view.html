@@ -11,7 +11,12 @@
     </label>
     <div ng-repeat="input in transaction.inputs" class="explorerTransaction">
       <div ng-show="input.previous_output.hash=='0000000000000000000000000000000000000000000000000000000000000000'">   <!--When NULL, coming from Mining-->
-        {{ 'EXPLORER.TRANSACTION_INPUTS_MINING' | translate }}
+        <div class="overflow col-xs-12 col-sm-12 col-md-11 col-lg-11 col-xl-11 noPaddingLeftRight">
+          {{ 'EXPLORER.TRANSACTION_INPUTS_MINING' | translate }}
+        </div>
+        <div class="col-md-1 col-lg-1 col-xl-1 hidden-xs hidden-sm" ng-show="input.first">
+          <span class="btn-link-black glyphicon glyphicon-arrow-right"></span>
+        </div>
         <!--Input value from mining or deposit
         <div class="numbersSearch" ng-repeat="output in transaction.outputs">
           <div class="numbersSearch" ng-show="output.attachment.type=='etp'">{{output.value/100000000}} ETP</div>
@@ -54,7 +59,7 @@
     <label class="control-label">
       {{ 'EXPLORER.TRANSACTION_OUTPUTS' | translate }}
     </label>
-    <div ng-repeat="output in transaction.outputs" class="explorerTransaction">
+    <div ng-repeat="output in transaction.outputs" ng-hide="output.attachment.type == 'message'" class="explorerTransaction">
       <div>
         <div class="overflow col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 noPaddingLeftRight">
           <a class="btn-link" href="#!/explorer/adr/{{output.address}}" bs-tooltip data-placement="top" title="{{ 'ADDRESS' | translate }}">{{output.address}}</a>
