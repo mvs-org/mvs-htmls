@@ -8,7 +8,7 @@
   <div class="qq fullPageWidth headerBox">
     <div class="headerBox" ng-controller="MenuController">
       <ul class="nav navbar-nav">
-        <li role="presentation"><div class="linkLogo hidden-xs hidden-sm"><a href="#!/home"><img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" /></a></div></li>
+        <li role="presentation"><div class="linkLogo hidden-xs hidden-sm hidden-md"><a href="#!/home"><img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" /></a></div></li>
         <li role="presentation"><a href="#!/home" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='home'}">{{ 'NAV_HOME' | translate }}</span></a></li>
         <li role="presentation"><a href="#!/addresses/myaddresses" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='addresses'}">{{ 'NAV_ACCOUNT_ADDRESSES' | translate }}</span></a></li>
         <li role="presentation"><a href="#!/asset/myassets" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='asset'}">{{ 'NAV_ASSETS' | translate }}</span></a></li>
@@ -49,12 +49,12 @@
 
 
           <!--Block height-->
-          <span class="hidden-xs hidden-sm topMenuButtonRight">
+          <!--<span class="hidden-xs hidden-sm hidden-md topMenuButtonRight">
             <p>
               <span>{{ 'CONNECTION_BLOCKS' | translate }}:</span>
               <span>{{height}}</span>
             </p>
-          </span>
+          </span>-->
 
           <!--Language button Large screens-->
           <span class="topMenuButtonRight languageHeaderLarge">
@@ -161,6 +161,6 @@
   <ui-view/>
 </div>
 <div class="footerRight">
-  <span class="hidden-md hidden-lg hidden-xl blockSmallScreen">{{ 'CONNECTION_BLOCKS' | translate }}: {{height}}</span>
+  <span class="block">{{ 'CONNECTION_BLOCKS' | translate }}: {{height}}</span>
   <span>{{ 'METAVERSE_VERSION' | translate }} <<<version>>></span>
 </div>

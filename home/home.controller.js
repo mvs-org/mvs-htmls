@@ -61,7 +61,13 @@
     $window.scrollTo(0,0);
     $scope.typeSearch = $location.path().split('/')[2];
     $scope.search = $location.path().split('/')[3];
+
     $scope.transactionsAddressSearch = [];
+    $scope.searchAddressloadTransactions = searchAddressloadTransactions;
+    $scope.searchAddressloadMore = searchAddressloadMore;
+    $scope.page = 2;            //by default we load the first page only
+    $scope.stopLoad = false;
+
     $scope.transaction_count = 0;
     $scope.assets = [];
     $scope.exists = false;
@@ -93,11 +99,22 @@
     //Used if we search an Address
     function searchAddress () {
       if ( typeof $scope.search !== 'undefined') {
+        searchAddressloadTransactions(1, 2);
+      }
+    }
+
+    function searchAddressloadTransactions(min, max) {
+      var page = min;
+      for (; (page<max) && (!$scope.stopLoad); page++) {
         NProgress.start();
-        MetaverseService.ListTxsAddress($scope.search)
+        MetaverseService.ListTxsAddress($scope.search, page)
         .then( (response) => {
-          var transactions = [];
+          console.log(response);
           if (typeof response.success !== 'undefined' && response.success && response.data != undefined) {
+            if ((response.data.total_page == response.data.current_page)&&(!isNaN(response.data.total_page))) {     //All the transactions have been loaded
+              $scope.stopLoad = true;
+            }
+
             response.data.transactions.forEach(function(e) {
               var transaction = {
                 "height": e.height,
@@ -111,13 +128,47 @@
               $scope.exists = true;
             });
           } else {
-            $translate('MESSAGES.TRANSACTION_NOT_FOUND').then( (data) => {
-              FlashService.Error(data);
-              $location.path('/explorer');
-            });
+            if(!$scope.exists) {
+              $translate('MESSAGES.TRANSACTION_NOT_FOUND').then( (data) => {
+                FlashService.Error(data);
+                $location.path('/explorer');
+              });
+            }
           }
           NProgress.done();
         });
+      }
+    }
+
+
+/*
+      var page = min;
+      for (; (page<max) && (!$scope.stopLoad); page++) {
+        MetaverseHelperService.LoadTransactions( (err, transactions) => {
+          if (err) {
+            $translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+            $window.scrollTo(0,0);
+          } else {
+            if ((transactions.lastpage == true) || (transactions.lastpage == undefined)) {     //All the transactions have been loaded
+              $scope.stopLoad = true;
+            }
+            transactions.forEach(function(e) {
+              $scope.transactions.push(e);
+            });
+            //displayUpdatedDates();
+            filterTransactions();
+          }
+          NProgress.done();
+        }, 'asset', page);
+      }
+    }
+*/
+
+
+    function searchAddressloadMore() {
+      if(!$scope.stopLoad) {
+        $scope.page = $scope.page+1;
+        searchAddressloadTransactions($scope.page - 1, $scope.page);
       }
     }
 
@@ -514,6 +565,7 @@
     $scope.selectAddressMem = '';                 //Keep in memory the specific address previously selected (if the user go to Auto and come back to Manual)
     $scope.autoSelectAddress = true;              //Automatically select the address
     $scope.selectAddressAvailable = true;         //If we send to more than 1 recipent, sendfrom is not available
+    $scope.transactionFee = 0.0001;
     $scope.memo = '';
 
     $scope.recipents = [];
@@ -714,13 +766,14 @@
         break;
         case 'FACTOR_ETP':
         value *= 100000000;
+        $scope.transactionFee *= 100000000;
         break;
         default:
         $translate('MESSAGES.TRANSFER_ERROR').then( (data) => FlashService.Error(data) );
         return;
       }
       value = Math.round(value);
-      var SendPromise = ($scope.sendfrom) ? MetaverseService.SendFrom($scope.sendfrom, sendTo, value, $scope.memo) : MetaverseService.Send(sendTo, value, $scope.memo);
+      var SendPromise = ($scope.sendfrom) ? MetaverseService.SendFrom($scope.sendfrom, sendTo, value, $scope.transactionFee, $scope.memo) : MetaverseService.Send(sendTo, value, $scope.transactionFee, $scope.memo);
       SendPromise
       .then( (response) => {
         NProgress.done();
@@ -748,6 +801,7 @@
     function transferMore() {
       NProgress.start();
       var recipentsQuery = [];    //data that will be used for the query
+      $scope.transactionFee *= 100000000;
 
       $scope.recipents.forEach( (e) => {
         var value = e.value;
@@ -768,7 +822,7 @@
         });
       });
 
-      var SendPromise = MetaverseService.SendMore(recipentsQuery);
+      var SendPromise = MetaverseService.SendMore(recipentsQuery, $scope.transactionFee);
       SendPromise
       .then( (response) => {
         NProgress.done();
@@ -805,7 +859,7 @@
     }
 
     function sendAll() {
-      $scope.recipents[0].value = $scope.availableBalance/100000000;
+      $scope.recipents[0].value = $scope.availableBalance/100000000 - $scope.transactionFee;
     }
 
     //Load a list of all transactions

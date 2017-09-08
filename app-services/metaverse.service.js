@@ -292,9 +292,9 @@
             return _send('listtxs', ['-i', page, credentials.user, credentials.password]);
         }
 
-        function ListTxsAddress(address) {
+        function ListTxsAddress(address, page) {
             var credentials = localStorageService.get('credentials');
-            return _send('listtxs', [credentials.user, credentials.password, '-a', address]);
+            return _send('listtxs', [credentials.user, credentials.password, '-a', address, '-i', page]);
         }
 
         /**
@@ -334,12 +334,12 @@
          *    }
          * }
          **/
-        function Send(recipent, quantity, memo) {
+        function Send(recipent, quantity, transactionFee, memo) {
             var credentials = localStorageService.get('credentials');
             if(memo == '') {
               return _send('send', [credentials.user, credentials.password, recipent, quantity]);
             } else {
-              return _send('send', [credentials.user, credentials.password, recipent, quantity, '-m', memo]);
+              return _send('send', [credentials.user, credentials.password, recipent, quantity, '-f', transactionFee, '-m', memo]);
             }
         }
 
@@ -380,12 +380,12 @@
          *    }
          * }
          **/
-        function SendFrom(sender, recipent, quantity, memo) {
+        function SendFrom(sender, recipent, quantity, transactionFee, memo) {
             var credentials = localStorageService.get('credentials');
             if(memo == '') {
               return _send('sendfrom', [credentials.user, credentials.password, sender, recipent, quantity]);
             } else {
-              return _send('sendfrom', [credentials.user, credentials.password, sender, recipent, quantity, '-m', memo]);
+              return _send('sendfrom', [credentials.user, credentials.password, sender, recipent, quantity, '-f', transactionFee, '-m', memo]);
             }
         }
 
@@ -426,12 +426,14 @@
          *    }
          * }
          **/
-        function SendMore(recipents) {
+        function SendMore(recipents, transactionFee) {
             var credentials = localStorageService.get('credentials');
             var query = [];
             var recipent = '';
             query.push(credentials.user);
             query.push(credentials.password);
+            query.push('-f');
+            query.push(transactionFee);
             recipents.forEach( (e) => {
               recipent = e.address + ':' + e.value;
               query.push('-r');

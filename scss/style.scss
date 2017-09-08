@@ -1388,8 +1388,8 @@ _____  ._______  ___.___ _______
 }
 .spe-addrbox .spe-tc.textCheckbox {
   font-size: 18px;
-  position: relative;
-  top: -1px;
+  //position: relative;
+  //top: -1px;
 }
 
 .spe-addrbox .glyphicon{
@@ -1806,11 +1806,19 @@ _____  ._______  ___.___ _______
 }
 
 .footerRight {
+  position: fixed;
+  padding: 10px;
+  bottom: 0;
+  background: #fff;
+  width: 100%;
+  border-top: 1px solid #ccc;
+  left: 0;
+  right: 0;
   text-align: right;
-  margin-right: 10px;
+  z-index: 1000;
 }
 
-.blockSmallScreen {
+.block {
   padding-right: 20px;
 }
 
@@ -2139,6 +2147,14 @@ form label {
   height: 26px;
   line-height: 2.5em;
 }
+
+.textAllLoadedAddressExplorer {
+  height: 26px;
+  line-height: 2.5em;
+  position: relative;
+  top: -25px;
+}
+
 
 /**********************ETP Addresses*******************/
 .whiteSpace {
@@ -2516,6 +2532,28 @@ h2 {
   word-break: break-all;
   word-wrap: break-word;
   font-size: 12px;
+}
+
+.addressInfoTable {
+  margin-bottom: 40px;
+  margin-top: 20px;
+}
+
+.oddAddressInfoTable {
+  background-color: #f2f2f2;
+  height: 40px;
+  border-top: solid 1px $mediumGrey;
+}
+
+.evenAddressInfoTable {
+  height: 40px;
+  border-top: solid 1px $mediumGrey;
+}
+
+.fieldAddressInfoTable {
+  padding-left: 20px;
+  height: 40px;
+  //border-bottom: 1px solid #f2f2f2;
 }
 
 .blockNumber {
