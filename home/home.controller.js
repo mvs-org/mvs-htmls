@@ -67,6 +67,7 @@
     $scope.searchAddressloadMore = searchAddressloadMore;
     $scope.page = 2;            //by default we load the first page only
     $scope.stopLoad = false;
+    $scope.showqr = showqr;
 
     $scope.transaction_count = 0;
     $scope.assets = [];
@@ -100,6 +101,7 @@
     function searchAddress () {
       if ( typeof $scope.search !== 'undefined') {
         searchAddressloadTransactions(1, 2);
+        showqr($scope.search);
       }
     }
 
@@ -165,6 +167,24 @@
 */
 
 
+    //Shows the QRCode
+    function showqr(address) {
+      angular.element(document).ready(function () {
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+          text: address,
+          width: 200,
+          height: 200,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+      });
+    }
+
+
+
+
+
     function searchAddressloadMore() {
       if(!$scope.stopLoad) {
         $scope.page = $scope.page+1;
@@ -225,7 +245,6 @@
 
     //Loads a given asset
     function loadasset(symbol) {
-
       MetaverseService.GetAsset(symbol)
       .then( (response) => {
         NProgress.done();
@@ -347,23 +366,22 @@
 
     $window.scrollTo(0,0);
     $scope.symbol = $filter('uppercase')($location.path().split('/')[2]);
-    $scope.changeFactor = changeFactor;
     $scope.deposit = deposit;
-    $scope.selectAddress = selectAddress;         //Selection of a specific address
-    $scope.selectAddressMem = '';                 //Keep in memory the specific address previously selected (if the user go to Auto and come back to Manual)
-    $scope.autoSelectAddress=true;                //Automatically select the address
-    $scope.underlineAuto='underline';
-    $scope.underlineManual='none';
+
     $scope.period_select=undefined;
     $scope.assetsIssued = [];
     $scope.balance = [];
+    $scope.transactionFee = 0.0001;
+    $scope.availableBalance = 0;
+    $scope.sendAll = sendAll;
+
 
     function init() {
-      $scope.sendfrom = '';
       $scope.deposit_address = "";
       $scope.value = "";
       $scope.password = '';
       $scope.value = '';
+      $scope.transactionFee = 0.0001;
     }
 
     $scope.isNumber = angular.isNumber;
@@ -410,33 +428,11 @@
       $scope.period_select=period;
     }
 
-    $rootScope.factor = "FACTOR_ETP";
-
-    function changeFactor(factor) {
-      switch (factor) {
-        case 'satoshi':
-        if ($rootScope.factor == "FACTOR_SATOSHI")
-        return;
-        $rootScope.factor = "FACTOR_SATOSHI";
-        $scope.value *= 100000000;
-        $scope.value = Math.round($scope.value);
-        break;
-        default:
-        if ($rootScope.factor == "FACTOR_ETP")
-        return;
-        $rootScope.factor = "FACTOR_ETP";
-        $scope.value /= 100000000;
-      }
-    }
-
     function deposit() {
       var credentials = localStorageService.get('credentials');
 
       if ($scope.password == '') { //Check for empty password
         $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else if ($scope.sendfrom !== '' ) {
-        FlashService.Error('Sorry, select the input address is not available for Deposits yet.');
         $window.scrollTo(0,0);
       } else if ($scope.password != credentials.password) {
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
@@ -450,8 +446,7 @@
       } else {
         var deposit_value = ("" + $scope.value * Math.pow(10,$scope.decimal_number)).split(".")[0];
 
-
-        var SendPromise = ($scope.symbol == 'ETP') ? MetaverseService.Deposit($scope.deposit_options[$scope.period_select][2], deposit_value, $scope.password, ($scope.address_option) ? $scope.deposit_address : undefined) : MetaverseService.FrozenAsset($scope.deposit_options[$scope.period_select][2], deposit_value, $scope.password, $scope.symbol, ($scope.address_option) ? $scope.deposit_address : undefined);
+        var SendPromise = ($scope.symbol == 'ETP') ? MetaverseService.Deposit($scope.deposit_options[$scope.period_select][2], deposit_value, $scope.transactionFee, $scope.password, ($scope.address_option) ? $scope.deposit_address : undefined) : MetaverseService.FrozenAsset($scope.deposit_options[$scope.period_select][2], deposit_value, $scope.password, $scope.symbol, ($scope.address_option) ? $scope.deposit_address : undefined);
         SendPromise
         .then( (response) => {
           NProgress.done();
@@ -472,40 +467,7 @@
       }
     }
 
-
-    function selectAddress(type, address) {
-      switch(type) {
-        case 'auto':
-        $scope.autoSelectAddress=true;
-        $scope.underlineAuto='underline';
-        $scope.underlineManual='none';
-        $scope.sendfrom='';
-        break;
-
-        case 'manual':
-        $scope.autoSelectAddress=false;
-        $scope.underlineAuto='none';
-        $scope.underlineManual='underline';
-        $scope.sendfrom=$scope.selectAddressMem;
-        break;
-
-        case 'selectionAddress':
-        $scope.autoSelectAddress=false;
-        $scope.underlineAuto='none';
-        $scope.underlineManual='underline';
-        $scope.sendfrom=address;
-        $scope.selectAddressMem=address;
-        break;
-
-        default:
-        $scope.autoSelectAddress=true;
-        $scope.underlineAuto='underline';
-        $scope.underlineManual='none';
-        $scope.sendfrom='';
-      }
-    }
-
-    //Load users ETP balance
+1    //Load users ETP balance
     function loadEtpBalance() {
       MetaverseHelperService.GetBalance( (err, balance, message) => {
         if (err) {
@@ -514,30 +476,26 @@
         } else {
           $scope.balance = balance;
           $scope.decimal_number = 8;
+          $scope.availableBalance = balance['total-unspent'];
         }
       });
     }
 
-    //Load the addresses and their balances
-    /*function listBalances() {
-      NProgress.start();
-      MetaverseService.ListBalances()
-      .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
-          $scope.addresses = [];
-          response.data.balances.forEach( (e) => {
-            $scope.addresses.push({
-              "balance": parseInt(e.balance.unspent),
-              "address": e.balance.address,
-              "frozen": e.balance.frozen
-            });
-          });
-          init();
-        }
-        NProgress.done();
-      });
-    }*/
+    function availBalance(address) {
+      if(address == '') {
+        $scope.availableBalance = $scope.balance['total-available'];
+      } else {
+        $scope.addresses.forEach( (a) => {
+          if(a.address == address) {
+            $scope.availableBalance = a.balance - a.frozen;
+          }
+        });
+      }
+    }
 
+    function sendAll() {
+      $scope.value = $scope.availableBalance/100000000 - $scope.transactionFee;
+    }
 
     init();
 
@@ -567,17 +525,20 @@
     $scope.selectAddressAvailable = true;         //If we send to more than 1 recipent, sendfrom is not available
     $scope.transactionFee = 0.0001;
     $scope.memo = '';
+    $scope.getBalance = getBalance;
 
     $scope.recipents = [];
 
     // Initializes all transaction parameters with empty strings.
     function init() {
+      getBalance();
       $scope.sendfrom = '';
       $scope.sendto = '';
       $scope.fee = '';
       $scope.message = '';
       $scope.value = '';
       $scope.password = '';
+      $scope.transactionFee = 0.0001;
       $scope.memo = '';
       MetaverseService.ListBalances(true)
       .then( (response) => {
@@ -665,16 +626,20 @@
     }
 
 
-    //Load users ETP balance
-    MetaverseHelperService.GetBalance( (err, balance, message) => {
-      if (err) {
-        FlashService.Error(message);
-        $window.scrollTo(0,0);
-      } else {
-        $scope.balance = balance;
-        $scope.availableBalance = balance['total-unspent'];
-      }
-    });
+    function getBalance(){
+      //Load users ETP balance
+      MetaverseHelperService.GetBalance( (err, balance, message) => {
+        if (err) {
+          FlashService.Error(message);
+          $window.scrollTo(0,0);
+        } else {
+          $scope.balance = balance;
+          $scope.availableBalance = balance['total-unspent'];
+        }
+      });
+    }
+
+    getBalance();
 
     //Load the addresses and their balances
     MetaverseService.ListBalances()
@@ -757,6 +722,7 @@
       NProgress.start();
       var value = '';
       var sendTo = '';
+      var fee = $scope.transactionFee * 100000000;
       $scope.recipents.forEach( (e) => {
         value = e.value;
         sendTo = e.address;
@@ -766,14 +732,13 @@
         break;
         case 'FACTOR_ETP':
         value *= 100000000;
-        $scope.transactionFee *= 100000000;
         break;
         default:
         $translate('MESSAGES.TRANSFER_ERROR').then( (data) => FlashService.Error(data) );
         return;
       }
       value = Math.round(value);
-      var SendPromise = ($scope.sendfrom) ? MetaverseService.SendFrom($scope.sendfrom, sendTo, value, $scope.transactionFee, $scope.memo) : MetaverseService.Send(sendTo, value, $scope.transactionFee, $scope.memo);
+      var SendPromise = ($scope.sendfrom) ? MetaverseService.SendFrom($scope.sendfrom, sendTo, value, fee, $scope.memo) : MetaverseService.Send(sendTo, value, fee, $scope.memo);
       SendPromise
       .then( (response) => {
         NProgress.done();
@@ -801,7 +766,7 @@
     function transferMore() {
       NProgress.start();
       var recipentsQuery = [];    //data that will be used for the query
-      $scope.transactionFee *= 100000000;
+      var fee = $scope.transactionFee * 100000000;
 
       $scope.recipents.forEach( (e) => {
         var value = e.value;
@@ -822,7 +787,7 @@
         });
       });
 
-      var SendPromise = MetaverseService.SendMore(recipentsQuery, $scope.transactionFee);
+      var SendPromise = MetaverseService.SendMore(recipentsQuery, fee);
       SendPromise
       .then( (response) => {
         NProgress.done();
@@ -1733,8 +1698,9 @@
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.assets = [];
         $scope.assets = response.data.assets;
+        //All the details are hidden at the loading
         $scope.assets.forEach( (a) => {
-          $scope.asset.details = false;
+          a.details = false;
         });
       } else {
         $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => {
@@ -2223,64 +2189,6 @@
       }
     }
 
-    //Define the time period to use and show the dates From ... To ... if the Custom button is selected
-    /*function setDates(period, startDate, endDate)
-    {
-      switch (period) {
-        case 'week':
-        $scope.showDates=false;
-        $scope.endDate = new Date();
-        $scope.startDate = new Date($scope.endDate-(7*86400000));//8640000 millisecond/day
-        break;
-
-        case 'month':
-        $scope.showDates=false;
-        $scope.endDate = new Date();
-        $scope.startDate = new Date($scope.endDate-(30*86400000));
-        break;
-
-        case 'threeMonths':
-        $scope.showDates=false;
-        $scope.endDate = new Date();
-        $scope.startDate = new Date($scope.endDate-(90*86400000));
-        break;
-
-        case 'custom':
-        $scope.showDates=true;
-        break;
-
-        default:
-        $scope.startDate = new Date();
-        $scope.endDate = new Date();
-      }
-      displayUpdatedDates();
-    }*/
-
-
-
-    /*$scope.dateRangeFilter = function (transaction, startDate, endDate) {
-      if (transaction >= startDate && transaction <= endDate) {
-        return true;
-      }
-      return false;
-    }*/
-
-
-    //Update the startDate, endDate and list of transactions when the Submit button is clicked
-    /*function displayUpdatedDates() {
-      $scope.startDateUpdated = $scope.startDate;
-      $scope.endDateUpdated = $scope.endDate;
-      $scope.showHistory = true;
-      $scope.transactionsFiltered = [];
-      $scope.transactions.forEach(function(e) {
-        if ($scope.dateRangeFilter(e.timestamp, $scope.startDateUpdated, $scope.endDateUpdated) && e.type==$scope.assetType) {
-          $scope.transactionsFiltered.push(e);
-        }
-      });
-    }*/
-
-
-
     //Load users ETP balance
     MetaverseHelperService.GetBalance( (err, balance, message) => {
       if (err)
@@ -2346,38 +2254,31 @@
 
     $("#inputField").focus();
 
-    $scope.connected = false;
+    $scope.showConnected = false;
 
     ws.onmessage = (ev) => {
+      $scope.showConnected = true;
       NProgress.done();
       $scope.consolelog.push({
         query: $scope.querystring,
         answer: ev.data
       });
-      console.log($scope.connected);
-
-
-
 
       $scope.querystring = '';
       $scope.$apply();
-      //scrolldown();
-      if ($scope.connected) {
-        window.scrollTo(0,document.body.scrollHeight);
-      }
-      $scope.connected = true;
+      scrolldown();
     };
 
     $scope.querystring = '';
     $scope.consolelog = [];
 
-    /*To put the results in a window that we can scrolldown, with ID = consolelog
+    /*To put the results in a window that we can scrolldown, with ID = consolelog*/
     function scrolldown() {
       window.setTimeout( () => {
         var elem = document.getElementById('consolelog');
         elem.scrollTop = elem.scrollHeight;
       }, 100);
-    }*/
+    }
 
     $scope.query = () => {
       NProgress.start();

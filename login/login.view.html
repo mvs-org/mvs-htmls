@@ -21,25 +21,34 @@
         <ul class="nav navbar-nav">
           <li role="presentation">
             <div class="linkLogo">
-              <a href="#!/login" class="linkLogo">
+              <a href="#!/login">
                 <img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" />
               </a>
-            </li>
-          </div>
+            </div>
+          </li>
         </ul>
-
-        <!--Right header-->
+          <!--Right header-->
         <ul class="nav navbar-nav navbar-right">
           <form class="navbar-form">
-
             <!--Language button Large screens-->
-            <button class="btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
-              中文
-            </button>
-            /
-            <button class="btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('en_US')">
-              EN
-            </button>
+            <p ng-show="('LANG_CODE' | translate)=='zh'">
+              <button class="selectedLanguage btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
+                中文
+              </button>
+              /
+              <button class="lang-en btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('en_US')">
+                EN
+              </button>
+            </p>
+            <p ng-show="('LANG_CODE' | translate)=='en'">
+              <button class="btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
+                中文
+              </button>
+              /
+              <button class="selectedLanguage btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('en_US')">
+                EN
+              </button>
+            </p>
           </form>
         </ul>
       </div>

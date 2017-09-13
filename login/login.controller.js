@@ -5,8 +5,8 @@
         .module('app')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$location', 'MetaverseService', 'FlashService','localStorageService', '$translate'];
-    function LoginController($location, MetaverseService, FlashService, localStorageService, $translate) {
+    LoginController.$inject = ['$location', 'MetaverseService', 'FlashService','localStorageService', '$translate', '$window'];
+    function LoginController($location, MetaverseService, FlashService, localStorageService, $translate, $window) {
         var vm = this;
 
         vm.login = login;
@@ -40,6 +40,7 @@
                           //Show login error message
                           setTimeout( () => NProgress.done(), 1000);
                           $translate('MESSAGES.LOGIN_WRONG_CREDENTIALS').then( (data) => FlashService.Error(data) );
+                          $window.scrollTo(0,0);
                       }
 
       	        })
@@ -47,6 +48,7 @@
                   setTimeout( () =>  NProgress.done(), 500 );
                   //Show login error message
                   $translate('MESSAGES.GENERAL_CONNECTION_ERROR').then( (data) => FlashService.Error(data) );
+                  $window.scrollTo(0,0);
                 }
               );
         };

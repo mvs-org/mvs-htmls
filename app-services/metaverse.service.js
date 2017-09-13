@@ -383,7 +383,7 @@
         function SendFrom(sender, recipent, quantity, transactionFee, memo) {
             var credentials = localStorageService.get('credentials');
             if(memo == '') {
-              return _send('sendfrom', [credentials.user, credentials.password, sender, recipent, quantity]);
+              return _send('sendfrom', [credentials.user, credentials.password, sender, recipent, quantity, '-f', transactionFee]);
             } else {
               return _send('sendfrom', [credentials.user, credentials.password, sender, recipent, quantity, '-f', transactionFee, '-m', memo]);
             }
@@ -704,12 +704,12 @@
          * @apiParam {List} params [-f depositperiod,username, password, amount]
          *
          **/
-        function Deposit(deposit_period, amount, password, address) {
+        function Deposit(deposit_period, amount, transactionFee, password, address) {
             var credentials = localStorageService.get('credentials');
             if (address != undefined) {
-                return _send('deposit', ['-d', deposit_period, '-a', address, credentials.user, password, amount]);
+                return _send('deposit', ['-d', deposit_period, '-a', address, '-f', transactionFee, credentials.user, password, amount]);
             } else {
-                return _send('deposit', ['-d', deposit_period, credentials.user, password, amount]);
+                return _send('deposit', ['-d', deposit_period, credentials.user, '-f', transactionFee, password, amount]);
             }
         }
 

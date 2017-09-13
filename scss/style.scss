@@ -114,7 +114,7 @@ No media query since this is the default in Bootstrap because it is "mobile firs
   text-align: left;
   background-color: transparent;
   //height: 50px;
-  margin: 10px 0;
+  margin: 5px 5px 5px 0px;
   //border-radius: 4px;
   border: solid 1px $lightGrey;
   //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
@@ -150,24 +150,15 @@ No media query since this is the default in Bootstrap because it is "mobile firs
 
 
 .assetBox .assetLogo {
-  //width: 45px;
-  //height: 45px;
-  //left: 15px;
-  //line-height: 45px;
-  //margin-top: 0;
-  width: 40px;
-  /* height: 45px; */
-  /* left: 15px; */
   line-height: 40px;
   text-align: center;
   display: inline-block;
-
 }
 
 .assetSymbol {
   //margin: 4px;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   margin: 3px;
   background-color: transparent;
 }
@@ -291,7 +282,7 @@ Bootstrap 4 breakpoints
     //text-align: left;
     //background-color: transparent;
     //height: 50px;
-    //margin: 5px;
+    margin: 5px 5px 5px 0px;
     //border-radius: 4px;
     //border: solid 1px $lightGrey;
     //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
@@ -327,8 +318,8 @@ Bootstrap 4 breakpoints
 
   .assetSymbol {
     //margin: 4px;
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     background-color: transparent;
   }
 
@@ -418,7 +409,7 @@ Bootstrap 4 breakpoints
     text-align: left;
     background-color: transparent;
     //height: 50px;
-    margin: 5px;
+    margin: 5px 5px 5px 0px;
     border-radius: 4px;
     //border: solid 1px $lightGrey;
     //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
@@ -451,8 +442,8 @@ Bootstrap 4 breakpoints
 
   .assetSymbol {
     //margin: 4px;
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     background-color: transparent;
   }
   //
@@ -542,7 +533,7 @@ Bootstrap 4 breakpoints
     //text-align: left;
     //background-color: transparent;
     ////height: 50px;
-    //margin: 5px;
+    margin: 5px 5px 5px 0px;
     //border-radius: 4px;
     //border: solid 1px $lightGrey;
     //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
@@ -571,8 +562,8 @@ Bootstrap 4 breakpoints
 
   .assetSymbol {
     //margin: 4px;
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     background-color: transparent;
   }
 
@@ -662,7 +653,7 @@ Bootstrap 4 breakpoints
     //text-align: left;
     //background-color: transparent;
     //height: 60px;
-    //margin: 5px;
+    margin: 5px 5px 5px 0px;
     //border-radius: 4px;
     //border: solid 1px $lightGrey;
     //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
@@ -792,7 +783,7 @@ Bootstrap 4 breakpoints
     text-align: left;
     background-color: transparent;
     height: 80px;
-    margin: 5px;
+    margin: 5px 5px 5px 0px;
     border-radius: 4px;
     border: solid 1px $lightGrey;
     //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
@@ -830,13 +821,13 @@ Bootstrap 4 breakpoints
     background-color: transparent;
   }
 
-  //.assetLogo {
-  //  position: absolute;
-  //  font-size: 26px;
-  //  padding-left: 8px;
-  //  text-align: center;
-  //  padding-top: 20px;
-  //}
+  .assetLogo {
+    position: absolute;
+    font-size: 26px;
+    padding-left: 2px;
+    text-align: center;
+    padding-top: 4px;
+  }
 
   .assetBoxSymbolNameETP {
     //width: 300px;
@@ -902,9 +893,6 @@ Bootstrap 4 breakpoints
 
 
 
-.assetBoxWrapper  .col-lg-5 {
-  width: 30%;
-}
 .assetBoxWrapper .col-xs-offset-5 {
   margin: 0 20px 0 15%;
   width: 260px;
@@ -1438,7 +1426,7 @@ _____  ._______  ___.___ _______
   background-color: white;
   border-radius: 10px;
   padding: 55px;
-  margin: 165px auto 0;
+  margin: 165px auto 100px;
   width: 520px;
   height: 570px;
   //margin-top: 10%;
@@ -1696,6 +1684,7 @@ _____  ._______  ___.___ _______
 
 .menuButtonXs {
   color: black !important;
+  margin-top: 4px;
 }
 
 .selectedLanguage {
@@ -1760,7 +1749,8 @@ _____  ._______  ___.___ _______
 
 .admin {
   overflow:hidden;
-  min-height:700px;
+  //min-height:700px;
+  //height: 100vh;
   padding-bottom: 40px;
   padding-left: 15px;
   padding-right: 15px;
@@ -2152,7 +2142,12 @@ form label {
   height: 26px;
   line-height: 2.5em;
   position: relative;
+
+}
+
+.textAllLoadedAddressExplorerMore10 {
   top: -25px;
+
 }
 
 
@@ -2445,16 +2440,16 @@ form label {
 
 /*************Console page**************/
 html,body {
-    height: 100%
+    //height: 100%
 }
 
-
-.consoleFooter {
-
-}
 
 .console {
   background-color: transparent;
+  width:100%;
+  float:left;
+  overflow:auto;
+  max-height: 50vh;
 }
 
 .console_query {
@@ -2562,6 +2557,21 @@ h2 {
 
 .center {
   text-align: center;
+}
+
+.qrCodeExplorer {
+  height: 200px;
+  width: 200px;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.qrCodeExplorerContainer {
+  text-align: center;
+}
+
+.blockExplorerLabel {
+  font-size: 18px;
 }
 
 

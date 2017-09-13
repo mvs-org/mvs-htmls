@@ -5,9 +5,9 @@
   .module('app')
   .controller('RegisterController', RegisterController);
 
-  RegisterController.$inject = ['MetaverseService','$scope', '$location', '$rootScope', 'FlashService', '$translate'];
+  RegisterController.$inject = ['MetaverseService','$scope', '$location', '$rootScope', 'FlashService', '$translate', '$window'];
 
-  function RegisterController(MetaverseService, $scope, $location, $rootScope, FlashService, $translate) {
+  function RegisterController(MetaverseService, $scope, $location, $rootScope, FlashService, $translate, $window) {
     var vm = this;
 
     vm.register = register;
@@ -24,18 +24,22 @@
       setTimeout( () => NProgress.done() , 500);
       if((vm.user.username==undefined || vm.user.username=='') && !$scope.import_from_file) {
         $translate('MESSAGES.NO_ACCOUNTNAME_PROVIDED').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
         return;
       }
       else if(vm.user.password==undefined){
         $translate('MESSAGES.NO_PASSWORD_PROVIDED').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
         return;
       }
       else if(vm.user.password.length<6){
         $translate('MESSAGES.PASSWORD_SHORT').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
         return;
       }
       else if((vm.user.password_repeat!=vm.user.password) && !$scope.import_from_file){
         $translate('MESSAGES.PASSWORD_NOT_MATCH').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
         return;
       }
       if($scope.import_from_phrase){ //Import account from phrase
@@ -50,8 +54,10 @@
             $translate('MESSAGES.IMPORT_ERROR').then( (data) => {
               if (response.message != undefined) {
                 FlashService.Error(data + " " + response.message);
+                $window.scrollTo(0,0);
               } else {
                 FlashService.Error(data);
+                $window.scrollTo(0,0);
               }
             });
           }
@@ -68,8 +74,10 @@
             $translate('MESSAGES.IMPORT_ERROR').then( (data) => {
               if (response.message != undefined) {
                 FlashService.Error(data + " " + response.message);
+                $window.scrollTo(0,0);
               } else {
                 FlashService.Error(data);
+                $window.scrollTo(0,0);
               }
             });
           }
@@ -79,12 +87,14 @@
         .then( (response) => {
           if ( typeof response.success !== 'undefined' && response.success) {
             $translate('MESSAGES.REGISTARTION_SUCCESS').then( (data) => FlashService.Success(data) );
+            $window.scrollTo(0,0);
             vm.registered = {
               "privatekey" : response.data.mnemonic,
               "address" : response.data['default-address']
             };
           } else {
             FlashService.Error(response.message);
+            $window.scrollTo(0,0);
           }
         });
       }
