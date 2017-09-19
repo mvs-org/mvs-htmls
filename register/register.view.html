@@ -98,45 +98,60 @@
         </div>
       </div>
 
-      <!--Account name-->
-      <div class="form-group col-xs-12" ng-hide="import_from_file">
-        <label for="username" class="control-label comm-ft">{{ 'REGISTER.CHOOSE_ACCOUNT_NAME' | translate }}</label>
-        <input type="text" name="username" ng-model="vm.user.username" required class="form-control">
-      </div>
-      <!--Password-->
-      <div class="form-group col-xs-12">
-        <label ng-hide="import_from_file" for="password" class="control-label comm-ft">{{ 'REGISTER.CHOOSE_PASSWORD' | translate }}</label>
-        <label ng-show="import_from_file" for="password" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_PASSWORD' | translate }}</label>
-        <input type="password" name="password" ng-model="vm.user.password" required class="form-control">
-      </div>
-      <!--Re-enter password-->
-      <div class="form-group col-xs-12" ng-hide="import_from_file">
-        <label for="password" class="control-label comm-ft">{{ 'REGISTER.REPEAT_PASSWORD' | translate }}</label>
-        <input class="form-control" type="password" ng-model="vm.user.password_repeat" required>
-      </div>
-
-
-      <!--Import account-->
-      <div class="form-group col-xs-12">
-
-        <!--When import from Private key-->
-        <div ng-show="import_from_phrase">
-          <div class="form-group">
-            <label for="importPhrase" class="control-label comm-ft">{{ 'REGISTER.IMPORT_PHRASE' | translate }}</label>
-            <textarea class="form-control" type="text" name="importPhrase" ng-model="import_phrase" rows="3" required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="nbrAdr" class="control-label comm-ft">{{ 'REGISTER.IMPORT_ADDRESS_COUNT' | translate }}</label>
-            <input type="number" name="nbrAdr" ng-model="address_count" min="1" required class="form-control">
-          </div>
+      <!--Register new Account-->
+      <div class="form-group col-xs-12" ng-show="!import_from_file && !import_from_phrase">
+        <!--Account name-->
+        <div class="form-group col-xs-12">
+          <label for="username" class="control-label comm-ft">{{ 'REGISTER.CHOOSE_ACCOUNT_NAME' | translate }}</label>
+          <input type="text" name="username" ng-model="vm.user.username" required class="form-control">
         </div>
+        <!--Password-->
+        <div class="form-group col-xs-12">
+          <label for="password" class="control-label comm-ft">{{ 'REGISTER.CHOOSE_PASSWORD' | translate }}</label>
+          <input type="password" name="password" ng-model="vm.user.password" required class="form-control">
+        </div>
+        <!--Re-enter password-->
+        <div class="form-group col-xs-12" ng-hide="import_from_file || import_from_phrase">
+          <label for="password" class="control-label comm-ft">{{ 'REGISTER.REPEAT_PASSWORD' | translate }}</label>
+          <input class="form-control" type="password" ng-model="vm.user.password_repeat" required>
+        </div>
+      </div>
 
-        <!--When import from a file-->
-        <div ng-show="import_from_file">
-          <div class="form-group">
-            <label for="path" class="control-label comm-ft">{{ 'REGISTER.IMPORT_FILE_PATH' | translate }}</label>
-            <input type="text" name="path" ng-model="path" required class="form-control">
-          </div>
+
+      <!--Import from a file-->
+      <div class="form-group col-xs-12" ng-show="import_from_file">
+        <div class="form-group col-xs-12">
+          <label for="password" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_PASSWORD' | translate }}</label>
+          <input type="password" name="password" ng-model="vm.user.password" required class="form-control">
+        </div>
+        <div class="form-group col-xs-12">
+          <label for="path" class="control-label comm-ft">{{ 'REGISTER.IMPORT_FILE_PATH' | translate }}</label>
+          <input type="text" name="path" ng-model="path" required class="form-control">
+          <!--<input type="file" fileread="accountInfo" name="path" class="" name="datafile" accept=".txt">-->
+        </div>
+        <!--<textarea class="form-control importAccountFileTextArea" ng-model="accountInfo" rows="5" required></textarea>-->
+      </div>
+
+
+      <!--Import from Private key-->
+      <div class="form-group col-xs-12" ng-show="import_from_phrase">
+        <!--Account name-->
+        <div class="form-group col-xs-12">
+          <label for="username" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_NAME' | translate }}</label>
+          <input type="text" name="username" ng-model="vm.user.username" required class="form-control">
+        </div>
+        <!--Password-->
+        <div class="form-group col-xs-12">
+          <label for="password" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_PASSWORD' | translate }}</label>
+          <input type="password" name="password" ng-model="vm.user.password" required class="form-control">
+        </div>
+        <div class="form-group col-xs-12">
+          <label for="importPhrase" class="control-label comm-ft">{{ 'REGISTER.IMPORT_PHRASE' | translate }}</label>
+          <textarea class="form-control" type="text" name="importPhrase" ng-model="import_phrase" rows="3" required></textarea>
+        </div>
+        <div class="form-group col-xs-12">
+          <label for="nbrAdr" class="control-label comm-ft">{{ 'REGISTER.IMPORT_ADDRESS_COUNT' | translate }}</label>
+          <input type="number" name="nbrAdr" ng-model="address_count" min="1" required class="form-control">
         </div>
       </div>
 
