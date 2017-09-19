@@ -7,28 +7,6 @@
       <span>{{ 'TRANSFER_ASSET_FEE_START' | translate }} <b class="red">0.0001</b> {{ 'TRANSFER_ASSET_FEE_END' | translate }}<span>
     </div>
 
-      <!--Display all the addresses if the user choose to let it manually-->
-      <!--<div class="col-xs-12 noPaddingLeftRight" ng-hide=autoSelectAddress>
-        <div class="radioButtonAddress noPaddingLeftRight" ng-repeat="asset in assetAddresses | orderBy:'quantity':true" ng-click="selectAddress('selectionAddress',asset.address)" ng-show="(asset.symbol == symbol)">
-          <dd class="panel addressBox noPaddingLeftRight col-xs-1">
-            <input type="radio" name="radioDeposit" id={{asset.symbol}}.{{asset.address}} value="hideCustomDate" checked/>
-            <label for={{asset.symbol}}.{{asset.address}}>
-              <div class="addressBoxSymbolImgDeposit">
-                <img class="assetSymbol assetSymbolDeposit" src="images/favicon.jpg" alt=""/>
-              </div>
-              <div class="addressBoxTextInfoDeposit">
-                <span class="addressBoxNameDeposit">{{asset.name}}</span>
-                <span class="addressBoxAddressDeposit">{{asset.address}}</span>
-                <span class="col-xs-6 noPaddingLeftRight">
-                  <span class="assetBoxTitle">{{ 'BALANCE' | translate }}</span>
-                  <span class="assetBoxValue">{{asset.quantity | assetformat : asset.decimal_number}}</span>
-                </span>
-            </div>
-          </label>
-        </dd>
-      </div>
-    </div>-->
-
     <form class="row">
       <!--Sender-->
       <div class="col-md-12 form-group">
@@ -55,9 +33,9 @@
       <div class="col-md-12 form-group">
         <div class="col-md-6 noPaddingLeftRight">
           <div class="form-group">
-            <label for="value" class="control-label col-md-6 noPaddingLeftRight">{{ 'TRANSFER_VALUE' | translate }}</label>
+            <label for="value" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_VALUE' | translate }}</label>
             <!--AvailableBalance-->
-            <div class="col-md-6 noPaddingLeftRight addRecipent">
+            <div class="col-xs-6 noPaddingLeftRight addRecipent">
               <button type="button" class="btn-link-red addRecipentButton" ng-click="sendAll()">{{ 'TRANSFER_AMOUNT_AVALAIBLE' | translate }}: {{availableBalance | assetformat : asset.decimal_number}}</button>
             </div>
             <input type="number" ng-model="quantity" name="quantity" min=0 required class="form-control" placeholder="0" autocomplete="off">

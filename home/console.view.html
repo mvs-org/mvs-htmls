@@ -11,7 +11,7 @@
     </div>
 
     <div class="console" id="consolelog">
-      <div ng-repeat="log in consolelog" ng-show="showConnected">
+      <div ng-repeat="log in consolelog" ng-show="showConnected" ng-hide="log.index < consolelog.length-10">
         <div class="console_query" ng-show="log.query != ''">
           <span class="console_text">{{log.query}}</span>
         </div>
@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-    <input type="text" rows="5" ng-show="showConnected" ng-model="querystring" ng-keyup="$event.keyCode == 13 && query()" class="forminput" id="inputField" placeholder="{{ 'CONSOLE.INSERT_PROMPT' | translate }}">
+    <input type="text" rows="5" ng-show="showConnected" ng-model="querystring" ng-keyup="$event.keyCode == 13 && query()" class="form-control forminputConsole" id="inputField" placeholder="{{ 'CONSOLE.INSERT_PROMPT' | translate }}">
   </div>
 
   <!--Mining-->
@@ -33,10 +33,7 @@
         <div class="miningSpinner">
         </div>
       </h4>
-
     </div>
-
-
 
     <div ng-show="isMining" class="miningEnd">{{ 'MINING_HOW_STOP' | translate }}</div>
     <div class="row">
@@ -90,7 +87,7 @@
       </div>
     </div>
     <div class="form-group">
-      <input type="text" rows="5" ng-show="connected" ng-model="querystring" ng-keyup="$event.keyCode == 13 && query()" class="form-control" id="inputField" placeholder="{{ 'CONSOLE.INSERT_PROMPT' | translate }}">
+      <input type="text" rows="5" ng-show="connected" ng-model="querystring" ng-keyup="$event.keyCode == 13 && query()" class="form-control forminputConsole" id="inputField" placeholder="{{ 'CONSOLE.INSERT_PROMPT' | translate }}">
     </div>
   </div>
 </div>

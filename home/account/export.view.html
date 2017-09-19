@@ -3,12 +3,27 @@
     <li role="presentation"><a href="#!/account/details" class="btn-link-menu">{{ 'SETTINGS.CHANGE_PASSWORD' | translate }}</a></li>
     <li role="presentation"><a href="#!/account/privatekey" class="btn-link-menu">{{ 'SETTINGS.PRIVATE_KEY' | translate }}</a></li>
     <li role="presentation" class="active"><a href="#!/account/export" class="btn-link-menu">{{ 'SETTINGS.EXPORT' | translate }}</a></li>
-    <!--<li role="presentation"><a href="#!/account/subscribe" class="btn-link-menu">{{ 'NAV_ACCOUNT_SUBSCRIBE' | translate }}</a></li>-->
   </ul>
 </div>
 <div class="row">
   <div class="col-md-6">
     <br/>
+    <!--<form class="form-spebox">
+      <div class="form-group">
+        <label for="password" class="control-label">{{ 'SETTINGS_BACKUP_PASSWORD' | translate }}</label>
+        <input type="password" class="form-control" name="password" id="" ng-model="password" autocomplete="off" required>
+      </div>
+      <div class="form-group">
+        <label for="password" class="control-label">{{ 'SETTINGS.MNEMONIC_LAST_WORD' | translate }}</label>
+        <input type="password" class="form-control" name="password" id="" ng-model="last_word" autocomplete="off" required>
+      </div>
+
+      </br>
+      <div class="row col-md-6">
+        <input type="submit" ng-click="exportAccount(password, last_word)" value="{{ 'SETTINGS_EXPORT_ACCOUNT_BUTTON' | translate }}" class="btn btn-success">
+      </div>
+
+    </form>-->
     <form class="form-spebox">
       <div class="form-group">
         <label for="password" class="control-label">{{ 'SETTINGS_BACKUP_PASSWORD' | translate }}</label>

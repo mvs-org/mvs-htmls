@@ -6,6 +6,7 @@
         .controller('LoginController', LoginController);
 
     LoginController.$inject = ['$location', 'MetaverseService', 'FlashService','localStorageService', '$translate', '$window'];
+
     function LoginController($location, MetaverseService, FlashService, localStorageService, $translate, $window) {
         var vm = this;
 

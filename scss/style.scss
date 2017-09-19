@@ -749,7 +749,7 @@ Bootstrap 4 breakpoints
   }
 
   .assetBoxCopy {
-    padding-top: 14px;
+    padding-top: 10px;
     display: inline-block;
   }
 
@@ -873,7 +873,7 @@ Bootstrap 4 breakpoints
   }
 
   .assetBoxCopy {
-    padding-top: 22px;
+    padding-top: 10px;
     display: inline-block;
   }
 
@@ -1590,7 +1590,7 @@ _____  ._______  ___.___ _______
 }
 
 .headerBlankLargeScreens {
-  margin-top: 60px;
+  margin-top: 65px;
 }
 
 .headerButtonXs {
@@ -1749,17 +1749,26 @@ _____  ._______  ___.___ _______
 
 .admin {
   overflow:hidden;
-  //min-height:700px;
-  //height: 100vh;
   padding-bottom: 40px;
   padding-left: 15px;
   padding-right: 15px;
+  padding-top: 15px;
 }
 
 .fullPageWidth {
+  min-width: 700px;
   max-width: 1320px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.navbarSmallScreens {
+  position: fixed;
+  top: 0;
+  //left: 0;
+  right: 0;
+  z-index: 9999;
+  width: 100%;
 }
 
 
@@ -1858,6 +1867,10 @@ _____  ._______  ___.___ _______
 .exportAccount {
   display: inline-block;
   margin: 10px;
+}
+
+.importAccountFileTextArea {
+  height: auto !important;
 }
 
 
@@ -2058,6 +2071,10 @@ form label {
   font-size: 14px;
   color: $darkGrey02;
 
+}
+
+.checkboxAgreeSaved {
+  margin-bottom: 20px;
 }
 
 
@@ -2472,7 +2489,7 @@ word-wrap: break-word;
   margin: 0;
   padding: 0;
   font-size: 14px;
-  line-height: 16px;
+  line-height: 20px;
   color: black;
   word-break: break-all;
   background-color: transparent;
@@ -2488,15 +2505,12 @@ word-wrap: break-word;
   word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
-.forminput {
-  margin-top: 10px;
-  background-color: transparent !important;
-  border-width: 0;
-  width: 100%;
-  vertical-align: top;
-
+.forminputConsole {
+  //border-color: #66afe9;
+  margin-top: 14px;
+  padding: 8px 0 8px 4px;
+  display: inline;
 }
-
 
 
 
@@ -2720,9 +2734,7 @@ h2 {
   margin-bottom: 30px;
 }
 
-#inputField{
-  padding: 8px 0;
-}
+
 .ngdialog.ngdialog-theme-default .ngdialog-content{
   padding: 2em  3em !important;
 }

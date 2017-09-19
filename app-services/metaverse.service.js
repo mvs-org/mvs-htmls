@@ -163,6 +163,11 @@
         }
 
 
+        /*function ExportAccountAsFile(password, last_word) {
+          var credentials = localStorageService.get('credentials');
+          return _send('exportaccountasfile', [credentials.user, password, last_word]);
+        }*/
+
         function ExportAccountAsFile(password, last_word, path) {
           var credentials = localStorageService.get('credentials');
           return _send('exportaccountasfile', [credentials.user, password, last_word, path]);
@@ -337,7 +342,7 @@
         function Send(recipent, quantity, transactionFee, memo) {
             var credentials = localStorageService.get('credentials');
             if(memo == '') {
-              return _send('send', [credentials.user, credentials.password, recipent, quantity]);
+              return _send('send', [credentials.user, credentials.password, recipent, quantity, '-f', transactionFee]);
             } else {
               return _send('send', [credentials.user, credentials.password, recipent, quantity, '-f', transactionFee, '-m', memo]);
             }
@@ -708,8 +713,10 @@
             var credentials = localStorageService.get('credentials');
             if (address != undefined) {
                 return _send('deposit', ['-d', deposit_period, '-a', address, '-f', transactionFee, credentials.user, password, amount]);
+                //return _send('deposit', ['-d', deposit_period, '-a', address, credentials.user, password, amount]);
             } else {
-                return _send('deposit', ['-d', deposit_period, credentials.user, '-f', transactionFee, password, amount]);
+                return _send('deposit', ['-d', deposit_period, '-f', transactionFee, credentials.user, password, amount]);
+                //return _send('deposit', ['-d', deposit_period, credentials.user, password, amount]);
             }
         }
 

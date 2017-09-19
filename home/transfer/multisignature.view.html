@@ -1,16 +1,17 @@
 <div class="content">
-	<span class="headline">{{ 'HEADLINE_ETP_TRANSFER_MULTISIGNATURE' | translate }}</span>
+	<span class="headline">{{ 'HEADLINE_ETP_TRANSFER' | translate }}</span>
+
+
 	<!--Before sending a transaction-->
 	<div ng-hide="transferSuccess">
-		<div>
-		  <ul class="nav nav-pills tabsMenu">
-		    <li role="presentation" class="active"><a href="#!/transfer/multisignature" class="btn-link-menu">{{ 'NAV_TRANSFER_MULTISIGNATURE_INIT' | translate }}</a></li>
-		    <li role="presentation"><a href="#!/transfer/sign" class="btn-link-menu">{{ 'NAV_TRANSFER_MULTISIGNATURE_SIGN' | translate }}</a></li>
-		  </ul>
-		</div>
+		<ul class="nav nav-pills tabsMenu">
+			<li role="presentation"><a href="#!/transfer/ETP" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIMPLE' | translate }}</a></li>
+			<li role="presentation" class="active"><a href="#!/transfer/multisignature" class="btn-link-menu">{{ 'TRANSFER_TYPE_MULTISIG' | translate }}</a></li>
+			<li role="presentation"><a href="#!/transfer/sign" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIGN' | translate }}</a></li>
+			<!--<li role="presentation"><a href="#!/account/subscribe" class="btn-link-menu">{{ 'NAV_ACCOUNT_SUBSCRIBE' | translate }}</a></li>-->
+		</ul>
 
 		<form class="row">
-			<br/>
 
 			<!--Sender-->
 			<div class="col-md-12 form-group">
@@ -18,10 +19,13 @@
 				<div class="col-md-6 noPaddingLeftRight">
 					<label for="addressFrom" class="control-label col-xs-3 col-sm-3 col-md-3 noPaddingLeftRight">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
 					<div class="createAddress col-xs-9 col-sm-9 col-md-9 noPaddingLeftRight">
-						<a href="#!/transfer/newmultisignature" class="btn-link-black smallButton"><span class="glyphicon glyphicon-plus"></span>{{ 'TRANSFER_MULTISIGNATURE_ADD' | translate }}</a>
+						<a href="#!/addresses/newmultisignature" class="btn-link-black smallButton"><span class="glyphicon glyphicon-plus"></span>{{ 'TRANSFER_MULTISIGNATURE_ADD' | translate }}</a>
 					</div>
-					<select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom"  ng-change="availableBalance = addresses[sendfrom]" required>
-						<option ng-repeat="multiSig in listMultiSig | orderBy:'balance':true" title="{{multiSig.balance/100000000}} ETP" value="{{multiSig.address}}">{{multiSig.address}} - {{multiSig.balance/100000000}} ETP</option>
+					<select ng-hide="listMultiSig.length == 0" name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom"  ng-change="availableBalance = addresses[sendfrom]" required>
+						<option ng-repeat="multiSig in listMultiSig | orderBy:'balance':true" title="{{multiSig.balance/100000000}} ETP" value="{{multiSig.address}}">{{multiSig.address}}</option>
+						<!--<option ng-repeat="multiSig in listMultiSig | orderBy:'balance':true" title="{{multiSig.balance/100000000}} ETP" value="{{multiSig.address}}">{{multiSig.address}} - {{multiSig.balance/100000000}} ETP</option>-->
+					</select>
+					<select ng-show="listMultiSig.length == 0" name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom"  ng-change="availableBalance = addresses[sendfrom]" required disabled bs-tooltip data-placement="top" title="{{ 'TRANSFER_NO_MULTISIG_ADDR' | translate }}">
 					</select>
 				</div>
 			</div>
@@ -37,12 +41,12 @@
 			<!--Amount-->
 			<div class="col-md-12 form-group">
 				<div class="col-md-6 noPaddingLeftRight">
-					<label for="value" class="control-label col-md-6 noPaddingLeftRight">{{ 'TRANSFER_VALUE' | translate }}</label>
-					<!--AvailableBalance-->
-					<div class="col-md-6 noPaddingLeftRight addRecipent" ng-show="(recipents.length == 1)">
-						<button type="button" class="btn-link-red addRecipentButton" ng-click="quantity = availableBalance/100000000">{{ 'TRANSFER_AMOUNT_AVALAIBLE' | translate }}: {{availableBalance/100000000}} ETP</button>
+					<label for="value" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_VALUE' | translate }}</label>
+					<!--Available Balance-->
+					<div class="col-xs-6 noPaddingLeftRight addRecipent" ng-show="(recipents.length == 1)">
+						<button type="button" class="btn-link-red addRecipentButton" ng-click="quantity = availableBalance/100000000 - 0.0001">{{ 'TRANSFER_AMOUNT_AVALAIBLE' | translate }}: {{availableBalance/100000000}} ETP</button>
 					</div>
-					<input type="number" min=0 step="0.00000001" max={{availableBalance/100000000}} required class="form-control" placeholder="0.00000000" name="value" ng-model="quantity" autocomplete="off">
+					<input type="number" min=0 step="0.00000001" required class="form-control" placeholder="0.00000000" name="value" ng-model="quantity" autocomplete="off">
 				</div>
 			</div>
 
@@ -71,7 +75,7 @@
 	<div ng-show="transferSuccess">
 		<div class="form-group">{{ 'TRANSFER_MULTISIGNATURE_SUCCESS' | translate}}</div>
 		<div class="form-group">
-			<button class="btn btn-success smallButton" bs-popover data-clipboard-text="TEST" data-toggle="popover" data-placement="top" data-content="{{ 'TRANSFER_MULTISIGNATURE_POPOVER_COPIED' | translate }}" role="button">
+			<button class="btn btn-success smallButton" bs-popover data-clipboard-text="{{resultCreateTx}}" data-toggle="popover" data-placement="top" data-content="{{ 'TRANSFER_MULTISIGNATURE_POPOVER_COPIED' | translate }}" role="button">
 				<span class="glyphicon glyphicon-file"></span>  {{ 'TRANSFER_MULTISIGNATURE_COPY_BUTTON' | translate }}
 			</button>
 		</div>

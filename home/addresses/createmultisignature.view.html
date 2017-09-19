@@ -1,0 +1,71 @@
+<div class="content">
+	<span class="headline">{{ 'HEADLINE_ETP_CREATE_MULTISIGNATURE' | translate }}</span>
+
+	<form class="row">
+		<!--Sender-->
+		<div class="col-md-12 form-group">
+			<br/>
+
+			<div class="col-md-6 noPaddingLeftRight">
+				<label for="addressFrom" class="ddd control-label">{{ 'CREATE_MULTISIGNATURE_MY_ADDRESS' | translate }}</label>
+				<select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom">
+					<option ng-repeat="address in addresses | orderBy:'balance':true" ng-click="getPublicKey(address.address)" value="{{address.address}}" title="{{address.balance/100000000}} ETP">{{address.address}}</option>
+				</select>
+			</div>
+		</div>
+
+		<!--Sender key-->
+		<div class="col-md-12 form-group">
+			<div class="col-md-6 noPaddingLeftRight">
+				<label for="publicKey" class="control-label">{{ 'CREATE_MULTISIGNATURE_MY_PUBLIC_KEY' | translate }}</label>
+				<input type="multisig" class="form-control" name="publicKey" id="" ng-model="publicKey">
+			</div>
+		</div>
+
+		<!--Co-signers-->
+		<div class="col-md-12 form-group" ng-repeat="cosigner in cosigners | orderBy:'index'">
+			<div class="col-md-6 noPaddingLeftRight">
+				<label for="cosigner" class="control-label col-xs-6 noPaddingLeftRight">{{ 'CREATE_MULTISIGNATURE_PUBLIC_KEY_OTHERS' | translate }} {{cosigner.index}}</label>
+				<!--Add Recipent button, only on the first one-->
+				<div class="col-xs-6 noPaddingLeftRight addRecipent" ng-show="cosigner.index == 1">
+					<button type="button" ng-click="addCoSigner()" class="btn-link-red addRecipentButton"><span class="glyphicon glyphicon-plus"></span>{{ 'CREATE_MULTISIGNATURE_ADD_COSIGNER' | translate }}</button>
+				</div>
+				<!--Remove Recipent button, on the last one-->
+				<div class="col-xs-6 noPaddingLeftRight addRecipent" ng-show="(cosigners.length>1) && (cosigner.index == cosigners.length)">
+					<button type="button" ng-click="removeCoSigner()" class="btn-link-red addRecipentButton"><span class="glyphicon glyphicon-minus"></span>{{ 'CREATE_MULTISIGNATURE_REMOVE_COSIGNER' | translate }}</button>
+				</div>
+				<input type="multisig" class="form-control" name="cosigner" id="" ng-model="cosigner.publicKey" required>
+			</div>
+		</div>
+
+		<div class="col-md-12 form-group">
+			<div class="col-md-6 noPaddingLeftRight">
+				<label for="nbrSign" class="control-label">{{ 'CREATE_MULTISIGNATURE_NBR_COSIGNER_REQUIRED' | translate }}</label>
+				<select type="number" class="form-control" name="nbrSign" required placeholder="" required ng-model="nbrCosignersRequired">
+		      <option ng-repeat="i in getNumber(cosigners.length) track by $index" value="{{$index+2}}">{{$index+2}}</option>
+		    </select>
+			</div>
+		</div>
+
+		<!--Password-->
+		<div class="col-md-12 form-group">
+			<div class="col-md-6 noPaddingLeftRight">
+				<div class="form-group">
+					<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
+					<input type="password" class="form-control" name="password" id="" required autocomplete="new-password" ng-model="password">
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-12 col-sm-12 col-md-12 form-group">
+			<!--Submit button-->
+			<div class="col-xs-12 col-sm-6 col-md-3 noPaddingLeftRight">
+				<button type="submit" class="btn btn-success" ng-click="getNewMultisign()">{{ 'CREATE_MULTISIGNATURE_CREATE' | translate }}</button>
+			</div>
+			<!--Return button-->
+			<div class="col-xs-12 col-sm-6 col-md-3">
+				<a href="#!/addresses/myaddresses" class="btn btn-link-red">{{ 'CREATE_MULTISIGNATURE_RETURN' | translate }}</a>
+			</div>
+		</div>
+	</form>
+</div>

@@ -146,8 +146,8 @@
         </div>
 
         <!--Type (ETP,...)-->
-        <div class="noPaddingLeftRight transactionBoxField col-md-2 col-lg-2">
-          <span class="overflow">
+        <div class="noPaddingLeftRight transactionBoxField overflow col-md-2 col-lg-2">
+          <span>
             {{transaction.type}}
           </span>
         </div>
@@ -157,8 +157,7 @@
     <div>
       <div class="loadMoreLess" ng-hide="transactionsFiltered.length>10">
         <input ng-hide="stopLoad" type="button" class="btn btn-success smallButton" value="{{'HISTORY_LOAD_MORE' | translate}}" ng-click="loadMore()"></input>
-        <!--<input ng-show="stopLoad" type="button" class="btn btn-success smallButton" bs-popover data-toggle="popover" data-placement="top" data-container="body" data-content="{{ 'HISTORY_ALL_LOADED' | translate }}" value="Load more" ng-click="loadMore()"></input>-->
-        <div class="textAllLoaded control-label" ng-show="stopLoad">{{ 'HISTORY_ALL_LOADED' | translate }}</div>
+        <!--<div class="textAllLoaded control-label" ng-show="stopLoad">{{ 'HISTORY_ALL_LOADED' | translate }}</div>-->
       </div>
     </div>
 
@@ -168,8 +167,7 @@
       <div>
         <div class="loadMore" ng-show="transactionsFiltered.length>10">
           <input ng-hide="stopLoad" type="button" class="btn btn-success smallButton" value="{{'HISTORY_LOAD_MORE' | translate}}" ng-click="loadMore()"></input>
-          <!--<input ng-show="stopLoad" type="button" class="btn btn-success smallButton" bs-popover data-toggle="popover" data-placement="top" data-container="body" data-content="{{ 'HISTORY_ALL_LOADED' | translate }}" value="Load more" ng-click="loadMore()"></input>-->
-          <div class="textAllLoaded control-label" ng-show="stopLoad">{{ 'HISTORY_ALL_LOADED' | translate }}</div>
+          <!--<div class="textAllLoaded control-label" ng-show="stopLoad">{{ 'HISTORY_ALL_LOADED' | translate }}</div>-->
         </div>
       </div>
     </div>
@@ -199,9 +197,9 @@
       <div>
         <input ng-hide="stopLoad" type="button" class="btn btn-success" value="Load more" ng-click="loadMore()"></input>
       </div>
-      <div ng-show="stopLoad">
+      <!--<div ng-show="stopLoad">
         {{ 'HISTORY_ALL_LOADED' | translate }}
-      </div>
+      </div>-->
     </div>
   </div>
 </div>
