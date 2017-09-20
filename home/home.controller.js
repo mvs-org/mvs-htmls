@@ -494,7 +494,7 @@
       }
     }
 
-1    //Load users ETP balance
+    //Load users ETP balance
     function loadEtpBalance() {
       MetaverseHelperService.GetBalance( (err, balance, message) => {
         if (err) {
@@ -521,7 +521,7 @@
     }
 
     function sendAll() {
-      $scope.value = $scope.availableBalance/100000000 - $scope.transactionFee;
+      $scope.value = ($scope.availableBalance - $scope.transactionFee*100000000)/100000000;
     }
 
     init();
