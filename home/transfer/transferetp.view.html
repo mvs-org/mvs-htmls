@@ -47,7 +47,7 @@
 				<select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" ng-change="availBalance(sendfrom)">
 					<!--<option value="">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }} --- {{balance['total-unspent']/100000000}} ETP</option>
 					<option ng-show="address.balance != 0" ng-repeat="address in addresses | orderBy:'balance':true" value="{{address.address}}">{{address.address}} --- {{address.balance/100000000}} ETP</option>-->
-					<option title="{{balance['total-unspent']/100000000}} ETP" value="" ng-click="availBalance(balance['total-unspent'])">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</option>
+					<option title="{{balance['total-unspent']/100000000}} ETP" value="">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</option>
 					<option ng-repeat="oneAddress in listAddresses | orderBy:'balance':true" value="{{oneAddress.address}}" title="{{oneAddress.balance/100000000}} ETP" ng-show="oneAddress.balance != 0 && recipents.length == 1 && addresses[oneAddress.address].type == 'single'">{{oneAddress.address}}</option>
 				</select>
 			</div>
@@ -98,7 +98,7 @@
 		</div>
 
 		<!--Memo-->
-		<div class="col-xs-12 col-sm-12 col-md-12">
+		<div class="col-xs-12 col-sm-12 col-md-12" ng-show="(recipents.length == 1)">
 			<div class="col-xs-12 col-sm-12 col-md-6 noPaddingLeftRight">
 				<div class="form-group">
 					<label for="memo" class="control-label">{{ 'TRANSFER_MEMO' | translate }}</label>

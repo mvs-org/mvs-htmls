@@ -119,7 +119,7 @@
     function searchAddress () {
       if ( typeof $scope.search !== 'undefined') {
         searchAddressloadTransactions(1, 2);
-        showqr($scope.search);
+        //showqr($scope.search);
       }
     }
 
@@ -286,6 +286,7 @@
             $translate('MESSAGES.TRANSACTION_NOT_FOUND').then( (data) => {
               FlashService.Error(data);
             });
+            $window.scrollTo(0,0);
           } else {
             response.data.transaction.outputs.forEach(function(e) {
               if(e.address == address && e.index == index) {
@@ -425,6 +426,7 @@
         }
       } else {
         $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       }
       if($scope.symbol == 'ETP') {
         loadEtpBalance();
@@ -942,6 +944,7 @@
         $window.scrollTo(0,0);
       } else if ($scope.password === '') { //Check for empty password
         $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else {
         var SendPromise = MetaverseService.GetNewMultiSig($scope.nbrCosignersRequired, $scope.cosigners.length+1, $scope.publicKey, $scope.cosigners);
         SendPromise
@@ -1049,8 +1052,10 @@
 
       if ($scope.password === '') { //Check for empty password
         $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else if (quantityToSend > ($scope.availableBalance - 10000)) {
         $translate('MESSAGES.TRANSACTION_AMOUNT_NOT_ENOUGH').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else {
         MetaverseService.CreateMultisigTx(sendFrom, sendTo, quantityToSend)
         .then( (response) => {
@@ -1312,6 +1317,7 @@
     $scope.exportAccount = exportAccount;
     $scope.accountname = localStorageService.get('credentials').user;
     $scope.debugState = MetaverseService.debug;
+    $scope.path = "";
 
     $scope.setDeugger = setDeugger;
 
@@ -1503,6 +1509,7 @@
         }
       } else {
         $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       }
     });
 
@@ -1794,6 +1801,7 @@
       increase_maximum_supply*=Math.pow(10,decimal_number);
       if(increase_maximum_supply < 0) {
         $translate('MESSAGES.ASSETS_SECOND_ISSUE_ERROR').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       }
       MetaverseService.SecondIssue(symbol, increase_maximum_supply)
       .then( (response) => {
@@ -2158,6 +2166,7 @@
         $scope.assets = response.data.assets;
       } else {
         $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       }
     });
 
@@ -2200,10 +2209,10 @@
   function ConsoleController(MetaverseService, $rootScope, FlashService, $translate, $scope, $window) {
 
     $window.scrollTo(0,0);
-    //var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
+    var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
     //To test the Console view with Grunt:
     //var ws = new WebSocket('ws://test4.metaverse.live:8820/ws');
-    var ws = new WebSocket('ws://localhost:8820/ws');
+    //var ws = new WebSocket('ws://localhost:8820/ws');
 
     $("#inputField").focus();
 

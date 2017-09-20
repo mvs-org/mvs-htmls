@@ -290,7 +290,7 @@
   "MESSAGES.NO_PASSWORD_PROVIDED" : "请选择一个密码来保护您的账户。",
   "MESSAGES.PASSWORD_SHORT" : "密码至少6位。",
   "MESSAGES.PASSWORD_NOT_MATCH" : "密码不正确。",
-  "MESSAGE.WRONG_PRIVATE_KEY" : "Wrong Private key. Your Private key contains special characters.",
+  "MESSAGE.WRONG_PRIVATE_KEY" : "私钥错误。你的私钥包含了特殊字符。",
   "MESSAGES.REGISTARTION_SUCCESS": "注册成功！您可以进行登陆了！",
   "MESSAGES.LOGIN_WRONG_CREDENTIALS": "无效的登陆凭证。",
   "MESSAGES.GENERAL_CONNECTION_ERROR": "链接错误，请检测服务器状态。",

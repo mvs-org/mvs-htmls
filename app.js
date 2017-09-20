@@ -219,7 +219,7 @@
             })
 
             .state('home.createmultisignature', {
-                url: "/address/newmultisignature",
+                url: "/addresses/newmultisignature",
                 templateUrl: "home/addresses/createmultisignature.view.html",
                 controller: 'ETPMultiSignController',
                 controllerAs: 'vm'
