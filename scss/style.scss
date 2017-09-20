@@ -2250,9 +2250,10 @@ form label {
 }
 
 .addressBoxName {
-  color: $blueGeneralColor;
+  color:#323232;
+  font-size: 20px;
+  width: 200px;
   float:left;
-  font-size: 14px;
   background-color: transparent;
   height: 22px;
   display: inline;
@@ -2380,11 +2381,12 @@ form label {
 }
 
 .addressBoxAddressDeposit {
+  padding-top: 8px;
   width: 100%;
-    float:left;
-    color: #666;
-    line-height: 14px;
-    padding-bottom: 8px;
+  float:left;
+  color: #666;
+  line-height: 14px;
+  padding-bottom: 8px;
 }
 
 //Select period
@@ -2470,7 +2472,7 @@ html,body {
 }
 
 .consoleLargeScreens {
-  padding-right: 30px;
+  padding-right: 50px;
 }
 
 .console_query {
@@ -2714,17 +2716,9 @@ h2 {
   border-radius: 8px;
   box-shadow: 0 1px 2px 0 rgba(35, 35, 35, 0.1);
 }
-.assetBoxAdd .addressBoxName {
-  color:#323232;
-  font-size: 20px;
-  width: 200px;
-}
 .assetBoxAdd  .assetBoxValue{
   font-size: 18px !important;
   padding-top: 5px;
-}
-.assetBoxAdd  .addressBoxAddressDeposit {
-  padding-top: 8px;
 }
 .assetBoxAdd .assetBoxBalance {
   padding-top: 0;

@@ -24,7 +24,7 @@
   </div>
 
   <!--Mining-->
-  <div class="mining col-sm-12 col-md-4">
+  <div class="mining noPaddingLeftRight col-sm-12 col-md-4">
     <div>
       <h4 ng-hide="isMining">{{ 'NAV_MINING' | translate }}
         <span ng-hide="isMining" class="miningEnd wk-title">{{ 'MINING_NOT_RECOMMENDED' | translate }}   </span>
@@ -72,13 +72,13 @@
   </div>
 
   <!--Console small screens-->
-  <div class="col-sm-12 col-md-6 hidden-md hidden-lg hidden-xl">
+  <div class="col-sm-12 col-md-6 noPaddingLeftRight hidden-md hidden-lg hidden-xl">
     <h4>{{ 'NAV_CONSOLE' | translate }}</h4>
     <div class="console_query" >
-      <span class="span1" ng-hide="connected">{{ 'CONSOLE.CONNECTION' | translate }}</span>
+      <span class="span1" ng-hide="showConnected">{{ 'CONSOLE.CONNECTION' | translate }}</span>
     </div>
 
-    <div ng-repeat="log in consolelog">
+    <div ng-repeat="log in consolelog" ng-show="showConnected">
       <div class="console_query">
         <span class="console_text">{{log.query}}</span>
       </div>
@@ -87,7 +87,7 @@
       </div>
     </div>
     <div class="form-group">
-      <input type="text" rows="5" ng-show="connected" ng-model="querystring" ng-keyup="$event.keyCode == 13 && query()" class="form-control forminputConsole" id="inputField" placeholder="{{ 'CONSOLE.INSERT_PROMPT' | translate }}">
+      <input type="text" rows="5" ng-show="showConnected" ng-model="querystring" ng-keyup="$event.keyCode == 13 && query()" class="form-control forminputConsole" id="inputField" placeholder="{{ 'CONSOLE.INSERT_PROMPT' | translate }}">
     </div>
   </div>
 </div>

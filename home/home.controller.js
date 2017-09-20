@@ -503,7 +503,7 @@
         } else {
           $scope.balance = balance;
           $scope.decimal_number = 8;
-          $scope.availableBalance = balance['total-unspent'];
+          $scope.availableBalance = balance['total-available'];
         }
       });
     }
@@ -587,7 +587,7 @@
           $window.scrollTo(0,0);
         } else {
           $scope.balance = balance;
-          $scope.availableBalance = balance['total-unspent'];
+          $scope.availableBalance = balance['total-available'];
         }
       });
     }
@@ -742,7 +742,7 @@
     }
 
     function sendAll() {
-      $scope.recipents[0].value = $scope.availableBalance/100000000 - $scope.transactionFee;
+      $scope.recipents[0].value = ($scope.availableBalance - 100000000*$scope.transactionFee)/100000000;
     }
 
     //Load a list of all transactions
@@ -779,6 +779,7 @@
             });
             $scope.listAddresses.push({
               "balance": parseInt(e.balance.unspent),
+              "available": parseInt(e.balance.available),
               "address": e.balance.address
             });
             /*$scope.addresses[e.balance.address] = parseInt(e.balance.unspent);
@@ -845,6 +846,8 @@
     $scope.nbrCosignersRequired = 0;
 
     $scope.availableBalance = 0;
+
+    $scope.sendAllMultisig = sendAllMultisig;
 
 
 
@@ -1047,9 +1050,9 @@
     }
 
     function createMultisigTx(sendFrom, sendTo, quantity) {
-      var quantityToSend = quantity*100000000;
+      var quantityToSend = ("" + quantity * Math.pow(10,8)).split(".")[0];
+      //var quantityToSend = Math.round(quantity);
       //quantity = Math.round(quantity);
-
       if ($scope.password === '') { //Check for empty password
         $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -1082,6 +1085,12 @@
           }
         });
       }
+    }
+
+
+
+    function sendAllMultisig() {
+      $scope.quantity = ($scope.availableBalance - 10000)/100000000;
     }
 
     function signMultisigTx(message, lastTx) {
@@ -2059,8 +2068,8 @@
             });
             $window.scrollTo(0,0);
           } else{
-            $translate('MESSAGES.ASSETS_CREATE_ERROR').then( (data) => FlashService.Error(data) );
-            //$translate('MESSAGES.ASSETS_CREATE_ERROR').then( (data) => FlashService.Error(data + ' ' + response.message) );
+            //$translate('MESSAGES.ASSETS_CREATE_ERROR').then( (data) => FlashService.Error(data) );
+            $translate('MESSAGES.ASSETS_CREATE_ERROR').then( (data) => FlashService.Error(data + ' ' + response.message) );
             $window.scrollTo(0,0);
           }
         });
@@ -2086,7 +2095,6 @@
       MetaverseService.Issue(symbol)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
-          loadasset($scope.symbol);
           $translate('MESSAGES.ASSETS_ISSUE_SUCCESS').then( (data) => FlashService.Success(data) );
           $window.scrollTo(0,0);
         } else {
