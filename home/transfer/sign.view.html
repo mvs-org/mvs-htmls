@@ -37,9 +37,9 @@
 		<div ng-hide="lastTx">
 			<div class="form-group"><b class="warningText">{{ 'TRANSFER_SIGN_SUCCESS' | translate}}</b></div>
 			<div class="form-group">
-				<button class="btn btn-success smallButton" bs-popover data-clipboard-text="{{resultSignTx}}" data-toggle="popover" data-placement="top" data-content="{{ 'TRANSFER_MULTISIGNATURE_POPOVER_COPIED' | translate }}" role="button">
+				<!--<button class="btn btn-success smallButton" bs-popover data-clipboard-text="{{resultSignTx}}" data-toggle="popover" data-placement="top" data-content="{{ 'TRANSFER_MULTISIGNATURE_POPOVER_COPIED' | translate }}" role="button">
 					<span class="glyphicon glyphicon-file"></span>  {{ 'TRANSFER_MULTISIGNATURE_COPY_BUTTON' | translate }}
-				</button>
+				</button>-->
 			</div>
 			<textarea class="form-control" rows="5">{{resultSignTx}}</textarea>
 			<br>

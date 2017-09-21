@@ -85,9 +85,9 @@
 	<div ng-show="transferSuccess">
 		<div class="form-group">{{ 'TRANSFER_MULTISIGNATURE_SUCCESS' | translate}}</div>
 		<div class="form-group">
-			<button class="btn btn-success smallButton" bs-popover data-clipboard-text="{{resultCreateTx}}" data-toggle="popover" data-placement="top" data-content="{{ 'TRANSFER_MULTISIGNATURE_POPOVER_COPIED' | translate }}" role="button">
+			<!--<button class="btn btn-success smallButton" bs-popover data-clipboard-text="{{resultCreateTx}}" data-toggle="popover" data-placement="top" data-content="{{ 'TRANSFER_MULTISIGNATURE_POPOVER_COPIED' | translate }}" role="button">
 				<span class="glyphicon glyphicon-file"></span>  {{ 'TRANSFER_MULTISIGNATURE_COPY_BUTTON' | translate }}
-			</button>
+			</button>-->
 		</div>
 		<textarea class="form-control" rows="5">{{resultCreateTx}}</textarea>
 		<br>
