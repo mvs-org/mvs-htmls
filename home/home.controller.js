@@ -848,6 +848,7 @@
     $scope.availableBalance = 0;
 
     $scope.sendAllMultisig = sendAllMultisig;
+    $scope.transactionFee = 0.0001;
 
 
 
@@ -1049,18 +1050,19 @@
       NProgress.done();
     }
 
-    function createMultisigTx(sendFrom, sendTo, quantity) {
+    function createMultisigTx(sendFrom, sendTo, quantity, transactionFee) {
       var quantityToSend = ("" + quantity * Math.pow(10,8)).split(".")[0];
+      var transactionFeeToSend = ("" + transactionFee * Math.pow(10,8)).split(".")[0];
       //var quantityToSend = Math.round(quantity);
       //quantity = Math.round(quantity);
       if ($scope.password === '') { //Check for empty password
         $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
-      } else if (quantityToSend > ($scope.availableBalance - 10000)) {
+      } else if (quantityToSend > ($scope.availableBalance - transactionFeeToSend)) {
         $translate('MESSAGES.TRANSACTION_AMOUNT_NOT_ENOUGH').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else {
-        MetaverseService.CreateMultisigTx(sendFrom, sendTo, quantityToSend)
+        MetaverseService.CreateMultisigTx(sendFrom, sendTo, quantityToSend, transactionFeeToSend)
         .then( (response) => {
           NProgress.done();
           if (typeof response.success !== 'undefined' && response.success) {
@@ -1090,7 +1092,7 @@
 
 
     function sendAllMultisig() {
-      $scope.quantity = ($scope.availableBalance - 10000)/100000000;
+      $scope.quantity = ($scope.availableBalance - $scope.transactionFee*100000000)/100000000;
     }
 
     function signMultisigTx(message, lastTx) {

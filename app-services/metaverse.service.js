@@ -776,9 +776,9 @@
         }
 
 
-        function CreateMultisigTx(fromAddress, toAddress, amount) {
+        function CreateMultisigTx(fromAddress, toAddress, amount, transactionFee) {
           var credentials = localStorageService.get('credentials');
-          return _send('createmultisigtx', [credentials.user, credentials.password, fromAddress, toAddress, amount]);
+          return _send('createmultisigtx', [credentials.user, credentials.password, fromAddress, toAddress, amount, '-f', transactionFee]);
         }
 
         function SignMultisigTx(message, lastTx) {

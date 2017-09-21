@@ -50,6 +50,16 @@
 				</div>
 			</div>
 
+			<!--Fee-->
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<div class="col-xs-12 col-sm-12 col-md-6 noPaddingLeftRight">
+					<div class="form-group">
+						<label for="fee" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</label>
+						<input type="number" step="0.00000001" class="form-control" name="fee" id="" ng-model="transactionFee">
+					</div>
+				</div>
+			</div>
+
 
 
 			<!--Password-->
@@ -65,7 +75,7 @@
 			<!--Submit button-->
 			<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
 				<div class="col-xs-12 col-sm-6 col-md-3">
-					<button type="submit" class="btn btn-success" id="transferBtn" ng-click="createMultisigTx(sendfrom, sendTo, quantity)">{{ 'TRANSFER_SEND' | translate }}</button>
+					<button type="submit" class="btn btn-success" id="transferBtn" ng-click="createMultisigTx(sendfrom, sendTo, quantity, transactionFee)">{{ 'TRANSFER_SEND' | translate }}</button>
 				</div>
 			</div>
 		</form>
