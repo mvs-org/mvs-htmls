@@ -336,7 +336,7 @@
   "MESSAGES.TRANSACTION_NOT_FOUND" : "Could not find a transaction for given hash.",
   "MESSAGES.BLOCK_NOT_FOUND" : "Could not find a block for given number.",
   "MESSAGES.ADDRESS_NOT_FOUND" : "Could not find this address.",
-  "MESSAGES.CREATE_MULTISIGNATURE_SUCCESS" : "Multi-signature sucessfully created.",
+  "MESSAGES.CREATE_MULTISIGNATURE_SUCCESS" : "Multi-signature address successfully created.",
   "MESSAGES.CREATE_MULTISIGNATURE_ERROR" : "Could not create this multi-signature.",
   "MESSAGES.CREATE_MULTISIGNATURE_WRONG_PUBLIC_KEY" : "Wrong public key.",
   "MESSAGES.SIGN_SUCCESS" : "Transaction successfully signed.",

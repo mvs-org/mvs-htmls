@@ -957,7 +957,7 @@
           NProgress.done();
           if (typeof response.success !== 'undefined' && response.success) {
             //Creation was successful
-            $translate('MESSAGES.CREATE_MULTISIGNATURE_SUCCESS').then( (data) => FlashService.Success(data) );
+            $translate('MESSAGES.CREATE_MULTISIGNATURE_SUCCESS').then( (data) => FlashService.Success(data + " " + response.data.address) );
             $window.scrollTo(0,0);
             init();
           } else {
