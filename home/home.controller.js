@@ -90,6 +90,7 @@
     $scope.transaction_count = 0;
     $scope.assets = [];
     $scope.exists = false;
+    $scope.noResult = false;
     $scope.transactionInputsValues = [];
 
     $scope.asset = '';
@@ -147,12 +148,11 @@
               $scope.exists = true;
             });
           } else {
-            if(!$scope.exists) {
-              $translate('MESSAGES.TRANSACTION_NOT_FOUND').then( (data) => {
-                FlashService.Error(data);
-                $location.path('/explorer');
-              });
-            }
+            $translate('MESSAGES.NO_LISTED_TRANSACTIONS').then( (data) => {
+              FlashService.Error(data);
+              //$location.path('/explorer');
+              $scope.noResult = true;
+            });
           }
           NProgress.done();
         });
@@ -220,6 +220,7 @@
             $translate('MESSAGES.TRANSACTION_NOT_FOUND').then( (data) => {
               FlashService.Error(data);
             });
+            $scope.noResult = true;
             $window.scrollTo(0,0);
           } else {
             $scope.transaction = response.data.transaction;
@@ -283,6 +284,7 @@
         MetaverseService.FetchTx(transaction_hash)
         .then( (response) => {
           if (typeof response.success == 'undefined' || response.success == false) {
+            $scope.noResult = true;
             $translate('MESSAGES.TRANSACTION_NOT_FOUND').then( (data) => {
               FlashService.Error(data);
             });
@@ -331,6 +333,7 @@
         MetaverseService.FetchHeader(blockHeight)
         .then( (response) => {
           if (typeof response == 'undefined' || typeof response.success == 'undefined' || response.success == false) {
+            $scope.noResult = true;
             $translate('MESSAGES.BLOCK_NOT_FOUND').then( (data) => {
               FlashService.Error(data);
             });
@@ -849,6 +852,7 @@
 
     $scope.sendAllMultisig = sendAllMultisig;
     $scope.transactionFee = 0.0001;
+    $scope.listAddresses = [];                    //List of addresses
 
 
 
@@ -869,6 +873,7 @@
       $scope.value = '';
       $scope.password = '';
       $scope.availableBalance = 0;
+      $scope.publicKey = '';
       MetaverseService.ListBalances(true)
       .then( (response) => {
         if (response.success)
@@ -893,32 +898,17 @@
 
 
     function getPublicKey(address) {
-      //TODO: if address empty
-
       NProgress.start();
       MetaverseService.GetPublicKey(address)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.publicKey = response.data['public-key'];
-          /*$scope.addresses = [];
-          response.data.balances.forEach( (e) => {
-            var name = "New address";
-            if (localStorageService.get(e.balance.address) != undefined) {
-              name = localStorageService.get(e.balance.address);
-            }
-            $scope.addresses.push({
-              "balance": parseInt(e.balance.unspent),
-              "address": e.balance.address,
-              "name": name,
-              "frozen": e.balance.frozen
-            });*/
-          } else {
-            $translate('MESSAGES.ADDRESS_NOT_FOUND').then( (data) => FlashService.Success(data) );
-            $window.scrollTo(0,0);
-          }
-
-        });
-        NProgress.done();
+        } else {
+          $translate('MESSAGES.ADDRESS_NOT_FOUND').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
+        }
+      });
+      NProgress.done();
     }
 
 
@@ -945,7 +935,6 @@
 
       if (transactionOK == false) {
         //error already handle
-        $window.scrollTo(0,0);
       } else if ($scope.password === '') { //Check for empty password
         $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -953,7 +942,6 @@
         var SendPromise = MetaverseService.GetNewMultiSig($scope.nbrCosignersRequired, $scope.cosigners.length+1, $scope.publicKey, $scope.cosigners);
         SendPromise
         .then( (response) => {
-          $window.scrollTo(0,0);
           NProgress.done();
           if (typeof response.success !== 'undefined' && response.success) {
             //Creation was successful
@@ -993,7 +981,7 @@
     });
 
 
-    function listMultiSign() {
+    /*function listMultiSign() {
       NProgress.start();
       //Load users ETP balance
       //Load the addresses and their balances
@@ -1048,7 +1036,72 @@
         }
       });
       NProgress.done();
+    }*/
+
+
+    function listMultiSign() {
+      NProgress.start();
+      //Load users ETP balance
+      //Load the addresses and their balances
+      MetaverseService.ListBalances()
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.addresses = [];
+          response.data.balances.forEach( (e) => {
+            var name = "New address";
+            if (localStorageService.get(e.balance.address) != undefined) {
+              name = localStorageService.get(e.balance.address);
+            }
+            $scope.addresses[e.balance.address] = ({
+              "balance": parseInt(e.balance.unspent),
+              "address": e.balance.address,
+              "name": name,
+              "frozen": e.balance.frozen,
+              "type": "single"
+            });
+            $scope.listAddresses.push({
+              "balance": parseInt(e.balance.unspent),
+              "available": parseInt(e.balance.available),
+              "address": e.balance.address
+            });
+          });
+
+          //After loading the balances, we load the multisig addresses
+          MetaverseService.ListMultiSig()
+          .then( (response) => {
+            if (typeof response.success !== 'undefined' && response.success) {
+              if(response.data.multisig != "") {    //if the user has some assets
+                response.data.multisig.forEach( (e) => {
+                  $scope.addresses[e.address].type = "multisig";
+                  var name = "New address";
+                  if (localStorageService.get(e.address) != undefined) {
+                    name = localStorageService.get(e.address);
+                  }
+                  var balance = '';
+                  $scope.listMultiSig.push({
+                    "index": e.index,
+                    "m": e.m,
+                    "n": e.n,
+                    "selfpublickey": e["self-publickey"],
+                    "description": e.description,
+                    "address": e.address,
+                    "name": name,
+                    "balance": $scope.addresses[e.address],
+                    "publicKeys": e["public-keys"]
+                  });
+                });
+              } else {
+                //The account has no multi-signature address
+              }
+            } else {
+              //Fail
+            }
+          });
+        }
+      });
+      NProgress.done();
     }
+
 
     function createMultisigTx(sendFrom, sendTo, quantity, transactionFee) {
       var quantityToSend = ("" + quantity * Math.pow(10,8)).split(".")[0];
@@ -1671,7 +1724,9 @@
         $scope.assets = response.data.assets;
         //All the details are hidden at the loading
         $scope.assets.forEach( (a) => {
-          a.details = false;
+          if(a != undefined) {
+            a.details = false;
+          }
         });
       } else {
         $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => {
@@ -1772,19 +1827,26 @@
     MetaverseService.ListAssets()
     .then( (response) => {
       NProgress.done();
-      if (typeof response.success !== 'undefined' && response.success) {
-        $scope.assets = [];
-        $scope.assets = response.data.assets;
-        //If asset is defined -> load it
+      if(response.data.assets != "") {    //if the user has some assets
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.assets = [];
+          $scope.assets = response.data.assets;
+          //If asset is defined -> load it
+          if ($scope.symbol != undefined && $scope.symbol != "") {
+            NProgress.start();
+            loadasset($scope.symbol);
+          }
+        } else {
+          //Redirect user to the assets page
+          $location.path('/asset/myassets');
+          //Show asset load error
+          $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+        }
+      } else {
         if ($scope.symbol != undefined && $scope.symbol != "") {
           NProgress.start();
           loadasset($scope.symbol);
         }
-      } else {
-        //Redirect user to the assets page
-        $location.path('/asset/myassets');
-        //Show asset load error
-        $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
       }
     });
 
@@ -1832,7 +1894,6 @@
     function loadasset(symbol) {
       MetaverseService.GetAsset(symbol)
       .then( (response) => {
-        NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.asset = response.data.assets[0];
           if ($scope.asset.issuer == localStorageService.get('credentials').user) {
@@ -1852,6 +1913,7 @@
           $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) =>  FlashService.Error(data));
           $window.scrollTo(0,0);
         }
+        NProgress.done();
       });
     }
 
@@ -2172,11 +2234,16 @@
 
     MetaverseService.ListAssets()
     .then( (response) => {
-      if (typeof response.success !== 'undefined' && response.success) {
-        $scope.assets = response.data.assets;
+      if(response.data.assets != "") {    //if the user has some assets
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.assets = response.data.assets;
+        } else {
+          $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
+        }
       } else {
-        $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
+        //the user has no asset
+        $scope.assets = "";
       }
     });
 
@@ -2372,8 +2439,8 @@
 
 
     function defineTypeSearch(search) {
-      if (search === ' ') {                 //empty research
-        $location.path('/noresult');
+      if (search === '' || search == undefined) {            //empty research
+        $location.path('/explorer/search/');
       } else if ($filter('uppercase')(search) === 'ETP') {
         $location.path('/addresses/myaddresses');
       } else if (search.length === 64) {
@@ -2382,7 +2449,7 @@
         $location.path('/explorer/adr/' + search);
       } else if (!isNaN(search)) {
         $location.path('/explorer/blk/' + search);
-      } else {    //The research's format doesn't match any kind, we check if it is in the list of assets
+      } else {                        //The research's format doesn't match any kind, we check if it is in the list of assets
         loadListAssets(search);
       }
     };

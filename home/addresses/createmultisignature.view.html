@@ -8,8 +8,8 @@
 
 			<div class="col-md-6 noPaddingLeftRight">
 				<label for="addressFrom" class="ddd control-label">{{ 'CREATE_MULTISIGNATURE_MY_ADDRESS' | translate }}</label>
-				<select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom">
-					<option ng-repeat="address in addresses | orderBy:'balance':true" ng-click="getPublicKey(address.address)" value="{{address.address}}" title="{{address.balance/100000000}} ETP">{{address.address}}</option>
+				<select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" ng-change="getPublicKey(sendfrom)">
+					<option ng-repeat="oneAddress in listAddresses | orderBy:'available':true" value="{{oneAddress.address}}" title="{{oneAddress.available/100000000}} ETP" ng-show="addresses[oneAddress.address].type == 'single'">{{oneAddress.address}}</option>
 				</select>
 			</div>
 		</div>

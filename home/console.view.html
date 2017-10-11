@@ -11,7 +11,7 @@
     </div>
 
     <div class="console" id="consolelog">
-      <div ng-repeat="log in consolelog" ng-show="showConnected" ng-hide="log.index < consolelog.length-10">
+      <div ng-repeat="log in consolelog" ng-show="showConnected" ng-hide="log.index < consolelog.length-9">
         <div class="console_query" ng-show="log.query != ''">
           <span class="console_text">{{log.query}}</span>
         </div>
@@ -78,7 +78,7 @@
       <span class="span1" ng-hide="showConnected">{{ 'CONSOLE.CONNECTION' | translate }}</span>
     </div>
 
-    <div ng-repeat="log in consolelog" ng-show="showConnected">
+    <div ng-repeat="log in consolelog" ng-show="showConnected" ng-hide="log.index < consolelog.length-9">
       <div class="console_query">
         <span class="console_text">{{log.query}}</span>
       </div>

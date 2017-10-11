@@ -1,6 +1,6 @@
-<div class="content" ng-show=exists>
+<div class="content">
   <span class="headline">{{ 'EXPLORER_HEADLINE_ADDRESS' | translate }}</span>
-  <div class="col-md-12 noPaddingLeftRight">
+  <div class="col-md-12 noPaddingLeftRight" ng-show=exists>
     <h2>{{search}}</h2>
 
     <!--<div class="info_table col-xs-12 col-sm-12 noPaddingLeftRight">
@@ -65,5 +65,9 @@
     </div>
     <!--<div class="textAllLoadedAddressExplorer control-label" ng-show="stopLoad && transactionsAddressSearch.length <= 10">{{ 'EXPLORER_ADDRESS_TX_ALL_LOADED' | translate }}</div>-->
 
+  </div>
+  <div ng-show="noResult">
+    <h2>{{search}}</h2>
+    <h4>{{'EXPLORER_ADDRESS_NO_TX' | translate}}</h4>
   </div>
 </div>
