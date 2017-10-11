@@ -2286,10 +2286,9 @@
   function ConsoleController(MetaverseService, $rootScope, FlashService, $translate, $scope, $window) {
 
     $window.scrollTo(0,0);
-    var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
-    //To test the Console view with Grunt:
-    //var ws = new WebSocket('ws://test4.metaverse.live:8820/ws');
-    //var ws = new WebSocket('ws://localhost:8820/ws');
+
+    var ws = new WebSocket('ws://localhost:8820/ws');
+    //var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
 
     $("#inputField").focus();
 

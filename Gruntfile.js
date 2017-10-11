@@ -190,7 +190,7 @@ module.exports = function(grunt) {
         }, 'string-replace': {
             dist: {
                 files: {
-                    'dist/': ['dist/min/app.min.*.js', 'dist/**/*.css', 'dist/**/*.html']
+                    'dist/': ['dist/min/app.*.js', 'dist/**/*.css', 'dist/**/*.html']
                 },
                 options: {
                     saveUnchanged: false,
@@ -203,6 +203,9 @@ module.exports = function(grunt) {
                     }, {
                         pattern: '<<<version>>>',
                         replacement: package.version
+                    }, {
+                        pattern: 'window.location.hostname+":3000"',
+                        replacement: 'window.location.hostname+":8820"'
                     }]
                 }
             }
