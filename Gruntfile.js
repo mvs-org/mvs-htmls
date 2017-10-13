@@ -206,6 +206,9 @@ module.exports = function(grunt) {
                     }, {
                         pattern: 'window.location.hostname+":3000"',
                         replacement: 'window.location.hostname+":8820"'
+                    }, {
+                        pattern: 'window.location.hostname + ":3000"',
+                        replacement: 'window.location.hostname + ":8820"'
                     }]
                 }
             }

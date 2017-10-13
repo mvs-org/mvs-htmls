@@ -626,6 +626,10 @@
           $translate('MESSAGES.TRANSACTION_RECIPENT_ADDRESS_NEEDED').then( (data) => FlashService.Error(data) );
           $window.scrollTo(0,0);
           transactionOK = false;
+        } else if (e.address.length != 34) {
+          $translate('MESSAGES.TRANSACTION_RECIPENT_WRONG').then( (data) => FlashService.Error(data + ' ' + e.index));
+          $window.scrollTo(0,0);
+          transactionOK = false;
         } else if (typeof e.value == 'undefined' || e.value === '') { //Check for transaction value
           $translate('MESSAGES.TRANSACTION_VALUE_NEEDED').then( (data) => FlashService.Error(data) );
           $window.scrollTo(0,0);
@@ -1656,11 +1660,17 @@
       if (localStorageService.get('credentials').password != $scope.password) {
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
-      } else if ($scope.recipent_address == undefined || $scope.recipent_address.length != 34) {
+      } else if ($scope.recipent_address == undefined) {
         $translate('MESSAGES.TRANSACTION_RECIPENT_ADDRESS_NEEDED').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else if ($scope.recipent_address.length != 34) {
+        $translate('MESSAGES.TRANSACTION_RECIPENT_WRONG').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else if ($scope.quantity == undefined || !($scope.quantity > 0)) {
         $translate('MESSAGES.TRANSACTION_VALUE_NEEDED').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else if ($scope.recipent_address.charAt(0) == '3') {
+        $translate('MESSAGES.TRANSACTION_ASSET_MULTISIG').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else {
         //Modify number to fit to number of decimals defined for asset

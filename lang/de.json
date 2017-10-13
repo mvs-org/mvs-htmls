@@ -107,6 +107,7 @@
   "BALANCE_UNCONFIRMED": "in Bestätigung",
   "DATE_CREATED" : "Erstellt am",
   "ADDRESS" : "Adresse",
+  "ADDRESS_OF_CREATOR" : "Issuer's address",
   "BALANCE" : "Kontostand",
   "STATUS" : "Status",
   "QUANTITY" : "Quantity",

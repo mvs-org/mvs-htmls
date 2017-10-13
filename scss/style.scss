@@ -262,6 +262,10 @@ No media query since this is the default in Bootstrap because it is "mobile firs
   width: 70px !important;
 }
 
+.assetDetailsPanel {
+  margin-bottom: 20px;
+}
+
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::
 Bootstrap 4 breakpoints
 */
@@ -390,6 +394,10 @@ Bootstrap 4 breakpoints
     margin-right: 0px;
     width: 70px !important;
   }
+
+  .assetDetailsPanel {
+    margin-bottom: 20px;
+  }
 }
 
 /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
@@ -437,8 +445,6 @@ Bootstrap 4 breakpoints
     -moz-box-shadow:   0 1px 2px 0 rgba(0, 0, 0, 0.19);
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
   }
-
-
 
   .assetSymbol {
     //margin: 4px;
@@ -513,6 +519,10 @@ Bootstrap 4 breakpoints
     margin-left: 10px;
     margin-right: 0px;
     width: 70px !important;
+  }
+
+  .assetDetailsPanel {
+    margin-bottom: 20px;
   }
 }
 
@@ -633,6 +643,10 @@ Bootstrap 4 breakpoints
     margin-left: 10px;
     margin-right: 0px;
     width: 70px !important;
+  }
+
+  .assetDetailsPanel {
+    margin-bottom: 20px;
   }
 }
 
@@ -764,6 +778,11 @@ Bootstrap 4 breakpoints
     margin-right: 4px;
     width: 70px !important;
   }
+
+  .assetDetailsPanel {
+    height: 285px;
+    margin-bottom: 20px;
+  }
 }
 
 /* Extra extra large devices (large desktops, 1400px and up) */
@@ -889,6 +908,10 @@ Bootstrap 4 breakpoints
     width: 70px !important;
   }
 
+  .assetDetailsPanel {
+    height: 285px;
+    margin-bottom: 20px;
+  }
 }
 
 
@@ -1923,17 +1946,15 @@ _____  ._______  ___.___ _______
 .assetDataColumn {
   height: 32px;
   text-align: left;
-  padding-right: 20px;
+  //padding-right: 20px;
   font-weight: 400;
   font-style: normal;
   font-size: 14px;
 }
 
 .assetValueColumn {
-  width: auto;
-  margin-left: 10px;
-  font-weight: 200;
-
+  //width: auto;
+  padding-left: 20px;
 }
 
 .popupButtons {
@@ -2640,6 +2661,18 @@ h2 {
 
 
 /**************Assets details*****************/
+.assetDetailsBoxButton {
+  top: -5px;
+}
+
+.assetDataLine {
+  margin-top: 5px;
+}
+
+.assetDetailsBlank {
+  height: 20px;
+}
+
 .sendAssetButton {
   text-align: right;
 }
@@ -2663,6 +2696,9 @@ h2 {
 .form-spebox input[type=submit]{
   margin-top:60px;
 }
+
+
+
 /**************Advanced details*****************/
 .wk-title{
   font-size: 14px;
