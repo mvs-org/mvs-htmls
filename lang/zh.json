@@ -215,7 +215,7 @@
   "REGISTER.SIGNUP_THANK_YOU" : "感谢您使用元界",
   "REGISTER.SIGNUP_MNEMONIC_AGREE" : "我同意",
   "REGISTER.PRIVATE_KEY_MNEMONIC" : "这是您的助记关键词",
-  "REGISTER.PRIVATE_KEY_MNEMONIC_INFO" : "请将该私钥助记关键词存储在一个安全的地方。最好是抄写到一张纸上。备份该私钥是至关重要的事情，如果遗失该私钥，不可能再被找回。",
+  "REGISTER.PRIVATE_KEY_MNEMONIC_INFO" : "请将该主私钥助记符存储在一个安全的地方，比如抄写到纸上或者加密的U盘。备份助记符是非常重要的事情，如果遗失或者忘记，您所有的资产都不可能再被找回，包括ETP。",
   "REGISTER.NEW_USER" : "新建账户",
   "FORGOT_PASSWORD.ENTER_PRIVATE_KEY" : "请输入您需要修改密码账户的主私钥",
   "FORGOT_PASSWORD.CHOOSE_PASSWORD" : "请输入密码",

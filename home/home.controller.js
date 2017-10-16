@@ -242,6 +242,17 @@
               if(e.attachment.type!='etp') {
                 loadasset(e.attachment.symbol);
               }
+              //console.log(e.script);
+              //var script = e.script;
+              //var occurence = script.match('[' + (/[a-z]|[A-Z]|[0-9]| /g) + '] numequalverify dup hash160 ['+ (/[a-z]|[A-Z]|[0-9]| /g) + '] equalverify checksig');
+
+              //var occurence = script.match(\[([\\w| ]+)\] numequalverify dup hash160 \[[\\w| ]+\] equalverify checksig);
+              //console.log(occurence);
+              /*var occurences = phraseToSend.match(/[a-z]|[A-Z]| /g);
+              if(phraseToSend.length != occurences.length){
+                $translate('MESSAGE.WRONG_PRIVATE_KEY').then( (data) => FlashService.Error(data) );
+                $window.scrollTo(0,0);
+                return;*/
             });
 
             //Search for the value of the input and put it in $scope.transactionInputsValues
