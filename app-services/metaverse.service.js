@@ -939,13 +939,21 @@
                                     transaction.type = 'ETP';
                                     transaction.asset_type=8;
                                     e.outputs.forEach(function(output){
-                                        if((transaction.direction==='receive' && output.own==='true') || (transaction.direction==='send' && output.own==='false')){
-                                            transaction.recipents.push({
-                                                "address": output.address,
-                                                "value": parseInt(output['etp-value'])
-                                            });
-                                            transaction.value += parseInt(output['etp-value']);
-                                        }
+                                      if (typeof output.script != 'undefined' && output.script.match(/\[ (\w+) ] numequalverify dup hash160 \[ (\w+) \] equalverify checksig/) != null) {
+                                        transaction.frozen = true;
+                                        transaction.recipents.push({
+                                          "address": output.address,
+                                          "value": parseInt(output['etp-value'])
+                                        });
+                                        transaction.value += parseInt(output['etp-value']);
+                                      } else if((transaction.direction==='receive' && output.own==='true') || (transaction.direction==='send' && output.own==='false')){
+                                        transaction.frozen = false;
+                                        transaction.recipents.push({
+                                          "address": output.address,
+                                          "value": parseInt(output['etp-value'])
+                                        });
+                                        transaction.value += parseInt(output['etp-value']);
+                                      }
                                     });
                                     if(transaction.value) {
                                       transactions.push(transaction);
