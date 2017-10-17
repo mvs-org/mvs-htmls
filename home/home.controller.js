@@ -1101,7 +1101,7 @@
                     "description": e.description,
                     "address": e.address,
                     "name": name,
-                    "balance": $scope.addresses[e.address],
+                    "balance": $scope.addresses[e.address].balance,
                     "publicKeys": e["public-keys"]
                   });
                 });

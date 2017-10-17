@@ -21,11 +21,11 @@
 					<div class="createAddress col-xs-9 col-sm-9 col-md-9 noPaddingLeftRight">
 						<a href="#!/addresses/newmultisignature" class="btn-link-black smallButton"><span class="glyphicon glyphicon-plus"></span>{{ 'TRANSFER_MULTISIGNATURE_ADD' | translate }}</a>
 					</div>
-					<select ng-hide="listMultiSig.length == 0" name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom"  ng-change="availableBalance = addresses[sendfrom]" required>
+					<select ng-hide="listMultiSig.length == 0" name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom"  ng-change="availableBalance = addresses[sendfrom].balance" required>
 						<option ng-repeat="multiSig in listMultiSig | orderBy:'balance':true" title="{{multiSig.balance/100000000}} ETP" value="{{multiSig.address}}">{{multiSig.address}}</option>
 						<!--<option ng-repeat="multiSig in listMultiSig | orderBy:'balance':true" title="{{multiSig.balance/100000000}} ETP" value="{{multiSig.address}}">{{multiSig.address}} - {{multiSig.balance/100000000}} ETP</option>-->
 					</select>
-					<select ng-show="listMultiSig.length == 0" name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom"  ng-change="availableBalance = addresses[sendfrom]" required disabled bs-tooltip data-placement="top" title="{{ 'TRANSFER_NO_MULTISIG_ADDR' | translate }}">
+					<select ng-show="listMultiSig.length == 0" name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom"  ng-change="availableBalance = addresses[sendfrom].balance" required disabled bs-tooltip data-placement="top" title="{{ 'TRANSFER_NO_MULTISIG_ADDR' | translate }}">
 					</select>
 				</div>
 			</div>
