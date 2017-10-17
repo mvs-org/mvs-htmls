@@ -57,9 +57,10 @@
         } else {
           MetaverseService.ImportAccount(vm.user.username, vm.user.password, phraseToSend, $scope.address_count)
           .then(function (response) {
-            if (response == undefined && typeof response.success !== 'undefined' && response.success) {
+            if (typeof response.success !== 'undefined' && response.success) {
                 $translate('MESSAGES.IMPORT_SUCCESS').then( (data) => {
                     FlashService.Success(data,true);
+                    $window.scrollTo(0,0);
                     $location.path('/login');
                 });
             } else {
@@ -80,7 +81,7 @@
         //.then(function (response) {
         MetaverseService.ImportAccountFromFile($scope.path, vm.user.password)
         .then(function (response) {
-          if ( typeof response.success !== 'undefined' && response.success) {
+          if (typeof response.success !== 'undefined' && response.success) {
               $translate('MESSAGES.IMPORT_SUCCESS').then( (data) => {
                   FlashService.Success(data,true);
                   $location.path('/login');
