@@ -209,7 +209,7 @@
   "REGISTER.IMPORT_FROM_KEY" : "Import from Private key",
   "REGISTER.IMPORT_FROM_FILE" : "Import from a file",
   "REGISTER.IMPORT_PHRASE" : "Enter your account mnemonic",
-  "REGISTER.IMPORT_ADDRESS_COUNT" : "How many addresses do you need to generate? These addresses are same as your old account, if you don't remember how many addresses you used before, recommand use a bigger number, eg: 100.",
+  "REGISTER.IMPORT_ADDRESS_COUNT" : "How many addresses do you need to generate? These addresses are same as your old account, if you don't remember how many addresses you used before, recommend use a bigger number, eg: 100.",
   "REGISTER.IMPORT_LAST_WORD" : "Last word of your mnemonic",
   "REGISTER.IMPORT_FILE_PATH" : "File location",
   "REGISTER.SIGNUP_THANK_YOU" : "Thank you for sign up.",
