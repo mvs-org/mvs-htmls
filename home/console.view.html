@@ -2,7 +2,8 @@
   <div class="headline col-md-12 noPaddingLeftRight">{{ 'NAV_PRO' | translate }}</div>
 
   <!--Console large screens-->
-  <div class="col-sm-12 col-md-8 noPaddingLeftRight consoleLargeScreens hidden-xs hidden-sm">
+  <!--<div class="col-sm-12 col-md-8 noPaddingLeftRight consoleLargeScreens hidden-xs hidden-sm">-->
+  <div class="col-sm-12 consoleLargeScreens">
     <h4>{{ 'NAV_CONSOLE' | translate }}</h4>
     <div ng-hide="showConnected">
       <div class="console_query">
@@ -24,7 +25,7 @@
   </div>
 
   <!--Mining-->
-  <div class="mining noPaddingLeftRight col-sm-12 col-md-4">
+  <!--<div class="mining noPaddingLeftRight col-sm-12 col-md-4">
     <div>
       <h4 ng-hide="isMining">{{ 'NAV_MINING' | translate }}
         <span ng-hide="isMining" class="miningEnd wk-title">{{ 'MINING_NOT_RECOMMENDED' | translate }}   </span>
@@ -37,7 +38,7 @@
 
     <div ng-show="isMining" class="miningEnd">{{ 'MINING_HOW_STOP' | translate }}</div>
     <div class="row">
-      <!--Table for mining Rate, Difficulty and Height-->
+
       <div class="col-xs-12 col-sm-12 col-md-12">
         <table class="table miningTable wk-countbox">
           <tbody>
@@ -55,13 +56,13 @@
             </tr>
           </tbody>
         </table>
-        <!--Mining buttons-->
+
         <div>
-          <!--Play button, when not mining-->
+
           <button class="btn btn-success wk-beginning" ng-click="start()" ng-hide="isMining">
              {{ 'MINING_START' | translate }}
           </button>
-          <!--Pause button, when mining-->
+
           <button class="btn btn-secondary wk-beginning" ng-click="stop()" ng-show="isMining">
             {{ 'MINING_END' | translate }}
           </button>
@@ -69,10 +70,10 @@
       </div>
     </div>
     <br/><br/>
-  </div>
+  </div>-->
 
   <!--Console small screens-->
-  <div class="col-sm-12 col-md-6 noPaddingLeftRight hidden-md hidden-lg hidden-xl">
+  <!--<div class="col-sm-12 col-md-6 noPaddingLeftRight hidden-md hidden-lg hidden-xl">
     <h4>{{ 'NAV_CONSOLE' | translate }}</h4>
     <div class="console_query" >
       <span class="span1" ng-hide="showConnected">{{ 'CONSOLE.CONNECTION' | translate }}</span>
@@ -89,5 +90,5 @@
     <div class="form-group">
       <input type="text" rows="5" ng-show="showConnected" ng-model="querystring" ng-keyup="$event.keyCode == 13 && query()" class="form-control forminputConsole" id="inputField" placeholder="{{ 'CONSOLE.INSERT_PROMPT' | translate }}">
     </div>
-  </div>
+  </div>-->
 </div>
