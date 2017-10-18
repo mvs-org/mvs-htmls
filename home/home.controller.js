@@ -2224,6 +2224,9 @@
     $scope.stopLoad = false;
     $scope.page = 3;          //By default, we load the 2 first pages
 
+    //For unfrozen calculation time
+    //$scope.averageBlockTime = 0;
+
 
     function filterOnAsset (asset) {
       $scope.assetType = asset;
@@ -2282,6 +2285,32 @@
               $scope.stopLoad = true;
             }
             transactions.forEach(function(e) {
+              /*if($scope.averageBlockTime == 0){   //if it hasn't been calculated yet, we calculated the average block time
+                //1486815046 is the timestamp of the genesis block
+                //1497080262 is the timestamp of the genesis block on TestNet
+                $scope.averageBlockTime = ((e.timestamp/1000)-1486815046)/e.height;
+              }*/
+              if (e.frozen == true) {
+                e.recipents.forEach(function(recipent) {
+                  var re = /\[ (\w+) ] numequalverify dup hash160 \[ (\w+) \] equalverify checksig/;
+                  var nbrBlocksHex = recipent.script.replace(re, '$1');
+                  //var address = e.script.replace(re, '$2');
+                  var nbrBlocksDec = parseInt(nbrBlocksHex,16);
+                  e.availableBlockNo = parseInt(e.height) + parseInt(nbrBlocksDec);
+
+                  /*if((e.availableBlockNo - $rootScope.height) > 0){   //If the Frozen ETP are still locked
+                    e.availableInBlock = e.availableBlockNo - $rootScope.height;
+                    //e.availableInTime = e.availableInBlock * $scope.averageBlockTime;
+                    //e.availableInTimeDays = Math.floor(e.availableInTime / 86400);
+                    //e.availableInTimeHours = Math.floor(e.availableInTime / 3600) - (e.availableInTimeDays * 24);
+                    //console.log("Days:", e.availableInTimeDays);
+                    //console.log("Hours:", e.availableInTimeHours);
+                  } else {                //If the Frozen ETP are not unlocked
+                    e.availableInBlock = 0;
+                  }*/
+                });
+              }
+
               $scope.transactions.push(e);
             });
             //displayUpdatedDates();
@@ -2440,6 +2469,7 @@
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.height = response.data;
+          $rootScope.height = response.data;
         }
       });
     }

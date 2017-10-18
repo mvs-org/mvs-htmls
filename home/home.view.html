@@ -114,11 +114,16 @@
         <div class="col-md-4 col-lg-6 noPaddingLeftRight transactionBoxHeaderField">
           {{'HISTORY_TRANSACTION_HASH' | translate}}
         </div>
-        <div class="col-md-2 col-lg-2 noPaddingLeftRight transactionBoxHeaderField">
-          {{'HISTORY_TRANSACTION_AMOUNT' | translate}}
-        </div>
-        <div class="col-md-2 col-lg-2 noPaddingLeftRight transactionBoxHeaderField">
-          {{'HISTORY_TRANSACTION_TYPE' | translate}}
+        <div class="col-md-4 col-lg-4 noPaddingLeftRight">
+          <div class="col-md-4 col-lg-4 noPaddingLeftRight transactionBoxHeaderField">
+            {{'HISTORY_TRANSACTION_AMOUNT' | translate}}
+          </div>
+          <div class="col-md-4 col-lg-4 noPaddingLeftRight transactionBoxHeaderField">
+            {{'HISTORY_TRANSACTION_TYPE' | translate}}
+          </div>
+          <div class="col-md-4 col-lg-4 noPaddingLeftRight transactionBoxHeaderField historyUnfrozenColumn">
+            {{'HISTORY_UNFROZEN_BLOCK' | translate}}
+          </div>
         </div>
       </div>
       <div class="transactionOneLine col-md-12 noPaddingLeftRight" dir-paginate="transaction in transactionsFiltered | orderBy:'timestamp':true | itemsPerPage: 10"  pagination-id="paginationRecord">
@@ -139,16 +144,28 @@
           </a>
         </div>
 
-        <!--Value-->
-        <div class="noPaddingLeftRight transactionBoxField col-md-2 col-lg-2">
-          <span ng-show="transaction.direction!='send'" class="receiveSign overflow"><span class="p-empty">+</span>{{transaction.value | assetformat : transaction.decimal_number}}</span>
-          <span ng-show="transaction.direction=='send'" class="sendSign overflow"><span class="p-empty">-</span>{{transaction.value | assetformat : transaction.decimal_number}}</span>
-        </div>
+        <div class="noPaddingLeftRight col-md-4 col-lg-4">
+          <!--Value-->
+          <div class="noPaddingLeftRight transactionBoxField col-md-4 col-lg-4">
+            <span ng-show="transaction.direction!='send'" class="receiveSign overflow"><span class="p-empty">+</span>{{transaction.value | assetformat : transaction.decimal_number}}</span>
+            <span ng-show="transaction.direction=='send'" class="sendSign overflow"><span class="p-empty">-</span>{{transaction.value | assetformat : transaction.decimal_number}}</span>
+          </div>
 
-        <!--Type (ETP,...)-->
-        <div class="noPaddingLeftRight transactionBoxField overflow col-md-2 col-lg-2">
-          <span>{{transaction.type}}</span>
-          <!--<span ng-show="transaction.frozen"> Frozen</span>-->
+          <!--Type (ETP,...)-->
+          <div class="noPaddingLeftRight transactionBoxField col-md-4 col-lg-4">
+            <span>{{transaction.type}}</span>
+            <!--<span ng-show="transaction.frozen"> Frozen
+              <span ng-hide="transaction.availableInBlock != 0">now available</span>
+              <span ng-show="transaction.availableInBlock != 0">for {{transaction.availableInTimeDays}} days</span>
+            </span>-->
+          </div>
+
+          <!--Frozen till-->
+          <div class="noPaddingLeftRight transactionBoxField overflow col-md-4 col-lg-4 historyUnfrozenColumn">
+            <span ng-show="transaction.frozen">{{transaction.availableBlockNo}}</span>
+            <!--<span ng-show="transaction.frozen">{{transaction.availableInBlock}}</span>-->
+            <!--<span ng-show="transaction.frozen && transaction.availableInBlock != 0">{{transaction.availableInTimeDays}} days</span>-->
+          </div>
         </div>
       </div>
 

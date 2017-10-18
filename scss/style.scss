@@ -2058,6 +2058,11 @@ form label {
   padding-top: 10px;
 }
 
+.historyUnfrozenColumn {
+  overflow-wrap: normal;
+  white-space: nowrap;
+}
+
 .transactionLine {
   height: 40px;
 }

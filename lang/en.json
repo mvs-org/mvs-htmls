@@ -259,6 +259,7 @@
   "HISTORY_TRANSACTION_TYPE" : "Currency",
   "HISTORY_LOAD_MORE" : "Load more",
   "HISTORY_ALL_LOADED" : "All your transactions have been loaded",
+  "HISTORY_UNFROZEN_BLOCK" : "Unfrozen block",
   "EXPLORER_ADDRESS_TX_ALL_LOADED" : "All the transactions have been loaded",
   "EXPLORER_ADDRESS_NBR_TXS" : "No. Transactions",
   "EXPLORER_ADDRESS_TOTAL_RECEIVED" : "Total Received",

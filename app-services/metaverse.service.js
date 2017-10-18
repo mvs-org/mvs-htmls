@@ -943,14 +943,16 @@
                                         transaction.frozen = true;
                                         transaction.recipents.push({
                                           "address": output.address,
-                                          "value": parseInt(output['etp-value'])
+                                          "value": parseInt(output['etp-value']),
+                                          "script": output.script
                                         });
                                         transaction.value += parseInt(output['etp-value']);
                                       } else if((transaction.direction==='receive' && output.own==='true') || (transaction.direction==='send' && output.own==='false')){
                                         transaction.frozen = false;
                                         transaction.recipents.push({
                                           "address": output.address,
-                                          "value": parseInt(output['etp-value'])
+                                          "value": parseInt(output['etp-value']),
+                                          "script": output.script
                                         });
                                         transaction.value += parseInt(output['etp-value']);
                                       }
