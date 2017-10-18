@@ -1327,7 +1327,8 @@
       MetaverseService.GetNewAddress()
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
-          FlashService.Success('Created new address: ' + response.data);
+          //FlashService.Success('Created new address: ' + response.data);
+          $translate('MESSAGES.CREATED_ADDRESS').then( (data) => FlashService.Success(data) );
           $window.scrollTo(0,0);
           listBalances();
         }

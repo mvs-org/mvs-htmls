@@ -168,6 +168,7 @@
   "ADDRESSES_COPY_ADDRESS" : "Copy address",
   "ADDRESSES_POPOVER_COPIED" : "Address copied!",
   "ADDRESSES_TOOLTIP_EDIT_NAME" : "Edit name",
+  "MESSAGES.CREATED_ADDRESS" : "New address created",
   "SETTINGS_ACCOUNT_ID" : "Account ID",
   "SETTINGS_ACCOUNT_NAME" : "Name",
   "SETTINGS_PRIVATE_KEY" : "Private key",
