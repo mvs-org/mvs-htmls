@@ -238,7 +238,7 @@
                 controller: 'ConsoleController'
             });
 
-        $urlRouterProvider.otherwise("/home");
+        $urlRouterProvider.otherwise("/login");
     };
 
     run.$inject = ['$rootScope', '$location', 'localStorageService', '$translate', 'FileSaver', 'Blob'];
