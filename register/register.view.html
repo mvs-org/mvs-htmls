@@ -30,8 +30,15 @@
           <!--Right header-->
         <ul class="nav navbar-nav navbar-right">
           <form class="navbar-form">
+            <!--Block height-->
+            <span class="topMenuButtonRight blockHeaderLarge">
+              <p>
+                <span>{{ 'CONNECTION_BLOCKS' | translate }}:</span>
+                <span>{{vm.height}}</span>
+              </p>
+            </span>
             <!--Language button Large screens-->
-            <p ng-show="('LANG_CODE' | translate)=='zh'">
+            <span class="topMenuButtonRight languageHeaderLarge" ng-show="('LANG_CODE' | translate)=='zh'">
               <button class="selectedLanguage btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
                 中文
               </button>
@@ -39,8 +46,8 @@
               <button class="lang-en btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('en_US')">
                 EN
               </button>
-            </p>
-            <p ng-show="('LANG_CODE' | translate)=='en'">
+            </span>
+            <span class="topMenuButtonRight languageHeaderLarge" ng-show="('LANG_CODE' | translate)=='en'">
               <button class="btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
                 中文
               </button>
@@ -48,28 +55,54 @@
               <button class="selectedLanguage btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('en_US')">
                 EN
               </button>
-            </p>
+            </span>
           </form>
         </ul>
       </div>
     </div>
   </nav>
 
+
   <!--Language button Small screens-->
   <div class="panel headerLoginXs">
     <div class="header visible-xs">
-      <div class="col-xs-6">
-        <a href="#!/login" class="linkLogo"><img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" /></a>
+      <div class="col-xs-3">
+        <div class="linkLogo">
+          <a href="#!/login">
+            <img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" />
+          </a>
+        </div>
       </div>
-      <div class="col-xs-6 headerLoginXsLanguageButton">
-        <span class="languageHeaderLarge ">
-          <button class="languageButtonHeaderSmall" type="button" ng-click="vm.changeLang('zh_ZH')" ng-show="('LANG_CODE' | translate)=='en'" alt="">
-            <img class="languageFlag" src="images/zh.png" />
-          </button>
-          <button class="languageButtonHeaderSmall" type="button" ng-click="vm.changeLang('en_US')" ng-show="('LANG_CODE' | translate)=='zh'">
-            <img class="languageFlag" alt="" src="images/en.png"/>
-          </button>
-        </span>
+      <div class="col-xs-9 headerLoginXsLanguageButton">
+        <!--Right header-->
+        <form class="navbar-form headerRightXS">
+          <!--Block height-->
+          <span class="topMenuButtonRight blockHeaderLarge">
+            <p>
+              <span>{{ 'CONNECTION_BLOCKS' | translate }}:</span>
+              <span>{{vm.height}}</span>
+            </p>
+          </span>
+          <!--Language button Large screens-->
+          <span class="topMenuButtonRight languageHeaderSmall" ng-show="('LANG_CODE' | translate)=='zh'">
+            <button class="selectedLanguage btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
+              中文
+            </button>
+            /
+            <button class="lang-en btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('en_US')">
+              EN
+            </button>
+          </span>
+          <span class="topMenuButtonRight languageHeaderLarge" ng-show="('LANG_CODE' | translate)=='en'">
+            <button class="btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
+              中文
+            </button>
+            /
+            <button class="selectedLanguage btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('en_US')">
+              EN
+            </button>
+          </span>
+        </form>
       </div>
     </div>
   </div>
@@ -160,7 +193,7 @@
         <div class="lr-btnbox text-center">
           <button class="btn btn-success" ng-click="vm.register()" type="submit" ng-disabled="form.$invalid || vm.dataLoading">{{ 'REGISTER.REGISTER_BUTTON' | translate }}</button>
         </div>
-        <br/><br/><br/>
+        <br/><br/>
         <div class="col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6">
           <a href="#!/login" class="btn btn-link-red col-xs-6 col-sm-4 col-md-4">{{ 'REGISTER.LOGIN_BUTTON' | translate }}</a>
         </div>
@@ -177,7 +210,9 @@
         <b class="mnemonic_red col-xs-12 col-sm-12 col-md-12">{{vm.registered.privatekey}}</b>
       </div>
       <br><br>
-      <div class="form-group col-xs-12 comm-ft">{{ "REGISTER.PRIVATE_KEY_MNEMONIC_INFO" | translate}}</div>
+      <div class="form-group col-xs-12 comm-ft">{{ "REGISTER.PRIVATE_KEY_MNEMONIC_WARNING_TITLE" | translate}}</div>
+      <div class="form-group col-xs-12 comm-ft">{{ "REGISTER.PRIVATE_KEY_MNEMONIC_WARNING1" | translate}}</div>
+      <div class="form-group col-xs-12 comm-ft">{{ "REGISTER.PRIVATE_KEY_MNEMONIC_WARNING2" | translate}}</div>
       <div class="form-group col-xs-12 spe-addrbox">
         <div class="checkboxCircle">
           <div class="checkbox-box">

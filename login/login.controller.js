@@ -5,9 +5,9 @@
         .module('app')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$location', 'MetaverseService', 'FlashService','localStorageService', '$translate', '$window'];
+    LoginController.$inject = ['$location', 'MetaverseService', 'FlashService','localStorageService', '$interval', '$translate', '$window'];
 
-    function LoginController($location, MetaverseService, FlashService, localStorageService, $translate, $window) {
+    function LoginController($location, MetaverseService, FlashService, localStorageService, $interval, $translate, $window) {
         var vm = this;
 
         vm.login = login;
@@ -20,6 +20,21 @@
         vm.changeLang = (key) => $translate.use(key)
             .then(  (key) => localStorageService.set('language',key) )
             .catch( (error) => console.log("Cannot change language.") );
+
+        vm.height = '';
+
+        function updateHeight() {
+          MetaverseService.FetchHeight()
+          .then( (response) => {
+            if (typeof response.success !== 'undefined' && response.success) {
+              vm.height = response.data;
+            }
+          });
+        }
+
+        updateHeight();
+        $interval( () => updateHeight(), 10000);
+
 
         function login() {
             //Show loading

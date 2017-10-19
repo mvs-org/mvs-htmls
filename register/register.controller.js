@@ -5,9 +5,9 @@
   .module('app')
   .controller('RegisterController', RegisterController);
 
-  RegisterController.$inject = ['MetaverseService','$scope', '$location', 'localStorageService', '$rootScope', 'FlashService', '$translate', '$window'];
+  RegisterController.$inject = ['MetaverseService', '$scope', '$interval', '$location', 'localStorageService', '$rootScope', 'FlashService', '$translate', '$window'];
 
-  function RegisterController(MetaverseService, $scope, $location, localStorageService, $rootScope, FlashService, $translate, $window) {
+  function RegisterController(MetaverseService, $scope, $interval, $location, localStorageService, $rootScope, FlashService, $translate, $window) {
     var vm = this;
 
     vm.register = register;
@@ -18,6 +18,20 @@
     vm.changeLang = (key) => $translate.use(key)
         .then(  (key) => localStorageService.set('language',key) )
         .catch( (error) => console.log("Cannot change language.") );
+
+    vm.height = '';
+
+    function updateHeight() {
+      MetaverseService.FetchHeight()
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          vm.height = response.data;
+        }
+      });
+    }
+
+    updateHeight();
+    $interval( () => updateHeight(), 10000);
 
     function register() {
       NProgress.start();
