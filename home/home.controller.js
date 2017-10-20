@@ -2293,9 +2293,18 @@
               if (e.frozen == true) {
                 e.recipents.forEach(function(recipent) {
                   var re = /\[ (\w+) ] numequalverify dup hash160 \[ (\w+) \] equalverify checksig/;
-                  var nbrBlocksHex = recipent.script.replace(re, '$1');
+                  var nbrBlocksScript = recipent.script.replace(re, '$1');
                   //var address = e.script.replace(re, '$2');
-                  var nbrBlocksDec = parseInt(nbrBlocksHex,16);
+
+                  var nbrBlocksScriptLenght = nbrBlocksScript.length;
+                  var nbrBlocksScriptReorderer = "";
+
+                  for (var i=0; i < nbrBlocksScriptLenght; i=i+2) {
+                    nbrBlocksScriptReorderer += nbrBlocksScript.charAt(nbrBlocksScriptLenght-i-2);
+                    nbrBlocksScriptReorderer += nbrBlocksScript.charAt(nbrBlocksScriptLenght-i-1);
+                  }
+
+                  var nbrBlocksDec = parseInt(nbrBlocksScriptReorderer,16);
                   e.availableBlockNo = parseInt(e.height) + parseInt(nbrBlocksDec);
 
                   /*if((e.availableBlockNo - $rootScope.height) > 0){   //If the Frozen ETP are still locked
