@@ -418,7 +418,6 @@
 
     $scope.isNumber = angular.isNumber;
 
-
     MetaverseService.ListAssets()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
@@ -446,6 +445,7 @@
         loadEtpBalance();
       }
     });
+
 
 
     $scope.deposit_options = {
@@ -1451,7 +1451,6 @@
           }
           NProgress.done();
         });
-
       }
     }
 
