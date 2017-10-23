@@ -626,23 +626,6 @@
         }
 
 
-
-        /**
-         * @api {post} /rpc Delete asset
-         * @apiName Delete an asset
-         * @apiGroup Assets
-         *
-         * @apiDescription Delete an asset. The asset will be deleted definitely
-         *
-         * @apiParam {Const} method delete
-         * @apiParam {List} params ['-s', symbol, username, password]
-         *
-         **/
-        function Delete(symbol) {
-            var credentials = localStorageService.get('credentials');
-            return _send('deleteasset', ['-s', symbol, credentials.user, credentials.password]);
-        }
-
         /**
          * @api {post} /rpc List All assets
          * @apiName List All assets
