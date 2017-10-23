@@ -14,8 +14,13 @@
     function MetaverseService($http, localStorageService) {
         var service = {};
 
-        //var SERVER = window.location.hostname + ':3000';
-        var SERVER = window.location.hostname + ':8820'; //TO KEEP
+        //Test runned on port 3000, via Grunt
+        var SERVER = window.location.hostname+":3000";
+
+        //Replaced via the Gruntfile to the port 8820 in Live
+        //var SERVER = window.location.hostname+":8820";
+        //If we want to change the port, don't forget to change it in home.controller.js for the Console!
+
         var RPC_URL = 'http://' + SERVER + '/rpc';
 
 
@@ -163,6 +168,11 @@
         }
 
 
+        /*function ExportAccountAsFile(password, last_word) {
+          var credentials = localStorageService.get('credentials');
+          return _send('exportaccountasfile', [credentials.user, password, last_word]);
+        }*/
+
         function ExportAccountAsFile(password, last_word, path) {
           var credentials = localStorageService.get('credentials');
           return _send('exportaccountasfile', [credentials.user, password, last_word, path]);
@@ -292,9 +302,9 @@
             return _send('listtxs', ['-i', page, credentials.user, credentials.password]);
         }
 
-        function ListTxsAddress(address) {
+        function ListTxsAddress(address, page) {
             var credentials = localStorageService.get('credentials');
-            return _send('listtxs', [credentials.user, credentials.password, '-a', address]);
+            return _send('listtxs', [credentials.user, credentials.password, '-a', address, '-i', page]);
         }
 
         /**
@@ -334,12 +344,12 @@
          *    }
          * }
          **/
-        function Send(recipent, quantity, memo) {
+        function Send(recipent, quantity, transactionFee, memo) {
             var credentials = localStorageService.get('credentials');
             if(memo == '') {
-              return _send('send', [credentials.user, credentials.password, recipent, quantity]);
+              return _send('send', [credentials.user, credentials.password, recipent, quantity, '-f', transactionFee]);
             } else {
-              return _send('send', [credentials.user, credentials.password, recipent, quantity, '-m', memo]);
+              return _send('send', [credentials.user, credentials.password, recipent, quantity, '-f', transactionFee, '-m', memo]);
             }
         }
 
@@ -380,12 +390,12 @@
          *    }
          * }
          **/
-        function SendFrom(sender, recipent, quantity, memo) {
+        function SendFrom(sender, recipent, quantity, transactionFee, memo) {
             var credentials = localStorageService.get('credentials');
             if(memo == '') {
-              return _send('sendfrom', [credentials.user, credentials.password, sender, recipent, quantity]);
+              return _send('sendfrom', [credentials.user, credentials.password, sender, recipent, quantity, '-f', transactionFee]);
             } else {
-              return _send('sendfrom', [credentials.user, credentials.password, sender, recipent, quantity, '-m', memo]);
+              return _send('sendfrom', [credentials.user, credentials.password, sender, recipent, quantity, '-f', transactionFee, '-m', memo]);
             }
         }
 
@@ -426,12 +436,14 @@
          *    }
          * }
          **/
-        function SendMore(recipents) {
+        function SendMore(recipents, transactionFee) {
             var credentials = localStorageService.get('credentials');
             var query = [];
             var recipent = '';
             query.push(credentials.user);
             query.push(credentials.password);
+            query.push('-f');
+            query.push(transactionFee);
             recipents.forEach( (e) => {
               recipent = e.address + ':' + e.value;
               query.push('-r');
@@ -720,12 +732,14 @@
          * @apiParam {List} params [-f depositperiod,username, password, amount]
          *
          **/
-        function Deposit(deposit_period, amount, password, address) {
+        function Deposit(deposit_period, amount, transactionFee, password, address) {
             var credentials = localStorageService.get('credentials');
             if (address != undefined) {
-                return _send('deposit', ['-d', deposit_period, '-a', address, credentials.user, password, amount]);
+                return _send('deposit', ['-d', deposit_period, '-a', address, '-f', transactionFee, credentials.user, password, amount]);
+                //return _send('deposit', ['-d', deposit_period, '-a', address, credentials.user, password, amount]);
             } else {
-                return _send('deposit', ['-d', deposit_period, credentials.user, password, amount]);
+                return _send('deposit', ['-d', deposit_period, '-f', transactionFee, credentials.user, password, amount]);
+                //return _send('deposit', ['-d', deposit_period, credentials.user, password, amount]);
             }
         }
 
@@ -785,9 +799,9 @@
         }
 
 
-        function CreateMultisigTx(fromAddress, toAddress, amount) {
+        function CreateMultisigTx(fromAddress, toAddress, amount, transactionFee) {
           var credentials = localStorageService.get('credentials');
-          return _send('createmultisigtx', [credentials.user, credentials.password, fromAddress, toAddress, amount]);
+          return _send('createmultisigtx', [credentials.user, credentials.password, fromAddress, toAddress, amount, '-f', transactionFee]);
         }
 
         function SignMultisigTx(message, lastTx) {
@@ -943,13 +957,23 @@
                                     transaction.type = 'ETP';
                                     transaction.asset_type=8;
                                     e.outputs.forEach(function(output){
-                                        if((transaction.direction==='receive' && output.own==='true') || (transaction.direction==='send' && output.own==='false')){
-                                            transaction.recipents.push({
-                                                "address": output.address,
-                                                "value": parseInt(output['etp-value'])
-                                            });
-                                            transaction.value += parseInt(output['etp-value']);
-                                        }
+                                      if (typeof output.script != 'undefined' && output.script.match(/\[ (\w+) ] numequalverify dup hash160 \[ (\w+) \] equalverify checksig/) != null) {
+                                        transaction.frozen = true;
+                                        transaction.recipents.push({
+                                          "address": output.address,
+                                          "value": parseInt(output['etp-value']),
+                                          "script": output.script
+                                        });
+                                        transaction.value += parseInt(output['etp-value']);
+                                      } else if((transaction.direction==='receive' && output.own==='true') || (transaction.direction==='send' && output.own==='false')){
+                                        transaction.frozen = false;
+                                        transaction.recipents.push({
+                                          "address": output.address,
+                                          "value": parseInt(output['etp-value']),
+                                          "script": output.script
+                                        });
+                                        transaction.value += parseInt(output['etp-value']);
+                                      }
                                     });
                                     if(transaction.value) {
                                       transactions.push(transaction);

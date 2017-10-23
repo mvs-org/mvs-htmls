@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('app', ['ui.router', 'ngCookies', 'LocalStorageModule', 'pascalprecht.translate', 'angularUtils.directives.dirPagination', 'ngDialog'])
+    angular.module('app', ['ui.router', 'ngCookies', 'LocalStorageModule', 'pascalprecht.translate', 'angularUtils.directives.dirPagination', 'ngDialog', 'ngFileSaver'])
         .config(config)
   	    .filter('assetformat',function(){
 			      return function(input, asset_type){
@@ -219,8 +219,8 @@
             })
 
             .state('home.createmultisignature', {
-                url: "/transfer/newmultisignature",
-                templateUrl: "home/transfer/createmultisignature.view.html",
+                url: "/addresses/newmultisignature",
+                templateUrl: "home/addresses/createmultisignature.view.html",
                 controller: 'ETPMultiSignController',
                 controllerAs: 'vm'
             })
@@ -238,10 +238,10 @@
                 controller: 'ConsoleController'
             });
 
-        $urlRouterProvider.otherwise("/home");
+        $urlRouterProvider.otherwise("/login");
     };
 
-    run.$inject = ['$rootScope', '$location', 'localStorageService', '$translate'];
+    run.$inject = ['$rootScope', '$location', 'localStorageService', '$translate', 'FileSaver', 'Blob'];
 
     function run($rootScope, $location, $localStorageService, $translate) {
 

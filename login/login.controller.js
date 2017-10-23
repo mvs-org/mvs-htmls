@@ -5,8 +5,9 @@
         .module('app')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$location', 'MetaverseService', 'FlashService','localStorageService', '$translate'];
-    function LoginController($location, MetaverseService, FlashService, localStorageService, $translate) {
+    LoginController.$inject = ['$location', 'MetaverseService', 'FlashService','localStorageService', '$interval', '$translate', '$window'];
+
+    function LoginController($location, MetaverseService, FlashService, localStorageService, $interval, $translate, $window) {
         var vm = this;
 
         vm.login = login;
@@ -19,6 +20,21 @@
         vm.changeLang = (key) => $translate.use(key)
             .then(  (key) => localStorageService.set('language',key) )
             .catch( (error) => console.log("Cannot change language.") );
+
+        vm.height = '';
+
+        function updateHeight() {
+          MetaverseService.FetchHeight()
+          .then( (response) => {
+            if (typeof response.success !== 'undefined' && response.success) {
+              vm.height = response.data;
+            }
+          });
+        }
+
+        updateHeight();
+        $interval( () => updateHeight(), 10000);
+
 
         function login() {
             //Show loading
@@ -40,6 +56,7 @@
                           //Show login error message
                           setTimeout( () => NProgress.done(), 1000);
                           $translate('MESSAGES.LOGIN_WRONG_CREDENTIALS').then( (data) => FlashService.Error(data) );
+                          $window.scrollTo(0,0);
                       }
 
       	        })
@@ -47,6 +64,7 @@
                   setTimeout( () =>  NProgress.done(), 500 );
                   //Show login error message
                   $translate('MESSAGES.GENERAL_CONNECTION_ERROR').then( (data) => FlashService.Error(data) );
+                  $window.scrollTo(0,0);
                 }
               );
         };

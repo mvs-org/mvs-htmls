@@ -1,5 +1,5 @@
-<!--Empty header for xs device to make the page start at the right height-->
-<div class="headerBlankLargeScreens hidden-xs">
+<!--Empty header to make the page start at the right height-->
+<div class="headerBlankLargeScreens">
 
 </div>
 
@@ -8,7 +8,7 @@
   <div class="qq fullPageWidth headerBox">
     <div class="headerBox" ng-controller="MenuController">
       <ul class="nav navbar-nav">
-        <li role="presentation"><div class="linkLogo hidden-xs hidden-sm"><a href="#!/home" ><img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" /></a></div></li>
+        <li role="presentation"><div class="linkLogo hidden-xs hidden-sm hidden-md"><a href="#!/home"><img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" /></a></div></li>
         <li role="presentation"><a href="#!/home" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='home'}">{{ 'NAV_HOME' | translate }}</span></a></li>
         <li role="presentation"><a href="#!/addresses/myaddresses" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='addresses'}">{{ 'NAV_ACCOUNT_ADDRESSES' | translate }}</span></a></li>
         <li role="presentation"><a href="#!/asset/myassets" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='asset'}">{{ 'NAV_ASSETS' | translate }}</span></a></li>
@@ -49,18 +49,16 @@
 
 
           <!--Block height-->
-          <span class="hidden-xs hidden-sm topMenuButtonRight">
+          <!--<span class="hidden-xs hidden-sm hidden-md topMenuButtonRight">
             <p>
               <span>{{ 'CONNECTION_BLOCKS' | translate }}:</span>
               <span>{{height}}</span>
             </p>
-          </span>
+          </span>-->
 
           <!--Language button Large screens-->
           <span class="topMenuButtonRight languageHeaderLarge">
             <p ng-show="('LANG_CODE' | translate)=='zh'">
-              <button class="btn-link-black smallButton languageButtonXl" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
-            <p>
               <button class="selectedLanguage btn-link-black smallButton languageButtonXl" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
                 中文
               </button>
@@ -83,7 +81,9 @@
           <!--User name-->
           <span class="">
             <a href="#!/account/details" class="btn-link smallButton menuButton userName">
-              <p class="userNameSpan topMenuButtonRight">{{vm.account}}</p>
+              <p class="userNameSpan topMenuButtonRight">
+                {{vm.account}}
+              </p>
             </a>
           </span>
 
@@ -92,7 +92,7 @@
           <span class="topMenuButtonRight">
             <a href="#!/login" class="btn-link smallButton menuButton">
               <p>
-                {{ 'HEADER_LOGOUT' | translate }} <span class="glyphicon glyphicon-log-out"></span>
+                <span class="hidden-xs hidden-sm hidden-md">{{ 'HEADER_LOGOUT' | translate }}</span> <span class="glyphicon glyphicon-log-out"></span>
               </p>
             </a>
           </span>
@@ -102,8 +102,8 @@
   </div>
 </nav>
 
-<!--Menu button for XS device-->
-<div class="panel">
+<!--Nav bar for XS device-->
+<div class="panel navbarSmallScreens">
   <div class="header visible-xs">
 
     <!--Search very small screen-->
@@ -141,11 +141,11 @@
         <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-
         <li role="presentation"><a href="#!/home" class="btn">{{ 'NAV_HOME' | translate }}</a></li>
         <li role="presentation"><a href="#!/addresses/myaddresses" class="btn">{{ 'NAV_ACCOUNT_ADDRESSES' | translate }}</a></li>
-        <li role="presentation"><a href="#!/deposit/ETP" class="btn">{{ 'NAV_DEPOSIT' | translate }}</a></li>
+        <li role="presentation"><a href="#!/asset/myassets" class="btn">{{ 'NAV_ASSETS' | translate }}</span></a></li>
         <li class="divider" role="separator"></li>
+        <li role="presentation"> <a href="#!/account/details" class="btn">{{ 'USER_SETTING' | translate }}</span></a></li>
         <li role="presentation"><a href="#!/advanced" class="btn">{{ 'NAV_PRO' | translate }}</a></li>
         <li class="divider" role="separator"></li>
         <li role="presentation"><a href="#!/login" class="btn">{{ 'HEADER_LOGOUT' | translate }}</a></li>
@@ -161,6 +161,6 @@
   <ui-view/>
 </div>
 <div class="footerRight">
-  <span class="hidden-md hidden-lg hidden-xl blockSmallScreen">{{ 'CONNECTION_BLOCKS' | translate }}: {{height}}</span>
+  <span class="block">{{ 'CONNECTION_BLOCKS' | translate }}: {{height}}</span>
   <span>{{ 'METAVERSE_VERSION' | translate }} <<<version>>></span>
 </div>

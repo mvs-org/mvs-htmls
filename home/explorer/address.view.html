@@ -1,26 +1,73 @@
-<div class="content" ng-show=exists>
+<div class="content">
   <span class="headline">{{ 'EXPLORER_HEADLINE_ADDRESS' | translate }}</span>
-  <div class="col-md-12 noPaddingLeftRight">
+  <div class="col-md-12 noPaddingLeftRight" ng-show=exists>
     <h2>{{search}}</h2>
-    <!--<div dir-paginate="transaction in resultAddress | orderBy:'height':1 | itemsPerPage: 10">-->
-    <div class="col-xs-10 col-sm-10 col-md-8 noPaddingLeftRight form-group">
+
+    <!--<div class="info_table col-xs-12 col-sm-12 noPaddingLeftRight">
+  		<table class="col-xs-12 col-sm-6 noPaddingLeftRight addressInfoTable">
+  			<tr class="oddAddressInfoTable">
+  				<th class="fieldAddressInfoTable col-xs-6">{{ 'EXPLORER_ADDRESS_NBR_TXS' | translate }}</th>
+  				<th class="fieldAddressInfoTable col-xs-6">463</th>
+  			</tr>
+  			<tr class="evenAddressInfoTable">
+  				<td class="fieldAddressInfoTable col-xs-6">{{ 'EXPLORER_ADDRESS_TOTAL_RECEIVED' | translate }}</td>
+  				<td class="fieldAddressInfoTable col-xs-6">1076 ETP</td>
+  			</tr>
+        <tr class="oddAddressInfoTable">
+          <td class="fieldAddressInfoTable col-xs-6">{{ 'EXPLORER_ADDRESS_TOTAL_FROZEN' | translate }}</td>
+          <td class="fieldAddressInfoTable col-xs-6">185 ETP</td>
+        </tr>
+        <tr class="evenAddressInfoTable">
+          <td class="fieldAddressInfoTable col-xs-6">{{ 'EXPLORER_ADDRESS_AVAILABLE_BALANCE' | translate }}</td>
+          <td class="fieldAddressInfoTable col-xs-6">398 ETP</td>
+        </tr>
+  		</table>-->
+      <!--QRCode-->
+      <!--<div class="col-xs-12 col-sm-offset-2 col-sm-4 noPaddingLeftRight">
+        <div class="qrCodeExplorer" id="qrcode"></div>
+      </div>
+  	</div>-->
+
+
+
+    <div class="col-xs-10 col-sm-8 col-md-8 noPaddingLeftRight form-group">
       <label class="control-label">
         {{ 'EXPLORER_TRANSACTION_HASH' | translate }}
       </label>
     </div>
-    <div class="col-xs-2 col-sm-2 col-md-4 noPaddingLeftRight form-group">
+    <div class="col-xs-2 col-sm-4 col-md-4 noPaddingLeftRight form-group">
       <label class="control-label">
         {{ 'EXPLORER_TRANSACTION_BLOCK' | translate }}
       </label>
     </div>
+
+
+
+
     <div dir-paginate="transaction in transactionsAddressSearch | orderBy:'transaction.timestamp' | itemsPerPage: 10">
-      <div class="col-xs-10 col-sm-10 col-md-8 noPaddingLeftRight overflow">
+      <div class="col-xs-10 col-sm-8 col-md-8 noPaddingLeftRight overflow">
         <a href="#!/explorer/tx/{{transaction.hash}}" class="btn-link">{{transaction.hash}}</a>
       </div>
-      <div class="col-xs-2 col-sm-2 col-md-4 noPaddingLeftRight">
+      <div class="col-xs-2 col-sm-4 col-md-4 noPaddingLeftRight">
         <a href="#!/explorer/blk/{{transaction.height}}" class="btn-link">{{transaction.height}}</a>
       </div>
     </div>
-    <dir-pagination-controls></dir-pagination-controls>
+    <!--Pagination and  more button-->
+    <div class="paginationHistory">
+      <dir-pagination-controls></dir-pagination-controls>
+      <div>
+        <div class="loadMore" ng-hide="stopLoad"><!-- ng-show="transactionsFiltered.length>10"-->
+          <input type="button" class="btn btn-success smallButton" value="{{'HISTORY_LOAD_MORE' | translate}}" ng-click="searchAddressloadMore()"></input>
+          <!-- <input ng-show="stopLoad" type="button" class="btn btn-success smallButton" bs-popover data-toggle="popover" data-placement="top" data-container="body" data-content="{{ 'HISTORY_ALL_LOADED' | translate }}" value="Load more" ng-click="loadMore()"></input>-->
+        </div>
+      </div>
+      <!--<div class="textAllLoadedAddressExplorer textAllLoadedAddressExplorerMore10 control-label" ng-show="stopLoad && transactionsAddressSearch.length > 10">{{ 'EXPLORER_ADDRESS_TX_ALL_LOADED' | translate }}</div>-->
+    </div>
+    <!--<div class="textAllLoadedAddressExplorer control-label" ng-show="stopLoad && transactionsAddressSearch.length <= 10">{{ 'EXPLORER_ADDRESS_TX_ALL_LOADED' | translate }}</div>-->
+
+  </div>
+  <div ng-show="noResult">
+    <h2>{{search}}</h2>
+    <h4>{{'EXPLORER_ADDRESS_NO_TX' | translate}}</h4>
   </div>
 </div>

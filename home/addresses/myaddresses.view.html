@@ -41,7 +41,8 @@
   <div class="whiteSpace">
     <br/>
   </div>
-  <div class="col-xs-12 noPaddingLeftRight spe-addrbox">
+
+  <div class="col-xs-12 noPaddingLeftRight spe-addrbox showHideEmpty">
     <div class="col-xs-6">
       <div class="checkboxCircle">
         <div class="checkbox-box">
@@ -54,7 +55,7 @@
     <!--Get new address-->
     <div class="createAddress col-xs-6 noPaddingLeftRight">
       <!--New Multisignature address-->
-      <!--<a href="#!/transfer/newmultisignature" class="btn-link-black smallButton"><span class="glyphicon glyphicon-plus"></span>{{ 'TRANSFER_MULTISIGNATURE_ADD' | translate }}</a>-->
+      <a href="#!/addresses/newmultisignature" class="btn-link-black smallButton"><span class="glyphicon glyphicon-plus"></span>{{ 'TRANSFER_MULTISIGNATURE_ADD' | translate }}</a>
       <!--New personnal address-->
       <button ng-click="getnewaddress()" class="btn-link-black smallButton"><span class="glyphicon glyphicon-plus"></span> {{ 'ADDRESSES_CREATE_NEW_ADDRESS' | translate }}</button>
     </div>
@@ -91,7 +92,7 @@
           </span>
         </div>
 
-        <span class="col-xs-12 noPaddingLeftRight addressBoxAddressDeposit overflow">{{address.address}}</span>
+        <a href="#!/explorer/adr/{{address.address}}" class="btn-link-black col-xs-12 noPaddingLeftRight addressBoxAddressDeposit overflow">{{address.address}}</a>
 
       </div>
       <div class="assetBoxBalance col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
@@ -100,7 +101,7 @@
       </div>
       <div class="assetBoxFrozen col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 noPaddingLeftRight">
         <div class="assetBoxTitle">{{ 'FROZEN' | translate}}</div>
-        <div class="assetBoxValue col-xd-12 noPaddingLeftRight overflow">{{address.frozen/100000000}}</div>
+        <div class="assetBoxValue col-xd-12 noPaddingLeftRight">{{address.frozen/100000000}}</div>
       </div>
       <div class="assetBoxCopy col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
         <span class="copyAddress">
@@ -123,3 +124,4 @@
   <div class="paginationHistory">
     <dir-pagination-controls></dir-pagination-controls>
   </div>
+  <br/><br/>

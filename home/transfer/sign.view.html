@@ -1,21 +1,25 @@
 <div class="content">
-	<span class="headline">{{ 'HEADLINE_ETP_TRANSFER_MULTISIGNATURE' | translate }}</span>
+	<span class="headline">{{ 'HEADLINE_ETP_TRANSFER' | translate }}</span>
 	<!--Before sending a transaction-->
 	<div ng-hide="transferSuccess">
-		<div>
-		  <ul class="nav nav-pills tabsMenu">
-		    <li role="presentation"><a href="#!/transfer/multisignature" class="btn-link-menu">{{ 'NAV_TRANSFER_MULTISIGNATURE_INIT' | translate }}</a></li>
-		    <li role="presentation" class="active"><a href="#!/transfer/sign" class="btn-link-menu">{{ 'NAV_TRANSFER_MULTISIGNATURE_SIGN' | translate }}</a></li>
-		  </ul>
-		</div>
+		<ul class="nav nav-pills tabsMenu">
+			<li role="presentation"><a href="#!/transfer/ETP" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIMPLE' | translate }}</a></li>
+			<li role="presentation"><a href="#!/transfer/multisignature" class="btn-link-menu">{{ 'TRANSFER_TYPE_MULTISIG' | translate }}</a></li>
+			<li role="presentation" class="active"><a href="#!/transfer/sign" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIGN' | translate }}</a></li>
+			<!--<li role="presentation"><a href="#!/account/subscribe" class="btn-link-menu">{{ 'NAV_ACCOUNT_SUBSCRIBE' | translate }}</a></li>-->
+		</ul>
 		<br/>
 		<div class="form-group">{{ 'TRANSFER_SIGN_HEADER' | translate}}:</div>
 		<textarea class="form-control" ng-model="transaction" rows="5"></textarea>
 		<br>
-		<div class="checkboxCircle">
-			<input type="checkbox" ng-model="lastTx" id="checkboxAgree">
-			<label for="checkboxAgree"></label>
-			<span class="">{{ 'TRANSFER_SIGN_IS_LAST_TRANSACTION' | translate}}</span>
+		<div class="col-xs-12 noPaddingLeftRight spe-addrbox">
+			<div class="checkboxCircle">
+				<div class="checkbox-box">
+					<input type="checkbox" checked ng-model="lastTx" id="checkboxAgree" ng-click="!displayEmptyAdresses && displayEmpty() ; displayEmptyAdresses && hideEmpty()"  >
+					<label for="checkboxAgree"></label>
+				</div>
+				<span class="textCheckbox">{{ 'TRANSFER_SIGN_IS_LAST_TRANSACTION' | translate}}</span>
+			</div>
 		</div>
 		<div class="col-xs-6 col-sm-3 col-md-3 noPaddingLeftRight">
 			<br/>
@@ -33,16 +37,20 @@
 		<div ng-hide="lastTx">
 			<div class="form-group"><b class="warningText">{{ 'TRANSFER_SIGN_SUCCESS' | translate}}</b></div>
 			<div class="form-group">
-				<button class="btn btn-success smallButton" bs-popover data-clipboard-text="{{resultSignTx}}" data-toggle="popover" data-placement="top" data-content="{{ 'TRANSFER_MULTISIGNATURE_POPOVER_COPIED' | translate }}" role="button">
+				<!--<button class="btn btn-success smallButton" bs-popover data-clipboard-text="{{resultSignTx}}" data-toggle="popover" data-placement="top" data-content="{{ 'TRANSFER_MULTISIGNATURE_POPOVER_COPIED' | translate }}" role="button">
 					<span class="glyphicon glyphicon-file"></span>  {{ 'TRANSFER_MULTISIGNATURE_COPY_BUTTON' | translate }}
-				</button>
+				</button>-->
 			</div>
 			<textarea class="form-control" rows="5">{{resultSignTx}}</textarea>
 			<br>
-			<div class="checkboxCircle">
-				<input type="checkbox" ng-model="fileSaved" id="checkboxAgreeSaved">
-				<label for="checkboxAgreeSaved"></label>
-				<span class="">{{ 'TRANSFER_MULTISIGNATURE_I_HAVE_COPIED' | translate}}</span>
+			<div class="col-xs-12 noPaddingLeftRight spe-addrbox checkboxAgreeSaved">
+				<div class="checkboxCircle">
+					<div class="checkbox-box">
+						<input type="checkbox" ng-model="fileSaved" id="checkboxAgreeSaved">
+						<label for="checkboxAgreeSaved"></label>
+					</div>
+					<span class="textCheckbox">{{ 'TRANSFER_MULTISIGNATURE_I_HAVE_COPIED' | translate}}</span>
+				</div>
 			</div>
 			<div ng-show="fileSaved">
 				<br/>

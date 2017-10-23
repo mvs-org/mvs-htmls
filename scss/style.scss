@@ -86,6 +86,9 @@ h4 {
 .AStitle-tabs .tabsMenu > li.active > a{
   color: #323232 !important;
 }
+.AStitle-tabs {
+  margin-bottom: 20px;
+}
 /*reset other style  end*/
 
 /*
@@ -111,7 +114,7 @@ No media query since this is the default in Bootstrap because it is "mobile firs
   text-align: left;
   background-color: transparent;
   //height: 50px;
-  margin: 10px 0;
+  margin: 5px 5px 5px 0px;
   //border-radius: 4px;
   border: solid 1px $lightGrey;
   //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
@@ -147,24 +150,15 @@ No media query since this is the default in Bootstrap because it is "mobile firs
 
 
 .assetBox .assetLogo {
-  //width: 45px;
-  //height: 45px;
-  //left: 15px;
-  //line-height: 45px;
-  //margin-top: 0;
-  width: 40px;
-  /* height: 45px; */
-  /* left: 15px; */
   line-height: 40px;
   text-align: center;
   display: inline-block;
-
 }
 
 .assetSymbol {
   //margin: 4px;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   margin: 3px;
   background-color: transparent;
 }
@@ -268,6 +262,10 @@ No media query since this is the default in Bootstrap because it is "mobile firs
   width: 70px !important;
 }
 
+.assetDetailsPanel {
+  margin-bottom: 20px;
+}
+
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::
 Bootstrap 4 breakpoints
 */
@@ -288,7 +286,7 @@ Bootstrap 4 breakpoints
     //text-align: left;
     //background-color: transparent;
     //height: 50px;
-    //margin: 5px;
+    margin: 5px 5px 5px 0px;
     //border-radius: 4px;
     //border: solid 1px $lightGrey;
     //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
@@ -324,8 +322,8 @@ Bootstrap 4 breakpoints
 
   .assetSymbol {
     //margin: 4px;
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     background-color: transparent;
   }
 
@@ -396,6 +394,10 @@ Bootstrap 4 breakpoints
     margin-right: 0px;
     width: 70px !important;
   }
+
+  .assetDetailsPanel {
+    margin-bottom: 20px;
+  }
 }
 
 /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
@@ -415,7 +417,7 @@ Bootstrap 4 breakpoints
     text-align: left;
     background-color: transparent;
     //height: 50px;
-    margin: 5px;
+    margin: 5px 5px 5px 0px;
     border-radius: 4px;
     //border: solid 1px $lightGrey;
     //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
@@ -444,12 +446,10 @@ Bootstrap 4 breakpoints
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
   }
 
-
-
   .assetSymbol {
     //margin: 4px;
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     background-color: transparent;
   }
   //
@@ -520,6 +520,10 @@ Bootstrap 4 breakpoints
     margin-right: 0px;
     width: 70px !important;
   }
+
+  .assetDetailsPanel {
+    margin-bottom: 20px;
+  }
 }
 
 /* Large devices (desktops, 992px and up) */
@@ -539,7 +543,7 @@ Bootstrap 4 breakpoints
     //text-align: left;
     //background-color: transparent;
     ////height: 50px;
-    //margin: 5px;
+    margin: 5px 5px 5px 0px;
     //border-radius: 4px;
     //border: solid 1px $lightGrey;
     //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
@@ -568,8 +572,8 @@ Bootstrap 4 breakpoints
 
   .assetSymbol {
     //margin: 4px;
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     background-color: transparent;
   }
 
@@ -640,6 +644,10 @@ Bootstrap 4 breakpoints
     margin-right: 0px;
     width: 70px !important;
   }
+
+  .assetDetailsPanel {
+    margin-bottom: 20px;
+  }
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
@@ -659,7 +667,7 @@ Bootstrap 4 breakpoints
     //text-align: left;
     //background-color: transparent;
     //height: 60px;
-    //margin: 5px;
+    margin: 5px 5px 5px 0px;
     //border-radius: 4px;
     //border: solid 1px $lightGrey;
     //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
@@ -755,7 +763,7 @@ Bootstrap 4 breakpoints
   }
 
   .assetBoxCopy {
-    padding-top: 14px;
+    padding-top: 10px;
     display: inline-block;
   }
 
@@ -769,6 +777,11 @@ Bootstrap 4 breakpoints
     margin-left: 10px;
     margin-right: 4px;
     width: 70px !important;
+  }
+
+  .assetDetailsPanel {
+    height: 285px;
+    margin-bottom: 20px;
   }
 }
 
@@ -789,7 +802,7 @@ Bootstrap 4 breakpoints
     text-align: left;
     background-color: transparent;
     height: 80px;
-    margin: 5px;
+    margin: 5px 5px 5px 0px;
     border-radius: 4px;
     border: solid 1px $lightGrey;
     //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
@@ -827,13 +840,13 @@ Bootstrap 4 breakpoints
     background-color: transparent;
   }
 
-  //.assetLogo {
-  //  position: absolute;
-  //  font-size: 26px;
-  //  padding-left: 8px;
-  //  text-align: center;
-  //  padding-top: 20px;
-  //}
+  .assetLogo {
+    position: absolute;
+    font-size: 26px;
+    padding-left: 2px;
+    text-align: center;
+    padding-top: 4px;
+  }
 
   .assetBoxSymbolNameETP {
     //width: 300px;
@@ -879,7 +892,7 @@ Bootstrap 4 breakpoints
   }
 
   .assetBoxCopy {
-    padding-top: 22px;
+    padding-top: 10px;
     display: inline-block;
   }
 
@@ -895,13 +908,14 @@ Bootstrap 4 breakpoints
     width: 70px !important;
   }
 
+  .assetDetailsPanel {
+    height: 285px;
+    margin-bottom: 20px;
+  }
 }
 
 
 
-.assetBoxWrapper  .col-lg-5 {
-  width: 30%;
-}
 .assetBoxWrapper .col-xs-offset-5 {
   margin: 0 20px 0 15%;
   width: 260px;
@@ -1239,6 +1253,10 @@ _____  ._______  ___.___ _______
 
 }
 
+.blockHeaderLarge {
+  padding-top: 12px !important;
+}
+
 .languageHeaderButtonLarge {
   padding: 0;
   border: 0;
@@ -1358,6 +1376,9 @@ _____  ._______  ___.___ _______
   text-align: right;
 }
 
+.showHideEmpty {
+  margin: 50px 0 10px;
+}
 
 
 .spe-addrbox .checkboxCircle label{
@@ -1378,7 +1399,17 @@ _____  ._______  ___.___ _______
 
 }
 .spe-addrbox{
- margin: 50px 0 10px;
+ //margin: 50px 0 10px;
+}
+.spe-addrbox .spe-tc.textCheckbox {
+  font-size: 18px;
+  //position: relative;
+  //top: -1px;
+}
+
+.spe-addrbox .glyphicon{
+  font-weight: lighter;
+  font-size: 12px;
 }
 .mainContent1{
   overflow: hidden;
@@ -1422,13 +1453,17 @@ _____  ._______  ___.___ _______
   background-color: white;
   border-radius: 10px;
   padding: 55px;
-  margin: 165px auto 0;
+  //padding-bottom: 10px;
+  margin: 165px auto 100px;
   width: 520px;
-  height: 570px;
+  height: 630px;
   //margin-top: 10%;
   //padding-top: 3%;
   //padding-bottom: 3%;
   //margin-bottom: 10%;
+}
+.headerRightXS {
+  margin-top: 0;
 }
 .depositAddressCheckbox .textCheckbox {
     padding-left: 20px;
@@ -1470,7 +1505,7 @@ _____  ._______  ___.___ _______
   border: none;
 }
 .rg-btnbox{
-  margin: 68px 0 20px;
+  margin: 20px 0 20px;
 }
 
 .rg-btnbox .btn:hover{
@@ -1528,14 +1563,13 @@ _____  ._______  ___.___ _______
 .logoMetaverseSmall {
   width: 97px;
   height: 34px;
-  //position: absolute;
-  left: 27px;
-  margin-top: 13px;
-  margin-right: 20px;
 }
+
 
 .linkLogo {
   padding: 0 !important;
+  margin-top: 13px;
+  margin-right: 20px;
 }
 
 .header {
@@ -1587,7 +1621,7 @@ _____  ._______  ___.___ _______
 }
 
 .headerBlankLargeScreens {
-  margin-top: 60px;
+  margin-top: 65px;
 }
 
 .headerButtonXs {
@@ -1664,6 +1698,7 @@ _____  ._______  ___.___ _______
 
 .userNameSpan {
   padding-top: 10px;
+  //padding-bottom: 10px;
   width: 120px;
 }
 
@@ -1681,6 +1716,7 @@ _____  ._______  ___.___ _______
 
 .menuButtonXs {
   color: black !important;
+  margin-top: 4px;
 }
 
 .selectedLanguage {
@@ -1745,16 +1781,26 @@ _____  ._______  ___.___ _______
 
 .admin {
   overflow:hidden;
-  min-height:700px;
   padding-bottom: 40px;
   padding-left: 15px;
   padding-right: 15px;
+  padding-top: 15px;
 }
 
 .fullPageWidth {
+  min-width: 700px;
   max-width: 1320px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.navbarSmallScreens {
+  position: fixed;
+  top: 0;
+  //left: 0;
+  right: 0;
+  z-index: 1000;
+  width: 100%;
 }
 
 
@@ -1781,16 +1827,29 @@ _____  ._______  ___.___ _______
   padding-right: 0px;
 }
 
+.noMarginTopBottom {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 .uppercase {
   text-transform: uppercase;
 }
 
 .footerRight {
+  position: fixed;
+  padding: 10px;
+  bottom: 0;
+  background: #fff;
+  width: 100%;
+  border-top: 1px solid #ccc;
+  left: 0;
+  right: 0;
   text-align: right;
-  margin-right: 10px;
+  z-index: 1000;
 }
 
-.blockSmallScreen {
+.block {
   padding-right: 20px;
 }
 
@@ -1842,6 +1901,10 @@ _____  ._______  ___.___ _______
   margin: 10px;
 }
 
+.importAccountFileTextArea {
+  height: auto !important;
+}
+
 
 
 
@@ -1891,17 +1954,15 @@ _____  ._______  ___.___ _______
 .assetDataColumn {
   height: 32px;
   text-align: left;
-  padding-right: 20px;
+  //padding-right: 20px;
   font-weight: 400;
   font-style: normal;
   font-size: 14px;
 }
 
 .assetValueColumn {
-  width: auto;
-  margin-left: 10px;
-  font-weight: 200;
-
+  //width: auto;
+  padding-left: 20px;
 }
 
 .popupButtons {
@@ -1959,7 +2020,7 @@ form label {
   //background-color: $successButtonColor !important;
   width: 24px;
   height: 24px;
-  background-color: #f75368;
+  background-color: $redGeneralColor !important;
   line-height: 24px;
   text-align: center;
   padding: 0;
@@ -2005,6 +2066,11 @@ form label {
   padding-top: 10px;
 }
 
+.historyUnfrozenColumn {
+  overflow-wrap: normal;
+  white-space: nowrap;
+}
+
 .transactionLine {
   height: 40px;
 }
@@ -2014,7 +2080,7 @@ form label {
 }
 
 .sendSign {
-  color: #f75368;
+  color: $redGeneralColor;
 }
 
 .issueSign {
@@ -2042,6 +2108,10 @@ form label {
 
 }
 
+.checkboxAgreeSaved {
+  margin-bottom: 20px;
+}
+
 
 //Display of the history for large screens
 .transactionOneLine {
@@ -2049,6 +2119,7 @@ form label {
   height: 40px;
   border-bottom: solid 1px;
   border-color: $mediumGreyddd;
+  padding: 0 20px;
 }
 
 .transactionBoxField {
@@ -2102,6 +2173,7 @@ form label {
   color: $mediumGrey;
   font-weight: 400;
   font-size: 14px;
+  width: 100%;
 }
 
 .transactionBoxSmallTime {
@@ -2119,13 +2191,26 @@ form label {
   line-height: 2.5em;
 }
 
+.textAllLoadedAddressExplorer {
+  height: 26px;
+  line-height: 2.5em;
+  position: relative;
+
+}
+
+.textAllLoadedAddressExplorerMore10 {
+  top: -25px;
+
+}
+
+
 /**********************ETP Addresses*******************/
 .whiteSpace {
   margin-bottom: 80px;
 }
 
 .textCheckbox {
-  padding-left: 10px;
+  padding-left: 28px;
 }
 
 
@@ -2191,6 +2276,8 @@ form label {
 .editAddressNameButtonEditing {
   background-color: transparent;
   border-width: 0;
+  height: 100%;
+  width: 100%;
 }
 
 .ast-wd{
@@ -2201,11 +2288,12 @@ form label {
 }
 
 .addressBoxName {
-  color: $blueGeneralColor;
+  color:#323232;
+  font-size: 20px;
+  width: 200px;
   float:left;
-  font-size: 14px;
   background-color: transparent;
-  height: 22px;
+  height: 26px;
   display: inline;
   max-width: calc(100% - 30px);
   text-overflow: ellipsis;
@@ -2231,12 +2319,12 @@ form label {
 
 //QR Code
 .modal-dialog {
-
+  width: 500px;
 }
 
 .modal-content {
   height: 520px;
-  width: 500px;
+  width: inherit;
 }
 
 .qrCodePopUp {
@@ -2331,11 +2419,12 @@ form label {
 }
 
 .addressBoxAddressDeposit {
+  padding-top: 8px;
   width: 100%;
-    float:left;
-    color: #666;
-    line-height: 14px;
-    padding-bottom: 8px;
+  float:left;
+  color: #666;
+  line-height: 14px;
+  padding-bottom: 8px;
 }
 
 //Select period
@@ -2345,7 +2434,7 @@ form label {
 
 .quickResponse {
   color: $redGeneralColor;
-  margin-top: 30px;
+  //margin-top: 30px;
 }
 
 
@@ -2408,16 +2497,20 @@ form label {
 
 /*************Console page**************/
 html,body {
-    height: 100%
+    //height: 100%
 }
 
-
-.consoleFooter {
-
-}
 
 .console {
   background-color: transparent;
+  width:100%;
+  float:left;
+  overflow:auto;
+  max-height: 50vh;
+}
+
+.consoleLargeScreens {
+  padding-right: 50px;
 }
 
 .console_query {
@@ -2440,7 +2533,7 @@ word-wrap: break-word;
   margin: 0;
   padding: 0;
   font-size: 14px;
-  line-height: 16px;
+  line-height: 20px;
   color: black;
   word-break: break-all;
   background-color: transparent;
@@ -2456,15 +2549,12 @@ word-wrap: break-word;
   word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
-.forminput {
-  margin-top: 10px;
-  background-color: transparent !important;
-  border-width: 0;
-  width: 100%;
-  vertical-align: top;
-
+.forminputConsole {
+  //border-color: #66afe9;
+  margin-top: 14px;
+  padding: 8px 0 8px 4px;
+  display: inline;
 }
-
 
 
 
@@ -2497,12 +2587,49 @@ h2 {
   font-size: 12px;
 }
 
+.addressInfoTable {
+  margin-bottom: 40px;
+  margin-top: 20px;
+}
+
+.oddAddressInfoTable {
+  background-color: #f2f2f2;
+  height: 40px;
+  border-top: solid 1px $mediumGrey;
+}
+
+.evenAddressInfoTable {
+  height: 40px;
+  border-top: solid 1px $mediumGrey;
+}
+
+.fieldAddressInfoTable {
+  padding-left: 20px;
+  height: 40px;
+  //border-bottom: 1px solid #f2f2f2;
+}
+
 .blockNumber {
   text-align: right;
 }
 
 .center {
   text-align: center;
+}
+
+.qrCodeExplorer {
+  height: 200px;
+  width: 200px;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.qrCodeExplorerContainer {
+  text-align: center;
+}
+
+.blockExplorerLabel {
+  font-size: 18px;
 }
 
 
@@ -2534,6 +2661,10 @@ h2 {
   color: red;
 }
 
+.fileSaved {
+  margin-top: 20px;
+}
+
 /***************All Assets page**************/
 .detailsOneLine {
   line-height: 45px;
@@ -2543,6 +2674,18 @@ h2 {
 
 
 /**************Assets details*****************/
+.assetDetailsBoxButton {
+  top: -5px;
+}
+
+.assetDataLine {
+  margin-top: 5px;
+}
+
+.assetDetailsBlank {
+  height: 20px;
+}
+
 .sendAssetButton {
   text-align: right;
 }
@@ -2566,6 +2709,9 @@ h2 {
 .form-spebox input[type=submit]{
   margin-top:60px;
 }
+
+
+
 /**************Advanced details*****************/
 .wk-title{
   font-size: 14px;
@@ -2587,7 +2733,7 @@ h2 {
   height: 30px;
   line-height: 16px;
   border-radius: 8px;
-  background-color: #f75368;
+  background-color: $redGeneralColor;
 }
 
 
@@ -2618,32 +2764,14 @@ h2 {
 .C-assetBox .assetBoxValue{
   font-size: 20px !important;
 }
-.spe-addrbox .spe-tc.textCheckbox {
-  font-size: 18px;
-  position: relative;
-  top: -1px;
-  left: 14px;
-}
-.spe-addrbox .glyphicon{
-  font-weight: lighter;
-  font-size: 12px;
-}
 .assetBoxAdd {
   border-left:5px solid #ff697c;
   border-radius: 8px;
   box-shadow: 0 1px 2px 0 rgba(35, 35, 35, 0.1);
 }
-.assetBoxAdd .addressBoxName {
-  color:#323232;
-  font-size: 20px;
-  width: 200px;
-}
 .assetBoxAdd  .assetBoxValue{
   font-size: 18px !important;
   padding-top: 5px;
-}
-.assetBoxAdd  .addressBoxAddressDeposit {
-  padding-top: 8px;
 }
 .assetBoxAdd .assetBoxBalance {
   padding-top: 0;
@@ -2657,9 +2785,7 @@ h2 {
   margin-bottom: 30px;
 }
 
-#inputField{
-  padding: 8px 0;
-}
+
 .ngdialog.ngdialog-theme-default .ngdialog-content{
   padding: 2em  3em !important;
 }

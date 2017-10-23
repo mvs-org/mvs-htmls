@@ -19,21 +19,43 @@
     <div class="fullPageWidth headerBox">
       <div class="headerBox" ng-controller="MenuController">
         <ul class="nav navbar-nav">
-          <li role="presentation"><a href="#!/login" class="linkLogo"><img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" /></a></li>
+          <li role="presentation">
+            <div class="linkLogo">
+              <a href="#!/login">
+                <img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" />
+              </a>
+            </div>
+          </li>
         </ul>
-
         <!--Right header-->
         <ul class="nav navbar-nav navbar-right">
           <form class="navbar-form">
-
+            <!--Block height-->
+            <span class="topMenuButtonRight blockHeaderLarge">
+              <p>
+                <span>{{ 'CONNECTION_BLOCKS' | translate }}:</span>
+                <span>{{vm.height}}</span>
+              </p>
+            </span>
             <!--Language button Large screens-->
-            <button class="btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
-              中文
-            </button>
-            /
-            <button class="btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('en_US')">
-              EN
-            </button>
+            <span class="topMenuButtonRight languageHeaderLarge" ng-show="('LANG_CODE' | translate)=='zh'">
+              <button class="selectedLanguage btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
+                中文
+              </button>
+              /
+              <button class="lang-en btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('en_US')">
+                EN
+              </button>
+            </span>
+            <span class="topMenuButtonRight languageHeaderLarge" ng-show="('LANG_CODE' | translate)=='en'">
+              <button class="btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
+                中文
+              </button>
+              /
+              <button class="selectedLanguage btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('en_US')">
+                EN
+              </button>
+            </span>
           </form>
         </ul>
       </div>
@@ -43,18 +65,43 @@
   <!--Language button Small screens-->
   <div class="panel headerLoginXs">
     <div class="header visible-xs">
-      <div class="col-xs-6">
-        <a href="#!/login" class="linkLogo"><img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" /></a>
+      <div class="col-xs-3">
+        <div class="linkLogo">
+          <a href="#!/login">
+            <img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" />
+          </a>
+        </div>
       </div>
-      <div class="col-xs-6 headerLoginXsLanguageButton">
-        <span class="languageHeaderLarge ">
-          <button class="languageButtonHeaderSmall" type="button" ng-click="vm.changeLang('zh_ZH')" ng-show="('LANG_CODE' | translate)=='en'" alt="">
-            <img class="languageFlag" src="images/zh.png" />
-          </button>
-          <button class="languageButtonHeaderSmall" type="button" ng-click="vm.changeLang('en_US')" ng-show="('LANG_CODE' | translate)=='zh'">
-            <img class="languageFlag" alt="" src="images/en.png"/>
-          </button>
-        </span>
+      <div class="col-xs-9 headerLoginXsLanguageButton">
+        <!--Right header-->
+        <form class="navbar-form headerRightXS">
+          <!--Block height-->
+          <span class="topMenuButtonRight blockHeaderLarge">
+            <p>
+              <span>{{ 'CONNECTION_BLOCKS' | translate }}:</span>
+              <span>{{vm.height}}</span>
+            </p>
+          </span>
+          <!--Language button Large screens-->
+          <span class="topMenuButtonRight languageHeaderSmall" ng-show="('LANG_CODE' | translate)=='zh'">
+            <button class="selectedLanguage btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
+              中文
+            </button>
+            /
+            <button class="lang-en btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('en_US')">
+              EN
+            </button>
+          </span>
+          <span class="topMenuButtonRight languageHeaderLarge" ng-show="('LANG_CODE' | translate)=='en'">
+            <button class="btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
+              中文
+            </button>
+            /
+            <button class="selectedLanguage btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('en_US')">
+              EN
+            </button>
+          </span>
+        </form>
       </div>
     </div>
   </div>
@@ -65,7 +112,12 @@
     <!--Logo-->
 
     <h1 class="loginTitle">{{ 'LOGIN.TITLE' | translate }}</h1>
+    <span class="comm-ft">
+      {{ 'LOGIN.CHECK_BLOCK_HEIGHT1' | translate }}<a href="http://explorer.mvs.org" target="_blank">{{ 'LOGIN.CHECK_BLOCK_HEIGHT_LINK' | translate }}</a>{{ 'LOGIN.CHECK_BLOCK_HEIGHT2' | translate }}
+    </span>
+
     <div class="form-group">
+      <br/>
       <!--Username-->
       <div class="form-group col-xs-12">
         <label for="username" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_NAME' | translate }}</label>
@@ -74,7 +126,7 @@
       <!--Password-->
       <div class="form-group col-xs-12">
         <label for="password" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_PASSWORD' | translate }}</label>
-        <input type="password" name="password" class="form-control" ng-model="vm.password">
+        <input type="password" name="password" autocomplete="new-password" class="form-control" ng-model="vm.password">
       </div>
       <br>
       <!--Login button-->
@@ -83,7 +135,6 @@
           <button type="submit" class="btn btn-success" ng-disabled="form.$invalid || vm.dataLoading" ng-click="vm.login()">{{ 'LOGIN.LOGIN_BUTTON' | translate }}</button>
         </div>
       </div>
-      <br/><br/><br/>
       <!--Register button-->
       <div class="form-group col-xs-12">
         <div class="lr-btnbox  rg-btnbox text-center">

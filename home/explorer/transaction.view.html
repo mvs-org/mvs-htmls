@@ -1,76 +1,85 @@
-<div class="content" ng-show=exists>
+<div class="content">
   <span class="headline">{{ 'EXPLORER_HEADLINE_TRANSACTION' | translate }}</span>
-  <div class="col-md-12 noPaddingLeftRight">
+  <div class="col-md-12 noPaddingLeftRight" ng-show="exists">
     <h2>{{search}}</h2>
-  </div>
 
-  <!--Input addresses-->
-  <div class="col-sm-12 col-md-6 form-group noPaddingLeftRight">
-    <label class="control-label">
-      {{ 'EXPLORER.TRANSACTION_INPUTS' | translate }}
-    </label>
-    <div ng-repeat="input in transaction.inputs" class="explorerTransaction">
-      <div ng-show="input.previous_output.hash=='0000000000000000000000000000000000000000000000000000000000000000'">   <!--When NULL, coming from Mining-->
-        {{ 'EXPLORER.TRANSACTION_INPUTS_MINING' | translate }}
-        <!--Input value from mining or deposit
-        <div class="numbersSearch" ng-repeat="output in transaction.outputs">
-          <div class="numbersSearch" ng-show="output.attachment.type=='etp'">{{output.value/100000000}} ETP</div>
-          <div class="numbersSearch" ng-hide="output.attachment.type=='etp'">{{output.attachment.quantity | assetformat : asset.decimal_number}} {{output.attachment.symbol}}</div>
-        </div>-->
-      </div>
-      <div ng-hide="input.previous_output.hash=='0000000000000000000000000000000000000000000000000000000000000000'">
-        <div class="overflow col-xs-7 col-sm-8 col-md-7 col-lg-8 col-xl-8 noPaddingLeftRight">
-          <a class="btn-link" href="#!/explorer/adr/{{input.address}}" bs-tooltip data-placement="top" title="{{ 'ADDRESS' | translate }}">{{input.address}}</a>
-        </div>
-        <div class="explorerRightInfo col-xs-5 col-sm-4 col-md-4 col-lg-3 col-xl-3 noPaddingLeftRight">
-          <!--<a href="#!/explorer/tx/{{input.previous_output.hash}}">
-            <button class="btn-link-black smallButton noPaddingTopBottomButton" bs-tooltip data-placement="top" title="{{ 'EXPLORER.TRANSACTION_PREVIOUS' | translate }}">
-              <span class="glyphicon glyphicon-transfer"></span>
-            </button>
-          </a>-->
-          <button class="btn-link-black smallButton noPaddingTopBottomButton" ng-click="input.display = !input.display">{{ 'EXPLORER.TRANSACTION_SCRIPT' | translate }}</button>
-        </div>
-        <div class="col-md-1 col-lg-1 col-xl-1 hidden-xs hidden-sm" ng-show="input.first">
-          <span class="btn-link-black glyphicon glyphicon-arrow-right"></span>
-        </div>
-        <!--Display the input value, removed since too slow-->
-        <!--<div class="numbersSearch" ng-repeat="transactionInputsValue in transactionInputsValues" ng-show="transactionInputsValue.hash==input.previous_output.hash && transactionInputsValue.address==input.address && transactionInputsValue.index == input.previous_output.index">
-          <span class="numbersSearch" ng-show="transactionInputsValue.type=='etp'">{{transactionInputsValue.value/100000000}} ETP</span>
-          <span class="numbersSearch" ng-hide="transactionInputsValue.type=='etp'">{{transactionInputsValue.quantity | assetformat : asset.decimal_number}} {{transactionInputsValue.symbol}}</span>
-          <a class="btn-link" href="#!/explorer/tx/{{transactionInputsValue.hash}}">{{ 'EXPLORER.SEE_INPUT' | translate }}</a>
-        </div>-->
-      </div>
-      <div ng-show="input.display" class="col-sm-12 col-md-11 form-group noPaddingLeftRight">
-        <div class="explorerScript">
-          {{input.script}}
-        </div>
-      </div>
 
+    <!--Input addresses-->
+    <div class="col-sm-12 col-md-6 form-group noPaddingLeftRight">
+      <label class="control-label">
+        {{ 'EXPLORER.TRANSACTION_INPUTS' | translate }}
+      </label>
+      <div ng-repeat="input in transaction.inputs" class="explorerTransaction">
+        <div ng-show="input.previous_output.hash=='0000000000000000000000000000000000000000000000000000000000000000'">   <!--When NULL, coming from Mining-->
+          <div class="overflow col-xs-12 col-sm-12 col-md-11 col-lg-11 col-xl-11 noPaddingLeftRight">
+            {{ 'EXPLORER.TRANSACTION_INPUTS_MINING' | translate }}
+          </div>
+          <div class="col-md-1 col-lg-1 col-xl-1 hidden-xs hidden-sm" ng-show="input.first">
+            <span class="btn-link-black glyphicon glyphicon-arrow-right"></span>
+          </div>
+          <!--Input value from mining or deposit
+          <div class="numbersSearch" ng-repeat="output in transaction.outputs">
+            <div class="numbersSearch" ng-show="output.attachment.type=='etp'">{{output.value/100000000}} ETP</div>
+            <div class="numbersSearch" ng-hide="output.attachment.type=='etp'">{{output.attachment.quantity | assetformat : asset.decimal_number}} {{output.attachment.symbol}}</div>
+          </div>-->
+        </div>
+        <div ng-hide="input.previous_output.hash=='0000000000000000000000000000000000000000000000000000000000000000'">
+          <div class="overflow col-xs-7 col-sm-8 col-md-7 col-lg-8 col-xl-8 noPaddingLeftRight">
+            <a class="btn-link" href="#!/explorer/adr/{{input.address}}" bs-tooltip data-placement="top" title="{{ 'ADDRESS' | translate }}">{{input.address}}</a>
+          </div>
+          <div class="explorerRightInfo col-xs-5 col-sm-4 col-md-4 col-lg-3 col-xl-3 noPaddingLeftRight">
+            <!--<a href="#!/explorer/tx/{{input.previous_output.hash}}">
+              <button class="btn-link-black smallButton noPaddingTopBottomButton" bs-tooltip data-placement="top" title="{{ 'EXPLORER.TRANSACTION_PREVIOUS' | translate }}">
+                <span class="glyphicon glyphicon-transfer"></span>
+              </button>
+            </a>-->
+            <button class="btn-link-black smallButton noPaddingTopBottomButton" ng-click="input.display = !input.display">{{ 'EXPLORER.TRANSACTION_SCRIPT' | translate }}</button>
+          </div>
+          <div class="col-md-1 col-lg-1 col-xl-1 hidden-xs hidden-sm" ng-show="input.first">
+            <span class="btn-link-black glyphicon glyphicon-arrow-right"></span>
+          </div>
+          <!--Display the input value, removed since too slow-->
+          <!--<div class="numbersSearch" ng-repeat="transactionInputsValue in transactionInputsValues" ng-show="transactionInputsValue.hash==input.previous_output.hash && transactionInputsValue.address==input.address && transactionInputsValue.index == input.previous_output.index">
+            <span class="numbersSearch" ng-show="transactionInputsValue.type=='etp'">{{transactionInputsValue.value/100000000}} ETP</span>
+            <span class="numbersSearch" ng-hide="transactionInputsValue.type=='etp'">{{transactionInputsValue.quantity | assetformat : asset.decimal_number}} {{transactionInputsValue.symbol}}</span>
+            <a class="btn-link" href="#!/explorer/tx/{{transactionInputsValue.hash}}">{{ 'EXPLORER.SEE_INPUT' | translate }}</a>
+          </div>-->
+        </div>
+        <div ng-show="input.display" class="col-sm-12 col-md-11 form-group noPaddingLeftRight">
+          <div class="explorerScript">
+            {{input.script}}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!--Output addresses-->
+    <div class="col-sm-12 col-md-6 form-group noPaddingLeftRight">
+      <label class="control-label">
+        {{ 'EXPLORER.TRANSACTION_OUTPUTS' | translate }}
+      </label>
+      <div ng-repeat="output in transaction.outputs" ng-hide="output.attachment.type == 'message'" class="explorerTransaction">
+        <div>
+          <div class="overflow col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 noPaddingLeftRight">
+            <a class="btn-link" href="#!/explorer/adr/{{output.address}}" bs-tooltip data-placement="top" title="{{ 'ADDRESS' | translate }}">{{output.address}}</a>
+          </div>
+          <div class="explorerRightInfo col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 noPaddingLeftRight">
+            <span class="numbersSearch" ng-show="output.attachment.type=='etp'">{{output.value/100000000}} ETP</span>
+            <span class="numbersSearch" ng-hide="output.attachment.type=='etp'">{{output.attachment.quantity | assetformat : asset.decimal_number}} {{output.attachment.symbol}}</span>
+            <button class="btn-link-black smallButton noPaddingTopBottomButton" ng-click="output.display = !output.display">{{ 'EXPLORER.TRANSACTION_SCRIPT' | translate }}</button>
+          </div>
+        </div>
+        <div ng-show="output.display" class="col-sm-12 col-md-11 form-group noPaddingLeftRight">
+          <div class="explorerScript">
+            {{output.script}}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
-  <!--Output addresses-->
-  <div class="col-sm-12 col-md-6 form-group noPaddingLeftRight">
-    <label class="control-label">
-      {{ 'EXPLORER.TRANSACTION_OUTPUTS' | translate }}
-    </label>
-    <div ng-repeat="output in transaction.outputs" class="explorerTransaction">
-      <div>
-        <div class="overflow col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 noPaddingLeftRight">
-          <a class="btn-link" href="#!/explorer/adr/{{output.address}}" bs-tooltip data-placement="top" title="{{ 'ADDRESS' | translate }}">{{output.address}}</a>
-        </div>
-        <div class="explorerRightInfo col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 noPaddingLeftRight">
-          <span class="numbersSearch" ng-show="output.attachment.type=='etp'">{{output.value/100000000}} ETP</span>
-          <span class="numbersSearch" ng-hide="output.attachment.type=='etp'">{{output.attachment.quantity | assetformat : asset.decimal_number}} {{output.attachment.symbol}}</span>
-          <button class="btn-link-black smallButton noPaddingTopBottomButton" ng-click="output.display = !output.display">{{ 'EXPLORER.TRANSACTION_SCRIPT' | translate }}</button>
-        </div>
-      </div>
-      <div ng-show="output.display" class="col-sm-12 col-md-11 form-group noPaddingLeftRight">
-        <div class="explorerScript">
-          {{output.script}}
-        </div>
-      </div>
-
-    </div>
+  <div ng-show="noResult">
+    <h2>{{search}}</h2>
+    <h4>{{'EXPLORER_TRANSACTION_NO_TX' | translate}}</div>
   </div>
 </div>

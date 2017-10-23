@@ -1,61 +1,61 @@
 <div class="content">
   <div class="headline">{{ 'NAV_HOME' | translate }}</div>
-<div class="body-content">
-  <form method="post" class="form-x col-xs-12 noPaddingLeftRight" action="">
-    <div class="mainContent1">
-      <dl id="outer_wrap">
-        <!--ETP Balance-->
-        <dd class="assetBox col-xs-12 col-sm-12 col-md-12" >
-          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-            <div class="assetBoxSymbolImg">
-              <img class="assetSymbol" src="images/favicon.jpg" alt=""/>
-            </div>
-            <div class="assetBoxSymbolNameETP">
-              <a href="#!/addresses/myaddresses" class="btn-link-black">ETP</a>
-            </div>
-          </div>
-          <div class="assetBoxBalance col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 noPaddingLeftRight">
-            <div class="assetBoxTitle">{{ 'BALANCE' | translate }}</div>
-            <div class="assetBoxValue overflow money-y">{{balance['total-unspent']/100000000}}</div>
-          </div>
-          <div class="assetBoxFrozen col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 noPaddingLeftRight">
-            <div class="assetBoxTitle">{{ 'FROZEN' | translate}}</div>
-            <div class="assetBoxValue">{{balance['total-frozen']/100000000}}</div>
-          </div>
-          <div class="assetBoxButtons">
-            <a href="#!/deposit/ETP" class="btn btn-link-red smallButton assetBoxButton">{{ 'DEPOSIT.HEADLINE' | translate}}</a>
-            <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/ETP">{{ 'ASSETS_SEND' | translate}}</a>
-          </div>
-        </dd>
-        <!--All others assets balance-->
-        <div dir-paginate="asset in assets | orderBy:['-status','symbol'] | itemsPerPage: 3" pagination-id="paginationAssets">
+  <div class="body-content">
+    <form method="post" class="form-x col-xs-12 noPaddingLeftRight" action="">
+      <div class="mainContent1">
+        <dl id="outer_wrap">
+          <!--ETP Balance-->
           <dd class="assetBox col-xs-12 col-sm-12 col-md-12" >
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 overflow">
-              <span class="assetBoxSymbolImg assetLogo">资</span>
-              <div class="assetBoxSymbolName overflow">
-                <a href="#!/asset/details/{{asset.symbol}}" class="btn-link-black ">{{asset.symbol}}</a>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+              <div class="assetBoxSymbolImg">
+                <img class="assetSymbol" src="images/favicon.jpg" alt=""/>
+              </div>
+              <div class="assetBoxSymbolNameETP">
+                <a href="#!/addresses/myaddresses" class="btn-link-black">ETP</a>
               </div>
             </div>
             <div class="assetBoxBalance col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 noPaddingLeftRight">
               <div class="assetBoxTitle">{{ 'BALANCE' | translate }}</div>
-              <div class="assetBoxValue overflow">{{asset.quantity | assetformat : asset.decimal_number}}</div>
+              <div class="assetBoxValue overflow money-y">{{balance['total-unspent']/100000000}}</div>
             </div>
             <div class="assetBoxFrozen col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 noPaddingLeftRight">
-              <div class="assetBoxTitle">{{ 'STATUS' | translate}}</div>
-              <div class="assetBoxValue">{{asset.status}}</div>
+              <div class="assetBoxTitle">{{ 'FROZEN' | translate}}</div>
+              <div class="assetBoxValue">{{balance['total-frozen']/100000000}}</div>
             </div>
-            <div ng-show="asset.status == 'unspent'" class="assetBoxButtons">
-              <!--<a href="#!/deposit/{{asset.symbol}}" class="btn btn-link-red smallButton assetBoxButton">{{ 'DEPOSIT.HEADLINE' | translate}}</a>-->
-              <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/{{asset.symbol}}/">{{ 'ASSETS_SEND' | translate}}</a>
+            <div class="assetBoxButtons">
+              <a href="#!/deposit/ETP" class="btn btn-link-red smallButton assetBoxButton">{{ 'DEPOSIT.HEADLINE' | translate}}</a>
+              <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/ETP">{{ 'ASSETS_SEND' | translate}}</a>
             </div>
           </dd>
+          <!--All others assets balance-->
+          <div dir-paginate="asset in assets | orderBy:['-status','symbol'] | itemsPerPage: 3" pagination-id="paginationAssets">
+            <dd class="assetBox col-xs-12 col-sm-12 col-md-12" >
+              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 overflow">
+                <span class="assetBoxSymbolImg assetLogo">资</span>
+                <div class="assetBoxSymbolName overflow">
+                  <a href="#!/asset/details/{{asset.symbol}}" class="btn-link-black ">{{asset.symbol}}</a>
+                </div>
+              </div>
+              <div class="assetBoxBalance col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 noPaddingLeftRight">
+                <div class="assetBoxTitle">{{ 'BALANCE' | translate }}</div>
+                <div class="assetBoxValue overflow">{{asset.quantity | assetformat : asset.decimal_number}}</div>
+              </div>
+              <div class="assetBoxFrozen col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 noPaddingLeftRight">
+                <div class="assetBoxTitle">{{ 'STATUS' | translate}}</div>
+                <div class="assetBoxValue">{{asset.status}}</div>
+              </div>
+              <div ng-show="asset.status == 'unspent'" class="assetBoxButtons">
+                <!--<a href="#!/deposit/{{asset.symbol}}" class="btn btn-link-red smallButton assetBoxButton">{{ 'DEPOSIT.HEADLINE' | translate}}</a>-->
+                <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/{{asset.symbol}}/">{{ 'ASSETS_SEND' | translate}}</a>
+              </div>
+            </dd>
+          </div>
+        </dl>
+        <div class="col-xs-12 moreAssetsButton noPaddingLeftRight">
+          <a href="#!/asset/myassets" class="btn smallButton spe-ricon">{{ 'NAV_MORE_ASSETS' | translate}} <span class="glyphicon fa fa-angle-double-right"></span></a>
         </div>
-      </dl>
-      <div class="col-xs-12 moreAssetsButton noPaddingLeftRight">
-        <a href="#!/asset/myassets" class="btn smallButton spe-ricon">{{ 'NAV_MORE_ASSETS' | translate}} <span class="glyphicon fa fa-angle-double-right"></span></a>
-      </div>
 
-      <!--<div class="paginationHistory">
+        <!--<div class="paginationHistory">
         <dir-pagination-controls pagination-id="paginationAssets"></dir-pagination-controls>
       </div>-->
     </div>
@@ -114,42 +114,58 @@
         <div class="col-md-4 col-lg-6 noPaddingLeftRight transactionBoxHeaderField">
           {{'HISTORY_TRANSACTION_HASH' | translate}}
         </div>
-        <div class="col-md-2 col-lg-2 noPaddingLeftRight transactionBoxHeaderField">
-          {{'HISTORY_TRANSACTION_AMOUNT' | translate}}
-        </div>
-        <div class="col-md-2 col-lg-2 noPaddingLeftRight transactionBoxHeaderField">
-          {{'HISTORY_TRANSACTION_TYPE' | translate}}
+        <div class="col-md-4 col-lg-4 noPaddingLeftRight">
+          <div class="col-md-4 col-lg-4 noPaddingLeftRight transactionBoxHeaderField">
+            {{'HISTORY_TRANSACTION_AMOUNT' | translate}}
+          </div>
+          <div class="col-md-4 col-lg-4 noPaddingLeftRight transactionBoxHeaderField">
+            {{'HISTORY_TRANSACTION_TYPE' | translate}}
+          </div>
+          <div class="col-md-4 col-lg-4 noPaddingLeftRight transactionBoxHeaderField historyUnfrozenColumn">
+            {{'HISTORY_UNFROZEN_BLOCK' | translate}}
+          </div>
         </div>
       </div>
       <div class="transactionOneLine col-md-12 noPaddingLeftRight" dir-paginate="transaction in transactionsFiltered | orderBy:'timestamp':true | itemsPerPage: 10"  pagination-id="paginationRecord">
         <!--Time-->
         <div class="date-day transactionBoxField noPaddingLeftRight col-md-2 col-lg-1">
-            {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT_DAY' | translate) }}
+          {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT_DAY' | translate) }}
         </div>
 
         <!--Time-->
         <div class="date-cdetail transactionBoxField noPaddingLeftRight col-md-2 col-lg-1">
-            {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT_HOUR' | translate) }}
+          {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT_HOUR' | translate) }}
         </div>
 
         <!--Transaction Hash-->
         <div class="transactionBoxField noPaddingLeftRight col-md-4 col-lg-6">
-            <a class="btn-link spe-blueft" href="#!/explorer/tx/{{transaction.hash}}">
+          <a class="btn-link spe-blueft" href="#!/explorer/tx/{{transaction.hash}}">
             <div class="overflow">{{transaction.hash}}</div>
-            </a>
+          </a>
         </div>
 
-        <!--Value-->
-        <div class="noPaddingLeftRight transactionBoxField col-md-2 col-lg-2">
+        <div class="noPaddingLeftRight col-md-4 col-lg-4">
+          <!--Value-->
+          <div class="noPaddingLeftRight transactionBoxField col-md-4 col-lg-4">
             <span ng-show="transaction.direction!='send'" class="receiveSign overflow"><span class="p-empty">+</span>{{transaction.value | assetformat : transaction.decimal_number}}</span>
             <span ng-show="transaction.direction=='send'" class="sendSign overflow"><span class="p-empty">-</span>{{transaction.value | assetformat : transaction.decimal_number}}</span>
-        </div>
+          </div>
 
-        <!--Type (ETP,...)-->
-        <div class="noPaddingLeftRight transactionBoxField col-md-2 col-lg-2">
-            <span class="overflow">
-              {{transaction.type}}
-            </span>
+          <!--Type (ETP,...)-->
+          <div class="noPaddingLeftRight transactionBoxField col-md-4 col-lg-4">
+            <span>{{transaction.type}}</span>
+            <!--<span ng-show="transaction.frozen"> Frozen
+              <span ng-hide="transaction.availableInBlock != 0">now available</span>
+              <span ng-show="transaction.availableInBlock != 0">for {{transaction.availableInTimeDays}} days</span>
+            </span>-->
+          </div>
+
+          <!--Frozen till-->
+          <div class="noPaddingLeftRight transactionBoxField overflow col-md-4 col-lg-4 historyUnfrozenColumn">
+            <span ng-show="transaction.frozen">{{transaction.availableBlockNo}}</span>
+            <!--<span ng-show="transaction.frozen">{{transaction.availableInBlock}}</span>-->
+            <!--<span ng-show="transaction.frozen && transaction.availableInBlock != 0">{{transaction.availableInTimeDays}} days</span>-->
+          </div>
         </div>
       </div>
 
@@ -157,8 +173,7 @@
     <div>
       <div class="loadMoreLess" ng-hide="transactionsFiltered.length>10">
         <input ng-hide="stopLoad" type="button" class="btn btn-success smallButton" value="{{'HISTORY_LOAD_MORE' | translate}}" ng-click="loadMore()"></input>
-        <!--<input ng-show="stopLoad" type="button" class="btn btn-success smallButton" bs-popover data-toggle="popover" data-placement="top" data-container="body" data-content="{{ 'HISTORY_ALL_LOADED' | translate }}" value="Load more" ng-click="loadMore()"></input>-->
-        <div class="textAllLoaded control-label" ng-show="stopLoad">{{ 'HISTORY_ALL_LOADED' | translate }}</div>
+        <!--<div class="textAllLoaded control-label" ng-show="stopLoad">{{ 'HISTORY_ALL_LOADED' | translate }}</div>-->
       </div>
     </div>
 
@@ -168,8 +183,7 @@
       <div>
         <div class="loadMore" ng-show="transactionsFiltered.length>10">
           <input ng-hide="stopLoad" type="button" class="btn btn-success smallButton" value="{{'HISTORY_LOAD_MORE' | translate}}" ng-click="loadMore()"></input>
-          <!--<input ng-show="stopLoad" type="button" class="btn btn-success smallButton" bs-popover data-toggle="popover" data-placement="top" data-container="body" data-content="{{ 'HISTORY_ALL_LOADED' | translate }}" value="Load more" ng-click="loadMore()"></input>-->
-          <div class="textAllLoaded control-label" ng-show="stopLoad">{{ 'HISTORY_ALL_LOADED' | translate }}</div>
+          <!--<div class="textAllLoaded control-label" ng-show="stopLoad">{{ 'HISTORY_ALL_LOADED' | translate }}</div>-->
         </div>
       </div>
     </div>
@@ -179,15 +193,16 @@
       <div class="no_transaction_message" ng-show="transactionsFiltered.length==0">
         {{'MESSAGES.NO_LISTED_TRANSACTIONS' | translate}}
       </div>
+
       <div class="transactionBoxSmall" ng-repeat="transaction in transactionsFiltered | orderBy:'timestamp':true">
         <div class="transactionBoxSmallInfo col-xs-12 col-sm-12">
           <div class="transactionBoxSmallAmount">
             <span ng-show="transaction.direction!='send'" class="receiveSign overflow">+{{transaction.value | assetformat : transaction.decimal_number}} {{transaction.type}}</span>
             <span ng-show="transaction.direction=='send'" class="sendSign overflow">-{{transaction.value | assetformat : transaction.decimal_number}} {{transaction.type}}</span>
           </div>
-          <div class="transactionBoxSmallAddress">
+          <div class="transactionBoxSmallAddress overflow">
             <a class="btn-link" href="#!/explorer/tx/{{transaction.hash}}">
-              <span ng-repeat="recipent in transaction.recipents" class="overflow">{{transaction.hash}}</span>
+              {{transaction.hash}}
             </a>
           </div>
           <div class="transactionBoxSmallTime">
@@ -198,8 +213,9 @@
       <div>
         <input ng-hide="stopLoad" type="button" class="btn btn-success" value="Load more" ng-click="loadMore()"></input>
       </div>
-      <div ng-show="stopLoad">
+      <!--<div ng-show="stopLoad">
         {{ 'HISTORY_ALL_LOADED' | translate }}
-      </div>
+      </div>-->
     </div>
   </div>
+</div>
