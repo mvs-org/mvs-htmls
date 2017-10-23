@@ -304,6 +304,8 @@
   "MESSAGES.NO_PASSWORD_PROVIDED" : "Please choose a password to secure your account.",
   "MESSAGES.PASSWORD_SHORT" : "Passwords must be at least 6 characters long.",
   "MESSAGES.PASSWORD_NOT_MATCH" : "Passwords do not match.",
+  "MESSAGES.USERNAME_CONTAINS_SPACE" : "Please do not put any space in your Username.",
+  "MESSAGES.PASSWORD_CONTAINS_SPACE" : "Please do not put any space in your Password.",
   "MESSAGE.WRONG_PRIVATE_KEY" : "Wrong Private key. Your Private key contains special characters.",
   "MESSAGES.REGISTARTION_SUCCESS": "Registration successful. You can now login to your account!",
   "MESSAGES.LOGIN_WRONG_CREDENTIALS": "Invalid login credentials.",

@@ -304,6 +304,8 @@
   "MESSAGES.NO_PASSWORD_PROVIDED" : "请选择一个密码来保护您的账户。",
   "MESSAGES.PASSWORD_SHORT" : "密码至少6位。",
   "MESSAGES.PASSWORD_NOT_MATCH" : "密码不正确。",
+  "MESSAGES.USERNAME_CONTAINS_SPACE" : "Please do not put any space in your Username.",
+  "MESSAGES.PASSWORD_CONTAINS_SPACE" : "Please do not put any space in your Password.",
   "MESSAGE.WRONG_PRIVATE_KEY" : "私钥错误。你的私钥包含了特殊字符。",
   "MESSAGES.REGISTARTION_SUCCESS": "注册成功！您可以进行登陆了！",
   "MESSAGES.LOGIN_WRONG_CREDENTIALS": "无效的登陆凭证。",

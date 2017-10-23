@@ -56,6 +56,17 @@
         $window.scrollTo(0,0);
         return;
       }
+      else if(vm.user.username.indexOf(" ") != -1){
+        $translate('MESSAGES.USERNAME_CONTAINS_SPACE').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+        return;
+      }
+      else if(vm.user.password.indexOf(" ") != -1){
+        $translate('MESSAGES.PASSWORD_CONTAINS_SPACE').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+        return;
+      }
+      console.log("checks ok");
       if($scope.import_from_phrase){ //Import account from phrase
         //Remove the Enter key from the phrase
         var re = /(\r\n|\n|\r)/gm;
