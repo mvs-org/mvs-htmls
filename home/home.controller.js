@@ -2346,8 +2346,8 @@
 
     $window.scrollTo(0,0);
 
-    //var ws = new WebSocket('ws://localhost:8820/ws');
-    var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
+    //var ws = new WebSocket('ws://localhost:8820/ws'); //For test
+    var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');  //Live
 
     $("#inputField").focus();
 

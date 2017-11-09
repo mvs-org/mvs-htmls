@@ -307,6 +307,8 @@
   "MESSAGES.USERNAME_CONTAINS_SPACE" : "Please do not put any space in your Username.",
   "MESSAGES.PASSWORD_CONTAINS_SPACE" : "Please do not put any space in your Password.",
   "MESSAGE.WRONG_PRIVATE_KEY" : "Wrong Private key. Your Private key contains special characters.",
+  "MESSAGES.NO_PHRASE" : "Please enter your mnemonic.",
+  "MESSAGES.NO_ADDRESS_NBR" : "Please enter how many addresses you want to generate.",
   "MESSAGES.REGISTARTION_SUCCESS": "Registration successful. You can now login to your account!",
   "MESSAGES.LOGIN_WRONG_CREDENTIALS": "Invalid login credentials.",
   "MESSAGES.GENERAL_CONNECTION_ERROR": "Server connection error. Please check server status.",
