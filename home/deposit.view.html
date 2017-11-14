@@ -20,10 +20,12 @@
 
 		<!--Time period-->
 		<div class="form-group col-md-12 noPaddingLeftRight">
-			<label for="recipent_address" class="control-label">{{ 'DEPOSIT.PERIOD' | translate }}</label>
+			<!--<label for="recipent_address" class="control-label">{{ 'DEPOSIT.PERIOD' | translate }}</label>-->
+			<label for="recipent_address" class="control-label">{{ 'DEPOSIT.NBR_BLOCKS' | translate }}</label>
 			<select class="form-control" name="period" ng-model="period_select" required>
 				<option ng-repeat="(deposit_option, interest_rate) in deposit_options" value="{{deposit_option}}">
-					{{deposit_option | translate}}
+					{{interest_rate[3]}} {{ 'BLOCKS' | translate }},
+					<!--{{deposit_option | translate}}-->
 					{{ 'DEPOSIT.INTEREST_RATE' | translate }}: {{interest_rate[0] * 100 | number : 4}} %
 				</option>
 			</select>
@@ -44,14 +46,16 @@
 
 			<table class="col-xs-12 noPaddingLeftRight" id="interestRateTable">
 				<tr class="headerInterestRateTable">
-					<th class="fieldInterestRateTable">{{ 'DEPOSIT.PERIOD' | translate }}</th>
+					<!--<th class="fieldInterestRateTable">{{ 'DEPOSIT.PERIOD' | translate }}</th>-->
+					<th class="fieldInterestRateTable">{{ 'DEPOSIT.NBR_BLOCKS' | translate }}</th>
 					<th class="fieldInterestRateTable">{{ 'DEPOSIT.INTEREST_RATE' | translate }}</th>
-					<th class="fieldInterestRateTable">{{ 'DEPOSIT.ANNUAL_RATE' | translate }}</th>
+					<!--<th class="fieldInterestRateTable">{{ 'DEPOSIT.ANNUAL_RATE' | translate }}</th>-->
 				</tr>
 				<tr ng-class="{'selected_row' : period_select == deposit_option}" ng-repeat="(deposit_option, interest_rate) in deposit_options">
-					<td class="fieldInterestRateTable">{{deposit_option | translate}}</td>
+					<!--<td class="fieldInterestRateTable">{{deposit_option | translate}}</td>-->
+					<td class="fieldInterestRateTable">{{interest_rate[3]}}</td>
 					<td class="fieldInterestRateTable">{{interest_rate[0] * 100 | number : 4}} %</td>
-					<td class="fieldInterestRateTable">{{interest_rate[1] * 100 | number : 2}} %</td>
+					<!--<td class="fieldInterestRateTable">{{interest_rate[1] * 100 | number : 2}} %</td>-->
 				</tr>
 			</table>
 		</div>
@@ -109,14 +113,16 @@
 
 		<table class="col-xs-12 noPaddingLeftRight" id="interestRateTable">
 			<tr class="headerInterestRateTable">
-				<th class="fieldInterestRateTable">{{ 'DEPOSIT.PERIOD' | translate }}</th>
+				<!--<th class="fieldInterestRateTable">{{ 'DEPOSIT.PERIOD' | translate }}</th>-->
+				<th class="fieldInterestRateTable">{{ 'DEPOSIT.NBR_BLOCKS' | translate }}</th>
 				<th class="fieldInterestRateTable">{{ 'DEPOSIT.INTEREST_RATE' | translate }}</th>
-				<th class="fieldInterestRateTable">{{ 'DEPOSIT.ANNUAL_RATE' | translate }}</th>
+				<!--<th class="fieldInterestRateTable">{{ 'DEPOSIT.ANNUAL_RATE' | translate }}</th>-->
 			</tr>
 			<tr ng-class="{'selected_row' : period_select == deposit_option}" ng-repeat="(deposit_option, interest_rate) in deposit_options">
-				<td class="fieldInterestRateTable">{{deposit_option | translate}}</td>
+				<!--<td class="fieldInterestRateTable">{{deposit_option | translate}}</td>-->
+				<td class="fieldInterestRateTable">{{interest_rate[3]}}</td>
 				<td class="fieldInterestRateTable">{{interest_rate[0] * 100 | number : 4}} %</td>
-				<td class="fieldInterestRateTable">{{interest_rate[1] * 100 | number : 2}} %</td>
+				<!--<td class="fieldInterestRateTable">{{interest_rate[1] * 100 | number : 2}} %</td>-->
 			</tr>
 		</table>
 	</div>

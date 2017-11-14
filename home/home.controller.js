@@ -447,13 +447,13 @@
     });
 
 
-
+    //[effective interest rate, annual interest rate, period, nbr blocks]
     $scope.deposit_options = {
-      "DEPOSIT.PERIOD.WEEK": [0.0009589, 0.05, 7],
-      "DEPOSIT.PERIOD.MONTH": [0.0066667, 0.08, 30],
-      "DEPOSIT.PERIOD.QUARTER": [0.032, 0.128, 90],
-      "DEPOSIT.PERIOD.HALF_YEAR": [0.08, 0.16, 182],
-      "DEPOSIT.PERIOD.YEAR": [0.2, 0.2, 365]
+      "DEPOSIT.PERIOD.WEEK": [0.0009589, 0.05, 7, 25200],
+      "DEPOSIT.PERIOD.MONTH": [0.0066667, 0.08, 30, 108000],
+      "DEPOSIT.PERIOD.QUARTER": [0.032, 0.128, 90, 331200],
+      "DEPOSIT.PERIOD.HALF_YEAR": [0.08, 0.16, 182, 655200],
+      "DEPOSIT.PERIOD.YEAR": [0.2, 0.2, 365, 1314000]
     };
 
 
