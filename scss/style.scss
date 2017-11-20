@@ -1531,11 +1531,6 @@ _____  ._______  ___.___ _______
   height: 42px !important;
 }
 
-.headerLoginXs {
-  border-radius: 0;
-  border-width: 0;
-}
-
 .headerLoginXsLanguageButton {
   text-align: right;
 }
@@ -1801,6 +1796,8 @@ _____  ._______  ___.___ _______
   right: 0;
   z-index: 1000;
   width: 100%;
+  border-radius: 0;
+  border-width: 0;
 }
 
 
