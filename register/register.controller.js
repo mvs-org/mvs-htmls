@@ -9,6 +9,7 @@
 
   function RegisterController(MetaverseService, $scope, $interval, $location, localStorageService, $rootScope, FlashService, $translate, $window) {
     var vm = this;
+    vm.buttonCopyToClipboard = new Clipboard('.btn');
 
     vm.register = register;
     vm.user={

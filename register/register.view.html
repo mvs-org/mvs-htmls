@@ -209,11 +209,16 @@
       <div class="form-group col-xs-12">
         <b class="mnemonic_red col-xs-12 col-sm-12 col-md-12">{{vm.registered.privatekey}}</b>
       </div>
-      <br><br>
-      <div class="form-group col-xs-12 comm-ft">{{ "REGISTER.PRIVATE_KEY_MNEMONIC_WARNING_TITLE" | translate}}</div>
-      <div class="form-group col-xs-12 comm-ft">{{ "REGISTER.PRIVATE_KEY_MNEMONIC_WARNING1" | translate}}</div>
-      <div class="form-group col-xs-12 comm-ft">{{ "REGISTER.PRIVATE_KEY_MNEMONIC_WARNING2" | translate}}</div>
-      <div class="form-group col-xs-12 spe-addrbox">
+      <div class="col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6">
+        <button class="btn btn-success" bs-popover data-clipboard-text="{{vm.registered.privatekey}}" data-toggle="popover" data-placement="top" data-content="{{ 'REGISTER.PRIVATE_KEY_MNEMONIC_COPIED' | translate }}" role="button">
+          <span class="glyphicon"></span> {{ 'REGISTER.COPY_PRIVATE_KEY_MNEMONIC' | translate }}
+        </button>
+        <br><br>
+      </div>
+      <div class="form-group col-xs-12 col-xl-12 comm-ft">{{ "REGISTER.PRIVATE_KEY_MNEMONIC_WARNING_TITLE" | translate}}</div>
+      <div class="form-group col-xs-12 col-xl-12 comm-ft">{{ "REGISTER.PRIVATE_KEY_MNEMONIC_WARNING1" | translate}}</div>
+      <div class="form-group col-xs-12 col-xl-12 comm-ft">{{ "REGISTER.PRIVATE_KEY_MNEMONIC_WARNING2" | translate}}</div>
+      <div class="form-group col-xs-12 col-xl-12 spe-addrbox">
         <div class="checkboxCircle">
           <div class="checkbox-box">
             <input type="checkbox" ng-model="vm.registered.read" id="checkboxAgree">

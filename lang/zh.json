@@ -217,6 +217,8 @@
   "REGISTER.IMPORT_ADDRESS_COUNT" : "请输入您拥有地址的个数(非关键选项)。这些地址与您的旧账户中的地址相同，如果您不记得您使用过多少个地址，建议填一个比较大的数目，如100。",
   "REGISTER.IMPORT_LAST_WORD" : "您的助记关键词的最后一个单词",
   "REGISTER.IMPORT_FILE_PATH" : "文件位置",
+  "REGISTER.COPY_PRIVATE_KEY_MNEMONIC" : "Copy Private Key",
+  "REGISTER.PRIVATE_KEY_MNEMONIC_COPIED" : "Private Key copied!",
   "REGISTER.SIGNUP_THANK_YOU" : "感谢您使用元界",
   "REGISTER.SIGNUP_MNEMONIC_AGREE" : "我同意",
   "REGISTER.PRIVATE_KEY_MNEMONIC" : "这是您的助记关键词",

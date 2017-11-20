@@ -217,6 +217,8 @@
   "REGISTER.IMPORT_ADDRESS_COUNT" : "How many addresses do you need to generate? These addresses are same as your old account, if you don't remember how many addresses you used before, recommend use a bigger number, eg: 100.",
   "REGISTER.IMPORT_LAST_WORD" : "Last word of your mnemonic",
   "REGISTER.IMPORT_FILE_PATH" : "File location",
+  "REGISTER.COPY_PRIVATE_KEY_MNEMONIC" : "Copy Private Key",
+  "REGISTER.PRIVATE_KEY_MNEMONIC_COPIED" : "Private Key copied!",
   "REGISTER.SIGNUP_THANK_YOU" : "Thank you for sign up.",
   "REGISTER.SIGNUP_MNEMONIC_AGREE" : "I understand.",
   "REGISTER.PRIVATE_KEY_MNEMONIC" : "This is the mnemonic of your private key",
