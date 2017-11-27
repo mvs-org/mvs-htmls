@@ -1916,19 +1916,23 @@
       MetaverseService.GetAsset(symbol)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
-          $scope.asset = response.data.assets[0];
-          if ($scope.asset.issuer == localStorageService.get('credentials').user) {
-            $scope.owner = true;
-          }
-          $scope.initial_maximum_supply = parseFloat($scope.asset.maximum_supply)/Math.pow(10,$scope.asset.decimal_number);
-          $scope.current_maximum_supply = $scope.initial_maximum_supply;
-          $scope.new_maximum_supply = $scope.initial_maximum_supply;
-          $scope.details = false;
-          $scope.assets.forEach( (a) => {
-            if (a.symbol == symbol) {
-              $scope.asset.quantity = a.quantity;
+          if(response.data.assets != "") {    //if the user has some assets
+            $scope.asset = response.data.assets[0];
+            if ($scope.asset.issuer == localStorageService.get('credentials').user) {
+              $scope.owner = true;
             }
-          });
+            $scope.initial_maximum_supply = parseFloat($scope.asset.maximum_supply)/Math.pow(10,$scope.asset.decimal_number);
+            $scope.current_maximum_supply = $scope.initial_maximum_supply;
+            $scope.new_maximum_supply = $scope.initial_maximum_supply;
+            $scope.details = false;
+            $scope.assets.forEach( (a) => {
+              if (a.symbol == symbol) {
+                $scope.asset.quantity = a.quantity;
+              }
+            });
+          } else {
+            //The user as no Assets
+          }
         } else {
           //Asset could not be loaded
           $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) =>  FlashService.Error(data));
