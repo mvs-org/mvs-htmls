@@ -142,6 +142,7 @@
           <a class="btn-link spe-blueft" href="#!/explorer/tx/{{transaction.hash}}">
             <div class="overflow">{{transaction.hash}}</div>
           </a>
+          <span ng-if="transaction.memo != ''" class="historyMemo">{{transaction.memo}}</span>
         </div>
 
         <div class="noPaddingLeftRight col-md-4 col-lg-4">
@@ -204,6 +205,9 @@
             <a class="btn-link" href="#!/explorer/tx/{{transaction.hash}}">
               {{transaction.hash}}
             </a>
+          </div>
+          <div ng-if="transaction.memo != ''" class="historyMemo">
+            {{transaction.memo}}
           </div>
           <div class="transactionBoxSmallTime">
             {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT' | translate) }}

@@ -279,6 +279,7 @@
   "EXPLORER.TRANSACTION_INPUTS" : "Inputs",
   "EXPLORER.TRANSACTION_OUTPUTS" : "Outputs",
   "EXPLORER.TRANSACTION_SCRIPT" : "Script",
+  "EXPLORER.MEMO" : "Memo",
   "EXPLORER_TRANSACTION_NO_TX" : "There is no transaction for this Hash.",
   "EXPLORER.HEADLINE" : "Transaction explorer",
   "EXPLORER.NAV_ITEM" : "Explorer",

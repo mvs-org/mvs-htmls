@@ -77,6 +77,15 @@
         </div>
       </div>
     </div>
+    <!--Memo-->
+    <div class="col-sm-12 col-md-12 form-group noPaddingLeftRight">
+      <div ng-repeat="output in transaction.outputs" ng-show="output.attachment.type == 'message'" class="">
+        <label class="control-label">
+          {{ 'EXPLORER.MEMO' | translate }}
+        </label>
+        <div>{{output.attachment.content}}</div>
+      </div>
+    </div>
   </div>
   <div ng-show="noResult">
     <h2>{{search}}</h2>

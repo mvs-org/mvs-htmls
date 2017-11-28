@@ -932,7 +932,8 @@
                                     "timestamp": new Date(e.timestamp * 1000),
                                     "direction": e.direction,
                                     "recipents": [],
-                                    "value": 0
+                                    "value": 0,
+                                    "memo": ""
                                 };
                                 switch(determineTransactionType(e)){
                                 case TX_TYPE_ETP:
@@ -957,6 +958,10 @@
                                         });
                                         transaction.value += parseInt(output['etp-value']);
                                       }
+                                      //memo
+                                      if (typeof output.attachment.content != 'undefined') {
+                                        transaction.memo = output.attachment.content;
+                                      }
                                     });
                                     if(transaction.value) {
                                       transactions.push(transaction);
@@ -975,6 +980,10 @@
                                             transaction.value += parseInt(output.attachment.quantity);
                                             transaction.type = output.attachment.symbol;
                                             transaction.decimal_number=output.attachment.decimal_number;
+                                        }
+                                        //memo
+                                        if (typeof output.attachment.content != 'undefined') {
+                                          transaction.memo = output.attachment.content;
                                         }
                                     });
                                     if(transaction.value) {
@@ -995,6 +1004,10 @@
                                             transaction.value += parseInt(output.attachment.maximum_supply);
                                             transaction.type = output.attachment.symbol;
                                             transaction.decimal_number=output.attachment.decimal_number;
+                                        }
+                                        //memo
+                                        if (typeof output.attachment.content != 'undefined') {
+                                          transaction.memo = output.attachment.content;
                                         }
                                     });
                                     if(transaction.value) {

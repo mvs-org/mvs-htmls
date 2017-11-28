@@ -2113,7 +2113,7 @@ form label {
 //Display of the history for large screens
 .transactionOneLine {
   color: $veryDarkGrey;
-  height: 40px;
+  min-height: 40px;
   border-bottom: solid 1px;
   border-color: $mediumGreyddd;
   padding: 0 20px;
@@ -2128,6 +2128,9 @@ form label {
 }
 .date-cdetail{
   color: #8a8f92;
+}
+.historyMemo{
+
 }
 .spe-blueft{
   color: #27a7ea !important;
