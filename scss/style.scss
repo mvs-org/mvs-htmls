@@ -9,6 +9,7 @@ $veryDarkGrey: #5E5E5E; //user for text in assets
 $redGeneralColor:#f75368;//used for all non-buttons
 $redGeneralColor02:#ff697c;//used for all non-buttons
 $successButtonColor:#f75368; //used for Login,research
+$successButtonColorSecondary:#307cd1; //blue used for Register,back
 $infoButtonColor:rgba(52, 125, 237, 100); //used for Register
 $linkButtonColor:#347DED;
 $linkButtonMenuColor:#f75368;
@@ -259,7 +260,7 @@ No media query since this is the default in Bootstrap because it is "mobile firs
 .assetBoxButton {
   margin-left: 10px;
   margin-right: 0px;
-  width: 70px !important;
+  width: 80px !important;
 }
 
 .assetDetailsPanel {
@@ -392,7 +393,7 @@ Bootstrap 4 breakpoints
   .assetBoxButton {
     margin-left: 10px;
     margin-right: 0px;
-    width: 70px !important;
+    width: 80px !important;
   }
 
   .assetDetailsPanel {
@@ -518,7 +519,7 @@ Bootstrap 4 breakpoints
   .assetBoxButton {
     margin-left: 10px;
     margin-right: 0px;
-    width: 70px !important;
+    width: 80px !important;
   }
 
   .assetDetailsPanel {
@@ -642,7 +643,7 @@ Bootstrap 4 breakpoints
   .assetBoxButton {
     margin-left: 10px;
     margin-right: 0px;
-    width: 70px !important;
+    width: 80px !important;
   }
 
   .assetDetailsPanel {
@@ -769,14 +770,14 @@ Bootstrap 4 breakpoints
 
   .assetBoxButtons {
     text-align: right;
-    margin-top: 14px;
+    margin-top: 10px;
     margin-right: 0px;
   }
 
   .assetBoxButton {
     margin-left: 10px;
     margin-right: 4px;
-    width: 70px !important;
+    width: 80px !important;
   }
 
   .assetDetailsPanel {
@@ -905,7 +906,7 @@ Bootstrap 4 breakpoints
   .assetBoxButton {
     margin-left: 10px;
     margin-right: 10px;
-    width: 70px !important;
+    width: 80px !important;
   }
 
   .assetDetailsPanel {
@@ -1210,6 +1211,11 @@ _____  ._______  ___.___ _______
   @include btn-theme($successButtonColor, 'standard');
 }
 
+.btn-success-secondary {
+  border: none;
+  @include btn-theme($successButtonColorSecondary, 'standard');
+}
+
 .btn-info {
   @include btn-theme($infoButtonColor, 'standard');
 }
@@ -1455,7 +1461,7 @@ _____  ._______  ___.___ _______
   padding: 55px;
   //padding-bottom: 10px;
   margin: 165px auto 100px;
-  width: 520px;
+  width: 550px;
   height: 630px;
   //margin-top: 10%;
   //padding-top: 3%;
@@ -1536,7 +1542,15 @@ _____  ._______  ___.___ _______
 }
 
 .loginButton {
-  padding-top: 20px;
+  padding-top: 30px;
+}
+
+.registerButton {
+  margin-top: 44px;
+  width: 240px;
+  height: 30px;
+  border-radius: 8px;
+  border: none;
 }
 
 

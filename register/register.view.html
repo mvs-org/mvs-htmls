@@ -188,20 +188,23 @@
       </div>
 
       <!--Submit and Cancel buttons-->
-      <div class="form-group col-xs-12">
-        <div class="lr-btnbox text-center">
+      <div class="form-group">
+        <div class="text-center loginButton col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
           <button class="btn btn-success" ng-click="vm.register()" type="submit" ng-disabled="form.$invalid || vm.dataLoading">{{ 'REGISTER.REGISTER_BUTTON' | translate }}</button>
         </div>
-        <br/><br/>
-        <div class="col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6">
-          <a href="#!/login" class="btn btn-link-red col-xs-6 col-sm-4 col-md-4">{{ 'REGISTER.LOGIN_BUTTON' | translate }}</a>
+      </div>
+      <div class="form-group">
+        <div class="lr-btnbox loginButton text-center col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6">
+          <a href="#!/login" class="btn btn-success btn-success-secondary">{{ 'REGISTER.LOGIN_BUTTON' | translate }}</a>
         </div>
       </div>
     </div>
     <!--After validation: -->
     <div ng-show="vm.registered">
-      <h1 class="loginTitle">{{ "REGISTER.SIGNUP_THANK_YOU" | translate}}</h1>
-      <br><br>
+      <h1 class="loginTitle">
+        <div>{{ "REGISTER.SIGNUP_THANK_YOU1" | translate}}</div>
+        <div>{{ "REGISTER.SIGNUP_THANK_YOU2" | translate}}</div>
+      </h1>
       <div class="form-group col-xs-12 comm-ft">
         {{ "REGISTER.PRIVATE_KEY_MNEMONIC" | translate}}:
       </div>
