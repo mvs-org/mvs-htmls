@@ -11,6 +11,10 @@
     var vm = this;
     vm.buttonCopyToClipboard = new Clipboard('.btn');
 
+    vm.confirmKey = '';
+    vm.countWords = countWords;
+    vm.countBackupWords = 0;
+
     vm.register = register;
     vm.user={
       username: ''
@@ -29,6 +33,16 @@
           vm.height = response.data;
         }
       });
+    }
+
+    function countWords() {
+      if(vm.confirmKey == ''){
+        vm.countBackupWords = 0;
+      } else {
+        vm.confirmKey = vm.confirmKey.replace("  "," ");
+        vm.confirmKey = vm.confirmKey.replace("  "," ");
+        vm.countBackupWords = vm.confirmKey.split(" ").length;
+      }
     }
 
     updateHeight();
