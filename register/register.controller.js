@@ -9,6 +9,11 @@
 
   function RegisterController(MetaverseService, $scope, $interval, $location, localStorageService, $rootScope, FlashService, $translate, $window) {
     var vm = this;
+    vm.buttonCopyToClipboard = new Clipboard('.btn');
+
+    vm.confirmKey = '';
+    vm.countWords = countWords;
+    vm.countBackupWords = 0;
 
     vm.register = register;
     vm.user={
@@ -28,6 +33,16 @@
           vm.height = response.data;
         }
       });
+    }
+
+    function countWords() {
+      if(vm.confirmKey == ''){
+        vm.countBackupWords = 0;
+      } else {
+        vm.confirmKey = vm.confirmKey.replace("  "," ");
+        vm.confirmKey = vm.confirmKey.replace("  "," ");
+        vm.countBackupWords = vm.confirmKey.split(" ").length;
+      }
     }
 
     updateHeight();
@@ -56,39 +71,59 @@
         $window.scrollTo(0,0);
         return;
       }
+      else if(vm.user.username.indexOf(" ") != -1){
+        $translate('MESSAGES.USERNAME_CONTAINS_SPACE').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+        return;
+      }
+      else if(vm.user.password.indexOf(" ") != -1){
+        $translate('MESSAGES.PASSWORD_CONTAINS_SPACE').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+        return;
+      }
       if($scope.import_from_phrase){ //Import account from phrase
-        //Remove the Enter key from the phrase
-        var re = /(\r\n|\n|\r)/gm;
-        var phraseToSend = $scope.import_phrase.replace(re," ");
-        phraseToSend = phraseToSend.replace("  "," ");
-
-        //Check if the key contains special characters
-        var occurences = phraseToSend.match(/[a-z]|[A-Z]| /g);
-        if(phraseToSend.length != occurences.length){
-          $translate('MESSAGE.WRONG_PRIVATE_KEY').then( (data) => FlashService.Error(data) );
+        if($scope.import_phrase == undefined){
+          $translate('MESSAGES.NO_PHRASE').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
+          return;
+        } else if($scope.address_count == undefined){
+          $translate('MESSAGES.NO_ADDRESS_NBR').then( (data) => FlashService.Error(data) );
           $window.scrollTo(0,0);
           return;
         } else {
-          MetaverseService.ImportAccount(vm.user.username, vm.user.password, phraseToSend, $scope.address_count)
-          .then(function (response) {
-            if (typeof response.success !== 'undefined' && response.success) {
-                $translate('MESSAGES.IMPORT_SUCCESS').then( (data) => {
-                    FlashService.Success(data,true);
+          //Remove the Enter key from the phrase
+          var re = /(\r\n|\n|\r)/gm;
+          var phraseToSend = $scope.import_phrase.replace(re," ");
+          phraseToSend = phraseToSend.replace("  "," ");
+
+          //Check if the key contains special characters
+          var occurences = phraseToSend.match(/[a-z]|[A-Z]| /g);
+          if(phraseToSend.length != occurences.length){
+            $translate('MESSAGE.WRONG_PRIVATE_KEY').then( (data) => FlashService.Error(data) );
+            $window.scrollTo(0,0);
+            return;
+          } else {
+            MetaverseService.ImportAccount(vm.user.username, vm.user.password, phraseToSend, $scope.address_count)
+            .then(function (response) {
+              if (typeof response.success !== 'undefined' && response.success) {
+                  $translate('MESSAGES.IMPORT_SUCCESS').then( (data) => {
+                      FlashService.Success(data,true);
+                      $window.scrollTo(0,0);
+                      $location.path('/login');
+                  });
+              } else {
+                $translate('MESSAGES.IMPORT_ERROR').then( (data) => {
+                  if (response.message != undefined) {
+                    FlashService.Error(data + " " + response.message);
                     $window.scrollTo(0,0);
-                    $location.path('/login');
+                  } else {
+                    FlashService.Error(data);
+                    $window.scrollTo(0,0);
+                  }
                 });
-            } else {
-              $translate('MESSAGES.IMPORT_ERROR').then( (data) => {
-                if (response.message != undefined) {
-                  FlashService.Error(data + " " + response.message);
-                  $window.scrollTo(0,0);
-                } else {
-                  FlashService.Error(data);
-                  $window.scrollTo(0,0);
-                }
-              });
-            }
-          });
+              }
+            });
+          }
         }
       } else if($scope.import_from_file){ //Import account from file
         //MetaverseService.ImportAccountFromFile($scope.accountInfo, vm.user.password)
@@ -112,6 +147,7 @@
             });
           }
         });
+
       } else { //Create a new account
         MetaverseService.GetNewAccount(vm.user.username, vm.user.password)
         .then( (response) => {

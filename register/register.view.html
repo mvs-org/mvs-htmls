@@ -21,7 +21,7 @@
         <ul class="nav navbar-nav">
           <li role="presentation">
             <div class="linkLogo">
-              <a href="#!/login">
+              <a>
                 <img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" />
               </a>
             </div>
@@ -62,13 +62,12 @@
     </div>
   </nav>
 
-
   <!--Language button Small screens-->
-  <div class="panel headerLoginXs">
+  <div class="panel navbarSmallScreens">
     <div class="header visible-xs">
       <div class="col-xs-3">
         <div class="linkLogo">
-          <a href="#!/login">
+          <a>
             <img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" />
           </a>
         </div>
@@ -136,17 +135,17 @@
         <!--Account name-->
         <div class="form-group col-xs-12">
           <label for="username" class="control-label comm-ft">{{ 'REGISTER.CHOOSE_ACCOUNT_NAME' | translate }}</label>
-          <input type="text" name="username" ng-model="vm.user.username" required class="form-control">
+          <input type="text" name="username" ng-model="vm.user.username" class="form-control">
         </div>
         <!--Password-->
         <div class="form-group col-xs-12">
           <label for="password" class="control-label comm-ft">{{ 'REGISTER.CHOOSE_PASSWORD' | translate }}</label>
-          <input type="password" name="password" ng-model="vm.user.password" required class="form-control">
+          <input type="password" name="password" ng-model="vm.user.password" class="form-control">
         </div>
         <!--Re-enter password-->
         <div class="form-group col-xs-12" ng-hide="import_from_file || import_from_phrase">
           <label for="password" class="control-label comm-ft">{{ 'REGISTER.REPEAT_PASSWORD' | translate }}</label>
-          <input class="form-control" type="password" ng-model="vm.user.password_repeat" required>
+          <input class="form-control" type="password" ng-model="vm.user.password_repeat">
         </div>
       </div>
 
@@ -155,14 +154,14 @@
       <div class="form-group col-xs-12" ng-show="import_from_file">
         <div class="form-group col-xs-12">
           <label for="password" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_PASSWORD' | translate }}</label>
-          <input type="password" name="password" ng-model="vm.user.password" required class="form-control">
+          <input type="password" name="password" ng-model="vm.user.password" class="form-control">
         </div>
         <div class="form-group col-xs-12">
           <label for="path" class="control-label comm-ft">{{ 'REGISTER.IMPORT_FILE_PATH' | translate }}</label>
-          <input type="text" name="path" ng-model="path" required class="form-control">
+          <input type="text" name="path" ng-model="path" class="form-control">
           <!--<input type="file" fileread="accountInfo" name="path" class="" name="datafile" accept=".txt">-->
         </div>
-        <!--<textarea class="form-control importAccountFileTextArea" ng-model="accountInfo" rows="5" required></textarea>-->
+        <!--<textarea class="form-control importAccountFileTextArea" ng-model="accountInfo" rows="5"></textarea>-->
       </div>
 
 
@@ -171,49 +170,57 @@
         <!--Account name-->
         <div class="form-group col-xs-12">
           <label for="username" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_NAME' | translate }}</label>
-          <input type="text" name="username" ng-model="vm.user.username" required class="form-control">
+          <input type="text" name="username" ng-model="vm.user.username" class="form-control">
         </div>
         <!--Password-->
         <div class="form-group col-xs-12">
           <label for="password" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_PASSWORD' | translate }}</label>
-          <input type="password" name="password" ng-model="vm.user.password" required class="form-control">
+          <input type="password" name="password" ng-model="vm.user.password" class="form-control">
         </div>
         <div class="form-group col-xs-12">
           <label for="importPhrase" class="control-label comm-ft">{{ 'REGISTER.IMPORT_PHRASE' | translate }}</label>
-          <textarea class="form-control" type="text" name="importPhrase" ng-model="import_phrase" rows="3" required></textarea>
+          <textarea class="form-control" type="text" name="importPhrase" ng-model="import_phrase" rows="3"></textarea>
         </div>
         <div class="form-group col-xs-12">
           <label for="nbrAdr" class="control-label comm-ft">{{ 'REGISTER.IMPORT_ADDRESS_COUNT' | translate }}</label>
-          <input type="number" name="nbrAdr" ng-model="address_count" min="1" required class="form-control">
+          <input type="number" name="nbrAdr" ng-model="address_count" min="1" class="form-control">
         </div>
       </div>
 
       <!--Submit and Cancel buttons-->
-      <div class="form-group col-xs-12">
-        <div class="lr-btnbox text-center">
+      <div class="form-group">
+        <div class="text-center loginButton col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
           <button class="btn btn-success" ng-click="vm.register()" type="submit" ng-disabled="form.$invalid || vm.dataLoading">{{ 'REGISTER.REGISTER_BUTTON' | translate }}</button>
         </div>
-        <br/><br/>
-        <div class="col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6">
-          <a href="#!/login" class="btn btn-link-red col-xs-6 col-sm-4 col-md-4">{{ 'REGISTER.LOGIN_BUTTON' | translate }}</a>
+      </div>
+      <div class="form-group">
+        <div class="lr-btnbox loginButton text-center col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6">
+          <a href="#!/login" class="btn btn-success btn-success-secondary">{{ 'REGISTER.LOGIN_BUTTON' | translate }}</a>
         </div>
       </div>
     </div>
     <!--After validation: -->
     <div ng-show="vm.registered">
-      <h1 class="loginTitle">{{ "REGISTER.SIGNUP_THANK_YOU" | translate}}</h1>
-      <br><br>
-      <div class="form-group col-xs-12 comm-ft">
+      <h1 class="loginTitle">
+        <div>{{ "REGISTER.SIGNUP_THANK_YOU1" | translate}}</div>
+        <div>{{ "REGISTER.SIGNUP_THANK_YOU2" | translate}}</div>
+      </h1>
+      <div class="form-group col-xs-12 comm-ft" ng-hide="vm.registered.read">
         {{ "REGISTER.PRIVATE_KEY_MNEMONIC" | translate}}:
       </div>
-      <div class="form-group col-xs-12">
+      <div class="form-group col-xs-12" ng-hide="vm.registered.read">
         <b class="mnemonic_red col-xs-12 col-sm-12 col-md-12">{{vm.registered.privatekey}}</b>
       </div>
-      <br><br>
-      <div class="form-group col-xs-12 comm-ft">{{ "REGISTER.PRIVATE_KEY_MNEMONIC_WARNING_TITLE" | translate}}</div>
-      <div class="form-group col-xs-12 comm-ft">{{ "REGISTER.PRIVATE_KEY_MNEMONIC_WARNING1" | translate}}</div>
-      <div class="form-group col-xs-12 comm-ft">{{ "REGISTER.PRIVATE_KEY_MNEMONIC_WARNING2" | translate}}</div>
-      <div class="form-group col-xs-12 spe-addrbox">
+      <!--<div class="col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6">
+        <button class="btn btn-success" bs-popover data-clipboard-text="{{vm.registered.privatekey}}" data-toggle="popover" data-placement="top" data-content="{{ 'REGISTER.PRIVATE_KEY_MNEMONIC_COPIED' | translate }}" role="button">
+          <span class="glyphicon"></span> {{ 'REGISTER.COPY_PRIVATE_KEY_MNEMONIC' | translate }}
+        </button>
+        <br><br>
+      </div>-->
+      <div class="form-group col-xs-12 col-xl-12 comm-ft">{{ "REGISTER.PRIVATE_KEY_MNEMONIC_WARNING_TITLE" | translate}}</div>
+      <div class="form-group col-xs-12 col-xl-12 comm-ft">{{ "REGISTER.PRIVATE_KEY_MNEMONIC_WARNING1" | translate}}</div>
+      <div class="form-group col-xs-12 col-xl-12 comm-ft">{{ "REGISTER.PRIVATE_KEY_MNEMONIC_WARNING2" | translate}}</div>
+      <div class="form-group col-xs-12 col-xl-12 spe-addrbox">
         <div class="checkboxCircle">
           <div class="checkbox-box">
             <input type="checkbox" ng-model="vm.registered.read" id="checkboxAgree">
@@ -223,6 +230,17 @@
         </div>
       </div>
       <div class="form-group col-xs-12 noPaddingLeftRight" ng-show="vm.registered.read">
+        <span class="form-group col-xs-12 col-xl-12 comm-ft red">{{ "REGISTER.PLEASE_CONFIRM_KEY" | translate}}</span>
+        <textarea ng-change="vm.countWords()" ng-paste="$event.preventDefault()" class="form-control" ng-model="vm.confirmKey" rows="5"></textarea>
+        <div class="checkConfirmKey">
+          <span ng-show="(vm.confirmKey != vm.registered.privatekey) && (vm.countBackupWords < 24)" class="red"><span class="glyphicon glyphicon-remove"></span> {{ "REGISTER.CONFIRM_KEY_WORDS_ENTERED_BEFORE_NUMBER" | translate}}{{vm.countBackupWords}}{{ "REGISTER.CONFIRM_KEY_WORDS_ENTERED_AFTER_NUMBER" | translate}}{{ "REGISTER.CONFIRM_KEY_WORDS_REMAINING_BEFORE_NUMBER" | translate}}{{24 - vm.countBackupWords}}{{ "REGISTER.CONFIRM_KEY_WORDS_REMAINING_AFTER_NUMBER" | translate}}</span>
+          <span ng-show="(vm.confirmKey != vm.registered.privatekey) && (vm.countBackupWords == 24)" class="red"><span class="glyphicon glyphicon-remove"></span> {{ "REGISTER.CONFIRM_KEY_WORDS_INCORRECT" | translate}}</span>
+          <span ng-show="(vm.confirmKey != vm.registered.privatekey) && (vm.countBackupWords > 24)" class="red"><span class="glyphicon glyphicon-remove"></span> {{ "REGISTER.CONFIRM_KEY_WORDS_TOO_MANY" | translate}}</span>
+          <span ng-show="vm.confirmKey == vm.registered.privatekey" class="green"><span class="glyphicon glyphicon-ok"></span> {{ "REGISTER.CONFIRM_KEY_CORRECT" | translate}}</span>
+        </div>
+      </div>
+
+      <div class="form-group col-xs-12 noPaddingLeftRight" ng-show="vm.confirmKey == vm.registered.privatekey">
         <br/>
         <div class="col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6">
           <a href="#!/login" class="btn btn-success">{{ 'REGISTER.LOGIN_BUTTON' | translate }}</a>

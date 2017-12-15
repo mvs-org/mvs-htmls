@@ -23,7 +23,7 @@
               <div class="assetBoxValue">{{balance['total-frozen']/100000000}}</div>
             </div>
             <div class="assetBoxButtons">
-              <a href="#!/deposit/ETP" class="btn btn-link-red smallButton assetBoxButton">{{ 'DEPOSIT.HEADLINE' | translate}}</a>
+              <a href="#!/deposit/ETP" class="btn btn-success btn-success-secondary assetBoxButton">{{ 'DEPOSIT.HEADLINE' | translate}}</a>
               <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/ETP">{{ 'ASSETS_SEND' | translate}}</a>
             </div>
           </dd>
@@ -142,6 +142,7 @@
           <a class="btn-link spe-blueft" href="#!/explorer/tx/{{transaction.hash}}">
             <div class="overflow">{{transaction.hash}}</div>
           </a>
+          <span ng-if="transaction.memo != ''" class="historyMemo">{{transaction.memo}}</span>
         </div>
 
         <div class="noPaddingLeftRight col-md-4 col-lg-4">
@@ -204,6 +205,9 @@
             <a class="btn-link" href="#!/explorer/tx/{{transaction.hash}}">
               {{transaction.hash}}
             </a>
+          </div>
+          <div ng-if="transaction.memo != ''" class="historyMemo">
+            {{transaction.memo}}
           </div>
           <div class="transactionBoxSmallTime">
             {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT' | translate) }}

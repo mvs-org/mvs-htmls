@@ -447,13 +447,13 @@
     });
 
 
-
+    //[effective interest rate, annual interest rate, period, nbr blocks]
     $scope.deposit_options = {
-      "DEPOSIT.PERIOD.WEEK": [0.0009589, 0.05, 7],
-      "DEPOSIT.PERIOD.MONTH": [0.0066667, 0.08, 30],
-      "DEPOSIT.PERIOD.QUARTER": [0.032, 0.128, 90],
-      "DEPOSIT.PERIOD.HALF_YEAR": [0.08, 0.16, 182],
-      "DEPOSIT.PERIOD.YEAR": [0.2, 0.2, 365]
+      "DEPOSIT.PERIOD.WEEK": [0.0009589, 0.05, 7, 25200],
+      "DEPOSIT.PERIOD.MONTH": [0.0066667, 0.08, 30, 108000],
+      "DEPOSIT.PERIOD.QUARTER": [0.032, 0.128, 90, 331200],
+      "DEPOSIT.PERIOD.HALF_YEAR": [0.08, 0.16, 182, 655200],
+      "DEPOSIT.PERIOD.YEAR": [0.2, 0.2, 365, 1314000]
     };
 
 
@@ -1916,19 +1916,23 @@
       MetaverseService.GetAsset(symbol)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
-          $scope.asset = response.data.assets[0];
-          if ($scope.asset.issuer == localStorageService.get('credentials').user) {
-            $scope.owner = true;
-          }
-          $scope.initial_maximum_supply = parseFloat($scope.asset.maximum_supply)/Math.pow(10,$scope.asset.decimal_number);
-          $scope.current_maximum_supply = $scope.initial_maximum_supply;
-          $scope.new_maximum_supply = $scope.initial_maximum_supply;
-          $scope.details = false;
-          $scope.assets.forEach( (a) => {
-            if (a.symbol == symbol) {
-              $scope.asset.quantity = a.quantity;
+          if(response.data.assets != "") {    //if the user has some assets
+            $scope.asset = response.data.assets[0];
+            if ($scope.asset.issuer == localStorageService.get('credentials').user) {
+              $scope.owner = true;
             }
-          });
+            $scope.initial_maximum_supply = parseFloat($scope.asset.maximum_supply)/Math.pow(10,$scope.asset.decimal_number);
+            $scope.current_maximum_supply = $scope.initial_maximum_supply;
+            $scope.new_maximum_supply = $scope.initial_maximum_supply;
+            $scope.details = false;
+            $scope.assets.forEach( (a) => {
+              if (a.symbol == symbol) {
+                $scope.asset.quantity = a.quantity;
+              }
+            });
+          } else {
+            //The user as no Assets
+          }
         } else {
           //Asset could not be loaded
           $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) =>  FlashService.Error(data));
@@ -2346,8 +2350,8 @@
 
     $window.scrollTo(0,0);
 
-    var ws = new WebSocket('ws://localhost:8820/ws');
-    //var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');
+    //var ws = new WebSocket('ws://localhost:8820/ws'); //For test
+    var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');  //Live
 
     $("#inputField").focus();
 

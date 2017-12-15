@@ -62,8 +62,9 @@
     </div>
   </nav>
 
+
   <!--Language button Small screens-->
-  <div class="panel headerLoginXs">
+  <div class="panel navbarSmallScreens">
     <div class="header visible-xs">
       <div class="col-xs-3">
         <div class="linkLogo">
@@ -130,15 +131,15 @@
       </div>
       <br>
       <!--Login button-->
-      <div class="form-group col-xs-12 loginButton">
-        <div class="lr-btnbox text-center">
+      <div class="form-group">
+        <div class="text-center loginButton col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
           <button type="submit" class="btn btn-success" ng-disabled="form.$invalid || vm.dataLoading" ng-click="vm.login()">{{ 'LOGIN.LOGIN_BUTTON' | translate }}</button>
         </div>
       </div>
       <!--Register button-->
-      <div class="form-group col-xs-12">
-        <div class="lr-btnbox  rg-btnbox text-center">
-          <a href="#!/register" class="btn btn-link-red">{{ 'LOGIN.REGISTER_BUTTON' | translate }}</a>
+      <div class="form-group">
+        <div class="lr-btnbox loginButton text-center col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6">
+          <a href="#!/register" class="btn btn-success btn-success-secondary col-xs-6 col-sm-4 col-md-4">{{ 'LOGIN.REGISTER_BUTTON' | translate }}</a>
         </div>
       </div>
       <!--Help button-->
