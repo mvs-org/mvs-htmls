@@ -14,14 +14,11 @@
     function MetaverseService($http, localStorageService) {
         var service = {};
 
-        //Test runned on port 3000, via Grunt
-        var SERVER = window.location.hostname+":3000";
+        //Test runned on port 3000. Mainnet is on port 8820
+        var SERVER = window.location.hostname+((window.location.port!=80)?":"+window.location.port:"");
 
-        //Replaced via the Gruntfile to the port 8820 in Live
-        //var SERVER = window.location.hostname+":8820";
-        //If we want to change the port, don't forget to change it in home.controller.js for the Console!
-
-        var RPC_URL = 'http://' + SERVER + '/rpc';
+        //var RPC_URL = window.location.protocol + '://' + SERVER + '/rpc';
+        var RPC_URL = window.location.protocol + '/rpc';
 
 
         service.debug = false;
