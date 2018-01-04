@@ -39,7 +39,8 @@
       </div>
       </br>
       <div class="row col-md-6">
-        <input type="submit" ng-click="exportAccount(password, last_word, path)" value="{{ 'SETTINGS_EXPORT_ACCOUNT_BUTTON' | translate }}" class="btn btn-success">
+        <!--<input type="submit" ng-click="exportAccount(password, last_word, path)" value="{{ 'SETTINGS_EXPORT_ACCOUNT_BUTTON' | translate }}" class="btn btn-success">-->
+        <input type="button" bs-popover data-toggle="popover" data-placement="top" data-content="{{ 'SETTINGS_EXPORT_ACCOUNT_NOT_AVAILABLE' | translate }}" value="{{ 'SETTINGS_EXPORT_ACCOUNT_BUTTON' | translate }}" class="btn btn-success">
       </div>
     </form>
   </div>
