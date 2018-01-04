@@ -665,8 +665,7 @@
          *
          **/
         function GetAsset(symbol) {
-            var credentials = localStorageService.get('credentials');
-            return _send('getasset', [credentials.user, credentials.password, symbol]);
+            return _send('getasset', [symbol]);
         }
 
 
