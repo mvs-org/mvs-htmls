@@ -375,5 +375,6 @@
   "MESSAGES.CREATE_MULTISIGNATURE_WRONG_PUBLIC_KEY" : "Wrong public key.",
   "MESSAGES.SIGN_SUCCESS" : "Transaction successfully signed.",
   "MESSAGES.SIGN_AND_BROADCAST_SUCCESS" : "Transaction successfully signed and broadcast to the Blockchain.",
-  "MESSAGES.SIGN_ERROR" : "The transaction could not be signed."
+  "MESSAGES.SIGN_ERROR" : "The transaction could not be signed.",
+  "SETTINGS_EXPORT_ACCOUNT_NOT_AVAILABLE" : "Export Account temporarily unavailable"
 }
