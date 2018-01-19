@@ -59,6 +59,15 @@
       }
     }
   }])
+  .directive('checkImage', function() {
+   return {
+      link: function(scope, element, attrs) {
+         element.bind('error', function() {
+            element.attr('src', 'icon/default.png'); // set default image
+         });
+       }
+     }
+  });
 
 
   function MenuController($location, $rootScope){
