@@ -125,6 +125,11 @@ module.exports = function(grunt) {
                 src: 'images/**',
                 dest: 'dist'
             },
+            icon: {
+                expand: true,
+                src: 'icon/**',
+                dest: 'dist'
+            },
             views: {
                 expand: true,
                 src: '**/*.view.html',
