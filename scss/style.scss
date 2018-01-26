@@ -21,19 +21,12 @@ $off-wht: rgba(white,.4);
 $headerHeight: 65px;
 
 
-@font-face{
-    font-family: spepingfang;
-    src: url('pingfang.ttf'),
-    url('pingfang.woff'),
-    url('pingfang.svg'),
-    url('pingfang.eot'); /* IE9 */
-
-}
 
 // body,h1,h2,h3,h4, .headline {
 * {
-  font-family:'spepingfang',Arial,sans-serif,Tahoma,Arial,sans-serif;
-  font-weight: 700 !important;
+  //font-family:'spepingfang',Arial,sans-serif,Tahoma,Arial,sans-serif;
+  //font-weight: 700 !important;
+  font-family: Arial,sans-serif,微软雅黑;
 }
 
 
@@ -1733,7 +1726,6 @@ _____  ._______  ___.___ _______
 }
 
 .selectedLanguage {
-  font-weight: 900 !important;
   color: $redGeneralColor !important;
 }
 
