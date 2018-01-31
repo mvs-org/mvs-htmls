@@ -201,7 +201,7 @@
   "LOGIN.ENTER_ACCOUNT_PASSWORD" : "输入您的密码",
   "LOGIN.FORGOT_PASSWORD" : "忘记密码?",
   "LOGIN.LOGIN_BUTTON" : "登录",
-  "LOGIN.REGISTER_BUTTON" : "注册账号",
+  "LOGIN.REGISTER_BUTTON" : "创建账户",
   "LOGIN.CHECK_BLOCK_HEIGHT1" : "第一次设置钱包时，若钱包块高未同步完，不推荐操作钱包，最新块高可通过区块浏览器",
   "LOGIN.CHECK_BLOCK_HEIGHT_LINK" : "explorer.mvs.org",
   "LOGIN.CHECK_BLOCK_HEIGHT2" : "查看。",
