@@ -161,6 +161,23 @@
   <ui-view/>
 </div>
 <div class="footerRight">
-  <span class="block">{{ 'CONNECTION_BLOCKS' | translate }}: {{height}}</span>
-  <span>{{ 'METAVERSE_VERSION' | translate }} <<<version>>></span>
+  <div class="heightText">{{ 'CONNECTION_BLOCKS' | translate }}: </div>
+  <div ng-if="heightFromExplorer==0" class="block">{{height}}</div>
+  <div ng-if="heightFromExplorer!=0 && height>=heightFromExplorer" class="block">
+    <div class="block">{{height}}/{{height}}</div>
+    <div class="progress progress-height">
+      <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-height" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+        100%
+      </div>
+    </div>
+  </div>
+  <div ng-if="heightFromExplorer!=0 && height<heightFromExplorer" class="block">
+    <div class="block">{{height}}/{{heightFromExplorer}}</div>
+    <div class="progress progress-height">
+      <div class="progress-bar progress-bar-warning progress-bar-striped progress-bar-height" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:{{loadingPercent}}%">
+        {{loadingPercent}}%
+      </div>
+    </div>
+  </div>
+  <div class="version">{{ 'METAVERSE_VERSION' | translate }} <<<version>>></div>
 </div>

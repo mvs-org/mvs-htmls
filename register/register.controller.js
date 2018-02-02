@@ -5,9 +5,9 @@
   .module('app')
   .controller('RegisterController', RegisterController);
 
-  RegisterController.$inject = ['MetaverseService', '$scope', '$interval', '$location', 'localStorageService', '$rootScope', 'FlashService', '$translate', '$window'];
+  RegisterController.$inject = ['MetaverseService', '$scope', '$interval', '$location', 'localStorageService', '$rootScope', 'FlashService', '$translate', '$window', '$http'];
 
-  function RegisterController(MetaverseService, $scope, $interval, $location, localStorageService, $rootScope, FlashService, $translate, $window) {
+  function RegisterController(MetaverseService, $scope, $interval, $location, localStorageService, $rootScope, FlashService, $translate, $window, $http) {
     var vm = this;
     vm.buttonCopyToClipboard = new Clipboard('.btn');
 
@@ -26,11 +26,25 @@
 
     vm.height = '';
 
+    vm.getHeightFromExplorer = getHeightFromExplorer;
+    vm.heightFromExplorer = 0;
+    vm.loadingPercent = 0;
+
+    function getHeightFromExplorer() {
+      $http.get('https://explorer.mvs.org/api/height')
+        .then((response)=>{
+          vm.heightFromExplorer = response.data.result;
+          vm.loadingPercent = Math.floor(vm.height/vm.heightFromExplorer*100);
+        })
+    }
+
     function updateHeight() {
+      vm.getHeightFromExplorer();
       MetaverseService.FetchHeight()
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           vm.height = response.data;
+          vm.loadingPercent = Math.floor(vm.height/vm.heightFromExplorer*100);
         }
       });
     }

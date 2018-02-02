@@ -5,9 +5,9 @@
         .module('app')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$location', 'MetaverseService', 'FlashService','localStorageService', '$interval', '$translate', '$window'];
+    LoginController.$inject = ['$location', 'MetaverseService', 'FlashService','localStorageService', '$interval', '$translate', '$window', '$http'];
 
-    function LoginController($location, MetaverseService, FlashService, localStorageService, $interval, $translate, $window) {
+    function LoginController($location, MetaverseService, FlashService, localStorageService, $interval, $translate, $window, $http) {
         var vm = this;
 
         vm.login = login;
@@ -23,11 +23,25 @@
 
         vm.height = '';
 
+        vm.getHeightFromExplorer = getHeightFromExplorer;
+        vm.heightFromExplorer = 0;
+        vm.loadingPercent = 0;
+
+        function getHeightFromExplorer() {
+          $http.get('https://explorer.mvs.org/api/height')
+            .then((response)=>{
+              vm.heightFromExplorer = response.data.result;
+              vm.loadingPercent = Math.floor(vm.height/vm.heightFromExplorer*100);
+            })
+        }
+
         function updateHeight() {
+          vm.getHeightFromExplorer();
           MetaverseService.FetchHeight()
           .then( (response) => {
             if (typeof response.success !== 'undefined' && response.success) {
               vm.height = response.data;
+              vm.loadingPercent = Math.floor(vm.height/vm.heightFromExplorer*100);
             }
           });
         }

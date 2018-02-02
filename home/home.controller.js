@@ -2460,14 +2460,24 @@
 
   }
 
-  function HomeController(MetaverseService, $rootScope, $scope, localStorageService, $interval, $translate, $location, $filter) {
+  function HomeController(MetaverseService, $rootScope, $scope, localStorageService, $interval, $translate, $location, $filter, $http) {
 
     var vm = this;
     vm.account = localStorageService.get('credentials').user;
     $scope.height = '';
     $scope.assets = [];
     $scope.language = localStorageService.get('language');
+    $scope.getHeightFromExplorer = getHeightFromExplorer;
+    $scope.heightFromExplorer = 0;
+    $scope.loadingPercent = 0;
 
+    function getHeightFromExplorer() {
+      $http.get('https://explorer.mvs.org/api/height')
+        .then((response)=>{
+          $scope.heightFromExplorer = response.data.result;
+          $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100);
+        })
+    }
 
     $scope.menu = {
       account: {
@@ -2486,11 +2496,13 @@
 
 
     function updateHeight() {
+      getHeightFromExplorer();
       MetaverseService.FetchHeight()
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.height = response.data;
           $rootScope.height = response.data;
+          $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100);
         }
       });
     }
