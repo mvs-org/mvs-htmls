@@ -1774,6 +1774,26 @@ _____  ._______  ___.___ _______
 
 
 /****************Commun to all pages****************/
+.alertWalletPages {
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  top: $headerHeight;
+  margin-top: 10px;
+}
+
+.emptySpaceAlert {
+  height: 50px;
+}
+
+.flashMessage {
+  display: inline-block;
+}
+
+.flashLink {
+  display: inline-block;
+}
+
 .red {
   color: $redGeneralColor;
 }

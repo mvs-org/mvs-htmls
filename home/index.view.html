@@ -154,8 +154,13 @@
 </div>
 
 <div class="admin fullPageWidth">
-  <div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
-    <div class="" ng-bind="flash.message">
+  <div class="emptySpaceAlert" ng-if="flash"></div>
+  <div class="alert alertWalletPages fullPageWidth" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error', 'alert-info': flash.type === 'info' }" ng-if="flash" >
+    <button type="button" class="close" ng-click="ClickCloseFlashMessage()">X</button>
+    <div class="flashMessage" ng-bind="flash.message">
+    </div>
+    <div class="flashLink">
+      <a href="#!/explorer/tx/{{flash.hash}}" class="btn-link" ng-bind="flash.hash"></a>
     </div>
   </div>
   <ui-view/>

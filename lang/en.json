@@ -376,5 +376,6 @@
   "MESSAGES.SIGN_SUCCESS" : "Transaction successfully signed.",
   "MESSAGES.SIGN_AND_BROADCAST_SUCCESS" : "Transaction successfully signed and broadcast to the Blockchain.",
   "MESSAGES.SIGN_ERROR" : "The transaction could not be signed.",
-  "SETTINGS_EXPORT_ACCOUNT_NOT_AVAILABLE" : "Export Account temporarily unavailable"
+  "SETTINGS_EXPORT_ACCOUNT_NOT_AVAILABLE" : "Export Account temporarily unavailable",
+  "MESSAGES.TX_PROCESSED" : "Your transaction has been processed: "
 }

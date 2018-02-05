@@ -2460,7 +2460,7 @@
 
   }
 
-  function HomeController(MetaverseService, $rootScope, $scope, localStorageService, $interval, $translate, $location, $filter, $http) {
+  function HomeController(MetaverseService, $rootScope, $scope, localStorageService, $interval, $translate, $location, $filter, $http, FlashService) {
 
     var vm = this;
     vm.account = localStorageService.get('credentials').user;
@@ -2470,6 +2470,52 @@
     $scope.getHeightFromExplorer = getHeightFromExplorer;
     $scope.heightFromExplorer = 0;
     $scope.loadingPercent = 0;
+    $scope.subscribed = false;
+
+    var ws = new WebSocket('ws://localhost:8821/ws');
+
+    $scope.showConnected = false;
+    $scope.index = 0;
+
+    $scope.ClickCloseFlashMessage = () => {
+      FlashService.CloseFlashMessage();
+    }
+
+    ws.onmessage = (ev) => {
+      var response = JSON.parse(ev.data);
+      if(!$scope.subscribed) {
+        $scope.subscribed = true;
+        $scope.subscribeToAllMyAddresses();
+      } else if (response.channel == 'tx' && response.event == 'publish' && response.result.height != '0'){
+        console.log(response.result);
+
+        $translate('MESSAGES.TX_PROCESSED').then( (data) =>  FlashService.Info(data, false, response.result.hash));
+
+        //FlashService.Info("Your transaction has been processed: ", false, response.result.hash);
+      }
+    };
+
+    $scope.subscribeToAllMyAddresses = () => {
+      NProgress.start();
+      MetaverseService.ListBalances()
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          //$scope.addresses = [];
+          //console.log(response)
+          response.data.balances.forEach( (e) => {
+            //console.log(e.balance.address)
+            ws.send(JSON.stringify({
+              "event": "subscribe",
+              "channel": "tx",
+              "address":e.balance.address
+            }));
+          });
+        }
+        NProgress.done();
+      });
+    };
+
+    //$scope.query();
 
     function getHeightFromExplorer() {
       $http.get('https://explorer.mvs.org/api/height')
@@ -2477,6 +2523,7 @@
           $scope.heightFromExplorer = response.data.result;
           $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100);
         })
+        .catch( (error) => console.log("Cannot get Height from explorer") );
     }
 
     $scope.menu = {
