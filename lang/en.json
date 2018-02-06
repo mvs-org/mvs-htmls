@@ -202,9 +202,7 @@
   "LOGIN.FORGOT_PASSWORD" : "Forgot password?",
   "LOGIN.LOGIN_BUTTON" : "Login",
   "LOGIN.REGISTER_BUTTON" : "Create account",
-  "LOGIN.CHECK_BLOCK_HEIGHT1" : "If the block height has yet to fully synchronize when setup wallet at first time, DO NOT recommend using the wallet. You may view the latest block height through ",
-  "LOGIN.CHECK_BLOCK_HEIGHT_LINK" : "explorer.mvs.org",
-  "LOGIN.CHECK_BLOCK_HEIGHT2" : ".",
+  "LOGIN.DESCRIPTION" : "This wallet is a full-node wallet, browser is just the user interface displayed for users. You are actually visiting the local host back-end program in your device without interaction with any other server, you can use it safely.",
   "REGISTER.CHOOSE_ACCOUNT_NAME" : "Please enter an account name",
   "REGISTER.CHOOSE_PASSWORD" : "Please enter a password",
   "REGISTER.REPEAT_PASSWORD" : "Please repeat your password",
@@ -377,5 +375,7 @@
   "MESSAGES.SIGN_AND_BROADCAST_SUCCESS" : "Transaction successfully signed and broadcast to the Blockchain.",
   "MESSAGES.SIGN_ERROR" : "The transaction could not be signed.",
   "SETTINGS_EXPORT_ACCOUNT_NOT_AVAILABLE" : "Export Account temporarily unavailable",
-  "MESSAGES.TX_PROCESSED" : "Your transaction has been processed: "
+  "MESSAGES.TX_PROCESSED" : "A new transaction has been processed: ",
+  "MESSAGES.NEW_VERSION_AVAILABLE" : "A new version of the wallet is available at: ",
+  "MESSAGES.NEW_VERSION_MAJOR_CHANGE" : "A major update has been release. Please update your wallet from: "
 }
