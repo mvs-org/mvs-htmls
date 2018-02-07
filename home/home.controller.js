@@ -2477,23 +2477,40 @@
     $scope.showConnected = false;
     $scope.index = 0;
     $scope.sound = true;
+    $rootScope.version = "<<<version>>>";
+    //$rootScope.version = "0.7.2";
 
     $scope.ClickCloseFlashMessage = () => {
       FlashService.CloseFlashMessage();
     }
 
-    /*$scope.checkVersion = function checkVersion () {
-      $http.get('https://explorer.mvs.org/api/height')
-        .then((response)=>{
-          //console.log(response.data.result);
-          //if(response.data.result!=<<<version>>>) {
-            $translate('MESSAGES.NEW_VERSION_AVAILABLE').then( (data) =>  FlashService.Warning(data, false, "", "mvs.org"));
-          //}
-        })
-        .catch( (error) => console.log("Cannot get Version from explorer") );
-    }*/
+    $scope.checkVersion = function () {
+      if($rootScope.version.charAt(0) == '<') {    //Dev
+        //no check
+      } else {        //Live
+        $http.get('https://explorer.mvs.org/api/fullnode/version')
+          .then((response)=>{
+            var walletVersion = $rootScope.version.split(".");
+            var supportVersion = response.data.support.split(".");
+            var currentVersion = response.data.current.split(".");
+            if($scope.checkNeedUpdate(walletVersion,supportVersion)) {
+              $translate('MESSAGES.NEW_VERSION_MAJOR_CHANGE').then( (data) =>  FlashService.Error(data, false, "", "mvs.org"));
+            } else if ($scope.checkNeedUpdate(walletVersion,currentVersion)) {
+              $translate('MESSAGES.NEW_VERSION_AVAILABLE').then( (data) =>  FlashService.Warning(data, false, "", "mvs.org"));
+            }
+          })
+          .catch( (error) => console.log("Cannot get Version from explorer") );
+      }
+    }
 
-    //checkVersion();
+    $scope.checkNeedUpdate = function (walletVersion, comparedVersion){
+      if((walletVersion[0]<comparedVersion[0])||((walletVersion[0]==comparedVersion[0])&&(walletVersion[1]<comparedVersion[1]))||((walletVersion[0]==comparedVersion[0])&&(walletVersion[1]==comparedVersion[1])&&(walletVersion[2]<comparedVersion[2]))){
+        return true;
+      }
+      return false;
+    }
+
+    $scope.checkVersion();
 
     ws.onmessage = (ev) => {
       var response = JSON.parse(ev.data);

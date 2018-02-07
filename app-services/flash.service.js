@@ -12,6 +12,7 @@
         service.Success = Success;
         service.Error = Error;
         service.Info = Info;
+        service.Warning = Warning;
         service.CloseFlashMessage = CloseFlashMessage;
 
         initService();
@@ -40,30 +41,43 @@
             delete $rootScope.flash;
         }
 
-        function Success(message, keepAfterLocationChange, hash) {
+        function Success(message, keepAfterLocationChange, hash, link) {
             $rootScope.flash = {
                 message: message,
                 type: 'success',
                 keepAfterLocationChange: keepAfterLocationChange,
-                hash: hash
+                hash: hash,
+                link: link
             };
         }
 
-        function Error(message, keepAfterLocationChange, hash) {
+        function Error(message, keepAfterLocationChange, hash, link) {
             $rootScope.flash = {
                 message: message,
                 type: 'error',
                 keepAfterLocationChange: keepAfterLocationChange,
-                hash: hash
+                hash: hash,
+                link: link
             };
         }
 
-        function Info(message, keepAfterLocationChange, hash) {
+        function Info(message, keepAfterLocationChange, hash, link) {
             $rootScope.flash = {
                 message: message,
                 type: 'info',
                 keepAfterLocationChange: keepAfterLocationChange,
-                hash: hash
+                hash: hash,
+                link: link
+            };
+        }
+
+        function Warning(message, keepAfterLocationChange, hash, link) {
+            $rootScope.flash = {
+                message: message,
+                type: 'warning',
+                keepAfterLocationChange: keepAfterLocationChange,
+                hash: hash,
+                link: link
             };
         }
     }
