@@ -202,7 +202,7 @@
   "LOGIN.FORGOT_PASSWORD" : "Forgot password?",
   "LOGIN.LOGIN_BUTTON" : "Login",
   "LOGIN.REGISTER_BUTTON" : "Create account",
-  "LOGIN.DESCRIPTION" : "This wallet is a full-node wallet, browser is just the user interface displayed for users. You are actually visiting the local host back-end program in your device without interaction with any other server, you can use it safely.",
+  "LOGIN.DESCRIPTION" : "The Metaverse mainnet wallet (MVSD) is a full-node wallet for cryptocurrency management. Although users interact with the wallet through their browser, MVSD is not a web wallet; users are accessing a locally-stored backend program. With MVSD, you may truly own your private keys and digital assets.",
   "REGISTER.CHOOSE_ACCOUNT_NAME" : "Please enter an account name",
   "REGISTER.CHOOSE_PASSWORD" : "Please enter a password",
   "REGISTER.REPEAT_PASSWORD" : "Please repeat your password",

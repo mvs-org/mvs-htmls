@@ -202,7 +202,7 @@
   "LOGIN.FORGOT_PASSWORD" : "忘记密码?",
   "LOGIN.LOGIN_BUTTON" : "登录",
   "LOGIN.REGISTER_BUTTON" : "创建账户",
-  "LOGIN.DESCRIPTION" : "您的元界钱包属于全节点钱包，浏览器仅作为用户界面展示给用户，实际访问的是您设备中的本地后台程序，没有与任何服务端进行交互，您可以放心使用。",
+  "LOGIN.DESCRIPTION" : "元界主网钱包是一款管理加密货币的全节点钱包。它并非是网页钱包，浏览器仅作为用户界面，访问的是本地后台程序。在这里，您可以真正意义上拥有自己的私钥以及数字资产。",
   "REGISTER.CHOOSE_ACCOUNT_NAME" : "请输入用户名",
   "REGISTER.CHOOSE_PASSWORD" : "请输入密码",
   "REGISTER.REPEAT_PASSWORD" : "请再次输入密码",
