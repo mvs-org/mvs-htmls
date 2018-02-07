@@ -47,15 +47,6 @@
             </p>
           </span>
 
-
-          <!--Block height-->
-          <!--<span class="hidden-xs hidden-sm hidden-md topMenuButtonRight">
-            <p>
-              <span>{{ 'CONNECTION_BLOCKS' | translate }}:</span>
-              <span>{{height}}</span>
-            </p>
-          </span>-->
-
           <!--Language button Large screens-->
           <span class="topMenuButtonRight languageHeaderLarge">
             <p ng-show="('LANG_CODE' | translate)=='zh'">
@@ -83,6 +74,19 @@
             <a href="#!/account/details" class="btn-link smallButton menuButton userName">
               <p class="userNameSpan topMenuButtonRight">
                 {{vm.account}}
+              </p>
+            </a>
+          </span>
+
+          <span class="topMenuButtonRight">
+            <a ng-show="sound" class="btn-link smallButton menuButton" value="" ng-click="onOffSound()">
+              <p>
+                <span class="glyphicon glyphicon-volume-up soundButton"></span>
+              </p>
+            </a>
+            <a ng-show="!sound" class="btn-link smallButton menuButton" value="" ng-click="onOffSound()">
+              <p>
+                <span class="glyphicon glyphicon-volume-off soundButton"></span>
               </p>
             </a>
           </span>
@@ -155,12 +159,15 @@
 
 <div class="admin fullPageWidth">
   <div class="emptySpaceAlert" ng-if="flash"></div>
-  <div class="alert alertWalletPages fullPageWidth" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error', 'alert-info': flash.type === 'info' }" ng-if="flash" >
+  <div class="alert alertWalletPages" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error', 'alert-info': flash.type === 'info', 'alert-warning': flash.type === 'warning' }" ng-if="flash" >
     <button type="button" class="close" ng-click="ClickCloseFlashMessage()">X</button>
     <div class="flashMessage" ng-bind="flash.message">
     </div>
     <div class="flashLink">
       <a href="#!/explorer/tx/{{flash.hash}}" class="btn-link" ng-bind="flash.hash"></a>
+    </div>
+    <div class="flashLink">
+      <a href="https://{{flash.link}}" class="btn-link" ng-bind="flash.link"></a>
     </div>
   </div>
   <ui-view/>

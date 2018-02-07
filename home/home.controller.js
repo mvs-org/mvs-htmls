@@ -2476,46 +2476,66 @@
 
     $scope.showConnected = false;
     $scope.index = 0;
+    $scope.sound = true;
 
     $scope.ClickCloseFlashMessage = () => {
       FlashService.CloseFlashMessage();
     }
 
+    /*$scope.checkVersion = function checkVersion () {
+      $http.get('https://explorer.mvs.org/api/height')
+        .then((response)=>{
+          //console.log(response.data.result);
+          //if(response.data.result!=<<<version>>>) {
+            $translate('MESSAGES.NEW_VERSION_AVAILABLE').then( (data) =>  FlashService.Warning(data, false, "", "mvs.org"));
+          //}
+        })
+        .catch( (error) => console.log("Cannot get Version from explorer") );
+    }*/
+
+    //checkVersion();
+
     ws.onmessage = (ev) => {
       var response = JSON.parse(ev.data);
-      if(!$scope.subscribed) {
+      if(!$scope.subscribed) {      //Websocket connected, need to subscribe to all addresses
         $scope.subscribed = true;
         $scope.subscribeToAllMyAddresses();
       } else if (response.channel == 'tx' && response.event == 'publish' && response.result.height != '0'){
-        console.log(response.result);
-
-        $translate('MESSAGES.TX_PROCESSED').then( (data) =>  FlashService.Info(data, false, response.result.hash));
-
-        //FlashService.Info("Your transaction has been processed: ", false, response.result.hash);
+        //New transaction detected
+        if((parseInt($scope.heightFromExplorer) - parseInt($scope.height)) < 100) {
+          $translate('MESSAGES.TX_PROCESSED').then( (data) =>  FlashService.Info(data, false, response.result.hash));
+          if($scope.sound) {
+            $scope.playNewTx();
+          }
+        }
       }
     };
+
+    $scope.playNewTx = function() {
+     var audio = new Audio('audio/message.mp3');
+     audio.play();
+    };
+
+    $scope.onOffSound = function () {
+      $scope.sound = !$scope.sound;
+    }
 
     $scope.subscribeToAllMyAddresses = () => {
       NProgress.start();
       MetaverseService.ListBalances()
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
-          //$scope.addresses = [];
-          //console.log(response)
           response.data.balances.forEach( (e) => {
-            //console.log(e.balance.address)
             ws.send(JSON.stringify({
               "event": "subscribe",
               "channel": "tx",
-              "address":e.balance.address
+              "address": e.balance.address
             }));
           });
         }
         NProgress.done();
       });
     };
-
-    //$scope.query();
 
     function getHeightFromExplorer() {
       $http.get('https://explorer.mvs.org/api/height')

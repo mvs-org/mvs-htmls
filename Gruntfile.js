@@ -125,6 +125,11 @@ module.exports = function(grunt) {
                 src: 'images/**',
                 dest: 'dist'
             },
+            audio: {
+                expand: true,
+                src: 'audio/**',
+                dest: 'dist'
+            },
             icon: {
                 expand: true,
                 src: 'icon/**',

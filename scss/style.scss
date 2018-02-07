@@ -1687,6 +1687,10 @@ _____  ._______  ___.___ _______
   height: 34px;
 }
 
+.soundButton {
+  font-size: 18px;
+}
+
 .header-right {
   float:right;
   display:inline-block;
@@ -1777,9 +1781,12 @@ _____  ._______  ___.___ _______
 .alertWalletPages {
   position: fixed;
   z-index: 1000;
-  width: 100%;
+  width: calc(100% - 30px);
   top: $headerHeight;
   margin-top: 10px;
+  max-width: 1290px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .emptySpaceAlert {
