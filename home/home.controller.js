@@ -30,7 +30,7 @@
       }
     };
   })
-  .directive('bsPopover', function($compile, $timeout){
+  .directive('z', function($compile, $timeout){
     return function(scope, element) {
       $(element).popover();
       $('body').on('click', function (e) {
@@ -2479,6 +2479,7 @@
     $scope.sound = true;
     $rootScope.version = "<<<version>>>";
     //$rootScope.version = "0.7.2";
+    $scope.popoverSynchShown = false;
 
     $scope.ClickCloseFlashMessage = () => {
       FlashService.CloseFlashMessage();
@@ -2557,6 +2558,10 @@
     function getHeightFromExplorer() {
       $http.get('https://explorer.mvs.org/api/height')
         .then((response)=>{
+          if(!$scope.popoverSynchShown) {
+            $(function () { $('.popover-show').popover('show');});
+            $scope.popoverSynchShown = true;
+          }
           $scope.heightFromExplorer = response.data.result;
           $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100);
         })

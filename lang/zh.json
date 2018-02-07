@@ -377,5 +377,6 @@
   "SETTINGS_EXPORT_ACCOUNT_NOT_AVAILABLE" : "导出账户功能暂不可用",
   "MESSAGES.TX_PROCESSED" : "A new transaction has been processed: ",
   "MESSAGES.NEW_VERSION_AVAILABLE" : "A new version of the wallet is available. Please update your wallet from:",
-  "MESSAGES.NEW_VERSION_MAJOR_CHANGE" : "An important update has been released. Please update your wallet from:"
+  "MESSAGES.NEW_VERSION_MAJOR_CHANGE" : "An important update has been released. Please update your wallet from:",
+  "MESSAGE.PLEASE_WAIT_SYNCH" : "Please wait full synchronisation before using your wallet"
 }

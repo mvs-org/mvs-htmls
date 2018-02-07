@@ -376,6 +376,7 @@
   "MESSAGES.SIGN_ERROR" : "The transaction could not be signed.",
   "SETTINGS_EXPORT_ACCOUNT_NOT_AVAILABLE" : "Export Account temporarily unavailable",
   "MESSAGES.TX_PROCESSED" : "A new transaction has been processed: ",
-  "MESSAGES.NEW_VERSION_AVAILABLE" : "A new version of the wallet is available at:",
-  "MESSAGES.NEW_VERSION_MAJOR_CHANGE" : "An important update has been release. Please update your wallet from:"
+  "MESSAGES.NEW_VERSION_AVAILABLE" : "A new version of the wallet is available. Please update your wallet from:",
+  "MESSAGES.NEW_VERSION_MAJOR_CHANGE" : "An important update has been released. Please update your wallet from:",
+  "MESSAGE.PLEASE_WAIT_SYNCH" : "Please wait full synchronisation before using your wallet"
 }

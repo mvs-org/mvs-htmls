@@ -30,9 +30,15 @@
     vm.heightFromExplorer = 0;
     vm.loadingPercent = 0;
 
+    vm.popoverSynchShown = false;
+
     function getHeightFromExplorer() {
       $http.get('https://explorer.mvs.org/api/height')
         .then((response)=>{
+          if(!vm.popoverSynchShown) {
+            $(function () { $('.popover-show').popover('show');});
+            vm.popoverSynchShown = true;
+          }
           vm.heightFromExplorer = response.data.result;
           vm.loadingPercent = Math.floor(vm.height/vm.heightFromExplorer*100);
         })
