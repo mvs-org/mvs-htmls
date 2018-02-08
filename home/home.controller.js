@@ -2039,7 +2039,7 @@
         if (typeof response.success !== 'undefined' && response.success) {
           $translate('MESSAGES.ASSETS_DELETE_SUCCESS').then( (data) => FlashService.Success(data, true) );
           $window.scrollTo(0,0);
-          $location.path('/asset/myassets');
+          $location.path('/home');
         } else {
           //Asset could not be delete
           $translate('MESSAGES.ASSETS_DELETE_ERROR').then( (data) =>  FlashService.Error(data));
@@ -2472,7 +2472,8 @@
     $scope.loadingPercent = 0;
     $scope.subscribed = false;
 
-    var ws = new WebSocket('ws://localhost:8821/ws');
+    //var ws = new WebSocket('ws://localhost:8821/ws');
+    var ws = new WebSocket('ws://' + MetaverseService.SERVER2 + '/ws');  //Live
 
     $scope.showConnected = false;
     $scope.index = 0;
