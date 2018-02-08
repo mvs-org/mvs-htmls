@@ -109,7 +109,7 @@
   </div>
 
 
-  <form class="loginArea rgArea">
+  <form class="loginArea">
     <!--To register-->
     <div ng-hide="vm.registered">
       <h1 class="loginTitle">{{ 'REGISTER.NEW_USER' | translate }}</h1>
@@ -251,25 +251,32 @@
       </div>
     </div>
   </form>
-  <div class="footerRight">
-    <div class="heightText">{{ 'CONNECTION_BLOCKS' | translate }}: </div>
-    <div ng-if="vm.heightFromExplorer==0" class="block">{{vm.height}}</div>
-    <div ng-if="vm.heightFromExplorer!=0 && (vm.heightFromExplorer-vm.height)<100" class="block">
-      <div class="block">{{vm.height}}/{{vm.height}}</div>
-      <div class="progress progress-height">
-        <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-height" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:{{vm.loadingPercent}}%">
-          {{vm.loadingPercent}}%
+
+  <div class="footer">
+    <div class="footerLeft">
+      <span class="glyphicon glyphicon-signal"></span>
+      {{vm.peers}}
+    </div>
+    <div class="footerRight">
+      <div class="heightText">{{ 'CONNECTION_BLOCKS' | translate }}: </div>
+      <div ng-if="vm.heightFromExplorer==0" class="block">{{vm.height}}</div>
+        <div ng-if="vm.heightFromExplorer!=0 && (vm.heightFromExplorer-vm.height)<1000" class="block">
+        <div class="block">{{vm.height}}/{{vm.height}}</div>
+        <div class="progress progress-height">
+          <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-height" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:{{vm.loadingPercent}}%">
+            {{vm.loadingPercent}}%
+          </div>
         </div>
       </div>
-    </div>
-    <div ng-if="vm.heightFromExplorer!=0 && (vm.heightFromExplorer-vm.height)>=100" class="block">
-      <div class="block">{{vm.height}}/{{vm.heightFromExplorer}}</div>
-      <div class="progress progress-height popover-show" data-toggle="popover" data-placement="top" data-content="{{ 'MESSAGE.PLEASE_WAIT_SYNCH' | translate }}">
-        <div class="progress-bar progress-bar-danger progress-bar-striped progress-bar-height" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:{{vm.loadingPercent}}%">
-          {{vm.loadingPercent}}%
+      <div ng-if="vm.heightFromExplorer!=0 && (vm.heightFromExplorer-vm.height)>=1000" class="block">
+        <div class="block">{{vm.height}}/{{vm.heightFromExplorer}}</div>
+        <div class="progress progress-height popover-show" data-toggle="popover" data-placement="top" data-content="{{ 'MESSAGE.PLEASE_WAIT_SYNCH' | translate }}">
+          <div class="progress-bar progress-bar-danger progress-bar-striped progress-bar-height" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:{{vm.loadingPercent}}%">
+            {{vm.loadingPercent}}%
+          </div>
         </div>
       </div>
+      <div class="version">{{ 'METAVERSE_VERSION' | translate }} {{vm.version}}</div>
     </div>
-    <div class="version">{{ 'METAVERSE_VERSION' | translate }} <<<version>>></div>
   </div>
 </div>

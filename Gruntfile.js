@@ -210,9 +210,6 @@ module.exports = function(grunt) {
                     }, {
                         pattern: /(\.css|\.js(?!on)|\.json)/g,
                         replacement: '\.'+package.version+'$1'
-                    }, {
-                        pattern: '<<<version>>>',
-                        replacement: package.version
                     }]
                 }
             }

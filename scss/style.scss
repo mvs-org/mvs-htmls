@@ -1448,18 +1448,19 @@ _____  ._______  ___.___ _______
   font-weight: 100;
 }
 
+.loginDescription {
+  text-align: justify;
+}
+
 .loginArea {
   background-color: white;
   border-radius: 10px;
   padding: 55px;
-  //padding-bottom: 10px;
   margin: 165px auto 100px;
   width: 550px;
   height: 630px;
-  //margin-top: 10%;
-  //padding-top: 3%;
-  //padding-bottom: 3%;
-  //margin-bottom: 10%;
+  height: auto;
+  display: table;
 }
 .headerRightXS {
   margin-top: 0;
@@ -1873,7 +1874,7 @@ _____  ._______  ___.___ _______
   text-transform: uppercase;
 }
 
-.footerRight {
+.footer {
   position: fixed;
   padding: 10px;
   bottom: 0;
@@ -1882,8 +1883,17 @@ _____  ._______  ___.___ _______
   border-top: 1px solid #ccc;
   left: 0;
   right: 0;
-  text-align: right;
   z-index: 1000;
+}
+
+.footerLeft {
+  text-align: left;
+  display: inline;
+}
+
+.footerRight {
+  float: right;
+  display: inline;
 }
 
 .heightText {
@@ -1904,7 +1914,7 @@ _____  ._______  ___.___ _______
   width: 150px;
   height: 12px;
   display: inline-block;
-  margin-bottom: 0;
+  margin-bottom: -1px;
 }
 
 .progress-bar-height {

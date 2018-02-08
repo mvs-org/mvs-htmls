@@ -80,8 +80,17 @@
         service.Query = Query;
         service.Deposit = Deposit;
         service.FrozenAsset = FrozenAsset;
+        service.GetInfo = GetInfo;
 
         return service;
+
+
+        /**
+         **/
+        function GetInfo() {
+            return _send('getinfo', []);
+        }
+
 
         /**
          * @api {post} /rpc Create a new account

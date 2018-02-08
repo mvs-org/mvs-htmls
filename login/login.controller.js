@@ -29,6 +29,20 @@
 
         vm.popoverSynchShown = false;
 
+        vm.version = "";
+        vm.peers = "";
+
+        MetaverseService.GetInfo()
+        .then( (response) => {
+          if (typeof response.success !== 'undefined' && response.success) {
+            vm.height = response.data.height;
+            vm.height = response.data;
+            vm.loadingPercent = Math.floor(vm.height/vm.heightFromExplorer*100);
+            vm.version = response.data['wallet-version'];
+            vm.peers = response.data.peers;
+          }
+        });
+
         function getHeightFromExplorer() {
           $http.get('https://explorer.mvs.org/api/height')
             .then((response)=>{
@@ -43,11 +57,12 @@
 
         function updateHeight() {
           vm.getHeightFromExplorer();
-          MetaverseService.FetchHeight()
+          MetaverseService.GetInfo()
           .then( (response) => {
             if (typeof response.success !== 'undefined' && response.success) {
-              vm.height = response.data;
+              vm.height = response.data.height;
               vm.loadingPercent = Math.floor(vm.height/vm.heightFromExplorer*100);
+              vm.peers = response.data.peers;
             }
           });
         }

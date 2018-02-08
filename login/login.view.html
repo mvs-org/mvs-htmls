@@ -112,65 +112,61 @@
 
   <!--Register area-->
   <form class="loginArea">
-    <!--Logo-->
-
     <h1 class="loginTitle">{{ 'LOGIN.TITLE' | translate }}</h1>
-    <span class="comm-ft">
+    <div class="comm-ft loginDescription">
       {{ 'LOGIN.DESCRIPTION' | translate }}
-    </span>
-
+    </div>
+    <br/>
+    <!--Username-->
+    <div class="form-group col-xs-12">
+      <label for="username" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_NAME' | translate }}</label>
+      <input type="text" name="username" class="form-control" ng-model="vm.username">
+    </div>
+    <!--Password-->
+    <div class="form-group col-xs-12">
+      <label for="password" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_PASSWORD' | translate }}</label>
+      <input type="password" name="password" autocomplete="new-password" class="form-control" ng-model="vm.password">
+    </div>
+    <br>
+    <!--Login button-->
     <div class="form-group">
-      <br/>
-      <!--Username-->
-      <div class="form-group col-xs-12">
-        <label for="username" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_NAME' | translate }}</label>
-        <input type="text" name="username" class="form-control" ng-model="vm.username">
+      <div class="text-center loginButton col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
+        <button type="submit" class="btn btn-success" ng-disabled="form.$invalid || vm.dataLoading" ng-click="vm.login()">{{ 'LOGIN.LOGIN_BUTTON' | translate }}</button>
       </div>
-      <!--Password-->
-      <div class="form-group col-xs-12">
-        <label for="password" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_PASSWORD' | translate }}</label>
-        <input type="password" name="password" autocomplete="new-password" class="form-control" ng-model="vm.password">
+    </div>
+    <!--Register button-->
+    <div class="form-group">
+      <div class="lr-btnbox loginButton text-center col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6">
+        <a href="#!/register" class="btn btn-success btn-success-secondary col-xs-6 col-sm-4 col-md-4">{{ 'LOGIN.REGISTER_BUTTON' | translate }}</a>
       </div>
-      <br>
-      <!--Login button-->
-      <div class="form-group">
-        <div class="text-center loginButton col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
-          <button type="submit" class="btn btn-success" ng-disabled="form.$invalid || vm.dataLoading" ng-click="vm.login()">{{ 'LOGIN.LOGIN_BUTTON' | translate }}</button>
-        </div>
-      </div>
-      <!--Register button-->
-      <div class="form-group">
-        <div class="lr-btnbox loginButton text-center col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6">
-          <a href="#!/register" class="btn btn-success btn-success-secondary col-xs-6 col-sm-4 col-md-4">{{ 'LOGIN.REGISTER_BUTTON' | translate }}</a>
-        </div>
-      </div>
-      <!--Help button-->
-      <!--<div class="col-md-4 col-sm-4 col-xs-6 col-xs-offset-6 col-sm-offset-0 col-md-offset-0 pull-right">
-      <button type="button" class="btn btn-link" style="width:100%">无法登录？</button>
-      TODO
-    </div>-->
-      <br><br>
     </div>
   </form>
-  <div class="footerRight">
-    <div class="heightText">{{ 'CONNECTION_BLOCKS' | translate }}: </div>
-    <div ng-if="vm.heightFromExplorer==0" class="block">{{vm.height}}</div>
-      <div ng-if="vm.heightFromExplorer!=0 && (vm.heightFromExplorer-vm.height)<100" class="block">
-      <div class="block">{{vm.height}}/{{vm.height}}</div>
-      <div class="progress progress-height">
-        <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-height" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:{{vm.loadingPercent}}%">
-          {{vm.loadingPercent}}%
+
+  <div class="footer">
+    <div class="footerLeft">
+      <span class="glyphicon glyphicon-signal"></span>
+      {{vm.peers}}
+    </div>
+    <div class="footerRight">
+      <div class="heightText">{{ 'CONNECTION_BLOCKS' | translate }}: </div>
+      <div ng-if="vm.heightFromExplorer==0" class="block">{{vm.height}}</div>
+        <div ng-if="vm.heightFromExplorer!=0 && (vm.heightFromExplorer-vm.height)<1000" class="block">
+        <div class="block">{{vm.height}}/{{vm.height}}</div>
+        <div class="progress progress-height">
+          <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-height" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:{{vm.loadingPercent}}%">
+            {{vm.loadingPercent}}%
+          </div>
         </div>
       </div>
-    </div>
-    <div ng-if="vm.heightFromExplorer!=0 && (vm.heightFromExplorer-vm.height)>=100" class="block">
-      <div class="block">{{vm.height}}/{{vm.heightFromExplorer}}</div>
-      <div class="progress progress-height popover-show" data-toggle="popover" data-placement="top" data-content="{{ 'MESSAGE.PLEASE_WAIT_SYNCH' | translate }}">
-        <div class="progress-bar progress-bar-danger progress-bar-striped progress-bar-height" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:{{vm.loadingPercent}}%">
-          {{vm.loadingPercent}}%
+      <div ng-if="vm.heightFromExplorer!=0 && (vm.heightFromExplorer-vm.height)>=1000" class="block">
+        <div class="block">{{vm.height}}/{{vm.heightFromExplorer}}</div>
+        <div class="progress progress-height popover-show" data-toggle="popover" data-placement="top" data-content="{{ 'MESSAGE.PLEASE_WAIT_SYNCH' | translate }}">
+          <div class="progress-bar progress-bar-danger progress-bar-striped progress-bar-height" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:{{vm.loadingPercent}}%">
+            {{vm.loadingPercent}}%
+          </div>
         </div>
       </div>
+      <div class="version">{{ 'METAVERSE_VERSION' | translate }} {{vm.version}}</div>
     </div>
-    <div class="version">{{ 'METAVERSE_VERSION' | translate }} <<<version>>></div>
   </div>
 </div>

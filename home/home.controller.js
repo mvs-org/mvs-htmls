@@ -2477,21 +2477,36 @@
     $scope.showConnected = false;
     $scope.index = 0;
     $scope.sound = true;
-    $rootScope.version = "<<<version>>>";
-    //$rootScope.version = "0.7.2";
+
+    $scope.version = "";
     $scope.popoverSynchShown = false;
+    $scope.peers = "";
+
+
+    MetaverseService.GetInfo()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.height = response.data.height;
+        $rootScope.height = response.data;
+        $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100);
+        $scope.version = response.data['wallet-version'];
+        $scope.checkVersion();
+        $scope.peers = response.data.peers;
+      }
+    });
+
 
     $scope.ClickCloseFlashMessage = () => {
       FlashService.CloseFlashMessage();
     }
 
     $scope.checkVersion = function () {
-      if($rootScope.version.charAt(0) == '<') {    //Dev
+      if($scope.version.charAt(0) == '<') {    //Dev
         //no check
       } else {        //Live
         $http.get('https://explorer.mvs.org/api/fullnode/version')
           .then((response)=>{
-            var walletVersion = $rootScope.version.split(".");
+            var walletVersion = $scope.version.split(".");
             var supportVersion = response.data.support.split(".");
             var currentVersion = response.data.current.split(".");
             if($scope.checkNeedUpdate(walletVersion,supportVersion)) {
@@ -2510,8 +2525,6 @@
       }
       return false;
     }
-
-    $scope.checkVersion();
 
     ws.onmessage = (ev) => {
       var response = JSON.parse(ev.data);
@@ -2586,12 +2599,13 @@
 
     function updateHeight() {
       getHeightFromExplorer();
-      MetaverseService.FetchHeight()
+      MetaverseService.GetInfo()
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
-          $scope.height = response.data;
+          $scope.height = response.data.height;
           $rootScope.height = response.data;
           $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100);
+          $scope.peers = response.data.peers;
         }
       });
     }
