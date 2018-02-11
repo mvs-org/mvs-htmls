@@ -202,9 +202,7 @@
   "LOGIN.FORGOT_PASSWORD" : "Forgot password?",
   "LOGIN.LOGIN_BUTTON" : "Login",
   "LOGIN.REGISTER_BUTTON" : "Create account",
-  "LOGIN.CHECK_BLOCK_HEIGHT1" : "If the block height has yet to fully synchronize when setup wallet at first time, DO NOT recommend using the wallet. You may view the latest block height through ",
-  "LOGIN.CHECK_BLOCK_HEIGHT_LINK" : "explorer.mvs.org",
-  "LOGIN.CHECK_BLOCK_HEIGHT2" : ".",
+  "LOGIN.DESCRIPTION" : "The Metaverse mainnet wallet (MVSD) is a full-node wallet for cryptocurrency management. Although users interact with the wallet through their browser, MVSD is not a web wallet; users are accessing a locally-stored backend program. With MVSD, you may truly own your private keys and digital assets.",
   "REGISTER.CHOOSE_ACCOUNT_NAME" : "Please enter an account name",
   "REGISTER.CHOOSE_PASSWORD" : "Please enter a password",
   "REGISTER.REPEAT_PASSWORD" : "Please repeat your password",
@@ -376,5 +374,9 @@
   "MESSAGES.SIGN_SUCCESS" : "Transaction successfully signed.",
   "MESSAGES.SIGN_AND_BROADCAST_SUCCESS" : "Transaction successfully signed and broadcast to the Blockchain.",
   "MESSAGES.SIGN_ERROR" : "The transaction could not be signed.",
-  "SETTINGS_EXPORT_ACCOUNT_NOT_AVAILABLE" : "Export Account temporarily unavailable"
+  "SETTINGS_EXPORT_ACCOUNT_NOT_AVAILABLE" : "Export Account temporarily unavailable",
+  "MESSAGES.TX_PROCESSED" : "A new transaction has been processed: ",
+  "MESSAGES.NEW_VERSION_AVAILABLE" : "A new version of the wallet is available. Please update your wallet from:",
+  "MESSAGES.NEW_VERSION_MAJOR_CHANGE" : "An important update has been released. Please update your wallet from:",
+  "MESSAGE.PLEASE_WAIT_SYNCH" : "Please wait full synchronisation before using your wallet"
 }

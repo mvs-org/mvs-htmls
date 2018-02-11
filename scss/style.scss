@@ -21,19 +21,12 @@ $off-wht: rgba(white,.4);
 $headerHeight: 65px;
 
 
-@font-face{
-    font-family: spepingfang;
-    src: url('pingfang.ttf'),
-    url('pingfang.woff'),
-    url('pingfang.svg'),
-    url('pingfang.eot'); /* IE9 */
-
-}
 
 // body,h1,h2,h3,h4, .headline {
 * {
-  font-family:'spepingfang',Arial,sans-serif,Tahoma,Arial,sans-serif;
-  font-weight: 700 !important;
+  //font-family:'spepingfang',Arial,sans-serif,Tahoma,Arial,sans-serif;
+  //font-weight: 700 !important;
+  font-family: Arial,sans-serif,微软雅黑;
 }
 
 
@@ -1455,18 +1448,19 @@ _____  ._______  ___.___ _______
   font-weight: 100;
 }
 
+.loginDescription {
+  text-align: justify;
+}
+
 .loginArea {
   background-color: white;
   border-radius: 10px;
   padding: 55px;
-  //padding-bottom: 10px;
   margin: 165px auto 100px;
   width: 550px;
   height: 630px;
-  //margin-top: 10%;
-  //padding-top: 3%;
-  //padding-bottom: 3%;
-  //margin-bottom: 10%;
+  height: auto;
+  display: table;
 }
 .headerRightXS {
   margin-top: 0;
@@ -1575,7 +1569,7 @@ _____  ._______  ___.___ _______
 //Logo Metaverse top bar
 .logoMetaverseSmall {
   width: 97px;
-  height: 34px;
+  //height: 34px;
 }
 
 
@@ -1694,6 +1688,10 @@ _____  ._______  ___.___ _______
   height: 34px;
 }
 
+.soundButton {
+  font-size: 18px;
+}
+
 .header-right {
   float:right;
   display:inline-block;
@@ -1711,8 +1709,7 @@ _____  ._______  ___.___ _______
 
 .userNameSpan {
   padding-top: 10px;
-  //padding-bottom: 10px;
-  width: 120px;
+  max-width: 120px;
 }
 
 .userNameSpanXs {
@@ -1733,7 +1730,6 @@ _____  ._______  ___.___ _______
 }
 
 .selectedLanguage {
-  font-weight: 900 !important;
   color: $redGeneralColor !important;
 }
 
@@ -1782,6 +1778,29 @@ _____  ._______  ___.___ _______
 
 
 /****************Commun to all pages****************/
+.alertWalletPages {
+  position: fixed;
+  z-index: 1000;
+  width: calc(100% - 30px);
+  top: $headerHeight;
+  margin-top: 10px;
+  max-width: 1290px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.emptySpaceAlert {
+  height: 50px;
+}
+
+.flashMessage {
+  display: inline-block;
+}
+
+.flashLink {
+  display: inline-block;
+}
+
 .red {
   color: $redGeneralColor;
 }
@@ -1855,7 +1874,7 @@ _____  ._______  ___.___ _______
   text-transform: uppercase;
 }
 
-.footerRight {
+.footer {
   position: fixed;
   padding: 10px;
   bottom: 0;
@@ -1864,12 +1883,46 @@ _____  ._______  ___.___ _______
   border-top: 1px solid #ccc;
   left: 0;
   right: 0;
-  text-align: right;
   z-index: 1000;
+}
+
+.footerLeft {
+  text-align: left;
+  display: inline;
+}
+
+.footerRight {
+  float: right;
+  display: inline;
+}
+
+.heightText {
+  display: inline-block;
 }
 
 .block {
   padding-right: 20px;
+  display: inline-block;
+}
+
+.blockWithBar {
+  padding-right: 20px;
+  display: inline-block;
+}
+
+.progress-height {
+  width: 150px;
+  height: 12px;
+  display: inline-block;
+  margin-bottom: -1px;
+}
+
+.progress-bar-height {
+  line-height: 14px;
+}
+
+.version {
+  display: inline-block;
 }
 
 

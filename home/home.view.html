@@ -8,7 +8,7 @@
           <dd class="assetBox col-xs-12 col-sm-12 col-md-12" >
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
               <div class="assetBoxSymbolImg">
-                <img class="assetSymbol" src="images/favicon.jpg" alt=""/>
+                <img class="assetSymbol" src="icon/ETP.png" alt=""/>
               </div>
               <div class="assetBoxSymbolNameETP">
                 <a href="#!/addresses/myaddresses" class="btn-link-black">ETP</a>
@@ -31,7 +31,9 @@
           <div dir-paginate="asset in assets | orderBy:['-status','symbol'] | itemsPerPage: 3" pagination-id="paginationAssets">
             <dd class="assetBox col-xs-12 col-sm-12 col-md-12" >
               <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 overflow">
-                <span class="assetBoxSymbolImg assetLogo">资</span>
+                <div class="assetBoxSymbolImg">
+                  <img class="assetSymbol" check-image ng-src="{{'icon/'+asset.symbol+'.png'}}">
+                </div>
                 <div class="assetBoxSymbolName overflow">
                   <a href="#!/asset/details/{{asset.symbol}}" class="btn-link-black ">{{asset.symbol}}</a>
                 </div>

@@ -5,9 +5,9 @@
         .module('app')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$location', 'MetaverseService', 'FlashService','localStorageService', '$interval', '$translate', '$window'];
+    LoginController.$inject = ['$location', 'MetaverseService', 'FlashService','localStorageService', '$interval', '$translate', '$window', '$http'];
 
-    function LoginController($location, MetaverseService, FlashService, localStorageService, $interval, $translate, $window) {
+    function LoginController($location, MetaverseService, FlashService, localStorageService, $interval, $translate, $window, $http) {
         var vm = this;
 
         vm.login = login;
@@ -23,11 +23,46 @@
 
         vm.height = '';
 
+        vm.getHeightFromExplorer = getHeightFromExplorer;
+        vm.heightFromExplorer = 0;
+        vm.loadingPercent = 0;
+
+        vm.popoverSynchShown = false;
+
+        vm.version = "";
+        vm.peers = "";
+
+        MetaverseService.GetInfo()
+        .then( (response) => {
+          if (typeof response.success !== 'undefined' && response.success) {
+            vm.height = response.data.height;
+            vm.height = response.data;
+            vm.loadingPercent = Math.floor(vm.height/vm.heightFromExplorer*100);
+            vm.version = response.data['wallet-version'];
+            vm.peers = response.data.peers;
+          }
+        });
+
+        function getHeightFromExplorer() {
+          $http.get('https://explorer.mvs.org/api/height')
+            .then((response)=>{
+              if(!vm.popoverSynchShown) {
+                $(function () { $('.popover-show').popover('show');});
+                vm.popoverSynchShown = true;
+              }
+              vm.heightFromExplorer = response.data.result;
+              vm.loadingPercent = Math.floor(vm.height/vm.heightFromExplorer*100);
+            })
+        }
+
         function updateHeight() {
-          MetaverseService.FetchHeight()
+          vm.getHeightFromExplorer();
+          MetaverseService.GetInfo()
           .then( (response) => {
             if (typeof response.success !== 'undefined' && response.success) {
-              vm.height = response.data;
+              vm.height = response.data.height;
+              vm.loadingPercent = Math.floor(vm.height/vm.heightFromExplorer*100);
+              vm.peers = response.data.peers;
             }
           });
         }

@@ -30,7 +30,7 @@
       }
     };
   })
-  .directive('bsPopover', function($compile, $timeout){
+  .directive('z', function($compile, $timeout){
     return function(scope, element) {
       $(element).popover();
       $('body').on('click', function (e) {
@@ -59,6 +59,15 @@
       }
     }
   }])
+  .directive('checkImage', function() {
+   return {
+      link: function(scope, element, attrs) {
+         element.bind('error', function() {
+            element.attr('src', 'icon/default.png'); // set default image
+         });
+       }
+     }
+  });
 
 
   function MenuController($location, $rootScope){
@@ -2030,7 +2039,7 @@
         if (typeof response.success !== 'undefined' && response.success) {
           $translate('MESSAGES.ASSETS_DELETE_SUCCESS').then( (data) => FlashService.Success(data, true) );
           $window.scrollTo(0,0);
-          $location.path('/asset/myassets');
+          $location.path('/home');
         } else {
           //Asset could not be delete
           $translate('MESSAGES.ASSETS_DELETE_ERROR').then( (data) =>  FlashService.Error(data));
@@ -2451,14 +2460,127 @@
 
   }
 
-  function HomeController(MetaverseService, $rootScope, $scope, localStorageService, $interval, $translate, $location, $filter) {
+  function HomeController(MetaverseService, $rootScope, $scope, localStorageService, $interval, $translate, $location, $filter, $http, FlashService) {
 
     var vm = this;
     vm.account = localStorageService.get('credentials').user;
     $scope.height = '';
     $scope.assets = [];
     $scope.language = localStorageService.get('language');
+    $scope.getHeightFromExplorer = getHeightFromExplorer;
+    $scope.heightFromExplorer = 0;
+    $scope.loadingPercent = 0;
+    $scope.subscribed = false;
 
+    //var ws = new WebSocket('ws://localhost:8821/ws');
+    var ws = new WebSocket('ws://' + MetaverseService.SERVER2 + '/ws');  //Live
+
+    $scope.showConnected = false;
+    $scope.index = 0;
+    $scope.sound = true;
+
+    $scope.version = "";
+    $scope.popoverSynchShown = false;
+    $scope.peers = "";
+
+
+    MetaverseService.GetInfo()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.height = response.data.height;
+        $rootScope.height = response.data;
+        $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100);
+        $scope.version = response.data['wallet-version'];
+        $scope.checkVersion();
+        $scope.peers = response.data.peers;
+      }
+    });
+
+
+    $scope.ClickCloseFlashMessage = () => {
+      FlashService.CloseFlashMessage();
+    }
+
+    $scope.checkVersion = function () {
+      if($scope.version.charAt(0) == '<') {    //Dev
+        //no check
+      } else {        //Live
+        $http.get('https://explorer.mvs.org/api/fullnode/version')
+          .then((response)=>{
+            var walletVersion = $scope.version.split(".");
+            var supportVersion = response.data.support.split(".");
+            var currentVersion = response.data.current.split(".");
+            if($scope.checkNeedUpdate(walletVersion,supportVersion)) {
+              $translate('MESSAGES.NEW_VERSION_MAJOR_CHANGE').then( (data) =>  FlashService.Error(data, false, "", "mvs.org"));
+            } else if ($scope.checkNeedUpdate(walletVersion,currentVersion)) {
+              $translate('MESSAGES.NEW_VERSION_AVAILABLE').then( (data) =>  FlashService.Warning(data, false, "", "mvs.org"));
+            }
+          })
+          .catch( (error) => console.log("Cannot get Version from explorer") );
+      }
+    }
+
+    $scope.checkNeedUpdate = function (walletVersion, comparedVersion){
+      if((walletVersion[0]<comparedVersion[0])||((walletVersion[0]==comparedVersion[0])&&(walletVersion[1]<comparedVersion[1]))||((walletVersion[0]==comparedVersion[0])&&(walletVersion[1]==comparedVersion[1])&&(walletVersion[2]<comparedVersion[2]))){
+        return true;
+      }
+      return false;
+    }
+
+    ws.onmessage = (ev) => {
+      var response = JSON.parse(ev.data);
+      if(!$scope.subscribed) {      //Websocket connected, need to subscribe to all addresses
+        $scope.subscribed = true;
+        $scope.subscribeToAllMyAddresses();
+      } else if (response.channel == 'tx' && response.event == 'publish' && response.result.height != '0'){
+        //New transaction detected
+        if((parseInt($scope.heightFromExplorer) - parseInt($scope.height)) < 100) {
+          $translate('MESSAGES.TX_PROCESSED').then( (data) =>  FlashService.Info(data, false, response.result.hash));
+          if($scope.sound) {
+            $scope.playNewTx();
+          }
+        }
+      }
+    };
+
+    $scope.playNewTx = function() {
+     var audio = new Audio('audio/message.mp3');
+     audio.play();
+    };
+
+    $scope.onOffSound = function () {
+      $scope.sound = !$scope.sound;
+    }
+
+    $scope.subscribeToAllMyAddresses = () => {
+      NProgress.start();
+      MetaverseService.ListBalances()
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          response.data.balances.forEach( (e) => {
+            ws.send(JSON.stringify({
+              "event": "subscribe",
+              "channel": "tx",
+              "address": e.balance.address
+            }));
+          });
+        }
+        NProgress.done();
+      });
+    };
+
+    function getHeightFromExplorer() {
+      $http.get('https://explorer.mvs.org/api/height')
+        .then((response)=>{
+          if(!$scope.popoverSynchShown) {
+            $(function () { $('.popover-show').popover('show');});
+            $scope.popoverSynchShown = true;
+          }
+          $scope.heightFromExplorer = response.data.result;
+          $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100);
+        })
+        .catch( (error) => console.log("Cannot get Height from explorer") );
+    }
 
     $scope.menu = {
       account: {
@@ -2477,11 +2599,14 @@
 
 
     function updateHeight() {
-      MetaverseService.FetchHeight()
+      getHeightFromExplorer();
+      MetaverseService.GetInfo()
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
-          $scope.height = response.data;
+          $scope.height = response.data.height;
           $rootScope.height = response.data;
+          $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100);
+          $scope.peers = response.data.peers;
         }
       });
     }

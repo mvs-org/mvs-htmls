@@ -201,10 +201,8 @@
   "LOGIN.ENTER_ACCOUNT_PASSWORD" : "输入您的密码",
   "LOGIN.FORGOT_PASSWORD" : "忘记密码?",
   "LOGIN.LOGIN_BUTTON" : "登录",
-  "LOGIN.REGISTER_BUTTON" : "注册账号",
-  "LOGIN.CHECK_BLOCK_HEIGHT1" : "第一次设置钱包时，若钱包块高未同步完，不推荐操作钱包，最新块高可通过区块浏览器",
-  "LOGIN.CHECK_BLOCK_HEIGHT_LINK" : "explorer.mvs.org",
-  "LOGIN.CHECK_BLOCK_HEIGHT2" : "查看。",
+  "LOGIN.REGISTER_BUTTON" : "创建账户",
+  "LOGIN.DESCRIPTION" : "元界主网钱包是一款管理加密货币的全节点钱包。它并非是网页钱包，浏览器仅作为用户界面，访问的是本地后台程序。在这里，您可以真正意义上拥有自己的私钥以及数字资产。",
   "REGISTER.CHOOSE_ACCOUNT_NAME" : "请输入用户名",
   "REGISTER.CHOOSE_PASSWORD" : "请输入密码",
   "REGISTER.REPEAT_PASSWORD" : "请再次输入密码",
@@ -376,5 +374,9 @@
   "MESSAGES.SIGN_SUCCESS" : "交易成功签署",
   "MESSAGES.SIGN_AND_BROADCAST_SUCCESS" : "交易已成功签署并广播到了Blockchain网络上",
   "MESSAGES.SIGN_ERROR" : "交易无法签署",
-  "SETTINGS_EXPORT_ACCOUNT_NOT_AVAILABLE" : "导出账户功能暂不可用"
+  "SETTINGS_EXPORT_ACCOUNT_NOT_AVAILABLE" : "导出账户功能暂不可用",
+  "MESSAGES.TX_PROCESSED" : "一笔新的交易已发送: ",
+  "MESSAGES.NEW_VERSION_AVAILABLE" : "新版钱包已更新，请从以下地址更新钱包:",
+  "MESSAGES.NEW_VERSION_MAJOR_CHANGE" : "已发布新版钱包，请从以下地址更新钱包:",
+  "MESSAGE.PLEASE_WAIT_SYNCH" : "请待区块同步完成后再使用钱包"
 }

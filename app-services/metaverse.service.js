@@ -15,7 +15,10 @@
         var service = {};
 
         //Test runned on port 3000. Mainnet is on port 8820
-        var SERVER = window.location.hostname+((window.location.port!=80)?":"+window.location.port:"");
+        //var SERVER = window.location.hostname+((window.location.port!=80)?":"+window.location.port:"");
+        var SERVER = window.location.hostname+":8820";
+
+        var SERVER2 = window.location.hostname+":8821";
 
         //var RPC_URL = window.location.protocol + '://' + SERVER + '/rpc';
         var RPC_URL = window.location.protocol + '/rpc';
@@ -39,6 +42,7 @@
 
 
         service.SERVER = SERVER;
+        service.SERVER2 = SERVER2;
 
         //Mining
         service.Start = Start;
@@ -80,8 +84,17 @@
         service.Query = Query;
         service.Deposit = Deposit;
         service.FrozenAsset = FrozenAsset;
+        service.GetInfo = GetInfo;
 
         return service;
+
+
+        /**
+         **/
+        function GetInfo() {
+            return _send('getinfo', []);
+        }
+
 
         /**
          * @api {post} /rpc Create a new account
@@ -619,7 +632,7 @@
          **/
         function Delete(symbol) {
             var credentials = localStorageService.get('credentials');
-            return _send('deleteunissuedasset', ['-s', symbol, credentials.user, credentials.password]);
+            return _send('deletelocalasset', ['-s', symbol, credentials.user, credentials.password]);
         }
 
 

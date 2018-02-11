@@ -8,7 +8,7 @@
   <div class="qq fullPageWidth headerBox">
     <div class="headerBox" ng-controller="MenuController">
       <ul class="nav navbar-nav">
-        <li role="presentation"><div class="linkLogo hidden-xs hidden-sm hidden-md"><a href="#!/home"><img src="images/metaverse_logo.jpg" class="logoMetaverseSmall" alt="" /></a></div></li>
+        <li role="presentation"><div class="linkLogo hidden-xs hidden-sm hidden-md"><a href="#!/home"><img src="images/metaverse_logo.png" class="logoMetaverseSmall" alt="" /></a></div></li>
         <li role="presentation"><a href="#!/home" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='home'}">{{ 'NAV_HOME' | translate }}</span></a></li>
         <li role="presentation"><a href="#!/addresses/myaddresses" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='addresses'}">{{ 'NAV_ACCOUNT_ADDRESSES' | translate }}</span></a></li>
         <li role="presentation"><a href="#!/asset/myassets" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='asset'}">{{ 'NAV_ASSETS' | translate }}</span></a></li>
@@ -47,15 +47,6 @@
             </p>
           </span>
 
-
-          <!--Block height-->
-          <!--<span class="hidden-xs hidden-sm hidden-md topMenuButtonRight">
-            <p>
-              <span>{{ 'CONNECTION_BLOCKS' | translate }}:</span>
-              <span>{{height}}</span>
-            </p>
-          </span>-->
-
           <!--Language button Large screens-->
           <span class="topMenuButtonRight languageHeaderLarge">
             <p ng-show="('LANG_CODE' | translate)=='zh'">
@@ -83,6 +74,19 @@
             <a href="#!/account/details" class="btn-link smallButton menuButton userName">
               <p class="userNameSpan topMenuButtonRight">
                 {{vm.account}}
+              </p>
+            </a>
+          </span>
+
+          <span class="topMenuButtonRight">
+            <a ng-show="sound" class="btn-link smallButton menuButton" value="" ng-click="onOffSound()">
+              <p>
+                <span class="glyphicon glyphicon-volume-up soundButton"></span>
+              </p>
+            </a>
+            <a ng-show="!sound" class="btn-link smallButton menuButton" value="" ng-click="onOffSound()">
+              <p>
+                <span class="glyphicon glyphicon-volume-off soundButton"></span>
               </p>
             </a>
           </span>
@@ -154,13 +158,44 @@
 </div>
 
 <div class="admin fullPageWidth">
-  <div class="alert" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" >
-    <div class="" ng-bind="flash.message">
+  <div class="emptySpaceAlert" ng-if="flash"></div>
+  <div class="alert alertWalletPages" ng-class="{ 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error', 'alert-info': flash.type === 'info', 'alert-warning': flash.type === 'warning' }" ng-if="flash" >
+    <button type="button" class="close" ng-click="ClickCloseFlashMessage()">X</button>
+    <div class="flashMessage" ng-bind="flash.message">
+    </div>
+    <div class="flashLink">
+      <a href="#!/explorer/tx/{{flash.hash}}" class="btn-link" ng-bind="flash.hash"></a>
+    </div>
+    <div class="flashLink">
+      <a href="https://{{flash.link}}" class="btn-link" target="_blank" ng-bind="flash.link"></a>
     </div>
   </div>
   <ui-view/>
 </div>
-<div class="footerRight">
-  <span class="block">{{ 'CONNECTION_BLOCKS' | translate }}: {{height}}</span>
-  <span>{{ 'METAVERSE_VERSION' | translate }} <<<version>>></span>
+<div class="footer">
+  <div class="footerLeft">
+    <span class="glyphicon glyphicon-signal"></span>
+    {{peers}}
+  </div>
+  <div class="footerRight">
+    <div class="heightText">{{ 'CONNECTION_BLOCKS' | translate }}: </div>
+    <div ng-if="heightFromExplorer==0" class="block">{{height}}</div>
+    <div ng-if="heightFromExplorer!=0 && (heightFromExplorer-height)<1000" class="block">
+      <div class="block">{{height}}/{{height}}</div>
+      <div class="progress progress-height">
+        <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-height" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:{{loadingPercent}}%">
+          {{loadingPercent}}%
+        </div>
+      </div>
+    </div>
+    <div ng-if="heightFromExplorer!=0 && (heightFromExplorer-height)>=1000" class="block">
+      <div class="block">{{height}}/{{heightFromExplorer}}</div>
+      <div class="progress progress-height popover-show" data-toggle="popover" data-placement="top" data-content="{{ 'MESSAGE.PLEASE_WAIT_SYNCH' | translate }}">
+        <div class="progress-bar progress-bar-danger progress-bar-striped progress-bar-height" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:{{loadingPercent}}%">
+          {{loadingPercent}}%
+        </div>
+      </div>
+    </div>
+    <div class="version">{{ 'METAVERSE_VERSION' | translate }} {{version}}</div>
+  </div>
 </div>

@@ -125,6 +125,16 @@ module.exports = function(grunt) {
                 src: 'images/**',
                 dest: 'dist'
             },
+            audio: {
+                expand: true,
+                src: 'audio/**',
+                dest: 'dist'
+            },
+            icon: {
+                expand: true,
+                src: 'icon/**',
+                dest: 'dist'
+            },
             views: {
                 expand: true,
                 src: '**/*.view.html',
@@ -200,9 +210,6 @@ module.exports = function(grunt) {
                     }, {
                         pattern: /(\.css|\.js(?!on)|\.json)/g,
                         replacement: '\.'+package.version+'$1'
-                    }, {
-                        pattern: '<<<version>>>',
-                        replacement: package.version
                     }]
                 }
             }
