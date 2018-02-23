@@ -375,7 +375,7 @@
   "MESSAGES.SIGN_AND_BROADCAST_SUCCESS" : "交易已成功签署并广播到了Blockchain网络上",
   "MESSAGES.SIGN_ERROR" : "交易无法签署",
   "SETTINGS_EXPORT_ACCOUNT_NOT_AVAILABLE" : "导出账户功能暂不可用",
-  "MESSAGES.TX_PROCESSED" : "一笔新的交易已发送: ",
+  "MESSAGES.TX_PROCESSED" : "您收到一笔款: ",
   "MESSAGES.NEW_VERSION_AVAILABLE" : "新版钱包已更新，请从以下地址更新钱包:",
   "MESSAGES.NEW_VERSION_MAJOR_CHANGE" : "已发布新版钱包，请从以下地址更新钱包:",
   "MESSAGE.PLEASE_WAIT_SYNCH" : "请待区块同步完成后再使用钱包"
