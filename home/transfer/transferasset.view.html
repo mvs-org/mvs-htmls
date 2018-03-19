@@ -15,8 +15,7 @@
           <label for="addressFrom" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
           <select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" ng-change="availBalance(sendfrom)">
             <option value="" ng-show="(asset.symbol == symbol)" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</option>
-            <option ng-repeat="asset in assetAddresses | orderBy:'quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}">{{asset.address}}</option>
-            <!--{{asset.address}} - {{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}-->
+            <option ng-repeat="asset in assetAddresses | orderBy:'quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}">{{asset.address}} - {{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
           </select>
         </div>
       </div>

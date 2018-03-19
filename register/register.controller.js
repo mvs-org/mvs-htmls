@@ -56,6 +56,7 @@
           vm.heightFromExplorer = response.data.result;
           vm.loadingPercent = Math.floor(vm.height/vm.heightFromExplorer*100);
         })
+        .catch( (error) => console.log("Cannot get Height from explorer") );
     }
 
     function updateHeight() {

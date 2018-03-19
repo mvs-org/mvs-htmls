@@ -1078,6 +1078,7 @@
             }
             $scope.addresses[e.balance.address] = ({
               "balance": parseInt(e.balance.unspent),
+              "available": parseInt(e.balance.available),
               "address": e.balance.address,
               "name": name,
               "frozen": e.balance.frozen,
@@ -1089,6 +1090,7 @@
               "address": e.balance.address
             });
           });
+          console.log($scope.listAddresses);
 
           //After loading the balances, we load the multisig addresses
           MetaverseService.ListMultiSig()
@@ -1111,8 +1113,10 @@
                     "address": e.address,
                     "name": name,
                     "balance": $scope.addresses[e.address].balance,
+                    "available": $scope.addresses[e.address].available,
                     "publicKeys": e["public-keys"]
                   });
+                  console.log($scope.listMultiSig);
                 });
               } else {
                 //The account has no multi-signature address
