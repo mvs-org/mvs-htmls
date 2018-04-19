@@ -378,5 +378,7 @@
   "MESSAGES.TX_PROCESSED" : "您收到一笔款: ",
   "MESSAGES.NEW_VERSION_AVAILABLE" : "新版钱包已更新，请从以下地址更新钱包:",
   "MESSAGES.NEW_VERSION_MAJOR_CHANGE" : "已发布新版钱包，请从以下地址更新钱包:",
-  "MESSAGE.PLEASE_WAIT_SYNCH" : "请待区块同步完成后再使用钱包"
+  "MESSAGE.PLEASE_WAIT_SYNCH" : "请待区块同步完成后再使用钱包",
+  "NAV_PROFILE": "Profile",
+  "PROFILE.CREATE_PROFILE": "Create New Profile"
 }

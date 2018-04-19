@@ -87,14 +87,6 @@
                 controllerAs: 'vm'
             })
 
-            /*.state('home.account.subscribe', {
-                url: "/account/subscribe",
-                templateUrl: "home/account/subscribe.view.html",
-                controller: 'AccountController',
-                controllerAs: 'vm'
-            })*/
-
-
             .state('home.addresses', {
                 templateUrl: "home/addresses/index.view.html",
                 controller: 'AddressesController'
@@ -113,7 +105,6 @@
                 controller: 'AddressesController',
                 controllerAs: 'vm'
             })*/
-
 
             .state('home.home', {
                 url: "/home",
@@ -236,6 +227,23 @@
                 url: "/advanced",
                 templateUrl: "home/console.view.html",
                 controller: 'ConsoleController'
+            })
+
+            .state('home.profile', {
+                templateUrl: "home/profile/index.view.html",
+                controller: 'ProfileController'
+            })
+
+            .state('home.profile.myprofil', {
+                url: "/profile/myprofile",
+                templateUrl: "home/profile/myprofile.view.html",
+                controller: 'ProfileController'
+            })
+
+            .state('home.profile.create', {
+                url: "/profile/create",
+                templateUrl: "home/profile/create.view.html",
+                controller: 'ProfileController'
             });
 
         $urlRouterProvider.otherwise("/login");

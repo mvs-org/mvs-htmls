@@ -125,7 +125,7 @@ No media query since this is the default in Bootstrap because it is "mobile firs
   outline: none;
 }
 
-//Contains the logo of the asset
+//Contains the logo of the assetz
 .assetBoxSymbolImg {
   margin-top: 6px;
   width: 36px;
@@ -966,7 +966,7 @@ _____  ._______  ___.___ _______
     }
     &:focus {
       text-decoration: none;
-      color: red !important;
+      color: $btn-color !important;
     }
 
   } @else if $type == 'link-menu' {
@@ -1414,7 +1414,7 @@ _____  ._______  ___.___ _______
   overflow: hidden;
 }
 /*********** End Buttons ****************/
-.form-group select, .form-group textarea, .form-group input[type]:not([type=search]):not([type=submit]) {
+.form-group select, .form-group textarea, .form-group input[type]:not([type=search]):not([type=submit]):not([disabled]):not([readonly]) {
   background-color : white;
   border-width: solid 1px $mediumGrey;
 }
@@ -2781,11 +2781,6 @@ h2 {
   width: 200px;
 }
 
-.form-spebox input[type=submit]{
-  margin-top:60px;
-}
-
-
 
 /**************Advanced details*****************/
 .wk-title{
@@ -2894,5 +2889,45 @@ h2 {
 }
 
 .comm-btnbox{
-  width:240px !important
+  width:240px !important;
+  margin-top:40px;
+}
+
+.navbar-form {
+  padding-left: 0;
+  padding-right: 10px;
+}
+
+.buttonBox {
+  width:490px !important;
+  margin-right: -15px;
+  margin-left: -15px;
+  margin-top:40px;
+}
+
+.selectedOnOffChain {
+  font-weight: 700;
+}
+
+.onOffChainButtons {
+  margin-bottom: 30px;
+}
+
+.readonly {
+  background-color: #eee;
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+.profilFieldButtons {
+  margin-top: 27px;
+  width: 100%;
+  //text-align: center;
+}
+
+.profilFieldButtons .btn{
+  max-width: 130px;
+  margin-left: 20px;
+  width: 50%;
+  display: inline-block;
 }

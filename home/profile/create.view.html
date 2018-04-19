@@ -1,0 +1,34 @@
+<div>
+  <ul class="nav nav-pills tabsMenu">
+    <li role="presentation" class="active"><a class="btn-link-menu">{{ 'CREATE_PROFILE.CREATE_PROFILE' | translate }}</a></li>
+  </ul>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-sm-6 col-md-6">
+    <br/>
+    <form class="form-spebox">
+      <!--ID-->
+      <div class="form-group">
+        <label class="control-label">{{ 'CREATE_PROFILE.CREATE_ID' | translate }}</label>
+        <input type="text" class="form-control" name="password" id="" ng-model="privatekey_password" autocomplete="off">
+      </div>
+      <!--Address-->
+  		<div class="form-group">
+				<label for="useAddress" class=" ddd control-label">{{ 'CREATE_PROFILE.SELECT_ADDRESS' | translate }}</label>
+				<select name="useAddress" type="address" class="form-control" placeholder="" ng-model="sendfrom" ng-change="availBalance(sendfrom)">
+					<option value="">{{ 'CREATE_PROFILE.ADDRESS_AUTOMATIC' | translate }}</option>
+					<option ng-repeat="oneAddress in listAddresses | orderBy:'balance':true" value="{{oneAddress.address}}" title="{{oneAddress.available/100000000}} ETP" ng-show="oneAddress.balance != 0 && addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available/100000000}} ETP</option>
+				</select>
+  		</div>
+      <div class="buttonBox">
+        <div class="col-xs-6">
+          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="{{ 'CREATE_PROFILE.CREATE_PROFILE_BUTTON' | translate }}" class="btn btn-success">
+        </div>
+        <div class="col-xs-6">
+          <a href="#!/profile/myprofile" class="btn btn-success btn-success-secondary">Back to my profile</a>
+          <!--a href="#!/profile/myprofile" class="btn btn-link-red">Back to my profile</a-->
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

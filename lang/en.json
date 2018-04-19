@@ -378,5 +378,20 @@
   "MESSAGES.TX_PROCESSED" : "A new transaction has been processed: ",
   "MESSAGES.NEW_VERSION_AVAILABLE" : "A new version of the wallet is available. Please update your wallet from:",
   "MESSAGES.NEW_VERSION_MAJOR_CHANGE" : "An important update has been released. Please update your wallet from:",
-  "MESSAGE.PLEASE_WAIT_SYNCH" : "Please wait full synchronisation before using your wallet"
+  "MESSAGE.PLEASE_WAIT_SYNCH" : "Please wait full synchronisation before using your wallet",
+  "NAV_PROFILE": "Profile",
+  "HEADLINE_PROFILE": "Digital Identity",
+  "PROFILE.MY_PROFILE": "My Profile",
+  "PROFILE.AUTHORIZE": "Authorize",
+  "PROFILE.REQUEST_LIST": "Request List",
+  "PROFILE.RELATIONSHIPS": "My Relationships",
+  "PROFILE.CREATE_NEW_PROFILE_BUTTON": "Create Profile",
+  "PROFIL.DID": "DID",
+  "PROFIL.ADDRESS": "Address",
+  "PROFILE.DATA_FIELD": "Data Field ",
+  "CREATE_PROFILE.CREATE_PROFILE": "Create Profile",
+  "CREATE_PROFILE.CREATE_ID": "Digital Identity ID",
+  "CREATE_PROFILE.CREATE_PROFILE_BUTTON": "Create Profile",
+  "CREATE_PROFILE.SELECT_ADDRESS": "Select Address",
+  "CREATE_PROFILE.ADDRESS_AUTOMATIC": "Automatic"
 }

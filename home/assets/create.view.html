@@ -7,7 +7,7 @@
 </div>-->
 <br/>
 <form>
-  <div class="col-sm-6">
+  <div class="col-md-12 col-lg-6">
 
     <!--Form via HTML5 and SCSS-->
     <form class="form-horizontal spe-form" role="form">
@@ -56,7 +56,7 @@
         <input type="password" class="form-control" name="password" placeholder="" required ng-class="{ 'border-danger' : (error.password && password)}" ng-model="password" autocomplete="new-password">
       </div>
       <br/>
-      <div class="creatAssetBtnbox">
+      <div class="comm-btnbox">
         <input type="submit" class="btn btn-success" ng-click="createasset()" value="{{ 'ASSET_ASSET_CREATE_SUBMIT_BUTTON' | translate }}">
       </div>
     </form>

@@ -16,6 +16,7 @@
   .controller('ETPMultiSignController', ETPMultiSignController)
   .controller('DepositController', DepositController)
   .controller('ExplorerController', ExplorerController)
+  .controller('ProfileController', ProfileController)
   .directive('bsTooltip', function() {
     return {
       restrict: 'A',
@@ -959,9 +960,6 @@
 
       if (transactionOK == false) {
         //error already handle
-      } else if ($scope.password === '') { //Check for empty password
-        $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
       } else {
         var SendPromise = MetaverseService.GetNewMultiSig($scope.nbrCosignersRequired, $scope.cosigners.length+1, $scope.publicKey, $scope.cosigners);
         SendPromise
@@ -983,7 +981,6 @@
                 $window.scrollTo(0,0);
               }
             });
-            $scope.password = '';
           }
         });
       }
@@ -1003,65 +1000,6 @@
         $scope.balance = balance;
       }
     });
-
-
-    /*function listMultiSign() {
-      NProgress.start();
-      //Load users ETP balance
-      //Load the addresses and their balances
-      MetaverseService.ListBalances()
-      .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
-          $scope.addresses = [];
-          response.data.balances.forEach( (e) => {
-            var name = "New address";
-            if (localStorageService.get(e.balance.address) != undefined) {
-              name = localStorageService.get(e.balance.address);
-            }
-            $scope.addresses[e.balance.address] = parseInt(e.balance.unspent);
-            $scope.addresses.push({
-              "balance": parseInt(e.balance.unspent),
-              "address": e.balance.address,
-              "name": name,
-              "frozen": e.balance.frozen
-            });
-          });
-
-          //After loading the balances, we load the multisig addresses
-          MetaverseService.ListMultiSig()
-          .then( (response) => {
-            if (typeof response.success !== 'undefined' && response.success) {
-              if(response.data.multisig != "") {    //if the user has already at least 1 multisignature address
-                response.data.multisig.forEach( (e) => {
-                  var name = "New address";
-                  if (localStorageService.get(e.address) != undefined) {
-                    name = localStorageService.get(e.address);
-                  }
-                  var balance = '';
-                  $scope.listMultiSig.push({
-                    "index": e.index,
-                    "m": e.m,
-                    "n": e.n,
-                    "selfpublickey": e["self-publickey"],
-                    "description": e.description,
-                    "address": e.address,
-                    "name": name,
-                    "balance": $scope.addresses[e.address],
-                    "publicKeys": e["public-keys"]
-                  });
-                });
-              } else {
-                //The account has no multi-signature address
-              }
-            } else {
-              //Fail
-            }
-          });
-        }
-      });
-      NProgress.done();
-    }*/
-
 
     function listMultiSign() {
       NProgress.start();
@@ -1090,7 +1028,6 @@
               "address": e.balance.address
             });
           });
-          console.log($scope.listAddresses);
 
           //After loading the balances, we load the multisig addresses
           MetaverseService.ListMultiSig()
@@ -1116,7 +1053,6 @@
                     "available": $scope.addresses[e.address].available,
                     "publicKeys": e["public-keys"]
                   });
-                  console.log($scope.listMultiSig);
                 });
               } else {
                 //The account has no multi-signature address
@@ -2606,7 +2542,7 @@
       getHeightFromExplorer();
       MetaverseService.GetInfo()
       .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
+        if (response.success == undefined && response.success) {
           $scope.height = response.data.height;
           $rootScope.height = response.data;
           $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100);
@@ -2675,4 +2611,87 @@
       NProgress.done();
     }
   }
+
+  function ProfileController(MetaverseHelperService, MetaverseService, $scope, $translate, $window, localStorageService) {
+
+    $scope.listAddresses = [];
+    $scope.listMultiSig = [];
+
+    $scope.onChain = false;
+    $scope.selectedDID = '';
+    $scope.address = '';
+
+    function listMultiSign() {
+      NProgress.start();
+      //Load users ETP balance
+      //Load the addresses and their balances
+      MetaverseService.ListBalances()
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.addresses = [];
+          response.data.balances.forEach( (e) => {
+            var name = "New address";
+            if (localStorageService.get(e.balance.address) != undefined) {
+              name = localStorageService.get(e.balance.address);
+            }
+            $scope.addresses[e.balance.address] = ({
+              "balance": parseInt(e.balance.unspent),
+              "available": parseInt(e.balance.available),
+              "address": e.balance.address,
+              "name": name,
+              "frozen": e.balance.frozen,
+              "type": "single"
+            });
+            $scope.listAddresses.push({
+              "balance": parseInt(e.balance.unspent),
+              "available": parseInt(e.balance.available),
+              "address": e.balance.address
+            });
+          });
+
+          //After loading the balances, we load the multisig addresses
+          MetaverseService.ListMultiSig()
+          .then( (response) => {
+            if (typeof response.success !== 'undefined' && response.success) {
+              if(response.data.multisig != "") {    //if the user has some assets
+                response.data.multisig.forEach( (e) => {
+                  $scope.addresses[e.address].type = "multisig";
+                  var name = "New address";
+                  if (localStorageService.get(e.address) != undefined) {
+                    name = localStorageService.get(e.address);
+                  }
+                  var balance = '';
+                  $scope.listMultiSig.push({
+                    "index": e.index,
+                    "m": e.m,
+                    "n": e.n,
+                    "selfpublickey": e["self-publickey"],
+                    "description": e.description,
+                    "address": e.address,
+                    "name": name,
+                    "balance": $scope.addresses[e.address].balance,
+                    "available": $scope.addresses[e.address].available,
+                    "publicKeys": e["public-keys"]
+                  });
+                });
+              } else {
+                //The account has no multi-signature address
+              }
+            } else {
+              //Fail
+            }
+          });
+        }
+      });
+      NProgress.done();
+    }
+
+    listMultiSign();
+
+    function changeDID(selectedDID) {
+
+    }
+
+  }
+
 })();
