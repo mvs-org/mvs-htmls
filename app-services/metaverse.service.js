@@ -178,18 +178,14 @@
         }
 
 
-        /*function ExportAccountAsFile(password, last_word) {
+        function ExportAccountAsFile(password, last_word) {
           var credentials = localStorageService.get('credentials');
           return _send('exportaccountasfile', [credentials.user, password, last_word]);
-        }*/
-
-        function ExportAccountAsFile(password, last_word, path) {
-          var credentials = localStorageService.get('credentials');
-          return _send('exportaccountasfile', [credentials.user, password, last_word, path]);
         }
 
-        function ImportAccountFromFile(path, password) {
-          return _send('importaccountfromfile', [path, password]);
+
+        function ImportAccountFromFile(username, password, path, content) {
+          return _send('importaccountfromfile', [username, password, path, content]);
         }
 
 

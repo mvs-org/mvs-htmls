@@ -161,15 +161,15 @@
             });
           }
         }
-      } else if($scope.import_from_file){ //Import account from file
-        //MetaverseService.ImportAccountFromFile($scope.accountInfo, vm.user.password)
-        //.then(function (response) {
-        MetaverseService.ImportAccountFromFile($scope.path, vm.user.password)
+      } else if($scope.import_from_file){
+        //Import account from file
+        MetaverseService.ImportAccountFromFile(vm.user.username, vm.user.password, '.', $scope.accountInfo)
         .then(function (response) {
           if (typeof response.success !== 'undefined' && response.success) {
               $translate('MESSAGES.IMPORT_SUCCESS').then( (data) => {
                   FlashService.Success(data,true);
                   $location.path('/login');
+                  $window.scrollTo(0,0);
               });
           } else {
             $translate('MESSAGES.IMPORT_ERROR').then( (data) => {
@@ -184,7 +184,8 @@
           }
         });
 
-      } else { //Create a new account
+      } else {
+        //Create a new account
         MetaverseService.GetNewAccount(vm.user.username, vm.user.password)
         .then( (response) => {
           if ( typeof response.success !== 'undefined' && response.success) {
