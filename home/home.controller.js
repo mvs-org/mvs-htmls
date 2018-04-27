@@ -1338,7 +1338,7 @@
     });
   }
 
-  function AccountController(MetaverseService, $translate, $rootScope, $scope, FlashService, $location, localStorageService, $window, FileSaver, Blob) {
+  function AccountController(MetaverseService, $translate, $rootScope, $scope, $http, FlashService, $location, localStorageService, $window, FileSaver, Blob) {
 
     $window.scrollTo(0,0);
     $scope.showprivatekey = showprivatekey;
@@ -1347,6 +1347,9 @@
     $scope.accountname = localStorageService.get('credentials').user;
     $scope.debugState = MetaverseService.debug;
     $scope.path = "";
+    $scope.download = download;
+    $scope.showqr = showqr;
+    $scope.empty = '';
 
     $scope.setDeugger = setDeugger;
 
@@ -1408,64 +1411,68 @@
       $scope.debugState = MetaverseService.debug;
     }
 
-    /*function exportAccount(password, last_word) {
+    new Blob(['text'], { type: 'text/plain;charset=utf-8' });
+
+    function download(text, fileName) {
+      var jsonse = JSON.stringify(text);
+      var data = new Blob([jsonse], {type: "application/json"});
+      FileSaver.saveAs(data, fileName + '.' + $scope.empty + 'json');
+    };
+
+
+    //Shows a modal of the address incl. a qr code
+    function showqr(text, password) {
+      let mnemonic = text.mnemonic;
+      let index = text.index;
+
+      let decryptedmnemonic = JSON.parse(CryptoJS.AES.decrypt(mnemonic, password).toString(CryptoJS.enc.Utf8));
+      let seed = bip39.mnemonicToSeed(decryptedmnemonic, MetaverseService.MetaverseNetwork[$rootScope.network]);
+      let encseed = CryptoJS.AES.encrypt(JSON.stringify(seed.toString('hex')), password).toString();
+
+      let display = encseed + "&" + $rootScope.network.charAt(0) + "&" + index;
+
+      $('#showqrmodal').modal();
+      $('#modal_account').html(localStorageService.get('credentials').user);
+      $('#modal_qr').html('');
+      var qrcode = new QRCode(document.getElementById("modal_qr"), {
+        text: display,
+        width: 300,
+        height: 300,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+      $('#showqrmodal').modal('show');
+    }
+
+    function exportAccount(password, last_word, toFile) {
       if (localStorageService.get('credentials').password != password) {
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
+      /*} else if (path.split(" ").length > 1) {
+        $translate('MESSAGES.CONTAINS_SPACE').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);*/
       } else {
         NProgress.start();
         MetaverseService.ExportAccountAsFile(password, last_word)
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success) {
-            //Show success message
-            download(response.data.result, localStorageService.get('credentials').user);
-            $translate('MESSAGES.EXPORT_ACCOUNT_FILE_SUCCESS').then( (data) => {
-              FlashService.Success(data);
-            });
-            $window.scrollTo(0,0);
-          } else {
-            //Show export error
-            $translate('MESSAGES.EXPORT_ACCOUNT_FILE_ERROR').then( (data) => {
-              if (response.message != undefined) {
-                FlashService.Error(data + " " + response.message);
-              } else {
-                FlashService.Error(data);
-              }
-            });
-            $window.scrollTo(0,0);
-          }
-          NProgress.done();
-        });
-      }
-    }
-
-    new Blob(['text'], { type: 'text/plain;charset=utf-8' });
-
-    $scope.download = download;
-
-
-    function download(text, fileName) {
-      var data = new Blob([text], { type: 'text/plain;charset=utf-8' });
-      FileSaver.saveAs(data, fileName+'.txt');
-    };*/
-
-
-    function exportAccount(password, last_word, path) {
-      if (localStorageService.get('credentials').password != password) {
-        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else if (path.split(" ").length > 1){
-        $translate('MESSAGES.CONTAINS_SPACE').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else {
-        NProgress.start();
-        MetaverseService.ExportAccountAsFile(password, last_word, path)
-        .then( (response) => {
-          if (typeof response.success !== 'undefined' && response.success) {
-            //Show success message
-            $translate('MESSAGES.EXPORT_ACCOUNT_FILE_SUCCESS').then( (data) => {
-              FlashService.Success(data);
-            });
+            $http.get('./keys/mvs_keystore_' + localStorageService.get('credentials').user + '.' + $scope.empty + 'json')
+              .then(function onSuccess(response) {
+                if (toFile) {
+                  download(response.data, 'mvs_keystore_' + localStorageService.get('credentials').user);
+                  $translate('MESSAGES.EXPORT_ACCOUNT_FILE_SUCCESS').then( (data) => {
+                    FlashService.Success(data);
+                  });
+                } else {
+                  showqr(response.data, password);
+                }
+              })
+              .catch(function onError(response) {
+                $translate('MESSAGES.EXPORT_ACCOUNT_DOWNLOAD_FILE_ERROR').then( (data) => {
+                  FlashService.Warning(data);
+                });
+              });
             $window.scrollTo(0,0);
           } else {
             //Show export error
@@ -1501,7 +1508,7 @@
     $scope.assetsIssued = [];
 
     $scope.allAddresses = [];                     //Contains the list of all the addresses
-    $scope.assetAddresses = [];                    //Contrain the asset balance of each address
+    $scope.assetAddresses = [];                   //Contrain the asset balance of each address
     $scope.listBalances = listBalances;
     $scope.listAssetBalances = listAssetBalances;
 
@@ -2338,66 +2345,6 @@
       ws.send($scope.querystring);
     };
 
-
-    /***Mining***/
-    $scope.start = StartMining;
-    $scope.stop = StopMining;
-    $scope.status = {};
-    $scope.isMining=false;
-
-
-
-    function GetMiningInfo() {
-      NProgress.start();
-      MetaverseService.GetMiningInfo()
-      .then( (response) => {
-        NProgress.done();
-        if (typeof response.success !== 'undefined' && response.success) {
-          $scope.status = response.data['mining-info'];
-          $scope.isMining = (response.data['mining-info'].status === 'true');  //Convert string to boolean
-        } else {
-          $translate('MESSAGES.MINING_STATUS_ERROR').then( (data) => FlashService.Error(data) );
-          $window.scrollTo(0,0);
-        }
-      });
-    }
-
-
-    function StartMining() {
-      NProgress.start();
-      MetaverseService.Start()
-      .then( (response) => {
-        NProgress.done();
-        if (typeof response.success !== 'undefined' && response.success) {
-          $translate('MESSAGES.MINING_START_SUCCESS').then( (data) => FlashService.Success(data) );
-          $window.scrollTo(0,0);
-          GetMiningInfo();
-        } else {
-          $translate('MESSAGES.MINING_START_ERROR').then( (data) => FlashService.Error(data) );
-          $window.scrollTo(0,0);
-        }
-      });
-    }
-
-    function StopMining() {
-      NProgress.start();
-      MetaverseService.Stop()
-      .then(function(response) {
-        NProgress.done();
-        if (typeof response.success !== 'undefined' && response.success) {
-          $translate('MESSAGES.MINING_STOP_SUCCESS').then( (data) => FlashService.Success(data) );
-          $window.scrollTo(0,0);
-          GetMiningInfo();
-        } else {
-          $translate('MESSAGES.MINING_STOP_ERROR').then( (data) => FlashService.Error(data) );
-          $window.scrollTo(0,0);
-        }
-      });
-    }
-
-    GetMiningInfo();
-
-
   }
 
   function HomeController(MetaverseService, $rootScope, $scope, localStorageService, $interval, $translate, $location, $filter, $http, FlashService) {
@@ -2428,7 +2375,7 @@
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.height = response.data.height;
-        $rootScope.height = response.data;
+        $rootScope.network = response.data.testnet ? 'testnet' : 'mainnet';
         $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100);
         $scope.version = response.data['wallet-version'];
         $scope.checkVersion();
@@ -2544,7 +2491,7 @@
       .then( (response) => {
         if (response.success == undefined && response.success) {
           $scope.height = response.data.height;
-          $rootScope.height = response.data;
+          $rootScope.network = response.data.testnet ? 'testnet' : 'mainnet';
           $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100);
           $scope.peers = response.data.peers;
         }

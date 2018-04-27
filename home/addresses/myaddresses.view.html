@@ -1,127 +1,123 @@
+<div class="headline">
+  ETP
+</div>
+<!--<div>
+<ul class="nav nav-pills tabsMenu">
+<li role="presentation" class="active"><a href="#!/addresses/myaddresses" class="btn-link-menu">{{ 'ADDRESSES_MY_ADDRESSES' | translate }}</a></li>
+<li role="presentation"><a href="#!/addresses/multisignatureaddresses" class="btn-link-menu">{{ 'ADDRESSES_MULTISIG_ADDRESSES' | translate }}</a></li>
+</ul>
+</div>-->
 
-  <div class="headline">
-    ETP
-    <!--{{ 'NAV_ACCOUNT_ADDRESSES' | translate }}-->
-    <!--<a href="#!/deposit/ETP" class="btn btn-success smallButton">{{ 'DEPOSIT.HEADLINE' | translate }}</a>-->
-  </div>
-  <!--<div>
-    <ul class="nav nav-pills tabsMenu">
-      <li role="presentation" class="active"><a href="#!/addresses/myaddresses" class="btn-link-menu">{{ 'ADDRESSES_MY_ADDRESSES' | translate }}</a></li>
-      <li role="presentation"><a href="#!/addresses/multisignatureaddresses" class="btn-link-menu">{{ 'ADDRESSES_MULTISIG_ADDRESSES' | translate }}</a></li>
-    </ul>
-  </div>-->
-
-  <!--ETP Balance-->
-  <div class="assetBox  first-atbox col-xs-12 col-sm-12 col-md-12 " >
-    <!--<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">-->
-      <!--<div class="assetBoxSymbolImg">-->
-        <!--<img class="assetSymbol" src="images/favicon.jpg" alt=""/>-->
-      <!--</div>-->
-      <!--<div class="assetBoxSymbolNameETP">-->
-        <!--<a href="#!/addresses/myaddresses" class="btn-link-black">ETP</a>-->
-      <!--</div>-->
-    <!--</div>-->
-    <div class="boxbox">
-        <div class="assetBoxBalance ast-wd">
-          <div class="assetBoxTitle ">{{ 'BALANCE' | translate }}</div>
-          <div class="assetBoxValue overflow">{{balance['total-unspent']/100000000}}</div>
-        </div>
-        <div class="assetBoxFrozen">
-          <div class="assetBoxTitle">{{ 'FROZEN' | translate}}</div>
-          <div class="assetBoxValue overflow">{{balance['total-frozen']/100000000}}</div>
-        </div>
-      </div>
-    <div class="assetBoxButtons fr">
-      <a href="#!/deposit/ETP" class="btn btn-success btn-success-secondary smallButton assetBoxButton">{{ 'DEPOSIT.HEADLINE' | translate}}</a>
-      <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/ETP">{{ 'ASSETS_SEND' | translate}}</a>
+<!--ETP Balance-->
+<div class="assetBox  first-atbox col-xs-12 col-sm-12 col-md-12 " >
+  <!--<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">-->
+  <!--<div class="assetBoxSymbolImg">-->
+  <!--<img class="assetSymbol" src="images/favicon.jpg" alt=""/>-->
+  <!--</div>-->
+  <!--<div class="assetBoxSymbolNameETP">-->
+  <!--<a href="#!/addresses/myaddresses" class="btn-link-black">ETP</a>-->
+  <!--</div>-->
+  <!--</div>-->
+  <div class="boxbox">
+    <div class="assetBoxBalance ast-wd">
+      <div class="assetBoxTitle ">{{ 'BALANCE' | translate }}</div>
+      <div class="assetBoxValue overflow">{{balance['total-unspent']/100000000}}</div>
+    </div>
+    <div class="assetBoxFrozen">
+      <div class="assetBoxTitle">{{ 'FROZEN' | translate}}</div>
+      <div class="assetBoxValue overflow">{{balance['total-frozen']/100000000}}</div>
     </div>
   </div>
-
-  <!--Show/Hide empty addresses-->
-  <div class="whiteSpace">
-    <br/>
+  <div class="assetBoxButtons fr">
+    <a href="#!/deposit/ETP" class="btn btn-success btn-success-secondary smallButton assetBoxButton">{{ 'DEPOSIT.HEADLINE' | translate}}</a>
+    <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/ETP">{{ 'ASSETS_SEND' | translate}}</a>
   </div>
+</div>
 
-  <div class="col-xs-12 noPaddingLeftRight spe-addrbox showHideEmpty">
-    <div class="col-xs-6">
-      <div class="checkboxCircle">
-        <div class="checkbox-box">
-          <input type="checkbox" checked ng-model="displayEmptyAdresses" id="checkboxCircleAdresses" ng-click="!displayEmptyAdresses && displayEmpty() ; displayEmptyAdresses && hideEmpty()"  >
-          <label for="checkboxCircleAdresses"></label>
-        </div>
-        <span class="textCheckbox spe-tc">{{ 'ADDRESSES_HIDE_EMPTY' | translate }}</span>
-      </div>
-    </div>
-    <!--Get new address-->
-    <div class="createAddress col-xs-6 noPaddingLeftRight">
-      <!--New Multisignature address-->
-      <a href="#!/addresses/newmultisignature" class="btn btn-success smallButton"><span class="glyphicon glyphicon-plus"></span> {{ 'TRANSFER_MULTISIGNATURE_ADD' | translate }}</a>
-      <!--New personnal address-->
-      <button ng-click="getnewaddress()" class="btn btn-success smallButton"><span class="glyphicon glyphicon-plus"></span> {{ 'ADDRESSES_CREATE_NEW_ADDRESS' | translate }}</button>
-    </div>
-  </div>
-
-  <!--QR Code pop-up-->
-  <div class="modal fade" id="showqrmodal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content panel">
-        <div class="qrCodePopUp" id="modal_qr"></div>
-        <div class="addressQRCode" id="modal_address"></div>
-      </div>
-    </div>
-  </div>
+<!--Show/Hide empty addresses-->
+<div class="whiteSpace">
   <br/>
+</div>
 
-  <!--Display all the ETP adresses-->
-  <div dir-paginate="address in addressesDisplay | orderBy:'balance':true | itemsPerPage: 10" ng-hide="(displayEmptyAdresses == true && address.balance == 0)" ng-model='chkMonitor'>
-    <dd class="assetBoxAdd assetBox col-xs-12 col-sm-12 col-md-12" >
-      <div class="assetBoxBalance col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
-        <!--Display editable name of the address-->
-        <div ng-hide="address.edit">
-          <span class="addressBoxName" readonly="true" id="editAddressName">{{address.name}}</span>
-          <button class="fa fa-edit editAddressNameButton" bs-tooltip data-placement="top" title="{{ 'ADDRESSES_TOOLTIP_EDIT_NAME' | translate }}" ng-click="enableEditAddressName(address.address)"></button>
-        </div>
-        <!--Display while editing-->
-        <div class="input-group" ng-show="address.edit">
-          <input type="text" ng-model="address.newName" class="form-control addressBoxNameUpdate" id="editAddressNameEditing" maxlength="40" ng-keyup="$event.keyCode == 13 && endEditAddressName(address.address, address.newName)">
-          <span class="input-group-addon editAddressName">
-            <button class="glyphicon glyphicon-floppy-saved editAddressNameButtonEditing" ng-click="endEditAddressName(address.address, address.newName)"></button>
-          </span>
-          <span class="input-group-addon editAddressName">
-            <button class="glyphicon glyphicon-remove editAddressNameButtonEditing" ng-click="cancelEditAddressName(address.address)"></button>
-          </span>
-        </div>
+<div class="col-xs-12 noPaddingLeftRight spe-addrbox showHideEmpty">
+  <div class="col-xs-6">
+    <div class="checkboxCircle">
+      <div class="checkbox-box">
+        <input type="checkbox" checked ng-model="displayEmptyAdresses" id="checkboxCircleAdresses" ng-click="!displayEmptyAdresses && displayEmpty() ; displayEmptyAdresses && hideEmpty()"  >
+        <label for="checkboxCircleAdresses"></label>
+      </div>
+      <span class="textCheckbox spe-tc">{{ 'ADDRESSES_HIDE_EMPTY' | translate }}</span>
+    </div>
+  </div>
+  <!--Get new address-->
+  <div class="createAddress col-xs-6 noPaddingLeftRight">
+    <!--New Multisignature address-->
+    <a href="#!/addresses/newmultisignature" class="btn btn-success smallButton"><span class="glyphicon glyphicon-plus"></span> {{ 'TRANSFER_MULTISIGNATURE_ADD' | translate }}</a>
+    <!--New personnal address-->
+    <button ng-click="getnewaddress()" class="btn btn-success smallButton"><span class="glyphicon glyphicon-plus"></span> {{ 'ADDRESSES_CREATE_NEW_ADDRESS' | translate }}</button>
+  </div>
+</div>
 
-        <a href="#!/explorer/adr/{{address.address}}" class="btn-link-black col-xs-12 noPaddingLeftRight addressBoxAddressDeposit overflow">{{address.address}}</a>
+<!--QR Code pop-up-->
+<div class="modal fade" id="showqrmodal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content panel">
+      <div class="qrCodePopUp" id="modal_qr"></div>
+      <div class="addressQRCode" id="modal_address"></div>
+    </div>
+  </div>
+</div>
+<br/>
 
+<!--Display all the ETP adresses-->
+<div dir-paginate="address in addressesDisplay | orderBy:'balance':true | itemsPerPage: 10" ng-hide="(displayEmptyAdresses == true && address.balance == 0)" ng-model='chkMonitor'>
+  <dd class="assetBoxAdd assetBox col-xs-12 col-sm-12 col-md-12" >
+    <div class="assetBoxBalance col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+      <!--Display editable name of the address-->
+      <div ng-hide="address.edit">
+        <span class="addressBoxName" readonly="true" id="editAddressName">{{address.name}}</span>
+        <button class="fa fa-edit editAddressNameButton" bs-tooltip data-placement="top" title="{{ 'ADDRESSES_TOOLTIP_EDIT_NAME' | translate }}" ng-click="enableEditAddressName(address.address)"></button>
       </div>
-      <div class="assetBoxBalance col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
-        <div class="assetBoxTitle">{{ 'BALANCE' | translate }}</div>
-        <div class="assetBoxValue col-xd-12 noPaddingLeftRight overflow">{{address.balance/100000000}}</div>
-      </div>
-      <div class="assetBoxFrozen col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 noPaddingLeftRight">
-        <div class="assetBoxTitle">{{ 'FROZEN' | translate}}</div>
-        <div class="assetBoxValue col-xd-12 noPaddingLeftRight">{{address.frozen/100000000}}</div>
-      </div>
-      <div class="assetBoxCopy col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
-        <span class="copyAddress">
-          <button class="btn btn-link-black addressLinkButton" bs-popover data-clipboard-text="{{address.address}}" data-toggle="popover" data-placement="top" data-content="{{ 'ADDRESSES_POPOVER_COPIED' | translate }}" role="button">
-            <span class="glyphicon"></span> {{ 'ADDRESSES_COPY_ADDRESS' | translate }}
-          </button>
+      <!--Display while editing-->
+      <div class="input-group" ng-show="address.edit">
+        <input type="text" ng-model="address.newName" class="form-control addressBoxNameUpdate" id="editAddressNameEditing" maxlength="40" ng-keyup="$event.keyCode == 13 && endEditAddressName(address.address, address.newName)">
+        <span class="input-group-addon editAddressName">
+          <button class="glyphicon glyphicon-floppy-saved editAddressNameButtonEditing" ng-click="endEditAddressName(address.address, address.newName)"></button>
+        </span>
+        <span class="input-group-addon editAddressName">
+          <button class="glyphicon glyphicon-remove editAddressNameButtonEditing" ng-click="cancelEditAddressName(address.address)"></button>
         </span>
       </div>
-      <div class="assetBoxCopy col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
-        <span class="qrCode">
-          <button id="element" class="btn btn-link-black addressLinkButton" ng-click="showqr(address.address)" alt="receive">
-            <span class="glyphicon glyphicon-qrcode"></span> {{ 'ADDRESSES_QR_CODE' | translate }}
-          </button>
-        </span>
-      </div>
-    </dd>
-  </div>
+      <a href="#!/explorer/adr/{{address.address}}" class="btn-link-black col-xs-12 noPaddingLeftRight addressBoxAddressDeposit overflow">{{address.address}}</a>
+    </div>
 
-  <!--Pagination-->
-  <div class="paginationHistory">
-    <dir-pagination-controls></dir-pagination-controls>
-  </div>
-  <br/><br/>
+    <div class="assetBoxBalance col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
+      <div class="assetBoxTitle">{{ 'BALANCE' | translate }}</div>
+      <div class="assetBoxValue col-xd-12 noPaddingLeftRight overflow">{{address.balance/100000000}}</div>
+    </div>
+    <div class="assetBoxFrozen col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 noPaddingLeftRight">
+      <div class="assetBoxTitle">{{ 'FROZEN' | translate}}</div>
+      <div class="assetBoxValue col-xd-12 noPaddingLeftRight">{{address.frozen/100000000}}</div>
+    </div>
+    <div class="assetBoxCopy col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
+      <span class="copyAddress">
+        <button class="btn btn-link-black addressLinkButton" bs-popover data-clipboard-text="{{address.address}}" data-toggle="popover" data-placement="top" data-content="{{ 'ADDRESSES_POPOVER_COPIED' | translate }}" role="button">
+          <span class="glyphicon"></span> {{ 'ADDRESSES_COPY_ADDRESS' | translate }}
+        </button>
+      </span>
+    </div>
+    <div class="assetBoxCopy col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
+      <span class="qrCode">
+        <button id="element" class="btn btn-link-black addressLinkButton" ng-click="showqr(address.address)" alt="receive">
+          <span class="glyphicon glyphicon-qrcode"></span> {{ 'ADDRESSES_QR_CODE' | translate }}
+        </button>
+      </span>
+    </div>
+  </dd>
+</div>
+
+<!--Pagination-->
+<div class="paginationHistory">
+  <dir-pagination-controls></dir-pagination-controls>
+</div>
+<br/><br/>

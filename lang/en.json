@@ -176,7 +176,7 @@
   "SETTINGS_BACKUP_ACCOUNT" : "Show backup words",
   "SETTINGS_BACKUP_PASSWORD" : "Password",
   "SETTINGS_ACCOUNT_INFORMATION" : "Account information",
-  "SETTINGS_EXPORT_ACCOUNT_BUTTON" : "Export",
+  "SETTINGS_EXPORT_ACCOUNT_BUTTON" : "Export to file",
   "SETTINGS.DEBUG_ENABLE" : "Enable Debugger",
   "SETTINGS.DEBUG_DISABLE" : "Disable Debugger",
   "SETTINGS.MNEMONIC_LOAD_ERROR" : "Could not load backup words. Please check your input.",
@@ -393,5 +393,7 @@
   "CREATE_PROFILE.CREATE_ID": "Digital Identity ID",
   "CREATE_PROFILE.CREATE_PROFILE_BUTTON": "Create Profile",
   "CREATE_PROFILE.SELECT_ADDRESS": "Select Address",
-  "CREATE_PROFILE.ADDRESS_AUTOMATIC": "Automatic"
+  "CREATE_PROFILE.ADDRESS_AUTOMATIC": "Automatic",
+  "SETTINGS_EXPORT_ACCOUNT_BUTTON_TO_APP": "Export to app",
+  "MESSAGES.EXPORT_ACCOUNT_DOWNLOAD_FILE_ERROR": "Account exported to metaverse/mvs-htmls/keys/"
 }
