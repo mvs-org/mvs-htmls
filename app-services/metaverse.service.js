@@ -22,6 +22,7 @@
 
         //var RPC_URL = window.location.protocol + '://' + SERVER + '/rpc';
         var RPC_URL = window.location.protocol + '/rpc';
+        var RPC_URL_V2 = window.location.protocol + '/rpc/v2';
 
 
         service.debug = false;
@@ -64,8 +65,10 @@
         service.GetNewAddress = GetNewAddress;
         service.ChangePassword = ChangePassword;
         service.ResetPassword = ResetPassword;
-        service.ExportAccountAsFile = ExportAccountAsFile;
-        service.ImportAccountFromFile = ImportAccountFromFile;
+        //service.ExportAccountAsFile = ExportAccountAsFile;
+        //service.ImportAccountFromFile = ImportAccountFromFile;
+        service.DumpKeyFile = DumpKeyFile;
+        service.ImportKeyFile = ImportKeyFile;
 
 
         service.SERVER = SERVER;
@@ -112,6 +115,7 @@
         service.Deposit = Deposit;
         service.FrozenAsset = FrozenAsset;
         service.GetInfo = GetInfo;
+        service.GetInfoV2 = GetInfoV2;
 
         return service;
 
@@ -120,6 +124,10 @@
          **/
         function GetInfo() {
             return _send('getinfo', []);
+        }
+
+        function GetInfoV2() {
+            return _sendV2('getinfo', []);
         }
 
 
@@ -205,14 +213,23 @@
         }
 
 
-        function ExportAccountAsFile(password, last_word) {
+        /*function ExportAccountAsFile(password, last_word) {
           var credentials = localStorageService.get('credentials');
           return _send('exportaccountasfile', [credentials.user, password, last_word]);
+        }*/
+
+        function DumpKeyFile(password, last_word) {
+          var credentials = localStorageService.get('credentials');
+          return _sendV2('dumpkeyfile', [credentials.user, password, last_word]);
         }
 
 
-        function ImportAccountFromFile(username, password, path, content) {
+        /*function ImportAccountFromFile(username, password, path, content) {
           return _send('importaccountfromfile', [username, password, path, content]);
+        }*/
+
+        function ImportKeyFile(username, password, path, content) {
+          return _send('importkeyfile', [username, password, path, content]);
         }
 
 
@@ -850,6 +867,31 @@
 
         function _send(method, params) {
             return $http.post(RPC_URL, {
+                    method: method,
+                    params: params
+                }, {
+                    headers: {}
+                })
+                .then(
+                    function(res) {
+
+                        if (service.debug)
+                            console.log({
+                                "method": method,
+                                "params": params,
+                                "result": res.data
+                            });
+                        return handleSuccess(res);
+                    },
+                    function(res) {
+                        handleError(res);
+                    }
+                );
+        }
+
+        function _sendV2(method, params) {
+            return $http.post(RPC_URL_V2, {
+                    jsonrpc: "2.0",
                     method: method,
                     params: params
                 }, {

@@ -164,8 +164,10 @@
         }
       } else if($scope.import_from_file){
         //Import account from file
-        MetaverseService.ImportAccountFromFile(vm.user.username, vm.user.password, '.', $scope.accountInfo)
+        //MetaverseService.ImportAccountFromFile(vm.user.username, vm.user.password, '.', $scope.accountInfo)
+        MetaverseService.ImportKeyFile(vm.user.username, vm.user.password, '.', $scope.accountInfo)
         .then(function (response) {
+          console.log(response)
           if (typeof response.success !== 'undefined' && response.success) {
               $translate('MESSAGES.IMPORT_SUCCESS').then( (data) => {
                   FlashService.Success(data,true);

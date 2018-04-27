@@ -1454,7 +1454,8 @@
         $window.scrollTo(0,0);*/
       } else {
         NProgress.start();
-        MetaverseService.ExportAccountAsFile(password, last_word)
+        //MetaverseService.ExportAccountAsFile(password, last_word)
+        MetaverseService.DumpKeyFile(password, last_word)
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success) {
             $http.get('./keys/mvs_keystore_' + localStorageService.get('credentials').user + '.' + $scope.empty + 'json')
@@ -2371,7 +2372,7 @@
     $scope.peers = "";
 
 
-    MetaverseService.GetInfo()
+    /*MetaverseService.GetInfo()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.height = response.data.height;
@@ -2380,6 +2381,18 @@
         $scope.version = response.data['wallet-version'];
         $scope.checkVersion();
         $scope.peers = response.data.peers;
+      }
+    });*/
+
+    MetaverseService.GetInfoV2()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.height = response.data.result.height;
+        $rootScope.network = response.data.result.testnet ? 'testnet' : 'mainnet';
+        $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100);
+        $scope.version = response.data.result['wallet-version'];
+        $scope.checkVersion();
+        $scope.peers = response.data.result.peers;
       }
     });
 
@@ -2487,13 +2500,13 @@
 
     function updateHeight() {
       getHeightFromExplorer();
-      MetaverseService.GetInfo()
+      MetaverseService.GetInfoV2()
       .then( (response) => {
         if (response.success == undefined && response.success) {
-          $scope.height = response.data.height;
-          $rootScope.network = response.data.testnet ? 'testnet' : 'mainnet';
+          $scope.height = response.data.result.height;
+          $rootScope.network = response.data.result.testnet ? 'testnet' : 'mainnet';
           $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100);
-          $scope.peers = response.data.peers;
+          $scope.peers = response.data.result.peers;
         }
       });
     }
