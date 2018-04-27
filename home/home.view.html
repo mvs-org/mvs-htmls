@@ -32,7 +32,7 @@
             <dd class="assetBox col-xs-12 col-sm-12 col-md-12" >
               <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 overflow">
                 <div class="assetBoxSymbolImg">
-                  <img class="assetSymbol" check-image ng-src="{{'icon/'+asset.symbol+'.png'}}">
+                  <img class="assetSymbol" check-image ng-src="{{'icon/'+asset.icon+'.png'}}">
                 </div>
                 <div class="assetBoxSymbolName overflow">
                   <a href="#!/asset/details/{{asset.symbol}}" class="btn-link-black ">{{asset.symbol}}</a>
@@ -56,22 +56,14 @@
         <div class="col-xs-12 moreAssetsButton noPaddingLeftRight">
           <a href="#!/asset/myassets" class="btn smallButton spe-ricon">{{ 'NAV_MORE_ASSETS' | translate}} <span class="glyphicon fa fa-angle-double-right"></span></a>
         </div>
-
-        <!--<div class="paginationHistory">
-        <dir-pagination-controls pagination-id="paginationAssets"></dir-pagination-controls>
-      </div>-->
     </div>
 
   </form>
 
   <div>
-    <!--<div class="headline">{{ 'NAV_HISTORY' | translate }}   </div>-->
-    <div class="headline secondHeadline">{{ 'HEADLINE_TRANSACTIONS' | translate }}
-
-    </div>
+    <div class="headline secondHeadline">{{ 'HEADLINE_TRANSACTIONS' | translate }}</div>
     <div class="selectAssetType hidden-md hidden-lg hidden-xl">
       <button class="dropdown-togglen assetTypeButton" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-        <img class="languageFlag" alt="" />
         {{assetType}}
         <span class="caret"></span>
       </button>

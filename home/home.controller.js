@@ -1690,7 +1690,7 @@
     $window.scrollTo(0,0);
     $scope.symbol = $stateParams.symbol;
     $scope.assets = [];
-    //$scope.issue = issue;
+    $scope.icons = MetaverseService.hasIcon;
 
     //Load assets
     NProgress.start();
@@ -1701,10 +1701,9 @@
         $scope.assets = [];
         $scope.assets = response.data.assets;
         //All the details are hidden at the loading
-        $scope.assets.forEach( (a) => {
-          if(a != undefined) {
-            a.details = false;
-          }
+        $scope.assets.forEach( (asset) => {
+          asset.details = false;
+          asset.icon = ($scope.icons.indexOf(asset.symbol) > -1) ? asset.symbol : 'default';
         });
       } else {
         $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => {
@@ -1716,45 +1715,6 @@
       }
     });
 
-    //If asset is defined -> load it
-    /*if ($scope.symbol != undefined && $scope.symbol != "") {
-      NProgress.start();
-      loadasset($scope.symbol);
-    }*/
-
-    /*function issue(symbol) {
-      NProgress.start();
-      MetaverseService.Issue(symbol)
-      .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
-          loadasset($scope.symbol);
-          $translate('MESSAGES.ASSETS_ISSUE_SUCCESS').then( (data) => FlashService.Success(data) );
-        } else {
-          $translate('MESSAGES.ASSETS_ISSUE_ERROR').then( (data) => FlashService.Error(data) );
-        }
-        NProgress.done();
-      });
-    }*/
-
-    //Loads a given asset
-    /*function loadasset(symbol) {
-      NProgress.start();
-      MetaverseService.GetAsset(symbol)
-      .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
-          $scope.asset = response.data.assets[0];
-          $scope.assets.forEach( (a) => {
-            if (a.symbol == symbol) {
-              $scope.asset.quantity = a.quantity;
-            }
-          });
-        } else {
-          //Asset could not be loaded
-          $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
-        }
-      });
-      NProgress.done();
-    }*/
   }
 
 
@@ -1780,6 +1740,7 @@
     $scope.cancelEditAddressName = cancelEditAddressName;
     $scope.showqr = showqr;
     $scope.buttonCopyToClipboard = new Clipboard('.btn');
+    $scope.icons = MetaverseService.hasIcon;
 
 
     //Shows a modal of the address incl. a qr code
@@ -1809,6 +1770,9 @@
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.assets = [];
           $scope.assets = response.data.assets;
+          $scope.assets.forEach( (asset) => {
+            asset.icon = ($scope.icons.indexOf(asset.symbol) > -1) ? asset.symbol : 'default';
+          });
           //If asset is defined -> load it
           if ($scope.symbol != undefined && $scope.symbol != "") {
             NProgress.start();
@@ -2171,11 +2135,6 @@
     $scope.startDateUpdated = new Date();
     $scope.endDateUpdated = new Date();
 
-    //$scope.setDates = setDates;
-    //$scope.displayUpdatedDates = displayUpdatedDates;
-    //$scope.showHistory = false;
-
-
     $scope.assetType = 'ALL';
     $scope.filterOnAsset = filterOnAsset;
 
@@ -2183,6 +2142,7 @@
     $scope.loadMore = loadMore;
     $scope.stopLoad = false;
     $scope.page = 3;          //By default, we load the 2 first pages
+    $scope.icons = MetaverseService.hasIcon;
 
     //For unfrozen calculation time
     //$scope.averageBlockTime = 0;
@@ -2191,7 +2151,6 @@
     function filterOnAsset (asset) {
       $scope.assetType = asset;
       filterTransactions();
-      //displayUpdatedDates();
     }
 
     function filterTransactions() {
@@ -2222,6 +2181,9 @@
       if(response.data.assets != "") {    //if the user has some assets
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.assets = response.data.assets;
+          $scope.assets.forEach( (asset) => {
+            asset.icon = ($scope.icons.indexOf(asset.symbol) > -1) ? asset.symbol : 'default';
+          });
         } else {
           $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
           $window.scrollTo(0,0);
@@ -2370,19 +2332,6 @@
     $scope.version = "";
     $scope.popoverSynchShown = false;
     $scope.peers = "";
-
-
-    /*MetaverseService.GetInfo()
-    .then( (response) => {
-      if (typeof response.success !== 'undefined' && response.success) {
-        $scope.height = response.data.height;
-        $rootScope.network = response.data.testnet ? 'testnet' : 'mainnet';
-        $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100);
-        $scope.version = response.data['wallet-version'];
-        $scope.checkVersion();
-        $scope.peers = response.data.peers;
-      }
-    });*/
 
     MetaverseService.GetInfoV2()
     .then( (response) => {
