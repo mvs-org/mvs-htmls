@@ -395,5 +395,6 @@
   "CREATE_PROFILE.SELECT_ADDRESS": "Select Address",
   "CREATE_PROFILE.ADDRESS_AUTOMATIC": "Automatic",
   "SETTINGS_EXPORT_ACCOUNT_BUTTON_TO_APP": "Export to app",
-  "MESSAGES.EXPORT_ACCOUNT_DOWNLOAD_FILE_ERROR": "Account exported to metaverse/mvs-htmls/keys/"
+  "MESSAGES.EXPORT_ACCOUNT_DOWNLOAD_FILE_ERROR": "Account exported to metaverse/mvs-htmls/keys/",
+  "REGISTER.NEW_ACCOUNT": "New account"
 }

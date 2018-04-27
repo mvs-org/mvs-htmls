@@ -14,6 +14,7 @@
     vm.confirmKey = '';
     vm.countWords = countWords;
     vm.countBackupWords = 0;
+    $scope.new_account = true;
 
     vm.register = register;
     vm.user={

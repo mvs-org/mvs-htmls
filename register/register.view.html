@@ -104,19 +104,31 @@
     <!--To register-->
     <div ng-hide="vm.registered">
       <h1 class="loginTitle">{{ 'REGISTER.NEW_USER' | translate }}</h1>
-      <div class="form-group checkBoxImport spe-addrbox col-xs-12 col-sm-6">
+
+      <div class="checkBoxImport spe-addrbox">
         <div class="checkboxCircle">
-          <div class="checkbox-box">
-            <input type="checkbox" ng-model="import_from_file" id="checkboxImportFromFile" ng-click="import_from_phrase = false">
-            <label class="control-label" for="checkboxImportFromFile"></label>
-          </div>
+            <div class="checkbox-box">
+              <input type="checkbox" id="checkboxNewAccount" ng-model="new_account" ng-click="new_account = true; import_from_file = false; import_from_phrase = false;" checked>
+              <label class="control-label" for="checkboxNewAccount"></label>
+            </div>
+          <span class="textCheckbox comm-ft">{{ 'REGISTER.NEW_ACCOUNT' | translate }}</span>
+        </div>
+      </div>
+
+      <div class="checkBoxImport spe-addrbox">
+        <div class="checkboxCircle">
+            <div class="checkbox-box">
+              <input type="checkbox" id="checkboxImportFromFile" ng-model="import_from_file" ng-click="new_account = false; import_from_file = true; import_from_phrase = false;">
+              <label class="control-label" for="checkboxImportFromFile"></label>
+            </div>
           <span class="textCheckbox comm-ft">{{ 'REGISTER.IMPORT_FROM_FILE' | translate }}</span>
         </div>
       </div>
-      <div class="form-group checkBoxImport spe-addrbox col-xs-12 col-sm-6">
+
+      <div class="checkBoxImport spe-addrbox">
         <div class="checkboxCircle">
             <div class="checkbox-box">
-              <input type="checkbox" ng-model="import_from_phrase" id="checkboxImportFromKey" ng-click="import_from_file = false">
+              <input type="checkbox" id="checkboxImportFromKey" ng-model="import_from_phrase" ng-click="new_account = false; import_from_file = false; import_from_phrase = true;">
               <label class="control-label" for="checkboxImportFromKey"></label>
             </div>
           <span class="textCheckbox comm-ft">{{ 'REGISTER.IMPORT_FROM_KEY' | translate }}</span>
@@ -125,6 +137,7 @@
 
       <!--Register new Account-->
       <div class="form-group col-xs-12" ng-show="!import_from_file && !import_from_phrase">
+        <br>
         <!--Account name-->
         <div class="form-group col-xs-12">
           <label for="username" class="control-label comm-ft">{{ 'REGISTER.CHOOSE_ACCOUNT_NAME' | translate }}</label>
@@ -145,6 +158,7 @@
 
       <!--Import from a file-->
       <div class="form-group col-xs-12" ng-show="import_from_file">
+        <br>
         <div class="form-group col-xs-12">
           <label for="username" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_NAME' | translate }}</label>
           <input type="text" name="username" ng-model="vm.user.username" class="form-control">
@@ -162,6 +176,7 @@
 
       <!--Import from Private key-->
       <div class="form-group col-xs-12" ng-show="import_from_phrase">
+        <br>
         <!--Account name-->
         <div class="form-group col-xs-12">
           <label for="username" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_NAME' | translate }}</label>

@@ -380,5 +380,21 @@
   "MESSAGES.NEW_VERSION_MAJOR_CHANGE" : "已发布新版钱包，请从以下地址更新钱包:",
   "MESSAGE.PLEASE_WAIT_SYNCH" : "请待区块同步完成后再使用钱包",
   "NAV_PROFILE": "Profile",
-  "PROFILE.CREATE_PROFILE": "Create New Profile"
+  "HEADLINE_PROFILE": "Digital Identity",
+  "PROFILE.MY_PROFILE": "My Profile",
+  "PROFILE.AUTHORIZE": "Authorize",
+  "PROFILE.REQUEST_LIST": "Request List",
+  "PROFILE.RELATIONSHIPS": "My Relationships",
+  "PROFILE.CREATE_NEW_PROFILE_BUTTON": "Create Profile",
+  "PROFIL.DID": "DID",
+  "PROFIL.ADDRESS": "Address",
+  "PROFILE.DATA_FIELD": "Data Field ",
+  "CREATE_PROFILE.CREATE_PROFILE": "Create Profile",
+  "CREATE_PROFILE.CREATE_ID": "Digital Identity ID",
+  "CREATE_PROFILE.CREATE_PROFILE_BUTTON": "Create Profile",
+  "CREATE_PROFILE.SELECT_ADDRESS": "Select Address",
+  "CREATE_PROFILE.ADDRESS_AUTOMATIC": "Automatic",
+  "SETTINGS_EXPORT_ACCOUNT_BUTTON_TO_APP": "Export to app",
+  "MESSAGES.EXPORT_ACCOUNT_DOWNLOAD_FILE_ERROR": "Account exported to metaverse/mvs-htmls/keys/",
+  "REGISTER.NEW_ACCOUNT": "New account"
 }
