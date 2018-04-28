@@ -24,14 +24,8 @@ $headerHeight: 65px;
 
 // body,h1,h2,h3,h4, .headline {
 * {
-  //font-family:'spepingfang',Arial,sans-serif,Tahoma,Arial,sans-serif;
-  //font-weight: 700 !important;
   font-family: Arial,sans-serif,微软雅黑;
 }
-
-
-
-
 
 h4 {
   line-height: 40px;
@@ -47,6 +41,7 @@ h4 {
 .nav-tabs>li {
    margin-bottom: 0;
 }
+
 .nav>li>a {
   padding: 0;
   font-size:16px;
@@ -55,10 +50,12 @@ h4 {
   margin: 0 15px 10px 0;
   font-weight: 500;
 }
+
 .nav>li>a.selectedAsset{
   font-weight: 700;
   color: #000;
 }
+
 .nav-tabs {
   border-bottom: none;
 }
@@ -67,6 +64,7 @@ h4 {
   margin-top: 40px;
   border-bottom: 1px solid #f3f3f3;
 }
+
 .nav-pills>li>a {
   border-radius: 4px;
   font-size: 20px;
@@ -77,9 +75,11 @@ h4 {
   margin: 0 40px 0 0;
   width: auto;
 }
+
 .AStitle-tabs .tabsMenu > li.active > a{
   color: #323232 !important;
 }
+
 .AStitle-tabs {
   margin-bottom: 20px;
 }
@@ -90,134 +90,61 @@ Extra small devices (portrait phones, less than 544px)
 No media query since this is the default in Bootstrap because it is "mobile first"
 */
 .headline {
-  //font-size: 22px;
-  //display: inline-block;
   margin-bottom: 10px;
-
   font-size: 48px;
   font-weight: 100;
   color: #323232;
-}
-
-.secondHeadline {
-  padding-top: 200px !important;
 }
 
 /*****************Home page*****************/
 .assetBox {
   text-align: left;
   background-color: transparent;
-  //height: 50px;
-  margin: 5px 5px 5px 0px;
-  //border-radius: 4px;
-  border: solid 1px $lightGrey;
-  //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-  //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-  //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-  //max-width: 1165px;
+  margin: 10px 0;
   height: 80px;
-  //margin: 10px 0;
   padding: 15px;
   border-radius: 8px;
-  background-color: #ffffff;
   box-shadow: 0 1px 2px 0 rgba(35, 35, 35, 0.1);
   border: solid 1px rgba(151, 151, 151, 0.09);
   outline: none;
 }
 
-//Contains the logo of the assetz
+//Contains the logo of the asset
 .assetBoxSymbolImg {
-  margin-top: 6px;
-  width: 36px;
-  height: 36px;
+  margin-top: 0px;
+  width: 48px;
+  height: 48px;
   background-color: white;
   position: absolute;
   display: inline-block;
   -webkit-border-radius: 150px;
-  //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-  //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-  //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
   -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
   -moz-box-shadow:   0 1px 2px 0 rgba(0, 0, 0, 0.19);
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
 }
 
-
-.assetBox .assetLogo {
-  line-height: 40px;
-  text-align: center;
-  display: inline-block;
-}
-
 .assetSymbol {
-  //margin: 4px;
-  width: 30px;
-  height: 30px;
-  margin: 3px;
+  width: 40px;
+  height: 40px;
+  margin: 4px;
   background-color: transparent;
 }
 
-.assetLogo {
-  //position: absolute;
-  //font-size: 24px;
-  //padding-left: 8px;
-  //text-align: center;
-  //padding-top: 11px;
-  width: 34px;
-  height: 34px;
-  font-size: 24px;
-  font-weight: 500;
-  text-align: center;
-  color: #323232;
-  //top: 3px;
-  //position: relative;
-  //left: 6px;
-}
-
-.assetBoxSymbolNameETP {
-  //width: 100px;
-  //padding-top:10px;
-  //padding-bottom: 6px;
-  padding-left: 55px !important;
-  font-size: 36px;
-  display: inline-block;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-.assetBoxSymbolNameETP .btn-link-black {
-  margin-left: 15px;
-}
-.assetBoxSymbolNameETP .btn-link-black {
-  //font-weight: lighter;
-  font-size: 28px;
-  //padding: 10px 0 0 70px;
-}
-.assetBox .assetBoxSymbolName {
-  font-size: 24px;
-  height: 44px;
-}
-.assetBox .assetBoxSymbolName {
-  padding: 6px 0 0 70px;
-}
-.assetBoxButtons.ng-hide{
-  //display: block !important;
-}
 .assetBoxSymbolName {
   width: 100%;
-  padding-top:10px;
-  padding-bottom: 6px;
-  //padding-left: 70px;
-  font-size: 20px;
   display: inline-block;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  font-size: 26px;
+  height: 44px;
+  padding: 6px 0 0 70px;
+  margin-left: 15px;
 }
 
 .assetBoxTitle {
-  height: 16px;
-  font-size: 12px;
+  height: 20px;
+  font-size: 14px;
   color: #666;
 }
 
@@ -225,9 +152,11 @@ No media query since this is the default in Bootstrap because it is "mobile firs
   font-size: 18px;
   padding-top: 4px;
 }
+
 .assetvcode{
   font-size: 14px !important;
 }
+
 .assetBoxBalance {
   display: inline-block;
 }
@@ -235,9 +164,7 @@ No media query since this is the default in Bootstrap because it is "mobile firs
 .assetBoxFrozen {
   display: inline-block;
 }
-.money-y{
-  // font-weight: 500 !important;
-}
+
 .assetBoxCopy {
   padding-top: 10px;
   display: inline-block;
@@ -245,13 +172,13 @@ No media query since this is the default in Bootstrap because it is "mobile firs
 
 .assetBoxButtons {
   text-align: right;
-  //margin-top: 10px;
+  margin-top: 10px;
   margin-right: 0px;
 }
 
 .assetBoxButton {
   margin-left: 10px;
-  margin-right: 0px;
+  margin-right: 4px;
   width: 80px !important;
 }
 
@@ -264,645 +191,28 @@ Bootstrap 4 breakpoints
 */
 /* Small devices (landscape phones, 544px and up) */
 @media (min-width: 544px) {
-  .headline {
-    //font-size: 26px;
-    //display: inline-block;
-    //margin-bottom: 10px;
-  }
 
-  .secondHeadline {
-    padding-top: 50px;
-  }
-
-  /*****************Home page*****************/
-  .assetBox {
-    //text-align: left;
-    //background-color: transparent;
-    //height: 50px;
-    margin: 5px 5px 5px 0px;
-    //border-radius: 4px;
-    //border: solid 1px $lightGrey;
-    //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //width: 1165px;
-    height: 80px;
-    margin: 10px 0;
-    border-radius: 8px;
-    background-color: #ffffff;
-    box-shadow: 0 1px 2px 0 rgba(35, 35, 35, 0.1);
-    border: solid 1px rgba(151, 151, 151, 0.09);
-  }
-
-  //Contains the logo of the asset
-  .assetBoxSymbolImg {
-    //margin-top: 6px;
-    width: 36px;
-    height: 36px;
-    background-color: white;
-    position: absolute;
-    display: inline-block;
-    //-webkit-border-radius: 150px;
-    //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
-    -moz-box-shadow:   0 1px 2px 0 rgba(0, 0, 0, 0.19);
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
-  }
-
-
-
-  .assetSymbol {
-    //margin: 4px;
-    width: 30px;
-    height: 30px;
-    background-color: transparent;
-  }
-
-  //.assetLogo {
-  //  position: absolute;
-  //  font-size: 24px;
-  //  padding-left: 8px;
-  //  text-align: center;
-  //  padding-top: 7px;
-  //}
-
-  .assetBoxSymbolNameETP {
-    //width: 200px;
-    //padding-top:11px;
-    //padding-bottom: 6px;
-    //padding-left: 70px;
-    font-size: 36px;
-    display: inline-block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
-  .assetBoxSymbolName {
-    //width: 200px;
-    padding-top:12px;
-    padding-bottom: 6px;
-    //padding-left: 70px;
-    font-size: 16px;
-    display: inline-block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
-  .assetBoxTitle {
-    height: 16px;
-    font-size: 12px;
-  }
-
-  .assetBoxValue {
-    font-size: 18px;
-    padding-top: 4px;
-  }
-
-  .assetBoxBalance {
-    display: inline-block;
-  }
-
-  .assetBoxFrozen {
-    display: inline-block;
-  }
-
-  .assetBoxCopy {
-    padding-top: 10px;
-    display: inline-block;
-  }
-
-  .assetBoxButtons {
-    text-align: right;
-    margin-top: 10px;
-    margin-right: 0px;
-  }
-
-  .assetBoxButton {
-    margin-left: 10px;
-    margin-right: 0px;
-    width: 80px !important;
-  }
-
-  .assetDetailsPanel {
-    margin-bottom: 20px;
-  }
 }
 
 /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
 @media (min-width: 768px) {
-  .headline {
-    //font-size: 26px;
-    //display: inline-block;
-    //margin-bottom: 10px;
-  }
 
-  .secondHeadline {
-    padding-top: 50px;
-  }
-
-  /*****************Home page*****************/
-  .assetBox {
-    text-align: left;
-    background-color: transparent;
-    //height: 50px;
-    margin: 5px 5px 5px 0px;
-    border-radius: 4px;
-    //border: solid 1px $lightGrey;
-    //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-
-    background-color: #ffffff;
-    box-shadow: 0 1px 2px 0 rgba(35, 35, 35, 0.1);
-    border: solid 1px rgba(151, 151, 151, 0.09);
-  }
-
-  //Contains the logo of the asset
-  .assetBoxSymbolImg {
-    //margin-top: 6px;
-    width: 36px;
-    height: 36px;
-    background-color: white;
-    position: absolute;
-    display: inline-block;
-    -webkit-border-radius: 150px;
-    //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
-    -moz-box-shadow:   0 1px 2px 0 rgba(0, 0, 0, 0.19);
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
-  }
-
-  .assetSymbol {
-    //margin: 4px;
-    width: 30px;
-    height: 30px;
-    background-color: transparent;
-  }
-  //
-  //.assetLogo {
-  //  position: absolute;
-  //  font-size: 24px;
-  //  padding-left: 8px;
-  //  text-align: center;
-  //  padding-top: 7px;
-  //}
-
-  .assetBoxSymbolNameETP {
-    //width: 200px;
-    //padding-top:11px;
-    //padding-bottom: 6px;
-    padding-left: 70px;
-    font-size: 36px;
-    display: inline-block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
-  .assetBoxSymbolName {
-    //width: 200px;
-    padding-top:12px;
-    padding-bottom: 6px;
-    padding-left: 70px;
-    font-size: 16px;
-    display: inline-block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
-  .assetBoxTitle {
-    height: 16px;
-    font-size: 12px;
-  }
-
-  .assetBoxValue {
-    font-size: 18px;
-    padding-top: 4px;
-  }
-
-  .assetBoxBalance {
-    display: inline-block;
-  }
-
-  .assetBoxFrozen {
-    display: inline-block;
-  }
-
-  .assetBoxCopy {
-    padding-top: 10px;
-    display: inline-block;
-  }
-
-  .assetBoxButtons {
-    text-align: right;
-    margin-top: 10px;
-    margin-right: 0px;
-  }
-
-  .assetBoxButton {
-    margin-left: 10px;
-    margin-right: 0px;
-    width: 80px !important;
-  }
-
-  .assetDetailsPanel {
-    margin-bottom: 20px;
-  }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-  .headline {
-    //font-size: 26px;
-    //display: inline-block;
-    //margin-bottom: 10px;
-  }
 
-  .secondHeadline {
-    padding-top: 50px;
-  }
-
-  /*****************Home page*****************/
-  .assetBox {
-    //text-align: left;
-    //background-color: transparent;
-    ////height: 50px;
-    margin: 5px 5px 5px 0px;
-    //border-radius: 4px;
-    //border: solid 1px $lightGrey;
-    //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-  }
-
-  //Contains the logo of the asset
-  .assetBoxSymbolImg {
-    //margin-top: 6px;
-    width: 36px;
-    height: 36px;
-    background-color: white;
-    position: absolute;
-    display: inline-block;
-    -webkit-border-radius: 150px;
-    //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
-    -moz-box-shadow:   0 1px 2px 0 rgba(0, 0, 0, 0.19);
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
-  }
-
-
-
-  .assetSymbol {
-    //margin: 4px;
-    width: 30px;
-    height: 30px;
-    background-color: transparent;
-  }
-
-  //.assetLogo {
-  //  position: absolute;
-  //  font-size: 24px;
-  //  padding-left: 8px;
-  //  text-align: center;
-  //  padding-top: 7px;
-  //}
-
-  .assetBoxSymbolNameETP {
-    //width: 200px;
-    //padding-top:11px;
-    //padding-bottom: 6px;
-    padding-left: 70px;
-    font-size:36px;
-    display: inline-block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
-  .assetBoxSymbolName {
-    //width: 200px;
-    padding-top:12px;
-    padding-bottom: 6px;
-    padding-left: 70px;
-    font-size: 16px;
-    display: inline-block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
-  .assetBoxTitle {
-    height: 16px;
-    font-size: 12px;
-  }
-
-  .assetBoxValue {
-    font-size: 18px;
-    padding-top: 4px;
-  }
-
-  .assetBoxBalance {
-    display: inline-block;
-  }
-
-  .assetBoxFrozen {
-    display: inline-block;
-  }
-
-  .assetBoxCopy {
-    padding-top: 10px;
-    display: inline-block;
-  }
-
-  .assetBoxButtons {
-    text-align: right;
-    margin-top: 10px;
-    margin-right: 0px;
-  }
-
-  .assetBoxButton {
-    margin-left: 10px;
-    margin-right: 0px;
-    width: 80px !important;
-  }
-
-  .assetDetailsPanel {
-    margin-bottom: 20px;
-  }
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
-  .headline {
-    //font-size: 36px;
-    //display: inline-block;
-    //margin-bottom: 10px;
-  }
 
-  .secondHeadline {
-    padding-top: 50px;
-  }
-
-  /*****************Home page*****************/
-  .assetBox {
-    //text-align: left;
-    //background-color: transparent;
-    //height: 60px;
-    margin: 5px 5px 5px 0px;
-    //border-radius: 4px;
-    //border: solid 1px $lightGrey;
-    //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //width: 1165px;
-    height: 80px;
-    margin: 10px 0;
-    border-radius: 8px;
-    background-color: #ffffff;
-    box-shadow: 0 1px 2px 0 rgba(35, 35, 35, 0.1);
-    border: solid 1px rgba(151, 151, 151, 0.09);
-   color: #323232;
-    font-size: 14px;
-    padding: 15px;
-  }
-
-  //Contains the logo of the asset
-  .assetBoxSymbolImg {
-    //margin-top: 8px;
-    width: 40px;
-    height: 40px;
-    background-color: white;
-    position: absolute;
-    display: inline-block;
-    -webkit-border-radius: 150px;
-    //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
-    -moz-box-shadow:   0 1px 2px 0 rgba(0, 0, 0, 0.19);
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
-  }
-
-
-
-  .assetSymbol {
-    margin: 4px;
-    width: 34px;
-    height: 34px;
-    background-color: transparent;
-  }
-
-  //.assetLogo {
-  //  position: absolute;
-  //  font-size: 26px;
-  //  padding-left: 8px;
-  //  text-align: center;
-  //  padding-top: 10px;
-  //}
-
-  .assetBoxSymbolNameETP {
-    //width: 200px;
-    //padding-top:10px;
-    //padding-bottom: 6px;
-    //padding-left: 70px;
-    font-size: 36px;
-    display: inline-block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
-  .assetBoxSymbolName {
-    //width: 200px;
-    padding-top:16px;
-    padding-bottom: 6px;
-    padding-left: 70px;
-    font-size: 18px;
-    display: inline-block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
-  .assetBoxTitle {
-    height: 16px;
-    font-size: 14px;
-  }
-
-  .assetBoxValue {
-    font-size: 18px;
-    padding-top: 4px;
-  }
-
-  .assetBoxBalance {
-    display: inline-block;
-  }
-
-  .assetBoxFrozen {
-    display: inline-block;
-  }
-
-  .assetBoxCopy {
-    padding-top: 10px;
-    display: inline-block;
-  }
-
-  .assetBoxButtons {
-    text-align: right;
-    margin-top: 10px;
-    margin-right: 0px;
-  }
-
-  .assetBoxButton {
-    margin-left: 10px;
-    margin-right: 4px;
-    width: 80px !important;
-  }
-
-  .assetDetailsPanel {
-    height: 285px;
-    margin-bottom: 20px;
-  }
 }
 
 /* Extra extra large devices (large desktops, 1400px and up) */
 @media (min-width: 1400px) {
-  .headline {
-    //font-size: 48px;
-    //display: inline-block;
-    //margin-bottom: 10px;
-  }
 
-  .secondHeadline {
-    padding-top: 50px;
-  }
-
-  /*****************Home page*****************/
-  .assetBox {
-    text-align: left;
-    background-color: transparent;
-    height: 80px;
-    margin: 5px 5px 5px 0px;
-    border-radius: 4px;
-    border: solid 1px $lightGrey;
-    //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-
-    background-color: #ffffff;
-    box-shadow: 0 1px 2px 0 rgba(35, 35, 35, 0.1);
-    border: solid 1px rgba(151, 151, 151, 0.09);
-  }
-
-  //Contains the logo of the asset
-  .assetBoxSymbolImg {
-    margin-top: 0;
-    width: 48px;
-    height: 48px;
-    background-color: white;
-    position: absolute;
-    display: inline-block;
-    -webkit-border-radius: 150px;
-    //-webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //-moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    //box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
-    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
-    -moz-box-shadow:   0 1px 2px 0 rgba(0, 0, 0, 0.19);
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.19);
-  }
-
-
-
-  .assetSymbol {
-    //margin: 4px;
-    width: 40px;
-    height: 40px;
-    background-color: transparent;
-  }
-
-  .assetLogo {
-    position: absolute;
-    font-size: 26px;
-    padding-left: 2px;
-    text-align: center;
-    padding-top: 4px;
-  }
-
-  .assetBoxSymbolNameETP {
-    //width: 300px;
-    //padding-top:14px;
-    //padding-bottom: 6px;
-    padding-left: 70px;
-    font-size: 36px;
-    display: inline-block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
-  .assetBoxSymbolName {
-    //width: 300px;
-    //padding-top:24px;
-    padding-bottom: 6px;
-    padding-left: 70px;
-    font-size: 18px;
-    display: inline-block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
-  .assetBoxTitle {
-    height: 20px;
-    font-size: 14px;
-  }
-
-  .assetBoxValue {
-    font-size: 18px;
-    padding-top: 4px;
-  }
-
-  .assetBoxBalance {
-    display: inline-block;
-  }
-
-  .assetBoxFrozen {
-    display: inline-block;
-  }
-
-  .assetBoxCopy {
-    padding-top: 10px;
-    display: inline-block;
-  }
-
-  .assetBoxButtons {
-    text-align: right;
-    //margin-top: 24px;
-    margin-right: 10px;
-  }
-
-  .assetBoxButton {
-    margin-left: 10px;
-    margin-right: 10px;
-    width: 80px !important;
-  }
-
-  .assetDetailsPanel {
-    height: 285px;
-    margin-bottom: 20px;
-  }
 }
-
-
 
 .assetBoxWrapper .col-xs-offset-5 {
   margin: 0 20px 0 15%;
@@ -923,7 +233,6 @@ _____  ._______  ___.___ _______
 @mixin btn-theme($btn-color, $type) {
   @if $type == 'standard' {
     width: 100%;
-    //border-color: darken($btn-color, 20%) !important;
     background-color: $btn-color !important;
     &:hover {
       background-color: darken($btn-color, 6%);
@@ -1032,8 +341,6 @@ _____  ._______  ___.___ _______
   color: black;
 }
 
-
-
 .radioButtonAddress {
     div {
       overflow: hidden;
@@ -1057,11 +364,9 @@ _____  ._______  ___.___ _______
             display: none;
             ~ label {
                 position: relative;
-                //line-height: 2.5em;
                 text-indent: 3.25em;
                 cursor: pointer;
                 user-select: none;
-
 
                 &:before {
                     position: absolute;
@@ -1203,6 +508,14 @@ _____  ._______  ___.___ _______
   opacity: 0.8;
 }
 
+.btn:focus {
+  outline: 0;
+}
+
+.btn:active {
+  outline: 0;
+}
+
 .btn-success {
   border: none;
   @include btn-theme($successButtonColor, 'standard');
@@ -1252,10 +565,6 @@ _____  ._______  ___.___ _______
   height: 14px !important;
 }
 
-.languageHeaderLarge {
-
-}
-
 .blockHeaderLarge {
   padding-top: 12px !important;
 }
@@ -1265,8 +574,6 @@ _____  ._______  ___.___ _______
   border: 0;
   background-color: transparent;
 }
-
-
 
 //Header buttons are smaller
 .smallButton {
@@ -1285,11 +592,6 @@ _____  ._______  ___.___ _______
   font-size: 20px;
   text-align: center;
   color: #323232;
-}
-.addressLinkButton {
-  //padding: 6px;
-  //padding-left: 10px;
-  //font-family: 'PingFangSC-Thin', 'PingFang SC Thin', 'PingFang SC';
 }
 
 .createAddress {
@@ -1314,33 +616,15 @@ _____  ._______  ___.___ _______
   position: absolute;
   width: 24px;
   height: 24px;
-  //-webkit-border-radius: 50px;
-  //-moz-border-radius: 50px;
-  //border-radius: 50px;
   left: -2px;
-  // margin-top: 4px;
   background: #fff;
-  //-webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
-  //-moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
-  //box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
-
-  //background: $lightGrey;
   outline: 0;
 }
-//, .depositAddressCheckbox .checkboxCircle label
+
 .checkboxCircle label:after {
   opacity: 0;
 	content: '';
 	position: absolute;
-	//width: 14px;
-	//height: 14px;
-	//background: $blueGeneralColor;
-    //background: url("/images/checkbx.png");
-	//-webkit-border-radius: 50px;
-	//-moz-border-radius: 50px;
-	//border-radius: 50px;
-	//top: 4px;
-	//left: 5px;
   width: 20px;
   height: 20px;
   background: url(/images/checkbx.png) no-repeat;
@@ -1348,9 +632,6 @@ _____  ._______  ___.___ _______
   left: 2px;
   outline: 0;
   background-size: 80%;
-	//-webkit-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
-	//-moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
-	//box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
   outline: 0;
 }
 .depositAddressCheckbox .checkboxCircle label{
@@ -1395,19 +676,13 @@ _____  ._______  ___.___ _______
   background: #fff;
   cursor: pointer;
 }
+
 .checkbox-box{
     float: left;
 }
-.spe-addrbox  .checkboxCircle label:after {
 
-}
-.spe-addrbox{
- //margin: 50px 0 10px;
-}
 .spe-addrbox .spe-tc.textCheckbox {
   font-size: 18px;
-  //position: relative;
-  //top: -1px;
 }
 
 .spe-addrbox .glyphicon{
@@ -1421,10 +696,6 @@ _____  ._______  ___.___ _______
 .form-group select, .form-group textarea, .form-group input[type]:not([type=search]):not([type=submit]):not([disabled]):not([readonly]) {
   background-color : white;
   border-width: solid 1px $mediumGrey;
-}
-
-.form-group {
-  //color: $veryDarkGrey;
 }
 
 .noPaddingTopBottomButton {
@@ -1569,7 +840,6 @@ _____  ._______  ___.___ _______
 //Logo Metaverse top bar
 .logoMetaverseSmall {
   width: 97px;
-  //height: 34px;
 }
 
 
@@ -1659,21 +929,11 @@ _____  ._______  ___.___ _______
   border: 0;
 }
 
-
-
 .header .own {
   float:left;
   height: 50px;
   font-size: 24px;
 }
-
-/*.header-right {
-  float:right;
-  display:inline;
-  padding-right: 5px;
-  padding-left: 5px;
-  margin-top: 6px;
-}*/
 
 .topMenuButtonRight {
   padding: 0;
@@ -1697,8 +957,6 @@ _____  ._______  ___.___ _______
   display:inline-block;
   margin-top: 6px;
   position: absolute;
-
-
 }
 
 .userName {
@@ -1716,7 +974,6 @@ _____  ._______  ___.___ _______
   padding-top: 6px;
   width: 150px;
 }
-
 
 .menuButtonSmallScreen {
     position: absolute;
@@ -1833,7 +1090,6 @@ _____  ._______  ___.___ _______
 .navbarSmallScreens {
   position: fixed;
   top: 0;
-  //left: 0;
   right: 0;
   z-index: 1000;
   width: 100%;
@@ -1841,16 +1097,12 @@ _____  ._______  ___.___ _______
   border-width: 0;
 }
 
-
-
 .layout {
-  //display: inline-block;
   width:100%;
 }
 
 //Loading spinner, on the top right
 #nprogress .spinner-icon {
-//.spinner-icon {
   width: 26px;
   height: 26px;
   background-image:url("../images/loading-spinner.png");
@@ -1936,10 +1188,6 @@ _____  ._______  ___.___ _______
   background-image:url("../images/loading-spinner.png");
   background-size: 26px 26px;
   margin-left: 10px;
-  //border: dotted 4px transparent;
-  //border-bottom-color: rgba(73,155,234,1);
-  //border-right-color: rgba(221,227,32,1);
-  //border-top-color: rgba(227,34,34,1);
   -webkit-animation: nprogress-spinner 1000ms linear infinite;
   animation: nprogress-spinner 1000ms linear infinite;
 
@@ -1978,13 +1226,7 @@ _____  ._______  ___.___ _______
 }
 
 
-
-
 /********************My assets**************************/
-
-
-
-
 .createAsset {
   margin: 10px;
 }
@@ -2026,14 +1268,12 @@ _____  ._______  ___.___ _______
 .assetDataColumn {
   height: 32px;
   text-align: left;
-  //padding-right: 20px;
   font-weight: 400;
   font-style: normal;
   font-size: 14px;
 }
 
 .assetValueColumn {
-  //width: auto;
   padding-left: 20px;
 }
 
@@ -2044,24 +1284,20 @@ _____  ._______  ___.___ _______
 
 /********************Home page*************************/
 .tabsMenu > li.active > a {
-    //text-decoration: underline;
     border-bottom: solid 2px $linkButtonMenuColor !important;
     border-radius: 0;
     color:#323232 !important;
 }
+
 form label {
   color:#323232;
   font-weight: 400;
 }
+
 .selectAssetType {
   display: inline-block;
   margin-left: 10px;
   font-size: 16px;
-
-}
-
-.sendAndReceiveBox {
-
 }
 
 .sendAndReceive {
@@ -2071,8 +1307,6 @@ form label {
 .sendAndReceiveText {
   color: $veryDarkGrey !important;
 }
-
-
 
 .assetTypeButton {
   width: auto;
@@ -2089,7 +1323,6 @@ form label {
 
 .pagination > .active > a {
   color: white !important;
-  //background-color: $successButtonColor !important;
   width: 24px;
   height: 24px;
   background-color: $redGeneralColor !important;
@@ -2100,7 +1333,6 @@ form label {
 .pagination>li>a, .pagination>li>span {
   position: relative;
   float: left;
-  //padding:2px 15px;
   padding: 0;
   margin: 0 15px;
   width: 24px;
@@ -2113,16 +1345,13 @@ form label {
   border: 1px solid #ddd;
   text-align: center;
 }
+
 .no_transaction_message{
   padding-top: 20px;
 }
 
 .radioButton {
   margin-bottom: 20px;
-}
-
-.oneRadioButton {
-
 }
 
 //History
@@ -2184,7 +1413,6 @@ form label {
   margin-bottom: 20px;
 }
 
-
 //Display of the history for large screens
 .transactionOneLine {
   color: $veryDarkGrey;
@@ -2211,23 +1439,17 @@ form label {
   color: #27a7ea !important;
 }
 .overflow {
-  //width: 100%;
-  //display: inline-block;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
 
-.pagination {
-  //display: inline;
-}
 .paginationl>li:first-child a{
   color:red !important
 
 }
 .paginationHistory {
   padding-left: 30%;
-  //padding-top: 200px;
 }
 
 //Display of the history for small screens
@@ -2235,7 +1457,6 @@ form label {
   margin-top: 15px;
   height: 100px;
   border-bottom: 1px solid $mediumGrey;
-  //font-family: 'PingFangSC-Regular', 'PingFang SC';
 }
 
 .transactionBoxSmallAmount {
@@ -2270,24 +1491,17 @@ form label {
   height: 26px;
   line-height: 2.5em;
   position: relative;
-
 }
 
 .textAllLoadedAddressExplorerMore10 {
   top: -25px;
-
 }
 
 
 /**********************ETP Addresses*******************/
-.whiteSpace {
-  margin-bottom: 80px;
-}
-
 .textCheckbox {
   padding-left: 28px;
 }
-
 
 .addressBox {
   background-color: $lightGrey;
@@ -2374,7 +1588,6 @@ form label {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-
 }
 
 .addressBoxValue {
@@ -2408,13 +1621,11 @@ form label {
   margin-left: 100px;
   margin-top: 100px;
   margin-bottom: 20px;
-
 }
 
 .addressQRCode {
   text-align: center;
     font-size: 18px;
-
 }
 
 
@@ -2426,7 +1637,6 @@ form label {
 
 .addressBoxSymbolImgDeposit {
   width: 10px;
-
 }
 
 .assetSymbolDeposit {
@@ -2477,7 +1687,6 @@ form label {
   display: inline;
   padding-top: 0;
   padding-bottom: 0;
-
 }
 
 .addressBoxBalanceDeposit {
@@ -2511,7 +1720,6 @@ form label {
   color: $redGeneralColor;
   //margin-top: 30px;
 }
-
 
 .depositAddressCheckbox {
   margin-bottom: 10px;
@@ -2571,11 +1779,6 @@ form label {
 
 
 /*************Console page**************/
-html,body {
-    //height: 100%
-}
-
-
 .console {
   background-color: transparent;
   width:100%;
@@ -2590,10 +1793,8 @@ html,body {
 
 .console_query {
   margin-top: 10px;
-  //color: $blueGeneralColor;
   word-break: break-all;
   word-wrap: break-word;
-
 }
 
 .console_answer {
@@ -2625,7 +1826,6 @@ word-wrap: break-word;
 }
 
 .forminputConsole {
-  //border-color: #66afe9;
   margin-top: 14px;
   padding: 8px 0 8px 4px;
   display: inline;
@@ -2681,7 +1881,6 @@ h2 {
 .fieldAddressInfoTable {
   padding-left: 20px;
   height: 40px;
-  //border-bottom: 1px solid #f2f2f2;
 }
 
 .blockNumber {
@@ -2772,11 +1971,12 @@ h2 {
 
 .ng-valid-step  .form-control {
   display: block;
-  //width: 90% !important;
 }
+
 .fullPageWidth .form-group {
   margin-bottom: 20px;
 }
+
 .creatAssetBtnbox .btn{
   width: 200px;
 }
@@ -2789,15 +1989,19 @@ h2 {
   font-weight: 300;
   margin-left: 15px;
 }
+
 .wk-countbox{
   color:$blackColorfont ;
 }
+
 .wk-countbox .wd-t{
   width: 50px;
 }
+
 .color66{
   color: #666;
 }
+
 .wk-beginning{
   width: 200px;
   height: 30px;
@@ -2806,47 +2010,29 @@ h2 {
   background-color: $redGeneralColor;
 }
 
-
 .form-spebox .form-control {
   width: 460px;
   height: 36px;
   border-radius: 4px;
 }
 /**************myaddresses*****************/
-.C-assetBox{
-  box-shadow:none;
-  border: none;
-}
-.fr{
-      float: right;
-}
-.boxbox{
-  float: left;
-  margin-top: 6px;
+.fr {
+  float: right;
 }
 
-.first-atbox .assetBoxButtons{
-    margin-top: 10px;
+.boxbox {
+  float: left;
 }
-.C-assetBox .assetBoxTitle{
-   font-size: 14px !important;
- }
-.C-assetBox .assetBoxValue{
-  font-size: 20px !important;
-}
+
 .assetBoxAdd {
   border-left:5px solid #ff697c;
   border-radius: 8px;
   box-shadow: 0 1px 2px 0 rgba(35, 35, 35, 0.1);
 }
-.assetBoxAdd  .assetBoxValue{
-  font-size: 18px !important;
-  padding-top: 5px;
-}
+
 .assetBoxAdd .assetBoxBalance {
   padding-top: 0;
 }
-
 
 .fullPageWidth .spe-addrgroup .form-group {
   margin-bottom: 10px;
@@ -2855,16 +2041,18 @@ h2 {
   margin-bottom: 30px;
 }
 
-
 .ngdialog.ngdialog-theme-default .ngdialog-content{
   padding: 2em  3em !important;
 }
+
 .ngdialog1-aria-labelledby, .ngdialog3-aria-labelledby{
   margin-bottom: 30px !important;
 }
+
 .it-list{
   line-height: 2;
 }
+
 .onsume_bit-num{
   color: $redGeneralColor02;
 }
@@ -2922,7 +2110,6 @@ h2 {
 .profilFieldButtons {
   margin-top: 27px;
   width: 100%;
-  //text-align: center;
 }
 
 .profilFieldButtons .btn{
