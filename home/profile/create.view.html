@@ -10,25 +10,47 @@
       <!--ID-->
       <div class="form-group">
         <label class="control-label">{{ 'CREATE_PROFILE.CREATE_ID' | translate }}</label>
-        <input type="text" class="form-control" name="password" id="" ng-model="privatekey_password" autocomplete="off">
+        <input type="text" class="form-control" ng-model="didSymbol" required>
       </div>
       <!--Address-->
   		<div class="form-group">
 				<label for="useAddress" class=" ddd control-label">{{ 'CREATE_PROFILE.SELECT_ADDRESS' | translate }}</label>
-				<select name="useAddress" type="address" class="form-control" placeholder="" ng-model="sendfrom" ng-change="availBalance(sendfrom)">
-					<option value="">{{ 'CREATE_PROFILE.ADDRESS_AUTOMATIC' | translate }}</option>
-					<option ng-repeat="oneAddress in listAddresses | orderBy:'balance':true" value="{{oneAddress.address}}" title="{{oneAddress.available/100000000}} ETP" ng-show="oneAddress.balance != 0 && addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available/100000000}} ETP</option>
+				<select name="useAddress" type="address" class="form-control" placeholder="" ng-model="didAddress" required>
+					<option ng-repeat="oneAddress in listAddresses | orderBy:'balance':true" value="{{oneAddress.address}}" title="{{oneAddress.available/100000000}} ETP" ng-show="addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available/100000000}} ETP</option>
 				</select>
   		</div>
+      <!--Password-->
+      <div class="form-group">
+        <label for="password" class="control-label">{{ 'SETTINGS_BACKUP_PASSWORD' | translate }}</label>
+        <input type="password" class="form-control" name="password" id="" ng-model="password" autocomplete="off">
+      </div>
+      <!--Buttons-->
       <div class="buttonBox">
         <div class="col-xs-6">
-          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="{{ 'CREATE_PROFILE.CREATE_PROFILE_BUTTON' | translate }}" class="btn btn-success">
+          <input type="submit" ng-click="popupIssueDid()" value="{{ 'CREATE_PROFILE.CREATE_PROFILE_BUTTON' | translate }}" class="btn btn-success">
         </div>
         <div class="col-xs-6">
-          <a href="#!/profile/myprofile" class="btn btn-success btn-success-secondary">Back to my profile</a>
-          <!--a href="#!/profile/myprofile" class="btn btn-link-red">Back to my profile</a-->
+          <a href="#!/profile/myprofile" class="btn btn-success btn-success-secondary">{{ 'CREATE_PROFILE.BACK_TO_PROFILE' | translate }}</a>
         </div>
       </div>
     </form>
   </div>
 </div>
+
+
+<script type="text/ng-template" id="issueDid">
+  <h2 class="center">
+    {{ 'CREATE_PROFILE_VALIDATION.TITLE' | translate }}
+  </h2>
+  <div class="it-list">
+    {{ 'CREATE_PROFILE_VALIDATION.TEXT' | translate }}
+  </div>
+  <div class="popupButtons">
+    <button class="btn btn-link-red createAssetPopupButtons col-xs-6" ng-click="closeAll()">
+      {{ 'CANCEL_BUTTON' | translate }}
+    </button>
+    <button class="btn btn-success createAssetPopupButtons col-xs-6" ng-click="createProfile(didAddress, didSymbol, password);closeAll()">
+      {{ 'CREATE_PROFILE_VALIDATION.ISSUE_NOW' | translate }}
+    </button>
+  </div>
+</script>

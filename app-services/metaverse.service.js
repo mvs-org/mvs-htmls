@@ -119,6 +119,12 @@
         service.GetInfo = GetInfo;
         service.GetInfoV2 = GetInfoV2;
 
+        //DID
+        service.IssueDid = IssueDid;
+        service.ListDids = ListDids;
+        service.ListMyDids = ListMyDids;
+        service.ListAllDids = ListAllDids;
+
         return service;
 
 
@@ -854,7 +860,24 @@
 
         function ImportAccount(user, password, phrase, address_count) {
           return _send('importaccount', ['-n', user, '-p', password, '-i', address_count, phrase]);
-            //return this.Query('importaccount --accoutname ' + user + ' --password ' + password + ' -i' + address_count + ' ' + phrase);
+        }
+
+        function IssueDid(address, symbol, password) {
+            var credentials = localStorageService.get('credentials');
+            return _sendV2('issuedid', [credentials.user, password, address, symbol]);
+        }
+
+        function ListDids() {
+            return _sendV2('listdids', []);
+        }
+
+        function ListMyDids() {
+            var credentials = localStorageService.get('credentials');
+            return _sendV2('listdids', [credentials.user, credentials.password]);
+        }
+
+        function ListAllDids() {
+            return _sendV2('listdids', []);
         }
 
         function Query(string) {

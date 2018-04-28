@@ -17,6 +17,8 @@
   .controller('DepositController', DepositController)
   .controller('ExplorerController', ExplorerController)
   .controller('ProfileController', ProfileController)
+  .controller('CreateProfileController', CreateProfileController)
+  .controller('AllProfilesController', AllProfilesController)
   .directive('bsTooltip', function() {
     return {
       restrict: 'A',
@@ -2521,14 +2523,17 @@
     }
   }
 
-  function ProfileController(MetaverseHelperService, MetaverseService, $scope, $translate, $window, localStorageService) {
+  function ProfileController(MetaverseHelperService, MetaverseService, $scope, $translate, $window, localStorageService, FlashService) {
 
     $scope.listAddresses = [];
     $scope.listMultiSig = [];
+    $scope.listDids = [];
 
     $scope.onChain = false;
-    $scope.selectedDID = '';
+    $scope.selectedDid = '';
     $scope.address = '';
+
+    $scope.listMyDids = listMyDids;
 
     function listMultiSign() {
       NProgress.start();
@@ -2597,7 +2602,210 @@
 
     listMultiSign();
 
-    function changeDID(selectedDID) {
+    function changeDid(selectedDid) {
+
+    }
+
+    function listMyDids() {
+      MetaverseService.ListMyDids()
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.myDids = response.result.dids;
+        } else {
+          //No DIDs for this account
+          $scope.myDids = [
+              {
+                      "address" : "",
+                      "description" : "test did",
+                      "issuer" : "test",
+                      "status" : "unissued",
+                      "symbol" : "TESTDID"
+              },
+              {
+                      "address" : "",
+                      "description" : "",
+                      "issuer" : "test",
+                      "status" : "unissued",
+                      "symbol" : "YANG"
+              },
+              {
+                      "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
+                      "description" : "",
+                      "issuer" : "yangguanglu",
+                      "status" : "issued",
+                      "symbol" : "LU"
+              },
+              {
+                      "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
+                      "description" : "",
+                      "issuer" : "yangguanglu",
+                      "status" : "issued",
+                      "symbol" : "MVS.TST"
+              },
+              {
+                      "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
+                      "description" : "",
+                      "issuer" : "yangguanglu",
+                      "status" : "issued",
+                      "symbol" : "GUANG"
+              }
+          ]
+        }
+      });
+    }
+
+    listMyDids();
+
+    function listDids() {
+      MetaverseService.ListDids()
+      .then( (response) => {
+        //console.log(response);
+      });
+    }
+
+    listDids();
+
+  }
+
+  function AllProfilesController(MetaverseHelperService, MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $location) {
+
+    $scope.listAllDids = listAllDids;
+
+
+    function listAllDids() {
+      MetaverseService.ListAllDids()
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.allDids = response.result.dids;
+
+        } else {
+          $scope.allDids=[
+                {
+                        "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
+                        "description" : "",
+                        "issuer" : "yangguanglu",
+                        "status" : "issued",
+                        "symbol" : "LU"
+                },
+                {
+                        "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
+                        "description" : "",
+                        "issuer" : "yangguanglu",
+                        "status" : "issued",
+                        "symbol" : "MVS.TST"
+                },
+                {
+                        "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
+                        "description" : "",
+                        "issuer" : "yangguanglu",
+                        "status" : "issued",
+                        "symbol" : "GUANG"
+                }
+            ]
+        }
+      });
+    }
+
+    listAllDids();
+  }
+
+
+  function CreateProfileController(MetaverseHelperService, MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $location) {
+
+    $scope.listAddresses = [];
+    $scope.listMultiSig = [];
+    $scope.createProfile = createProfile;
+    $scope.popupIssueDid = popupIssueDid;
+
+
+    function listAddresses() {
+      NProgress.start();
+      //Load users ETP balance
+      //Load the addresses and their balances
+      MetaverseService.ListBalances()
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.addresses = [];
+          response.data.balances.forEach( (e) => {
+            var name = "New address";
+            if (localStorageService.get(e.balance.address) != undefined) {
+              name = localStorageService.get(e.balance.address);
+            }
+            $scope.addresses[e.balance.address] = ({
+              "balance": parseInt(e.balance.unspent),
+              "available": parseInt(e.balance.available),
+              "address": e.balance.address,
+              "name": name,
+              "frozen": e.balance.frozen,
+              "type": "single"
+            });
+            $scope.listAddresses.push({
+              "balance": parseInt(e.balance.unspent),
+              "available": parseInt(e.balance.available),
+              "address": e.balance.address
+            });
+          });
+
+          //After loading the balances, we load the multisig addresses
+          MetaverseService.ListMultiSig()
+          .then( (response) => {
+            if (typeof response.success !== 'undefined' && response.success) {
+              if(response.data.multisig != "") {    //if the user has some assets
+                response.data.multisig.forEach( (e) => {
+                  $scope.addresses[e.address].type = "multisig";
+                });
+              } else {
+                //The account has no multi-signature address
+              }
+            } else {
+              //Fail
+            }
+          });
+        }
+      });
+      NProgress.done();
+    }
+
+    listAddresses();
+
+    function createProfile(didAddress, didSymbol, password) {
+      if (typeof didAddress == 'undefined') { //Check for recipent address
+        $translate('MESSAGES.CREATE_DID_ADDRESS_NEEDED').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else if (password === '') { //Check for empty password
+        $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else if (localStorageService.get('credentials').password != password) {
+        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else {
+        MetaverseService.IssueDid(didAddress, didSymbol, password)
+        .then( (response) => {
+          if (typeof response.success !== 'undefined' && response.success) {
+            $translate('MESSAGES.DID_CREATED').then( (data) =>  FlashService.Success(data, true));
+            $location.path('/profile/myprofile');
+          } else {
+            $translate('MESSAGES.ERROR_DID_CREATION').then( (data) => {
+              if (response.message != undefined) {
+                FlashService.Error(data + " : " + response.message);
+              } else {
+                FlashService.Error(data);
+              }
+            });
+          }
+        });
+      }
+    }
+
+    $scope.closeAll = function () {
+      ngDialog.closeAll();
+    };
+
+    function popupIssueDid() {
+      ngDialog.open({
+          template: 'issueDid',
+          scope: $scope
+      });
 
     }
 

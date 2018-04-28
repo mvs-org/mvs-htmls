@@ -222,7 +222,6 @@ No media query since this is the default in Bootstrap because it is "mobile firs
 }
 
 .assetBoxValue {
-  height: 26px;
   font-size: 18px;
   padding-top: 4px;
 }
@@ -359,7 +358,6 @@ Bootstrap 4 breakpoints
   }
 
   .assetBoxValue {
-    height: 26px;
     font-size: 18px;
     padding-top: 4px;
   }
@@ -485,7 +483,6 @@ Bootstrap 4 breakpoints
   }
 
   .assetBoxValue {
-    height: 26px;
     font-size: 18px;
     padding-top: 4px;
   }
@@ -609,7 +606,6 @@ Bootstrap 4 breakpoints
   }
 
   .assetBoxValue {
-    height: 26px;
     font-size: 18px;
     padding-top: 4px;
   }
@@ -743,7 +739,6 @@ Bootstrap 4 breakpoints
   }
 
   .assetBoxValue {
-    height: 26px;
     font-size: 18px;
     padding-top: 4px;
   }
@@ -872,7 +867,6 @@ Bootstrap 4 breakpoints
   }
 
   .assetBoxValue {
-    height: 26px;
     font-size: 18px;
     padding-top: 4px;
   }
@@ -937,7 +931,11 @@ _____  ._______  ___.___ _______
       box-shadow: 0 .125em $off-wht, inset 0 .063em $off-wht, inset 0 -.188em lighten($btn-color, 2%);
     }
     &:active {
+      outline: 0;
       box-shadow: 0 .063em $off-wht, inset 0 0 1.094em darken($btn-color, 40%), inset 0 .063em darken($btn-color, 20%),inset 0 -0.188em darken($btn-color, 20%);
+    }
+    &:focus {
+      outline: 0;
     }
   } @else if $type == 'secondary' {
     width: 100%;
@@ -952,7 +950,11 @@ _____  ._______  ___.___ _______
       box-shadow: 0 .125em $off-wht, inset 0 .063em $off-wht, inset 0 -.188em lighten($btn-color, 2%);
     }
     &:active {
+      outline: 0;
       box-shadow: 0 .063em $off-wht, inset 0 0 1.094em darken($btn-color, 40%), inset 0 .063em darken($btn-color, 20%),inset 0 -0.188em darken($btn-color, 20%);
+    }
+    &:focus {
+      outline: 0;
     }
 
   } @else if $type == 'link' {
@@ -966,6 +968,7 @@ _____  ._______  ___.___ _______
     }
     &:focus {
       text-decoration: none;
+      outline: 0;
       color: $btn-color !important;
     }
 
@@ -981,6 +984,7 @@ _____  ._______  ___.___ _______
     }
     &:focus {
       text-decoration: none;
+      outline: 0;
     }
 
   } @else if $type == 'language' {

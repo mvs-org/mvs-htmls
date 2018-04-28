@@ -393,7 +393,6 @@
   "CREATE_PROFILE.CREATE_ID": "Digital Identity ID",
   "CREATE_PROFILE.CREATE_PROFILE_BUTTON": "Create Profile",
   "CREATE_PROFILE.SELECT_ADDRESS": "Select Address",
-  "CREATE_PROFILE.ADDRESS_AUTOMATIC": "Automatic",
   "SETTINGS_EXPORT_ACCOUNT_BUTTON_TO_APP": "Export to app",
   "MESSAGES.EXPORT_ACCOUNT_DOWNLOAD_FILE_ERROR": "Account exported to metaverse/mvs-htmls/keys/",
   "REGISTER.NEW_ACCOUNT": "New account"

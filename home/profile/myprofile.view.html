@@ -1,9 +1,10 @@
 <div class="AStitle-tabs">
   <ul class="nav nav-pills tabsMenu">
-    <li role="presentation" class="active"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.MY_PROFILE' | translate}}</a></li>
+    <li class="active" role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.MY_PROFILE' | translate}}</a></li>
     <li class="disabled" role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.AUTHORIZE' | translate}}</a></li>
     <li class="disabled" role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.REQUEST_LIST' | translate}}</a></li>
     <li class="disabled" role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.RELATIONSHIPS' | translate}}</a></li>
+    <li class="" role="presentation"><a href="#!/profile/all" class="btn-link-menu">{{'PROFILE.ALL' | translate}}</a></li>
   </ul>
 </div>
 
@@ -23,13 +24,9 @@
 	<!--DID-->
 	<div class="col-md-12 form-group noPaddingLeftRight">
 		<div class="col-md-6 form-group noPaddingLeftRight">
-      <label for="useDID" class="control-label">{{ 'PROFIL.DID' | translate }}</label>
-      <select name="useDID" type="text" class="form-control" placeholder="" ng-model="selectedDID" ng-change="changeDID(selectedDID)">
-        <option value="">Laurent</option>
-        <option value="">Chen Hao</option>
-        <option value="">Toto</option>
-        <option value="">...</option>
-        <!--option ng-repeat="oneAddress in listAddresses | orderBy:'balance':true" value="{{oneAddress.address}}" title="{{oneAddress.available/100000000}} ETP" ng-show="oneAddress.balance != 0 && addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available/100000000}} ETP</option-->
+      <label for="useDid" class="control-label">{{ 'PROFIL.DID' | translate }}</label>
+      <select name="useDid" type="text" class="form-control" placeholder="" ng-model="selectedDid" ng-change="changeDid(selectedDid)">
+        <option ng-repeat="did in myDids" value="{{did.address}}" title="{{did.symbol}}">{{did.symbol}} - {{did.address}}</option>
       </select>
 		</div>
 	</div>

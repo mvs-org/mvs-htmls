@@ -393,8 +393,16 @@
   "CREATE_PROFILE.CREATE_ID": "Digital Identity ID",
   "CREATE_PROFILE.CREATE_PROFILE_BUTTON": "Create Profile",
   "CREATE_PROFILE.SELECT_ADDRESS": "Select Address",
-  "CREATE_PROFILE.ADDRESS_AUTOMATIC": "Automatic",
   "SETTINGS_EXPORT_ACCOUNT_BUTTON_TO_APP": "Export to app",
   "MESSAGES.EXPORT_ACCOUNT_DOWNLOAD_FILE_ERROR": "Account exported to metaverse/mvs-htmls/keys/",
-  "REGISTER.NEW_ACCOUNT": "New account"
+  "REGISTER.NEW_ACCOUNT": "New account",
+  "CREATE_PROFILE.BACK_TO_PROFILE": "Back to my profile",
+  "MESSAGES.CREATE_DID_ADDRESS_NEEDED": "Please select an address",
+  "CREATE_PROFILE_VALIDATION.TITLE": "Issue a DID cost 10 ETP",
+  "CREATE_PROFILE_VALIDATION.TEXT": "Are you sure you want to create a Digital Identity ?",
+  "CREATE_PROFILE_VALIDATION.ISSUE_NOW": "Pay 10 ETP",
+  "CANCEL_BUTTON": "Cancel",
+  "MESSAGES.DID_CREATED": "New Digital Identity created successfully !",
+  "MESSAGES.ERROR_DID_CREATION": "This Digital Identity hasn't been created",
+  "PROFILE.ALL": "All DIDs"
 }

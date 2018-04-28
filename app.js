@@ -243,8 +243,14 @@
             .state('home.profile.create', {
                 url: "/profile/create",
                 templateUrl: "home/profile/create.view.html",
-                controller: 'ProfileController'
-            });
+                controller: 'CreateProfileController'
+            })
+
+            .state('home.profile.all', {
+                url: "/profile/all",
+                templateUrl: "home/profile/all.view.html",
+                controller: 'AllProfilesController'
+            })
 
         $urlRouterProvider.otherwise("/login");
     };
