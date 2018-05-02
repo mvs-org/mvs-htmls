@@ -186,6 +186,10 @@ No media query since this is the default in Bootstrap because it is "mobile firs
   margin-bottom: 20px;
 }
 
+.checkRecipient {
+  padding-top: 5px;
+}
+
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::
 Bootstrap 4 breakpoints
 */
@@ -201,7 +205,9 @@ Bootstrap 4 breakpoints
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-
+  .checkRecipient {
+    padding-top: 32px;
+  }
 }
 
 /* Extra large devices (large desktops, 1200px and up) */

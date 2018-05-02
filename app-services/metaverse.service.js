@@ -121,9 +121,10 @@
 
         //DID
         service.IssueDid = IssueDid;
-        service.ListDids = ListDids;
         service.ListMyDids = ListMyDids;
         service.ListAllDids = ListAllDids;
+        service.DidSendAssetFrom = DidSendAssetFrom;
+        service.DidSendAsset = DidSendAsset;
 
         return service;
 
@@ -756,9 +757,9 @@
          * @apiParam {List} params [username, password, recipent_address, symbol, quantity]
          *
          **/
-        function SendAsset(recipent_address, symbol, quantity) {
+        function SendAsset(recipent_address, symbol, quantity, password) {
             var credentials = localStorageService.get('credentials');
-            return _send('sendasset', [credentials.user, credentials.password, recipent_address, symbol, quantity]);
+            return _sendV2('sendasset', [credentials.user, password, recipent_address, symbol, quantity]);
         }
 
         /**
@@ -804,9 +805,9 @@
          * @apiParam {List} params [username, password, sender_address, recipent_address, symbol, quantity]
          *
          **/
-        function SendAssetFrom(sender_address, recipent_address, symbol, quantity) {
+        function SendAssetFrom(sender_address, recipent_address, symbol, quantity, password) {
             var credentials = localStorageService.get('credentials');
-            return _send('sendassetfrom', [credentials.user, credentials.password, sender_address, recipent_address, symbol, quantity]);
+            return _sendV2('sendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity]);
         }
 
 
@@ -867,10 +868,6 @@
             return _sendV2('issuedid', [credentials.user, password, address, symbol]);
         }
 
-        function ListDids() {
-            return _sendV2('listdids', []);
-        }
-
         function ListMyDids() {
             var credentials = localStorageService.get('credentials');
             return _sendV2('listdids', [credentials.user, credentials.password]);
@@ -878,6 +875,17 @@
 
         function ListAllDids() {
             return _sendV2('listdids', []);
+        }
+
+        function DidSendAssetFrom(sender_address, recipent_address, symbol, quantity, password) {
+            var credentials = localStorageService.get('credentials');
+            return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity]);
+        }
+
+        function DidSendAsset(recipent_address, symbol, quantity, password) {
+            var credentials = localStorageService.get('credentials');
+            console.log(password);
+            return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity]);
         }
 
         function Query(string) {
