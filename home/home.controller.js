@@ -597,6 +597,7 @@
       $scope.password = '';
       $scope.transactionFee = 0.0001;
       $scope.memo = '';
+      $scope.confirmation = false;
       MetaverseService.ListBalances(true)
       .then( (response) => {
         if (response.success)
@@ -774,7 +775,7 @@
 
       value *= 100000000;
       value = Math.round(value);
-      if ($scope.correctEtpAddress) {
+      if (recipents[0].correctEtpAddress) {
         var SendPromise = (sendfrom) ? MetaverseService.SendFrom(sendfrom, sendTo, value, fee, memo, password) : MetaverseService.Send(sendTo, value, fee, memo, password);
       } else {
         var SendPromise = (sendfrom) ? MetaverseService.DidSendFrom(sendfrom, sendTo, value, fee, memo, password) : MetaverseService.DidSend(sendTo, value, fee, memo, password);
@@ -824,14 +825,14 @@
         NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
           //Transaction was successful
-          $translate('MESSAGES.TRANSFER_SUCCESS').then( (data) => FlashService.Success(data + response.data.transaction.hash) );
+          $translate('MESSAGES.TRANSFER_SUCCESS').then( (data) => FlashService.Success(data + response.data.result.transaction.hash) );
           $window.scrollTo(0,0);
           init();
         } else {
           //Transaction problem
           $translate('MESSAGES.TRANSFER_ERROR').then( (data) => {
-            if (response.message != undefined) {
-              FlashService.Error(data + " " + response.message);
+            if (response.message.message != undefined) {
+              FlashService.Error(data + " " + response.message.message);
             } else {
               FlashService.Error(data);
             }

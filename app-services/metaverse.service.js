@@ -408,9 +408,9 @@
         function Send(recipent, quantity, transactionFee, memo, password) {
             var credentials = localStorageService.get('credentials');
             if(memo == '') {
-              return _send('send', [credentials.user, password, recipent, quantity, '-f', transactionFee]);
+              return _sendV2('send', [credentials.user, password, recipent, quantity, '-f', transactionFee]);
             } else {
-              return _send('send', [credentials.user, password, recipent, quantity, '-f', transactionFee, '-m', memo]);
+              return _sendV2('send', [credentials.user, password, recipent, quantity, '-f', transactionFee, '-m', memo]);
             }
         }
 
@@ -454,9 +454,9 @@
         function SendFrom(sender, recipent, quantity, transactionFee, memo, password) {
             var credentials = localStorageService.get('credentials');
             if(memo == '') {
-              return _send('sendfrom', [credentials.user, password, sender, recipent, quantity, '-f', transactionFee]);
+              return _sendV2('sendfrom', [credentials.user, password, sender, recipent, quantity, '-f', transactionFee]);
             } else {
-              return _send('sendfrom', [credentials.user, password, sender, recipent, quantity, '-f', transactionFee, '-m', memo]);
+              return _sendV2('sendfrom', [credentials.user, password, sender, recipent, quantity, '-f', transactionFee, '-m', memo]);
             }
         }
 
@@ -510,7 +510,7 @@
               query.push('-r');
               query.push(recipent);
             });
-            return _send('sendmore', query);
+            return _sendV2('sendmore', query);
         }
 
         /**
