@@ -69,7 +69,7 @@
   "TRANSFER_NO_OF_CONFIRMATIONS" : "Confirmations",
   "TRANSFER_BACK_ASSETS" : "Back to My Assets",
   "TRANSFER_SELECT_INPUT_MULTI_RECIPENT": "Selection of input address not available for multi-recipients transactions",
-  "TRANSFER_MEMO" : "Memo",
+  "TRANSFER_MEMO" : "Message (optional)",
   "TRANSFER_ASSET_FEE_START" : "The asset transfer requires at least",
   "TRANSFER_ASSET_FEE_END" : "ETP for miners, so please make sure there is enough ETP in the account.",
   "TRANSFER_AMOUNT_AVALAIBLE" : "Available",
@@ -286,7 +286,7 @@
   "EXPLORER.TRANSACTION_INPUTS" : "Inputs",
   "EXPLORER.TRANSACTION_OUTPUTS" : "Outputs",
   "EXPLORER.TRANSACTION_SCRIPT" : "Script",
-  "EXPLORER.MEMO" : "Memo",
+  "EXPLORER.MEMO" : "Message",
   "EXPLORER_TRANSACTION_NO_TX" : "There is no transaction for this Hash.",
   "EXPLORER.HEADLINE" : "Transaction explorer",
   "EXPLORER.NAV_ITEM" : "Explorer",
@@ -409,9 +409,11 @@
   "TRANSFER_RECIPENT_ADDRESS_OR_AVATAR": "Recipient Address or Avatar",
   "MESSAGES.ALL_DIDS_LOAD_ERROR": "Unable to load the list of Avatars on the blockchain",
   "TRANSFER.INCORRECT_RECIPIENT": "Incorrect Address or Avatar",
+  "TRANSFER.INCORRECT_ADDRESS": "Incorrect Address",
   "TRANSFER.CORRECT_RECIPIENT_ADDRESS": "Send to ETP Address",
   "TRANSFER.CORRECT_RECIPIENT_AVATAR": "Send to Avatar",
   "TRANSFER.CONFIRMATION_TITLE": "Transaction summary",
   "TRANSFER_RECIPENT_AVATAR": "Recipient Avatar",
-  "MESSAGE.INCORRECT_RECIPIENT_ADDRESS_OR_AVATAR": "Incorrect recipient Address or Avatar"
+  "MESSAGE.INCORRECT_RECIPIENT_ADDRESS_OR_AVATAR": "Incorrect recipient Address or Avatar",
+  "TRANSFER.RECIPIENT_AVATAR_NO_MULTI": "Send to Avatar is not available for multi-recipients"
 }

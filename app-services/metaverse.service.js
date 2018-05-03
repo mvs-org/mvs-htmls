@@ -123,6 +123,8 @@
         service.IssueDid = IssueDid;
         service.ListMyDids = ListMyDids;
         service.ListAllDids = ListAllDids;
+        service.DidSendFrom = DidSendFrom;
+        service.DidSend = DidSend;
         service.DidSendAssetFrom = DidSendAssetFrom;
         service.DidSendAsset = DidSendAsset;
 
@@ -403,12 +405,12 @@
          *    }
          * }
          **/
-        function Send(recipent, quantity, transactionFee, memo) {
+        function Send(recipent, quantity, transactionFee, memo, password) {
             var credentials = localStorageService.get('credentials');
             if(memo == '') {
-              return _send('send', [credentials.user, credentials.password, recipent, quantity, '-f', transactionFee]);
+              return _send('send', [credentials.user, password, recipent, quantity, '-f', transactionFee]);
             } else {
-              return _send('send', [credentials.user, credentials.password, recipent, quantity, '-f', transactionFee, '-m', memo]);
+              return _send('send', [credentials.user, password, recipent, quantity, '-f', transactionFee, '-m', memo]);
             }
         }
 
@@ -449,12 +451,12 @@
          *    }
          * }
          **/
-        function SendFrom(sender, recipent, quantity, transactionFee, memo) {
+        function SendFrom(sender, recipent, quantity, transactionFee, memo, password) {
             var credentials = localStorageService.get('credentials');
             if(memo == '') {
-              return _send('sendfrom', [credentials.user, credentials.password, sender, recipent, quantity, '-f', transactionFee]);
+              return _send('sendfrom', [credentials.user, password, sender, recipent, quantity, '-f', transactionFee]);
             } else {
-              return _send('sendfrom', [credentials.user, credentials.password, sender, recipent, quantity, '-f', transactionFee, '-m', memo]);
+              return _send('sendfrom', [credentials.user, password, sender, recipent, quantity, '-f', transactionFee, '-m', memo]);
             }
         }
 
@@ -877,6 +879,24 @@
             return _sendV2('listdids', []);
         }
 
+        function DidSendFrom(sendfrom, sendTo, value, transactionFee, memo, password) {
+            var credentials = localStorageService.get('credentials');
+            if(memo == '') {
+              return _sendV2('didsendfrom', [credentials.user, password, sendfrom, sendTo, value, '-f', transactionFee]);
+            } else {
+              return _sendV2('didsendfrom', [credentials.user, password, sendfrom, sendTo, value, '-f', transactionFee, '-m', memo]);
+            }
+        }
+
+        function DidSend(sendTo, value, transactionFee, memo, password) {
+            var credentials = localStorageService.get('credentials');
+            if(memo == '') {
+              return _sendV2('didsend', [credentials.user, password, sendTo, value, '-f', transactionFee]);
+            } else {
+              return _sendV2('didsend', [credentials.user, password, sendTo, value, '-f', transactionFee, '-m', memo]);
+            }
+        }
+
         function DidSendAssetFrom(sender_address, recipent_address, symbol, quantity, password) {
             var credentials = localStorageService.get('credentials');
             return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity]);
@@ -884,7 +904,6 @@
 
         function DidSendAsset(recipent_address, symbol, quantity, password) {
             var credentials = localStorageService.get('credentials');
-            console.log(password);
             return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity]);
         }
 

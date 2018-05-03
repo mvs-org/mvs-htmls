@@ -69,7 +69,7 @@
   "TRANSFER_NO_OF_CONFIRMATIONS" : "确认数",
   "TRANSFER_BACK_ASSETS" : "返回",
   "TRANSFER_SELECT_INPUT_MULTI_RECIPENT": "同时发送到多个地址时此功能不可用",
-  "TRANSFER_MEMO" : "备注",
+  "TRANSFER_MEMO" : "备注 (可选)",
   "TRANSFER_ASSET_FEE_START" : "资产转移需要支付矿工至少",
   "TRANSFER_ASSET_FEE_END" : "个ETP,请确保账户中有足够的ETP。",
   "TRANSFER_AMOUNT_AVALAIBLE" : "可用",

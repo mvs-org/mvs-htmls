@@ -559,7 +559,7 @@
   /**
   * The ETP Controller provides ETP transaction functionality.
   */
-  function ETPController(MetaverseService, MetaverseHelperService, $rootScope, $scope, FlashService, localStorageService, $translate, $window) {
+  function ETPController(MetaverseService, MetaverseHelperService, $rootScope, $scope, FlashService, localStorageService, $translate, $window, $filter) {
 
     $window.scrollTo(0,0);
     //Start loading animation
@@ -578,6 +578,13 @@
 
     $scope.recipents = [];
     $scope.listAddresses = [];
+
+    $scope.checkRecipent = checkRecipent;
+    $scope.correctEtpAddress = false;
+    $scope.correctAvatar = false;
+    $scope.allDids = [];
+    $scope.confirmation = false;
+    $scope.checkInputs = checkInputs;
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -621,6 +628,73 @@
     getBalance();
 
 
+    MetaverseService.ListAllDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        //TODO for each $scope.allDids = response.result.dids;
+      } else {
+        //$translate('MESSAGES.ALL_DIDS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+        //$window.scrollTo(0,0);
+
+        //For Testing
+        $scope.allDids = [];
+        $scope.allDidsAddresses = [];
+        response = {
+            "jsonrpc": "2.0",
+            "id": 42,
+            "result":
+             {
+                "dids" :
+                [
+                    {
+                            "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
+                            "description" : "",
+                            "issuer" : "yangguanglu",
+                            "status" : "issued",
+                            "symbol" : "LU"
+                    },
+                    {
+                            "address" : "MCacqaACiXFyrHZfDqvNnZGeFDNwt1M41o",
+                            "description" : "",
+                            "issuer" : "laurent",
+                            "status" : "issued",
+                            "symbol" : "LAURENT"
+                    },
+                    {
+                            "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
+                            "description" : "",
+                            "issuer" : "yangguanglu",
+                            "status" : "issued",
+                            "symbol" : "GUANG"
+                    }
+                ]
+            }
+        }
+        response.result.dids.forEach( (did) => {
+          $scope.allDids.push(did.symbol);
+          $scope.allDidsAddresses[did.address] = did.symbol;
+        });
+      }
+      //Once all the DIDs have been loaded, we look for the one entered by the user
+      checkRecipent($scope.recipents[0].address, 1);
+    });
+
+    function checkRecipent(input, index) {
+      if (typeof input == 'undefined' || '') {
+        $scope.recipents[index-1].correctEtpAddress = false;
+        $scope.recipents[index-1].correctAvatar = false;
+      } else if((($rootScope.network == 'testnet' && input.charAt(0) == 't') || ($rootScope.network == 'mainnet' && input.charAt(0) == 'M') || input.charAt(0) == '3') && input.length == 34) {
+        $scope.recipents[index-1].correctEtpAddress = true;
+        $scope.recipents[index-1].correctAvatar = false;
+      } else if ($scope.allDids.indexOf($filter('uppercase')(input)) > -1) {
+        $scope.recipents[index-1].correctEtpAddress = false;
+        $scope.recipents[index-1].correctAvatar = true;
+      } else {
+        $scope.recipents[index-1].correctEtpAddress = false;
+        $scope.recipents[index-1].correctAvatar = false;
+      }
+    }
+
 
 
     $scope.addRecipent = function() {
@@ -639,25 +713,22 @@
       }
     }
 
-
-    //Transfers ETP
-    function transfer() {
-      var transactionOK=true;
+    //Check Inputs
+    function checkInputs(sendfrom, recipents, transactionFee, memo, password) {
+      var transactionOK = true;
       //Check for unimplemented parameters
-      $scope.recipents.forEach( (e) => {
-        if (e.address === '') { //Check for recipent address
-          $translate('MESSAGES.TRANSACTION_RECIPENT_ADDRESS_NEEDED').then( (data) => FlashService.Error(data) );
-          $window.scrollTo(0,0);
-          transactionOK = false;
-        } else if (e.address.length != 34) {
-          $translate('MESSAGES.TRANSACTION_RECIPENT_WRONG').then( (data) => FlashService.Error(data + ' ' + e.index));
+      recipents.forEach( (e) => {
+        if (!e.correctEtpAddress && !e.correctAvatar) { //Check for recipent address
+          $translate('TRANSFER.INCORRECT_RECIPIENT').then( (data) =>
+            $translate('TRANSFER_RECIPENT_ADDRESS').then( (data2) => FlashService.Error(data + ' (' + data2 + ' ' + e.index + ')' ))
+          );
           $window.scrollTo(0,0);
           transactionOK = false;
         } else if (typeof e.value == 'undefined' || e.value === '') { //Check for transaction value
           $translate('MESSAGES.TRANSACTION_VALUE_NEEDED').then( (data) => FlashService.Error(data) );
           $window.scrollTo(0,0);
           transactionOK = false;
-        } else if (e.value > ($scope.availableBalance/100000000 - $scope.transactionFee)) { //Check for transaction value
+        } else if (e.value > ($scope.availableBalance/100000000 - transactionFee)) { //Check for transaction value
           $translate('MESSAGES.TRANSACTION_AMOUNT_NOT_ENOUGH').then( (data) => FlashService.Error(data) );
           $window.scrollTo(0,0);
           transactionOK = false;
@@ -665,54 +736,62 @@
       });
       if (transactionOK === false) {
         //error already handle
-      } else if ($scope.password === '') { //Check for empty password
-        $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else if ($scope.transactionFee < 0.0001) { //Check for empty password
+      } else if (transactionFee < 0.0001) { //Check for empty password
         $translate('MESSAGES.TOO_LOW_FEE').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
+      } else if (password === '') { //Check for empty password
+        $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else if (localStorageService.get('credentials').password != password) {
+        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else {
-        //Check for password
-        if (localStorageService.get('credentials').password != $scope.password) {
-          $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
-          $window.scrollTo(0,0);
-        } else if ($scope.recipents.length == 1) { //Start transaction for 1 recipent
-          transferOne();
-        } else {  //Start transaction with more than 1 recipent
-          transferMore();
+        if(recipents[0].correctAvatar) {
+          recipents[0].address = $filter('uppercase')(recipents[0].address);
         }
+        $scope.confirmation = true;
+        delete $rootScope.flash;
+      }
+    }
+
+    //Transfers ETP
+    function transfer(sendfrom, recipents, transactionFee, memo, password) {
+      if (recipents.length == 1) { //Start transaction for 1 recipent
+          transferOne(sendfrom, recipents, transactionFee, memo, password);
+      } else {  //Start transaction with more than 1 recipent
+          transferMore(sendfrom, recipents, transactionFee, memo, password);
       }
       $window.scrollTo(0,0);
     }
 
 
 
-    function transferOne() {
+    function transferOne(sendfrom, recipents, transactionFee, memo, password) {
       NProgress.start();
-      var value = '';
-      var sendTo = '';
-      var fee = $scope.transactionFee * 100000000;
-      $scope.recipents.forEach( (e) => {
-        value = e.value;
-        sendTo = e.address;
-      });
+      var value = recipents[0].value;
+      var sendTo = recipents[0].address;
+      var fee = transactionFee * 100000000;
 
       value *= 100000000;
       value = Math.round(value);
-      var SendPromise = ($scope.sendfrom) ? MetaverseService.SendFrom($scope.sendfrom, sendTo, value, fee, $scope.memo) : MetaverseService.Send(sendTo, value, fee, $scope.memo);
+      if ($scope.correctEtpAddress) {
+        var SendPromise = (sendfrom) ? MetaverseService.SendFrom(sendfrom, sendTo, value, fee, memo, password) : MetaverseService.Send(sendTo, value, fee, memo, password);
+      } else {
+        var SendPromise = (sendfrom) ? MetaverseService.DidSendFrom(sendfrom, sendTo, value, fee, memo, password) : MetaverseService.DidSend(sendTo, value, fee, memo, password);
+      }
       SendPromise
       .then( (response) => {
         NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
           //Transaction was successful
-          $translate('MESSAGES.TRANSFER_SUCCESS').then( (data) => FlashService.Success(data + response.data.transaction.hash) );
+          $translate('MESSAGES.TRANSFER_SUCCESS').then( (data) => FlashService.Success(data + response.data.result.transaction.hash) );
           $window.scrollTo(0,0);
           init();
         } else {
           //Transaction problem
           $translate('MESSAGES.TRANSFER_ERROR').then( (data) => {
-            if (response.message != undefined) {
-              FlashService.Error(data + " " + response.message);
+            if (response.message.message != undefined) {
+              FlashService.Error(data + " " + response.message.message);
             } else {
               FlashService.Error(data);
             }
@@ -724,12 +803,12 @@
     }
 
 
-    function transferMore() {
+    function transferMore(sendfrom, recipents, transactionFee, memo, password) {
       NProgress.start();
       var recipentsQuery = [];    //data that will be used for the query
-      var fee = $scope.transactionFee * 100000000;
+      var fee = transactionFee * 100000000;
 
-      $scope.recipents.forEach( (e) => {
+      recipents.forEach( (e) => {
         var value = e.value;
         value *= 100000000;
         value = Math.round(value);
@@ -1708,7 +1787,8 @@
     function sendasset(sendfrom, sendto, symbol, quantity, password) {
       NProgress.start();
       //Modify number to fit to number of decimals defined for asset
-      quantity*=Math.pow(10,$scope.asset.decimal_number);
+      quantity *= Math.pow(10,$scope.asset.decimal_number);
+      quantity = Math.round(quantity);
       if ($scope.correctEtpAddress) {
         var SendPromise = (sendfrom) ? MetaverseService.SendAssetFrom(sendfrom, sendto, symbol, quantity, password) : MetaverseService.SendAsset(sendto, symbol, quantity, password);
       } else {
