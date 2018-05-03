@@ -103,6 +103,7 @@
         service.Issue = Issue;
         service.SecondIssue = SecondIssue;
         service.Delete = Delete;
+        service.GetAccountAsset = GetAccountAsset;
 
 
         //Chain
@@ -746,6 +747,11 @@
          **/
         function GetAddressAsset(address) {
             return _send('getaddressasset', [address]);
+        }
+
+        function GetAccountAsset(symbol) {
+            var credentials = localStorageService.get('credentials');
+            return _sendV2('getaccountasset', [credentials.user, credentials.password, symbol]);
         }
 
         /**

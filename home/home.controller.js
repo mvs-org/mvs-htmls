@@ -1590,10 +1590,7 @@
 
     $scope.assetsIssued = [];
 
-    $scope.allAddresses = [];                     //Contains the list of all the addresses
     $scope.assetAddresses = [];                   //Contrain the asset balance of each address
-    $scope.listBalances = listBalances;
-    $scope.listAssetBalances = listAssetBalances;
 
     $scope.availBalance = availBalance;
     $scope.availableBalance = 0;
@@ -1631,6 +1628,16 @@
         } else {    //if the user has 0 asset
 
         }
+      } else {
+        $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
+    });
+
+    MetaverseService.GetAccountAsset($scope.symbol)
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.assetAddresses = response.data.result.assets;
       } else {
         $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -1687,58 +1694,6 @@
       //Once all the DIDs have been loaded, we look for the one entered by the user
       checkRecipent($scope.sendto);
     });
-
-
-    function selectAssetType (symbol) {
-      $scope.symbol = symbol;
-    }
-
-
-    //We first load the list of all the addresses
-    function listBalances() {
-      NProgress.start();
-      MetaverseService.ListBalances()
-      .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
-          $scope.allAddresses = [];
-          response.data.balances.forEach( (e) => {
-            $scope.allAddresses.push({
-              "address": e.balance.address
-            });
-          });
-          listAssetBalances();
-        } else {
-          $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) =>  FlashService.Error(data));
-          $window.scrollTo(0,0);
-        }
-        NProgress.done();
-      });
-    }
-
-    listBalances();
-
-    function listAssetBalances() {
-      NProgress.start();
-      $scope.assetAddresses = [];
-      $scope.allAddresses.forEach( (e) => {
-        MetaverseService.GetAddressAsset(e.address)
-        .then( (response) => {
-          if (typeof response.success !== 'undefined' && response.success && response.data.assets != '') {    //If the address doesn't contain any asset, we don't need it
-            response.data.assets.forEach( (a) => {
-              if(a.symbol == $scope.symbol) {
-                var name = "New address";
-                if (localStorageService.get(a.address) != undefined) {
-                  name = localStorageService.get(a.address);
-                }
-                a.name = name;
-                $scope.assetAddresses.push(a);
-              }
-            });
-          }
-        });
-      });
-      NProgress.done();
-    }
 
 
     //Loads a given asset
