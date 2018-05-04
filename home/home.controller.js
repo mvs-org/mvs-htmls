@@ -2180,7 +2180,7 @@
 
     //Check if the password is valid
     $scope.$watch('password', (newVal, oldVal) => {
-      $scope.error.password = (newVal == undefined || !(newVal.length >= 6) || newVal == '');
+      $scope.error.password = (newVal == undefined || newVal == '');
       checkready();
     });
 
@@ -2226,9 +2226,7 @@
           $window.scrollTo(0,0);
         }
       });
-
     }
-
     $scope.closeAll = function () {
       ngDialog.closeAll();
     };
@@ -2239,9 +2237,7 @@
           template: 'templateId',
           scope: $scope
       });
-
     }
-
 
     function issue(symbol) {
       NProgress.start();
@@ -2668,13 +2664,12 @@
 
     $scope.listAddresses = [];
     $scope.listMultiSig = [];
-    $scope.listAllDids = [];
 
     $scope.onChain = false;
-    $scope.selectedDid = '';
-    $scope.address = '';
+    $scope.selectedDid = {};
 
-    $scope.listMyDids = listMyDids;
+    $scope.changeDid = changeDid;
+    $scope.listDidsAddresses = listDidsAddresses;
 
     function listMultiSign() {
       NProgress.start();
@@ -2747,50 +2742,46 @@
 
     }
 
-    function listMyDids() {
-      MetaverseService.ListMyDids()
+
+    MetaverseService.ListMyDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.myDids = response.result.dids;
+      } else {
+        //No DIDs for this account
+        $scope.myDids = [
+            {
+                    "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
+                    "description" : "test",
+                    "issuer" : "yangguanglu",
+                    "status" : "issued",
+                    "symbol" : "LU"
+            },
+            {
+                    "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
+                    "description" : "test",
+                    "issuer" : "yangguanglu",
+                    "status" : "issued",
+                    "symbol" : "MVS.TST"
+            },
+            {
+                    "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
+                    "description" : "test",
+                    "issuer" : "yangguanglu",
+                    "status" : "issued",
+                    "symbol" : "GUANG"
+            }
+        ]
+      }
+    });
+
+
+    function listDidsAddresses(symbol) {
+      MetaverseService.ListDidAddresses(symbol)
       .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
-          $scope.myDids = response.result.dids;
-        } else {
-          //No DIDs for this account
-          $scope.myDids = [
-              {
-                      "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
-                      "description" : "",
-                      "issuer" : "yangguanglu",
-                      "status" : "issued",
-                      "symbol" : "LU"
-              },
-              {
-                      "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
-                      "description" : "",
-                      "issuer" : "yangguanglu",
-                      "status" : "issued",
-                      "symbol" : "MVS.TST"
-              },
-              {
-                      "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
-                      "description" : "",
-                      "issuer" : "yangguanglu",
-                      "status" : "issued",
-                      "symbol" : "GUANG"
-              }
-          ]
-        }
+        console.log(response);
       });
     }
-
-    listMyDids();
-
-    function listAllDids() {
-      MetaverseService.ListAllDids()
-      .then( (response) => {
-        //TODO
-      });
-    }
-
-    listAllDids();
 
   }
 
@@ -2837,12 +2828,16 @@
   }
 
 
-  function CreateProfileController(MetaverseHelperService, MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $location) {
+  function CreateProfileController(MetaverseHelperService, MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $location, $rootScope) {
 
     $scope.listAddresses = [];
     $scope.listMultiSig = [];
     $scope.createProfile = createProfile;
     $scope.popupIssueDid = popupIssueDid;
+    $scope.error = {};
+    $scope.didAddress = '';
+    $scope.confirmation = false;
+    $scope.checkInputs = checkInputs;
 
 
     function listAddresses() {
@@ -2895,14 +2890,18 @@
 
     listAddresses();
 
+    function checkInputs(password) {
+      if (localStorageService.get('credentials').password != password) {
+        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else {
+        $scope.confirmation = true;
+        delete $rootScope.flash;
+      }
+    }
+
     function createProfile(didAddress, didSymbol, password) {
-      if (typeof didAddress == 'undefined') { //Check for recipent address
-        $translate('MESSAGES.CREATE_DID_ADDRESS_NEEDED').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else if (password === '') { //Check for empty password
-        $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else if (localStorageService.get('credentials').password != password) {
+      if (localStorageService.get('credentials').password != password) {
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else {
@@ -2939,6 +2938,37 @@
       });
 
     }
+
+    //Check if the form is submittable
+    function checkready() {
+      //Check for errors
+      for (var error in $scope.error) {
+        if ($scope.error[error]) {
+          $scope.submittable = false;
+          return;
+        }
+      }
+      $scope.submittable = true;
+    }
+
+    //Check if the avatar name is valid
+    $scope.$watch('didSymbol', (newVal, oldVal) => {
+      $scope.error.didSymbol = (newVal == undefined || newVal == '' || !newVal.match(/^[0-9A-Za-z.]+$/));
+      checkready();
+    });
+
+    //Check if the address is valid
+    $scope.$watch('didAddress', (newVal, oldVal) => {
+      //$scope.error.didAddress = (newVal == undefined || !newVal.match(/^[0-9A-Za-z]+$/) || !(($rootScope.network == 'testnet' && newVal.charAt(0) == 't') || ($rootScope.network == 'mainnet' && newVal.charAt(0) == 'M') || newVal.charAt(0) == '3') || newVal.length != 34);
+      $scope.error.didAddress = (newVal == undefined || newVal == '');
+      checkready();
+    });
+
+    //Check if the password is valid
+    $scope.$watch('password', (newVal, oldVal) => {
+      $scope.error.password = (newVal == undefined || newVal == '');
+      checkready();
+    });
 
   }
 

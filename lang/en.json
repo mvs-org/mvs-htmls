@@ -392,7 +392,7 @@
   "CREATE_PROFILE.CREATE_PROFILE": "Create Avatar",
   "CREATE_PROFILE.CREATE_ID": "Avatar Name",
   "CREATE_PROFILE.CREATE_PROFILE_BUTTON": "Create Avatar",
-  "CREATE_PROFILE.SELECT_ADDRESS": "Select Address",
+  "CREATE_PROFILE.SELECT_ADDRESS": "Linked Address",
   "SETTINGS_EXPORT_ACCOUNT_BUTTON_TO_APP": "Export to app",
   "MESSAGES.EXPORT_ACCOUNT_DOWNLOAD_FILE_ERROR": "Account exported to metaverse/mvs-htmls/keys/",
   "REGISTER.NEW_ACCOUNT": "New account",
@@ -416,5 +416,9 @@
   "TRANSFER_RECIPENT_AVATAR": "Recipient Avatar",
   "MESSAGE.INCORRECT_RECIPIENT_ADDRESS_OR_AVATAR": "Incorrect recipient Address or Avatar",
   "TRANSFER.RECIPIENT_AVATAR_NO_MULTI": "Send to Avatar is not available for multi-recipients",
-  "DEPOSIT.RECIPIENT_ADDRESS": "Recipient"
+  "DEPOSIT.RECIPIENT_ADDRESS": "Recipient",
+  "PROFIL.ADDRESSES_HISTORY": "Avatar addresses",
+  "PROFIL.CURRENT_ADDRESS": "Current address",
+  "PROFIL.PREVIOUS_ADDRESS": "Previous address",
+  "PROFILE.CREATE_EXPLANATION": "Your Avatar name is a unique symbol. It can be used instead of your ETP address to receive ETP and other assets. The address linked to this Avatar can be changed in the future."
 }

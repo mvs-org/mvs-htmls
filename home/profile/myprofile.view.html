@@ -26,22 +26,42 @@
 		<div class="col-md-6 form-group noPaddingLeftRight">
       <label for="useDid" class="control-label">{{ 'PROFIL.DID' | translate }}</label>
       <select name="useDid" type="text" class="form-control" placeholder="" ng-model="selectedDid" ng-change="changeDid(selectedDid)">
-        <option ng-repeat="did in myDids" value="{{did.address}}" title="{{did.symbol}}">{{did.symbol}} - {{did.address}}</option>
+        <option ng-repeat="did in myDids" value="{{did}}" title="{{did.symbol}}">{{did.symbol}} - {{did.address}}</option>
       </select>
 		</div>
 	</div>
 
-
-	<form ng-show="onChain" class="row">
+	<form ng-show="onChain">
 		<!--Address-->
-		<div class="col-md-12">
-			<div class="col-md-6 noPaddingLeftRight">
-				<div class="form-group">
-					<label for="address" class="control-label col-xs-6 noPaddingLeftRight">{{ 'PROFIL.ADDRESS' | translate }}</label>
-					<input type="address" class="form-control readonly" name="address" ng-model="address" readonly>
-				</div>
+		<div class="col-md-6 col-sm-12 noPaddingLeftRight">
+			<div class="form-group">
+				<label for="address" class="control-label col-xs-6 noPaddingLeftRight">{{ 'PROFIL.ADDRESS' | translate }}</label>
+				<input type="address" class="form-control readonly" name="address" ng-model="selectedAddress" readonly>
 			</div>
-		</div>
+      <div class="assetDetailsPanel panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{'TRANSFER.CONFIRMATION_TITLE' | translate}}</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</div>
+            <div class="assetValueColumn col-xs-3 noPaddingLeftRight">{{symbol}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{max_supply}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_DIGITS' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{decimals}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_DESCRIPTION' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{description}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
 	</form>
 
   <form ng-hide="onChain" class="row">

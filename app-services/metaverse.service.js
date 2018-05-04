@@ -128,6 +128,8 @@
         service.DidSend = DidSend;
         service.DidSendAssetFrom = DidSendAssetFrom;
         service.DidSendAsset = DidSendAsset;
+        service.DidModifyAddress = DidModifyAddress;
+        service.ListDidAddresses = ListDidAddresses;
 
         return service;
 
@@ -909,6 +911,16 @@
         function DidSendAsset(recipent_address, symbol, quantity, password) {
             var credentials = localStorageService.get('credentials');
             return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity]);
+        }
+
+        function DidModifyAddress(from_address, to_address, symbol, password) {
+            var credentials = localStorageService.get('credentials');
+            return _sendV2('didmodifyaddress', [credentials.user, password, from_address, to_address, symbol]);
+        }
+
+        function ListDidAddresses(symbol) {
+            var credentials = localStorageService.get('credentials');
+            return _sendV2('listdidaddresses', [credentials.user, credentials.password, symbol]);
         }
 
         function Query(string) {
