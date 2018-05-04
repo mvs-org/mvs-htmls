@@ -784,11 +784,9 @@
         function Deposit(deposit_period, amount, transactionFee, password, address) {
             var credentials = localStorageService.get('credentials');
             if (address != undefined) {
-                return _send('deposit', ['-d', deposit_period, '-a', address, '-f', transactionFee, credentials.user, password, amount]);
-                //return _send('deposit', ['-d', deposit_period, '-a', address, credentials.user, password, amount]);
+                return _sendV2('deposit', ['-d', deposit_period, '-a', address, '-f', transactionFee, credentials.user, password, amount]);
             } else {
-                return _send('deposit', ['-d', deposit_period, '-f', transactionFee, credentials.user, password, amount]);
-                //return _send('deposit', ['-d', deposit_period, credentials.user, password, amount]);
+                return _sendV2('deposit', ['-d', deposit_period, '-f', transactionFee, credentials.user, password, amount]);
             }
         }
 

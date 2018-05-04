@@ -419,6 +419,9 @@
     $scope.availableBalance = 0;
     $scope.sendAll = sendAll;
 
+    $scope.confirmation = false;
+    $scope.checkInputs = checkInputs;
+
 
     function init() {
       $scope.deposit_address = "";
@@ -426,6 +429,7 @@
       $scope.password = '';
       $scope.value = '';
       $scope.transactionFee = 0.0001;
+      $scope.confirmation = false;
     }
 
     $scope.isNumber = angular.isNumber;
@@ -477,47 +481,56 @@
       $scope.period_select=period;
     }
 
-    function deposit() {
-      var credentials = localStorageService.get('credentials');
-
-      if ($scope.password == '') { //Check for empty password
-        $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else if ($scope.password != credentials.password) {
-        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else if (!($scope.value > 0)) {
+    function checkInputs(value, transactionFee, period_select, password) {
+      if (!(value > 0)) {
         $translate('MESSAGES.INVALID_VALUE').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
-      } else if ($scope.transactionFee < 0.0001) {
+      } else if (transactionFee < 0.0001) {
         $translate('MESSAGES.TOO_LOW_FEE').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
-      } else if ($scope.deposit_options[$scope.period_select] == undefined) {
+      } else if ($scope.deposit_options[period_select] == undefined) {
         $translate('MESSAGES.INVALID_TIME_PERIOD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
+      } else if (password == '') { //Check for empty password
+        $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else if (password != localStorageService.get('credentials').password) {
+        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       } else {
-        var deposit_value = ("" + $scope.value * Math.pow(10,$scope.decimal_number)).split(".")[0];
-        var fee_value = ("" + $scope.transactionFee * Math.pow(10,$scope.decimal_number)).split(".")[0];
-
-        var SendPromise = ($scope.symbol == 'ETP') ? MetaverseService.Deposit($scope.deposit_options[$scope.period_select][2], deposit_value, fee_value, $scope.password, ($scope.address_option) ? $scope.deposit_address : undefined) : MetaverseService.FrozenAsset($scope.deposit_options[$scope.period_select][2], deposit_value, fee_value, $scope.password, $scope.symbol, ($scope.address_option) ? $scope.deposit_address : undefined);
-        SendPromise
-        .then( (response) => {
-          NProgress.done();
-          if (typeof response.success !== 'undefined' && response.success && response.data.error == undefined) {
-            init();
-            //Transaction was successful
-            $translate('MESSAGES.DEPOSIT_SUCCESS').then( (data) => FlashService.Success(data + response.data.transaction.hash) );
-            $window.scrollTo(0,0);
-            init();
-          } else {
-
-            //Transaction problem
-            $translate('MESSAGES.DEPOSIT_ERROR').then( (data) => FlashService.Error(data) );
-            $window.scrollTo(0,0);
-            $scope.password = '';
-          }
-        });
+        $scope.confirmation = true;
+        delete $rootScope.flash;
       }
+    }
+
+
+    function deposit(value, transactionFee, period_select, password) {
+      var deposit_value = ("" + value * Math.pow(10,$scope.decimal_number)).split(".")[0];
+      var fee_value = ("" + transactionFee * Math.pow(10,$scope.decimal_number)).split(".")[0];
+
+      var SendPromise = ($scope.symbol == 'ETP') ? MetaverseService.Deposit($scope.deposit_options[period_select][2], deposit_value, fee_value, password, ($scope.address_option) ? $scope.deposit_address : undefined) : MetaverseService.FrozenAsset($scope.deposit_options[period_select][2], deposit_value, fee_value, password, $scope.symbol, ($scope.address_option) ? $scope.deposit_address : undefined);
+      SendPromise
+      .then( (response) => {
+        NProgress.done();
+        if (typeof response.success !== 'undefined' && response.success) {
+          init();
+          //Transaction was successful
+          $translate('MESSAGES.DEPOSIT_SUCCESS').then( (data) => FlashService.Success(data + response.data.result.transaction.hash) );
+          $window.scrollTo(0,0);
+          init();
+        } else {
+          //Transaction problem
+          $translate('MESSAGES.DEPOSIT_ERROR').then( (data) => {
+            if (response.message.message != undefined) {
+              FlashService.Error(data + " " + response.message.message);
+            } else {
+              FlashService.Error(data);
+            }
+          });
+          $window.scrollTo(0,0);
+          $scope.password = '';
+        }
+      });
     }
 
     //Load users ETP balance
@@ -2733,20 +2746,6 @@
         } else {
           //No DIDs for this account
           $scope.myDids = [
-              {
-                      "address" : "",
-                      "description" : "test did",
-                      "issuer" : "test",
-                      "status" : "unissued",
-                      "symbol" : "TESTDID"
-              },
-              {
-                      "address" : "",
-                      "description" : "",
-                      "issuer" : "test",
-                      "status" : "unissued",
-                      "symbol" : "YANG"
-              },
               {
                       "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
                       "description" : "",

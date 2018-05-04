@@ -415,5 +415,6 @@
   "TRANSFER.CONFIRMATION_TITLE": "Transaction summary",
   "TRANSFER_RECIPENT_AVATAR": "Recipient Avatar",
   "MESSAGE.INCORRECT_RECIPIENT_ADDRESS_OR_AVATAR": "Incorrect recipient Address or Avatar",
-  "TRANSFER.RECIPIENT_AVATAR_NO_MULTI": "Send to Avatar is not available for multi-recipients"
+  "TRANSFER.RECIPIENT_AVATAR_NO_MULTI": "Send to Avatar is not available for multi-recipients",
+  "DEPOSIT.RECIPIENT_ADDRESS": "Recipient"
 }
