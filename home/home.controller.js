@@ -2116,7 +2116,7 @@
     };
   }
 
-  function CreateAssetController(MetaverseService, $rootScope, $scope, FlashService, localStorageService, $location, $translate, $window, ngDialog) {
+  function CreateAssetController(MetaverseService, $rootScope, $scope, FlashService, localStorageService, $location, $translate, $window, ngDialog, $filter) {
 
     $window.scrollTo(0,0);
     //This object contains all form errors
@@ -2126,6 +2126,9 @@
     $scope.popupIssue = popupIssue;
     $scope.issue = issue;
 
+    $scope.confirmation = false;
+    $scope.checkInputs = checkInputs;
+
     //Initialize form data
     function init() {
       $scope.symbol = '';
@@ -2134,6 +2137,7 @@
       $scope.secondary_offering = 0;
       $scope.decimals = '';
       $scope.password = '';
+      $scope.confirmation = false;
     }
 
     init();
@@ -2152,7 +2156,7 @@
 
     //Check if the max_supply is valid
     $scope.$watch('max_supply', (newVal, oldVal) => {
-      $scope.error.max_supply = (newVal == undefined || !(newVal == parseInt(newVal)));
+      $scope.error.max_supply = (newVal == undefined || !(newVal == parseInt(newVal)) || newVal == 0);
       checkready();
     });
 
@@ -2164,7 +2168,7 @@
 
     //Check if the decimals is valid
     $scope.$watch('decimals', (newVal, oldVal) => {
-      $scope.error.decimals = (newVal == undefined || !(newVal >= 0 && newVal <= 8));
+      $scope.error.decimals = (newVal == undefined || !(newVal >= 0 && newVal <= 8) || newVal == '');
       checkready();
     });
 
@@ -2176,7 +2180,7 @@
 
     //Check if the password is valid
     $scope.$watch('password', (newVal, oldVal) => {
-      $scope.error.password = (newVal == undefined || !(newVal.length >= 6) || !(localStorageService.get('credentials').password == $scope.password));
+      $scope.error.password = (newVal == undefined || !(newVal.length >= 6) || newVal == '');
       checkready();
     });
 
@@ -2190,34 +2194,39 @@
       return input;
     };
 
-    //Create asset function
-    function createasset() {
+    function checkInputs() {
       if (localStorageService.get('credentials').password != $scope.password) {
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else {
-        NProgress.start();
-        //Let Metaverse create an local asset
-        MetaverseService.CreateAsset($scope.symbol, $scope.max_supply, $scope.secondary_offering, $scope.decimals, $scope.description)
-        .then( (response) => {
-          NProgress.done();
-          if (typeof response.success !== 'undefined' && response.success) {
-            //Show success message
-            popupIssue($scope.symbol);
-            $translate('MESSAGES.ASSSET_CREATED_LOCAL_SUCCESS').then( (data) => {
-              FlashService.Success(data, true);
-
-              //Redirect user to the assets page
-              //$location.path('/asset/myassets');
-            });
-            $window.scrollTo(0,0);
-          } else{
-            //$translate('MESSAGES.ASSETS_CREATE_ERROR').then( (data) => FlashService.Error(data) );
-            $translate('MESSAGES.ASSETS_CREATE_ERROR').then( (data) => FlashService.Error(data + ' ' + response.message) );
-            $window.scrollTo(0,0);
-          }
-        });
+        $scope.symbol = $filter('uppercase')($scope.symbol);
+        $scope.confirmation = true;
+        delete $rootScope.flash;
       }
+    }
+
+    //Create asset function
+    function createasset() {
+      NProgress.start();
+      //Let Metaverse create an local asset
+      MetaverseService.CreateAsset($scope.symbol, $scope.max_supply, $scope.secondary_offering, $scope.decimals, $scope.description)
+      .then( (response) => {
+        NProgress.done();
+        if (typeof response.success !== 'undefined' && response.success) {
+          //Show success message
+          popupIssue($scope.symbol);
+          $translate('MESSAGES.ASSSET_CREATED_LOCAL_SUCCESS').then( (data) => {
+            FlashService.Success(data, true);
+            //Redirect user to the assets page
+          });
+          $window.scrollTo(0,0);
+        } else{
+          //$translate('MESSAGES.ASSETS_CREATE_ERROR').then( (data) => FlashService.Error(data) );
+          $translate('MESSAGES.ASSETS_CREATE_ERROR').then( (data) => FlashService.Error(data + ' ' + response.message) );
+          $window.scrollTo(0,0);
+        }
+      });
+
     }
 
     $scope.closeAll = function () {

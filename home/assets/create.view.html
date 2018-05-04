@@ -1,12 +1,6 @@
 <div class="headline">{{ 'HEADLINE_ASSETS_CREATE' | translate }}</div>
-<!--<div>
-  <ul class="nav nav-pills tabsMenu">
-    <li role="presentation"><a href="#!/asset/myassets" class="btn-link-menu">{{'ASSET_MY_ASSETS' | translate}}</a></li>
-    <li role="presentation"><a href="#!/asset/all" class="btn-link-menu">{{'ASSET_ALL_ASSETS' | translate}}</a></li>
-  </ul>
-</div>-->
 <br/>
-<form>
+<form ng-hide="confirmation" class="row">
   <div class="col-md-12 col-lg-6">
 
     <!--Form via HTML5 and SCSS-->
@@ -14,17 +8,17 @@
       <!--Symbol-->
       <div class="form-group">
         <label for="symbol" class="control-label">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</label>
-        <input type="text" class="form-control uppercase" name="symbol" required placeholder="" ng-model="symbol" autocomplete="off">
+        <input type="text" class="form-control uppercase" name="symbol" required placeholder="" ng-model="symbol" ng-class="{validInput: !error.symbol, wrongInput: error.symbol}" autocomplete="off">
       </div>
       <!--Maximum supply-->
       <div class="form-group col-xs-8 noPaddingLeftRight maxSupply">
         <label for="max_supply" class="control-label">{{ 'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate }}</label>
-        <input type="number" min="0" class="form-control" name="max_supply" required placeholder="" ng-model="max_supply" autocomplete="off">
+        <input type="number" min="0" class="form-control" name="max_supply" required placeholder="" ng-model="max_supply" ng-class="{validInput: !error.max_supply, wrongInput: error.max_supply}" autocomplete="off">
       </div>
       <!--Decimals-->
       <div class="form-group col-xs-4 noPaddingLeftRight">
         <label for="decimals" class="control-label">{{ 'ASSET_ASSET_CREATE_DIGITS' | translate }}</label>
-        <select type="number" class="form-control" name="decimals" required placeholder="" required ng-model="decimals">
+        <select type="number" class="form-control" name="decimals" required placeholder="" required ng-class="{validInput: !error.decimals, wrongInput: error.decimals}" ng-model="decimals">
           <option value=""></option>
           <option value="0">0</option>
           <option value="1" ng-show="max_supply<=1000000000000000000">1</option>
@@ -48,18 +42,58 @@
       <!--Description-->
       <div class="form-group">
         <label for="description" class="control-label">{{ 'ASSET_ASSET_CREATE_DESCRIPTION' | translate }}</label>
-        <textarea class="form-control" name="description" required rows="6" cols="35" ng-model="description" autocomplete="off"></textarea>
+        <textarea class="form-control" name="description" required rows="6" cols="35" ng-model="description" ng-class="{validInput: !error.description, wrongInput: error.description}" autocomplete="off"></textarea>
       </div>
       <!--Password-->
       <div class="form-group ddeg4">
         <label for="password" class="control-label">{{ 'ASSET_ASSET_CREATE_PASSWORD' | translate }}</label>
-        <input type="password" class="form-control" name="password" placeholder="" required ng-class="{ 'border-danger' : (error.password && password)}" ng-model="password" autocomplete="new-password">
+        <input type="password" class="form-control" name="password" placeholder="" required ng-model="password" ng-class="{validInput: !error.password, wrongInput: error.password}" autocomplete="new-password">
       </div>
-      <br/>
       <div class="comm-btnbox">
-        <input type="submit" class="btn btn-success" ng-click="createasset()" value="{{ 'ASSET_ASSET_CREATE_SUBMIT_BUTTON' | translate }}">
+        <input type="submit" class="btn btn-success" ng-click="checkInputs()" value="{{ 'ASSET_ASSET_CREATE_SUBMIT_BUTTON' | translate }}" ng-disabled="!submittable">
       </div>
     </form>
+  </div>
+</form>
+
+<form ng-show="confirmation" class="row">
+  <br/>
+  <div class="col-lg-6 col-md-12">
+    <div class="assetDetailsPanel panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{'TRANSFER.CONFIRMATION_TITLE' | translate}}</h3>
+      </div>
+      <div class="panel-body">
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</div>
+          <div class="assetValueColumn col-xs-3 noPaddingLeftRight">{{symbol}}</div>
+        </div>
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate }}</div>
+          <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{max_supply}}</div>
+        </div>
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_DIGITS' | translate }}</div>
+          <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{decimals}}</div>
+        </div>
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_DESCRIPTION' | translate }}</div>
+          <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{description}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 form-group noPaddingLeftRight">
+    <br>
+    <!--Submit button-->
+    <div class="col-xs-6 col-sm-6 col-md-3">
+      <input type="submit" class="btn btn-success" ng-click="createasset()" value="{{ 'TRANSFER_SEND' | translate }}">
+    </div>
+    <!--Return button-->
+    <div class="col-xs-6 col-sm-6 col-md-3">
+      <button class="btn btn-success btn-success-secondary" ng-click="confirmation = false">{{ 'CANCEL_BUTTON' | translate }}</button>
+    </div>
   </div>
 </form>
 
@@ -78,11 +112,7 @@
     {{ 'ASSET_CREATE_SUCCESS_TEXT3' | translate }}
   </div>
   <div class="popupButtons">
-    <button class="btn btn-link-red createAssetPopupButtons col-xs-6" ng-click="closeAll()">
-      <a href="#!/asset/myassets">{{ 'ASSET_CREATE_SUCCESS_CANCEL_BUTTON' | translate }}</a>
-    </button>
-    <button class="btn btn-success createAssetPopupButtons col-xs-6" ng-click="issue(symbol);closeAll()">
-      {{ 'ASSET_CREATE_SUCCESS_ISSUE_NOW' | translate }}
-    </button>
+    <a href="#!/asset/myassets" class="btn btn-link-red createAssetPopupButtons col-xs-6" ng-click="closeAll()">{{ 'ASSET_CREATE_SUCCESS_CANCEL_BUTTON' | translate }}</a>
+    <a href="#!/asset/myassets" class="btn btn-success createAssetPopupButtons col-xs-6" ng-click="issue(symbol);closeAll()">{{ 'ASSET_CREATE_SUCCESS_ISSUE_NOW' | translate }}</a>
   </div>
 </script>

@@ -2124,3 +2124,11 @@ h2 {
   width: 50%;
   display: inline-block;
 }
+
+.validInput {
+  border-color: green;
+}
+
+.wrongInput {
+  border-color: red;
+}
