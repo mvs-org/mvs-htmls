@@ -2787,48 +2787,41 @@
 
   function AllProfilesController(MetaverseHelperService, MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $location) {
 
-    $scope.listAllDids = listAllDids;
+    MetaverseService.ListAllDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.allDids = response.result.dids;
 
-
-    function listAllDids() {
-      MetaverseService.ListAllDids()
-      .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
-          $scope.allDids = response.result.dids;
-
-        } else {
-          $scope.allDids=[
-                {
-                        "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
-                        "description" : "",
-                        "issuer" : "yangguanglu",
-                        "status" : "issued",
-                        "symbol" : "LU"
-                },
-                {
-                        "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
-                        "description" : "",
-                        "issuer" : "yangguanglu",
-                        "status" : "issued",
-                        "symbol" : "MVS.TST"
-                },
-                {
-                        "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
-                        "description" : "",
-                        "issuer" : "yangguanglu",
-                        "status" : "issued",
-                        "symbol" : "GUANG"
-                }
-            ]
-        }
-      });
-    }
-
-    listAllDids();
+      } else {
+        $scope.allDids=[
+              {
+                      "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
+                      "description" : "",
+                      "issuer" : "yangguanglu",
+                      "status" : "issued",
+                      "symbol" : "LU"
+              },
+              {
+                      "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
+                      "description" : "",
+                      "issuer" : "yangguanglu",
+                      "status" : "issued",
+                      "symbol" : "MVS.TST"
+              },
+              {
+                      "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
+                      "description" : "",
+                      "issuer" : "yangguanglu",
+                      "status" : "issued",
+                      "symbol" : "GUANG"
+              }
+          ]
+      }
+    });
   }
 
 
-  function CreateProfileController(MetaverseHelperService, MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $location, $rootScope) {
+  function CreateProfileController(MetaverseHelperService, MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $location, $rootScope, $filter) {
 
     $scope.listAddresses = [];
     $scope.listMultiSig = [];
@@ -2890,11 +2883,48 @@
 
     listAddresses();
 
+    MetaverseService.ListAllDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.allDids = response.result.dids;
+
+      } else {
+        $scope.allDids=[
+              {
+                      "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
+                      "description" : "",
+                      "issuer" : "yangguanglu",
+                      "status" : "issued",
+                      "symbol" : "LU"
+              },
+              {
+                      "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
+                      "description" : "",
+                      "issuer" : "yangguanglu",
+                      "status" : "issued",
+                      "symbol" : "LAURENT"
+              },
+              {
+                      "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
+                      "description" : "",
+                      "issuer" : "yangguanglu",
+                      "status" : "issued",
+                      "symbol" : "GUANG"
+              }
+          ]
+          $scope.allDidsSymbols = [];
+          $scope.allDids.forEach(function(did) {
+            $scope.allDidsSymbols.push(did.symbol);
+          });
+      }
+    });
+
     function checkInputs(password) {
       if (localStorageService.get('credentials').password != password) {
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else {
+        $scope.didSymbol = $filter('uppercase')($scope.didSymbol);
         $scope.confirmation = true;
         delete $rootScope.flash;
       }
@@ -2953,7 +2983,9 @@
 
     //Check if the avatar name is valid
     $scope.$watch('didSymbol', (newVal, oldVal) => {
-      $scope.error.didSymbol = (newVal == undefined || newVal == '' || !newVal.match(/^[0-9A-Za-z.]+$/));
+      $scope.error.symbol_empty = (newVal == undefined);
+      $scope.error.symbol_wrong_char = newVal != undefined ? !newVal.match(/^[0-9A-Za-z.]+$/) : false;
+      $scope.error.symbol_already_exist = newVal != undefined ? ($scope.allDidsSymbols.indexOf($filter('uppercase')(newVal)) > -1) : false;
       checkready();
     });
 

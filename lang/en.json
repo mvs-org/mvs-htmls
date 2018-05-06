@@ -420,5 +420,7 @@
   "PROFIL.ADDRESSES_HISTORY": "Avatar addresses",
   "PROFIL.CURRENT_ADDRESS": "Current address",
   "PROFIL.PREVIOUS_ADDRESS": "Previous address",
-  "PROFILE.CREATE_EXPLANATION": "Your Avatar name is a unique symbol. It can be used instead of your ETP address to receive ETP and other assets. The address linked to this Avatar can be changed in the future."
+  "PROFILE.CREATE_EXPLANATION": "Your Avatar name is a unique symbol. It can be used instead of your ETP address to receive ETP and other assets. The address linked to this Avatar can be changed in the future.",
+  "CREATE_PROFILE.CREATE_ID_WRONG_CHARACTER": "Wrong character. Please only use numbers, letters and dots",
+  "CREATE_PROFILE.CREATE_ID_ALREADY_EXIST": "This Avatar name already exist"
 }

@@ -10,7 +10,10 @@
       <!--ID-->
       <div class="form-group">
         <label class="control-label">{{ 'CREATE_PROFILE.CREATE_ID' | translate }}</label>
-        <input type="text" class="form-control" name="didSymbol" ng-model="didSymbol" ng-class="{validInput: !error.didSymbol, wrongInput: error.didSymbol}" required>
+        <input type="text" class="form-control" name="didSymbol" ng-model="didSymbol" ng-class="{validInput: !error.symbol_empty && !error.symbol_wrong_char && !error.symbol_already_exist, wrongInput: error.symbol_empty || error.symbol_wrong_char || error.symbol_already_exist}" required>
+        <span ng-show="error.symbol_wrong_char" class="wrongInputComment">{{ 'CREATE_PROFILE.CREATE_ID_WRONG_CHARACTER' | translate }}</span>
+        <span ng-show="error.symbol_already_exist" class="wrongInputComment">{{ 'CREATE_PROFILE.CREATE_ID_ALREADY_EXIST' | translate }}</span>
+
       </div>
       <!--Address-->
   		<div class="form-group">
