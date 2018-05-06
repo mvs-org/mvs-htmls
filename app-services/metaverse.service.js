@@ -54,7 +54,7 @@
           }
         }
 
-        service.hasIcon = ['ETP', 'MVS.ZGC', 'MVS.ZDC', 'CSD', 'PARCELX.GPX', 'PARCELX.TEST', 'SDG', 'META', 'MVS.HUG'];
+        service.hasIcon = ['ETP', 'MVS.ZGC', 'MVS.ZDC', 'CSD.CSD', 'PARCELX.GPX', 'PARCELX.TEST', 'SDG', 'META', 'MVS.HUG'];
 
         service.CheckAccount = CheckAccount;
 
