@@ -1612,6 +1612,7 @@
     $scope.checkRecipent = checkRecipent;
     $scope.correctEtpAddress = false;
     $scope.correctAvatar = false;
+    $scope.burnAddress = false;
     $scope.allDids = [];
     $scope.confirmation = false;
     $scope.checkInputs = checkInputs;
@@ -1732,7 +1733,7 @@
     }
 
     function checkInputs(sendto, symbol, quantity, password) {
-      if (!$scope.correctEtpAddress && !$scope.correctAvatar){
+      if (!$scope.correctEtpAddress && !$scope.correctAvatar && !$scope.burnAddress){
         $translate('MESSAGE.INCORRECT_RECIPIENT_ADDRESS_OR_AVATAR').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else if (sendto.charAt(0) == '3') {
@@ -1796,15 +1797,23 @@
       if (typeof input == 'undefined' || '') {
         $scope.correctEtpAddress = false;
         $scope.correctAvatar = false;
+        $scope.burnAddress = false;
       } else if((($rootScope.network == 'testnet' && input.charAt(0) == 't') || ($rootScope.network == 'mainnet' && input.charAt(0) == 'M') || input.charAt(0) == '3') && input.length == 34) {
         $scope.correctEtpAddress = true;
         $scope.correctAvatar = false;
+        $scope.burnAddress = false;
       } else if ($scope.allDids.indexOf($filter('uppercase')(input)) > -1) {
         $scope.correctEtpAddress = false;
         $scope.correctAvatar = true;
+        $scope.burnAddress = false;
+      } else if (input == MetaverseService.burnAddress) {
+        $scope.correctEtpAddress = false;
+        $scope.correctAvatar = false;
+        $scope.burnAddress = true;
       } else {
         $scope.correctEtpAddress = false;
         $scope.correctAvatar = false;
+        $scope.burnAddress = false;
       }
     }
 

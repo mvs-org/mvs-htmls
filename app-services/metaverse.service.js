@@ -56,6 +56,8 @@
 
         service.hasIcon = ['ETP', 'MVS.ZGC', 'MVS.ZDC', 'CSD.CSD', 'PARCELX.GPX', 'PARCELX.TEST', 'SDG', 'META', 'MVS.HUG'];
 
+        service.burnAddress = '1111111111111111111114oLvT2';
+
         service.CheckAccount = CheckAccount;
 
         service.GetNewAccount = GetNewAccount;

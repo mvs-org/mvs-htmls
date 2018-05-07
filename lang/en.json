@@ -398,12 +398,12 @@
   "REGISTER.NEW_ACCOUNT": "New account",
   "CREATE_PROFILE.BACK_TO_PROFILE": "Back to My Avatars",
   "MESSAGES.CREATE_DID_ADDRESS_NEEDED": "Please select an address",
-  "CREATE_PROFILE_VALIDATION.TITLE": "Issue a DID cost 10 ETP",
-  "CREATE_PROFILE_VALIDATION.TEXT": "Are you sure you want to create a Digital Identity ?",
+  "CREATE_PROFILE_VALIDATION.TITLE": "Issue an Avatar cost 10 ETP",
+  "CREATE_PROFILE_VALIDATION.TEXT": "Are you sure you want to create an Avatar ?",
   "CREATE_PROFILE_VALIDATION.ISSUE_NOW": "Pay 10 ETP",
   "CANCEL_BUTTON": "Cancel",
-  "MESSAGES.DID_CREATED": "New Digital Identity created successfully !",
-  "MESSAGES.ERROR_DID_CREATION": "This Digital Identity hasn't been created",
+  "MESSAGES.DID_CREATED": "New Avatar created successfully !",
+  "MESSAGES.ERROR_DID_CREATION": "This Avatar hasn't been created",
   "PROFILE.ALL": "All DIDs",
   "MESSAGES.DID_ALREADY_EXIST": "this Avatar Name already exist",
   "TRANSFER_RECIPENT_ADDRESS_OR_AVATAR": "Recipient Address or Avatar",
@@ -422,5 +422,7 @@
   "PROFIL.PREVIOUS_ADDRESS": "Previous address",
   "PROFILE.CREATE_EXPLANATION": "Your Avatar name is a unique symbol. It can be used instead of your ETP address to receive ETP and other assets. The address linked to this Avatar can be changed in the future.",
   "CREATE_PROFILE.CREATE_ID_WRONG_CHARACTER": "Wrong character. Please only use numbers, letters and dots",
-  "CREATE_PROFILE.CREATE_ID_ALREADY_EXIST": "This Avatar name already exist"
+  "CREATE_PROFILE.CREATE_ID_ALREADY_EXIST": "This Avatar name already exist",
+  "TRANSFER_RECIPIENT_BURN": "Burn address",
+  "TRANSFER.CORRECT_RECIPIENT_BURN": "Send to Burn address. Those tokens will be definitely burned!"
 }
