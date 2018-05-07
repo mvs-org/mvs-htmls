@@ -92,7 +92,8 @@ module.exports = function(grunt) {
                     './node_modules/angular-utils-pagination/dirPagination.js',
                     './node_modules/ng-dialog/js/ngDialog.min.js',
                     './node_modules/angular-file-saver/dist/angular-file-saver.bundle.js',
-                    './node_modules/crypto-js/crypto-js.js'
+                    './node_modules/crypto-js/crypto-js.js',
+                    './node_modules/js-big-decimal/dist/web/js-big-decimal.min.js'
                 ],
                 dest: './min/framework.min.js'
             },

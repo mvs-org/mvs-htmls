@@ -70,6 +70,19 @@
          });
        }
      }
+  })
+  .filter('convertfortx',function(){
+      return function(input, asset_type){
+          if(typeof asset_type === 'undefined')
+              asset_type=8;
+          /*input += '';
+          asset_type = parseInt(asset_type);
+          1: no decimals, 2: correct number of decimals, 3: more decimals than allowed (asset_type)
+          return input.indexOf('.') < 0 ? input + '0'.repeat(asset_type) :
+            asset_type - (input.length - (input.indexOf('.') + 1)) >= 0 ? input.slice(0, input.indexOf('.')) + input.slice(input.indexOf('.') + 1) + '0'.repeat(asset_type - (input.length - (input.indexOf('.') + 1))) :
+            input.slice(0, input.indexOf('.')) + input.slice(input.indexOf('.') + 1, input.indexOf('.') + 1 + asset_type)*/
+          return bigDecimal.multiply(input, Math.pow(10,asset_type));
+      };
   });
 
 
@@ -505,8 +518,10 @@
 
 
     function deposit(value, transactionFee, period_select, password) {
-      var deposit_value = ("" + value * Math.pow(10,$scope.decimal_number)).split(".")[0];
-      var fee_value = ("" + transactionFee * Math.pow(10,$scope.decimal_number)).split(".")[0];
+      //var deposit_value = ("" + value * Math.pow(10,$scope.decimal_number)).split(".")[0];
+      //var fee_value = ("" + transactionFee * Math.pow(10,$scope.decimal_number)).split(".")[0];
+      var deposit_value = $filter('convertfortx')(value, $scope.decimal_number);
+      var fee_value = $filter('convertfortx')(transactionFee, $scope.decimal_number);
 
       var SendPromise = ($scope.symbol == 'ETP') ? MetaverseService.Deposit($scope.deposit_options[period_select][2], deposit_value, fee_value, password, ($scope.address_option) ? $scope.deposit_address : undefined) : MetaverseService.FrozenAsset($scope.deposit_options[period_select][2], deposit_value, fee_value, password, $scope.symbol, ($scope.address_option) ? $scope.deposit_address : undefined);
       SendPromise
@@ -593,8 +608,6 @@
     $scope.listAddresses = [];
 
     $scope.checkRecipent = checkRecipent;
-    $scope.correctEtpAddress = false;
-    $scope.correctAvatar = false;
     $scope.allDids = [];
     $scope.confirmation = false;
     $scope.checkInputs = checkInputs;
@@ -611,6 +624,9 @@
       $scope.transactionFee = 0.0001;
       $scope.memo = '';
       $scope.confirmation = false;
+      $scope.correctEtpAddress = false;
+      $scope.correctAvatar = false;
+      $scope.burnAddress = false;
       MetaverseService.ListBalances(true)
       .then( (response) => {
         if (response.success)
@@ -784,10 +800,11 @@
       NProgress.start();
       var value = recipents[0].value;
       var sendTo = recipents[0].address;
-      var fee = transactionFee * 100000000;
-
-      value *= 100000000;
-      value = Math.round(value);
+      //var fee = transactionFee * 100000000;
+      //value *= 100000000;
+      //value = Math.round(value);
+      var fee = $filter('convertfortx')(transactionFee, 8);
+      value = $filter('convertfortx')(value, 8);
       if (recipents[0].correctEtpAddress) {
         var SendPromise = (sendfrom) ? MetaverseService.SendFrom(sendfrom, sendTo, value, fee, memo, password) : MetaverseService.Send(sendTo, value, fee, memo, password);
       } else {
@@ -1163,10 +1180,10 @@
 
 
     function createMultisigTx(sendFrom, sendTo, quantity, transactionFee) {
-      var quantityToSend = ("" + quantity * Math.pow(10,8)).split(".")[0];
-      var transactionFeeToSend = ("" + transactionFee * Math.pow(10,8)).split(".")[0];
-      //var quantityToSend = Math.round(quantity);
-      //quantity = Math.round(quantity);
+      //var quantityToSend = ("" + quantity * Math.pow(10,8)).split(".")[0];
+      var quantityToSend = $filter('convertfortx')(quantity, 8);
+      //var transactionFeeToSend = ("" + transactionFee * Math.pow(10,8)).split(".")[0];
+      var transactionFeeToSend = $filter('convertfortx')(transactionFee, 8);
       if ($scope.password === '') { //Check for empty password
         $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -1608,13 +1625,8 @@
     $scope.availBalance = availBalance;
     $scope.availableBalance = 0;
     $scope.sendAll = sendAll;
-
     $scope.checkRecipent = checkRecipent;
-    $scope.correctEtpAddress = false;
-    $scope.correctAvatar = false;
-    $scope.burnAddress = false;
     $scope.allDids = [];
-    $scope.confirmation = false;
     $scope.checkInputs = checkInputs;
 
     // Initializes all transaction parameters with empty strings.
@@ -1624,6 +1636,10 @@
       $scope.message = '';
       $scope.value = '';
       $scope.password = '';
+      $scope.correctEtpAddress = false;
+      $scope.correctAvatar = false;
+      $scope.burnAddress = false;
+      $scope.confirmation = false;
     }
 
     MetaverseService.ListAssets()
@@ -1757,9 +1773,11 @@
     function sendasset(sendfrom, sendto, symbol, quantity, password) {
       NProgress.start();
       //Modify number to fit to number of decimals defined for asset
-      quantity *= Math.pow(10,$scope.asset.decimal_number);
-      quantity = Math.round(quantity);
-      if ($scope.correctEtpAddress) {
+      //quantity *= Math.pow(10,$scope.asset.decimal_number);
+      //quantity = Math.round(quantity);
+      quantity = $filter('convertfortx')(quantity, $scope.asset.decimal_number);
+
+      if ($scope.correctEtpAddress || $scope.burnAddress) {
         var SendPromise = (sendfrom) ? MetaverseService.SendAssetFrom(sendfrom, sendto, symbol, quantity, password) : MetaverseService.SendAsset(sendto, symbol, quantity, password);
       } else {
         var SendPromise = (sendfrom) ? MetaverseService.DidSendAssetFrom(sendfrom, sendto, symbol, quantity, password) : MetaverseService.DidSendAsset(sendto, symbol, quantity, password);
@@ -1820,7 +1838,8 @@
 
     function sendAll() {
       //$scope.quantity = $scope.availableBalance/$scope.asset.decimal_number;
-      $scope.quantity = parseFloat($scope.availableBalance)/Math.pow(10,$scope.asset.decimal_number);
+      //$scope.quantity = parseFloat($scope.availableBalance)/Math.pow(10,$scope.asset.decimal_number);
+      $scope.quantity = $filter('assetformat')($scope.availableBalance, $scope.asset.decimal_number);
     }
 
     init();
@@ -1861,7 +1880,7 @@
   }
 
 
-  function ShowAssetsController(MetaverseService, $rootScope, $scope, localStorageService, FlashService, $translate, $stateParams, $location, $window, ngDialog) {
+  function ShowAssetsController(MetaverseService, $rootScope, $scope, localStorageService, FlashService, $translate, $stateParams, $location, $window, ngDialog, $filter) {
 
     $window.scrollTo(0,0);
     $scope.symbol = $stateParams.symbol;
@@ -1956,7 +1975,8 @@
 
     function secondIssue(symbol, increase_maximum_supply, decimal_number) {
       NProgress.start();
-      increase_maximum_supply*=Math.pow(10,decimal_number);
+      //increase_maximum_supply*=Math.pow(10,decimal_number);
+      increase_maximum_supply = $filter('convertfortx')(increase_maximum_supply, decimal_number);
       if(increase_maximum_supply < 0) {
         $translate('MESSAGES.ASSETS_SECOND_ISSUE_ERROR').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -1985,7 +2005,8 @@
             if ($scope.asset.issuer == localStorageService.get('credentials').user) {
               $scope.owner = true;
             }
-            $scope.initial_maximum_supply = parseFloat($scope.asset.maximum_supply)/Math.pow(10,$scope.asset.decimal_number);
+            //$scope.initial_maximum_supply = parseFloat($scope.asset.maximum_supply)/Math.pow(10,$scope.asset.decimal_number);
+            $scope.initial_maximum_supply = $filter('assetformat')($scope.asset.maximum_supply, $scope.asset.decimal_number);
             $scope.current_maximum_supply = $scope.initial_maximum_supply;
             $scope.new_maximum_supply = $scope.initial_maximum_supply;
             $scope.details = false;

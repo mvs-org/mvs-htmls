@@ -7,7 +7,10 @@
 			      return function(input, asset_type){
                 if(typeof asset_type === 'undefined')
                     asset_type=8;
-                return parseFloat(input)/Math.pow(10,asset_type);
+                //input += '';
+                //return input.slice(input.length-asset_type) == 0 ? input.slice(0, input.length-asset_type) : input.length > asset_type ? input.slice(0, input.length-asset_type) + '.' + input.slice(input.length-asset_type) : '0.' + '0'.repeat(asset_type-input.length) + input.slice(input.length-asset_type);
+                var product = bigDecimal.divide(input, Math.pow(10,asset_type));
+                return bigDecimal.divide(input, Math.pow(10,asset_type));
             };
         })
         .config(['$compileProvider', function($compileProvider) {

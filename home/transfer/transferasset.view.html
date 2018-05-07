@@ -40,7 +40,7 @@
         <div class="col-xs-6 noPaddingLeftRight addRecipent">
           <button type="button" class="btn-link-red addRecipentButton" ng-click="sendAll()" tabIndex="-1">{{ 'TRANSFER_AMOUNT_AVALAIBLE' | translate }}: {{availableBalance | assetformat : asset.decimal_number}}</button>
         </div>
-        <input type="number" ng-model="quantity" name="quantity" min=0 required class="form-control" placeholder="0" autocomplete="off">
+        <input ng-model="quantity" name="quantity" min=0 required class="form-control" placeholder="0" autocomplete="off">
       </div>
     </div>
 
