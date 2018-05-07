@@ -713,15 +713,23 @@
       if (typeof input == 'undefined' || '') {
         $scope.recipents[index-1].correctEtpAddress = false;
         $scope.recipents[index-1].correctAvatar = false;
+        $scope.recipents[index-1].burnAddress = false;
       } else if((($rootScope.network == 'testnet' && input.charAt(0) == 't') || ($rootScope.network == 'mainnet' && input.charAt(0) == 'M') || input.charAt(0) == '3') && input.length == 34) {
         $scope.recipents[index-1].correctEtpAddress = true;
         $scope.recipents[index-1].correctAvatar = false;
+        $scope.recipents[index-1].burnAddress = false;
       } else if ($scope.allDids.indexOf($filter('uppercase')(input)) > -1) {
         $scope.recipents[index-1].correctEtpAddress = false;
         $scope.recipents[index-1].correctAvatar = true;
+        $scope.recipents[index-1].burnAddress = false;
+      } else if (input == MetaverseService.burnAddress) {
+        $scope.recipents[index-1].correctEtpAddress = false;
+        $scope.recipents[index-1].correctAvatar = false;
+        $scope.recipents[index-1].burnAddress = true;
       } else {
         $scope.recipents[index-1].correctEtpAddress = false;
         $scope.recipents[index-1].correctAvatar = false;
+        $scope.recipents[index-1].burnAddress = false;
       }
     }
 
@@ -748,7 +756,7 @@
       var transactionOK = true;
       //Check for unimplemented parameters
       recipents.forEach( (e) => {
-        if (!e.correctEtpAddress && !e.correctAvatar) { //Check for recipent address
+        if (!e.correctEtpAddress && !e.correctAvatar && !e.burnAddress) { //Check for recipent address
           $translate('TRANSFER.INCORRECT_RECIPIENT').then( (data) =>
             $translate('TRANSFER_RECIPENT_ADDRESS').then( (data2) => FlashService.Error(data + ' (' + data2 + ' ' + e.index + ')' ))
           );
@@ -805,7 +813,7 @@
       //value = Math.round(value);
       var fee = $filter('convertfortx')(transactionFee, 8);
       value = $filter('convertfortx')(value, 8);
-      if (recipents[0].correctEtpAddress) {
+      if (recipents[0].correctEtpAddress || recipents[0].burnAddress) {
         var SendPromise = (sendfrom) ? MetaverseService.SendFrom(sendfrom, sendTo, value, fee, memo, password) : MetaverseService.Send(sendTo, value, fee, memo, password);
       } else {
         var SendPromise = (sendfrom) ? MetaverseService.DidSendFrom(sendfrom, sendTo, value, fee, memo, password) : MetaverseService.DidSend(sendTo, value, fee, memo, password);

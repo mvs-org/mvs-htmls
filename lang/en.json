@@ -424,5 +424,6 @@
   "CREATE_PROFILE.CREATE_ID_WRONG_CHARACTER": "Wrong character. Please only use numbers, letters and dots",
   "CREATE_PROFILE.CREATE_ID_ALREADY_EXIST": "This Avatar name already exist",
   "TRANSFER_RECIPIENT_BURN": "Burn address",
-  "TRANSFER.CORRECT_RECIPIENT_BURN": "Send to Burn address. Those tokens will be definitely burned!"
+  "TRANSFER.CORRECT_RECIPIENT_BURN": "Send to Burn address. Those tokens will be definitely burned!",
+  "TRANSFER.CORRECT_RECIPIENT_BURN_ETP": "Send to Burn address. Those ETP will be definitely burned!"
 }

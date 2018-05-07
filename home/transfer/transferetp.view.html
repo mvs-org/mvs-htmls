@@ -56,11 +56,12 @@
 					<input type="etpaddress" class="form-control" name="recipent_address" id="" ng-model="recipent.address" ng-change="checkRecipent(recipent.address, recipent.index)" required>
 				</div>
 				<span class="col-md-6 checkRecipient" >
-					<span ng-show="!recipent.correctEtpAddress && !recipent.correctAvatar && recipent.address != '' && recipents.length==1" class="red"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.INCORRECT_RECIPIENT' | translate }}</span>
-					<span ng-show="!recipent.correctEtpAddress && !recipent.correctAvatar && recipent.address != '' && recipents.length>1" class="red"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.INCORRECT_ADDRESS' | translate }}</span>
+					<span ng-show="!recipent.correctEtpAddress && !recipent.correctAvatar && !recipent.burnAddress && recipent.address != '' && recipents.length==1" class="red"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.INCORRECT_RECIPIENT' | translate }}</span>
+					<span ng-show="!recipent.correctEtpAddress && !recipent.correctAvatar && !recipent.burnAddress && recipent.address != '' && recipents.length>1" class="red"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.INCORRECT_ADDRESS' | translate }}</span>
 					<span ng-show="recipent.correctEtpAddress" class="green"><span class="glyphicon glyphicon-ok"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_ADDRESS' | translate }}</span>
 					<span ng-show="recipent.correctAvatar && recipents.length==1" class="green"><span class="glyphicon glyphicon-ok"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_AVATAR' | translate }}</span>
 					<span ng-show="recipent.correctAvatar && recipents.length>1" class="red"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.RECIPIENT_AVATAR_NO_MULTI' | translate }}</span>
+					<span ng-show="recipent.burnAddress" class="warningInputComment"><span class="glyphicon glyphicon-warning-sign"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_BURN_ETP' | translate }}</span>
 				</span>
 			</div>
 
@@ -135,6 +136,7 @@
 					<div ng-repeat="recipent in recipents | orderBy:'index'">
 						<div class="col-xs-12 noPaddingLeftRight assetDataLine">
 							<div ng-show="recipent.correctEtpAddress" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_RECIPENT_ADDRESS' | translate }}<span ng-show="recipents.length > 1"> {{recipent.index}}<span></div>
+								<div ng-show="recipent.burnAddress" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_RECIPIENT_BURN' | translate }}<span ng-show="recipents.length > 1"> {{recipent.index}}<span></div>
 							<div ng-show="recipent.correctAvatar" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_RECIPENT_AVATAR' | translate }}</div>
 							<div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{recipent.address}}</div>
 						</div>
