@@ -2630,7 +2630,7 @@
         $location.path('/addresses/myaddresses');
       } else if (search.length === 64) {
         $location.path('/explorer/tx/' + search);
-      } else if (search.length === 34) {
+      } else if (search.length === 34 || search == MetaverseService.burnAddress) {
         $location.path('/explorer/adr/' + search);
       } else if (!isNaN(search)) {
         $location.path('/explorer/blk/' + search);
