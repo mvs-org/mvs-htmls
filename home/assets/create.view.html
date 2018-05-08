@@ -1,49 +1,94 @@
 <div class="headline">{{ 'HEADLINE_ASSETS_CREATE' | translate }}</div>
 <br/>
 <form ng-hide="confirmation" class="row">
-  <div class="col-md-12 col-lg-6">
-
-    <!--Form via HTML5 and SCSS-->
-    <form class="form-horizontal spe-form" role="form">
-      <!--Symbol-->
-      <div class="form-group">
-        <label for="symbol" class="control-label">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</label>
-        <input type="text" class="form-control uppercase" name="symbol" required placeholder="" ng-model="symbol" ng-class="{validInput: !error.symbol, wrongInput: error.symbol}" autocomplete="off">
+  <div class="col-md-12 col-lg-12 noPaddingLeftRight">
+    <div class="col-md-12 col-lg-6">
+      <!--Form via HTML5 and SCSS-->
+      <form class="form-horizontal spe-form" role="form">
+        <!--Symbol-->
+        <div class="form-group">
+          <label for="symbol" class="control-label">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</label>
+          <input type="text" class="form-control uppercase" name="symbol" required placeholder="" ng-model="symbol" ng-class="{validInput: !error.symbol, wrongInput: error.symbol}" autocomplete="off">
+        </div>
+        <!--Maximum supply-->
+        <div class="form-group col-xs-8 noPaddingLeftRight maxSupply">
+          <label for="max_supply" class="control-label">{{ 'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate }}</label>
+          <input type="number" min="0" class="form-control" name="max_supply" required placeholder="" ng-model="max_supply" ng-class="{validInput: !error.max_supply, wrongInput: error.max_supply}" autocomplete="off">
+        </div>
+        <!--Decimals-->
+        <div class="form-group col-xs-4 noPaddingLeftRight">
+          <label for="decimals" class="control-label">{{ 'ASSET_ASSET_CREATE_DIGITS' | translate }}</label>
+          <select type="number" class="form-control" name="decimals" required placeholder="" required ng-class="{validInput: !error.decimals, wrongInput: error.decimals}" ng-model="decimals">
+            <option value=""></option>
+            <option value="0">0</option>
+            <option value="1" ng-show="max_supply<=1000000000000000000">1</option>
+            <option value="2" ng-show="max_supply<=100000000000000000">2</option>
+            <option value="3" ng-show="max_supply<=10000000000000000">3</option>
+            <option value="4" ng-show="max_supply<=1000000000000000">4</option>
+            <option value="5" ng-show="max_supply<=100000000000000">5</option>
+            <option value="6" ng-show="max_supply<=10000000000000">6</option>
+            <option value="7" ng-show="max_supply<=1000000000000">7</option>
+            <option value="8" ng-show="max_supply<=100000000000">8</option>
+          </select>
+        </div>
+        <!--Secondary Offering-->
+        <!--<div class="form-group">
+          <label for="second_offering" class="control-label">{{ 'ASSET_ASSET_CREATE_SECONDARY_OFFERING' | translate }}</label>
+          <select type="text" min="0" class="form-control" name="secondary_offering" placeholder="" ng-model="secondary_offering" autocomplete="off">
+            <option value="0">0 %</option>
+            <option ng-repeat="n in range(51,100)" value="{{n}}11">{{n}} %</option>
+          </select>
+        </div>-->
+        <!--Description-->
+        <div class="form-group">
+          <label for="description" class="control-label">{{ 'ASSET_ASSET_CREATE_DESCRIPTION' | translate }}</label>
+          <textarea class="form-control" name="description" required rows="6" cols="35" ng-model="description" ng-class="{validInput: !error.description, wrongInput: error.description}" autocomplete="off"></textarea>
+        </div>
+        <!--Checkbox for secondaryissue-->
+        <div class="form-group col-xs-12 spe-addrbox depositAddressCheckbox">
+          <div class="checkboxCircle">
+            <div class="checkbox-box">
+              <input type="checkbox" tabIndex="-1" name="secondaryissue" ng-model="secondaryissue" ng-click="secondaryissue_rate = 0" id="checkboxCircleSecondaryIssue">
+              <label for="checkboxCircleSecondaryIssue"></label>
+            </div>
+            <span class="textCheckbox">{{ 'ASSET_CREATE.SECONDARY_ISSUE_CHECKBOX' | translate }}</span>
+          </div>
+        </div>
+        <div class="form-group col-xs-12 noPaddingLeftRight" ng-show="secondaryissue">
+          <label for="secondaryissue_rate" class="control-label">
+            {{ 'ASSET_CREATE.SECONDARY_ISSUE' | translate }}
+          </label>
+          <select name="secondaryissue_rate" type="number" class="form-control" ng-model="secondaryissue_rate" ng-change="availBalance(sendfrom)">
+            <option ng-selected="secondaryissue" value="0">0% ({{ 'ASSET_CREATE.SECONDARY_ISSUE_DISABLED' | translate }})</option>
+            <option ng-repeat="rate in [].constructor(100) track by $index" value="{{$index+1}}">{{$index+1}} %</option>
+            <option value="-1">{{ 'ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED' | translate }}</option>
+          </select>
+        </div>
       </div>
-      <!--Maximum supply-->
-      <div class="form-group col-xs-8 noPaddingLeftRight maxSupply">
-        <label for="max_supply" class="control-label">{{ 'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate }}</label>
-        <input type="number" min="0" class="form-control" name="max_supply" required placeholder="" ng-model="max_supply" ng-class="{validInput: !error.max_supply, wrongInput: error.max_supply}" autocomplete="off">
+      <!--Rate details-->
+      <div ng-show="secondaryissue" class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        <div class="assetDetailsPanel panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{'ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS' | translate}}</h3>
+          </div>
+          <div class="panel-body">
+            <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+              <div class="assetDataColumn col-xs-3 noPaddingLeftRight">0%</div>
+              <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_0' | translate}}</div>
+            </div>
+            <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+              <div class="assetDataColumn col-xs-3 noPaddingLeftRight">1 - 100%</div>
+              <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_1_TO_100' | translate}}</div>
+            </div>
+            <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+              <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED' | translate }}</div>
+              <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_MINUS1' | translate}}</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <!--Decimals-->
-      <div class="form-group col-xs-4 noPaddingLeftRight">
-        <label for="decimals" class="control-label">{{ 'ASSET_ASSET_CREATE_DIGITS' | translate }}</label>
-        <select type="number" class="form-control" name="decimals" required placeholder="" required ng-class="{validInput: !error.decimals, wrongInput: error.decimals}" ng-model="decimals">
-          <option value=""></option>
-          <option value="0">0</option>
-          <option value="1" ng-show="max_supply<=1000000000000000000">1</option>
-          <option value="2" ng-show="max_supply<=100000000000000000">2</option>
-          <option value="3" ng-show="max_supply<=10000000000000000">3</option>
-          <option value="4" ng-show="max_supply<=1000000000000000">4</option>
-          <option value="5" ng-show="max_supply<=100000000000000">5</option>
-          <option value="6" ng-show="max_supply<=10000000000000">6</option>
-          <option value="7" ng-show="max_supply<=1000000000000">7</option>
-          <option value="8" ng-show="max_supply<=100000000000">8</option>
-        </select>
-      </div>
-      <!--Secondary Offering-->
-      <!--<div class="form-group">
-        <label for="second_offering" class="control-label">{{ 'ASSET_ASSET_CREATE_SECONDARY_OFFERING' | translate }}</label>
-        <select type="text" min="0" class="form-control" name="secondary_offering" placeholder="" ng-model="secondary_offering" autocomplete="off">
-          <option value="0">0 %</option>
-          <option ng-repeat="n in range(51,100)" value="{{n}}11">{{n}} %</option>
-        </select>
-      </div>-->
-      <!--Description-->
-      <div class="form-group">
-        <label for="description" class="control-label">{{ 'ASSET_ASSET_CREATE_DESCRIPTION' | translate }}</label>
-        <textarea class="form-control" name="description" required rows="6" cols="35" ng-model="description" ng-class="{validInput: !error.description, wrongInput: error.description}" autocomplete="off"></textarea>
-      </div>
+    </div>
+    <div class="col-md-12 col-lg-6">
       <!--Password-->
       <div class="form-group ddeg4">
         <label for="password" class="control-label">{{ 'ASSET_ASSET_CREATE_PASSWORD' | translate }}</label>
@@ -79,6 +124,11 @@
         <div class="col-xs-12 noPaddingLeftRight assetDataLine">
           <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_DESCRIPTION' | translate }}</div>
           <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{description}}</div>
+        </div>
+        <div ng-show="secondaryissue_rate != 0 || secondaryissue" class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_CREATE.SECONDARY_ISSUE' | translate }}</div>
+          <div ng-hide="secondaryissue_rate == -1" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{secondaryissue_rate}} %</div>
+          <div ng-show="secondaryissue_rate == -1" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED' | translate }}</div>
         </div>
       </div>
     </div>

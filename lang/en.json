@@ -425,5 +425,13 @@
   "CREATE_PROFILE.CREATE_ID_ALREADY_EXIST": "This Avatar name already exist",
   "TRANSFER_RECIPIENT_BURN": "Burn address",
   "TRANSFER.CORRECT_RECIPIENT_BURN": "Send to Burn address. Those tokens will be definitely burned!",
-  "TRANSFER.CORRECT_RECIPIENT_BURN_ETP": "Send to Burn address. Those ETP will be definitely burned!"
+  "TRANSFER.CORRECT_RECIPIENT_BURN_ETP": "Send to Burn address. Those ETP will be definitely burned!",
+  "ASSET_CREATE.SECONDARY_ISSUE_CHECKBOX": "Allow additionnal issuance in the future",
+  "ASSET_CREATE.SECONDARY_ISSUE": "Secondary issue rate",
+  "ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED": "Unlimited",
+  "ASSET_CREATE.SECONDARY_ISSUE_DISABLED": "No secondary issue",
+  "ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS": "Secondary issue rate",
+  "ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_MINUS1": "The asset can be secondary issued freely, without limit",
+  "ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_0": "The asset is not allowed to be secondary issued forever, the Maximum Supply cannot be changed (default value)",
+  "ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_1_TO_100": "Secondary issue rate, the asset can be secondary issue when own percentage is greater than or equal to this rate value"
 }

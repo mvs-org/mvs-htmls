@@ -627,19 +627,6 @@ _____  ._______  ___.___ _______
   outline: 0;
 }
 
-.checkboxCircle label:after {
-  opacity: 0;
-	content: '';
-	position: absolute;
-  width: 20px;
-  height: 20px;
-  background: url(/images/checkbx.png) no-repeat;
-  top: 0;
-  left: 2px;
-  outline: 0;
-  background-size: 80%;
-  outline: 0;
-}
 .depositAddressCheckbox .checkboxCircle label{
   width: 20px;
   height: 20px;
@@ -656,6 +643,20 @@ _____  ._______  ___.___ _______
 .checkboxCircle input[type=checkbox]:checked + label:after {
 	filter: alpha(opacity=90);
 	opacity: 0.9;
+}
+
+.checkboxCircle label:after {
+  opacity: 0;
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: url(/images/checkbx.png) no-repeat;
+  top: 0;
+  left: 2px;
+  outline: 0;
+  background-size: 80%;
+  outline: 0;
 }
 
 .checkboxCircle :focus {
@@ -1272,7 +1273,6 @@ _____  ._______  ___.___ _______
 }
 
 .assetDataColumn {
-  height: 32px;
   text-align: left;
   font-weight: 400;
   font-style: normal;
@@ -1959,7 +1959,9 @@ h2 {
 }
 
 .assetDataLine {
-  margin-top: 5px;
+  margin-top: 12px;
+  border-bottom: 1px solid #f2f2f2;
+  padding-bottom: 10px;
 }
 
 .assetDetailsBlank {
@@ -2145,4 +2147,9 @@ h2 {
 
 .warningInputComment {
   color: orange;
+}
+
+.assetDetailsPanel .panel-body {
+  padding-top: 0;
+  padding-bottom: 0;
 }

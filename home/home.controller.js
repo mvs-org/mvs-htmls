@@ -2164,7 +2164,6 @@
     $scope.popupIssue = popupIssue;
     $scope.issue = issue;
 
-    $scope.confirmation = false;
     $scope.checkInputs = checkInputs;
 
     //Initialize form data
@@ -2176,6 +2175,7 @@
       $scope.decimals = '';
       $scope.password = '';
       $scope.confirmation = false;
+      $scope.secondaryissue_rate = 0;
     }
 
     init();
@@ -2247,7 +2247,7 @@
     function createasset() {
       NProgress.start();
       //Let Metaverse create an local asset
-      MetaverseService.CreateAsset($scope.symbol, $scope.max_supply, $scope.secondary_offering, $scope.decimals, $scope.description)
+      MetaverseService.CreateAsset($scope.symbol, $scope.max_supply, $scope.secondary_offering, $scope.decimals, $scope.description, $scope.secondaryissue_rate)
       .then( (response) => {
         NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
@@ -2259,8 +2259,7 @@
           });
           $window.scrollTo(0,0);
         } else{
-          //$translate('MESSAGES.ASSETS_CREATE_ERROR').then( (data) => FlashService.Error(data) );
-          $translate('MESSAGES.ASSETS_CREATE_ERROR').then( (data) => FlashService.Error(data + ' ' + response.message) );
+          $translate('MESSAGES.ASSETS_CREATE_ERROR').then( (data) => FlashService.Error(data + ' ' + response.message.message) );
           $window.scrollTo(0,0);
         }
       });

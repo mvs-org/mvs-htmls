@@ -643,11 +643,10 @@
          * @apiParam {List} params [username, password,'-s',symbol,'-v',max_supply,'-n',decimal_number, '-d',description]
          *
          **/
-        function CreateAsset(symbol, max_supply, secondary_offering, decimal_number, description) {
+        function CreateAsset(symbol, max_supply, secondary_offering, decimal_number, description, secondaryissue_rate) {
             max_supply*=Math.pow(10,decimal_number);
             var credentials = localStorageService.get('credentials');
-            return _send('createasset', [credentials.user, credentials.password, '-s', symbol, '-v', max_supply, '-n',decimal_number, '-d', description]);
-            //return _send('createasset', [credentials.user, credentials.password, '-s', symbol, '-v', max_supply, '-r', secondary_offering, '-n',decimal_number, '-d', description]);
+            return _sendV2('createasset', [credentials.user, credentials.password, '-s', symbol, '-v', max_supply, '-n',decimal_number, '-d', description, '-r', secondaryissue_rate]);
         }
 
         /**

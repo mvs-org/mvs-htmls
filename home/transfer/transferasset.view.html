@@ -71,8 +71,8 @@
         <div class="panel-body">
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</div>
-            <div ng-hide="sendfrom == ''" class="assetValueColumn col-xs-3 noPaddingLeftRight">{{sendfrom}}</div>
-            <div ng-show="sendfrom == ''" class="assetValueColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</div>
+            <div ng-hide="sendfrom == ''" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{sendfrom}}</div>
+            <div ng-show="sendfrom == ''" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div ng-show="correctEtpAddress" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_RECIPENT_ADDRESS' | translate }}</div>
