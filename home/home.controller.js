@@ -615,6 +615,7 @@
     $scope.sendAll = sendAll;
 
     $scope.checkRecipent = checkRecipent;
+    $scope.checkAmount = checkAmount;
     $scope.allDids = [];
     $scope.allDidsAddresses = [];
     $scope.confirmation = false;
@@ -632,9 +633,10 @@
       $scope.transactionFee = 0.0001;
       $scope.memo = '';
       $scope.confirmation = false;
-      $scope.correctEtpAddress = false;
-      $scope.correctAvatar = false;
-      $scope.burnAddress = false;
+      $scope.error = [];
+      $scope.option = [];
+      $scope.recipientOK = [];
+      $scope.amountOK = [];
       MetaverseService.ListBalances(true)
       .then( (response) => {
         if (response.success)
@@ -678,31 +680,115 @@
       }
       //Once all the DIDs have been loaded, we look for the one entered by the user
       checkRecipent($scope.recipents[0].address, 1);
+      checkAmount('', 1);
     });
 
     function checkRecipent(input, index) {
+      console.log("checkRecipent");
       if (typeof input == 'undefined' || '') {
         $scope.recipents[index-1].correctEtpAddress = false;
         $scope.recipents[index-1].correctAvatar = false;
         $scope.recipents[index-1].burnAddress = false;
+        $scope.recipientOK[index-1] = false;
       } else if((($rootScope.network == 'testnet' && input.charAt(0) == 't') || ($rootScope.network == 'mainnet' && input.charAt(0) == 'M') || input.charAt(0) == '3') && input.length == 34) {
         $scope.recipents[index-1].correctEtpAddress = true;
         $scope.recipents[index-1].correctAvatar = false;
         $scope.recipents[index-1].burnAddress = false;
+        $scope.recipientOK[index-1] = true;
       } else if ($scope.allDidsSymbols.indexOf($filter('uppercase')(input)) > -1) {
         $scope.recipents[index-1].correctEtpAddress = false;
         $scope.recipents[index-1].correctAvatar = true;
         $scope.recipents[index-1].burnAddress = false;
+        $scope.recipientOK[index-1] = true;
       } else if (input == MetaverseService.burnAddress) {
         $scope.recipents[index-1].correctEtpAddress = false;
         $scope.recipents[index-1].correctAvatar = false;
         $scope.recipents[index-1].burnAddress = true;
+        $scope.recipientOK[index-1] = true;
       } else {
         $scope.recipents[index-1].correctEtpAddress = false;
         $scope.recipents[index-1].correctAvatar = false;
         $scope.recipents[index-1].burnAddress = false;
+        $scope.recipientOK[index-1] = false;
       }
+      checkready();
     }
+
+    function checkAmount(input, index) {
+      if (typeof input == 'undefined' || input == '') {
+        $scope.recipents[index-1].emptyAmount = true;
+        $scope.recipents[index-1].wrongAmount = false;
+        $scope.recipents[index-1].notEnough = false;
+        $scope.amountOK[index-1] = false;
+      } else if (input < 0) {
+        $scope.recipents[index-1].emptyAmount = false;
+        $scope.recipents[index-1].wrongAmount = true;
+        $scope.recipents[index-1].notEnough = false;
+        $scope.amountOK[index-1] = false;
+      } else if (input > $scope.availableBalance/100000000 - $scope.transactionFee) {
+        $scope.recipents[index-1].emptyAmount = false;
+        $scope.recipents[index-1].wrongAmount = false;
+        $scope.recipents[index-1].notEnough = true;
+        $scope.amountOK[index-1] = false;
+      } else {
+        $scope.recipents[index-1].emptyAmount = false;
+        $scope.recipents[index-1].wrongAmount = false;
+        $scope.recipents[index-1].notEnough = false;
+        $scope.amountOK[index-1] = true;
+      }
+      checkready();
+    }
+
+    //Check if the form is submittable
+    function checkready() {
+      //Check for errors
+      for (var error in $scope.error) {
+        if ($scope.error[error]) {
+          $scope.submittable = false;
+          return;
+        }
+      }
+      for (var recipient in $scope.recipientOK) {
+        if (!$scope.recipientOK[recipient]) {
+          $scope.submittable = false;
+          return;
+        }
+      }
+      for (var amount in $scope.amountOK) {
+        if (!$scope.amountOK[amount]) {
+          $scope.submittable = false;
+          return;
+        }
+      }
+      $scope.submittable = true;
+    }
+
+    //Check if the send from address is valid
+    $scope.$watch('sendfrom', (newVal, oldVal) => {
+      $scope.error.sendfrom = (newVal == undefined);
+      checkready();
+    });
+
+    //Check if the fee is valid
+    $scope.$watch('transactionFee', (newVal, oldVal) => {
+      $scope.error.fee_empty = (newVal == undefined);
+      $scope.error.fee_too_low = newVal != undefined ? newVal<0.0001 : false;
+      checkready();
+    });
+
+    //Check if the memo is valid TODO check max length memo and char
+    $scope.$watch('memo', (newVal, oldVal) => {
+      $scope.option.memo_empty = (newVal == undefined || newVal == '');
+      $scope.error.memo_wrong_char = newVal != undefined ? false : false;
+      $scope.error.memo_too_long = newVal != undefined ? newVal.length > 1000 : false;
+      checkready();
+    });
+
+    //Check if the password is valid
+    $scope.$watch('password', (newVal, oldVal) => {
+      $scope.error.password = (newVal == undefined || newVal == '');
+      checkready();
+    });
 
 
 
@@ -713,20 +799,26 @@
       $scope.underlineManual='none';
       $scope.sendfrom='';
       $scope.selectAddressAvailable = false;
+      $scope.recipientOK.push(false);
+      $scope.amountOK.push(false);
+      checkready();
     }
 
     $scope.removeRecipent = function() {
       $scope.recipents.splice($scope.recipents.length-1, 1);
+      $scope.recipientOK.splice($scope.recipientOK.length-1, 1);
+      $scope.amountOK.splice($scope.recipientOK.length-1, 1);
       if($scope.recipents.length==1) {
         $scope.selectAddressAvailable = true;
       }
+      checkready();
     }
 
     //Check Inputs
     function checkInputs(sendfrom, recipents, transactionFee, memo, password) {
-      var transactionOK = true;
+      //var transactionOK = true;
       //Check for unimplemented parameters
-      recipents.forEach( (e) => {
+      /*recipents.forEach( (e) => {
         if (!e.correctEtpAddress && !e.correctAvatar && !e.burnAddress) { //Check for recipent address
           $translate('TRANSFER.INCORRECT_RECIPIENT').then( (data) =>
             $translate('TRANSFER_RECIPENT_ADDRESS').then( (data2) => FlashService.Error(data + ' (' + data2 + ' ' + e.index + ')' ))
@@ -751,7 +843,8 @@
       } else if (password === '') { //Check for empty password
         $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
-      } else if (localStorageService.get('credentials').password != password) {
+      } else */
+      if (localStorageService.get('credentials').password != password) {
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else {
@@ -2344,16 +2437,6 @@
       $scope.error.password = (newVal == undefined || newVal == '');
       checkready();
     });
-
-    //Define the range used for the secondary offering
-    $scope.range = function(min, max, step) {
-      step = step || 1;
-      var input = [];
-      for (var i = min; i <= max; i += step) {
-          input.push(i);
-      }
-      return input;
-    };
 
     function checkInputs() {
       if (localStorageService.get('credentials').password != $scope.password) {
