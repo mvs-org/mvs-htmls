@@ -608,8 +608,15 @@
     $scope.recipents = [];
     $scope.listAddresses = [];
 
+    $scope.symbol = 'ETP';
+
+    $scope.availBalance = availBalance;
+    $scope.availableBalance = 0;
+    $scope.sendAll = sendAll;
+
     $scope.checkRecipent = checkRecipent;
     $scope.allDids = [];
+    $scope.allDidsAddresses = [];
     $scope.confirmation = false;
     $scope.checkInputs = checkInputs;
 
@@ -637,12 +644,6 @@
       $scope.recipents.push({'index': 1, 'address': '', 'value': ''});
     }
 
-    $scope.symbol = 'ETP';
-
-    $scope.availBalance = availBalance;
-    $scope.availableBalance = 0;
-    $scope.sendAll = sendAll;
-
     function getBalance(){
       //Load users ETP balance
       MetaverseHelperService.GetBalance( (err, balance, message) => {
@@ -658,53 +659,18 @@
 
     getBalance();
 
-
     MetaverseService.ListAllDids()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
-        //TODO for each $scope.allDids = response.result.dids;
-      } else {
-        //$translate('MESSAGES.ALL_DIDS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
-        //$window.scrollTo(0,0);
-
-        //For Testing
-        $scope.allDids = [];
-        $scope.allDidsAddresses = [];
-        response = {
-            "jsonrpc": "2.0",
-            "id": 42,
-            "result":
-             {
-                "dids" :
-                [
-                    {
-                            "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
-                            "description" : "",
-                            "issuer" : "yangguanglu",
-                            "status" : "issued",
-                            "symbol" : "LU"
-                    },
-                    {
-                            "address" : "MCacqaACiXFyrHZfDqvNnZGeFDNwt1M41o",
-                            "description" : "",
-                            "issuer" : "laurent",
-                            "status" : "issued",
-                            "symbol" : "LAURENT"
-                    },
-                    {
-                            "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
-                            "description" : "",
-                            "issuer" : "yangguanglu",
-                            "status" : "issued",
-                            "symbol" : "GUANG"
-                    }
-                ]
-            }
-        }
-        response.result.dids.forEach( (did) => {
-          $scope.allDids.push(did.symbol);
+        $scope.allDids = response.data.result.dids;
+        $scope.allDidsSymbols = [];
+        $scope.allDids.forEach(function(did) {
+          $scope.allDidsSymbols.push(did.symbol);
           $scope.allDidsAddresses[did.address] = did.symbol;
         });
+      } else {
+        $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       }
       //Once all the DIDs have been loaded, we look for the one entered by the user
       checkRecipent($scope.recipents[0].address, 1);
@@ -719,7 +685,7 @@
         $scope.recipents[index-1].correctEtpAddress = true;
         $scope.recipents[index-1].correctAvatar = false;
         $scope.recipents[index-1].burnAddress = false;
-      } else if ($scope.allDids.indexOf($filter('uppercase')(input)) > -1) {
+      } else if ($scope.allDidsSymbols.indexOf($filter('uppercase')(input)) > -1) {
         $scope.recipents[index-1].correctEtpAddress = false;
         $scope.recipents[index-1].correctAvatar = true;
         $scope.recipents[index-1].burnAddress = false;
@@ -1600,7 +1566,7 @@
             //Show export error
             $translate('MESSAGES.EXPORT_ACCOUNT_FILE_ERROR').then( (data) => {
               if (response.message != undefined) {
-                FlashService.Error(data + " " + response.message);
+                FlashService.Error(data + " " + response.message.message);
               } else {
                 FlashService.Error(data);
               }
@@ -1686,49 +1652,15 @@
     MetaverseService.ListAllDids()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
-        //TODO for each $scope.allDids = response.result.dids;
-      } else {
-        //$translate('MESSAGES.ALL_DIDS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
-        //$window.scrollTo(0,0);
-
-        //For Testing
-        $scope.allDids = [];
-        $scope.allDidsAddresses = [];
-        response = {
-            "jsonrpc": "2.0",
-            "id": 42,
-            "result":
-             {
-                "dids" :
-                [
-                    {
-                            "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
-                            "description" : "",
-                            "issuer" : "yangguanglu",
-                            "status" : "issued",
-                            "symbol" : "LU"
-                    },
-                    {
-                            "address" : "MCacqaACiXFyrHZfDqvNnZGeFDNwt1M41o",
-                            "description" : "",
-                            "issuer" : "laurent",
-                            "status" : "issued",
-                            "symbol" : "LAURENT"
-                    },
-                    {
-                            "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
-                            "description" : "",
-                            "issuer" : "yangguanglu",
-                            "status" : "issued",
-                            "symbol" : "GUANG"
-                    }
-                ]
-            }
-        }
-        response.result.dids.forEach( (did) => {
-          $scope.allDids.push(did.symbol);
+        $scope.allDids = response.data.result.dids;
+        $scope.allDidsSymbols = [];
+        $scope.allDids.forEach(function(did) {
+          $scope.allDidsSymbols.push(did.symbol);
           $scope.allDidsAddresses[did.address] = did.symbol;
         });
+      } else {
+        $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       }
       //Once all the DIDs have been loaded, we look for the one entered by the user
       checkRecipent($scope.sendto);
@@ -1829,7 +1761,7 @@
         $scope.correctEtpAddress = true;
         $scope.correctAvatar = false;
         $scope.burnAddress = false;
-      } else if ($scope.allDids.indexOf($filter('uppercase')(input)) > -1) {
+      } else if ($scope.allDidsSymbols.indexOf($filter('uppercase')(input)) > -1) {
         $scope.correctEtpAddress = false;
         $scope.correctAvatar = true;
         $scope.burnAddress = false;
@@ -2234,7 +2166,7 @@
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else {
-        MetaverseService.IssueDid(didAddress, didSymbol, password)
+        MetaverseService.SecondaryIssue(didAddress, didSymbol, password)
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success) {
             $translate('MESSAGES.DID_CREATED').then( (data) =>  FlashService.Success(data, true));
@@ -2281,6 +2213,7 @@
 
     //Check if the quantity is valid
     $scope.$watch('quantity', (newVal, oldVal) => {
+      console.log(newVal);
       $scope.error.quantity = (newVal == undefined || newVal == '' || newVal < 0);
       checkready();
     });
@@ -2507,7 +2440,7 @@
 
     MetaverseService.ListAssets()
     .then( (response) => {
-      if(response.data.assets != "") {    //if the user has some assets
+      if(typeof response.data.assets != undefined && response.data.assets != "") {    //if the user has some assets
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.assets = response.data.assets;
           $scope.assets.forEach( (asset) => {
@@ -2854,6 +2787,8 @@
 
     $scope.listAddresses = [];
     $scope.listMultiSig = [];
+    $scope.myDids = [];
+    $scope.noDids = false;
 
     $scope.onChain = false;
     $scope.selectedDid = {};
@@ -2936,35 +2871,18 @@
     MetaverseService.ListMyDids()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.myDids = response.result.dids;
+        if (response.data.result.dids) {
+          $scope.myDids = response.data.result.dids;
+          $scope.selectedDid = $scope.myDids[0].symbol;
+        } else {
+          $scope.noDids = true;
+          $scope.selectedDid = "";
+        }
       } else {
-        //No DIDs for this account
-        $scope.myDids = [
-            {
-                    "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
-                    "description" : "test",
-                    "issuer" : "yangguanglu",
-                    "status" : "issued",
-                    "symbol" : "LU"
-            },
-            {
-                    "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
-                    "description" : "test",
-                    "issuer" : "yangguanglu",
-                    "status" : "issued",
-                    "symbol" : "MVS.TST"
-            },
-            {
-                    "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
-                    "description" : "test",
-                    "issuer" : "yangguanglu",
-                    "status" : "issued",
-                    "symbol" : "GUANG"
-            }
-        ]
+        $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       }
     });
-
 
     function listDidsAddresses(symbol) {
       MetaverseService.ListDidAddresses(symbol)
@@ -2977,35 +2895,15 @@
 
   function AllProfilesController(MetaverseHelperService, MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $location) {
 
+    $scope.allDids = [];
+
     MetaverseService.ListAllDids()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.allDids = response.result.dids;
-
+        $scope.allDids = response.data.result.dids;
       } else {
-        $scope.allDids=[
-              {
-                      "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
-                      "description" : "",
-                      "issuer" : "yangguanglu",
-                      "status" : "issued",
-                      "symbol" : "LU"
-              },
-              {
-                      "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
-                      "description" : "",
-                      "issuer" : "yangguanglu",
-                      "status" : "issued",
-                      "symbol" : "MVS.TST"
-              },
-              {
-                      "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
-                      "description" : "",
-                      "issuer" : "yangguanglu",
-                      "status" : "issued",
-                      "symbol" : "GUANG"
-              }
-          ]
+        $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       }
     });
   }
@@ -3021,6 +2919,7 @@
     $scope.didAddress = '';
     $scope.confirmation = false;
     $scope.checkInputs = checkInputs;
+    $scope.allDids = [];
 
 
     function listAddresses() {
@@ -3076,36 +2975,14 @@
     MetaverseService.ListAllDids()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.allDids = response.result.dids;
-
+        $scope.allDids = response.data.result.dids;
+        $scope.allDidsSymbols = [];
+        $scope.allDids.forEach(function(did) {
+          $scope.allDidsSymbols.push(did.symbol);
+        });
       } else {
-        $scope.allDids=[
-              {
-                      "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
-                      "description" : "",
-                      "issuer" : "yangguanglu",
-                      "status" : "issued",
-                      "symbol" : "LU"
-              },
-              {
-                      "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
-                      "description" : "",
-                      "issuer" : "yangguanglu",
-                      "status" : "issued",
-                      "symbol" : "LAURENT"
-              },
-              {
-                      "address" : "MN3UNt5FbUbpsYtW6UfhcieykUb8rXKP5g",
-                      "description" : "",
-                      "issuer" : "yangguanglu",
-                      "status" : "issued",
-                      "symbol" : "GUANG"
-              }
-          ]
-          $scope.allDidsSymbols = [];
-          $scope.allDids.forEach(function(did) {
-            $scope.allDidsSymbols.push(did.symbol);
-          });
+        $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       }
     });
 

@@ -20,13 +20,13 @@
     </div>
   </div>
 
-
 	<!--DID-->
 	<div class="col-md-12 form-group noPaddingLeftRight">
 		<div class="col-md-6 form-group noPaddingLeftRight">
       <label for="useDid" class="control-label">{{ 'PROFIL.DID' | translate }}</label>
       <select name="useDid" type="text" class="form-control" placeholder="" ng-model="selectedDid" ng-change="changeDid(selectedDid)">
-        <option ng-repeat="did in myDids" value="{{did}}" title="{{did.symbol}}">{{did.symbol}} - {{did.address}}</option>
+        <option ng-repeat="did in myDids" value="{{did.symbol}}" title="{{did.symbol}}">{{did.symbol}} - {{did.address}}</option>
+        <option ng-show="noDids" value="">{{ 'PROFIL.NO_DID' | translate }}</option>
       </select>
 		</div>
 	</div>
