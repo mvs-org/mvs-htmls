@@ -45,10 +45,16 @@
               </a>
             </td>-->
           </div>
-          <!--<tr class="row">
-            <td class="assetDataColumn">{{'ASSET_ASSET_CREATE_SECONDARY_OFFERING' | translate}}</td>
-            <td class="assetValueColumn">{{asset.secondissue_assetshare_threshold}}</td>
-          </tr>-->
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{'ASSET_CREATE.SECONDARY_ISSUE' | translate}}</div>
+            <div ng-hide="asset.secondaryissue_threshold == 127" class="assetValueColumn col-xs-3 noPaddingLeftRight">{{asset.secondaryissue_threshold}} %</div>
+            <div ng-show="asset.secondaryissue_threshold == 127" class="assetValueColumn col-xs-3 noPaddingLeftRight">{{'ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED' | translate}}</div>
+            <div class="sendAssetButton col-xs-6 noPaddingLeftRight assetDetailsBoxButton" ng-show="asset.status=='issued'">
+              <a href="#!/asset/secondaryissue/{{asset.symbol}}">
+                <button class="btn btn-success smallButton assetBoxButton">{{'ASSET_CREATE.SECONDARY_ISSUE_BUTTON' | translate}}</button>
+              </a>
+            </div>
+          </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{'ASSET_ASSET_DETAILS_DIGITS' | translate}}</div>
             <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{asset.decimal_number}}</div>
@@ -78,15 +84,17 @@
         <div class="panel-heading">
           <h3 class="panel-title">{{'ASSET_ASSET_DETAILS_MY_INFO' | translate}}{{asset.symbol}}</h3>
         </div>
-        <div class="panel-body assetDataLine">
-          <span class="assetDataColumn col-xs-3 noPaddingLeftRight">{{'BALANCE' | translate}}</span>
-          <span class="assetValueColumn col-xs-3 noPaddingLeftRight" ng-show="asset.quantity != undefined">{{asset.quantity | assetformat : asset.decimal_number}}</span>
-          <span class="assetValueColumn col-xs-3 noPaddingLeftRight" ng-hide="asset.quantity != undefined">0</span>
-          <span class="sendAssetButton col-xs-6 noPaddingLeftRight assetDetailsBoxButton" ng-show="asset.status=='issued'">
-            <a href="#!/transfer/{{asset.symbol}}/">
-              <button class="btn btn-success smallButton assetBoxButton">{{'ASSETS_SEND' | translate}}</button>
-            </a>
-          </span>
+        <div class="panel-body">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{'BALANCE' | translate}}</div>
+            <div class="assetValueColumn col-xs-3 noPaddingLeftRight" ng-show="asset.quantity != undefined">{{asset.quantity | assetformat : asset.decimal_number}}</div>
+            <div class="assetValueColumn col-xs-3 noPaddingLeftRight" ng-hide="asset.quantity != undefined">0</div>
+            <div class="sendAssetButton col-xs-6 noPaddingLeftRight assetDetailsBoxButton" ng-show="asset.status=='issued'">
+              <a href="#!/transfer/{{asset.symbol}}/">
+                <button class="btn btn-success smallButton assetBoxButton">{{'ASSETS_SEND' | translate}}</button>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>

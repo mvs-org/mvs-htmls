@@ -140,7 +140,7 @@
   "ASSET_ASSET_DETAILS_CANCEL" : "Cancel",
   "ASSET_ASSET_DETAILS_MY_INFO" : "My ",
   "ASSET_ASSET_DETAILS_GENERAL_INFO" : "Issuer Information",
-  "ASSET_ASSET_DETAILS_DIGITS" : "Nr. of decimals",
+  "ASSET_ASSET_DETAILS_DIGITS" : "No. of decimals",
   "ASSET_ASSET_CREATE_REQUEST" : "Create a new asset",
   "ASSET_ASSET_CUSTOM_DETAILS" : "Details",
   "ASSET_ASSET_CREATE_ISSUE_ADDRESS" : "Issuer address",
@@ -433,5 +433,14 @@
   "ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS": "Secondary issue rate",
   "ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_MINUS1": "The asset can be secondary issued freely, without limit",
   "ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_0": "The asset is not allowed to be secondary issued forever, the Maximum Supply cannot be changed (default value)",
-  "ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_1_TO_100": "Secondary issue rate, the asset can be secondary issue when own percentage is greater than or equal to this rate value"
+  "ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_1_TO_100": "Secondary issue rate, the asset can be secondary issue when own percentage is greater than or equal to this rate value",
+  "ASSET_CREATE.SECONDARY_ISSUE_BUTTON": "Secondary Issue",
+  "SECONDARY_ISSUE.SECONDARY_ISSUE": "Secondary Issue",
+  "SECONDARY_ISSUE.ADDRESS": "Address (this address will pay the transaction fee and receive the new assets)",
+  "SECONDARY_ISSUE.NOT_ENOUGH_ETP_PAY_FEE": "This address doesn't have enough ETP to pay the transaction fee",
+  "SECONDARY_ISSUE_VALIDATION.TITLE": "Secondary Issue",
+  "SECONDARY_ISSUE_VALIDATION.TEXT1": "You are about to issue ",
+  "SECONDARY_ISSUE_VALIDATION.TEXT2": " new tokens, are you sure ?",
+  "SECONDARY_ISSUE.QUANTITY": "Quantity",
+  "MESSAGE.PLEASE_WAIT_SYNCH_LONG" : "Your wallet is still syncing, the values you see might be outdated. Please wait for full synchronisation"
 }

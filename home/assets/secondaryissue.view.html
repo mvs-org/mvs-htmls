@@ -1,26 +1,32 @@
+<div class="headline">{{symbol}}</div>
 <div>
   <ul class="nav nav-pills tabsMenu">
-    <li role="presentation" class="active"><a class="btn-link-menu">{{ 'CREATE_PROFILE.CREATE_PROFILE' | translate }}</a></li>
+    <li role="presentation" class="active"><a class="btn-link-menu">{{ 'SECONDARY_ISSUE.SECONDARY_ISSUE' | translate }}</a></li>
   </ul>
 </div>
 <div class="row">
   <br/>
   <form ng-hide="confirmation">
     <div class="col-xs-12 col-sm-6">
-      <!--ID-->
+      <!--Quantity-->
       <div class="form-group">
-        <label class="control-label">{{ 'CREATE_PROFILE.CREATE_ID' | translate }}</label>
-        <input type="text" class="form-control" name="didSymbol" ng-model="didSymbol" ng-class="{validInput: !error.symbol_empty && !error.symbol_wrong_char && !error.symbol_already_exist, wrongInput: error.symbol_empty || error.symbol_wrong_char || error.symbol_already_exist}" required>
-        <span ng-show="error.symbol_wrong_char" class="wrongInputComment">{{ 'CREATE_PROFILE.CREATE_ID_WRONG_CHARACTER' | translate }}</span>
-        <span ng-show="error.symbol_already_exist" class="wrongInputComment">{{ 'CREATE_PROFILE.CREATE_ID_ALREADY_EXIST' | translate }}</span>
+        <label for="quantity" class="control-label">{{ 'SECONDARY_ISSUE.QUANTITY' | translate }}</label>
+        <input type="number" class="form-control" name="quantity" id="" ng-model="quantity" ng-class="{validInput: !error.quantity, wrongInput: error.quantity}">
       </div>
       <!--Address-->
   		<div class="form-group">
-				<label for="useAddress" class=" ddd control-label">{{ 'CREATE_PROFILE.SELECT_ADDRESS' | translate }}</label>
-				<select name="useAddress" type="address" name="didAddress" class="form-control" placeholder="" ng-model="didAddress" ng-class="{validInput: !error.didAddress, wrongInput: error.didAddress}" required>
+				<label for="useAddress" class=" ddd control-label">{{ 'SECONDARY_ISSUE.ADDRESS' | translate }}</label>
+				<select name="useAddress" type="address" name="address" class="form-control" placeholder="" ng-model="address" ng-class="{validInput: !error.address_empty && !error.address_not_enough_etp, wrongInput: error.address_empty || error.address_not_enough_etp}" required>
 					<option ng-repeat="oneAddress in listAddresses | orderBy:'balance':true" value="{{oneAddress.address}}" title="{{oneAddress.available/100000000}} ETP" ng-show="addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available/100000000}} ETP</option>
 				</select>
+        <span ng-show="error.address_not_enough_etp" class="wrongInputComment">{{ 'SECONDARY_ISSUE.NOT_ENOUGH_ETP_PAY_FEE' | translate }}</span>
   		</div>
+      <!--Fee-->
+      <div class="form-group">
+        <label for="fee" class="control-label">{{ 'TRANSFER_FEE' | translate }}</label>
+        <input type="number" step="0.00000001" class="form-control" name="fee" id="" ng-model="transactionFee" ng-class="{validInput: !error.fee_empty && !error.fee_too_low, wrongInput: error.fee_empty || error.fee_too_low}">
+        <span ng-show="error.fee_too_low" class="wrongInputComment">{{ 'MESSAGES.TOO_LOW_FEE' | translate }}</span>
+      </div>
       <!--Password-->
       <div class="form-group">
         <label for="password" class="control-label">{{ 'SETTINGS_BACKUP_PASSWORD' | translate }}</label>
@@ -37,7 +43,7 @@
         <input type="submit" ng-click="checkInputs(password)" value="{{ 'CREATE_PROFILE.CREATE_PROFILE_BUTTON' | translate }}" class="btn btn-success" ng-disabled="!submittable">
       </div>
       <div class="col-xs-6 col-sm-3">
-        <a href="#!/profile/myprofile" class="btn btn-success btn-success-secondary">{{ 'CREATE_PROFILE.BACK_TO_PROFILE' | translate }}</a>
+        <a href="#!/asset/myassets" class="btn btn-success btn-success-secondary">{{ 'TRANSFER_BACK_ASSETS' | translate }}</a>
       </div>
     </div>
   </form>
@@ -56,7 +62,7 @@
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'CREATE_PROFILE.SELECT_ADDRESS' | translate }}</div>
-            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{didAddress}}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{address}}</div>
           </div>
         </div>
       </div>
@@ -66,7 +72,7 @@
       <br>
       <!--Submit button-->
       <div class="col-xs-6 col-sm-6 col-md-3">
-        <input type="submit" class="btn btn-success" ng-click="popupIssueDid()" value="{{ 'CREATE_PROFILE.CREATE_PROFILE_BUTTON' | translate }}">
+        <input type="submit" class="btn btn-success" ng-click="popupSecondaryIssue()" value="{{ 'CREATE_PROFILE.CREATE_PROFILE_BUTTON' | translate }}">
       </div>
       <!--Return button-->
       <div class="col-xs-6 col-sm-6 col-md-3">
@@ -77,19 +83,21 @@
 </div>
 
 
-<script type="text/ng-template" id="issueDid">
+<script type="text/ng-template" id="secondaryIssue">
   <h2 class="center">
-    {{ 'CREATE_PROFILE_VALIDATION.TITLE' | translate }}
+    {{ 'SECONDARY_ISSUE_VALIDATION.TITLE' | translate }}
   </h2>
   <div class="it-list">
-    {{ 'CREATE_PROFILE_VALIDATION.TEXT' | translate }}
+    {{ 'SECONDARY_ISSUE_VALIDATION.TEXT1' | translate }}
+    {{symbol}}
+    {{ 'SECONDARY_ISSUE_VALIDATION.TEXT2' | translate }}
   </div>
   <div class="popupButtons">
     <button class="btn btn-link-red createAssetPopupButtons col-xs-6" ng-click="closeAll()">
       {{ 'CANCEL_BUTTON' | translate }}
     </button>
-    <a href="#!/profile/myprofile" class="btn btn-success createAssetPopupButtons col-xs-6" ng-click="createProfile(didAddress, didSymbol, password);closeAll()">
-      {{ 'CREATE_PROFILE_VALIDATION.ISSUE_NOW' | translate }}
+    <a href="#!/asset/myassets" class="btn btn-success createAssetPopupButtons col-xs-6" ng-click="secondaryIssue(quantity, address, transactionFee, password);closeAll()">
+      {{ 'ASSET_CREATE_SUCCESS_ISSUE_NOW' | translate }}
     </a>
   </div>
 </script>

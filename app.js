@@ -10,6 +10,7 @@
                 //input += '';
                 //return input.slice(input.length-asset_type) == 0 ? input.slice(0, input.length-asset_type) : input.length > asset_type ? input.slice(0, input.length-asset_type) + '.' + input.slice(input.length-asset_type) : '0.' + '0'.repeat(asset_type-input.length) + input.slice(input.length-asset_type);
                 var product = bigDecimal.divide(input, Math.pow(10,asset_type));
+                //return bigDecimal.getPrettyValue(bigDecimal.divide(input, Math.pow(10,asset_type)));
                 return bigDecimal.divide(input, Math.pow(10,asset_type));
             };
         })
@@ -174,6 +175,13 @@
                 url: "/asset/details/:symbol",
                 templateUrl: "home/assets/details.view.html",
                 controller: 'ShowAssetsController',
+                controllerAs: 'vm'
+            })
+
+            .state('home.asset.secondaryissue', {
+                url: "/asset/secondaryissue/:symbol",
+                templateUrl: "home/assets/secondaryissue.view.html",
+                controller: 'AssetSecondaryIssueController',
                 controllerAs: 'vm'
             })
 

@@ -9,6 +9,7 @@
   .controller('AccountController', AccountController)
   .controller('TransferAssetController', TransferAssetController)
   .controller('CreateAssetController', CreateAssetController)
+  .controller('AssetSecondaryIssueController', AssetSecondaryIssueController)
   .controller('AssetsController', AssetsController)
   .controller('ShowAssetsController', ShowAssetsController)
   .controller('ShowAllAssetsController', ShowAllAssetsController)
@@ -2152,6 +2153,158 @@
     $scope.closeAll = function () {
       ngDialog.closeAll();
     };
+  }
+
+  function AssetSecondaryIssueController(MetaverseService, $rootScope, $scope, $location, localStorageService, FlashService, $translate, $window, ngDialog, $filter) {
+
+    $scope.symbol = $filter('uppercase')($location.path().split('/')[3]);
+    $scope.listAddresses = [];
+    $scope.listMultiSig = [];
+    $scope.secondaryIssue = secondaryIssue;
+    $scope.error = {};
+    $scope.didAddress = '';
+    $scope.confirmation = false;
+    $scope.checkInputs = checkInputs;
+    $scope.transactionFee = 0.0001;
+
+
+    function listAddresses() {
+      NProgress.start();
+      //Load users ETP balance
+      //Load the addresses and their balances
+      MetaverseService.ListBalances()
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.addresses = [];
+          response.data.balances.forEach( (e) => {
+            var name = "New address";
+            if (localStorageService.get(e.balance.address) != undefined) {
+              name = localStorageService.get(e.balance.address);
+            }
+            $scope.addresses[e.balance.address] = ({
+              "balance": parseInt(e.balance.unspent),
+              "available": parseInt(e.balance.available),
+              "address": e.balance.address,
+              "name": name,
+              "frozen": e.balance.frozen,
+              "type": "single"
+            });
+            $scope.listAddresses.push({
+              "balance": parseInt(e.balance.unspent),
+              "available": parseInt(e.balance.available),
+              "address": e.balance.address
+            });
+          });
+
+          //After loading the balances, we load the multisig addresses
+          MetaverseService.ListMultiSig()
+          .then( (response) => {
+            if (typeof response.success !== 'undefined' && response.success) {
+              if(response.data.multisig != "") {    //if the user has some assets
+                response.data.multisig.forEach( (e) => {
+                  $scope.addresses[e.address].type = "multisig";
+                });
+              } else {
+                //The account has no multi-signature address
+              }
+            } else {
+              //Fail
+            }
+          });
+        }
+      });
+      NProgress.done();
+    }
+
+    listAddresses();
+
+    function checkInputs(password) {
+      if (localStorageService.get('credentials').password != password) {
+        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else {
+        $scope.didSymbol = $filter('uppercase')($scope.didSymbol);
+        $scope.confirmation = true;
+        delete $rootScope.flash;
+      }
+    }
+
+    function secondaryIssue(quantity, address, transactionFee, password) {
+      if (localStorageService.get('credentials').password != password) {
+        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else {
+        MetaverseService.IssueDid(didAddress, didSymbol, password)
+        .then( (response) => {
+          if (typeof response.success !== 'undefined' && response.success) {
+            $translate('MESSAGES.DID_CREATED').then( (data) =>  FlashService.Success(data, true));
+            $location.path('/profile/myprofile');
+          } else {
+            $translate('MESSAGES.ERROR_DID_CREATION').then( (data) => {
+              if (response.message.message != undefined) {
+                if (response.message.code == 7002) {
+                  $translate('MESSAGES.DID_ALREADY_EXIST').then( (data2) =>  FlashService.Error(data + " : " + data2));
+                } else {
+                  FlashService.Error(data + " : " + response.message.message);
+                }
+              } else {
+                FlashService.Error(data);
+              }
+            });
+          }
+        });
+      }
+    }
+
+    $scope.closeAll = function () {
+      ngDialog.closeAll();
+    };
+
+    function popupSecondaryIssue() {
+      ngDialog.open({
+          template: 'secondaryIssue',
+          scope: $scope
+      });
+    }
+
+    //Check if the form is submittable
+    function checkready() {
+      //Check for errors
+      for (var error in $scope.error) {
+        if ($scope.error[error]) {
+          $scope.submittable = false;
+          return;
+        }
+      }
+      $scope.submittable = true;
+    }
+
+    //Check if the quantity is valid
+    $scope.$watch('quantity', (newVal, oldVal) => {
+      $scope.error.quantity = (newVal == undefined || newVal == '' || newVal < 0);
+      checkready();
+    });
+
+    //Check if the address is valid
+    $scope.$watch('address', (newVal, oldVal) => {
+      $scope.error.address_empty = (newVal == undefined || newVal == '');
+      $scope.error.address_not_enough_etp = newVal != undefined ? $scope.addresses[newVal].available<$scope.transactionFee : false;
+      checkready();
+    });
+
+    //Check if the fee is valid
+    $scope.$watch('transactionFee', (newVal, oldVal) => {
+      $scope.error.fee_empty = (newVal == undefined);
+      $scope.error.fee_too_low = newVal != undefined ? newVal<0.0001 : false;
+      checkready();
+    });
+
+    //Check if the password is valid
+    $scope.$watch('password', (newVal, oldVal) => {
+      $scope.error.password = (newVal == undefined || newVal == '');
+      checkready();
+    });
+
   }
 
   function CreateAssetController(MetaverseService, $rootScope, $scope, FlashService, localStorageService, $location, $translate, $window, ngDialog, $filter) {
