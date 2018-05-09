@@ -428,7 +428,7 @@
   "TRANSFER.CORRECT_RECIPIENT_BURN_ETP": "Send to Burn address. Those ETP will be definitely burned!",
   "ASSET_CREATE.SECONDARY_ISSUE_CHECKBOX": "Allow additionnal issuance in the future",
   "ASSET_CREATE.SECONDARY_ISSUE": "Secondary issue rate",
-  "ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED": "Unlimited",
+  "ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED": "No restriction",
   "ASSET_CREATE.SECONDARY_ISSUE_DISABLED": "No secondary issue",
   "ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS": "Secondary issue rate",
   "ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_MINUS1": "The asset can be secondary issued freely, without limit",
@@ -445,5 +445,10 @@
   "MESSAGE.PLEASE_WAIT_SYNCH_LONG" : "Your wallet is still syncing, the values you see might be outdated. Please wait for full synchronisation",
   "MESSAGES.CANT_LOAD_ALL_DIDS": "Error while loading the list of Avatars",
   "MESSAGES.CANT_LOAD_MY_DIDS": "Error while loading the list of your Avatars",
-  "PROFIL.NO_DID": "You don't have any Avatar yet. Create one by clicking on Create Avatar"
+  "PROFIL.NO_DID": "You don't have any Avatar yet. Create one by clicking on Create Avatar",
+  "ASSET_CREATE.NO_DID": "You need an Avatar to create an Asset",
+  "ASSET_CREATE.DID": "Avatar",
+  "CREATE_ASSET.DESCRIPTION_TOO_LONG": "The maximum length for the description is 64 characters",
+  "CREATE_ASSET.SYMBOL_TOO_LONG": "The maximum length for the symbol is 64 characters",
+  "CREATE_ASSET.SYMBOL_WRONG_CHAR": "Wrong character. Please only use numbers, letters and dots"
 }

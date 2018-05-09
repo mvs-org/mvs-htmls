@@ -664,10 +664,14 @@
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.allDids = response.data.result.dids;
         $scope.allDidsSymbols = [];
-        $scope.allDids.forEach(function(did) {
-          $scope.allDidsSymbols.push(did.symbol);
-          $scope.allDidsAddresses[did.address] = did.symbol;
-        });
+        if(typeof $scope.allDids != 'undefined' && $scope.allDids != null) {
+          $scope.allDids.forEach(function(did) {
+            $scope.allDidsSymbols.push(did.symbol);
+            $scope.allDidsAddresses[did.address] = did.symbol;
+          });
+        } else {
+          $scope.allDids = [];
+        }
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -1654,10 +1658,14 @@
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.allDids = response.data.result.dids;
         $scope.allDidsSymbols = [];
-        $scope.allDids.forEach(function(did) {
-          $scope.allDidsSymbols.push(did.symbol);
-          $scope.allDidsAddresses[did.address] = did.symbol;
-        });
+        if(typeof $scope.allDids != 'undefined' && $scope.allDids != null) {
+          $scope.allDids.forEach(function(did) {
+            $scope.allDidsSymbols.push(did.symbol);
+            $scope.allDidsAddresses[did.address] = did.symbol;
+          });
+        } else {
+          $scope.allDids = [];
+        }
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -1804,10 +1812,12 @@
         $scope.assets = [];
         $scope.assets = response.data.assets;
         //All the details are hidden at the loading
-        $scope.assets.forEach( (asset) => {
-          asset.details = false;
-          asset.icon = ($scope.icons.indexOf(asset.symbol) > -1) ? asset.symbol : 'default';
-        });
+        if ($scope.assets != '') {
+          $scope.assets.forEach( (asset) => {
+            asset.details = false;
+            asset.icon = ($scope.icons.indexOf(asset.symbol) > -1) ? asset.symbol : 'default';
+          });
+        } //else, there is no asset on the blockchain
       } else {
         $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => {
           //Show asset load error
@@ -2093,7 +2103,7 @@
     $scope.listAddresses = [];
     $scope.listMultiSig = [];
     $scope.secondaryIssue = secondaryIssue;
-    $scope.error = {};
+    $scope.error = [];
     $scope.didAddress = '';
     $scope.confirmation = false;
     $scope.checkInputs = checkInputs;
@@ -2243,14 +2253,15 @@
   function CreateAssetController(MetaverseService, $rootScope, $scope, FlashService, localStorageService, $location, $translate, $window, ngDialog, $filter) {
 
     $window.scrollTo(0,0);
-    //This object contains all form errors
-    $scope.error = {};
     //Function to create a new asset
     $scope.createasset = createasset;
     $scope.popupIssue = popupIssue;
     $scope.issue = issue;
 
     $scope.checkInputs = checkInputs;
+    $scope.myDids = [];
+    $scope.noDids = false;
+    $scope.selectedDid = [];
 
     //Initialize form data
     function init() {
@@ -2262,9 +2273,26 @@
       $scope.password = '';
       $scope.confirmation = false;
       $scope.secondaryissue_rate = 0;
+      //This object contains all form errors
+      $scope.error = [];
     }
 
     init();
+
+    MetaverseService.ListMyDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        if (response.data.result.dids) {
+          $scope.myDids = response.data.result.dids;
+        } else {
+          $scope.noDids = true;
+          $scope.selectedDid = "";
+        }
+      } else {
+        $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
+    });
 
     //Check if the form is submittable
     function checkready() {
@@ -2278,15 +2306,23 @@
       $scope.submittable = true;
     }
 
-    //Check if the max_supply is valid
-    $scope.$watch('max_supply', (newVal, oldVal) => {
-      $scope.error.max_supply = (newVal == undefined || !(newVal == parseInt(newVal)) || newVal == 0);
+    //Check if the symbol is valid
+    $scope.$watch('symbol', (newVal, oldVal) => {
+      $scope.error.symbol_empty = (newVal == undefined || newVal == '');
+      $scope.error.symbol_too_long = newVal != undefined ? !(newVal.length < 65) : false;
+      $scope.error.symbol_wrong_char = (newVal != undefined && newVal != '') ? !newVal.match(/^[0-9A-Za-z.]+$/) : false;
       checkready();
     });
 
-    //Check if the symbol is valid
-    $scope.$watch('symbol', (newVal, oldVal) => {
-      $scope.error.symbol = (newVal == undefined || !newVal.match(/^[0-9A-Za-z.]+$/));
+    //Check if the avatar is valid
+    $scope.$watch('selectedDid', (newVal, oldVal) => {
+      $scope.error.avatar = (newVal == undefined || newVal == '');
+      checkready();
+    });
+
+    //Check if the max_supply is valid
+    $scope.$watch('max_supply', (newVal, oldVal) => {
+      $scope.error.max_supply = (newVal == undefined || !(newVal == parseInt(newVal)) || newVal == 0);
       checkready();
     });
 
@@ -2298,7 +2334,8 @@
 
     //Check if the description is valid
     $scope.$watch('description', (newVal, oldVal) => {
-      $scope.error.description = (newVal == undefined || !(newVal.length > 0));
+      $scope.error.description_empty = (newVal == undefined || !(newVal.length > 0));
+      $scope.error.description_too_long = newVal != undefined ? !(newVal.length < 65) : false;
       checkready();
     });
 
@@ -2331,9 +2368,10 @@
 
     //Create asset function
     function createasset() {
+      var quantity = $filter('convertfortx')($scope.max_supply, $scope.decimals);
       NProgress.start();
       //Let Metaverse create an local asset
-      MetaverseService.CreateAsset($scope.symbol, $scope.max_supply, $scope.secondary_offering, $scope.decimals, $scope.description, $scope.secondaryissue_rate)
+      MetaverseService.CreateAsset($scope.symbol, $scope.selectedDid, quantity, $scope.secondary_offering, $scope.decimals, $scope.description, $scope.secondaryissue_rate)
       .then( (response) => {
         NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
@@ -2440,19 +2478,19 @@
 
     MetaverseService.ListAssets()
     .then( (response) => {
-      if(typeof response.data.assets != undefined && response.data.assets != "") {    //if the user has some assets
-        if (typeof response.success !== 'undefined' && response.success) {
+      if (typeof response.success !== 'undefined' && response.success) {
+        if(typeof response.data.assets != 'undefined' && response.data.assets != "") {    //if the user has some assets
           $scope.assets = response.data.assets;
           $scope.assets.forEach( (asset) => {
             asset.icon = ($scope.icons.indexOf(asset.symbol) > -1) ? asset.symbol : 'default';
           });
         } else {
-          $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
-          $window.scrollTo(0,0);
+          //the user has no asset
+          $scope.assets = "";
         }
       } else {
-        //the user has no asset
-        $scope.assets = "";
+        $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       }
     });
 
@@ -2791,7 +2829,7 @@
     $scope.noDids = false;
 
     $scope.onChain = false;
-    $scope.selectedDid = {};
+    $scope.selectedDid = [];
 
     $scope.changeDid = changeDid;
     $scope.listDidsAddresses = listDidsAddresses;
@@ -2915,7 +2953,7 @@
     $scope.listMultiSig = [];
     $scope.createProfile = createProfile;
     $scope.popupIssueDid = popupIssueDid;
-    $scope.error = {};
+    $scope.error = [];
     $scope.didAddress = '';
     $scope.confirmation = false;
     $scope.checkInputs = checkInputs;
@@ -2977,9 +3015,13 @@
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.allDids = response.data.result.dids;
         $scope.allDidsSymbols = [];
-        $scope.allDids.forEach(function(did) {
-          $scope.allDidsSymbols.push(did.symbol);
-        });
+        if(typeof $scope.allDids != 'undefined' && $scope.allDids != null) {
+          $scope.allDids.forEach(function(did) {
+            $scope.allDidsSymbols.push(did.symbol);
+          });
+        } else {
+          $scope.allDids = [];
+        }
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);

@@ -8,7 +8,17 @@
         <!--Symbol-->
         <div class="form-group">
           <label for="symbol" class="control-label">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</label>
-          <input type="text" class="form-control uppercase" name="symbol" required placeholder="" ng-model="symbol" ng-class="{validInput: !error.symbol, wrongInput: error.symbol}" autocomplete="off">
+          <input type="text" class="form-control uppercase" name="symbol" required placeholder="" ng-model="symbol" ng-class="{validInput: !error.symbol_empty && !error.symbol_too_long && !error.symbol_wrong_char, wrongInput: error.symbol_empty || error.symbol_too_long || error.symbol_wrong_char}" autocomplete="off">
+          <span ng-show="error.symbol_too_long" class="wrongInputComment">{{ 'CREATE_ASSET.SYMBOL_TOO_LONG' | translate }}</span>
+          <span ng-show="error.symbol_wrong_char" class="wrongInputComment">{{ 'CREATE_ASSET.SYMBOL_WRONG_CHAR' | translate }}</span>
+        </div>
+        <!--DID-->
+        <div class="form-group">
+          <label for="useDid" class="control-label">{{ 'ASSET_CREATE.DID' | translate }}</label>
+          <select name="useDid" type="text" class="form-control" placeholder="" ng-model="selectedDid" ng-change="changeDid(selectedDid)" ng-class="{validInput: !error.avatar, wrongInput: error.avatar}" >
+            <option ng-repeat="did in myDids" value="{{did.symbol}}" title="{{did.symbol}}">{{did.symbol}} - {{did.address}}</option>
+            <option ng-show="noDids" value="">{{ 'ASSET_CREATE.NO_DID' | translate }}</option>
+          </select>
         </div>
         <!--Maximum supply-->
         <div class="form-group col-xs-8 noPaddingLeftRight maxSupply">
@@ -31,18 +41,11 @@
             <option value="8" ng-show="max_supply<=100000000000">8</option>
           </select>
         </div>
-        <!--Secondary Offering-->
-        <!--<div class="form-group">
-          <label for="second_offering" class="control-label">{{ 'ASSET_ASSET_CREATE_SECONDARY_OFFERING' | translate }}</label>
-          <select type="text" min="0" class="form-control" name="secondary_offering" placeholder="" ng-model="secondary_offering" autocomplete="off">
-            <option value="0">0 %</option>
-            <option ng-repeat="n in range(51,100)" value="{{n}}11">{{n}} %</option>
-          </select>
-        </div>-->
         <!--Description-->
         <div class="form-group">
           <label for="description" class="control-label">{{ 'ASSET_ASSET_CREATE_DESCRIPTION' | translate }}</label>
-          <textarea class="form-control" name="description" required rows="6" cols="35" ng-model="description" ng-class="{validInput: !error.description, wrongInput: error.description}" autocomplete="off"></textarea>
+          <textarea class="form-control" name="description" required rows="6" cols="35" ng-model="description" ng-class="{validInput: !error.description_empty && !error.description_too_long, wrongInput: error.description_empty || error.description_too_long}" autocomplete="off"></textarea>
+          <span ng-show="error.description_too_long" class="wrongInputComment">{{ 'CREATE_ASSET.DESCRIPTION_TOO_LONG' | translate }}</span>
         </div>
         <!--Checkbox for secondaryissue-->
         <div class="form-group col-xs-12 spe-addrbox depositAddressCheckbox">
@@ -112,6 +115,10 @@
         <div class="col-xs-12 noPaddingLeftRight assetDataLine">
           <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</div>
           <div class="assetValueColumn col-xs-3 noPaddingLeftRight">{{symbol}}</div>
+        </div>
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_CREATE.DID' | translate }}</div>
+          <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{selectedDid}}</div>
         </div>
         <div class="col-xs-12 noPaddingLeftRight assetDataLine">
           <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate }}</div>
