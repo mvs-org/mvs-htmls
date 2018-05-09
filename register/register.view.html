@@ -141,11 +141,13 @@
         <!--Account name-->
         <div class="form-group col-xs-12">
           <label for="username" class="control-label comm-ft">{{ 'REGISTER.CHOOSE_ACCOUNT_NAME' | translate }}</label>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.NEW_ACCOUNT_NAME' | translate }}"></span>
           <input type="text" name="username" ng-model="vm.user.username" class="form-control">
         </div>
         <!--Password-->
         <div class="form-group col-xs-12">
           <label for="password" class="control-label comm-ft">{{ 'REGISTER.CHOOSE_PASSWORD' | translate }}</label>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.NEW_ACCOUNT_PASSWORD' | translate }}"></span>
           <input type="password" name="password" ng-model="vm.user.password" class="form-control">
         </div>
         <!--Re-enter password-->
@@ -161,14 +163,17 @@
         <br>
         <div class="form-group col-xs-12">
           <label for="username" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_NAME' | translate }}</label>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.IMPORT_FROM_FILE_NAME' | translate }}"></span>
           <input type="text" name="username" ng-model="vm.user.username" class="form-control">
         </div>
         <div class="form-group col-xs-12">
           <label for="password" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_PASSWORD' | translate }}</label>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.IMPORT_FROM_FILE_PASSWORD' | translate }}"></span>
           <input type="password" name="password" ng-model="vm.user.password" class="form-control">
         </div>
         <div class="form-group col-xs-12">
           <label for="path" class="control-label comm-ft">{{ 'REGISTER.IMPORT_FILE_PATH' | translate }}</label>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.IMPORT_FROM_FILE_FILE' | translate }}"></span>
           <input type="file" fileread="accountInfo" name="path" class="" name="datafile" accept=".json">
         </div>
       </div>
@@ -180,19 +185,23 @@
         <!--Account name-->
         <div class="form-group col-xs-12">
           <label for="username" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_NAME' | translate }}</label>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.IMPORT_FROM_WORDS_NAME' | translate }}"></span>
           <input type="text" name="username" ng-model="vm.user.username" class="form-control">
         </div>
         <!--Password-->
         <div class="form-group col-xs-12">
           <label for="password" class="control-label comm-ft">{{ 'LOGIN.ENTER_ACCOUNT_PASSWORD' | translate }}</label>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.IMPORT_FROM_WORDS_PASSWORD' | translate }}"></span>
           <input type="password" name="password" ng-model="vm.user.password" class="form-control">
         </div>
         <div class="form-group col-xs-12">
           <label for="importPhrase" class="control-label comm-ft">{{ 'REGISTER.IMPORT_PHRASE' | translate }}</label>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.IMPORT_FROM_WORDS_WORDS' | translate }}"></span>
           <textarea class="form-control" type="text" name="importPhrase" ng-model="import_phrase" rows="3"></textarea>
         </div>
         <div class="form-group col-xs-12">
-          <label for="nbrAdr" class="control-label comm-ft">{{ 'REGISTER.IMPORT_ADDRESS_COUNT' | translate }}</label>
+          <label for="nbrAdr" class="control-label comm-ft">{{ 'REGISTER.IMPORT_ADDRESS_NUMBER' | translate }}</label>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.IMPORT_FROM_WORDS_ADDRESS_NUMBER' | translate }}"></span>
           <input type="number" name="nbrAdr" ng-model="address_count" min="1" class="form-control">
         </div>
       </div>

@@ -322,7 +322,7 @@
   "MESSAGES.NO_PHRASE" : "Please enter your backup words.",
   "MESSAGES.NO_ADDRESS_NBR" : "Please enter how many addresses you want to generate.",
   "MESSAGES.REGISTARTION_SUCCESS": "Registration successful!",
-  "MESSAGES.LOGIN_WRONG_CREDENTIALS": "Invalid login credentials.",
+  "MESSAGES.LOGIN_WRONG_CREDENTIALS": "Invalid name or password.",
   "MESSAGES.GENERAL_CONNECTION_ERROR": "Server connection error. Please check server status.",
   "MESSAGES.FUNCTION_NOT_IMPLEMENTED" : "Function not implemented yet. Sorry.",
   "MESSAGES.PASSWORD_NEEDED" : "You need to enter your password.",
@@ -450,5 +450,16 @@
   "ASSET_CREATE.DID": "Avatar",
   "CREATE_ASSET.DESCRIPTION_TOO_LONG": "The maximum length for the description is 64 characters",
   "CREATE_ASSET.SYMBOL_TOO_LONG": "The maximum length for the symbol is 64 characters",
-  "CREATE_ASSET.SYMBOL_WRONG_CHAR": "Wrong character. Please only use numbers, letters and dots"
+  "CREATE_ASSET.SYMBOL_WRONG_CHAR": "Wrong character. Please only use numbers, letters and dots",
+  "HELP.MEMO": "You memo will be displayed publicly on the blockchain. Do not put any personnal data!",
+  "HELP.NEW_ACCOUNT_NAME": "Your account name is only used locally, on your own computer to access your tokens. It is never used on the blockchain",
+  "HELP.NEW_ACCOUNT_PASSWORD": "This password will be used to login and do transactions",
+  "HELP.IMPORT_FROM_FILE_NAME": "You can either use the same user name or a different one than the one you used to create the account",
+  "HELP.IMPORT_FROM_FILE_PASSWORD": "You need to use the same password used to generate this file",
+  "HELP.IMPORT_FROM_FILE_FILE": "You can import your account with the file generated via this wallet or via myetpwallet.com. By default, the file name is mvs_keystore.json or mvs_keystore_{accountname}.json",
+  "HELP.IMPORT_FROM_WORDS_NAME": "You can either use the same user name or a different one than the one you used to create the account",
+  "HELP.IMPORT_FROM_WORDS_PASSWORD": "You can either use the same password than previously or create a new one",
+  "HELP.IMPORT_FROM_WORDS_WORDS": "Your backup words are 24 commun English words. Those words are the key to access your funds, keep them safely!",
+  "REGISTER.IMPORT_ADDRESS_NUMBER": "Number of addresses",
+  "HELP.IMPORT_FROM_WORDS_ADDRESS_NUMBER": "This is the number of addresses that will be generated. If you don't know how many addresses you previously had, you can put a high number (i.e. 100). If you use the same account on myetpwallet.com, it's recommended to key this number low (i.e. 10)"
 }
