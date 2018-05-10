@@ -2891,6 +2891,7 @@
     $scope.listDidsAddresses = listDidsAddresses;
 
     $scope.addressesHistory = [];
+    $scope.changeDid = changeDid;
 
     function listMultiSign() {
       NProgress.start();
@@ -2958,6 +2959,10 @@
     }
 
     listMultiSign();
+
+    function changeDid(symbol) {
+      listDidsAddresses(symbol);
+    }
 
 
     MetaverseService.ListMyDids()
