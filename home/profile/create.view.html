@@ -18,7 +18,7 @@
   		<div class="form-group">
 				<label for="useAddress" class=" ddd control-label">{{ 'CREATE_PROFILE.SELECT_ADDRESS' | translate }}</label>
 				<select name="useAddress" type="address" name="didAddress" class="form-control" placeholder="" ng-model="didAddress" ng-class="{validInput: !error.didAddress, wrongInput: error.didAddress}" required>
-					<option ng-repeat="oneAddress in listAddresses | orderBy:'balance':true" value="{{oneAddress.address}}" title="{{oneAddress.available/100000000}} ETP" ng-show="addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available/100000000}} ETP</option>
+					<option ng-repeat="oneAddress in listAddresses | orderBy:'balance':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-show="addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
 				</select>
   		</div>
       <!--Password-->

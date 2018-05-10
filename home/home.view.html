@@ -16,11 +16,11 @@
             </div>
             <div class="assetBoxBalance col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 noPaddingLeftRight">
               <div class="assetBoxTitle">{{ 'BALANCE' | translate }}</div>
-              <div class="assetBoxValue overflow">{{balance['total-unspent']/100000000}}</div>
+              <div class="assetBoxValue overflow">{{balance['total-unspent'] | assetformat : 8}}</div>
             </div>
             <div class="assetBoxFrozen col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 noPaddingLeftRight">
               <div class="assetBoxTitle">{{ 'FROZEN' | translate}}</div>
-              <div class="assetBoxValue">{{balance['total-frozen']/100000000}}</div>
+              <div class="assetBoxValue">{{balance['total-frozen'] | assetformat : 8}}</div>
             </div>
             <div class="assetBoxButtons">
               <a href="#!/deposit/ETP" class="btn btn-success smallButton btn-success-secondary assetBoxButton">{{ 'DEPOSIT.HEADLINE' | translate}}</a>

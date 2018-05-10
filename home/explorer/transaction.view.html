@@ -65,7 +65,7 @@
             <a class="btn-link" href="#!/explorer/adr/{{output.address}}" bs-tooltip data-placement="top" title="{{ 'ADDRESS' | translate }}">{{output.address}}</a>
           </div>
           <div class="explorerRightInfo col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 noPaddingLeftRight">
-            <span class="numbersSearch" ng-show="output.attachment.type=='etp'">{{output.value/100000000}} ETP</span>
+            <span class="numbersSearch" ng-show="output.attachment.type=='etp'">{{output.value | assetformat : 8}} ETP</span>
             <span class="numbersSearch" ng-hide="output.attachment.type=='etp'">{{output.attachment.quantity | assetformat : asset.decimal_number}} {{output.attachment.symbol}}</span>
             <button class="btn-link-black smallButton noPaddingTopBottomButton" ng-click="output.display = !output.display">{{ 'EXPLORER.TRANSACTION_SCRIPT' | translate }}</button>
           </div>

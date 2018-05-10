@@ -463,5 +463,6 @@
   "REGISTER.IMPORT_ADDRESS_NUMBER": "Number of addresses",
   "HELP.IMPORT_FROM_WORDS_ADDRESS_NUMBER": "This is the number of addresses that will be generated. If you don't know how many addresses you previously had, you can put a high number (i.e. 100). If you use the same account on myetpwallet.com, it's recommended to key this number low (i.e. 10)",
   "TRANSFER.WRONG_AMOUNT": "Incorrect amount",
-  "TRANSFER.NOT_ENOUGH_ETP": "You do not have enough ETP available (don't forget to take into account the transaction fee)"
+  "TRANSFER.NOT_ENOUGH_ETP": "You do not have enough ETP available (don't forget to take into account the transaction fee)",
+  "CREATE_ASSET.MAX_SUPPLY_DECIMALS_TOO_HIGH": "The selected Maximum supply / Decimals numbers are too high. Please decrease one of the two"
 }

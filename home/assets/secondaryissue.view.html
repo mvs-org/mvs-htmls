@@ -17,7 +17,7 @@
   		<div class="form-group">
 				<label for="useAddress" class=" ddd control-label">{{ 'SECONDARY_ISSUE.ADDRESS' | translate }}</label>
 				<select name="useAddress" type="address" name="address" class="form-control" placeholder="" ng-model="address" ng-class="{validInput: !error.address_empty && !error.address_not_enough_etp, wrongInput: error.address_empty || error.address_not_enough_etp}" required>
-					<option ng-repeat="oneAddress in listAddresses | orderBy:'balance':true" value="{{oneAddress.address}}" title="{{oneAddress.available/100000000}} ETP" ng-show="addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available/100000000}} ETP</option>
+					<option ng-repeat="oneAddress in listAddresses | orderBy:'balance':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-show="addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
 				</select>
         <span ng-show="error.address_not_enough_etp" class="wrongInputComment">{{ 'SECONDARY_ISSUE.NOT_ENOUGH_ETP_PAY_FEE' | translate }}</span>
   		</div>

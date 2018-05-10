@@ -21,7 +21,7 @@
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate}}</div>
             <div class="assetValueColumn col-xs-3 noPaddingLeftRight">
               <!--Display the maximum supply-->
-              <span>{{current_maximum_supply}}</span>
+              <span>{{asset.maximum_supply | assetformat : asset.decimal_number}}</span>
               <!--Secondary Offering-->
               <!--<button ng-show="owner && asset.status=='issued'" class="glyphicon glyphicon-plus-sign editAddressNameButton" bs-tooltip data-placement="top" title="{{ 'ASSET_ASSET_DETAILS_TOOLTIP_INCREASE_SUPPLY' | translate }}" ng-click="enableEditAssetMaxSupply()"></button>
               <span ng-show="increase_maximum_supply != 0 && !editMaxSupply">{{increase_maximum_supply}}</span>-->

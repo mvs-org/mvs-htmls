@@ -84,6 +84,13 @@
             input.slice(0, input.indexOf('.')) + input.slice(input.indexOf('.') + 1, input.indexOf('.') + 1 + asset_type)*/
           return bigDecimal.multiply(input, Math.pow(10,asset_type));
       };
+  })
+  .filter('converttodisplay',function(){
+      return function(input, asset_type){
+          if(typeof asset_type === 'undefined')
+              asset_type=8;
+          return bigDecimal.divide(input, Math.pow(10,asset_type));
+      };
   });
 
 
@@ -599,13 +606,8 @@
 
     $scope.underlineAuto='underline';
     $scope.underlineManual='none';
-    $scope.autoSelectAddress = true;              //Automatically select the address
-    $scope.selectAddressAvailable = true;         //If we send to more than 1 recipent, sendfrom is not available
-    $scope.transactionFee = 0.0001;
-    $scope.memo = '';
     $scope.getBalance = getBalance;
 
-    $scope.recipents = [];
     $scope.listAddresses = [];
 
     $scope.symbol = 'ETP';
@@ -618,7 +620,6 @@
     $scope.checkAmount = checkAmount;
     $scope.allDids = [];
     $scope.allDidsAddresses = [];
-    $scope.confirmation = false;
     $scope.checkInputs = checkInputs;
 
     // Initializes all transaction parameters with empty strings.
@@ -635,15 +636,18 @@
       $scope.confirmation = false;
       $scope.error = [];
       $scope.option = [];
+      $scope.option.memo_empty = true;
       $scope.recipientOK = [];
       $scope.amountOK = [];
+      $scope.autoSelectAddress = true;              //Automatically select the address
+      $scope.selectAddressAvailable = true;         //If we send to more than 1 recipent, sendfrom is not available
       MetaverseService.ListBalances(true)
       .then( (response) => {
         if (response.success)
         $scope.from_addresses = response.data.balances;
       });
       $scope.recipents = [];
-      $scope.recipents.push({'index': 1, 'address': '', 'value': ''});
+      $scope.recipents.push({'index': 1, 'address': '', 'value': '', 'correctEtpAddress': false, 'correctAvatar': false, 'burnAddress': false, 'emptyAmount': true, 'wrongAmount': false, 'notEnough': false});
     }
 
     function getBalance(){
@@ -684,7 +688,6 @@
     });
 
     function checkRecipent(input, index) {
-      console.log("checkRecipent");
       if (typeof input == 'undefined' || '') {
         $scope.recipents[index-1].correctEtpAddress = false;
         $scope.recipents[index-1].correctAvatar = false;
@@ -793,7 +796,7 @@
 
 
     $scope.addRecipent = function() {
-      $scope.recipents.push({'index': $scope.recipents.length+1, 'address': '', 'value': ''});
+      $scope.recipents.push({'index': $scope.recipents.length+1, 'address': '', 'value': '', 'correctEtpAddress': false, 'correctAvatar': false, 'burnAddress': false, 'emptyAmount': true, 'wrongAmount': false, 'notEnough': false});
       $scope.autoSelectAddress = true;
       $scope.underlineAuto='underline';
       $scope.underlineManual='none';
@@ -893,6 +896,7 @@
         } else {
           //Transaction problem
           $translate('MESSAGES.TRANSFER_ERROR').then( (data) => {
+            $scope.confirmation = false;
             if (response.message.message != undefined) {
               FlashService.Error(data + " " + response.message.message);
             } else {
@@ -932,6 +936,7 @@
           init();
         } else {
           //Transaction problem
+          $scope.confirmation = false;
           $translate('MESSAGES.TRANSFER_ERROR').then( (data) => {
             if (response.message.message != undefined) {
               FlashService.Error(data + " " + response.message.message);
@@ -955,6 +960,7 @@
 
     function sendAll() {
       $scope.recipents[0].value = ($scope.availableBalance - 100000000*$scope.transactionFee)/100000000;
+      checkAmount($scope.recipents[0].value, 1)
     }
 
     //Load a list of all transactions
@@ -1835,6 +1841,7 @@
           });
         } else {
           //Show asset load error
+          $scope.confirmation = false;
           $translate('MESSAGES.ASSETS_TRANSFER_ERROR').then( (data) => FlashService.Error(data + " " + response.message.message) );
           $window.scrollTo(0,0);
         }
@@ -1881,7 +1888,7 @@
     function sendAll() {
       //$scope.quantity = $scope.availableBalance/$scope.asset.decimal_number;
       //$scope.quantity = parseFloat($scope.availableBalance)/Math.pow(10,$scope.asset.decimal_number);
-      $scope.quantity = $filter('assetformat')($scope.availableBalance, $scope.asset.decimal_number);
+      $scope.quantity = $filter('converttodisplay')($scope.availableBalance, $scope.asset.decimal_number);
     }
 
     init();
@@ -2050,9 +2057,9 @@
               $scope.owner = true;
             }
             //$scope.initial_maximum_supply = parseFloat($scope.asset.maximum_supply)/Math.pow(10,$scope.asset.decimal_number);
-            $scope.initial_maximum_supply = $filter('assetformat')($scope.asset.maximum_supply, $scope.asset.decimal_number);
-            $scope.current_maximum_supply = $scope.initial_maximum_supply;
-            $scope.new_maximum_supply = $scope.initial_maximum_supply;
+            //$scope.initial_maximum_supply = $filter('converttodisplay')($scope.asset.maximum_supply, $scope.asset.decimal_number);
+            //$scope.current_maximum_supply = $scope.initial_maximum_supply;
+            //$scope.new_maximum_supply = $scope.initial_maximum_supply;
             $scope.details = false;
             $scope.assets.forEach( (a) => {
               if (a.symbol == symbol) {
@@ -2316,7 +2323,6 @@
 
     //Check if the quantity is valid
     $scope.$watch('quantity', (newVal, oldVal) => {
-      console.log(newVal);
       $scope.error.quantity = (newVal == undefined || newVal == '' || newVal < 0);
       checkready();
     });
@@ -2415,13 +2421,15 @@
 
     //Check if the max_supply is valid
     $scope.$watch('max_supply', (newVal, oldVal) => {
-      $scope.error.max_supply = (newVal == undefined || !(newVal == parseInt(newVal)) || newVal == 0);
+      $scope.error.max_supply_empty = (newVal == undefined || !(newVal == parseInt(newVal)) || newVal == 0);
+      $scope.error.max_supply_decimals_too_high = (newVal * Math.pow(10, $scope.decimals)) > 10000000000000000000;
       checkready();
     });
 
     //Check if the decimals is valid
     $scope.$watch('decimals', (newVal, oldVal) => {
-      $scope.error.decimals = (newVal == undefined || !(newVal >= 0 && newVal <= 8) || newVal == '');
+      $scope.error.decimals_empty = (newVal == undefined || !(newVal >= 0 && newVal <= 8) || newVal == '');
+      $scope.error.max_supply_decimals_too_high = ($scope.max_supply * Math.pow(10, newVal)) > 10000000000000000000;
       checkready();
     });
 
@@ -3008,7 +3016,7 @@
     function listDidsAddresses(symbol) {
       MetaverseService.ListDidAddresses(symbol)
       .then( (response) => {
-        console.log(response);
+
       });
     }
 

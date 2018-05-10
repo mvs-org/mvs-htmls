@@ -21,25 +21,28 @@
           </select>
         </div>
         <!--Maximum supply-->
-        <div class="form-group col-xs-8 noPaddingLeftRight maxSupply">
-          <label for="max_supply" class="control-label">{{ 'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate }}</label>
-          <input type="number" min="0" class="form-control" name="max_supply" required placeholder="" ng-model="max_supply" ng-class="{validInput: !error.max_supply, wrongInput: error.max_supply}" autocomplete="off">
-        </div>
-        <!--Decimals-->
-        <div class="form-group col-xs-4 noPaddingLeftRight">
-          <label for="decimals" class="control-label">{{ 'ASSET_ASSET_CREATE_DIGITS' | translate }}</label>
-          <select type="number" class="form-control" name="decimals" required placeholder="" required ng-class="{validInput: !error.decimals, wrongInput: error.decimals}" ng-model="decimals">
-            <option value=""></option>
-            <option value="0">0</option>
-            <option value="1" ng-show="max_supply<=1000000000000000000">1</option>
-            <option value="2" ng-show="max_supply<=100000000000000000">2</option>
-            <option value="3" ng-show="max_supply<=10000000000000000">3</option>
-            <option value="4" ng-show="max_supply<=1000000000000000">4</option>
-            <option value="5" ng-show="max_supply<=100000000000000">5</option>
-            <option value="6" ng-show="max_supply<=10000000000000">6</option>
-            <option value="7" ng-show="max_supply<=1000000000000">7</option>
-            <option value="8" ng-show="max_supply<=100000000000">8</option>
-          </select>
+        <div class="form-group col-xs-12 noPaddingLeftRight">
+          <div class="col-xs-8 noPaddingLeftRight maxSupply">
+            <label for="max_supply" class="control-label">{{ 'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate }}</label>
+            <input type="number" min="0" class="form-control" name="max_supply" required placeholder="" ng-model="max_supply" ng-class="{validInput: !error.max_supply_empty && !error.max_supply_decimals_too_high, wrongInput: error.max_supply_empty || error.max_supply_decimals_too_high}" autocomplete="off">
+          </div>
+          <!--Decimals-->
+          <div class="col-xs-4 noPaddingLeftRight">
+            <label for="decimals" class="control-label">{{ 'ASSET_ASSET_CREATE_DIGITS' | translate }}</label>
+            <select type="number" class="form-control" name="decimals" required placeholder="" required ng-class="{validInput: !error.decimals_empty && !error.max_supply_decimals_too_high, wrongInput: error.decimals_empty || error.max_supply_decimals_too_high}" ng-model="decimals">
+              <option value=""></option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+            </select>
+          </div>
+          <span ng-show="error.max_supply_decimals_too_high" class="wrongInputComment">{{ 'CREATE_ASSET.MAX_SUPPLY_DECIMALS_TOO_HIGH' | translate }}</span>
         </div>
         <!--Description-->
         <div class="form-group">
@@ -122,7 +125,7 @@
         </div>
         <div class="col-xs-12 noPaddingLeftRight assetDataLine">
           <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate }}</div>
-          <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{max_supply}}</div>
+          <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{max_supply | number : decimals}}</div>
         </div>
         <div class="col-xs-12 noPaddingLeftRight assetDataLine">
           <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_DIGITS' | translate }}</div>

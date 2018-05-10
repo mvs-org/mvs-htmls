@@ -23,7 +23,7 @@
 					</div>
 					<select ng-hide="listMultiSig.length == 0" name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom"  ng-change="availableBalance = addresses[sendfrom].balance" required>
 						<!--<option ng-repeat="multiSig in listMultiSig | orderBy:'available':true" title="{{multiSig.balance/100000000}} ETP" value="{{multiSig.address}}">{{multiSig.address}}</option>-->
-						<option ng-repeat="multiSig in listMultiSig | orderBy:'available':true" title="{{multiSig.balance/100000000}} ETP" value="{{multiSig.address}}">{{multiSig.address}} - {{multiSig.available/100000000}} ETP</option>
+						<option ng-repeat="multiSig in listMultiSig | orderBy:'available':true" title="{{multiSig.balance | assetformat : 8}} ETP" value="{{multiSig.address}}">{{multiSig.address}} - {{multiSig.available | assetformat : 8}} ETP</option>
 					</select>
 					<select ng-show="listMultiSig.length == 0" name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom"  ng-change="availableBalance = addresses[sendfrom].balance" required disabled bs-tooltip data-placement="top" title="{{ 'TRANSFER_NO_MULTISIG_ADDR' | translate }}">
 					</select>
@@ -44,7 +44,7 @@
 					<label for="value" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_VALUE' | translate }}</label>
 					<!--Available Balance-->
 					<div class="col-xs-6 noPaddingLeftRight addRecipent" ng-show="(recipents.length == 1)">
-						<button type="button" class="btn-link-red addRecipentButton" ng-click="sendAllMultisig()">{{ 'TRANSFER_AMOUNT_AVALAIBLE' | translate }}: {{availableBalance/100000000}} ETP</button>
+						<button type="button" class="btn-link-red addRecipentButton" ng-click="sendAllMultisig()">{{ 'TRANSFER_AMOUNT_AVALAIBLE' | translate }}: {{availableBalance | assetformat : 8}} ETP</button>
 					</div>
 					<input type="number" min=0 step="0.00000001" required class="form-control" placeholder="0.00000000" name="value" ng-model="quantity" autocomplete="off">
 				</div>

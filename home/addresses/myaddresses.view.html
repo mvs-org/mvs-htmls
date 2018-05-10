@@ -7,11 +7,11 @@
   <div class="boxbox">
     <div class="assetBoxBalance ast-wd">
       <div class="assetBoxTitle ">{{ 'BALANCE' | translate }}</div>
-      <div class="assetBoxValue overflow">{{balance['total-unspent']/100000000}}</div>
+      <div class="assetBoxValue overflow">{{balance['total-unspent'] | assetformat : 8}}</div>
     </div>
     <div class="assetBoxFrozen">
       <div class="assetBoxTitle">{{ 'FROZEN' | translate}}</div>
-      <div class="assetBoxValue overflow">{{balance['total-frozen']/100000000}}</div>
+      <div class="assetBoxValue overflow">{{balance['total-frozen'] | assetformat : 8}}</div>
     </div>
   </div>
   <div class="assetBoxButtons fr">
@@ -74,11 +74,11 @@
 
     <div class="assetBoxBalance col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
       <div class="assetBoxTitle">{{ 'BALANCE' | translate }}</div>
-      <div class="assetBoxValue col-xd-12 noPaddingLeftRight overflow">{{address.balance/100000000}}</div>
+      <div class="assetBoxValue col-xd-12 noPaddingLeftRight overflow">{{address.balance | assetformat : 8}}</div>
     </div>
     <div class="assetBoxFrozen col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 noPaddingLeftRight">
       <div class="assetBoxTitle">{{ 'FROZEN' | translate}}</div>
-      <div class="assetBoxValue col-xd-12 noPaddingLeftRight">{{address.frozen/100000000}}</div>
+      <div class="assetBoxValue col-xd-12 noPaddingLeftRight">{{address.frozen | assetformat : 8}}</div>
     </div>
     <div class="assetBoxCopy col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
       <span class="copyAddress">

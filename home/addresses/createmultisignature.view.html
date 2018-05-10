@@ -9,7 +9,7 @@
 			<div class="col-md-6 noPaddingLeftRight">
 				<label for="addressFrom" class="ddd control-label">{{ 'CREATE_MULTISIGNATURE_MY_ADDRESS' | translate }}</label>
 				<select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" ng-change="getPublicKey(sendfrom)">
-					<option ng-repeat="oneAddress in listAddresses | orderBy:'available':true" value="{{oneAddress.address}}" title="{{oneAddress.available/100000000}} ETP" ng-show="addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available/100000000}} ETP</option>
+					<option ng-repeat="oneAddress in listAddresses | orderBy:'available':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-show="addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
 				</select>
 			</div>
 		</div>
@@ -55,7 +55,7 @@
 			</div>
 			<!--Return button-->
 			<div class="col-xs-12 col-sm-6 col-md-3">
-				<a href="#!/transfer/ETP" class="btn btn-link-red">{{ 'CREATE_MULTISIGNATURE_RETURN' | translate }}</a>
+				<a href="#!/addresses/myaddresses" class="btn btn-link-red">{{ 'CREATE_MULTISIGNATURE_RETURN' | translate }}</a>
 			</div>
 		</div>
 	</form>
