@@ -20,6 +20,7 @@
   .controller('ProfileController', ProfileController)
   .controller('CreateProfileController', CreateProfileController)
   .controller('AllProfilesController', AllProfilesController)
+  .controller('ModifyAddressController', ModifyAddressController)
   .directive('bsTooltip', function() {
     return {
       restrict: 'A',
@@ -192,31 +193,6 @@
       }
     }
 
-
-/*
-      var page = min;
-      for (; (page<max) && (!$scope.stopLoad); page++) {
-        MetaverseHelperService.LoadTransactions( (err, transactions) => {
-          if (err) {
-            $translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
-            $window.scrollTo(0,0);
-          } else {
-            if ((transactions.lastpage == true) || (transactions.lastpage == undefined)) {     //All the transactions have been loaded
-              $scope.stopLoad = true;
-            }
-            transactions.forEach(function(e) {
-              $scope.transactions.push(e);
-            });
-            //displayUpdatedDates();
-            filterTransactions();
-          }
-          NProgress.done();
-        }, 'asset', page);
-      }
-    }
-*/
-
-
     //Shows the QRCode
     function showqr(address) {
       angular.element(document).ready(function () {
@@ -230,9 +206,6 @@
         });
       });
     }
-
-
-
 
 
     function searchAddressloadMore() {
@@ -272,15 +245,13 @@
 
             $scope.transaction.outputs.forEach(function(e) {
               e.display = false;
-              if(e.attachment.type!='etp') {
+              if(e.attachment.type =='asset-transfer' || e.attachment.type =='asset-issue') {
                 loadasset(e.attachment.symbol);
               }
-              //console.log(e.script);
               //var script = e.script;
               //var occurence = script.match('[' + (/[a-z]|[A-Z]|[0-9]| /g) + '] numequalverify dup hash160 ['+ (/[a-z]|[A-Z]|[0-9]| /g) + '] equalverify checksig');
 
               //var occurence = script.match(\[([\\w| ]+)\] numequalverify dup hash160 \[[\\w| ]+\] equalverify checksig);
-              //console.log(occurence);
               /*var occurences = phraseToSend.match(/[a-z]|[A-Z]| /g);
               if(phraseToSend.length != occurences.length){
                 $translate('MESSAGE.WRONG_PRIVATE_KEY').then( (data) => FlashService.Error(data) );
@@ -294,7 +265,7 @@
               if (e.previous_output.hash != '0000000000000000000000000000000000000000000000000000000000000000') {
                 //searchInputValue(e.previous_output.hash, e.address, e.previous_output.index); Removed, too slow
               } else {
-                //console.log("It's coming from Deposit interests or Mining");
+                //It's coming from Deposit interests or Mining
               }
             });
           }
@@ -313,8 +284,6 @@
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.asset = response.data.assets[0];
         } else {
-          //Redirect user to the assets page
-          $location.path('/asset/myassets');
           //Asset could not be loaded
           $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) =>  FlashService.Error(data));
         }
@@ -436,7 +405,6 @@
     $scope.period_select=undefined;
     $scope.assetsIssued = [];
     $scope.balance = [];
-    $scope.transactionFee = 0.0001;
     $scope.availableBalance = 0;
     $scope.sendAll = sendAll;
 
@@ -1001,7 +969,6 @@
               "address": e.balance.address
             });
             /*$scope.addresses[e.balance.address] = parseInt(e.balance.unspent);
-            console.log($scope.addresses[e.balance.address]);
             $scope.addresses.push({
               "balance": parseInt(e.balance.unspent),
               "address": e.balance.address,
@@ -2265,7 +2232,7 @@
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else {
-        $scope.didSymbol = $filter('uppercase')($scope.didSymbol);
+        //$scope.didSymbol = $filter('uppercase')($scope.didSymbol);
         $scope.confirmation = true;
         delete $rootScope.flash;
       }
@@ -2278,11 +2245,13 @@
       } else {
         MetaverseService.SecondaryIssue(didAddress, didSymbol, password)
         .then( (response) => {
-          if (typeof response.success !== 'undefined' && response.success) {
+          //TODO
+          /*if (typeof response.success !== 'undefined' && response.success) {
             $translate('MESSAGES.DID_CREATED').then( (data) =>  FlashService.Success(data, true));
             $location.path('/profile/myprofile');
           } else {
             $translate('MESSAGES.ERROR_DID_CREATION').then( (data) => {
+              $scope.confirmation = false;
               if (response.message.message != undefined) {
                 if (response.message.code == 7002) {
                   $translate('MESSAGES.DID_ALREADY_EXIST').then( (data2) =>  FlashService.Error(data + " : " + data2));
@@ -2292,8 +2261,10 @@
               } else {
                 FlashService.Error(data);
               }
+              $window.scrollTo(0,0);
+              $scope.password = '';
             });
-          }
+          }*/
         });
       }
     }
@@ -2422,14 +2393,14 @@
     //Check if the max_supply is valid
     $scope.$watch('max_supply', (newVal, oldVal) => {
       $scope.error.max_supply_empty = (newVal == undefined || !(newVal == parseInt(newVal)) || newVal == 0);
-      $scope.error.max_supply_decimals_too_high = (newVal * Math.pow(10, $scope.decimals)) > 10000000000000000000;
+      $scope.error.max_supply_decimals_too_high = newVal != undefined ? (newVal * Math.pow(10, $scope.decimals)) > 10000000000000000000 : false;
       checkready();
     });
 
     //Check if the decimals is valid
     $scope.$watch('decimals', (newVal, oldVal) => {
       $scope.error.decimals_empty = (newVal == undefined || !(newVal >= 0 && newVal <= 8) || newVal == '');
-      $scope.error.max_supply_decimals_too_high = ($scope.max_supply * Math.pow(10, newVal)) > 10000000000000000000;
+      $scope.error.max_supply_decimals_too_high = newVal != undefined ? ($scope.max_supply * Math.pow(10, newVal)) > 10000000000000000000 : false;
       checkready();
     });
 
@@ -2625,8 +2596,6 @@
                     //e.availableInTime = e.availableInBlock * $scope.averageBlockTime;
                     //e.availableInTimeDays = Math.floor(e.availableInTime / 86400);
                     //e.availableInTimeHours = Math.floor(e.availableInTime / 3600) - (e.availableInTimeDays * 24);
-                    //console.log("Days:", e.availableInTimeDays);
-                    //console.log("Hours:", e.availableInTimeHours);
                   } else {                //If the Frozen ETP are not unlocked
                     e.availableInBlock = 0;
                   }*/
@@ -2900,10 +2869,7 @@
             }
           });
         } else {
-          $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => {
-            //Show asset load error
-            FlashService.Error(data);
-          } );
+          $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
           $window.scrollTo(0,0);
         }
         $location.path(path);
@@ -2919,11 +2885,12 @@
     $scope.myDids = [];
     $scope.noDids = false;
 
-    $scope.onChain = false;
-    $scope.selectedDid = [];
+    $scope.onChain = true;
+    $scope.selectedDid = '';
 
-    $scope.changeDid = changeDid;
     $scope.listDidsAddresses = listDidsAddresses;
+
+    $scope.addressesHistory = [];
 
     function listMultiSign() {
       NProgress.start();
@@ -2992,10 +2959,6 @@
 
     listMultiSign();
 
-    function changeDid(selectedDid) {
-
-    }
-
 
     MetaverseService.ListMyDids()
     .then( (response) => {
@@ -3003,6 +2966,7 @@
         if (response.data.result.dids) {
           $scope.myDids = response.data.result.dids;
           $scope.selectedDid = $scope.myDids[0].symbol;
+          listDidsAddresses($scope.selectedDid);
         } else {
           $scope.noDids = true;
           $scope.selectedDid = "";
@@ -3016,7 +2980,18 @@
     function listDidsAddresses(symbol) {
       MetaverseService.ListDidAddresses(symbol)
       .then( (response) => {
-
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.addressesHistory = response.data.result.addresses;
+        } else {
+          $translate('MESSAGES.LISTDIDSADDRESSE_LOAD_ERROR').then( (data) => {
+            if (response.message.message != undefined) {
+              FlashService.Error(data + " " + response.message.message);
+            } else {
+              FlashService.Error(data);
+            }
+          });
+          $window.scrollTo(0,0);
+        }
       });
     }
 
@@ -3049,6 +3024,8 @@
     $scope.confirmation = false;
     $scope.checkInputs = checkInputs;
     $scope.allDids = [];
+    $scope.allDidsSymbols = [];
+    $scope.allDidsAddresses = [];
 
 
     function listAddresses() {
@@ -3105,10 +3082,10 @@
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.allDids = response.data.result.dids;
-        $scope.allDidsSymbols = [];
         if(typeof $scope.allDids != 'undefined' && $scope.allDids != null) {
           $scope.allDids.forEach(function(did) {
             $scope.allDidsSymbols.push(did.symbol);
+            $scope.allDidsAddresses.push(did.address);
           });
         } else {
           $scope.allDids = [];
@@ -3124,37 +3101,28 @@
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else {
-        $scope.didSymbol = $filter('uppercase')($scope.didSymbol);
+        //$scope.didSymbol = $filter('uppercase')($scope.didSymbol);
         $scope.confirmation = true;
         delete $rootScope.flash;
       }
     }
 
     function createProfile(didAddress, didSymbol, password) {
-      if (localStorageService.get('credentials').password != password) {
-        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else {
-        MetaverseService.IssueDid(didAddress, didSymbol, password)
-        .then( (response) => {
-          if (typeof response.success !== 'undefined' && response.success) {
-            $translate('MESSAGES.DID_CREATED').then( (data) =>  FlashService.Success(data, true));
-            $location.path('/profile/myprofile');
-          } else {
-            $translate('MESSAGES.ERROR_DID_CREATION').then( (data) => {
-              if (response.message.message != undefined) {
-                if (response.message.code == 7002) {
-                  $translate('MESSAGES.DID_ALREADY_EXIST').then( (data2) =>  FlashService.Error(data + " : " + data2));
-                } else {
-                  FlashService.Error(data + " : " + response.message.message);
-                }
-              } else {
-                FlashService.Error(data);
-              }
-            });
-          }
-        });
-      }
+      MetaverseService.IssueDid(didAddress, didSymbol, password)
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          $translate('MESSAGES.DID_CREATED').then( (data) =>  FlashService.Success(data, true));
+          $location.path('/profile/myprofile');
+        } else {
+          $translate('MESSAGES.ERROR_DID_CREATION').then( (data) => {
+            if (response.message.message != undefined) {
+              FlashService.Error(data + " : " + response.message.message);
+            } else {
+              FlashService.Error(data);
+            }
+          });
+        }
+      });
     }
 
     $scope.closeAll = function () {
@@ -3184,15 +3152,15 @@
     //Check if the avatar name is valid
     $scope.$watch('didSymbol', (newVal, oldVal) => {
       $scope.error.symbol_empty = (newVal == undefined);
-      $scope.error.symbol_wrong_char = newVal != undefined ? !newVal.match(/^[0-9A-Za-z.]+$/) : false;
+      $scope.error.symbol_wrong_char = newVal != undefined ? !newVal.match(/^[0-9A-Za-z.@]+$/) : false;
       $scope.error.symbol_already_exist = newVal != undefined ? ($scope.allDidsSymbols.indexOf($filter('uppercase')(newVal)) > -1) : false;
       checkready();
     });
 
     //Check if the address is valid
     $scope.$watch('didAddress', (newVal, oldVal) => {
-      //$scope.error.didAddress = (newVal == undefined || !newVal.match(/^[0-9A-Za-z]+$/) || !(($rootScope.network == 'testnet' && newVal.charAt(0) == 't') || ($rootScope.network == 'mainnet' && newVal.charAt(0) == 'M') || newVal.charAt(0) == '3') || newVal.length != 34);
-      $scope.error.didAddress = (newVal == undefined || newVal == '');
+      $scope.error.didAddress_empty = (newVal == undefined || newVal == '');
+      $scope.error.didAddress_already_used = newVal != undefined ? ($scope.allDidsAddresses.indexOf(newVal) > -1) : false;
       checkready();
     });
 
@@ -3201,6 +3169,177 @@
       $scope.error.password = (newVal == undefined || newVal == '');
       checkready();
     });
+
+  }
+
+  function ModifyAddressController(MetaverseHelperService, MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $location, $rootScope, $filter) {
+
+    $scope.listAddresses = [];
+    $scope.listMultiSig = [];
+    $scope.modifyAddress = modifyAddress;
+    $scope.error = [];
+    $scope.confirmation = false;
+    $scope.checkInputs = checkInputs;
+    $scope.selectedDid = $location.path().split('/')[3];
+    $scope.myDidsAddresses = [];
+    $scope.symbolAddress = [];
+    $scope.selectedDidAddress = '';
+    $scope.changeDid = changeDid;
+    $scope.transactionFee = 0.0001;
+
+
+    function listAddresses() {
+      NProgress.start();
+      //Load users ETP balance
+      //Load the addresses and their balances
+      MetaverseService.ListBalances()
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.addresses = [];
+          response.data.balances.forEach( (e) => {
+            var name = "New address";
+            if (localStorageService.get(e.balance.address) != undefined) {
+              name = localStorageService.get(e.balance.address);
+            }
+            $scope.addresses[e.balance.address] = ({
+              "balance": parseInt(e.balance.unspent),
+              "available": parseInt(e.balance.available),
+              "address": e.balance.address,
+              "name": name,
+              "frozen": e.balance.frozen,
+              "type": "single"
+            });
+            $scope.listAddresses.push({
+              "balance": parseInt(e.balance.unspent),
+              "available": parseInt(e.balance.available),
+              "address": e.balance.address
+            });
+          });
+
+          //After loading the balances, we load the multisig addresses
+          MetaverseService.ListMultiSig()
+          .then( (response) => {
+            if (typeof response.success !== 'undefined' && response.success) {
+              if(response.data.multisig != "") {    //if the user has some assets
+                response.data.multisig.forEach( (e) => {
+                  $scope.addresses[e.address].type = "multisig";
+                });
+              } else {
+                //The account has no multi-signature address
+              }
+            } else {
+              //Fail
+            }
+          });
+        }
+      });
+      NProgress.done();
+    }
+
+    listAddresses();
+
+    MetaverseService.ListMyDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        if (response.data.result.dids) {
+          $scope.myDids = response.data.result.dids;
+          if(typeof $scope.myDids != 'undefined' && $scope.myDids != null) {
+            $scope.myDids.forEach(function(did) {
+              $scope.myDidsAddresses.push(did.address);
+              $scope.symbolAddress[did.symbol] = did.address;
+              if(did.symbol == $scope.selectedDid)
+                $scope.selectedDidAddress = did.address;
+            })
+          } else {
+          }
+        } else {
+          $scope.noDids = true;
+          $scope.selectedDid = "";
+        }
+      } else {
+        $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
+    });
+
+    function changeDid(symbol) {
+      $scope.selectedDidAddress = $scope.symbolAddress[symbol];
+    }
+
+    function checkInputs(password) {
+      if (localStorageService.get('credentials').password != password) {
+        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else {
+        //$scope.didSymbol = $filter('uppercase')($scope.didSymbol);
+        $scope.confirmation = true;
+        delete $rootScope.flash;
+      }
+    }
+
+
+    function modifyAddress(selectedDid, selectedDidAddress, toAddress, transactionFee, password) {
+      var fee_value = $filter('convertfortx')(transactionFee, 8);
+      MetaverseService.DidModifyAddress(selectedDid, selectedDidAddress, toAddress, fee_value, password)
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          $translate('MESSAGES.DID_ADDRESS_UPDATED').then( (data) =>  FlashService.Success(data, true));
+          $location.path('/profile/myprofile');
+        } else {
+          $translate('MESSAGES.ERROR_DID_MODIFY_ADDRESS').then( (data) => {
+            if (response.message.message != undefined) {
+              FlashService.Error(data + " : " + response.message.message);
+            } else {
+              FlashService.Error(data);
+            }
+          });
+        }
+      });
+    }
+
+    $scope.closeAll = function () {
+      ngDialog.closeAll();
+    };
+
+    //Check if the form is submittable
+    function checkready() {
+      //Check for errors
+      for (var error in $scope.error) {
+        if ($scope.error[error]) {
+          $scope.submittable = false;
+          return;
+        }
+      }
+      $scope.submittable = true;
+    }
+
+    //Check if the avatar name is valid
+    $scope.$watch('selectedDid', (newVal, oldVal) => {
+      $scope.error.selectedDid = (newVal == undefined || newVal == '');
+      checkready();
+    });
+
+    //Check if the new address is valid
+    $scope.$watch('toAddress', (newVal, oldVal) => {
+      $scope.error.toAddress_empty = (newVal == undefined || newVal == '');
+      $scope.error.toAddress_already_used = newVal != undefined ? ($scope.myDidsAddresses.indexOf(newVal) > -1) : false;
+      $scope.error.toAddress_not_enough_balance = newVal != undefined ? ($scope.addresses[newVal].available < 1) : false;
+      checkready();
+    });
+
+    //Check if the fee is valid
+    $scope.$watch('transactionFee', (newVal, oldVal) => {
+      $scope.error.fee_empty = (newVal == undefined);
+      $scope.error.fee_too_low = newVal != undefined ? newVal<0.0001 : false;
+      checkready();
+    });
+
+    //Check if the password is valid
+    $scope.$watch('password', (newVal, oldVal) => {
+      $scope.error.password = (newVal == undefined || newVal == '');
+      checkready();
+    });
+
 
   }
 

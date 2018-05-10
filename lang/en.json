@@ -201,7 +201,7 @@
   "LOGIN.ENTER_ACCOUNT_PASSWORD" : "Enter your password",
   "LOGIN.FORGOT_PASSWORD" : "Forgot password?",
   "LOGIN.LOGIN_BUTTON" : "Login",
-  "LOGIN.REGISTER_BUTTON" : "Create account",
+  "LOGIN.REGISTER_BUTTON" : "Create / Import account",
   "LOGIN.DESCRIPTION" : "The Metaverse mainnet wallet (MVSD) is a full-node wallet for cryptocurrency management. Although users interact with the wallet through their browser, MVSD is not a web wallet; users are accessing a locally-stored backend program. With MVSD, you may truly own your private keys and digital assets.",
   "REGISTER.CHOOSE_ACCOUNT_NAME" : "Please enter an account name",
   "REGISTER.CHOOSE_PASSWORD" : "Please enter a password",
@@ -405,7 +405,6 @@
   "MESSAGES.DID_CREATED": "New Avatar created successfully ! Please wait next block to see it",
   "MESSAGES.ERROR_DID_CREATION": "This Avatar hasn't been created",
   "PROFILE.ALL": "All Avatars",
-  "MESSAGES.DID_ALREADY_EXIST": "this Avatar Name already exist",
   "TRANSFER_RECIPENT_ADDRESS_OR_AVATAR": "Recipient Address or Avatar",
   "MESSAGES.ALL_DIDS_LOAD_ERROR": "Unable to load the list of Avatars on the blockchain",
   "TRANSFER.INCORRECT_RECIPIENT": "Incorrect Address or Avatar",
@@ -464,5 +463,15 @@
   "HELP.IMPORT_FROM_WORDS_ADDRESS_NUMBER": "This is the number of addresses that will be generated. If you don't know how many addresses you previously had, you can put a high number (i.e. 100). If you use the same account on myetpwallet.com, it's recommended to key this number low (i.e. 10)",
   "TRANSFER.WRONG_AMOUNT": "Incorrect amount",
   "TRANSFER.NOT_ENOUGH_ETP": "You do not have enough ETP available (don't forget to take into account the transaction fee)",
-  "CREATE_ASSET.MAX_SUPPLY_DECIMALS_TOO_HIGH": "The selected Maximum supply / Decimals numbers are too high. Please decrease one of the two"
+  "CREATE_ASSET.MAX_SUPPLY_DECIMALS_TOO_HIGH": "The selected Maximum supply / Decimals numbers are too high. Please decrease one of the two",
+  "MESSAGES.LISTDIDSADDRESSE_LOAD_ERROR": "Error while getting the address history of this Avatar.",
+  "PROFIL.UPDATE_ADDRESS": "Modify",
+  "MESSAGES.DID_ADDRESS_UPDATED": "Avatar address updated! Please wait next block to see the new address",
+  "PROFILE.MODIFY_ADDRESS": "Modify Avatar address",
+  "PROFIL_MODIFY_ADDRESS.FROM_ADDRESS": "Current address",
+  "PROFIL_MODIFY_ADDRESS.TO_ADDRESS": "New address",
+  "PROFIL_MODIFY_ADDRESS.ADDRESS_ALREADY_USED": "This address is already linked to an Avatar",
+  "PROFIL_MODIFY_ADDRESS.ADDRESS_NOT_ENOUGH_BALANCE": "You need at least 0.0001 ETP to pay the transaction fee with the new address",
+  "PROFIL_MODIFY_ADDRESS.MODIFY_BUTTON": "Modify Avatar address",
+  "MESSAGES.ERROR_DID_MODIFY_ADDRESS": "The Avatar address hasn't been changed."
 }

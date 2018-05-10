@@ -259,6 +259,12 @@
                 controller: 'AllProfilesController'
             })
 
+            .state('home.profile.modifyaddress', {
+                url: "/profile/modifyaddress/:didsymbol",
+                templateUrl: "home/profile/modifyaddress.view.html",
+                controller: 'ModifyAddressController'
+            })
+
         $urlRouterProvider.otherwise("/login");
     };
 

@@ -1,9 +1,9 @@
 <div class="AStitle-tabs">
   <ul class="nav nav-pills tabsMenu">
     <li class="active" role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.MY_PROFILE' | translate}}</a></li>
-    <li class="disabled" role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.AUTHORIZE' | translate}}</a></li>
+    <!--li class="disabled" role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.AUTHORIZE' | translate}}</a></li>
     <li class="disabled" role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.REQUEST_LIST' | translate}}</a></li>
-    <li class="disabled" role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.RELATIONSHIPS' | translate}}</a></li>
+    <li class="disabled" role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.RELATIONSHIPS' | translate}}</a></li-->
     <li class="" role="presentation"><a href="#!/profile/all" class="btn-link-menu">{{'PROFILE.ALL' | translate}}</a></li>
   </ul>
 </div>
@@ -26,30 +26,28 @@
       <label for="useDid" class="control-label">{{ 'PROFIL.DID' | translate }}</label>
       <select name="useDid" type="text" class="form-control" placeholder="" ng-model="selectedDid" ng-change="changeDid(selectedDid)">
         <option ng-repeat="did in myDids" value="{{did.symbol}}" title="{{did.symbol}}">{{did.symbol}} - {{did.address}}</option>
-        <option ng-show="noDids" value="">{{ 'PROFIL.NO_DID' | translate }}</option>
+        <option ng-if="noDids" value="">{{ 'PROFIL.NO_DID' | translate }}</option>
       </select>
 		</div>
 	</div>
 
 	<form ng-show="onChain">
 		<!--Address-->
-		<div class="col-md-6 col-sm-12 noPaddingLeftRight">
-			<div class="form-group">
-				<label for="address" class="control-label col-xs-6 noPaddingLeftRight">{{ 'PROFIL.ADDRESS' | translate }}</label>
-				<input type="address" class="form-control readonly" name="address" ng-model="selectedAddress" readonly>
-			</div>
+		<div ng-hide="addressesHistory.length == 0" class="col-md-6 col-sm-12 noPaddingLeftRight">
       <div class="assetDetailsPanel panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{'PROFIL.ADDRESSES_HISTORY' | translate}}</h3>
+          <h3 class="panel-title col-md-6 noPaddingLeftRight">{{'PROFIL.ADDRESSES_HISTORY' | translate}}</h3>
+          <div class="sendAssetButton assetDetailsBoxButton col-md-6 noPaddingLeftRight">
+            <a href="#!/profile/modifyaddress/{{selectedDid}}">
+              <button class="btn btn-success smallButton assetBoxButton">{{'PROFIL.UPDATE_ADDRESS' | translate}}</button>
+            </a>
+          </div>
         </div>
         <div class="panel-body">
-          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CURRENT_ADDRESS' | translate }}</div>
-            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{symbol}}</div>
-          </div>
-          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.PREVIOUS_ADDRESS' | translate }}</div>
-            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{max_supply}}</div>
+          <div ng-repeat="address in addressesHistory" class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div ng-show="address.status == 'current'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CURRENT_ADDRESS' | translate }}</div>
+            <div ng-hide="address.status == 'current'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.PREVIOUS_ADDRESS' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{address.address}}</div>
           </div>
         </div>
       </div>
