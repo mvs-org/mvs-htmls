@@ -54,11 +54,9 @@
 						<button type="button" ng-click="removeRecipent()" tabIndex="-1" class="btn-link-red addRecipentButton"><span class="glyphicon glyphicon-minus"></span> {{ 'TRANSFER_REMOVE_RECIPENT' | translate }}</button>
 					</div>
 					<input type="etpaddress" class="form-control" name="recipent_address" id="" ng-model="recipent.address" ng-change="checkRecipent(recipent.address, recipent.index)" required ng-class="{validInput: (recipent.correctEtpAddress || recipent.correctAvatar || recipent.burnAddress) && recipent.address != '', wrongInput: (!recipent.correctEtpAddress && !recipent.correctAvatar && !recipent.burnAddress) || recipent.address == ''}">
-					<span ng-show="!recipent.correctEtpAddress && !recipent.correctAvatar && !recipent.burnAddress && recipent.address != '' && recipents.length==1" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.INCORRECT_RECIPIENT' | translate }}</span>
-					<span ng-show="!recipent.correctEtpAddress && !recipent.correctAvatar && !recipent.burnAddress && recipent.address != '' && recipents.length>1" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.INCORRECT_ADDRESS' | translate }}</span>
+					<span ng-show="!recipent.correctEtpAddress && !recipent.correctAvatar && !recipent.burnAddress && recipent.address != ''" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.INCORRECT_RECIPIENT' | translate }}</span>
 					<span ng-show="recipent.correctEtpAddress" class="correctInputComment"><span class="glyphicon glyphicon-ok"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_ADDRESS' | translate }}</span>
-					<span ng-show="recipent.correctAvatar && recipents.length==1" class="correctInputComment"><span class="glyphicon glyphicon-ok"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_AVATAR' | translate }}</span>
-					<span ng-show="recipent.correctAvatar && recipents.length>1" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.RECIPIENT_AVATAR_NO_MULTI' | translate }}</span>
+					<span ng-show="recipent.correctAvatar" class="correctInputComment"><span class="glyphicon glyphicon-ok"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_AVATAR' | translate }}</span>
 					<span ng-show="recipent.burnAddress" class="warningInputComment"><span class="glyphicon glyphicon-warning-sign"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_BURN_ETP' | translate }}</span>
 				</div>
 			</div>

@@ -7,7 +7,7 @@
             return function(input, asset_type){
                 if(typeof asset_type === 'undefined')
                     asset_type=8;
-                return bigDecimal.getPrettyValue(bigDecimal.divide(input, Math.pow(10,asset_type)));
+                return bigDecimal.getPrettyValue(bigDecimal.divide(input, Math.pow(10,asset_type), parseInt(asset_type)));
             };
         })
         .config(['$compileProvider', function($compileProvider) {

@@ -21,7 +21,6 @@
 					<option ng-repeat="oneAddress in listAddresses | orderBy:'balance':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-show="addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
 				</select>
         <span ng-show="error.didAddress_already_used" class="wrongInputComment">{{ 'PROFIL_MODIFY_ADDRESS.ADDRESS_ALREADY_USED' | translate }}</span>
-        <span ng-show="error.didAddress_already_used" class="wrongInputComment">{{ 'PROFIL_MODIFY_ADDRESS.ADDRESS_ALREADY_USED' | translate }}</span>
   		</div>
       <!--Password-->
       <div class="form-group">

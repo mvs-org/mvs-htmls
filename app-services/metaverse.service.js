@@ -132,6 +132,7 @@
         service.DidSendAsset = DidSendAsset;
         service.DidModifyAddress = DidModifyAddress;
         service.ListDidAddresses = ListDidAddresses;
+        service.DidSendMore = DidSendMore;
 
         return service;
 
@@ -502,12 +503,12 @@
          *    }
          * }
          **/
-        function SendMore(recipents, transactionFee) {
+        function SendMore(recipents, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
             var query = [];
             var recipent = '';
             query.push(credentials.user);
-            query.push(credentials.password);
+            query.push(password);
             query.push('-f');
             query.push(transactionFee);
             recipents.forEach( (e) => {
@@ -921,6 +922,22 @@
         function ListDidAddresses(symbol) {
             var credentials = localStorageService.get('credentials');
             return _sendV2('listdidaddresses', [credentials.user, credentials.password, symbol]);
+        }
+
+        function DidSendMore(recipents, transactionFee, password) {
+            var credentials = localStorageService.get('credentials');
+            var query = [];
+            var recipent = '';
+            query.push(credentials.user);
+            query.push(password);
+            query.push('-f');
+            query.push(transactionFee);
+            recipents.forEach( (e) => {
+              recipent = e.address + ':' + e.value;
+              query.push('-r');
+              query.push(recipent);
+            });
+            return _sendV2('didsendmore', query);
         }
 
         function Query(string) {

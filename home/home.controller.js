@@ -666,7 +666,7 @@
         $scope.recipents[index-1].correctAvatar = false;
         $scope.recipents[index-1].burnAddress = false;
         $scope.recipientOK[index-1] = true;
-      } else if ($scope.allDidsSymbols.indexOf($filter('uppercase')(input)) > -1) {
+      } else if ($scope.allDidsSymbols.indexOf(input) > -1) {
         $scope.recipents[index-1].correctEtpAddress = false;
         $scope.recipents[index-1].correctAvatar = true;
         $scope.recipents[index-1].burnAddress = false;
@@ -686,7 +686,7 @@
     }
 
     function checkAmount(input, index) {
-      if (typeof input == 'undefined' || input == '') {
+      if (typeof input == 'undefined' || input === '') {
         $scope.recipents[index-1].emptyAmount = true;
         $scope.recipents[index-1].wrongAmount = false;
         $scope.recipents[index-1].notEnough = false;
@@ -819,9 +819,6 @@
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else {
-        if(recipents[0].correctAvatar) {
-          recipents[0].address = $filter('uppercase')(recipents[0].address);
-        }
         $scope.confirmation = true;
         delete $rootScope.flash;
       }
@@ -893,7 +890,7 @@
         });
       });
 
-      var SendPromise = MetaverseService.SendMore(recipentsQuery, fee);
+      var SendPromise = MetaverseService.DidSendMore(recipentsQuery, fee, password);
       SendPromise
       .then( (response) => {
         NProgress.done();
@@ -1777,9 +1774,6 @@
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else {
-        if($scope.correctAvatar) {
-          $scope.sendto = $filter('uppercase')(sendto);
-        }
         $scope.confirmation = true;
         delete $rootScope.flash;
       }
@@ -1836,7 +1830,7 @@
         $scope.correctEtpAddress = true;
         $scope.correctAvatar = false;
         $scope.burnAddress = false;
-      } else if ($scope.allDidsSymbols.indexOf($filter('uppercase')(input)) > -1) {
+      } else if ($scope.allDidsSymbols.indexOf(input) > -1) {
         $scope.correctEtpAddress = false;
         $scope.correctAvatar = true;
         $scope.burnAddress = false;
@@ -2294,7 +2288,7 @@
 
     //Check if the quantity is valid
     $scope.$watch('quantity', (newVal, oldVal) => {
-      $scope.error.quantity = (newVal == undefined || newVal == '' || newVal < 0);
+      $scope.error.quantity = (newVal == undefined || newVal === '' || newVal < 0);
       checkready();
     });
 
@@ -2378,7 +2372,7 @@
 
     //Check if the symbol is valid
     $scope.$watch('symbol', (newVal, oldVal) => {
-      $scope.error.symbol_empty = (newVal == undefined || newVal == '');
+      $scope.error.symbol_empty = (newVal == undefined || newVal === '');
       $scope.error.symbol_too_long = newVal != undefined ? !(newVal.length < 65) : false;
       $scope.error.symbol_wrong_char = (newVal != undefined && newVal != '') ? !newVal.match(/^[0-9A-Za-z.]+$/) : false;
       checkready();
@@ -2386,7 +2380,7 @@
 
     //Check if the avatar is valid
     $scope.$watch('selectedDid', (newVal, oldVal) => {
-      $scope.error.avatar = (newVal == undefined || newVal == '');
+      $scope.error.avatar = (newVal == undefined || newVal === '');
       checkready();
     });
 
@@ -2399,7 +2393,7 @@
 
     //Check if the decimals is valid
     $scope.$watch('decimals', (newVal, oldVal) => {
-      $scope.error.decimals_empty = (newVal == undefined || !(newVal >= 0 && newVal <= 8) || newVal == '');
+      $scope.error.decimals_empty = (newVal == undefined || !(newVal >= 0 && newVal <= 8) || newVal === '');
       $scope.error.max_supply_decimals_too_high = newVal != undefined ? ($scope.max_supply * Math.pow(10, newVal)) > 10000000000000000000 : false;
       checkready();
     });
@@ -3158,7 +3152,7 @@
     $scope.$watch('didSymbol', (newVal, oldVal) => {
       $scope.error.symbol_empty = (newVal == undefined);
       $scope.error.symbol_wrong_char = newVal != undefined ? !newVal.match(/^[0-9A-Za-z.@]+$/) : false;
-      $scope.error.symbol_already_exist = newVal != undefined ? ($scope.allDidsSymbols.indexOf($filter('uppercase')(newVal)) > -1) : false;
+      $scope.error.symbol_already_exist = newVal != undefined ? ($scope.allDidsSymbols.indexOf(newVal) > -1) : false;
       checkready();
     });
 
