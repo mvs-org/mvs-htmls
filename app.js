@@ -271,6 +271,12 @@
                 controller: 'TransferCertController'
             })
 
+            .state('home.profile.issuecert', {
+                url: "/profile/issuecert/:symbol",
+                templateUrl: "home/profile/issuecert.view.html",
+                controller: 'IssueCertController'
+            })
+
         $urlRouterProvider.otherwise("/login");
     };
 

@@ -13,6 +13,8 @@
   <a href="#!/profile/create" class="btn btn-success smallButton"><span class="glyphicon glyphicon-plus"></span> {{ 'PROFILE.CREATE_NEW_PROFILE_BUTTON' | translate }}</a>
 </div>
 
+<div ng-hide="loaded" class="mediumSpinner"></div>
+
 <!--Display all the DIDs-->
 <div dir-paginate="did in allDids | orderBy:'symbol' | itemsPerPage: 10">
   <dd class="assetBoxAdd assetBox col-xs-12 col-sm-12 col-md-12" >

@@ -32,7 +32,7 @@
           <!--Search big screen-->
           <p class="hidden-xs hidden-sm hidden-md topMenuButtonRight headerBoxSearchLarge">
             <span class="input-group searchArea">
-              <input type="search" name="search" class="form-control researchTextBox navbar-form" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
+              <input type="search" name="search" maxlength="64" class="form-control researchTextBox navbar-form" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
               <span class="input-group-addon researchButton">
                 <button type="submit" class="btn-link-black smallButton menuButton topMenuButtonRight glyphicon glyphicon-search" value="" ng-click="vm.search(stringToSearch)"></button>
               </span>

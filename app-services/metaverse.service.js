@@ -133,8 +133,11 @@
         service.DidModifyAddress = DidModifyAddress;
         service.ListDidAddresses = ListDidAddresses;
         service.DidSendMore = DidSendMore;
+
+        //Cert
         service.AccountAssetCert = AccountAssetCert;
         service.TransferCert = TransferCert;
+        service.IssueCert = IssueCert;
 
         return service;
 
@@ -934,6 +937,11 @@
         function TransferCert(certSymbol, certType, toDID, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
             return _sendV2('transfercert', [credentials.user, password, toDID, certSymbol, '-c', certType, '-f', transactionFee]);
+        }
+
+        function IssueCert(domain, type, symbol, toDID, transactionFee, password) {
+            var credentials = localStorageService.get('credentials');
+            return _sendV2('issuecert', [credentials.user, password, toDID, symbol, type, '-f', transactionFee]);
         }
 
         function DidSendMore(recipents, transactionFee, password) {

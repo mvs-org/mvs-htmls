@@ -64,6 +64,11 @@
         <div class="assetDetailsPanel panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title col-md-6 noPaddingLeftRight">{{'PROFIL.AVATAR_CERTIFICATES' | translate}}</h3>
+            <div class="sendAssetButton assetDetailsBoxButton col-md-6 noPaddingLeftRight">
+              <a href="#!/profile/issuecert/">
+                <button class="btn btn-success smallButton assetBoxButton">{{'PROFIL.ISSUE_CERT_BUTTON' | translate}}</button>
+              </a>
+            </div>
           </div>
           <div class="panel-body">
             <div ng-hide="myCertsLoaded" class="col-xs-12 noPaddingLeftRight assetDataLine">
@@ -71,8 +76,8 @@
             </div>
             <div ng-show="myCertsLoaded && cert.owner == selectedDid" ng-repeat="cert in myCerts" class="col-xs-12 noPaddingLeftRight assetDataLine">
               <div ng-show="cert.certs == 1" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }}</div>
-              <div ng-show="cert.certs == 2" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAINE' | translate }}</div>
-              <div ng-show="cert.certs == 3" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAINE_AND_SECONDARY_ISSUE' | translate }}</div>
+              <div ng-show="cert.certs == 2" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
+              <div ng-show="cert.certs == 3" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAIN_AND_SECONDARY_ISSUE' | translate }}</div>
               <div ng-show="cert.certs == 4" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_NAMING' | translate }}</div>
               <div class="assetValueColumn col-xs-3 noPaddingLeftRight">{{cert.symbol}}</div>
               <div class="sendAssetButton col-xs-6 noPaddingLeftRight assetDetailsBoxButton">
@@ -87,7 +92,7 @@
           </div>
         </div>
       </div>
-      <!--Rate details-->
+      <!--Certificates details-->
       <div class="col-md-6 col-sm-12">
         <div class="assetDetailsPanel panel panel-default">
           <div class="panel-heading">
@@ -99,7 +104,7 @@
               <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_TYPE1' | translate}}</div>
             </div>
             <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-              <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAINE' | translate }}</div>
+              <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
               <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_TYPE2' | translate}}</div>
             </div>
             <div class="col-xs-12 noPaddingLeftRight assetDataLine">
