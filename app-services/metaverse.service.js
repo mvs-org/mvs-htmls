@@ -134,6 +134,7 @@
         service.ListDidAddresses = ListDidAddresses;
         service.DidSendMore = DidSendMore;
         service.AccountAssetCert = AccountAssetCert;
+        service.TransferCert = TransferCert;
 
         return service;
 
@@ -928,6 +929,11 @@
         function AccountAssetCert() {
             var credentials = localStorageService.get('credentials');
             return _sendV2('getaccountasset', [credentials.user, credentials.password, '-c']);
+        }
+
+        function TransferCert(certSymbol, certType, toDID, transactionFee, password) {
+            var credentials = localStorageService.get('credentials');
+            return _sendV2('transfercert', [credentials.user, password, toDID, certSymbol, '-c', certType, '-f', transactionFee]);
         }
 
         function DidSendMore(recipents, transactionFee, password) {

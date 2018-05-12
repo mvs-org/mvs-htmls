@@ -32,11 +32,9 @@
   		</div>
       <!--Fee-->
       <div class="form-group">
-        <div class="form-group">
-          <label for="fee" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</label>
-          <input type="number" step="0.00000001" class="form-control" name="fee" id="" ng-model="transactionFee" ng-class="{validInput: !error.fee_empty && !error.fee_too_low, wrongInput: error.fee_empty || error.fee_too_low}">
-          <span ng-show="error.fee_too_low" class="wrongInputComment">{{ 'MESSAGES.TOO_LOW_FEE' | translate }}</span>
-        </div>
+        <label for="fee" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</label>
+        <input type="number" step="0.00000001" class="form-control" name="fee" id="" ng-model="transactionFee" ng-class="{validInput: !error.fee_empty && !error.fee_too_low, wrongInput: error.fee_empty || error.fee_too_low}">
+        <span ng-show="error.fee_too_low" class="wrongInputComment">{{ 'MESSAGES.TOO_LOW_FEE' | translate }}</span>
       </div>
       <!--Password-->
       <div class="form-group">

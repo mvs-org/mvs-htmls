@@ -1190,6 +1190,18 @@ _____  ._______  ___.___ _______
 //Loading spinner
 .miniSpinner {
   display: inline-block;
+  width: 14px;
+  height: 14px;
+  background-image:url("../images/loading-spinner.png");
+  background-size: 14px 14px;
+  //margin-left: 6px;
+  -webkit-animation: nprogress-spinner 1000ms linear infinite;
+  animation: nprogress-spinner 1000ms linear infinite;
+
+}
+
+.mediumSpinner {
+  display: inline-block;
   width: 26px;
   height: 26px;
   background-image:url("../images/loading-spinner.png");

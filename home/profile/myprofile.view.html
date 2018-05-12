@@ -46,7 +46,7 @@
           </div>
           <div class="panel-body">
             <div ng-show="loadingAddressHistory && !myCertsLoaded" class="col-xs-12 noPaddingLeftRight assetDataLine">
-              <div class="miniSpinner"></div>
+              <div class="mediumSpinner"></div>
             </div>
             <div ng-hide="loadingAddressHistory && !myCertsLoaded" ng-repeat="address in addressesHistory" class="col-xs-12 noPaddingLeftRight assetDataLine">
               <div ng-show="address.status == 'current'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CURRENT_ADDRESS' | translate }}</div>
@@ -67,13 +67,19 @@
           </div>
           <div class="panel-body">
             <div ng-hide="myCertsLoaded" class="col-xs-12 noPaddingLeftRight assetDataLine">
-              <div class="miniSpinner"></div>
+              <div class="mediumSpinner"></div>
             </div>
             <div ng-show="myCertsLoaded && cert.owner == selectedDid" ng-repeat="cert in myCerts" class="col-xs-12 noPaddingLeftRight assetDataLine">
               <div ng-show="cert.certs == 1" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }}</div>
               <div ng-show="cert.certs == 2" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAINE' | translate }}</div>
+              <div ng-show="cert.certs == 3" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAINE_AND_SECONDARY_ISSUE' | translate }}</div>
               <div ng-show="cert.certs == 4" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_NAMING' | translate }}</div>
-              <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{cert.symbol}}</div>
+              <div class="assetValueColumn col-xs-3 noPaddingLeftRight">{{cert.symbol}}</div>
+              <div class="sendAssetButton col-xs-6 noPaddingLeftRight assetDetailsBoxButton">
+                <a href="#!/profile/transfercert/{{cert.symbol}}">
+                  <button class="btn btn-success smallButton assetBoxButton">{{'PROFIL.CERT_TRANSFER_BUTTON' | translate}}</button>
+                </a>
+              </div>
             </div>
             <div ng-show="myCertsLoaded && myCerts.length == 0" class="col-xs-12 noPaddingLeftRight assetDataLine">
               <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{'PROFIL.NO_CERTIFICATES' | translate}}</div>

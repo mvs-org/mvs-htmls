@@ -265,6 +265,12 @@
                 controller: 'ModifyAddressController'
             })
 
+            .state('home.profile.transfercert', {
+                url: "/profile/transfercert/:symbol",
+                templateUrl: "home/profile/transfercert.view.html",
+                controller: 'TransferCertController'
+            })
+
         $urlRouterProvider.otherwise("/login");
     };
 

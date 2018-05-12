@@ -21,6 +21,7 @@
   .controller('CreateProfileController', CreateProfileController)
   .controller('AllProfilesController', AllProfilesController)
   .controller('ModifyAddressController', ModifyAddressController)
+  .controller('TransferCertController', TransferCertController)
   .directive('bsTooltip', function() {
     return {
       restrict: 'A',
@@ -3350,6 +3351,242 @@
       $scope.error.toAddress_empty = (newVal == undefined || newVal == '');
       $scope.error.toAddress_already_used = newVal != undefined ? ($scope.myDidsAddresses.indexOf(newVal) > -1) : false;
       $scope.error.toAddress_not_enough_balance = newVal != undefined ? ($scope.addresses[newVal].available < 1) : false;
+      checkready();
+    });
+
+    //Check if the fee is valid
+    $scope.$watch('transactionFee', (newVal, oldVal) => {
+      $scope.error.fee_empty = (newVal == undefined);
+      $scope.error.fee_too_low = newVal != undefined ? newVal<0.0001 : false;
+      checkready();
+    });
+
+    //Check if the password is valid
+    $scope.$watch('password', (newVal, oldVal) => {
+      $scope.error.password = (newVal == undefined || newVal == '');
+      checkready();
+    });
+
+
+  }
+
+  function TransferCertController(MetaverseHelperService, MetaverseService, $scope, $filter, $rootScope, $location, $translate, $window, localStorageService, FlashService) {
+
+    $scope.listAddresses = [];
+    $scope.listMultiSig = [];
+    $scope.myDids = [];
+    $scope.myCerts = [];
+    $scope.certs = [];
+    $scope.noDids = false;
+    $scope.error = [];
+    $scope.certType = '';
+    $scope.changeSymbol = changeSymbol;
+    $scope.transactionFee = 0.0001;
+    $scope.allDidsAddresses = [];
+    $scope.listMyCerts = listMyCerts;
+    $scope.checkInputs = checkInputs;
+    $scope.transferCert = transferCert;
+    $scope.myCertsLoaded = false;
+
+    $scope.onChain = true;
+    $scope.certSymbol = $location.path().split('/')[3];
+
+    function listMultiSign() {
+      NProgress.start();
+      //Load users ETP balance
+      //Load the addresses and their balances
+      MetaverseService.ListBalances()
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.addresses = [];
+          response.data.balances.forEach( (e) => {
+            var name = "New address";
+            if (localStorageService.get(e.balance.address) != undefined) {
+              name = localStorageService.get(e.balance.address);
+            }
+            $scope.addresses[e.balance.address] = ({
+              "balance": parseInt(e.balance.unspent),
+              "available": parseInt(e.balance.available),
+              "address": e.balance.address,
+              "name": name,
+              "frozen": e.balance.frozen,
+              "type": "single"
+            });
+            $scope.listAddresses.push({
+              "balance": parseInt(e.balance.unspent),
+              "available": parseInt(e.balance.available),
+              "address": e.balance.address
+            });
+          });
+
+          //After loading the balances, we load the multisig addresses
+          MetaverseService.ListMultiSig()
+          .then( (response) => {
+            if (typeof response.success !== 'undefined' && response.success) {
+              if(response.data.multisig != "") {    //if the user has some assets
+                response.data.multisig.forEach( (e) => {
+                  $scope.addresses[e.address].type = "multisig";
+                  var name = "New address";
+                  if (localStorageService.get(e.address) != undefined) {
+                    name = localStorageService.get(e.address);
+                  }
+                  var balance = '';
+                  $scope.listMultiSig.push({
+                    "index": e.index,
+                    "m": e.m,
+                    "n": e.n,
+                    "selfpublickey": e["self-publickey"],
+                    "description": e.description,
+                    "address": e.address,
+                    "name": name,
+                    "balance": $scope.addresses[e.address].balance,
+                    "available": $scope.addresses[e.address].available,
+                    "publicKeys": e["public-keys"]
+                  });
+                });
+              } else {
+                //The account has no multi-signature address
+              }
+            } else {
+              //Fail
+            }
+          });
+        }
+      });
+      NProgress.done();
+    }
+
+    listMultiSign();
+
+    function changeSymbol(symbol) {
+      $scope.certType = $scope.certs[symbol].certs;
+    }
+
+    function listMyCerts() {
+      MetaverseService.AccountAssetCert()
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          if(response.data.result.assetcerts != null && response.data.result.assetcerts != '') {
+            $scope.myCerts = response.data.result.assetcerts;
+            $scope.myCerts.forEach( (e) => {
+              $scope.certs[e.symbol] = e;
+              if (e.symbol == $scope.certSymbol)
+                $scope.certType = e.certs;
+            });
+          } else {
+            $scope.myCerts = [];
+          }
+          $scope.myCertsLoaded = true;
+        } else {
+          $translate('MESSAGES.CANT_LOAD_MY_CERTS').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
+        }
+      });
+    }
+
+    MetaverseService.ListAllDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.allDids = response.data.result.dids;
+        $scope.allDidsSymbols = [];
+        if(typeof $scope.allDids != 'undefined' && $scope.allDids != null) {
+          $scope.allDids.forEach(function(did) {
+            $scope.allDidsSymbols.push(did.symbol);
+            //$scope.allDidsAddresses[did.address] = did.symbol;
+          });
+        } else {
+          $scope.allDids = [];
+        }
+      } else {
+        $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
+      listMyCerts();
+    });
+
+    function checkInputs(password, certType) {
+      $scope.typeToSend = '';
+      switch (certType) {
+        case 1:
+          $scope.typeToSend = 'ISSUE';
+          break;
+        case 2:
+          $scope.typeToSend = 'DOMAIN';
+          break;
+        case 3:
+          $scope.typeToSend = 'ISSUE DOMAIN';
+          break;
+        case 4:
+          $scope.typeToSend = 'NAMING';
+          break;
+        default:
+          $scope.typeToSend = '';
+      }
+      if($scope.typeToSend == '') {
+        $translate('MESSAGES.UNKNOWN_CERTIFICATE_TYPE').then( (data) =>  FlashService.Error(data));
+        $window.scrollTo(0,0);
+      } else if (localStorageService.get('credentials').password != password) {
+        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else {
+        $scope.confirmation = true;
+        delete $rootScope.flash;
+      }
+    }
+
+    function transferCert(certSymbol, typeToSend, toDID, transactionFee, password) {
+      var fee_value = $filter('convertfortx')(transactionFee, 8);
+      NProgress.start();
+      MetaverseService.TransferCert(certSymbol, typeToSend, toDID, fee_value, password)
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          $translate('MESSAGES.CERT_TRANSFERED').then( (data) =>  FlashService.Success(data, true));
+          $location.path('/profile/myprofile');
+        } else {
+          $translate('MESSAGES.ERROR_CERT_TRANSFERED').then( (data) => {
+            if (response.message.message != undefined) {
+              FlashService.Error(data + " : " + response.message.message);
+            } else {
+              FlashService.Error(data);
+            }
+          });
+        }
+        NProgress.done();
+      });
+    }
+
+    $scope.closeAll = function () {
+      ngDialog.closeAll();
+    };
+
+    //Check if the form is submittable
+    function checkready() {
+      //Check for errors
+      for (var error in $scope.error) {
+        if ($scope.error[error]) {
+          $scope.submittable = false;
+          return;
+        }
+      }
+      $scope.submittable = true;
+    }
+
+    //Check if the certification symbol is valid
+    $scope.$watch('certSymbol', (newVal, oldVal) => {
+      $scope.error.certSymbol = (newVal == undefined || newVal == '');
+      checkready();
+    });
+
+    //Check if the certification type is valid
+    $scope.$watch('certType', (newVal, oldVal) => {
+      $scope.error.certType = (newVal == undefined || newVal == '');
+      checkready();
+    });
+
+    //Check if the new address is valid
+    $scope.$watch('toDID', (newVal, oldVal) => {
+      $scope.error.toDID_empty = (newVal == undefined || newVal == '');
+      $scope.error.toDID_not_exist = newVal != undefined ? !($scope.allDidsSymbols.indexOf(newVal) > -1) : false;
       checkready();
     });
 
