@@ -428,7 +428,7 @@
   "ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED": "No restriction",
   "ASSET_CREATE.SECONDARY_ISSUE_DISABLED": "No secondary issue",
   "ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS": "Secondary issue rate",
-  "ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_MINUS1": "The asset can be secondary issued freely, without limit",
+  "ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_MINUS1": "There is no owning percentage condition, the owner of the Secondary issue certificate can do a secondary issue no matter how many token he own",
   "ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_0": "The asset is not allowed to be secondary issued forever, the Maximum Supply cannot be changed (default value)",
   "ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_1_TO_100": "Secondary issue rate, the asset can be secondary issue when own percentage is greater than or equal to this rate value",
   "ASSET_CREATE.SECONDARY_ISSUE_BUTTON": "Secondary Issue",
@@ -471,5 +471,16 @@
   "PROFIL_MODIFY_ADDRESS.ADDRESS_ALREADY_USED": "This address is already linked to an Avatar",
   "PROFIL_MODIFY_ADDRESS.ADDRESS_NOT_ENOUGH_BALANCE": "You need at least 0.0001 ETP to pay the transaction fee with the new address",
   "PROFIL_MODIFY_ADDRESS.MODIFY_BUTTON": "Modify Avatar address",
-  "MESSAGES.ERROR_DID_MODIFY_ADDRESS": "The Avatar address hasn't been changed."
+  "MESSAGES.ERROR_DID_MODIFY_ADDRESS": "The Avatar address hasn't been changed.",
+  "MESSAGES.CANT_LOAD_MY_CERTS": "Error while loading your certificates",
+  "PROFIL.MY_CERTIFICATES": "My certificates",
+  "PROFIL.AVATAR_CERTIFICATES": "Avatar certificates",
+  "PROFIL.CERT_SECONDARY_ISSUE": "Secondary Issue",
+  "PROFIL.CERT_DOMAINE": "Domaine",
+  "PROFIL.CERT_NAMING": "Naming",
+  "PROFIL.NO_CERTIFICATES": "You do not have any certificate yet",
+  "PROFIL.CERTIFICATES_EXPLANATION_TITLE": "Certificates types",
+  "PROFIL.CERTIFICATES_EXPLANATION_TYPE1": "This certificate give you the permission to do a Secondary Issue on a specific Asset",
+  "PROFIL.CERTIFICATES_EXPLANATION_TYPE2": "This certificate give you the ownership of a domaine (i.e. if you own the Domaine 'MVS', only you can create an asset whose name start with 'MVS.')",
+  "PROFIL.CERTIFICATES_EXPLANATION_TYPE4": "This certificate give you the permission to create an asset for a specific name. It is delivered by the Domaine owner (i.e. you own the Naming 'MVS.ASSET', you have the permission to create the Asset called 'MVS.ASSET' only)"
 }

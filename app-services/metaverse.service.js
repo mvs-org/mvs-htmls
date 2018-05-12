@@ -133,6 +133,7 @@
         service.DidModifyAddress = DidModifyAddress;
         service.ListDidAddresses = ListDidAddresses;
         service.DidSendMore = DidSendMore;
+        service.AccountAssetCert = AccountAssetCert;
 
         return service;
 
@@ -922,6 +923,11 @@
         function ListDidAddresses(symbol) {
             var credentials = localStorageService.get('credentials');
             return _sendV2('listdidaddresses', [credentials.user, credentials.password, symbol]);
+        }
+
+        function AccountAssetCert() {
+            var credentials = localStorageService.get('credentials');
+            return _sendV2('getaccountasset', [credentials.user, credentials.password, '-c']);
         }
 
         function DidSendMore(recipents, transactionFee, password) {

@@ -2877,12 +2877,16 @@
     $scope.listAddresses = [];
     $scope.listMultiSig = [];
     $scope.myDids = [];
+    $scope.myCerts = [];
     $scope.noDids = false;
 
     $scope.onChain = true;
     $scope.selectedDid = '';
+    $scope.myCertsLoaded = false;
+    $scope.loadingAddressHistory = true;
 
     $scope.listDidsAddresses = listDidsAddresses;
+    $scope.listMyCerts = listMyCerts;
 
     $scope.addressesHistory = [];
     $scope.changeDid = changeDid;
@@ -2976,11 +2980,16 @@
       }
     });
 
+
     function listDidsAddresses(symbol) {
+      $scope.loadingAddressHistory = true;
       MetaverseService.ListDidAddresses(symbol)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.addressesHistory = response.data.result.addresses;
+          if(!$scope.myCertsLoaded) {
+            listMyCerts();
+          }
         } else {
           $translate('MESSAGES.LISTDIDSADDRESSE_LOAD_ERROR').then( (data) => {
             if (response.message.message != undefined) {
@@ -2989,6 +2998,24 @@
               FlashService.Error(data);
             }
           });
+          $window.scrollTo(0,0);
+        }
+        $scope.loadingAddressHistory = false;
+      });
+    }
+
+    function listMyCerts() {
+      MetaverseService.AccountAssetCert()
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          if(response.data.result.assetcerts != null) {
+            $scope.myCerts = response.data.result.assetcerts;
+          } else {
+            $scope.myCerts = [];
+          }
+          $scope.myCertsLoaded = true;
+        } else {
+          $translate('MESSAGES.CANT_LOAD_MY_CERTS').then( (data) => FlashService.Error(data) );
           $window.scrollTo(0,0);
         }
       });

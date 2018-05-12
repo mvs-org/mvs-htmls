@@ -1081,7 +1081,7 @@ _____  ._______  ___.___ _______
 
 .admin {
   overflow:hidden;
-  padding-bottom: 40px;
+  padding-bottom: 60px;
   padding-left: 15px;
   padding-right: 15px;
   padding-top: 15px;
@@ -1187,8 +1187,8 @@ _____  ._______  ___.___ _______
 
 /****************Mining view****************/
 
-//Spinner when miningTable
-.miningSpinner {
+//Loading spinner
+.miniSpinner {
   display: inline-block;
   width: 26px;
   height: 26px;
@@ -1323,6 +1323,10 @@ form label {
   border-width: 0;
 }
 
+.pagination {
+  display: inline;
+}
+
 .pagination > li > a {
   color: $successButtonColor !important;
   border-width: 0 !important;
@@ -1365,10 +1369,7 @@ form label {
 //History
 //Big screens
 .loadMore {
-  display: inline-block;
-  position: relative;
-  left: 420px;
-  top: -54px;
+  display: inline;
 }
 
 .loadMoreLess10 {
@@ -1458,6 +1459,7 @@ form label {
 }
 .paginationHistory {
   padding-left: 30%;
+  margin-top: 20px;
 }
 
 //Display of the history for small screens
