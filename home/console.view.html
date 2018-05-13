@@ -5,12 +5,7 @@
   <!--<div class="col-sm-12 col-md-8 noPaddingLeftRight consoleLargeScreens hidden-xs hidden-sm">-->
   <div class="col-sm-12 consoleLargeScreens">
     <h4>{{ 'NAV_CONSOLE' | translate }}</h4>
-    <div ng-hide="showConnected">
-      <div class="console_query">
-        <span class="span1">{{ 'CONSOLE.CONNECTION' | translate }}</span>
-      </div>
-    </div>
-
+    <div ng-hide="showConnected" class="mediumSpinner"></div>
     <div class="console" id="consolelog">
       <div ng-repeat="log in consolelog" ng-show="showConnected" ng-hide="log.index < consolelog.length-9">
         <div class="console_query" ng-show="log.query != ''">
@@ -21,7 +16,7 @@
         </div>
       </div>
     </div>
-    <input type="text" rows="5" ng-show="showConnected" ng-model="querystring" ng-keyup="$event.keyCode == 13 && query()" class="form-control forminputConsole" id="inputField" placeholder="{{ 'CONSOLE.INSERT_PROMPT' | translate }}">
+    <input type="text" rows="5" ng-show="showConnected" ng-model="querystring" ng-keyup="$event.keyCode == 13 && query() || $event.keyCode == 38 && arrowup() || $event.keyCode == 40 && arrowdown()" class="form-control forminputConsole" id="inputField" placeholder="{{ 'CONSOLE.INSERT_PROMPT' | translate }}">
   </div>
 
   <!--Mining-->

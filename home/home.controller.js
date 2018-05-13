@@ -2634,6 +2634,7 @@
 
     $scope.showConnected = false;
     $scope.index = 0;
+    $scope.queryHistory = 0;
 
     ws.onmessage = (ev) => {
       $scope.showConnected = true;
@@ -2644,6 +2645,7 @@
         answer: ev.data,
         index: $scope.index
       });
+      $scope.queryHistory = $scope.consolelog.length;
 
       $scope.querystring = '';
       $scope.$apply();
@@ -2662,8 +2664,33 @@
     }
 
     $scope.query = () => {
-      NProgress.start();
-      ws.send($scope.querystring);
+      if ($scope.querystring == "clear") {
+        var connectionstatus = $scope.consolelog[0];
+        $scope.consolelog = [];
+        $scope.consolelog.push(connectionstatus);
+        $scope.querystring = '';
+        $scope.queryHistory = 0;
+      } else {
+        NProgress.start();
+        ws.send($scope.querystring);
+      }
+    };
+
+    $scope.arrowup = () => {
+      if ($scope.queryHistory > 1) {
+        $scope.queryHistory--;
+        $scope.querystring = $scope.consolelog[$scope.queryHistory].query;
+      }
+    };
+
+    $scope.arrowdown = () => {
+      if ($scope.queryHistory < $scope.consolelog.length-1) {
+        $scope.queryHistory++;
+        $scope.querystring = $scope.consolelog[$scope.queryHistory].query;
+      } else if ($scope.queryHistory = $scope.consolelog.length-1) {
+        $scope.queryHistory++;
+        $scope.querystring = '';
+      }
     };
 
   }
