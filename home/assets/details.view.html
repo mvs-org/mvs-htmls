@@ -65,7 +65,10 @@
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{'STATUS' | translate}}</div>
-            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{asset.status}}</div>
+            <div ng-show="asset.status == 'unissued'" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'ASSET.STATUS_UNISSUED' | translate }}</div>
+            <div ng-show="asset.status == 'issued'" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'ASSET.STATUS_ISSUED' | translate }}</div>
+            <div ng-show="asset.status == 'unspent'" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'ASSET.STATUS_UNSPENT' | translate }}</div>
+            <div ng-hide="asset.status == 'unissued' || asset.status == 'issued' || asset.status == 'unspent'" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{asset.status}}</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{'ISSUER' | translate}}</div>

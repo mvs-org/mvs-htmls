@@ -1,13 +1,18 @@
 <div>
   <ul class="nav nav-pills tabsMenu">
-    <li role="presentation" class="active"><a href="#!/profile/transfercert/" class="btn-link-menu">{{ 'TRANSFER_CERT.HEADLINE' | translate }}</a></li>
+    <li role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.MY_PROFILE' | translate}}</a></li>
+    <!--li class="disabled" role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.AUTHORIZE' | translate}}</a></li>
+    <li class="disabled" role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.REQUEST_LIST' | translate}}</a></li>
+    <li class="disabled" role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.RELATIONSHIPS' | translate}}</a></li-->
+    <li role="presentation"><a href="#!/profile/all" class="btn-link-menu">{{'PROFILE.ALL' | translate}}</a></li>
+    <li class="active" role="presentation"><a href="#!/profile/transfercert/" class="btn-link-menu">{{ 'TRANSFER_CERT.HEADLINE' | translate }}</a></li>
     <li role="presentation"><a href="#!/profile/issuecert/" class="btn-link-menu">{{ 'ISSUE_CERT.HEADLINE' | translate }}</a></li>
   </ul>
 </div>
 <div class="row">
   <br/>
   <form ng-hide="confirmation">
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-sm-12 col-md-6">
       <!--Cert-->
       <div class="form-group">
         <label class="control-label">{{ 'TRANSFER_CERT.SYMBOL' | translate }}</label>
@@ -44,7 +49,7 @@
       </div>
     </div>
     <!--Certificates details-->
-    <div class="col-md-6 col-sm-12">
+    <div class="col-sm-12 col-md-6">
       <div class="assetDetailsPanel panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">{{'PROFIL.CERTIFICATES_EXPLANATION_TITLE' | translate}}</h3>
@@ -57,7 +62,7 @@
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
             <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_TYPE2' | translate}}</div>
-          </div>DOMAIN
+          </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_NAMING' | translate }}</div>
             <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_TYPE4' | translate}}</div>

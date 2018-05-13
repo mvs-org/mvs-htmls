@@ -2646,7 +2646,6 @@
         index: $scope.index
       });
       $scope.queryHistory = $scope.consolelog.length;
-
       $scope.querystring = '';
       $scope.$apply();
       scrolldown();

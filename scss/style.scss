@@ -72,8 +72,15 @@ h4 {
   text-align: center;
   color: #666666 !important;
   padding-bottom: 10px;
-  margin: 0 40px 0 0;
+  margin: 10px 40px 0 0;
   width: auto;
+}
+
+.tabsMenu > li.active > a {
+    border-bottom: solid 2px $linkButtonMenuColor !important;
+    border-radius: 0;
+    padding-bottom: 8px;
+    color:#323232 !important;
 }
 
 .AStitle-tabs .tabsMenu > li.active > a{
@@ -1303,12 +1310,6 @@ _____  ._______  ___.___ _______
 
 
 /********************Home page*************************/
-.tabsMenu > li.active > a {
-    border-bottom: solid 2px $linkButtonMenuColor !important;
-    border-radius: 0;
-    color:#323232 !important;
-}
-
 form label {
   color:#323232;
   font-weight: 400;
@@ -2144,16 +2145,28 @@ h2 {
 
 .validInput {
   border-color: green !important;
-  -moz-box-shadow:    0px 0px 1px 0px green !important;
-  -webkit-box-shadow: 0px 0px 1px 0px green !important;
-  box-shadow:         0px 0px 1px 0px green !important;
+  -moz-box-shadow:    0px 0px 0px 0px green !important;
+  -webkit-box-shadow: 0px 0px 0px 0px green !important;
+  box-shadow:         0px 0px 0px 0px green !important;
+}
+
+.validInput:focus {
+  -moz-box-shadow:    0px 0px 2px 0px green !important;
+  -webkit-box-shadow: 0px 0px 2px 0px green !important;
+  box-shadow:         0px 0px 2px 0px green !important;
 }
 
 .wrongInput {
   border-color: red !important;
-  -moz-box-shadow:    0px 0px 1px 0px red !important;
-  -webkit-box-shadow: 0px 0px 1px 0px red !important;
-  box-shadow:         0px 0px 1px 0px red !important;
+  -moz-box-shadow:    0px 0px 0px 0px red !important;
+  -webkit-box-shadow: 0px 0px 0px 0px red !important;
+  box-shadow:         0px 0px 0px 0px red !important;
+}
+
+.wrongInput:focus {
+  -moz-box-shadow:    0px 0px 2px 0px red !important;
+  -webkit-box-shadow: 0px 0px 2px 0px red !important;
+  box-shadow:         0px 0px 2px 0px red !important;
 }
 
 .correctInputComment {

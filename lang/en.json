@@ -512,5 +512,8 @@
   "HELP.ISSUE_CERT_TODID": "This is the Avatar that will receive this certificate. It can be one of my Avatars or the one of someone else. After beeing issued, this certificate can be sent freely to another Avatar",
   "ISSUE_CERT.UNUSUAL_FORMAT": "An asset symbol format is usually (domain_name).(asset_name)",
   "ISSUE_CERT.ERROR_SYMBOL_SELECT_DOMAIN_FIRST": "Please select a Domain first",
-  "MESSAGES.ERROR_CERT_ISSUE": "Impossible to issue this certificate"
+  "MESSAGES.ERROR_CERT_ISSUE": "Impossible to issue this certificate",
+  "ASSET.STATUS_UNISSUED": "Only created locally",
+  "ASSET.STATUS_ISSUED": "Registered on the blockchain",
+  "ASSET.STATUS_UNSPENT": "Registered and available"
 }

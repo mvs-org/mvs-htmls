@@ -1,13 +1,18 @@
 <div>
   <ul class="nav nav-pills tabsMenu">
+    <li role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.MY_PROFILE' | translate}}</a></li>
+    <!--li class="disabled" role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.AUTHORIZE' | translate}}</a></li>
+    <li class="disabled" role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.REQUEST_LIST' | translate}}</a></li>
+    <li class="disabled" role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.RELATIONSHIPS' | translate}}</a></li-->
+    <li role="presentation"><a href="#!/profile/all" class="btn-link-menu">{{'PROFILE.ALL' | translate}}</a></li>
     <li role="presentation"><a href="#!/profile/transfercert/" class="btn-link-menu">{{ 'TRANSFER_CERT.HEADLINE' | translate }}</a></li>
-    <li role="presentation" class="active"><a href="#!/profile/issuecert/" class="btn-link-menu">{{ 'ISSUE_CERT.HEADLINE' | translate }}</a></li>
+    <li class="active" role="presentation"><a href="#!/profile/issuecert/" class="btn-link-menu">{{ 'ISSUE_CERT.HEADLINE' | translate }}</a></li>
   </ul>
 </div>
 <div class="row">
   <br/>
   <form ng-hide="confirmation">
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-sm-12 col-md-6">
       <!--My Domain-->
       <div class="form-group">
         <label class="control-label">{{ 'ISSUE_CERT.MY_DOMAIN' | translate }}</label>
@@ -52,7 +57,7 @@
       </div>
     </div>
     <!--Certificates details-->
-    <div class="col-md-6 col-sm-12">
+    <div class="col-sm-12 col-md-6">
       <div class="assetDetailsPanel panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">{{'ISSUE_CERT.EXPLANATION_TITLE' | translate}}</h3>
