@@ -404,26 +404,26 @@
     $scope.symbol = $filter('uppercase')($location.path().split('/')[2]);
     $scope.deposit = deposit;
 
-    $scope.period_select=undefined;
     $scope.assetsIssued = [];
     $scope.balance = [];
     $scope.availableBalance = 0;
     $scope.sendAll = sendAll;
+    $scope.error = [];
+    $scope.option = [];
 
     $scope.confirmation = false;
     $scope.checkInputs = checkInputs;
 
 
     function init() {
-      $scope.deposit_address = "";
-      $scope.value = "";
+      $scope.deposit_address = '';
       $scope.password = '';
       $scope.value = '';
       $scope.transactionFee = 0.0001;
       $scope.confirmation = false;
+      $scope.period_select = '';
+      $scope.submittable = false;
     }
-
-    $scope.isNumber = angular.isNumber;
 
     MetaverseService.ListAssets()
     .then( (response) => {
@@ -473,19 +473,7 @@
     }
 
     function checkInputs(value, transactionFee, period_select, password) {
-      if (!(value > 0)) {
-        $translate('MESSAGES.INVALID_VALUE').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else if (transactionFee < 0.0001) {
-        $translate('MESSAGES.TOO_LOW_FEE').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else if ($scope.deposit_options[period_select] == undefined) {
-        $translate('MESSAGES.INVALID_TIME_PERIOD').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else if (password == '') { //Check for empty password
-        $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else if (password != localStorageService.get('credentials').password) {
+      if (password != localStorageService.get('credentials').password) {
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else {
@@ -493,7 +481,6 @@
         delete $rootScope.flash;
       }
     }
-
 
     function deposit(value, transactionFee, period_select, password) {
       //var deposit_value = ("" + value * Math.pow(10,$scope.decimal_number)).split(".")[0];
@@ -526,6 +513,60 @@
       });
     }
 
+    //Check if the form is submittable
+    function checkready() {
+      //Check for errors
+      for (var error in $scope.error) {
+        if ($scope.error[error]) {
+          $scope.submittable = false;
+          return;
+        }
+      }
+      if ($scope.address_option && $scope.option.deposit_address_incorrect) {
+        $scope.submittable = false;
+        return;
+      }
+      $scope.submittable = true;
+    }
+
+    //Check if the certification symbol is valid
+    $scope.$watch('value', (newVal, oldVal) => {
+      /*var fee = $filter('convertfortx')($scope.transactionFee, 8);
+      var max_send = parseInt($scope.availableBalance) - parseInt(fee);
+      var value_tx = $filter('convertfortx')(newVal, 8);*/
+      $scope.error.value_empty = (newVal == undefined || newVal == '');
+      $scope.error.value_not_enough_balance = (newVal != undefined && newVal != '') ? newVal > ($scope.availableBalance - $scope.transactionFee*100000000)/100000000 : false;
+      $scope.error.value_not_a_number = (newVal != undefined && newVal != '') ? isNaN(newVal) : false;
+      checkready();
+    });
+
+    //Check if the certification type is valid
+    $scope.$watch('period_select', (newVal, oldVal) => {
+      $scope.error.period_empty = (newVal == undefined || newVal == '');
+      checkready();
+    });
+
+    //Check if the new address is valid
+    $scope.$watch('deposit_address', (newVal, oldVal) => {
+      $scope.option.deposit_address_empty = (newVal == undefined || newVal == '');
+      $scope.option.deposit_address_incorrect = (newVal != undefined && newVal != '') ? !((($rootScope.network == 'testnet' && newVal.charAt(0) == 't') || ($rootScope.network == 'mainnet' && newVal.charAt(0) == 'M') || newVal.charAt(0) == '3') && newVal.length == 34 && newVal.match(/^[0-9A-Za-z]+$/)) : false;
+      checkready();
+    });
+
+    //Check if the fee is valid
+    $scope.$watch('transactionFee', (newVal, oldVal) => {
+      $scope.error.fee_empty = (newVal == undefined);
+      $scope.error.fee_too_low = newVal != undefined ? newVal<0.0001 : false;
+      $scope.error.fee_not_a_number = newVal != undefined ? isNaN(newVal) : false;
+      checkready();
+    });
+
+    //Check if the password is valid
+    $scope.$watch('password', (newVal, oldVal) => {
+      $scope.error.password = (newVal == undefined || newVal == '');
+      checkready();
+    });
+
     //Load users ETP balance
     function loadEtpBalance() {
       MetaverseHelperService.GetBalance( (err, balance, message) => {
@@ -554,6 +595,9 @@
 
     function sendAll() {
       $scope.value = ($scope.availableBalance - $scope.transactionFee*100000000)/100000000;
+      /*var fee = $filter('convertfortx')($scope.transactionFee, 8);
+      var max_send = parseInt($scope.availableBalance) - parseInt(fee);
+      $scope.value = $filter('converttodisplay')(max_send, 8);*/
     }
 
     init();
@@ -663,7 +707,7 @@
         $scope.recipents[index-1].correctAvatar = false;
         $scope.recipents[index-1].burnAddress = false;
         $scope.recipientOK[index-1] = false;
-      } else if((($rootScope.network == 'testnet' && input.charAt(0) == 't') || ($rootScope.network == 'mainnet' && input.charAt(0) == 'M') || input.charAt(0) == '3') && input.length == 34) {
+      } else if((($rootScope.network == 'testnet' && input.charAt(0) == 't') || ($rootScope.network == 'mainnet' && input.charAt(0) == 'M') || input.charAt(0) == '3') && input.length == 34 && input.match(/^[0-9A-Za-z]+$/)) {
         $scope.recipents[index-1].correctEtpAddress = true;
         $scope.recipents[index-1].correctAvatar = false;
         $scope.recipents[index-1].burnAddress = false;
@@ -1828,7 +1872,7 @@
         $scope.correctEtpAddress = false;
         $scope.correctAvatar = false;
         $scope.burnAddress = false;
-      } else if((($rootScope.network == 'testnet' && input.charAt(0) == 't') || ($rootScope.network == 'mainnet' && input.charAt(0) == 'M') || input.charAt(0) == '3') && input.length == 34) {
+      } else if((($rootScope.network == 'testnet' && input.charAt(0) == 't') || ($rootScope.network == 'mainnet' && input.charAt(0) == 'M') || input.charAt(0) == '3') && input.length == 34 && input.match(/^[0-9A-Za-z]+$/)) {
         $scope.correctEtpAddress = true;
         $scope.correctAvatar = false;
         $scope.burnAddress = false;
@@ -3355,10 +3399,6 @@
       });
     }
 
-    $scope.closeAll = function () {
-      ngDialog.closeAll();
-    };
-
     //Check if the form is submittable
     function checkready() {
       //Check for errors
@@ -3586,10 +3626,6 @@
       });
     }
 
-    $scope.closeAll = function () {
-      ngDialog.closeAll();
-    };
-
     //Check if the form is submittable
     function checkready() {
       //Check for errors
@@ -3803,10 +3839,6 @@
         NProgress.done();
       });
     }
-
-    $scope.closeAll = function () {
-      ngDialog.closeAll();
-    };
 
     //Check if the form is submittable
     function checkready() {

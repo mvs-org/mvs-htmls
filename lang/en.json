@@ -515,5 +515,8 @@
   "MESSAGES.ERROR_CERT_ISSUE": "Impossible to issue this certificate",
   "ASSET.STATUS_UNISSUED": "Only created locally",
   "ASSET.STATUS_ISSUED": "Registered on the blockchain",
-  "ASSET.STATUS_UNSPENT": "Registered and available"
+  "ASSET.STATUS_UNSPENT": "Available",
+  "HELP.SECONDARY_ISSUE_BUTTON_DISABLED": "This Asset cannot do a Secondary Issue, its Maximum supply cannot be changed",
+  "DEPOSIT.AMOUNT_NOT_ENOUGH" : "You do not have enough ETP. Please remember to take into account the transaction fee",
+  "MESSAGES.NOT_A_NUMBER": "Please enter a number"
 }
