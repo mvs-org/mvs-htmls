@@ -96,7 +96,10 @@
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_CERT.TYPE' | translate }}</div>
-            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{typeToSend}}</div>
+            <div ng-show="certType == 1" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }}</div>
+            <div ng-show="certType == 2" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
+            <div ng-show="certType == 3" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAIN_AND_SECONDARY_ISSUE' | translate }}</div>
+            <div ng-show="certType == 4" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'PROFIL.CERT_NAMING' | translate }}</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_CERT.TODID' | translate }}</div>
@@ -114,7 +117,7 @@
       <br>
       <!--Submit button-->
       <div class="col-xs-6 col-sm-6 col-md-3">
-        <input type="submit" class="btn btn-success" ng-click="transferCert(certSymbol, typeToSend, toDID, transactionFee, password)" value="{{ 'TRANSFER_CERT.TRANSFER_BUTTON' | translate }}">
+        <input type="submit" class="btn btn-success" ng-click="transferCert(certSymbol, certType, toDID, transactionFee, password)" value="{{ 'TRANSFER_CERT.TRANSFER_BUTTON' | translate }}">
       </div>
       <!--Return button-->
       <div class="col-xs-6 col-sm-6 col-md-3">

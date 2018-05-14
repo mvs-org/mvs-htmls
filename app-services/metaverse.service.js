@@ -936,7 +936,18 @@
 
         function TransferCert(certSymbol, certType, toDID, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
-            return _sendV2('transfercert', [credentials.user, password, toDID, certSymbol, '-c', certType, '-f', transactionFee]);
+            switch (certType) {
+              case 1:
+                return _sendV2('transfercert', [credentials.user, password, toDID, certSymbol, '-c', 'ISSUE', '-f', transactionFee]);
+              case 2:
+                return _sendV2('transfercert', [credentials.user, password, toDID, certSymbol, '-c', 'DOMAIN', '-f', transactionFee]);
+              case 3:
+                return _sendV2('transfercert', [credentials.user, password, toDID, certSymbol, '-c', 'ISSUE', 'DOMAIN', '-f', transactionFee]);
+              case 4:
+                return _sendV2('transfercert', [credentials.user, password, toDID, certSymbol, '-c', 'NAMING', '-f', transactionFee]);
+              default:
+                console.log("Unkown type of certificate");
+            }
         }
 
         function IssueCert(domain, type, symbol, toDID, transactionFee, password) {

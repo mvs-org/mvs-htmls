@@ -534,7 +534,7 @@
       /*var fee = $filter('convertfortx')($scope.transactionFee, 8);
       var max_send = parseInt($scope.availableBalance) - parseInt(fee);
       var value_tx = $filter('convertfortx')(newVal, 8);*/
-      $scope.error.value_empty = (newVal == undefined || newVal == '');
+      $scope.error.value_empty = (newVal == undefined || newVal == '' || newVal < 0);
       $scope.error.value_not_enough_balance = (newVal != undefined && newVal != '') ? newVal > ($scope.availableBalance - $scope.transactionFee*100000000)/100000000 : false;
       $scope.error.value_not_a_number = (newVal != undefined && newVal != '') ? isNaN(newVal) : false;
       checkready();
@@ -1715,6 +1715,7 @@
     $scope.sendAll = sendAll;
     $scope.checkRecipent = checkRecipent;
     $scope.allDids = [];
+    $scope.allDidsAddresses = [];
     $scope.checkInputs = checkInputs;
 
     // Initializes all transaction parameters with empty strings.
@@ -3458,6 +3459,7 @@
     $scope.checkInputs = checkInputs;
     $scope.transferCert = transferCert;
     $scope.myCertsLoaded = false;
+    $scope.allDidsSymbols = [];
 
     $scope.onChain = true;
     $scope.certSymbol = $location.path().split('/')[3];
@@ -3576,24 +3578,7 @@
     });
 
     function checkInputs(password, certType) {
-      $scope.typeToSend = '';
-      switch (certType) {
-        case 1:
-          $scope.typeToSend = 'ISSUE';
-          break;
-        case 2:
-          $scope.typeToSend = 'DOMAIN';
-          break;
-        case 3:
-          $scope.typeToSend = 'ISSUE DOMAIN';
-          break;
-        case 4:
-          $scope.typeToSend = 'NAMING';
-          break;
-        default:
-          $scope.typeToSend = '';
-      }
-      if($scope.typeToSend == '') {
+      if($scope.certType != 1 && $scope.certType != 2 &&  $scope.certType != 3 && $scope.certType != 4) {
         $translate('MESSAGES.UNKNOWN_CERTIFICATE_TYPE').then( (data) =>  FlashService.Error(data));
         $window.scrollTo(0,0);
       } else if (localStorageService.get('credentials').password != password) {
@@ -3605,10 +3590,10 @@
       }
     }
 
-    function transferCert(certSymbol, typeToSend, toDID, transactionFee, password) {
+    function transferCert(certSymbol, certType, toDID, transactionFee, password) {
       var fee_value = $filter('convertfortx')(transactionFee, 8);
       NProgress.start();
-      MetaverseService.TransferCert(certSymbol, typeToSend, toDID, fee_value, password)
+      MetaverseService.TransferCert(certSymbol, certType, toDID, fee_value, password)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $translate('MESSAGES.CERT_TRANSFERED').then( (data) =>  FlashService.Success(data, true));
@@ -3653,7 +3638,7 @@
     //Check if the new address is valid
     $scope.$watch('toDID', (newVal, oldVal) => {
       $scope.error.toDID_empty = (newVal == undefined || newVal == '');
-      $scope.error.toDID_not_exist = newVal != undefined ? !($scope.allDidsSymbols.indexOf(newVal) > -1) : false;
+      $scope.error.toDID_not_exist = newVal != undefined && $scope.allDidsSymbols != undefined ? !($scope.allDidsSymbols.indexOf(newVal) > -1) : false;
       checkready();
     });
 
