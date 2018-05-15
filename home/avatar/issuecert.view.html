@@ -47,11 +47,6 @@
         <input type="number" step="0.00000001" class="form-control" name="fee" id="" ng-model="transactionFee" ng-class="{validInput: !error.fee_empty && !error.fee_too_low, wrongInput: error.fee_empty || error.fee_too_low}">
         <span ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</span>
       </div>
-      <!--Password-->
-      <div class="form-group">
-        <label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
-        <input type="password" class="form-control" name="password" id="" name="password" ng-model="password" ng-class="{validInput: !error.password, wrongInput: error.password}" autocomplete="off">
-      </div>
     </div>
     <!--Certificates details-->
     <div class="col-sm-12 col-md-6">
@@ -120,13 +115,18 @@
           </div>
         </div>
       </div>
+      <!--Password-->
+      <div class="form-group">
+        <label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
+        <input type="password" class="form-control" name="password" id="" name="password" ng-model="password" ng-class="{validInput: !errorPassword, wrongInput: errorPassword}" autocomplete="off">
+      </div>
     </div>
 
     <div class="col-xs-12 col-sm-12 col-md-12 form-group noPaddingLeftRight">
       <br>
       <!--Submit button-->
       <div class="col-xs-6 col-sm-6 col-md-3">
-        <input type="submit" class="btn btn-success" ng-click="issueCert(domain, symbol, toDID, transactionFee, password)" value="{{ 'ISSUE_CERT.TRANSFER_BUTTON' | translate }}">
+        <input type="submit" class="btn btn-success" ng-click="issueCert(domain, symbol, toDID, transactionFee, password)" value="{{ 'ISSUE_CERT.TRANSFER_BUTTON' | translate }}" ng-disabled="errorPassword">
       </div>
       <!--Return button-->
       <div class="col-xs-6 col-sm-6 col-md-3">

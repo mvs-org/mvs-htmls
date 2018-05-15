@@ -11,6 +11,7 @@
       <!--DID-->
       <div class="form-group">
         <label for="useDid" class="control-label">{{ 'PROFIL.DID' | translate }}</label>
+        <span ng-show="!noDids && myDids.length == 0" class="miniSpinner"></span>
         <select name="useDid" type="text" class="form-control" placeholder="" ng-model="selectedDid" ng-change="changeDid(selectedDid)" ng-class="{validInput: !error.selectedDid, wrongInput: error.selectedDid}">
           <option ng-repeat="did in myDids" value="{{did.symbol}}" title="{{did.symbol}}">{{did.symbol}}</option>
           <option ng-if="noDids" value="">{{ 'PROFIL.NO_DID' | translate }}</option>
@@ -19,12 +20,14 @@
       <!--Current Address-->
       <div class="form-group">
         <label for="useAddress" class=" ddd control-label">{{ 'PROFIL_MODIFY_ADDRESS.FROM_ADDRESS' | translate }}</label>
+        <span ng-show="(selectedDidAddress == '' && selectedDid != '') || (!noDids && myDids.length == 0)" class="miniSpinner"></span>
         <input type="address" class="form-control" name="currentAddress" id="" name="fromAddress" ng-model="selectedDidAddress" ng-class="{validInput: !error.selectedDid, wrongInput: error.selectedDid}" disabled>
       </div>
       <!--New Address-->
   		<div class="form-group">
 				<label for="useAddress" class=" ddd control-label">{{ 'PROFIL_MODIFY_ADDRESS.TO_ADDRESS' | translate }}</label>
-				<select name="useAddress" type="address" name="toAddress" class="form-control" placeholder="" ng-model="toAddress" ng-class="{validInput: !error.toAddress_empty && !error.toAddress_already_used && !error.toAddress_not_enough_balance, wrongInput: error.toAddress_empty || error.toAddress_already_used || error.toAddress_not_enough_balance}" required>
+        <span ng-show="listAddresses.length == 0" class="miniSpinner"></span>
+        <select name="useAddress" type="address" name="toAddress" class="form-control" placeholder="" ng-model="toAddress" ng-class="{validInput: !error.toAddress_empty && !error.toAddress_already_used && !error.toAddress_not_enough_balance, wrongInput: error.toAddress_empty || error.toAddress_already_used || error.toAddress_not_enough_balance}" required>
 					<option ng-repeat="oneAddress in listAddresses | orderBy:'balance':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-show="addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
 				</select>
         <span ng-show="error.toAddress_already_used" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'PROFIL_MODIFY_ADDRESS.ADDRESS_ALREADY_USED' | translate }}</span>
@@ -35,11 +38,6 @@
         <label for="fee" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</label>
         <input type="number" step="0.00000001" class="form-control" name="fee" id="" ng-model="transactionFee" ng-class="{validInput: !error.fee_empty && !error.fee_too_low, wrongInput: error.fee_empty || error.fee_too_low}">
         <span ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</span>
-      </div>
-      <!--Password-->
-      <div class="form-group">
-        <label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
-        <input type="password" class="form-control" name="password" id="" name="password" ng-model="password" ng-class="{validInput: !error.password, wrongInput: error.password}" autocomplete="off">
       </div>
     </div>
     <div class="col-xs-12 col-md-12 noPaddingLeftRight">
@@ -80,13 +78,18 @@
           </div>
         </div>
       </div>
+      <!--Password-->
+      <div class="form-group">
+        <label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
+        <input type="password" class="form-control" name="password" id="" name="password" ng-model="password" ng-class="{validInput: !errorPassword, wrongInput: errorPassword}" autocomplete="off">
+      </div>
     </div>
 
     <div class="col-xs-12 col-sm-12 col-md-12 form-group noPaddingLeftRight">
       <br>
       <!--Submit button-->
       <div class="col-xs-6 col-sm-6 col-md-3">
-        <input type="submit" class="btn btn-success" ng-click="modifyAddress(selectedDid, selectedDidAddress, toAddress, transactionFee, password)" value="{{ 'PROFIL_MODIFY_ADDRESS.MODIFY_BUTTON' | translate }}">
+        <input type="submit" class="btn btn-success" ng-click="modifyAddress(selectedDid, selectedDidAddress, toAddress, transactionFee, password)" value="{{ 'PROFIL_MODIFY_ADDRESS.MODIFY_BUTTON' | translate }}" ng-disabled="errorPassword">
       </div>
       <!--Return button-->
       <div class="col-xs-6 col-sm-6 col-md-3">

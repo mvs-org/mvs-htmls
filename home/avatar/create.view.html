@@ -10,6 +10,7 @@
       <!--ID-->
       <div class="form-group">
         <label class="control-label">{{ 'CREATE_PROFILE.CREATE_ID' | translate }}</label>
+        <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.CREATE_AVATAR_NAME' | translate }}"></span>
         <input type="text" class="form-control" name="didSymbol" ng-model="didSymbol" ng-class="{validInput: !error.symbol_empty && !error.symbol_wrong_char && !error.symbol_already_exist, wrongInput: error.symbol_empty || error.symbol_wrong_char || error.symbol_already_exist}" required>
         <span ng-show="error.symbol_wrong_char" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_PROFILE.CREATE_ID_WRONG_CHARACTER' | translate }}</span>
         <span ng-show="error.symbol_already_exist" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_PROFILE.CREATE_ID_ALREADY_EXIST' | translate }}</span>
@@ -17,25 +18,18 @@
       <!--Address-->
   		<div class="form-group">
 				<label for="useAddress" class=" ddd control-label">{{ 'CREATE_PROFILE.SELECT_ADDRESS' | translate }}</label>
-				<select name="useAddress" type="address" name="didAddress" class="form-control" placeholder="" ng-model="didAddress" ng-class="{validInput: !error.didAddress_empty && !error.didAddress_already_used, wrongInput: error.didAddress_empty || error.didAddress_already_used}" required>
-					<option ng-repeat="oneAddress in listAddresses | orderBy:'balance':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-show="addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
+        <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.CREATE_AVATAR_LINKED_ADDRESS' | translate }}"></span>
+        <select name="useAddress" type="address" name="didAddress" class="form-control" placeholder="" ng-model="didAddress" ng-class="{validInput: !error.didAddress_empty && !error.didAddress_already_used, wrongInput: error.didAddress_empty || error.didAddress_already_used}" required>
+					<option ng-repeat="oneAddress in listAddresses | orderBy:'available':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-show="addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
 				</select>
         <span ng-show="error.didAddress_already_used" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'PROFIL_MODIFY_ADDRESS.ADDRESS_ALREADY_USED' | translate }}</span>
   		</div>
-      <!--Password-->
-      <div class="form-group">
-        <label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
-        <input type="password" class="form-control" name="password" id="" name="password" ng-model="password" ng-class="{validInput: !error.password, wrongInput: error.password}" autocomplete="off">
-      </div>
-    </div>
-    <div class="col-xs-12 col-sm-6">
-      {{ 'PROFILE.CREATE_EXPLANATION' | translate }}
     </div>
     <div class="col-xs-12 col-md-12 noPaddingLeftRight">
       <br>
       <!--Buttons-->
       <div class="col-xs-6 col-sm-3">
-        <input type="submit" ng-click="checkInputs(password)" value="{{ 'CREATE_PROFILE.CREATE_PROFILE_BUTTON' | translate }}" class="btn btn-success" ng-disabled="!submittable">
+        <input type="submit" ng-click="checkInputs()" value="{{ 'CREATE_PROFILE.CREATE_PROFILE_BUTTON' | translate }}" class="btn btn-success" ng-disabled="!submittable">
       </div>
       <div class="col-xs-6 col-sm-3">
         <a href="#!/avatar/myavatars" class="btn btn-success btn-success-secondary">{{ 'CREATE_PROFILE.BACK_TO_PROFILE' | translate }}</a>
@@ -65,13 +59,18 @@
           </div>
         </div>
       </div>
+      <!--Password-->
+      <div class="form-group">
+        <label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
+        <input type="password" class="form-control" name="password" id="" name="password" ng-model="password" ng-class="{validInput: !errorPassword, wrongInput: errorPassword}" autocomplete="off">
+      </div>
     </div>
 
     <div class="col-xs-12 col-sm-12 col-md-12 form-group noPaddingLeftRight">
       <br>
       <!--Submit button-->
       <div class="col-xs-6 col-sm-6 col-md-3">
-        <input type="submit" class="btn btn-success" ng-click="popupIssueDid()" value="{{ 'CREATE_PROFILE.CREATE_PROFILE_BUTTON' | translate }}">
+        <input type="submit" class="btn btn-success" ng-click="popupIssueDid(password)" value="{{ 'CREATE_PROFILE.CREATE_PROFILE_BUTTON' | translate }}" ng-disabled="errorPassword">
       </div>
       <!--Return button-->
       <div class="col-xs-6 col-sm-6 col-md-3">

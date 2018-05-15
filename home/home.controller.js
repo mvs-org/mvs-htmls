@@ -2457,7 +2457,6 @@
     //Check if the password is valid
     $scope.$watch('password', (newVal, oldVal) => {
       $scope.errorPassword = (newVal == undefined || newVal == '');
-      checkready();
     });
 
     function checkInputs() {
@@ -3201,17 +3200,12 @@
     });
 
     function checkInputs(password) {
-      if (localStorageService.get('credentials').password != password) {
-        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else {
-        //$scope.didSymbol = $filter('uppercase')($scope.didSymbol);
-        $scope.confirmation = true;
-        delete $rootScope.flash;
-      }
+      $scope.confirmation = true;
+      delete $rootScope.flash;
     }
 
     function createProfile(didAddress, didSymbol, password) {
+      NProgress.start();
       MetaverseService.IssueDid(didAddress, didSymbol, password)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
@@ -3226,6 +3220,8 @@
             }
           });
         }
+        NProgress.done();
+        $scope.password = '';
       });
     }
 
@@ -3233,12 +3229,16 @@
       ngDialog.closeAll();
     };
 
-    function popupIssueDid() {
-      ngDialog.open({
-          template: 'issueDid',
-          scope: $scope
-      });
-
+    function popupIssueDid(password) {
+      if (localStorageService.get('credentials').password != password) {
+        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else {
+        ngDialog.open({
+            template: 'issueDid',
+            scope: $scope
+        });
+      }
     }
 
     //Check if the form is submittable
@@ -3270,8 +3270,7 @@
 
     //Check if the password is valid
     $scope.$watch('password', (newVal, oldVal) => {
-      $scope.error.password = (newVal == undefined || newVal == '');
-      checkready();
+      $scope.errorPassword = (newVal == undefined || newVal == '');
     });
 
   }
@@ -3371,36 +3370,36 @@
     }
 
     function checkInputs(password) {
-      if (localStorageService.get('credentials').password != password) {
-        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else {
-        //$scope.didSymbol = $filter('uppercase')($scope.didSymbol);
-        $scope.confirmation = true;
-        delete $rootScope.flash;
-      }
+      $scope.confirmation = true;
+      delete $rootScope.flash;
     }
 
 
     function modifyAddress(selectedDid, selectedDidAddress, toAddress, transactionFee, password) {
-      NProgress.start();
-      var fee_value = $filter('convertfortx')(transactionFee, 8);
-      MetaverseService.DidModifyAddress(selectedDid, selectedDidAddress, toAddress, fee_value, password)
-      .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
-          $translate('MESSAGES.DID_ADDRESS_UPDATED').then( (data) =>  FlashService.Success(data, true));
-          $location.path('/avatar/myavatars');
-        } else {
-          $translate('MESSAGES.ERROR_DID_MODIFY_ADDRESS').then( (data) => {
-            if (response.message.message != undefined) {
-              FlashService.Error(data + " : " + response.message.message);
-            } else {
-              FlashService.Error(data);
-            }
-          });
-        }
-        NProgress.done();
-      });
+      if (localStorageService.get('credentials').password != password) {
+        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else {
+        NProgress.start();
+        var fee_value = $filter('convertfortx')(transactionFee, 8);
+        MetaverseService.DidModifyAddress(selectedDid, selectedDidAddress, toAddress, fee_value, password)
+        .then( (response) => {
+          if (typeof response.success !== 'undefined' && response.success) {
+            $translate('MESSAGES.DID_ADDRESS_UPDATED').then( (data) =>  FlashService.Success(data, true));
+            $location.path('/avatar/myavatars');
+          } else {
+            $translate('MESSAGES.ERROR_DID_MODIFY_ADDRESS').then( (data) => {
+              if (response.message.message != undefined) {
+                FlashService.Error(data + " : " + response.message.message);
+              } else {
+                FlashService.Error(data);
+              }
+            });
+          }
+          NProgress.done();
+          $scope.password = '';
+        });
+      }
     }
 
     //Check if the form is submittable
@@ -3438,8 +3437,7 @@
 
     //Check if the password is valid
     $scope.$watch('password', (newVal, oldVal) => {
-      $scope.error.password = (newVal == undefined || newVal == '');
-      checkready();
+      $scope.errorPassword = (newVal == undefined || newVal == '');
     });
 
 
@@ -3612,8 +3610,8 @@
             });
           }
           NProgress.done();
+          $scope.password = '';
         });
-        $scope.password = '';
       }
     }
 
@@ -3658,7 +3656,6 @@
     //Check if the password is valid
     $scope.$watch('password', (newVal, oldVal) => {
       $scope.errorPassword = (newVal == undefined || newVal == '');
-      checkready();
     });
 
 
@@ -3800,35 +3797,36 @@
     });
 
     function checkInputs(password) {
+      $scope.symbol = $filter('uppercase')($scope.symbol);
+      $scope.confirmation = true;
+      delete $rootScope.flash;
+    }
+
+    function issueCert(domain, symbol, toDID, transactionFee, password) {
       if (localStorageService.get('credentials').password != password) {
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else {
-        $scope.symbol = $filter('uppercase')($scope.symbol);
-        $scope.confirmation = true;
-        delete $rootScope.flash;
+        var fee_value = $filter('convertfortx')(transactionFee, 8);
+        NProgress.start();
+        MetaverseService.IssueCert(domain, 'NAMING', symbol, toDID, fee_value, password)
+        .then( (response) => {
+          if (typeof response.success !== 'undefined' && response.success) {
+            $translate('MESSAGES.CERT_ISSUED').then( (data) =>  FlashService.Success(data, true));
+            $location.path('/avatar/myavatars');
+          } else {
+            $translate('MESSAGES.ERROR_CERT_ISSUE').then( (data) => {
+              if (response.message.message != undefined) {
+                FlashService.Error(data + " : " + response.message.message);
+              } else {
+                FlashService.Error(data);
+              }
+            });
+          }
+          NProgress.done();
+          $scope.password = '';
+        });
       }
-    }
-
-    function issueCert(domain, symbol, toDID, transactionFee, password) {
-      var fee_value = $filter('convertfortx')(transactionFee, 8);
-      NProgress.start();
-      MetaverseService.IssueCert(domain, 'NAMING', symbol, toDID, fee_value, password)
-      .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
-          $translate('MESSAGES.CERT_TRANSFERED').then( (data) =>  FlashService.Success(data, true));
-          $location.path('/avatar/myavatars');
-        } else {
-          $translate('MESSAGES.ERROR_CERT_ISSUE').then( (data) => {
-            if (response.message.message != undefined) {
-              FlashService.Error(data + " : " + response.message.message);
-            } else {
-              FlashService.Error(data);
-            }
-          });
-        }
-        NProgress.done();
-      });
     }
 
     //Check if the form is submittable
@@ -3874,8 +3872,7 @@
 
     //Check if the password is valid
     $scope.$watch('password', (newVal, oldVal) => {
-      $scope.error.password = (newVal == undefined || newVal == '');
-      checkready();
+      $scope.errorPassword = (newVal == undefined || newVal == '');
     });
 
 
