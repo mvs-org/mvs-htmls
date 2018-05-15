@@ -519,5 +519,8 @@
   "HELP.SECONDARY_ISSUE_BUTTON_DISABLED": "This Asset cannot do a Secondary Issue, its Maximum supply cannot be changed",
   "DEPOSIT.AMOUNT_NOT_ENOUGH" : "You do not have enough ETP. Please remember to take into account the transaction fee",
   "MESSAGES.NOT_A_NUMBER": "Please enter a number",
-  "SETTINGS.EXPORT_WARNING_KEEP_KEYFILE": "Exporting your account create a keyfile in metaverse/mvs-htmls/keys folder. If this is not your personnal computer, you can delete this folder after the export."
+  "SETTINGS.EXPORT_WARNING_KEEP_KEYFILE": "Exporting your account create a keyfile in metaverse/mvs-htmls/keys folder. If this is not your personnal computer, you can delete this folder after the export.",
+  "EXPLORER.CERT_TRANSFER": "Transfer Certificate",
+  "EXPLORER.AVATAR_ISSUE": "Avatar Issue",
+  "EXPLORER.AVATAR_TRANSFER": "Avatar Transfer"
 }
