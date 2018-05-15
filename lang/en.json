@@ -524,7 +524,7 @@
   "EXPLORER.AVATAR_TRANSFER": "Avatar Transfer",
   "HELP.CREATE_AVATAR_NAME": "Your Avatar name is a unique symbol. It can contains uppercase letters, lowercase letters, dots and @. It be used instead of your ETP address to receive ETP and other assets.",
   "HELP.CREATE_AVATAR_LINKED_ADDRESS": "The address linked to the Avatar can be changed to another address of the same account in the future.",
-  "MESSAGES.CERT_ISSUED": "Certificate successfully created!",
+  "MESSAGES.CERT_ISSUED": "Certificate successfully created! Your transaction hash is: ",
   "TRANSFER_CERT.TYPE_SEND_WHICH_ONE": "Certificate to be sent",
   "HELP.TRANSFER_CERT_SYMBOL": "This is the symbol representing the certificate that you own",
   "HELP.TRANSFER_CERT_TYPE": "This is the type of the certificate that you have selected",
@@ -532,5 +532,6 @@
   "TRANSFER_CERT.TYPE_SEND_WHICH_ONE_BOTH": "Send both Secondary Issue and Domain certificates",
   "TRANSFER_CERT.TYPE_SEND_WHICH_ONE_SECONDARY_ISSUE": "Only send Secondary Issue certificate",
   "TRANSFER_CERT.TYPE_SEND_WHICH_ONE_DOMAIN": "Only send Domain certificate",
-  "HELP.TRANSFER_CERT_TO_AVATAR": "You can transfer you certificate(s) to another one of your avatars or to someone else avatar"
+  "HELP.TRANSFER_CERT_TO_AVATAR": "You can transfer you certificate(s) to another one of your avatars or to someone else avatar",
+  "CREATE_ASSET.ERROR_SYMBOL_ALREADY_EXIST": "This Asset already exist on the blockchain"
 }

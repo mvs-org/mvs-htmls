@@ -45,13 +45,13 @@
         <label for="toDID" class="control-label">{{ 'TRANSFER_CERT.TODID' | translate }}</label>
         <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.TRANSFER_CERT_TO_AVATAR' | translate }}"></span>
         <input class="form-control" name="toDID" ng-model="toDID" ng-class="{validInput: !error.toDID_empty && !error.toDID_not_exist, wrongInput: error.toDID_empty || error.toDID_not_exist}" required>
-        <span ng-show="error.toDID_not_exist" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.INCORRECT_RECIPIENT_AVATAR' | translate }}</span>
+        <div ng-show="error.toDID_not_exist" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.INCORRECT_RECIPIENT_AVATAR' | translate }}</div>
       </div>
       <!--Fee-->
       <div class="form-group">
         <label for="fee" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</label>
         <input type="number" step="0.00000001" class="form-control" name="fee" id="" ng-model="transactionFee" ng-class="{validInput: !error.fee_empty && !error.fee_too_low, wrongInput: error.fee_empty || error.fee_too_low}">
-        <span ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</span>
+        <div ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</div>
       </div>
     </div>
     <!--Certificates details-->

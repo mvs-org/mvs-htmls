@@ -19,13 +19,13 @@
 				<select name="useAddress" type="address" name="address" class="form-control" placeholder="" ng-model="address" ng-class="{validInput: !error.address_empty && !error.address_not_enough_etp, wrongInput: error.address_empty || error.address_not_enough_etp}" required>
 					<option ng-repeat="oneAddress in listAddresses | orderBy:'balance':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-show="addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
 				</select>
-        <span ng-show="error.address_not_enough_etp" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'SECONDARY_ISSUE.NOT_ENOUGH_ETP_PAY_FEE' | translate }}</span>
+        <div ng-show="error.address_not_enough_etp" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'SECONDARY_ISSUE.NOT_ENOUGH_ETP_PAY_FEE' | translate }}</div>
   		</div>
       <!--Fee-->
       <div class="form-group">
         <label for="fee" class="control-label">{{ 'TRANSFER_FEE' | translate }}</label>
         <input type="number" step="0.00000001" class="form-control" name="fee" id="" ng-model="transactionFee" ng-class="{validInput: !error.fee_empty && !error.fee_too_low, wrongInput: error.fee_empty || error.fee_too_low}">
-        <span ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</span>
+        <div ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</div>
       </div>
       <!--Password-->
       <div class="form-group">

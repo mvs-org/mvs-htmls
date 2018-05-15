@@ -30,14 +30,14 @@
         <select name="useAddress" type="address" name="toAddress" class="form-control" placeholder="" ng-model="toAddress" ng-class="{validInput: !error.toAddress_empty && !error.toAddress_already_used && !error.toAddress_not_enough_balance, wrongInput: error.toAddress_empty || error.toAddress_already_used || error.toAddress_not_enough_balance}" required>
 					<option ng-repeat="oneAddress in listAddresses | orderBy:'balance':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-show="addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
 				</select>
-        <span ng-show="error.toAddress_already_used" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'PROFIL_MODIFY_ADDRESS.ADDRESS_ALREADY_USED' | translate }}</span>
-        <span ng-show="error.toAddress_not_enough_balance" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'PROFIL_MODIFY_ADDRESS.ADDRESS_NOT_ENOUGH_BALANCE' | translate }}</span>
+        <div ng-show="error.toAddress_already_used" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'PROFIL_MODIFY_ADDRESS.ADDRESS_ALREADY_USED' | translate }}</div>
+        <div ng-show="error.toAddress_not_enough_balance" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'PROFIL_MODIFY_ADDRESS.ADDRESS_NOT_ENOUGH_BALANCE' | translate }}</div>
   		</div>
       <!--Fee-->
       <div class="form-group">
         <label for="fee" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</label>
         <input type="number" step="0.00000001" class="form-control" name="fee" id="" ng-model="transactionFee" ng-class="{validInput: !error.fee_empty && !error.fee_too_low, wrongInput: error.fee_empty || error.fee_too_low}">
-        <span ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</span>
+        <div ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</div>
       </div>
     </div>
     <div class="col-xs-12 col-md-12 noPaddingLeftRight">

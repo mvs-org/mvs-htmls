@@ -6,9 +6,10 @@
       <!--Symbol-->
       <div class="form-group">
         <label for="symbol" class="control-label">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</label>
-        <input type="text" class="form-control uppercase" name="symbol" required placeholder="" ng-model="symbol" ng-class="{validInput: !error.symbol_empty && !error.symbol_too_long && !error.symbol_wrong_char, wrongInput: error.symbol_empty || error.symbol_too_long || error.symbol_wrong_char}" autocomplete="off">
-        <span ng-show="error.symbol_too_long" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_ASSET.SYMBOL_TOO_LONG' | translate }}</span>
-        <span ng-show="error.symbol_wrong_char" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_ASSET.SYMBOL_WRONG_CHAR' | translate }}</span>
+        <input type="text" class="form-control uppercase" name="symbol" required placeholder="" ng-model="symbol" ng-class="{validInput: !error.symbol_empty && !error.symbol_too_long && !error.symbol_wrong_char && !error.symbol_already_exist, wrongInput: error.symbol_empty || error.symbol_too_long || error.symbol_wrong_char || error.symbol_already_exist}" autocomplete="off">
+        <div ng-show="error.symbol_too_long" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_ASSET.SYMBOL_TOO_LONG' | translate }}</div>
+        <div ng-show="error.symbol_wrong_char" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_ASSET.SYMBOL_WRONG_CHAR' | translate }}</div>
+        <div ng-show="error.symbol_already_exist" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_ASSET.ERROR_SYMBOL_ALREADY_EXIST' | translate }}</div>
       </div>
       <!--Avatar-->
       <div class="form-group">
@@ -40,13 +41,13 @@
             <option value="8">8</option>
           </select>
         </div>
-        <span ng-show="error.max_supply_decimals_too_high" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_ASSET.MAX_SUPPLY_DECIMALS_TOO_HIGH' | translate }}</span>
+        <div ng-show="error.max_supply_decimals_too_high" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_ASSET.MAX_SUPPLY_DECIMALS_TOO_HIGH' | translate }}</div>
       </div>
       <!--Description-->
       <div class="form-group">
         <label for="description" class="control-label">{{ 'ASSET_ASSET_CREATE_DESCRIPTION' | translate }}</label>
         <textarea class="form-control" name="description" required rows="6" cols="35" ng-model="description" ng-class="{validInput: !error.description_empty && !error.description_too_long, wrongInput: error.description_empty || error.description_too_long}" autocomplete="off"></textarea>
-        <span ng-show="error.description_too_long" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_ASSET.DESCRIPTION_TOO_LONG' | translate }}</span>
+        <div ng-show="error.description_too_long" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_ASSET.DESCRIPTION_TOO_LONG' | translate }}</div>
       </div>
       <!--Checkbox for secondaryissue-->
       <div class="form-group col-xs-12 spe-addrbox depositAddressCheckbox">

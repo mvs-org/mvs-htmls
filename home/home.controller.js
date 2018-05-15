@@ -2375,6 +2375,8 @@
     $scope.myDids = [];
     $scope.noDids = false;
     $scope.selectedDid = "";
+    $scope.assets = [];
+    $scope.listAllAssets = [];
 
     //Initialize form data
     function init() {
@@ -2407,6 +2409,21 @@
       }
     });
 
+    MetaverseService.ListAllAssets()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.assets = response.data.assets;
+        //All the details are hidden at the loading
+        if ($scope.assets != '') {
+          $scope.assets.forEach( (asset) => {
+            $scope.listAllAssets.push(asset.symbol);
+          });
+        } //else, there is no asset on the blockchain
+      } else {
+        //error while loading assets
+      }
+    });
+
     //Check if the form is submittable
     function checkready() {
       //Check for errors
@@ -2424,6 +2441,7 @@
       $scope.error.symbol_empty = (newVal == undefined || newVal === '');
       $scope.error.symbol_too_long = newVal != undefined ? !(newVal.length < 65) : false;
       $scope.error.symbol_wrong_char = (newVal != undefined && newVal != '') ? !newVal.match(/^[0-9A-Za-z.]+$/) : false;
+      $scope.error.symbol_already_exist = newVal != undefined ? $scope.listAllAssets.indexOf($filter('uppercase')(newVal)) > -1 : false;
       checkready();
     });
 
@@ -3685,6 +3703,8 @@
     $scope.issueCert = issueCert;
     $scope.myCertsLoaded = false;
     $scope.symbol = '';
+    $scope.assets = [];
+    $scope.listAllAssets = [];
 
     $scope.onChain = true;
     $scope.domain = $filter('uppercase')($location.path().split('/')[3]);
@@ -3782,6 +3802,21 @@
       });
     }
 
+    MetaverseService.ListAllAssets()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.assets = response.data.assets;
+        //All the details are hidden at the loading
+        if ($scope.assets != '') {
+          $scope.assets.forEach( (asset) => {
+            $scope.listAllAssets.push(asset.symbol);
+          });
+        } //else, there is no asset on the blockchain
+      } else {
+        //error while loading assets
+      }
+    });
+
     MetaverseService.ListAllDids()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
@@ -3817,7 +3852,7 @@
         MetaverseService.IssueCert(domain, 'NAMING', symbol, toDID, fee_value, password)
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success) {
-            $translate('MESSAGES.CERT_ISSUED').then( (data) =>  FlashService.Success(data, true));
+            $translate('MESSAGES.CERT_ISSUED').then( (data) => FlashService.Success(data + response.data.result.transaction.hash, true) );
             $location.path('/avatar/myavatars');
           } else {
             $translate('MESSAGES.ERROR_CERT_ISSUE').then( (data) => {
@@ -3852,11 +3887,12 @@
       checkready();
     });
 
-    //Check if the certification type is valid
+    //Check if the new asset symbol is valid
     $scope.$watch('symbol', (newVal, oldVal) => {
       $scope.error.symbol_empty = (newVal == undefined || newVal == '');
-      $scope.error.symbol_not_under_my_domain = newVal != undefined && $scope.domain != undefined ? !newVal.startsWith($scope.domain + '.') : false;
+      $scope.error.symbol_not_under_my_domain = newVal != undefined && $scope.domain != undefined ? !($filter('uppercase')(newVal).startsWith($scope.domain + '.')) : false;
       $scope.error.symbol_wrong_char = (newVal != undefined && newVal != '') ? !newVal.match(/^[0-9A-Za-z.]+$/) : false;
+      $scope.error.symbol_already_exist = newVal != undefined ? $scope.listAllAssets.indexOf($filter('uppercase')(newVal)) > -1 : false;
       $scope.warning.symbol_end_dot = newVal != undefined ? newVal.charAt(newVal.length-1) == '.' : false;
       checkready();
     });
