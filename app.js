@@ -237,43 +237,43 @@
             })
 
             .state('home.profile', {
-                templateUrl: "home/profile/index.view.html",
+                templateUrl: "home/avatar/index.view.html",
                 controller: 'ProfileController'
             })
 
-            .state('home.profile.myprofil', {
-                url: "/profile/myprofile",
-                templateUrl: "home/profile/myprofile.view.html",
+            .state('home.profile.myprofile', {
+                url: "/avatar/myavatars",
+                templateUrl: "home/avatar/myavatars.view.html",
                 controller: 'ProfileController'
             })
 
             .state('home.profile.create', {
-                url: "/profile/create",
-                templateUrl: "home/profile/create.view.html",
+                url: "/avatar/create",
+                templateUrl: "home/avatar/create.view.html",
                 controller: 'CreateProfileController'
             })
 
             .state('home.profile.all', {
-                url: "/profile/all",
-                templateUrl: "home/profile/all.view.html",
+                url: "/avatar/all",
+                templateUrl: "home/avatar/all.view.html",
                 controller: 'AllProfilesController'
             })
 
             .state('home.profile.modifyaddress', {
-                url: "/profile/modifyaddress/:didsymbol",
-                templateUrl: "home/profile/modifyaddress.view.html",
+                url: "/avatar/modifyaddress/:didsymbol",
+                templateUrl: "home/avatar/modifyaddress.view.html",
                 controller: 'ModifyAddressController'
             })
 
             .state('home.profile.transfercert', {
-                url: "/profile/transfercert/:symbol",
-                templateUrl: "home/profile/transfercert.view.html",
+                url: "/avatar/transfercert/:symbol",
+                templateUrl: "home/avatar/transfercert.view.html",
                 controller: 'TransferCertController'
             })
 
             .state('home.profile.issuecert', {
-                url: "/profile/issuecert/:symbol",
-                templateUrl: "home/profile/issuecert.view.html",
+                url: "/avatar/issuecert/:symbol",
+                templateUrl: "home/avatar/issuecert.view.html",
                 controller: 'IssueCertController'
             })
 

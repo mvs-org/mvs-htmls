@@ -38,7 +38,7 @@
         <input type="submit" ng-click="checkInputs(password)" value="{{ 'CREATE_PROFILE.CREATE_PROFILE_BUTTON' | translate }}" class="btn btn-success" ng-disabled="!submittable">
       </div>
       <div class="col-xs-6 col-sm-3">
-        <a href="#!/profile/myprofile" class="btn btn-success btn-success-secondary">{{ 'CREATE_PROFILE.BACK_TO_PROFILE' | translate }}</a>
+        <a href="#!/avatar/myavatars" class="btn btn-success btn-success-secondary">{{ 'CREATE_PROFILE.BACK_TO_PROFILE' | translate }}</a>
       </div>
     </div>
   </form>
@@ -93,7 +93,7 @@
     <button class="btn btn-link-red createAssetPopupButtons col-xs-6" ng-click="closeAll()">
       {{ 'CANCEL_BUTTON' | translate }}
     </button>
-    <a href="#!/profile/myprofile" class="btn btn-success createAssetPopupButtons col-xs-6" ng-click="createProfile(didAddress, didSymbol, password);closeAll()">
+    <a href="#!/avatar/myavatars" class="btn btn-success createAssetPopupButtons col-xs-6" ng-click="createProfile(didAddress, didSymbol, password);closeAll()">
       {{ 'CREATE_PROFILE_VALIDATION.ISSUE_NOW' | translate }}
     </a>
   </div>

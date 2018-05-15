@@ -2291,7 +2291,7 @@
           //TODO
           /*if (typeof response.success !== 'undefined' && response.success) {
             $translate('MESSAGES.DID_CREATED').then( (data) =>  FlashService.Success(data, true));
-            $location.path('/profile/myprofile');
+            $location.path('/avatar/myavatars');
           } else {
             $translate('MESSAGES.ERROR_DID_CREATION').then( (data) => {
               $scope.confirmation = false;
@@ -3216,7 +3216,7 @@
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $translate('MESSAGES.DID_CREATED').then( (data) =>  FlashService.Success(data, true));
-          $location.path('/profile/myprofile');
+          $location.path('/avatar/myavatars');
         } else {
           $translate('MESSAGES.ERROR_DID_CREATION').then( (data) => {
             if (response.message.message != undefined) {
@@ -3389,7 +3389,7 @@
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $translate('MESSAGES.DID_ADDRESS_UPDATED').then( (data) =>  FlashService.Success(data, true));
-          $location.path('/profile/myprofile');
+          $location.path('/avatar/myavatars');
         } else {
           $translate('MESSAGES.ERROR_DID_MODIFY_ADDRESS').then( (data) => {
             if (response.message.message != undefined) {
@@ -3601,7 +3601,7 @@
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success) {
             $translate('MESSAGES.CERT_TRANSFERED').then( (data) =>  FlashService.Success(data, true));
-            $location.path('/profile/myprofile');
+            $location.path('/avatar/myavatars');
           } else {
             $translate('MESSAGES.ERROR_CERT_TRANSFERED').then( (data) => {
               if (response.message.message != undefined) {
@@ -3817,7 +3817,7 @@
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $translate('MESSAGES.CERT_TRANSFERED').then( (data) =>  FlashService.Success(data, true));
-          $location.path('/profile/myprofile');
+          $location.path('/avatar/myavatars');
         } else {
           $translate('MESSAGES.ERROR_CERT_ISSUE').then( (data) => {
             if (response.message.message != undefined) {

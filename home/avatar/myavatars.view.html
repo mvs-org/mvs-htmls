@@ -1,12 +1,9 @@
 <div class="AStitle-tabs">
   <ul class="nav nav-pills tabsMenu">
-    <li class="active" role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.MY_PROFILE' | translate}}</a></li>
-    <!--li class="disabled" role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.AUTHORIZE' | translate}}</a></li>
-    <li class="disabled" role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.REQUEST_LIST' | translate}}</a></li>
-    <li class="disabled" role="presentation"><a href="#!/profile/myprofile" class="btn-link-menu">{{'PROFILE.RELATIONSHIPS' | translate}}</a></li-->
-    <li role="presentation"><a href="#!/profile/all" class="btn-link-menu">{{'PROFILE.ALL' | translate}}</a></li>
-    <li role="presentation"><a href="#!/profile/transfercert/" class="btn-link-menu">{{ 'TRANSFER_CERT.HEADLINE' | translate }}</a></li>
-    <li role="presentation"><a href="#!/profile/issuecert/" class="btn-link-menu">{{ 'ISSUE_CERT.HEADLINE' | translate }}</a></li>
+    <li class="active" role="presentation"><a href="#!/avatar/myavatars" class="btn-link-menu">{{'PROFILE.MY_PROFILE' | translate}}</a></li>
+    <li role="presentation"><a href="#!/avatar/all" class="btn-link-menu">{{'PROFILE.ALL' | translate}}</a></li>
+    <li role="presentation"><a href="#!/avatar/transfercert/" class="btn-link-menu">{{ 'TRANSFER_CERT.HEADLINE' | translate }}</a></li>
+    <li role="presentation"><a href="#!/avatar/issuecert/" class="btn-link-menu">{{ 'ISSUE_CERT.HEADLINE' | translate }}</a></li>
   </ul>
 </div>
 
@@ -18,7 +15,7 @@
       <button class="btn-link-black smallButton menuButton" ng-click="onChain = false" ng-class="{selectedOnOffChain:onChain === false}">Off-chain</button>
     </div>
     <div class="col-xs-6 moreAssetsButton noPaddingLeftRight">
-      <a href="#!/profile/create" class="btn btn-success smallButton"><span class="glyphicon glyphicon-plus"></span> {{ 'PROFILE.CREATE_NEW_PROFILE_BUTTON' | translate }}</a>
+      <a href="#!/avatar/create" class="btn btn-success smallButton"><span class="glyphicon glyphicon-plus"></span> {{ 'PROFILE.CREATE_NEW_PROFILE_BUTTON' | translate }}</a>
     </div>
   </div>
 
@@ -41,7 +38,7 @@
           <div class="panel-heading">
             <h3 class="panel-title col-md-6 noPaddingLeftRight">{{'PROFIL.ADDRESSES_HISTORY' | translate}}</h3>
             <div class="sendAssetButton assetDetailsBoxButton col-md-6 noPaddingLeftRight">
-              <a href="#!/profile/modifyaddress/{{selectedDid}}">
+              <a href="#!/avatar/modifyaddress/{{selectedDid}}">
                 <button class="btn btn-success smallButton assetBoxButton">{{'PROFIL.UPDATE_ADDRESS' | translate}}</button>
               </a>
             </div>
@@ -67,7 +64,7 @@
           <div class="panel-heading">
             <h3 class="panel-title col-md-6 noPaddingLeftRight">{{'PROFIL.AVATAR_CERTIFICATES' | translate}}</h3>
             <div class="sendAssetButton assetDetailsBoxButton col-md-6 noPaddingLeftRight">
-              <a href="#!/profile/issuecert/">
+              <a href="#!/avatar/issuecert/">
                 <button class="btn btn-success smallButton assetBoxButton">{{'PROFIL.ISSUE_CERT_BUTTON' | translate}}</button>
               </a>
             </div>
@@ -83,7 +80,7 @@
               <div ng-show="cert.certs == 4" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_NAMING' | translate }}</div>
               <div class="assetValueColumn col-xs-3 noPaddingLeftRight">{{cert.symbol}}</div>
               <div class="sendAssetButton col-xs-6 noPaddingLeftRight assetDetailsBoxButton">
-                <a href="#!/profile/transfercert/{{cert.symbol}}">
+                <a href="#!/avatar/transfercert/{{cert.symbol}}">
                   <button class="btn btn-success smallButton assetBoxButton">{{'PROFIL.CERT_TRANSFER_BUTTON' | translate}}</button>
                 </a>
               </div>
