@@ -13,6 +13,7 @@
       <!--Cert-->
       <div class="form-group">
         <label class="control-label">{{ 'TRANSFER_CERT.SYMBOL' | translate }}</label>
+        <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.TRANSFER_CERT_SYMBOL' | translate }}"></span>
         <span ng-hide="myCertsLoaded" class="miniSpinner"></span>
         <select name="certSymbol" type="certSymbol" name="certSymbol" class="form-control" placeholder="" ng-model="certSymbol" ng-class="{validInput: !error.certSymbol && myCertsLoaded, wrongInput: error.certSymbol || !myCertsLoaded}" ng-change="changeSymbol(certSymbol)" required>
 					<option ng-repeat="cert in myCerts" value="{{cert.symbol}}" title="{{cert.symbol}}">{{cert.symbol}}</option>
@@ -20,16 +21,29 @@
       </div>
       <!--Type-->
       <div class="form-group">
-        <label for="useAddress" class="control-label">{{ 'TRANSFER_CERT.TYPE' | translate }}</label>
+        <label for="certType" class="control-label">{{ 'TRANSFER_CERT.TYPE' | translate }}</label>
+        <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.TRANSFER_CERT_TYPE' | translate }}"></span>
+        <span ng-hide="myCertsLoaded" class="miniSpinner"></span>
         <div ng-show="certType == ''" class="form-control" name="certType" id="" name="certType" ng-class="{validInput: !error.certType, wrongInput: error.certType}" disabled></div>
         <div ng-show="certType == 1" class="form-control" name="certType" id="" name="certType" ng-class="{validInput: !error.certType, wrongInput: error.certType}" disabled>{{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }}</div>
         <div ng-show="certType == 2" class="form-control" name="certType" id="" name="certType" ng-class="{validInput: !error.certType, wrongInput: error.certType}" disabled>{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
         <div ng-show="certType == 3" class="form-control" name="certType" id="" name="certType" ng-class="{validInput: !error.certType, wrongInput: error.certType}" disabled>{{ 'PROFIL.CERT_DOMAIN_AND_SECONDARY_ISSUE' | translate }}</div>
         <div ng-show="certType == 4" class="form-control" name="certType" id="" name="certType" ng-class="{validInput: !error.certType, wrongInput: error.certType}" disabled>{{ 'PROFIL.CERT_NAMING' | translate }}</div>
       </div>
+      <!--Type-->
+      <div class="form-group" ng-show="certType == 3">
+        <label for="useAddress" class="control-label">{{ 'TRANSFER_CERT.TYPE_SEND_WHICH_ONE' | translate }}</label>
+        <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.TRANSFER_CERT_TYPE_SEND_WHICH_ONE' | translate }}"></span>
+        <select name="selectType" type="selectType" name="selectType" class="form-control" placeholder="" ng-model="selectType" ng-class="{validInput: true, wrongInput: false}" required>
+          <option value="1">{{ 'TRANSFER_CERT.TYPE_SEND_WHICH_ONE_SECONDARY_ISSUE' | translate }}</option>
+          <option value="2">{{ 'TRANSFER_CERT.TYPE_SEND_WHICH_ONE_DOMAIN' | translate }}</option>
+          <option value="3">{{ 'TRANSFER_CERT.TYPE_SEND_WHICH_ONE_BOTH' | translate }}</option>
+        </select>
+      </div>
       <!--Recipient DID-->
       <div class="form-group">
         <label for="toDID" class="control-label">{{ 'TRANSFER_CERT.TODID' | translate }}</label>
+        <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.TRANSFER_CERT_TO_AVATAR' | translate }}"></span>
         <input class="form-control" name="toDID" ng-model="toDID" ng-class="{validInput: !error.toDID_empty && !error.toDID_not_exist, wrongInput: error.toDID_empty || error.toDID_not_exist}" required>
         <span ng-show="error.toDID_not_exist" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.INCORRECT_RECIPIENT_AVATAR' | translate }}</span>
       </div>
@@ -93,6 +107,12 @@
             <div ng-show="certType == 3" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAIN_AND_SECONDARY_ISSUE' | translate }}</div>
             <div ng-show="certType == 4" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'PROFIL.CERT_NAMING' | translate }}</div>
           </div>
+          <div ng-show="certType == 3" class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_CERT.TYPE_SEND_WHICH_ONE' | translate }}</div>
+            <div ng-show="selectType == 1" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'TRANSFER_CERT.TYPE_SEND_WHICH_ONE_SECONDARY_ISSUE' | translate }}</div>
+            <div ng-show="selectType == 2" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'TRANSFER_CERT.TYPE_SEND_WHICH_ONE_DOMAIN' | translate }}</div>
+            <div ng-show="selectType == 3" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'TRANSFER_CERT.TYPE_SEND_WHICH_ONE_BOTH' | translate }}</div>
+          </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_CERT.TODID' | translate }}</div>
             <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{toDID}}</div>
@@ -114,7 +134,7 @@
       <br>
       <!--Submit button-->
       <div class="col-xs-6 col-sm-6 col-md-3">
-        <input type="submit" class="btn btn-success" ng-click="transferCert(certSymbol, certType, toDID, transactionFee, password)" value="{{ 'TRANSFER_CERT.TRANSFER_BUTTON' | translate }}" ng-disabled="errorPassword">
+        <input type="submit" class="btn btn-success" ng-click="transferCert(certSymbol, certType, selectType, toDID, transactionFee, password)" value="{{ 'TRANSFER_CERT.TRANSFER_BUTTON' | translate }}" ng-disabled="errorPassword">
       </div>
       <!--Return button-->
       <div class="col-xs-6 col-sm-6 col-md-3">

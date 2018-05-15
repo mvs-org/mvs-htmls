@@ -477,7 +477,7 @@
   "PROFIL.AVATAR_CERTIFICATES": "Avatar certificates",
   "PROFIL.CERT_SECONDARY_ISSUE": "Secondary Issue",
   "PROFIL.CERT_DOMAIN": "Domain",
-  "PROFIL.CERT_DOMAIN_AND_SECONDARY_ISSUE": "Domain and Secondary Issue",
+  "PROFIL.CERT_DOMAIN_AND_SECONDARY_ISSUE": "Secondary Issue and Domain",
   "PROFIL.CERT_NAMING": "Naming",
   "PROFIL.NO_CERTIFICATES": "You do not have any certificate yet",
   "PROFIL.CERTIFICATES_EXPLANATION_TITLE": "Certificates types",
@@ -490,7 +490,7 @@
   "TRANSFER_CERT.TYPE": "Certificate type",
   "TRANSFER_CERT.TODID": "Recipient Avatar",
   "TRANSFER_CERT.TRANSFER_BUTTON": "Transfer certificate",
-  "MESSAGES.CERT_TRANSFERED": "Certificate successfully transfered!",
+  "MESSAGES.CERT_TRANSFERED": "Certificate successfully transfered! Your transaction hash is: ",
   "MESSAGES.ERROR_CERT_TRANSFERED": "Impossible to transfer this certificate",
   "MESSAGES.UNKNOWN_CERTIFICATE_TYPE": "Unknown type of certificate",
   "ASSET.NO_ASSETS": "You don't have any asset yet. You can create one by clicking on the Create Asset button",
@@ -524,5 +524,13 @@
   "EXPLORER.AVATAR_TRANSFER": "Avatar Transfer",
   "HELP.CREATE_AVATAR_NAME": "Your Avatar name is a unique symbol. It can contains uppercase letters, lowercase letters, dots and @. It be used instead of your ETP address to receive ETP and other assets.",
   "HELP.CREATE_AVATAR_LINKED_ADDRESS": "The address linked to the Avatar can be changed to another address of the same account in the future.",
-  "MESSAGES.CERT_ISSUED": "Certificate successfully created!"
+  "MESSAGES.CERT_ISSUED": "Certificate successfully created!",
+  "TRANSFER_CERT.TYPE_SEND_WHICH_ONE": "Certificate to be sent",
+  "HELP.TRANSFER_CERT_SYMBOL": "This is the symbol representing the certificate that you own",
+  "HELP.TRANSFER_CERT_TYPE": "This is the type of the certificate that you have selected",
+  "HELP.TRANSFER_CERT_TYPE_SEND_WHICH_ONE": "If you own both Secondary Issue and Domain certificates, you can choose to send both or only one of them",
+  "TRANSFER_CERT.TYPE_SEND_WHICH_ONE_BOTH": "Send both Secondary Issue and Domain certificates",
+  "TRANSFER_CERT.TYPE_SEND_WHICH_ONE_SECONDARY_ISSUE": "Only send Secondary Issue certificate",
+  "TRANSFER_CERT.TYPE_SEND_WHICH_ONE_DOMAIN": "Only send Domain certificate",
+  "HELP.TRANSFER_CERT_TO_AVATAR": "You can transfer you certificate(s) to another one of your avatars or to someone else avatar"
 }

@@ -3464,6 +3464,7 @@
 
     $scope.onChain = true;
     $scope.certSymbol = $location.path().split('/')[3];
+    $scope.selectType = '3';
 
     function listMultiSign() {
       NProgress.start();
@@ -3588,17 +3589,21 @@
       }
     }
 
-    function transferCert(certSymbol, certType, toDID, transactionFee, password) {
+    function transferCert(certSymbol, certType, selectType, toDID, transactionFee, password) {
+      var certToSend = certType;
+      if(certType == 3) {
+        certToSend = parseInt(selectType);
+      }
       var fee_value = $filter('convertfortx')(transactionFee, 8);
       if (localStorageService.get('credentials').password != password) {
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else {
         NProgress.start();
-        MetaverseService.TransferCert(certSymbol, certType, toDID, fee_value, password)
+        MetaverseService.TransferCert(certSymbol, certToSend, toDID, fee_value, password)
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success) {
-            $translate('MESSAGES.CERT_TRANSFERED').then( (data) =>  FlashService.Success(data, true));
+            $translate('MESSAGES.CERT_TRANSFERED').then( (data) => FlashService.Success(data + response.data.result.transaction.hash, true) );
             $location.path('/avatar/myavatars');
           } else {
             $translate('MESSAGES.ERROR_CERT_TRANSFERED').then( (data) => {
