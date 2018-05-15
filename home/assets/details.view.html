@@ -51,7 +51,8 @@
             <div ng-show="asset.secondaryissue_threshold == 127" class="assetValueColumn col-xs-3 noPaddingLeftRight">{{'ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED' | translate}}</div>
             <div class="sendAssetButton col-xs-6 noPaddingLeftRight assetDetailsBoxButton" ng-show="asset.status=='issued'">
               <a href="#!/asset/secondaryissue/{{asset.symbol}}">
-                <button class="btn btn-success smallButton assetBoxButton" ng-disabled="asset.secondaryissue_threshold == '0'" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_BUTTON_DISABLED' | translate }}">{{'ASSET_CREATE.SECONDARY_ISSUE_BUTTON' | translate}}</button>
+                <button ng-hide="asset.secondaryissue_threshold == '0'" class="btn btn-success smallButton assetBoxButton">{{'ASSET_CREATE.SECONDARY_ISSUE_BUTTON' | translate}}</button>
+                <button ng-show="asset.secondaryissue_threshold == '0'" class="btn btn-success smallButton assetBoxButton" ng-disabled="true" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_BUTTON_DISABLED' | translate }}">{{'ASSET_CREATE.SECONDARY_ISSUE_BUTTON' | translate}}</button>
               </a>
             </div>
           </div>

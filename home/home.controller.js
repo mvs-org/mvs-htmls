@@ -263,13 +263,13 @@
 
             //Search for the value of the input and put it in $scope.transactionInputsValues
             $scope.transactionInputsValues = [];
-            response.data.transaction.inputs.forEach(function(e) {
+            /*response.data.transaction.inputs.forEach(function(e) { Removed, too slow
               if (e.previous_output.hash != '0000000000000000000000000000000000000000000000000000000000000000') {
-                //searchInputValue(e.previous_output.hash, e.address, e.previous_output.index); Removed, too slow
+                searchInputValue(e.previous_output.hash, e.address, e.previous_output.index);
               } else {
                 //It's coming from Deposit interests or Mining
               }
-            });
+            });*/
           }
           NProgress.done();
         });
@@ -2374,13 +2374,13 @@
     $scope.checkInputs = checkInputs;
     $scope.myDids = [];
     $scope.noDids = false;
-    $scope.selectedDid = [];
+    $scope.selectedDid = "";
 
     //Initialize form data
     function init() {
       $scope.symbol = '';
       $scope.description = '';
-      $scope.max_supply = 0;
+      $scope.max_supply = '';
       $scope.secondary_offering = 0;
       $scope.decimals = '';
       $scope.password = '';
@@ -2399,7 +2399,7 @@
           $scope.myDids = response.data.result.dids;
         } else {
           $scope.noDids = true;
-          $scope.selectedDid = "";
+          $scope.selectedDid = "nodid";
         }
       } else {
         $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
@@ -2429,7 +2429,7 @@
 
     //Check if the avatar is valid
     $scope.$watch('selectedDid', (newVal, oldVal) => {
-      $scope.error.avatar = (newVal == undefined || newVal === '');
+      $scope.error.avatar = (newVal == undefined || newVal === '' || newVal == 'nodid');
       checkready();
     });
 
@@ -2456,42 +2456,43 @@
 
     //Check if the password is valid
     $scope.$watch('password', (newVal, oldVal) => {
-      $scope.error.password = (newVal == undefined || newVal == '');
+      $scope.errorPassword = (newVal == undefined || newVal == '');
       checkready();
     });
 
     function checkInputs() {
-      if (localStorageService.get('credentials').password != $scope.password) {
-        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else {
-        $scope.symbol = $filter('uppercase')($scope.symbol);
-        $scope.confirmation = true;
-        delete $rootScope.flash;
-      }
+      $scope.symbol = $filter('uppercase')($scope.symbol);
+      $scope.confirmation = true;
+      delete $rootScope.flash;
     }
 
     //Create asset function
     function createasset() {
-      var quantity = $filter('convertfortx')($scope.max_supply, $scope.decimals);
-      NProgress.start();
-      //Let Metaverse create an local asset
-      MetaverseService.CreateAsset($scope.symbol, $scope.selectedDid, quantity, $scope.secondary_offering, $scope.decimals, $scope.description, $scope.secondaryissue_rate)
-      .then( (response) => {
-        NProgress.done();
-        if (typeof response.success !== 'undefined' && response.success) {
-          //Show success message
-          popupIssue($scope.symbol);
-          $translate('MESSAGES.ASSSET_CREATED_LOCAL_SUCCESS').then( (data) => {
-            FlashService.Success(data, true);
-            //Redirect user to the assets page
-          });
-          $window.scrollTo(0,0);
-        } else{
-          $translate('MESSAGES.ASSETS_CREATE_ERROR').then( (data) => FlashService.Error(data + ' ' + response.message.message) );
-          $window.scrollTo(0,0);
-        }
-      });
+      if (localStorageService.get('credentials').password != $scope.password) {
+        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else {
+        var quantity = $filter('convertfortx')($scope.max_supply, $scope.decimals);
+        NProgress.start();
+        //Let Metaverse create an local asset
+        MetaverseService.CreateAsset($scope.symbol, $scope.selectedDid, quantity, $scope.secondary_offering, $scope.decimals, $scope.description, $scope.secondaryissue_rate)
+        .then( (response) => {
+          NProgress.done();
+          if (typeof response.success !== 'undefined' && response.success) {
+            //Show success message
+            popupIssue($scope.symbol);
+            $translate('MESSAGES.ASSSET_CREATED_LOCAL_SUCCESS').then( (data) => {
+              FlashService.Success(data, true);
+              //Redirect user to the assets page
+            });
+            $window.scrollTo(0,0);
+          } else{
+            $translate('MESSAGES.ASSETS_CREATE_ERROR').then( (data) => FlashService.Error(data + ' ' + response.message.message) );
+            $window.scrollTo(0,0);
+          }
+        });
+        $scope.password = '';
+      }
     }
     $scope.closeAll = function () {
       ngDialog.closeAll();
@@ -3382,6 +3383,7 @@
 
 
     function modifyAddress(selectedDid, selectedDidAddress, toAddress, transactionFee, password) {
+      NProgress.start();
       var fee_value = $filter('convertfortx')(transactionFee, 8);
       MetaverseService.DidModifyAddress(selectedDid, selectedDidAddress, toAddress, fee_value, password)
       .then( (response) => {
@@ -3397,6 +3399,7 @@
             }
           });
         }
+        NProgress.done();
       });
     }
 
@@ -3577,12 +3580,9 @@
       listMyCerts();
     });
 
-    function checkInputs(password, certType) {
+    function checkInputs(certType) {
       if($scope.certType != 1 && $scope.certType != 2 &&  $scope.certType != 3 && $scope.certType != 4) {
         $translate('MESSAGES.UNKNOWN_CERTIFICATE_TYPE').then( (data) =>  FlashService.Error(data));
-        $window.scrollTo(0,0);
-      } else if (localStorageService.get('credentials').password != password) {
-        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else {
         $scope.confirmation = true;
@@ -3592,23 +3592,29 @@
 
     function transferCert(certSymbol, certType, toDID, transactionFee, password) {
       var fee_value = $filter('convertfortx')(transactionFee, 8);
-      NProgress.start();
-      MetaverseService.TransferCert(certSymbol, certType, toDID, fee_value, password)
-      .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
-          $translate('MESSAGES.CERT_TRANSFERED').then( (data) =>  FlashService.Success(data, true));
-          $location.path('/profile/myprofile');
-        } else {
-          $translate('MESSAGES.ERROR_CERT_TRANSFERED').then( (data) => {
-            if (response.message.message != undefined) {
-              FlashService.Error(data + " : " + response.message.message);
-            } else {
-              FlashService.Error(data);
-            }
-          });
-        }
-        NProgress.done();
-      });
+      if (localStorageService.get('credentials').password != password) {
+        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else {
+        NProgress.start();
+        MetaverseService.TransferCert(certSymbol, certType, toDID, fee_value, password)
+        .then( (response) => {
+          if (typeof response.success !== 'undefined' && response.success) {
+            $translate('MESSAGES.CERT_TRANSFERED').then( (data) =>  FlashService.Success(data, true));
+            $location.path('/profile/myprofile');
+          } else {
+            $translate('MESSAGES.ERROR_CERT_TRANSFERED').then( (data) => {
+              if (response.message.message != undefined) {
+                FlashService.Error(data + " : " + response.message.message);
+              } else {
+                FlashService.Error(data);
+              }
+            });
+          }
+          NProgress.done();
+        });
+        $scope.password = '';
+      }
     }
 
     //Check if the form is submittable
@@ -3651,7 +3657,7 @@
 
     //Check if the password is valid
     $scope.$watch('password', (newVal, oldVal) => {
-      $scope.error.password = (newVal == undefined || newVal == '');
+      $scope.errorPassword = (newVal == undefined || newVal == '');
       checkready();
     });
 

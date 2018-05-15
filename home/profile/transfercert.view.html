@@ -42,11 +42,6 @@
         <input type="number" step="0.00000001" class="form-control" name="fee" id="" ng-model="transactionFee" ng-class="{validInput: !error.fee_empty && !error.fee_too_low, wrongInput: error.fee_empty || error.fee_too_low}">
         <span ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</span>
       </div>
-      <!--Password-->
-      <div class="form-group">
-        <label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
-        <input type="password" class="form-control" name="password" id="" name="password" ng-model="password" ng-class="{validInput: !error.password, wrongInput: error.password}" autocomplete="off">
-      </div>
     </div>
     <!--Certificates details-->
     <div class="col-sm-12 col-md-6">
@@ -74,7 +69,7 @@
       <br>
       <!--Buttons-->
       <div class="col-xs-6 col-sm-3">
-        <input type="submit" ng-click="checkInputs(password, certType)" value="{{ 'TRANSFER_CERT.TRANSFER_BUTTON' | translate }}" class="btn btn-success" ng-disabled="!submittable">
+        <input type="submit" ng-click="checkInputs(certType)" value="{{ 'TRANSFER_CERT.TRANSFER_BUTTON' | translate }}" class="btn btn-success" ng-disabled="!submittable">
       </div>
       <div class="col-xs-6 col-sm-3">
         <a href="#!/profile/myprofile" class="btn btn-success btn-success-secondary">{{ 'CREATE_PROFILE.BACK_TO_PROFILE' | translate }}</a>
@@ -111,13 +106,18 @@
           </div>
         </div>
       </div>
+      <!--Password-->
+      <div class="form-group">
+        <label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
+        <input type="password" class="form-control" name="password" id="" name="password" ng-model="password" ng-class="{validInput: !errorPassword, wrongInput: errorPassword}" autocomplete="off">
+      </div>
     </div>
 
     <div class="col-xs-12 col-sm-12 col-md-12 form-group noPaddingLeftRight">
       <br>
       <!--Submit button-->
       <div class="col-xs-6 col-sm-6 col-md-3">
-        <input type="submit" class="btn btn-success" ng-click="transferCert(certSymbol, certType, toDID, transactionFee, password)" value="{{ 'TRANSFER_CERT.TRANSFER_BUTTON' | translate }}">
+        <input type="submit" class="btn btn-success" ng-click="transferCert(certSymbol, certType, toDID, transactionFee, password)" value="{{ 'TRANSFER_CERT.TRANSFER_BUTTON' | translate }}" ng-disabled="errorPassword">
       </div>
       <!--Return button-->
       <div class="col-xs-6 col-sm-6 col-md-3">

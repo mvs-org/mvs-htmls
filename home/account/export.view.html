@@ -16,30 +16,27 @@
 </div>
 <br/>
 <form class="row">
-  <div class="col-md-12 form-group noPaddingLeftRight">
-    <div class="col-md-6">
+  <div class="col-xs-12 col-sm-6">
+    <div class="form-group">
       <label for="password" class="control-label">{{ 'SETTINGS_BACKUP_PASSWORD' | translate }}</label>
       <input type="password" class="form-control" name="password" id="" ng-model="password" autocomplete="off" required>
     </div>
-  </div>
-  <div class="col-md-12 form-group noPaddingLeftRight">
-    <div class="col-md-6">
+    <div class="form-group">
       <label for="password" class="control-label">{{ 'SETTINGS.MNEMONIC_LAST_WORD' | translate }}</label>
       <input type="password" class="form-control" name="password" id="" ng-model="last_word" autocomplete="off" required>
     </div>
   </div>
-  <!--div class="form-group">
-    <label for="path" class="control-label">{{ 'SETTINGS.EXPORT_ACCOUNT_PATH' | translate }}</label>
-    <input type="path" class="form-control" name="path" id="" ng-model="path">
-  </div-->
+  <div class="col-xs-12 col-sm-6">
+    <div class="red"><span class="glyphicon glyphicon-warning-sign"></span> {{ 'SETTINGS.EXPORT_WARNING_KEEP_KEYFILE' | translate }}</div>
+  </br>
+  </div>
   <div class="col-xs-12 col-sm-12 col-md-12 form-group noPaddingLeftRight">
-    <br>
     <!--Submit button-->
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-6 col-sm-3">
       <button type="submit" class="btn btn-success" ng-click="exportAccount(password, last_word, true)">{{ 'SETTINGS_EXPORT_ACCOUNT_BUTTON' | translate }}</button>
     </div>
     <!--Return button-->
-    <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="col-xs-6 col-sm-3">
       <button type="submit" class="btn btn-success btn-success-secondary" ng-click="exportAccount(password, last_word, false)">{{ 'SETTINGS_EXPORT_ACCOUNT_BUTTON_TO_APP' | translate }}</button>
     </div>
   </div>
