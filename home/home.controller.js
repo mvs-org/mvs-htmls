@@ -3227,7 +3227,7 @@
       MetaverseService.IssueDid(didAddress, didSymbol, password)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
-          $translate('MESSAGES.DID_CREATED').then( (data) =>  FlashService.Success(data, true));
+          $translate('MESSAGES.DID_CREATED').then( (data) => FlashService.Success(data + response.data.result.transaction.hash, true) );
           $location.path('/avatar/myavatars');
         } else {
           $translate('MESSAGES.ERROR_DID_CREATION').then( (data) => {
@@ -3403,7 +3403,7 @@
         MetaverseService.DidModifyAddress(selectedDid, selectedDidAddress, toAddress, fee_value, password)
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success) {
-            $translate('MESSAGES.DID_ADDRESS_UPDATED').then( (data) =>  FlashService.Success(data, true));
+            $translate('MESSAGES.DID_ADDRESS_UPDATED').then( (data) => FlashService.Success(data + response.data.result.transaction.hash, true) );
             $location.path('/avatar/myavatars');
           } else {
             $translate('MESSAGES.ERROR_DID_MODIFY_ADDRESS').then( (data) => {
