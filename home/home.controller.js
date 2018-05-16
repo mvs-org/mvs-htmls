@@ -635,6 +635,7 @@
     $scope.allDids = [];
     $scope.allDidsAddresses = [];
     $scope.checkInputs = checkInputs;
+    $scope.didFromAddress = [];
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -688,6 +689,7 @@
           $scope.allDids.forEach(function(did) {
             $scope.allDidsSymbols.push(did.symbol);
             $scope.allDidsAddresses[did.address] = did.symbol;
+            $scope.didFromAddress[did.symbol] = did.address;
           });
         } else {
           $scope.allDids = [];
@@ -803,7 +805,7 @@
 
     //Check if the password is valid
     $scope.$watch('password', (newVal, oldVal) => {
-      $scope.error.password = (newVal == undefined || newVal == '');
+      $scope.errorPassword = (newVal == undefined || newVal == '');
       checkready();
     });
 
@@ -861,23 +863,24 @@
         $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else */
-      if (localStorageService.get('credentials').password != password) {
-        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else {
-        $scope.confirmation = true;
-        delete $rootScope.flash;
-      }
+      $scope.confirmation = true;
+      delete $rootScope.flash;
     }
 
     //Transfers ETP
     function transfer(sendfrom, recipents, transactionFee, memo, password) {
-      if (recipents.length == 1) { //Start transaction for 1 recipent
-          transferOne(sendfrom, recipents, transactionFee, memo, password);
-      } else {  //Start transaction with more than 1 recipent
-          transferMore(sendfrom, recipents, transactionFee, memo, password);
+      if (localStorageService.get('credentials').password != password) {
+        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else {
+        if (recipents.length == 1) { //Start transaction for 1 recipent
+            transferOne(sendfrom, recipents, transactionFee, memo, password);
+        } else {  //Start transaction with more than 1 recipent
+            transferMore(sendfrom, recipents, transactionFee, memo, password);
+        }
+        $window.scrollTo(0,0);
+        $scope.password = '';
       }
-      $window.scrollTo(0,0);
     }
 
 

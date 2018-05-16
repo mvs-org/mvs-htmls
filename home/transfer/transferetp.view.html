@@ -25,26 +25,22 @@
 	</div>-->
 
 	<form ng-hide="confirmation" class="ddbr row">
-		<!--Sender-->
-		<div class="col-md-12 form-group">
+		<div class="col-sm-12 col-md-6">
 			<br/>
-			<div class="col-md-6 form-group noPaddingLeftRight">
+			<!--Sender-->
+			<div class="form-group">
 				<label for="addressFrom" class=" ddd control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
 				<select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" ng-change="availBalance(sendfrom)" ng-class="{validInput: !error.sendfrom, wrongInput: error.sendfrom}">
-					<!--<option value="">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }} --- {{balance['total-unspent']/100000000}} ETP</option>
-					<option ng-show="address.balance != 0" ng-repeat="address in addresses | orderBy:'balance':true" value="{{address.address}}">{{address.address}} --- {{address.balance/100000000}} ETP</option>-->
 					<option title="{{balance['total-available'] | assetformat : 8}} ETP" value="">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</option>
 					<option ng-repeat="oneAddress in listAddresses | orderBy:'quantity':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-if="allDidsAddresses[oneAddress.address] && oneAddress.available != 0 && recipents.length == 1 && addresses[oneAddress.address].type == 'single'">{{allDidsAddresses[oneAddress.address]}} - {{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
           <option ng-repeat="oneAddress in listAddresses | orderBy:'quantity':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-if="!allDidsAddresses[oneAddress.address] && oneAddress.available != 0 && recipents.length == 1 && addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
 				</select>
 			</div>
-		</div>
 
-		<!--Recipient(s)-->
-		<div class="spe-addrgroup col-md-12" ng-repeat="recipent in recipents | orderBy:'index'">
-			<div class="col-md-12 noPaddingLeftRight">
-				<div class="col-md-6 form-group noPaddingLeftRight">
-					<label for="recipent_address" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_RECIPENT_ADDRESS' | translate }}<span ng-show="recipents.length > 1"> {{recipent.index}}<span></label>
+			<!--Recipient(s)-->
+			<div class="spe-addrgroup" ng-repeat="recipent in recipents | orderBy:'index'">
+				<div class="form-group">
+					<label for="recipent_address" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_RECIPENT_ADDRESS_OR_AVATAR' | translate }}<span ng-show="recipents.length > 1"> {{recipent.index}}<span></label>
 					<!--Add Recipent button, only on the first one-->
 					<div class="col-xs-6 noPaddingLeftRight addRecipent" ng-show="recipent.index == 1">
 						<button type="button" ng-click="addRecipent()" tabIndex="-1" class="btn-link-red addRecipentButton"><span class="glyphicon glyphicon-plus"></span> {{ 'TRANSFER_ADD_RECIPENT' | translate }}</button>
@@ -59,55 +55,33 @@
 					<span ng-show="recipent.correctAvatar" class="correctInputComment"><span class="glyphicon glyphicon-ok"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_AVATAR' | translate }}</span>
 					<span ng-show="recipent.burnAddress" class="warningInputComment"><span class="glyphicon glyphicon-warning-sign"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_BURN_ETP' | translate }}</span>
 				</div>
-			</div>
 
-			<!--Amount-->
-			<div ng-show="false">{{availableBalance | assetformat : 8}}</div>  <!--Needed to update the available balance in the button-->
-			<div class="col-md-12 noPaddingLeftRight">
-				<div class="col-md-6 noPaddingLeftRight">
-					<div class="form-group">
-						<label for="value" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_VALUE' | translate }}<span ng-show="recipents.length > 1"> {{recipent.index}}<span></label>
-						<!--AvailableBalance-->
-						<div class="col-xs-6 noPaddingLeftRight addRecipent" ng-show="(recipent.index == 1)">
-							<button type="button" tabIndex="-1" class="btn-link-red addRecipentButton" ng-click="sendAll()">{{ 'TRANSFER_AMOUNT_AVALAIBLE' | translate }}: {{availableBalance | assetformat : 8}} ETP</button>
-						</div>
-						<input type="number" min=0 step="0.00000001" required class="form-control" placeholder="0.00000000" name="value" ng-model="recipent.value" autocomplete="off" ng-change="checkAmount(recipent.value, recipent.index)" ng-class="{validInput: !recipent.wrongAmount && !recipent.notEnough && !recipent.emptyAmount, wrongInput: recipent.wrongAmount || recipent.notEnough || recipent.emptyAmount}">
-						<span ng-show="recipent.wrongAmount" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.WRONG_AMOUNT' | translate }}</span>
-						<span ng-show="recipent.notEnough" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.NOT_ENOUGH_ETP' | translate }}</span>
+				<!--Amount-->
+				<div ng-show="false">{{availableBalance | assetformat : 8}}</div>  <!--Needed to update the available balance in the button-->
+				<div class="form-group">
+					<label for="value" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_VALUE' | translate }}<span ng-show="recipents.length > 1"> {{recipent.index}}<span></label>
+					<!--AvailableBalance-->
+					<div class="col-xs-6 noPaddingLeftRight addRecipent" ng-show="(recipent.index == 1)">
+						<button type="button" tabIndex="-1" class="btn-link-red addRecipentButton" ng-click="sendAll()">{{ 'TRANSFER_AMOUNT_AVALAIBLE' | translate }}: {{availableBalance | assetformat : 8}} ETP</button>
 					</div>
+					<input type="number" min=0 step="0.00000001" required class="form-control" placeholder="0.00000000" name="value" ng-model="recipent.value" autocomplete="off" ng-change="checkAmount(recipent.value, recipent.index)" ng-class="{validInput: !recipent.wrongAmount && !recipent.notEnough && !recipent.emptyAmount, wrongInput: recipent.wrongAmount || recipent.notEnough || recipent.emptyAmount}">
+					<span ng-show="recipent.wrongAmount" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.WRONG_AMOUNT' | translate }}</span>
+					<span ng-show="recipent.notEnough" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.NOT_ENOUGH_ETP' | translate }}</span>
 				</div>
 			</div>
-		</div>
 
-		<!--Fee-->
-		<div class="col-xs-12 col-sm-12 col-md-12">
-			<div class="col-xs-12 col-sm-12 col-md-6 noPaddingLeftRight">
-				<div class="form-group">
-					<label for="fee" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</label>
-					<input type="number" step="0.00000001" class="form-control" name="fee" id="" ng-model="transactionFee" ng-class="{validInput: !error.fee_empty && !error.fee_too_low, wrongInput: error.fee_empty || error.fee_too_low}">
-					<span ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</span>
-				</div>
+			<!--Fee-->
+			<div class="form-group">
+				<label for="fee" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</label>
+				<input type="number" step="0.00000001" class="form-control" name="fee" id="" ng-model="transactionFee" ng-class="{validInput: !error.fee_empty && !error.fee_too_low, wrongInput: error.fee_empty || error.fee_too_low}">
+				<span ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</span>
 			</div>
-		</div>
 
-		<!--Memo-->
-		<div class="col-xs-12 col-sm-12 col-md-12" ng-show="(recipents.length == 1)">
-			<div class="col-xs-12 col-sm-12 col-md-6 noPaddingLeftRight">
-				<div class="form-group">
-					<label for="memo" class="control-label">{{ 'TRANSFER_MEMO' | translate }}</label>
-					<span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.MEMO' | translate }}"></span>
-					<input type="memo" class="form-control" name="memo" id="" ng-model="memo" ng-class="{validInput: !option.memo_empty && !error.memo_wrong_char && !error.memo_too_long, wrongInput: error.memo_wrong_char || error.memo_too_long}" >
-				</div>
-			</div>
-		</div>
-
-		<!--Password-->
-		<div class="col-xs-12 col-sm-12 col-md-12">
-			<div class="col-xs-12 col-sm-12 col-md-6 noPaddingLeftRight">
-				<div class="form-group">
-					<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
-					<input type="password" class="form-control" name="password" id="" required autocomplete="new-password" ng-model="password" ng-class="{validInput: !error.password, wrongInput: error.password}">
-				</div>
+			<!--Memo-->
+			<div class="form-group" ng-show="(recipents.length == 1)">
+				<label for="memo" class="control-label">{{ 'TRANSFER_MEMO' | translate }}</label>
+				<span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.MEMO' | translate }}"></span>
+				<input type="memo" class="form-control" name="memo" id="" ng-model="memo" ng-class="{validInput: !option.memo_empty && !error.memo_wrong_char && !error.memo_too_long, wrongInput: error.memo_wrong_char || error.memo_too_long}" >
 			</div>
 		</div>
 
@@ -115,9 +89,10 @@
 		<div class="col-xs-12 col-sm-12 col-md-12">
 			<div class="col-xs-12 col-sm-6 col-md-3 noPaddingLeftRight">
 				<br/>
-				<button type="submit" class="btn btn-success" id="transferBtn" ng-click="checkInputs(sendfrom, recipents, transactionFee, memo, password)" ng-disabled="!submittable">{{ 'TRANSFER_SEND' | translate }}</button>
+				<button type="submit" class="btn btn-success" id="transferBtn" ng-click="checkInputs(sendfrom, recipents, transactionFee, memo)" ng-disabled="!submittable">{{ 'TRANSFER_SEND' | translate }}</button>
 			</div>
 		</div>
+
 	</form>
 
 	<form ng-show="confirmation" class="row">
@@ -136,9 +111,10 @@
 					<div ng-repeat="recipent in recipents | orderBy:'index'">
 						<div class="col-xs-12 noPaddingLeftRight assetDataLine">
 							<div ng-show="recipent.correctEtpAddress" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_RECIPENT_ADDRESS' | translate }}<span ng-show="recipents.length > 1"> {{recipent.index}}<span></div>
-								<div ng-show="recipent.burnAddress" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_RECIPIENT_BURN' | translate }}<span ng-show="recipents.length > 1"> {{recipent.index}}<span></div>
+							<div ng-show="recipent.burnAddress" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_RECIPIENT_BURN' | translate }}<span ng-show="recipents.length > 1"> {{recipent.index}}<span></div>
 							<div ng-show="recipent.correctAvatar" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_RECIPENT_AVATAR' | translate }}</div>
-							<div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{recipent.address}}</div>
+							<div ng-hide="recipent.correctAvatar" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{recipent.address}}</div>
+							<div ng-show="recipent.correctAvatar" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{recipent.address}} ({{didFromAddress[recipent.address]}})</div>
 						</div>
 						<div class="col-xs-12 noPaddingLeftRight assetDataLine">
 							<div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_VALUE' | translate }}<span ng-show="recipents.length > 1"> {{recipent.index}}<span></div>
@@ -155,13 +131,18 @@
 					</div>
 				</div>
 			</div>
+			<!--Password-->
+			<div class="form-group">
+				<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
+				<input type="password" class="form-control" name="password" id="" required ng-model="password" ng-class="{validInput: !errorPassword, wrongInput: errorPassword}">
+			</div>
 		</div>
 
 		<div class="col-xs-12 col-sm-12 col-md-12 form-group noPaddingLeftRight">
 			<br>
 			<!--Submit button-->
 			<div class="col-xs-6 col-sm-6 col-md-3">
-				<input type="submit" class="btn btn-success" ng-click="transfer(sendfrom, recipents, transactionFee, memo, password)" value="{{ 'TRANSFER_SEND' | translate }}">
+				<input type="submit" class="btn btn-success" ng-click="transfer(sendfrom, recipents, transactionFee, memo, password)" value="{{ 'TRANSFER_SEND' | translate }}" ng-disabled="errorPassword">
 			</div>
 			<!--Return button-->
 			<div class="col-xs-6 col-sm-6 col-md-3">
