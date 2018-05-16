@@ -542,5 +542,11 @@
   "HISTORY.INTRAWALLET_TX": "Intra-wallet",
   "HISTORY.DID_ISSUE": "Avatar creation",
   "HISTORY.DID_TRANSFER": "Avatar transfer",
-  "HISTORY.CERT": "Certificate"
+  "HISTORY.CERT": "Certificate",
+  "HISTORY.AVATARS": "Avatars",
+  "HISTORY.CERTIFICATES": "Certificates",
+  "CREATE_PROFILE.EXPLANATION_TITLE": "Avatar creation advice",
+  "CREATE_PROFILE.EXPLANATION_1": "You can create your avatar here. It represent your Digital Identity on the Metaverse blockchain.",
+  "CREATE_PROFILE.EXPLANATION_2": "Your avatar name will be publically written on the blockchain, and can be use to send and receive ETP and assets in place of the address linked to it.",
+  "CREATE_PROFILE.EXPLANATION_3": "Since the Avatar name is a public information, we advice to use a pseudo and not your real name. In the future, you will be able to link your avatar with personnal information like your name, but it will be kept off-chain to guaranty your control over your personnal data."
 }

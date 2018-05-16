@@ -2621,30 +2621,35 @@
     $scope.endDateUpdated = new Date();
 
     $scope.assetType = 'ALL';
-    $scope.filterOnAsset = filterOnAsset;
 
     $scope.loadTransactions = loadTransactions;
     $scope.loadMore = loadMore;
     $scope.stopLoad = false;
     $scope.page = 3;          //By default, we load the 2 first pages
     $scope.icons = MetaverseService.hasIcon;
-
-    //For unfrozen calculation time
-    //$scope.averageBlockTime = 0;
+    $scope.filterTransactions = filterTransactions;
 
 
-    function filterOnAsset (asset) {
+    function filterTransactions(asset) {
       $scope.assetType = asset;
-      filterTransactions();
-    }
-
-    function filterTransactions() {
       $scope.transactionsFiltered = [];
-      if ($scope.assetType == 'ALL') {
+      if (asset == 'ALL') {
         $scope.transactionsFiltered = $scope.transactions;
+      /*} else if  (asset == 'Avatars') {
+        $scope.transactions.forEach(function(e) {
+          if (e.direction=='did-issue' || e.direction=='did-transfer') {
+            $scope.transactionsFiltered.push(e);
+          }
+        });
+      } else if  (asset == 'Certs') {
+        $scope.transactions.forEach(function(e) {
+          if (e.direction=='cert') {
+            $scope.transactionsFiltered.push(e);
+          }
+        });*/
       } else {
         $scope.transactions.forEach(function(e) {
-          if (e.type==$scope.assetType) {
+          if (e.type==asset) {
             $scope.transactionsFiltered.push(e);
           }
         });
@@ -2728,7 +2733,7 @@
               $scope.transactions.push(e);
             });
             //displayUpdatedDates();
-            filterTransactions();
+            filterTransactions('ALL');
           }
           NProgress.done();
         }, 'asset', page);
