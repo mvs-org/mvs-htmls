@@ -2898,7 +2898,7 @@
       getHeightFromExplorer();
       MetaverseService.GetInfoV2()
       .then( (response) => {
-        if (response.success == undefined && response.success) {
+        if (typeof response.success != 'undefined' && response.success) {
           $scope.height = response.data.result.height;
           $rootScope.network = response.data.result.testnet ? 'testnet' : 'mainnet';
           $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100);

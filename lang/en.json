@@ -533,5 +533,8 @@
   "TRANSFER_CERT.TYPE_SEND_WHICH_ONE_SECONDARY_ISSUE": "Only send Secondary Issue certificate",
   "TRANSFER_CERT.TYPE_SEND_WHICH_ONE_DOMAIN": "Only send Domain certificate",
   "HELP.TRANSFER_CERT_TO_AVATAR": "You can transfer you certificate(s) to another one of your avatars or to someone else avatar",
-  "CREATE_ASSET.ERROR_SYMBOL_ALREADY_EXIST": "This Asset already exist on the blockchain"
+  "CREATE_ASSET.ERROR_SYMBOL_ALREADY_EXIST": "This Asset already exist on the blockchain",
+  "HELP.COMING_SOON": "Coming soon!",
+  "PROFILE.ON_CHAIN": "On-chain",
+  "PROFILE.OFF_CHAIN": "Off-chain"
 }

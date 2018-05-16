@@ -10,9 +10,10 @@
 <div class=" ">
   <div class="row">
     <div class="col-xs-6 onOffChainButtons">
-      <button class="btn-link-black smallButton menuButton" ng-click="onChain = true" ng-class="{selectedOnOffChain:onChain === true}">On-chain</button>
+      <button class="btn-link-black smallButton menuButton" ng-click="onChain = true" ng-class="{selectedOnOffChain:onChain === true}">{{ 'PROFILE.ON_CHAIN' | translate }}</button>
       <span> / </span>
-      <button class="btn-link-black smallButton menuButton" ng-click="onChain = false" ng-class="{selectedOnOffChain:onChain === false}">Off-chain</button>
+      <!--button class="btn-link-black smallButton menuButton" ng-click="onChain = false" ng-class="{selectedOnOffChain:onChain === false}">Off-chain</button-->
+      <button class="btn-link-black smallButton menuButton" ng-class="{selectedOnOffChain:onChain === false}"  bs-tooltip data-placement="top" title="{{ 'HELP.COMING_SOON' | translate }}">{{ 'PROFILE.OFF_CHAIN' | translate }}</button>
     </div>
     <div class="col-xs-6 moreAssetsButton noPaddingLeftRight">
       <a href="#!/avatar/create" class="btn btn-success smallButton"><span class="glyphicon glyphicon-plus"></span> {{ 'PROFILE.CREATE_NEW_PROFILE_BUTTON' | translate }}</a>
