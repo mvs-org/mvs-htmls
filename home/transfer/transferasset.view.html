@@ -7,48 +7,46 @@
   </div>
 
   <form ng-hide="confirmation" class="row">
-    <!--Sender-->
-    <div class="col-md-12 form-group">
+		<div class="col-sm-12 col-md-6">
       <br/>
-      <div class="col-md-6 noPaddingLeftRight">
+      <!--Sender-->
+			<div class="form-group">
         <label for="addressFrom" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
-        <select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" ng-change="availBalance(sendfrom)">
+        <select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" ng-change="availBalance(sendfrom)" ng-class="{validInput: !error.sendfrom, wrongInput: error.sendfrom}">
           <option value="" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</option>
           <option ng-repeat="asset in assetAddresses | orderBy:'quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-if="allDidsAddresses[asset.address]">{{allDidsAddresses[asset.address]}} - {{asset.address}} - {{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
           <option ng-repeat="asset in assetAddresses | orderBy:'quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-if="!allDidsAddresses[asset.address]">{{asset.address}} - {{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
         </select>
       </div>
-    </div>
 
-    <!--Recipient-->
-    <div class="col-md-12 form-group">
-      <div class="col-md-6 noPaddingLeftRight">
+      <!--Recipient-->
+      <div class="form-group">
         <label for="sendto" class="control-label">{{ 'TRANSFER_RECIPENT_ADDRESS_OR_AVATAR' | translate }}</label>
-        <input type="etpaddress" class="form-control" name="sendto" id="" ng-model="sendto" ng-change="checkRecipent(sendto)" required autocomplete="off">
-        <span ng-show="!correctEtpAddress && !correctAvatar && !burnAddress && sendto != ''" class="red"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.INCORRECT_RECIPIENT' | translate }}</span>
-        <span ng-show="correctEtpAddress" class="green"><span class="glyphicon glyphicon-ok"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_ADDRESS' | translate }}</span>
-        <span ng-show="correctAvatar" class="green"><span class="glyphicon glyphicon-ok"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_AVATAR' | translate }}</span>
-        <span ng-show="burnAddress" class="warningInputComment"><span class="glyphicon glyphicon-warning-sign"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_BURN' | translate }}</span>
-      </div>
-    </div>
+        <input type="etpaddress" class="form-control" name="sendto" id="" ng-model="sendto" ng-change="checkRecipent(sendto)" required autocomplete="off" ng-class="{validInput: (correctEtpAddress || correctAvatar || burnAddress) && !error.sendto_empty, wrongInput: (!correctEtpAddress && !correctAvatar && !burnAddress) || error.sendto_empty || correctMultiSignAddress}">
+        <div ng-show="!correctEtpAddress && !correctAvatar && !burnAddress && !correctMultiSignAddress && !error.sendto_empty" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.INCORRECT_RECIPIENT' | translate }}</div>
+        <div ng-show="correctEtpAddress" class="correctInputComment"><span class="glyphicon glyphicon-ok"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_ADDRESS' | translate }}</div>
+        <div ng-show="correctAvatar" class="correctInputComment"><span class="glyphicon glyphicon-ok"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_AVATAR' | translate }}</div>
+        <div ng-show="burnAddress" class="warningInputComment"><span class="glyphicon glyphicon-warning-sign"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_BURN' | translate }}</div>
+        <div ng-show="correctMultiSignAddress" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.ASSET_CORRECT_MULTI_SIGN' | translate }}</div>
 
-    <!--Amount-->
-    <div class="col-md-12 form-group">
-      <div class="col-md-6 noPaddingLeftRight">
+      </div>
+
+      <!--Amount-->
+      <div class="form-group">
         <label for="value" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_VALUE' | translate }}</label>
         <!--AvailableBalance-->
         <div class="col-xs-6 noPaddingLeftRight addRecipent">
           <button type="button" class="btn-link-red addRecipentButton" ng-click="sendAll()" tabIndex="-1">{{ 'TRANSFER_AMOUNT_AVALAIBLE' | translate }}: {{availableBalance | assetformat : asset.decimal_number}}</button>
         </div>
-        <input ng-model="quantity" name="quantity" min=0 required class="form-control" placeholder="0" autocomplete="off">
+        <input type="number" ng-model="quantity" name="quantity" min=0 required class="form-control" placeholder="0" autocomplete="off" ng-class="{validInput: !error.quantity_empty && !error.quantity_not_enough_balance, wrongInput: error.quantity_empty || error.quantity_not_enough_balance}">
+        <span ng-show="error.quantity_not_enough_balance" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.QUANTITY_NOT_ENOUGH_ASSET' | translate }} {{symbol}}</span>
       </div>
-    </div>
 
-    <!--Password-->
-    <div class="col-md-12 form-group">
-      <div class="col-md-6 noPaddingLeftRight">
-        <label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
-        <input type="password" class="form-control" name="password" id="" autocomplete="new-password" required ng-model="password">
+      <!--Fee-->
+      <div class="form-group">
+        <label for="fee" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</label>
+        <input type="number" step="0.00000001" class="form-control" name="fee" id="" ng-model="transactionFee" ng-class="{validInput: !error.fee_empty && !error.fee_too_low, wrongInput: error.fee_empty || error.fee_too_low}">
+        <span ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</span>
       </div>
     </div>
 
@@ -56,7 +54,7 @@
     <div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
       <div class="col-xs-12 col-sm-6 col-md-3 ">
         <br/>
-        <input type="submit" class="btn btn-success" ng-click="checkInputs(sendto, symbol, quantity, password)" value="{{ 'TRANSFER_SEND' | translate }}">
+        <input type="submit" class="btn btn-success" ng-click="checkInputs(sendto, symbol, quantity, transactionFee)" value="{{ 'TRANSFER_SEND' | translate }}" ng-disabled="!submittable">
       </div>
     </div>
   </form>
@@ -78,25 +76,31 @@
             <div ng-show="correctEtpAddress" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_RECIPENT_ADDRESS' | translate }}</div>
             <div ng-show="correctAvatar" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_RECIPENT_AVATAR' | translate }}</div>
             <div ng-show="burnAddress" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_RECIPIENT_BURN' | translate }}</div>
-            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{sendto}}</div>
+            <div ng-hide="correctAvatar" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{sendto}}</div>
+            <div ng-show="correctAvatar" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{sendto}} ({{didFromAddress[sendto]}})</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_VALUE' | translate }}</div>
             <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{quantity}} {{asset.symbol}}</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</div>
-            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">0.0001 ETP</div>
-          </div>
+						<div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</div>
+						<div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{transactionFee}} ETP</div>
+					</div>
         </div>
       </div>
+      <!--Password-->
+			<div class="form-group">
+				<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
+				<input type="password" class="form-control" name="password" id="" required ng-model="password" ng-class="{validInput: !errorPassword, wrongInput: errorPassword}">
+			</div>
     </div>
 
     <div class="col-xs-12 col-sm-12 col-md-12 form-group noPaddingLeftRight">
       <br>
       <!--Submit button-->
       <div class="col-xs-6 col-sm-6 col-md-3">
-        <input type="submit" class="btn btn-success" ng-click="sendasset(sendfrom, sendto, symbol, quantity, password)" value="{{ 'TRANSFER_SEND' | translate }}">
+        <input type="submit" class="btn btn-success" ng-click="sendasset(sendfrom, sendto, symbol, quantity, transactionFee, password)" value="{{ 'TRANSFER_SEND' | translate }}" ng-disabled="errorPassword">
       </div>
       <!--Return button-->
       <div class="col-xs-6 col-sm-6 col-md-3">

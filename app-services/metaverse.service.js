@@ -773,9 +773,9 @@
          * @apiParam {List} params [username, password, recipent_address, symbol, quantity]
          *
          **/
-        function SendAsset(recipent_address, symbol, quantity, password) {
+        function SendAsset(recipent_address, symbol, quantity, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
-            return _sendV2('sendasset', [credentials.user, password, recipent_address, symbol, quantity]);
+            return _sendV2('sendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee]);
         }
 
         /**
@@ -819,9 +819,9 @@
          * @apiParam {List} params [username, password, sender_address, recipent_address, symbol, quantity]
          *
          **/
-        function SendAssetFrom(sender_address, recipent_address, symbol, quantity, password) {
+        function SendAssetFrom(sender_address, recipent_address, symbol, quantity, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
-            return _sendV2('sendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity]);
+            return _sendV2('sendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee]);
         }
 
 
@@ -909,14 +909,14 @@
             }
         }
 
-        function DidSendAssetFrom(sender_address, recipent_address, symbol, quantity, password) {
+        function DidSendAssetFrom(sender_address, recipent_address, symbol, quantity, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
-            return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity]);
+            return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee]);
         }
 
-        function DidSendAsset(recipent_address, symbol, quantity, password) {
+        function DidSendAsset(recipent_address, symbol, quantity, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
-            return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity]);
+            return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee]);
         }
 
         function DidModifyAddress(symbol, fromAddress, toAddress, transactionFee, password) {

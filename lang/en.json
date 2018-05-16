@@ -536,5 +536,7 @@
   "CREATE_ASSET.ERROR_SYMBOL_ALREADY_EXIST": "This Asset already exist on the blockchain",
   "HELP.COMING_SOON": "Coming soon!",
   "PROFILE.ON_CHAIN": "On-chain",
-  "PROFILE.OFF_CHAIN": "Off-chain"
+  "PROFILE.OFF_CHAIN": "Off-chain",
+  "MESSAGES.QUANTITY_NOT_ENOUGH_ASSET": "You do not have enough",
+  "TRANSFER.ASSET_CORRECT_MULTI_SIGN": "Asset transfer to multi-signature addresses is currently not supported"
 }
