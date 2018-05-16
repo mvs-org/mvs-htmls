@@ -1063,6 +1063,9 @@
         const TX_TYPE_ETP = 'ETP';
         const TX_TYPE_ASSET = 'ASSET';
         const TX_TYPE_ISSUE = 'ISSUE';
+        const TX_TYPE_CERT = 'CERT';
+        const TX_TYPE_DID_ISSUE = 'DID_ISSUE';
+        const TX_TYPE_DID_TRANSFER = 'DID_TRANSFER';
         const TX_TYPE_UNKNOWN = 'UNKNOWN';
 
         service.LoadTransactions = LoadTransactions;
@@ -1090,10 +1093,16 @@
             if (tx.outputs != undefined && Array.isArray(tx.outputs)) {
                 var result;
                 tx.outputs.forEach(function(output) {
+                    if (output.attachment.type === 'asset-issue') //an asset issue has the priority, and contains certs
+                        result = TX_TYPE_ISSUE;
                     if (output.attachment.type === 'asset-transfer')
                         result = TX_TYPE_ASSET;
-                    if (output.attachment.type === 'asset-issue')
-                        result = TX_TYPE_ISSUE;
+                    if (output.attachment.type === 'asset-cert' && result != TX_TYPE_ISSUE)
+                        result = TX_TYPE_CERT;
+                    if (output.attachment.type === 'did-issue')
+                        result = TX_TYPE_DID_ISSUE;
+                    if (output.attachment.type === 'did-transfer')
+                        result = TX_TYPE_DID_TRANSFER;
                 });
                 return (result) ? result : TX_TYPE_ETP;
             } else {
@@ -1126,85 +1135,142 @@
                                     "memo": ""
                                 };
                                 switch(determineTransactionType(e)){
-                                case TX_TYPE_ETP:
-                                    //ETP transaction handling
-                                    transaction.type = 'ETP';
-                                    transaction.asset_type=8;
-                                    e.outputs.forEach(function(output){
-                                      if (typeof output.script != 'undefined' && output.script.match(/\[ (\w+) ] numequalverify dup hash160 \[ (\w+) \] equalverify checksig/) != null) {
-                                        transaction.frozen = true;
-                                        transaction.recipents.push({
-                                          "address": output.address,
-                                          "value": parseInt(output['etp-value']),
-                                          "script": output.script
-                                        });
-                                        transaction.value += parseInt(output['etp-value']);
-                                      } else if((transaction.direction==='receive' && output.own==='true') || (transaction.direction==='send' && output.own==='false')){
-                                        transaction.frozen = false;
-                                        transaction.recipents.push({
-                                          "address": output.address,
-                                          "value": parseInt(output['etp-value']),
-                                          "script": output.script
-                                        });
-                                        transaction.value += parseInt(output['etp-value']);
-                                      }
-                                      //memo
-                                      if (typeof output.attachment.content != 'undefined') {
-                                        transaction.memo = output.attachment.content;
-                                      }
-                                    });
-                                    if(transaction.value) {
-                                      transactions.push(transaction);
-                                    } else {
-                                      //console.log(transaction);
-                                    }
-                                    break;
-                                case TX_TYPE_ASSET:
-                                    //Asset transactions
-                                    e.outputs.forEach(function(output){
-                                        if((transaction.direction==='receive' && output.own==='true') || (transaction.direction==='send' && output.own==='false') && output.attachment.type==='asset-transfer'){
+                                    case TX_TYPE_ETP:
+                                        //ETP transaction handling
+                                        transaction.type = 'ETP';
+                                        transaction.asset_type = 8;
+                                        transaction.intrawallet = true;
+                                        e.outputs.forEach(function(output){
+                                          if (typeof output.script != 'undefined' && output.script.match(/\[ (\w+) ] numequalverify dup hash160 \[ (\w+) \] equalverify checksig/) != null) {
+                                            transaction.frozen = true;
+                                            transaction.intrawallet = false;
                                             transaction.recipents.push({
-                                                "address": output.address,
-                                                "value": parseInt(output.attachment.quantity)
+                                              "address": output.address,
+                                              "value": parseInt(output['etp-value']),
+                                              "script": output.script
                                             });
-                                            transaction.value += parseInt(output.attachment.quantity);
-                                            transaction.type = output.attachment.symbol;
-                                            transaction.decimal_number=output.attachment.decimal_number;
-                                        }
-                                        //memo
-                                        if (typeof output.attachment.content != 'undefined') {
-                                          transaction.memo = output.attachment.content;
-                                        }
-                                    });
-                                    if(transaction.value) {
-                                      transactions.push(transaction);
-                                    } else {
-                                      //console.log(transaction);
-                                    }
-                                    break;
-                                case TX_TYPE_ISSUE:
-                                    //Asset issue tx
-                                    transaction.direction='issue';
-                                    e.outputs.forEach(function(output){
-                                        if(output.own==='true' && output.attachment.type==='asset-issue'){
+                                            transaction.value += parseInt(output['etp-value']);
+                                          } else if((transaction.direction==='receive' && output.own==='true') || (transaction.direction==='send' && output.own==='false')){
+                                            transaction.frozen = false;
+                                            transaction.intrawallet = false;
                                             transaction.recipents.push({
-                                                "address": output.address,
-                                                "value": parseInt(output.attachment.maximum_supply)
+                                              "address": output.address,
+                                              "value": parseInt(output['etp-value']),
+                                              "script": output.script
                                             });
-                                            transaction.value += parseInt(output.attachment.maximum_supply);
-                                            transaction.type = output.attachment.symbol;
-                                            transaction.decimal_number=output.attachment.decimal_number;
-                                        }
-                                        //memo
-                                        if (typeof output.attachment.content != 'undefined') {
-                                          transaction.memo = output.attachment.content;
-                                        }
-                                    });
-                                    if(transaction.value) {
-                                      transactions.push(transaction);
-                                    } else {
-                                      //console.log(transaction);
-                                    }
+                                            transaction.value += parseInt(output['etp-value']);
+                                          }
+                                          //memo
+                                          if (typeof output.attachment.content != 'undefined') {
+                                            transaction.memo = output.attachment.content;
+                                          }
+                                        });
+                                        if(transaction.intrawallet)
+                                            transaction.direction = 'intra';
+                                        transactions.push(transaction);
+                                        break;
+                                    case TX_TYPE_ASSET:
+                                        //Asset transactions
+                                        transaction.intrawallet = true;
+                                        e.outputs.forEach(function(output){
+                                            if(output.attachment.type==='asset-transfer') {
+                                                transaction.type = output.attachment.symbol;
+                                                transaction.decimal_number=output.attachment.decimal_number;
+                                                if((transaction.direction==='receive' && output.own==='true') || (transaction.direction==='send' && output.own==='false')){
+                                                    transaction.intrawallet = false;
+                                                    transaction.recipents.push({
+                                                        "address": output.address,
+                                                        "value": parseInt(output.attachment.quantity)
+                                                    });
+                                                    transaction.value += parseInt(output.attachment.quantity);
+                                                }
+                                            }
+                                            //memo
+                                            if (typeof output.attachment.content != 'undefined') {
+                                              transaction.memo = output.attachment.content;
+                                            }
+                                        });
+                                        if(transaction.intrawallet)
+                                            transaction.direction = 'intra';
+                                        transactions.push(transaction);
+                                        break;
+                                    case TX_TYPE_ISSUE:
+                                        //Asset issue tx
+                                        transaction.direction='issue';
+                                        e.outputs.forEach(function(output){
+                                            if(output.own==='true' && output.attachment.type==='asset-issue'){
+                                                transaction.recipents.push({
+                                                    "address": output.address,
+                                                    "value": parseInt(output.attachment.quantity)
+                                                });
+                                                transaction.value += parseInt(output.attachment.quantity);
+                                                transaction.type = output.attachment.symbol;
+                                                transaction.decimal_number=output.attachment.decimal_number;
+                                            }/* else if(output.own==='true' && output.attachment.type==='asset-cert'){
+                                                var cert = {
+                                                    "height": e.height,
+                                                    "hash": e.hash,
+                                                    "timestamp": new Date(e.timestamp * 1000),
+                                                    "direction": "cert",
+                                                    "recipents": [],
+                                                    "value": 0,
+                                                    "memo": "",
+                                                    "type": output.attachment.symbol
+                                                };
+                                                cert.recipents.push({
+                                                    "address": output.address
+                                                });
+                                                transactions.push(cert);
+                                            }*/
+                                            //memo
+                                            if (typeof output.attachment.content != 'undefined') {
+                                              transaction.memo = output.attachment.content;
+                                            }
+                                        });
+                                        transactions.push(transaction);
+                                        break;
+                                    case TX_TYPE_CERT:
+                                        transaction.direction='cert';
+                                        e.outputs.forEach(function(output){
+                                            if(output.own==='true' && output.attachment.type==='asset-cert'){
+                                                transaction.recipents.push({
+                                                    "address": output.address
+                                                });
+                                                if(output.attachment.certs == '4') {
+                                                    transaction.type = output.attachment.symbol;
+                                                } else if (typeof transaction.type == 'undefined') {
+                                                    transaction.type = output.attachment.symbol;
+                                                }
+                                            }
+                                        });
+                                        transactions.push(transaction);
+                                        break;
+                                    case TX_TYPE_DID_ISSUE:
+                                        transaction.direction='did-issue';
+                                        e.outputs.forEach(function(output){
+                                            if(output.own==='true' && output.attachment.type==='did-issue'){
+                                                transaction.recipents.push({
+                                                    "address": output.address
+                                                });
+                                                transaction.type = output.attachment.symbol;
+                                            }
+                                        });
+                                        transactions.push(transaction);
+                                        break;
+                                    case TX_TYPE_DID_TRANSFER:
+                                        transaction.direction='did-transfer';
+                                        e.outputs.forEach(function(output){
+                                            if(output.own==='true' && output.attachment.type==='did-transfer'){
+                                                transaction.recipents.push({
+                                                    "address": output.address
+                                                });
+                                                transaction.type = output.attachment.symbol;
+                                            }
+                                        });
+                                        transactions.push(transaction);
+                                        break;
+                                    default:
+                                        break;
                                 }
                             });
                             //Return transaction list

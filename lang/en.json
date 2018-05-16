@@ -538,5 +538,9 @@
   "PROFILE.ON_CHAIN": "On-chain",
   "PROFILE.OFF_CHAIN": "Off-chain",
   "MESSAGES.QUANTITY_NOT_ENOUGH_ASSET": "You do not have enough",
-  "TRANSFER.ASSET_CORRECT_MULTI_SIGN": "Asset transfer to multi-signature addresses is currently not supported"
+  "TRANSFER.ASSET_CORRECT_MULTI_SIGN": "Asset transfer to multi-signature addresses is currently not supported",
+  "HISTORY.INTRAWALLET_TX": "Intra-wallet",
+  "HISTORY.DID_ISSUE": "Avatar creation",
+  "HISTORY.DID_TRANSFER": "Avatar transfer",
+  "HISTORY.CERT": "Certificate"
 }

@@ -44,7 +44,10 @@
               </div>
               <div class="assetBoxFrozen col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 noPaddingLeftRight">
                 <div class="assetBoxTitle">{{ 'STATUS' | translate}}</div>
-                <div class="assetBoxValue">{{asset.status}}</div>
+                <span ng-show="asset.status == 'unissued'" class="assetBoxValue">{{ 'ASSET.STATUS_UNISSUED' | translate }}</span>
+                <span ng-show="asset.status == 'issued'" class="assetBoxValue">{{ 'ASSET.STATUS_ISSUED' | translate }}</span>
+                <span ng-show="asset.status == 'unspent'" class="assetBoxValue">{{ 'ASSET.STATUS_UNSPENT' | translate }}</span>
+                <span ng-hide="asset.status == 'unissued' || asset.status == 'issued' || asset.status == 'unspent'" class="assetBoxValue">{{asset.status}}</span>
               </div>
               <div ng-show="asset.status == 'unspent'" class="assetBoxButtons">
                 <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/{{asset.symbol}}/">{{ 'ASSETS_SEND' | translate}}</a>
@@ -141,17 +144,17 @@
         <div class="noPaddingLeftRight col-md-4 col-lg-4">
           <!--Value-->
           <div class="noPaddingLeftRight transactionBoxField col-md-4 col-lg-4">
-            <span ng-show="transaction.direction!='send'" class="receiveSign overflow"><span class="p-empty">+</span>{{transaction.value | assetformat : transaction.decimal_number}}</span>
+            <span ng-show="transaction.direction=='receive' || transaction.direction=='issue'" class="receiveSign overflow"><span class="p-empty">+</span>{{transaction.value | assetformat : transaction.decimal_number}}</span>
             <span ng-show="transaction.direction=='send'" class="sendSign overflow"><span class="p-empty">-</span>{{transaction.value | assetformat : transaction.decimal_number}}</span>
+            <span ng-show="transaction.direction=='intra'" class="intrawalletSign overflow">{{'HISTORY.INTRAWALLET_TX' | translate}}</span>
+            <span ng-show="transaction.direction=='cert'" class="intrawalletSign overflow">{{'HISTORY.CERT' | translate}}</span>
+            <span ng-show="transaction.direction=='did-issue'" class="intrawalletSign overflow">{{'HISTORY.DID_ISSUE' | translate}}</span>
+            <span ng-show="transaction.direction=='did-transfer'" class="intrawalletSign overflow">{{'HISTORY.DID_TRANSFER' | translate}}</span>
           </div>
 
           <!--Type (ETP,...)-->
           <div class="noPaddingLeftRight transactionBoxField col-md-4 col-lg-4">
             <span>{{transaction.type}}</span>
-            <!--<span ng-show="transaction.frozen"> Frozen
-              <span ng-hide="transaction.availableInBlock != 0">now available</span>
-              <span ng-show="transaction.availableInBlock != 0">for {{transaction.availableInTimeDays}} days</span>
-            </span>-->
           </div>
 
           <!--Frozen till-->
@@ -189,8 +192,12 @@
       <div class="transactionBoxSmall" ng-repeat="transaction in transactionsFiltered | orderBy:'timestamp':true">
         <div class="transactionBoxSmallInfo col-xs-12 col-sm-12">
           <div class="transactionBoxSmallAmount">
-            <span ng-show="transaction.direction!='send'" class="receiveSign overflow">+{{transaction.value | assetformat : transaction.decimal_number}} {{transaction.type}}</span>
-            <span ng-show="transaction.direction=='send'" class="sendSign overflow">-{{transaction.value | assetformat : transaction.decimal_number}} {{transaction.type}}</span>
+            <span ng-show="transaction.direction=='receive' || transaction.direction=='issue'" class="receiveSign overflow"><span class="p-empty">+</span>{{transaction.value | assetformat : transaction.decimal_number}} {{transaction.type}}</span>
+            <span ng-show="transaction.direction=='send'" class="sendSign overflow"><span class="p-empty">-</span>{{transaction.value | assetformat : transaction.decimal_number}} {{transaction.type}}</span>
+            <span ng-show="transaction.direction=='intra'" class="intrawalletSign overflow">{{'HISTORY.INTRAWALLET_TX' | translate}} {{transaction.type}}</span>
+            <span ng-show="transaction.direction=='cert'" class="intrawalletSign overflow">{{'HISTORY.CERT' | translate}} {{transaction.type}}</span>
+            <span ng-show="transaction.direction=='did-issue'" class="intrawalletSign overflow">{{'HISTORY.DID_ISSUE' | translate}} {{transaction.type}}</span>
+            <span ng-show="transaction.direction=='did-transfer'" class="intrawalletSign overflow">{{'HISTORY.DID_TRANSFER' | translate}} {{transaction.type}}</span>
           </div>
           <div class="transactionBoxSmallAddress overflow">
             <a class="btn-link" href="#!/explorer/tx/{{transaction.hash}}">

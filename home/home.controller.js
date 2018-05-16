@@ -1923,9 +1923,6 @@
           return;
         }
       }
-      console.log(!$scope.correctEtpAddress);
-      console.log(!$scope.correctAvatar);
-      console.log(!$scope.burnAddress);
       if(!$scope.correctEtpAddress && !$scope.correctAvatar && !$scope.burnAddress) {
         $scope.submittable = false;
         return;
