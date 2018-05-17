@@ -495,7 +495,7 @@
         if (typeof response.success !== 'undefined' && response.success) {
           init();
           //Transaction was successful
-          $translate('MESSAGES.DEPOSIT_SUCCESS').then( (data) => FlashService.Success(data + response.data.result.transaction.hash) );
+          $translate('MESSAGES.DEPOSIT_SUCCESS').then( (data) => FlashService.Success(data, false, response.data.result.transaction.hash) );
           $window.scrollTo(0,0);
           init();
         } else {
@@ -904,7 +904,7 @@
         NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
           //Transaction was successful
-          $translate('MESSAGES.TRANSFER_SUCCESS').then( (data) => FlashService.Success(data + response.data.result.transaction.hash) );
+          $translate('MESSAGES.TRANSFER_SUCCESS').then( (data) => FlashService.Success(data, false, response.data.result.transaction.hash) );
           $window.scrollTo(0,0);
           init();
         } else {
@@ -945,7 +945,7 @@
         NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
           //Transaction was successful
-          $translate('MESSAGES.TRANSFER_SUCCESS').then( (data) => FlashService.Success(data + response.data.result.transaction.hash) );
+          $translate('MESSAGES.TRANSFER_SUCCESS').then( (data) => FlashService.Success(data, false, response.data.result.transaction.hash) );
           $window.scrollTo(0,0);
           init();
         } else {
@@ -1845,7 +1845,7 @@
           NProgress.done();
           if (typeof response.success !== 'undefined' && response.success) {
             $translate('MESSAGES.ASSETS_TRANSFER_SUCCESS').then( (data) => {
-              FlashService.Success(data + response.data.result.transaction.hash, true);
+              FlashService.Success(data, true, response.data.result.transaction.hash);
               //Redirect user to the assets page
               $location.path('/asset/myassets');
             });
@@ -1911,7 +1911,7 @@
     function sendAll() {
       //$scope.quantity = $scope.availableBalance/$scope.asset.decimal_number;
       //$scope.quantity = parseFloat($scope.availableBalance)/Math.pow(10,$scope.asset.decimal_number);
-      $scope.quantity = $filter('converttodisplay')($scope.availableBalance, $scope.asset.decimal_number);
+      $scope.quantity = parseFloat($filter('converttodisplay')($scope.availableBalance, $scope.asset.decimal_number));
     }
 
     //Check if the form is submittable
@@ -1971,6 +1971,8 @@
     $window.scrollTo(0,0);
     $scope.symbol = $stateParams.symbol;
     $scope.assets = [];
+    $scope.assetsOriginal = [];
+    $scope.assetsSecondaryIssue = [];
     $scope.icons = MetaverseService.hasIcon;
 
     //Load assets
@@ -1986,14 +1988,22 @@
           $scope.assets.forEach( (asset) => {
             asset.details = false;
             asset.icon = ($scope.icons.indexOf(asset.symbol) > -1) ? asset.symbol : 'default';
+            if(asset.is_secondaryissue == 'false'){
+              asset.maximum_supply = parseInt(asset.maximum_supply);
+              $scope.assetsOriginal.push(asset);
+            } else {
+              if(typeof $scope.assetsSecondaryIssue[asset.symbol] == 'undefined') {
+                $scope.assetsSecondaryIssue[asset.symbol] = parseInt(asset.maximum_supply);
+              } else {
+                $scope.assetsSecondaryIssue[asset.symbol] += parseInt(asset.maximum_supply);
+              }
+            }
           });
         } //else, there is no asset on the blockchain
       } else {
         $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => {
           //Show asset load error
           FlashService.Error(data);
-          //Redirect user to the assets page
-          $location.path('/asset/myassets');
         } );
       }
     });
@@ -2085,7 +2095,7 @@
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           loadasset($scope.symbol);
-          $translate('MESSAGES.ASSETS_ISSUE_SUCCESS').then( (data) => FlashService.Success(data) );
+          $translate('MESSAGES.ASSETS_ISSUE_SUCCESS').then( (data) => FlashService.Success(data, false, response.data.result.transaction.hash) );
           $window.scrollTo(0,0);
         } else {
           $translate('MESSAGES.ASSETS_ISSUE_ERROR').then( (data) => FlashService.Error(data) );
@@ -2108,7 +2118,7 @@
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           loadasset($scope.symbol);
-          $translate('MESSAGES.ASSETS_SECOND_ISSUE_SUCCESS').then( (data) => FlashService.Success(data) );
+          $translate('MESSAGES.ASSETS_SECOND_ISSUE_SUCCESS').then( (data) => FlashService.Success(data, true, response.data.result.transaction.hash) );
           $window.scrollTo(0,0);
         } else {
           $translate('MESSAGES.ASSETS_SECOND_ISSUE_ERROR').then( (data) => FlashService.Error(data + ' ' + response.message) );
@@ -2419,7 +2429,7 @@
 
     //Check if the password is valid
     $scope.$watch('password', (newVal, oldVal) => {
-      $scope.error.password = (newVal == undefined || newVal == '');
+      $scope.errorPassword = (newVal == undefined || newVal == '');
       checkready();
     });
 
@@ -2560,7 +2570,7 @@
           if (typeof response.success !== 'undefined' && response.success) {
             //Show success message
             popupIssue($scope.symbol);
-            $translate('MESSAGES.ASSSET_CREATED_LOCAL_SUCCESS').then( (data) => {
+            $translate('MESSAGES.ASSET_CREATED_LOCAL_SUCCESS').then( (data) => {
               FlashService.Success(data, true);
               //Redirect user to the assets page
             });
@@ -2590,7 +2600,8 @@
       MetaverseService.Issue(symbol)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
-          $translate('MESSAGES.ASSETS_ISSUE_SUCCESS').then( (data) => FlashService.Success(data) );
+          $translate('MESSAGES.ASSETS_ISSUE_SUCCESS').then( (data) => FlashService.Success(data, false, response.data.result.transaction.hash) );
+
           $window.scrollTo(0,0);
         } else {
           $translate('MESSAGES.ASSETS_ISSUE_ERROR').then( (data) => FlashService.Error(data) );
@@ -3294,7 +3305,7 @@
       MetaverseService.IssueDid(didAddress, didSymbol, password)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
-          $translate('MESSAGES.DID_CREATED').then( (data) => FlashService.Success(data + response.data.result.transaction.hash, true) );
+          $translate('MESSAGES.DID_CREATED').then( (data) => FlashService.Success(data, true, response.data.result.transaction.hash) );
           $location.path('/avatar/myavatars');
         } else {
           $translate('MESSAGES.ERROR_DID_CREATION').then( (data) => {
@@ -3470,7 +3481,7 @@
         MetaverseService.DidModifyAddress(selectedDid, selectedDidAddress, toAddress, fee_value, password)
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success) {
-            $translate('MESSAGES.DID_ADDRESS_UPDATED').then( (data) => FlashService.Success(data + response.data.result.transaction.hash, true) );
+            $translate('MESSAGES.DID_ADDRESS_UPDATED').then( (data) => FlashService.Success(data, true, response.data.result.transaction.hash) );
             $location.path('/avatar/myavatars');
           } else {
             $translate('MESSAGES.ERROR_DID_MODIFY_ADDRESS').then( (data) => {
@@ -3688,7 +3699,7 @@
         MetaverseService.TransferCert(certSymbol, certToSend, toDID, fee_value, password)
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success) {
-            $translate('MESSAGES.CERT_TRANSFERED').then( (data) => FlashService.Success(data + response.data.result.transaction.hash, true) );
+            $translate('MESSAGES.CERT_TRANSFERED').then( (data) => FlashService.Success(data, true, response.data.result.transaction.hash) );
             $location.path('/avatar/myavatars');
           } else {
             $translate('MESSAGES.ERROR_CERT_TRANSFERED').then( (data) => {
@@ -3919,7 +3930,7 @@
         MetaverseService.IssueCert(domain, 'NAMING', symbol, toDID, fee_value, password)
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success) {
-            $translate('MESSAGES.CERT_ISSUED').then( (data) => FlashService.Success(data + response.data.result.transaction.hash, true) );
+            $translate('MESSAGES.CERT_ISSUED').then( (data) => FlashService.Success(data, true, response.data.result.transaction.hash) );
             $location.path('/avatar/myavatars');
           } else {
             $translate('MESSAGES.ERROR_CERT_ISSUE').then( (data) => {

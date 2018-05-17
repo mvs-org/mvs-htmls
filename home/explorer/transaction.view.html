@@ -67,10 +67,9 @@
           <div class="explorerRightInfo col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 noPaddingLeftRight">
             <span class="numbersSearch" ng-show="output.attachment.type=='etp'">{{output.value | assetformat : 8}} ETP</span>
             <span class="numbersSearch" ng-show="output.attachment.type=='asset-issue' || output.attachment.type=='asset-transfer'">{{output.attachment.quantity | assetformat : asset.decimal_number}} {{output.attachment.symbol}}</span>
-            <span class="numbersSearch" ng-show="output.attachment.type=='asset-cert' && output.attachment.certs == 1">{{ 'EXPLORER.CERT_TRANSFER' | translate }} - {{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }} - {{output.attachment.symbol}}</span>
-            <span class="numbersSearch" ng-show="output.attachment.type=='asset-cert' && output.attachment.certs == 2">{{ 'EXPLORER.CERT_TRANSFER' | translate }} - {{ 'PROFIL.CERT_DOMAIN' | translate }} - {{output.attachment.symbol}}</span>
-            <span class="numbersSearch" ng-show="output.attachment.type=='asset-cert' && output.attachment.certs == 3">{{ 'EXPLORER.CERT_TRANSFER' | translate }} - {{ 'PROFIL.CERT_DOMAIN_AND_SECONDARY_ISSUE' | translate }} - {{output.attachment.symbol}}</span>
-            <span class="numbersSearch" ng-show="output.attachment.type=='asset-cert' && output.attachment.certs == 4">{{ 'EXPLORER.CERT_TRANSFER' | translate }} - {{ 'PROFIL.CERT_NAMING' | translate }} - {{output.attachment.symbol}}</span>
+            <span class="numbersSearch" ng-show="output.attachment.type=='asset-cert' && output.attachment.cert == 'ISSUE'">{{ 'EXPLORER.CERT_TRANSFER' | translate }} - {{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }} - {{output.attachment.symbol}}</span>
+            <span class="numbersSearch" ng-show="output.attachment.type=='asset-cert' && output.attachment.cert == 'DOMAIN'">{{ 'EXPLORER.CERT_TRANSFER' | translate }} - {{ 'PROFIL.CERT_DOMAIN' | translate }} - {{output.attachment.symbol}}</span>
+            <span class="numbersSearch" ng-show="output.attachment.type=='asset-cert' && output.attachment.cert == 'NAMING'">{{ 'EXPLORER.CERT_TRANSFER' | translate }} - {{ 'PROFIL.CERT_NAMING' | translate }} - {{output.attachment.symbol}}</span>
             <span class="numbersSearch" ng-show="output.attachment.type=='did-issue'">{{ 'EXPLORER.AVATAR_ISSUE' | translate }} - {{output.attachment.symbol}}</span>
             <span class="numbersSearch" ng-show="output.attachment.type=='did-transfer'">{{ 'EXPLORER.AVATAR_TRANSFER' | translate }} - {{output.attachment.symbol}}</span>
             <button class="btn-link-black smallButton noPaddingTopBottomButton" ng-click="output.display = !output.display">{{ 'EXPLORER.TRANSACTION_SCRIPT' | translate }}</button>

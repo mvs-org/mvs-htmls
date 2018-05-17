@@ -30,17 +30,33 @@
       <!--Password-->
       <div class="form-group">
         <label for="password" class="control-label">{{ 'SETTINGS_BACKUP_PASSWORD' | translate }}</label>
-        <input type="password" class="form-control" name="password" id="" name="password" ng-model="password" ng-class="{validInput: !error.password, wrongInput: error.password}" autocomplete="off">
+        <input type="password" class="form-control" name="password" id="" name="password" ng-model="password" ng-class="{validInput: !errorPassword, wrongInput: errorPassword}" autocomplete="off">
       </div>
     </div>
+    <!--Secondary Issue explanation-->
     <div class="col-xs-12 col-sm-6">
-      {{ 'PROFILE.CREATE_EXPLANATION' | translate }}
+      <div class="assetDetailsPanel panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{'SECONDARY_ISSUE.REQUIREMENT_TITLE' | translate}}</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.REQUIREMENT_OWN_CERT' | translate }}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.REQUIREMENT_PERCENTAGE' | translate }}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.REQUIREMENT_FEE' | translate }}</div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="col-xs-12 col-md-12 noPaddingLeftRight">
       <br>
       <!--Buttons-->
       <div class="col-xs-6 col-sm-3">
-        <input type="submit" ng-click="checkInputs(password)" value="{{ 'CREATE_PROFILE.CREATE_PROFILE_BUTTON' | translate }}" class="btn btn-success" ng-disabled="!submittable">
+        <input type="submit" ng-click="checkInputs(password)" value="{{ 'SECONDARY_ISSUE_BUTTON' | translate }}" class="btn btn-success" ng-disabled="!submittable">
       </div>
       <div class="col-xs-6 col-sm-3">
         <a href="#!/asset/myassets" class="btn btn-success btn-success-secondary">{{ 'TRANSFER_BACK_ASSETS' | translate }}</a>

@@ -333,7 +333,7 @@
   "MESSAGES.TRANSFER_SUCCESS" : "转让成功！ 该交易的哈希是: ",
   "MESSAGES.TRANSFER_ERROR" : "无法转让！",
   "MESSAGES.ASSETS_LOAD_ERROR" : "无法加载资产！",
-  "MESSAGES.ASSSET_CREATED_LOCAL_SUCCESS" : "资产已在本地创建，请点击“发布”将资产发布到元界区块链。",
+  "MESSAGES.ASSET_CREATED_LOCAL_SUCCESS" : "资产已在本地创建，请点击“发布”将资产发布到元界区块链。",
   "MESSAGES.MINING_START_SUCCESS" : "开始挖矿！",
   "MESSAGES.MINING_START_ERROR" : "无法开启挖矿！",
   "MESSAGES.MINING_STOP_SUCCESS" : "停止挖矿！",

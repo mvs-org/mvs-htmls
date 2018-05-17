@@ -32,8 +32,8 @@
 				<label for="addressFrom" class=" ddd control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
 				<select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" ng-change="availBalance(sendfrom)" ng-class="{validInput: !error.sendfrom, wrongInput: error.sendfrom}">
 					<option title="{{balance['total-available'] | assetformat : 8}} ETP" value="">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</option>
-					<option ng-repeat="oneAddress in listAddresses | orderBy:'quantity':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-if="allDidsAddresses[oneAddress.address] && oneAddress.available != 0 && recipents.length == 1 && addresses[oneAddress.address].type == 'single'">{{allDidsAddresses[oneAddress.address]}} - {{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
-          <option ng-repeat="oneAddress in listAddresses | orderBy:'quantity':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-if="!allDidsAddresses[oneAddress.address] && oneAddress.available != 0 && recipents.length == 1 && addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
+					<option ng-repeat="oneAddress in listAddresses | orderBy:'available':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-if="allDidsAddresses[oneAddress.address] && recipents.length == 1 && addresses[oneAddress.address].type == 'single'">{{allDidsAddresses[oneAddress.address]}} - {{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
+          <option ng-repeat="oneAddress in listAddresses | orderBy:'available':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-if="!allDidsAddresses[oneAddress.address] && oneAddress.available != 0 && recipents.length == 1 && addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
 				</select>
 			</div>
 

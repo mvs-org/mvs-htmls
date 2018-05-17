@@ -12,7 +12,7 @@
         <div class="col-xs-12 moreAssetsButton noPaddingLeftRight">
           <a href="#!/asset/create" class="btn btn-success smallButton"><span class="glyphicon glyphicon-plus"></span> {{ 'ASSET_ASSET_DETAILS_CREATE' | translate }}</a>
         </div>
-        <div dir-paginate="asset in assets | orderBy: ['-status','symbol'] | itemsPerPage: 10" >
+        <div dir-paginate="asset in assetsOriginal | orderBy: ['-status','symbol'] | itemsPerPage: 10" >
           <button class="assetBox col-xs-12 col-sm-12 col-md-12" ng-click="asset.details = !asset.details">
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
               <div class="assetBoxSymbolImg">
@@ -24,7 +24,7 @@
             </div>
             <div class="cccom-top assetBoxBalance col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
               <div class="assetBoxTitle">{{ 'ASSET_ALL_MAX_SUPPLY' | translate }}</div>
-              <div class="assetBoxValue overflow">{{asset.maximum_supply | assetformat : asset.decimal_number}}</div>
+              <div class="assetBoxValue overflow">{{asset.maximum_supply + assetsSecondaryIssue[asset.symbol] | assetformat : asset.decimal_number}}</div>
             </div>
             <div class="cccom-top assetBoxFrozen col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 noPaddingLeftRight">
               <div class="assetBoxTitle">{{ 'ASSET_ALL_ADDRESS' | translate }}</div>

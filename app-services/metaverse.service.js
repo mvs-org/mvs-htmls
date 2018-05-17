@@ -668,7 +668,7 @@
          **/
         function Issue(symbol) {
           var credentials = localStorageService.get('credentials');
-          return _send('issue', [credentials.user, credentials.password, symbol]);
+          return _sendV2('issue', [credentials.user, credentials.password, symbol]);
         }
 
 
