@@ -2976,7 +2976,7 @@
       getHeightFromExplorer();
       MetaverseService.GetInfoV2()
       .then( (response) => {
-        if (typeof response.success != 'undefined' && response.success) {
+        if (typeof response != 'undefined' && response.success) {
           $scope.height = response.data.result.height;
           $rootScope.network = response.data.result.testnet ? 'testnet' : 'mainnet';
           $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100);
@@ -3548,7 +3548,6 @@
     $scope.certs = [];
     $scope.noDids = false;
     $scope.error = [];
-    $scope.certType = '';
     $scope.changeSymbol = changeSymbol;
     $scope.transactionFee = 0.0001;
     $scope.allDidsAddresses = [];
@@ -3560,7 +3559,8 @@
 
     $scope.onChain = true;
     $scope.certSymbol = $location.path().split('/')[3];
-    $scope.selectType = '3';
+    $scope.certType = $location.path().split('/')[4];
+    $scope.selectedCert = $scope.certSymbol + ':' + $scope.certType;
 
     function listMultiSign() {
       NProgress.start();
@@ -3629,8 +3629,9 @@
 
     listMultiSign();
 
-    function changeSymbol(symbol) {
-      $scope.certType = $scope.certs[symbol].certs;
+    function changeSymbol(cert) {
+      $scope.certSymbol = cert.split(":")[0];
+      $scope.certType = cert.split(":")[1];
     }
 
     function listMyCerts() {
@@ -3641,8 +3642,6 @@
             $scope.myCerts = response.data.result.assetcerts;
             $scope.myCerts.forEach( (e) => {
               $scope.certs[e.symbol] = e;
-              if (e.symbol == $scope.certSymbol)
-                $scope.certType = e.certs;
             });
           } else {
             $scope.myCerts = [];
@@ -3675,28 +3674,19 @@
       listMyCerts();
     });
 
-    function checkInputs(certType) {
-      if($scope.certType != 1 && $scope.certType != 2 &&  $scope.certType != 3 && $scope.certType != 4) {
-        $translate('MESSAGES.UNKNOWN_CERTIFICATE_TYPE').then( (data) =>  FlashService.Error(data));
-        $window.scrollTo(0,0);
-      } else {
-        $scope.confirmation = true;
-        delete $rootScope.flash;
-      }
+    function checkInputs() {
+      $scope.confirmation = true;
+      delete $rootScope.flash;
     }
 
-    function transferCert(certSymbol, certType, selectType, toDID, transactionFee, password) {
-      var certToSend = certType;
-      if(certType == 3) {
-        certToSend = parseInt(selectType);
-      }
-      var fee_value = $filter('convertfortx')(transactionFee, 8);
+    function transferCert(certSymbol, certType, toDID, transactionFee, password) {
       if (localStorageService.get('credentials').password != password) {
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else {
+        var fee_value = $filter('convertfortx')(transactionFee, 8);
         NProgress.start();
-        MetaverseService.TransferCert(certSymbol, certToSend, toDID, fee_value, password)
+        MetaverseService.TransferCert(certSymbol, certType, toDID, fee_value, password)
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success) {
             $translate('MESSAGES.CERT_TRANSFERED').then( (data) => FlashService.Success(data, true, response.data.result.transaction.hash) );
