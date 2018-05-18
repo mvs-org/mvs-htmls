@@ -170,7 +170,7 @@
             .state('home.asset.details', {
                 url: "/asset/details/:symbol",
                 templateUrl: "home/assets/details.view.html",
-                controller: 'ShowAssetsController',
+                controller: 'AssetDetailController',
                 controllerAs: 'vm'
             })
 

@@ -12,6 +12,7 @@
   .controller('AssetSecondaryIssueController', AssetSecondaryIssueController)
   .controller('AssetsController', AssetsController)
   .controller('ShowAssetsController', ShowAssetsController)
+  .controller('AssetDetailController', AssetDetailController)
   .controller('ShowAllAssetsController', ShowAllAssetsController)
   .controller('ETPController', ETPController)
   .controller('ETPMultiSignController', ETPMultiSignController)
@@ -2252,6 +2253,140 @@
     $scope.closeAll = function () {
       ngDialog.closeAll();
     };
+  }
+
+
+  function AssetDetailController(MetaverseService, $rootScope, $scope, localStorageService, FlashService, $translate, $stateParams, $location, $window, ngDialog, $filter) {
+
+    $scope.symbol = $stateParams.symbol;
+    $scope.asset = [];
+    $scope.assets = [];
+    $scope.owner = false;               //true if the user is the owner of this asset
+    $scope.enableEditAddressName = enableEditAddressName;
+    $scope.endEditAddressName = endEditAddressName;
+    $scope.cancelEditAddressName = cancelEditAddressName;
+
+    $scope.showqr = showqr;
+    $scope.buttonCopyToClipboard = new Clipboard('.btn');
+    $scope.assetsLoaded = false;
+    $scope.assetOriginal = 0;
+    $scope.assetSecondaryIssue = 0;
+    $scope.assetAddresses = [];
+    $scope.getAssetBalance = [];
+    $scope.myDidsAddresses = [];
+
+
+    //Shows a modal of the address incl. a qr code
+    function showqr(address) {
+      $('#showqrmodal').modal();
+      $("#modal_address").html(address);
+      $('#modal_qr').html('');
+      var qrcode = new QRCode(document.getElementById("modal_qr"), {
+        text: address,
+        width: 300,
+        height: 300,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+      $('#showqrmodal').modal('show');
+    }
+
+
+    //Loads a given asset, used in the page asset/details
+    MetaverseService.GetAsset($scope.symbol)
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        if(response.data.assets != "") {    //if the user has some assets
+          $scope.assets = response.data.assets;
+          $scope.asset = response.data.assets[0];
+          $scope.assets.forEach( (asset) => {
+            if(asset.is_secondaryissue == 'false'){
+              $scope.assetOriginal = parseInt(asset.maximum_supply);
+            } else {
+              $scope.assetSecondaryIssue += parseInt(asset.maximum_supply);
+            }
+          });
+        } else {
+          //The user as no Assets
+        }
+      } else {
+        //Asset could not be loaded
+        $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) =>  FlashService.Error(data));
+        $window.scrollTo(0,0);
+      }
+      NProgress.done();
+    });
+
+
+    MetaverseService.GetAccountAsset($scope.symbol)
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success && response.data.result.assets != null) {    //If the address doesn't contain any asset, we don't need it
+        $scope.assetAddresses = response.data.result.assets;
+        $scope.assetAddresses.forEach( (address) => {
+          var name = "New address";
+          if (localStorageService.get(address.address) != undefined) {
+            name = localStorageService.get(address.address);
+          }
+          address.name = name;
+          address.edit = false;
+          $scope.getAssetBalance[address.address] = address.quantity;
+        });
+      }
+    });
+
+    MetaverseService.ListMyDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.myDids = response.data.result.dids;
+        $scope.balancesLoaded = true;
+        $scope.myDidsSymbols = [];
+        if(typeof $scope.myDids != 'undefined' && $scope.myDids != null) {
+          $scope.myDids.forEach(function(did) {
+            //$scope.myDidsSymbols.push(did.symbol);
+            $scope.myDidsAddresses[did.address] = did.symbol;
+          });
+        } else {
+          $scope.myDids = [];
+        }
+      } else {
+        $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
+    });
+
+
+    //Enable the edition of the Address Name
+    function enableEditAddressName(address) {
+      $scope.assetAddresses.forEach( (e) => {
+        if (e.address == address) {
+          e.newName = e.name;
+          e.edit = true;
+        }
+      });
+    }
+
+    //Save the edited name in the local storage
+    function endEditAddressName(address, newName) {
+      localStorageService.set(address,newName);
+      $scope.assetAddresses.forEach( (e) => {
+        if (e.address == address) {
+          e.name = newName;
+          e.edit = false;
+        }
+      });
+    }
+
+    //Cancel the edition
+    function cancelEditAddressName(address) {
+      $scope.assetAddresses.forEach( (e) => {
+        if (e.address == address) {
+          e.newName = e.name;
+          e.edit = false;
+        }
+      });
+    }
+
   }
 
   function AssetSecondaryIssueController(MetaverseService, $rootScope, $scope, $location, localStorageService, FlashService, $translate, $window, ngDialog, $filter) {

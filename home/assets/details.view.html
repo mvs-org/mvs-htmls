@@ -1,178 +1,148 @@
 <!--Display one specific Asset-->
+<div class="headline">{{asset.symbol}}</div>
 
-  <!--<div class="headline">{{ 'HEADLINE_ASSETS_DETAILS' | translate }}</div>
-  <div>
-    <ul class="nav nav-pills tabsMenu">
-      <li role="presentation"><a href="#!/asset/myassets" class="btn-link-menu">{{'ASSET_MY_ASSETS' | translate}}</a></li>
-      <li role="presentation"><a href="#!/asset/all" class="btn-link-menu">{{'ASSET_ALL_ASSETS' | translate}}</a></li>
-    </ul>
-  </div>
-  <br/>-->
-  <div class="headline">{{asset.symbol}}</div>
-
-  <table class="assetDetailsTable">
-    <div class="col-lg-6 col-md-12">
-      <div class="assetDetailsPanel panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">{{'ASSET_ASSET_DETAILS_GENERAL_INFO' | translate}}</h3>
+<table class="assetDetailsTable">
+  <div class="col-lg-6 col-md-12">
+    <div class="assetDetailsPanel panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{'ASSET_ASSET_DETAILS_GENERAL_INFO' | translate}}</h3>
+      </div>
+      <div class="panel-body">
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-4 noPaddingLeftRight">{{'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate}}</div>
+          <div class="assetValueColumn col-xs-8 noPaddingLeftRight">{{assetOriginal + assetSecondaryIssue | assetformat : asset.decimal_number}}</div>
         </div>
-        <div class="panel-body">
-          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate}}</div>
-            <div class="assetValueColumn col-xs-3 noPaddingLeftRight">
-              <!--Display the maximum supply-->
-              <span>{{asset.maximum_supply | assetformat : asset.decimal_number}}</span>
-              <!--Secondary Offering-->
-              <!--<button ng-show="owner && asset.status=='issued'" class="glyphicon glyphicon-plus-sign editAddressNameButton" bs-tooltip data-placement="top" title="{{ 'ASSET_ASSET_DETAILS_TOOLTIP_INCREASE_SUPPLY' | translate }}" ng-click="enableEditAssetMaxSupply()"></button>
-              <span ng-show="increase_maximum_supply != 0 && !editMaxSupply">{{increase_maximum_supply}}</span>-->
-              <!--Display while editing-->
-              <!--<div class=" editMaxSupplyBox">
-                <span class="input-group" ng-show="editMaxSupply">
-                  <input type="number" ng-model="increase_maximum_supply" class="form-control maxSupplyUpdateTextBox" min="0" ng-keyup="$event.keyCode == 13 && endEditAssetMaxSupply(new_maximum_supply)">
-                  <span class="input-group-addon editAddressName">
-                    <button class="glyphicon glyphicon-floppy-saved editAddressNameButtonEditing" ng-click="endEditAssetMaxSupply()"></button>
-                  </span>
-                  <span class="input-group-addon editAddressName">
-                    <button class="glyphicon glyphicon-remove editAddressNameButtonEditing" ng-click="cancelEditAssetMaxSupply()"></button>
-                  </span>
-                </span>
-              </div>-->
-            </div>
-            <!--Validation Secondary issuing button-->
-            <!--<td class="sendAssetButton col-md-6">
-              <a ng-show="(increase_maximum_supply != 0)" ng-click="secondIssue(asset.symbol, increase_maximum_supply, asset.decimal_number)">
-                <button class="btn btn-success smallButton">{{'ASSET_ASSET_DETAILS_SUBMIT' | translate}}</button>
-              </a>
-            </td>-->
+        <div ng-show="assetSecondaryIssue != 0" class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-4 noPaddingLeftRight">{{'ASSET_ALL.INITIAL_MAX_SUPPLY' | translate}}</div>
+          <div class="assetValueColumn col-xs-8 noPaddingLeftRight">{{assetOriginal | assetformat : asset.decimal_number}}</div>
+        </div>
+        <div ng-show="assetSecondaryIssue != 0" class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-4 noPaddingLeftRight">{{'ASSET_ALL.ADDED_VIA_SECONDARY_ISSUE' | translate}}</div>
+          <div class="assetValueColumn col-xs-8 noPaddingLeftRight">{{assetSecondaryIssue | assetformat : asset.decimal_number}}</div>
+        </div>
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-4 noPaddingLeftRight">{{'ASSET_CREATE.SECONDARY_ISSUE' | translate}}</div>
+          <div ng-hide="asset.secondaryissue_threshold == 127" class="assetValueColumn col-xs-4 noPaddingLeftRight">{{asset.secondaryissue_threshold}} %</div>
+          <div ng-show="asset.secondaryissue_threshold == 127" class="assetValueColumn col-xs-4 noPaddingLeftRight">{{'ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED' | translate}}</div>
+          <div class="sendAssetButton col-xs-4 noPaddingLeftRight assetDetailsBoxButton" ng-show="asset.status=='issued'">
+            <a href="#!/asset/secondaryissue/{{asset.symbol}}">
+              <button ng-hide="asset.secondaryissue_threshold == '0'" class="btn btn-success smallButton assetBoxButton">{{'ASSET_CREATE.SECONDARY_ISSUE_BUTTON' | translate}}</button>
+              <button ng-show="asset.secondaryissue_threshold == '0'" class="btn btn-success smallButton assetBoxButton" ng-disabled="true" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_BUTTON_DISABLED' | translate }}">{{'ASSET_CREATE.SECONDARY_ISSUE_BUTTON' | translate}}</button>
+            </a>
           </div>
-          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{'ASSET_CREATE.SECONDARY_ISSUE' | translate}}</div>
-            <div ng-hide="asset.secondaryissue_threshold == 127" class="assetValueColumn col-xs-3 noPaddingLeftRight">{{asset.secondaryissue_threshold}} %</div>
-            <div ng-show="asset.secondaryissue_threshold == 127" class="assetValueColumn col-xs-3 noPaddingLeftRight">{{'ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED' | translate}}</div>
-            <div class="sendAssetButton col-xs-6 noPaddingLeftRight assetDetailsBoxButton" ng-show="asset.status=='issued'">
-              <a href="#!/asset/secondaryissue/{{asset.symbol}}">
-                <button ng-hide="asset.secondaryissue_threshold == '0'" class="btn btn-success smallButton assetBoxButton">{{'ASSET_CREATE.SECONDARY_ISSUE_BUTTON' | translate}}</button>
-                <button ng-show="asset.secondaryissue_threshold == '0'" class="btn btn-success smallButton assetBoxButton" ng-disabled="true" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_BUTTON_DISABLED' | translate }}">{{'ASSET_CREATE.SECONDARY_ISSUE_BUTTON' | translate}}</button>
-              </a>
-            </div>
-          </div>
-          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{'ASSET_ASSET_DETAILS_DIGITS' | translate}}</div>
-            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{asset.decimal_number}}</div>
-          </div>
-          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{'ASSET_ASSET_CREATE_DESCRIPTION' | translate}}</div>
-            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{asset.description}}</div>
-          </div>
-          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{'STATUS' | translate}}</div>
-            <div ng-show="asset.status == 'unissued'" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'ASSET.STATUS_UNISSUED' | translate }}</div>
-            <div ng-show="asset.status == 'issued'" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'ASSET.STATUS_ISSUED' | translate }}</div>
-            <div ng-show="asset.status == 'unspent'" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'ASSET.STATUS_UNSPENT' | translate }}</div>
-            <div ng-hide="asset.status == 'unissued' || asset.status == 'issued' || asset.status == 'unspent'" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{asset.status}}</div>
-          </div>
-          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{'ISSUER' | translate}}</div>
-            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{asset.issuer}}</div>
-          </div>
-          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{'ADDRESS_OF_CREATOR' | translate}}</div>
-            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{asset.address}}</div>
+        </div>
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-4 noPaddingLeftRight">{{'ASSET_ASSET_DETAILS_DIGITS' | translate}}</div>
+          <div class="assetValueColumn col-xs-8 noPaddingLeftRight">{{asset.decimal_number}}</div>
+        </div>
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-4 noPaddingLeftRight">{{'ASSET_ASSET_CREATE_DESCRIPTION' | translate}}</div>
+          <div class="assetValueColumn col-xs-8 noPaddingLeftRight">{{asset.description}}</div>
+        </div>
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-4 noPaddingLeftRight">{{'STATUS' | translate}}</div>
+          <div ng-show="asset.status == 'unissued'" class="assetValueColumn col-xs-8 noPaddingLeftRight">{{ 'ASSET.STATUS_UNISSUED' | translate }}</div>
+          <div ng-show="asset.status == 'issued'" class="assetValueColumn col-xs-8 noPaddingLeftRight">{{ 'ASSET.STATUS_ISSUED' | translate }}</div>
+          <div ng-show="asset.status == 'unspent'" class="assetValueColumn col-xs-8 noPaddingLeftRight">{{ 'ASSET.STATUS_UNSPENT' | translate }}</div>
+          <div ng-hide="asset.status == 'unissued' || asset.status == 'issued' || asset.status == 'unspent'" class="assetValueColumn col-xs-8 noPaddingLeftRight">{{asset.status}}</div>
+        </div>
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-4 noPaddingLeftRight">{{'ISSUER' | translate}}</div>
+          <div class="assetValueColumn col-xs-8 noPaddingLeftRight">{{asset.issuer}}</div>
+        </div>
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-4 noPaddingLeftRight">{{'ADDRESS_OF_CREATOR' | translate}}</div>
+          <div class="assetValueColumn col-xs-8 noPaddingLeftRight">{{asset.address}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--My asset-->
+  <div class="col-lg-6 col-md-12">
+    <div class="assetDetailsPanel panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{'ASSET_ASSET_DETAILS_MY_INFO' | translate}}{{asset.symbol}}</h3>
+      </div>
+      <div class="panel-body">
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-4 noPaddingLeftRight">{{'BALANCE' | translate}}</div>
+          <div class="assetValueColumn col-xs-4 noPaddingLeftRight" ng-show="asset.quantity != undefined">{{asset.quantity | assetformat : asset.decimal_number}}</div>
+          <div class="assetValueColumn col-xs-4 noPaddingLeftRight" ng-hide="asset.quantity != undefined">0</div>
+          <div class="sendAssetButton col-xs-4 noPaddingLeftRight assetDetailsBoxButton" ng-show="asset.status=='issued'">
+            <a href="#!/transfer/{{asset.symbol}}/">
+              <button class="btn btn-success smallButton assetBoxButton">{{'ASSETS_SEND' | translate}}</button>
+            </a>
           </div>
         </div>
       </div>
     </div>
-    <!--My asset-->
-    <div class="col-lg-6 col-md-12">
-      <div class="assetDetailsPanel panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">{{'ASSET_ASSET_DETAILS_MY_INFO' | translate}}{{asset.symbol}}</h3>
-        </div>
-        <div class="panel-body">
-          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{'BALANCE' | translate}}</div>
-            <div class="assetValueColumn col-xs-3 noPaddingLeftRight" ng-show="asset.quantity != undefined">{{asset.quantity | assetformat : asset.decimal_number}}</div>
-            <div class="assetValueColumn col-xs-3 noPaddingLeftRight" ng-hide="asset.quantity != undefined">0</div>
-            <div class="sendAssetButton col-xs-6 noPaddingLeftRight assetDetailsBoxButton" ng-show="asset.status=='issued'">
-              <a href="#!/transfer/{{asset.symbol}}/">
-                <button class="btn btn-success smallButton assetBoxButton">{{'ASSETS_SEND' | translate}}</button>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </table>
-
-  <div ng-show="asset.status=='unissued'" class="col-xs-12 col-sm-6 col-md-4">
-    <a class="col-xs-6 col-xl-6" href="" ng-click="issue(asset.symbol)"><div class="btn btn-info">{{'ASSET_ISSUE' | translate}}</div></a>
-    <a class="col-xs-6 col-xl-6" href="" ng-click="deleteAsset(asset.symbol)"><div class="btn btn-danger">{{'ASSET_DELETE_ASSET' | translate}}</div></a>
-  </div>
-  <div ng-show="asset.status=='issued'" class="col-xs-12 col-sm-6 col-md-4">
-    <!--<a ng-hide="(increase_maximum_supply != 0)" class="col-xs-6 col-xl-6" href="#!/transfer/{{asset.symbol}}/"><input class="btn btn-info" value="{{'TRANSFER_SEND' | translate}}"></a>-->
-    <!--<a ng-hide="(increase_maximum_supply != 0)" class="col-xs-6 col-xl-6" href="#!/asset/myassets"><input class="btn btn-link" value="{{'TRANSFER_BACK_ASSETS' | translate}}"></a>-->
-    <!--<a ng-show="(increase_maximum_supply != 0)" class="col-xs-6 col-xl-6" ng-click="secondIssue(asset.symbol, increase_maximum_supply, asset.decimal_number)"><input type="button" class="btn btn-success" value="{{'ASSET_ASSET_DETAILS_SUBMIT' | translate}}"></a>-->
-    <!--<a ng-show="(increase_maximum_supply != 0)" class="col-xs-6 col-xl-6" href="#!/asset/myassets"><input class="btn btn-link" value="{{'ASSET_ASSET_DETAILS_CANCEL' | translate}}"></a>-->
   </div>
 
-  <!--QR Code pop-up-->
-  <div class="modal fade" id="showqrmodal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content panel">
-        <div class="qrCodePopUp" id="modal_qr"></div>
-        <div class="addressQRCode" id="modal_address"></div>
-      </div>
+</table>
+
+<div ng-show="asset.status=='unissued'" class="col-xs-12 col-sm-6 col-md-4">
+  <a class="col-xs-6 col-xl-6" href="" ng-click="issue(asset.symbol)"><div class="btn btn-info">{{'ASSET_ISSUE' | translate}}</div></a>
+  <a class="col-xs-6 col-xl-6" href="" ng-click="deleteAsset(asset.symbol)"><div class="btn btn-danger">{{'ASSET_DELETE_ASSET' | translate}}</div></a>
+</div>
+
+<!--QR Code pop-up-->
+<div class="modal fade" id="showqrmodal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content panel">
+      <div class="qrCodePopUp" id="modal_qr"></div>
+      <div class="addressQRCode" id="modal_address"></div>
     </div>
   </div>
+</div>
 
-  <!--Display all the adresses having this Asset-->
-  <div dir-paginate="asset in assetAddresses | orderBy:'quantity':true | itemsPerPage: 10" ng-hide="(asset.quantity == 0)">
-    <dd class="assetBox col-xs-12 col-sm-12 col-md-12" >
-      <div class="assetBoxBalance col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-        <!--Display editable name of the address-->
-        <div ng-hide="asset.edit">
-          <span class="addressBoxName" readonly="true" id="editAddressName">{{asset.name}}</span>
-          <button class="fa fa-edit editAddressNameButton" bs-tooltip data-placement="top" title="{{ 'ADDRESSES_TOOLTIP_EDIT_NAME' | translate }}" ng-click="enableEditAddressName(asset.address)"></button>
-        </div>
-        <!--Display while editing-->
-        <div class="input-group" ng-show="asset.edit">
-          <input type="text" ng-model="asset.newName" class="form-control addressBoxNameUpdate" id="editAddressNameEditing" maxlength="40" ng-keyup="$event.keyCode == 13 && endEditAddressName(asset.address, asset.newName)">
-          <span class="input-group-addon editAddressName">
-            <button class="glyphicon glyphicon-floppy-saved editAddressNameButtonEditing" ng-click="endEditAddressName(asset.address, asset.newName)"></button>
-          </span>
-          <span class="input-group-addon editAddressName">
-            <button class="glyphicon glyphicon-remove editAddressNameButtonEditing" ng-click="cancelEditAddressName(asset.address)"></button>
-          </span>
-        </div>
-        <a href="#!/explorer/adr/{{asset.address}}" class="btn-link-black col-xs-12 noPaddingLeftRight addressBoxAddressDeposit overflow">{{asset.address}}</a>
-
-        <!--<span class="col-xs-12 noPaddingLeftRight addressBoxAddressDeposit overflow">{{asset.address}}</span>-->
-
+<!--Display all the adresses having this Asset-->
+<div dir-paginate="asset in assetAddresses | orderBy:'quantity':true | itemsPerPage: 10" ng-hide="(asset.quantity == 0)">
+  <dd class="assetBox col-xs-12 col-sm-12 col-md-12" >
+    <div class="assetBoxBalance col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+      <span nh-show="myDidsAddresses[asset.address]" class="addressBoxName" readonly="true" id="editAddressName">{{myDidsAddresses[asset.address]}}</span>
+      <!--Display editable name of the address-->
+      <div ng-hide="asset.edit || myDidsAddresses[asset.address]">
+        <span class="addressBoxName" readonly="true" id="editAddressName">{{asset.name}}</span>
+        <button class="fa fa-edit editAddressNameButton" bs-tooltip data-placement="top" title="{{ 'ADDRESSES_TOOLTIP_EDIT_NAME' | translate }}" ng-click="enableEditAddressName(asset.address)"></button>
       </div>
-      <div class="assetBoxBalance col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
-        <div class="assetBoxTitle">{{ 'BALANCE' | translate }}</div>
-        <div class="assetBoxValue overflow">{{asset.quantity | assetformat : asset.decimal_number}}</div>
-      </div>
-      <div class="assetBoxCopy col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
-        <span class="copyAddress">
-          <button class="btn btn-link-black addressLinkButton" bs-popover data-clipboard-text="{{asset.address}}" data-toggle="popover" data-placement="top" data-content="{{ 'ADDRESSES_POPOVER_COPIED' | translate }}" role="button">
-            <!--<span class="glyphicon glyphicon-copy">-->
-            </span> {{ 'ADDRESSES_COPY_ADDRESS' | translate }}
-          </button>
+      <!--Display while editing-->
+      <div class="input-group" ng-show="asset.edit">
+        <input type="text" ng-model="asset.newName" class="form-control addressBoxNameUpdate" id="editAddressNameEditing" maxlength="40" ng-keyup="$event.keyCode == 13 && endEditAddressName(asset.address, asset.newName)">
+        <span class="input-group-addon editAddressName">
+          <button class="glyphicon glyphicon-floppy-saved editAddressNameButtonEditing" ng-click="endEditAddressName(asset.address, asset.newName)"></button>
+        </span>
+        <span class="input-group-addon editAddressName">
+          <button class="glyphicon glyphicon-remove editAddressNameButtonEditing" ng-click="cancelEditAddressName(asset.address)"></button>
         </span>
       </div>
-      <div class="assetBoxCopy col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
-        <span class="qrCode">
-          <button id="element" class="btn btn-link-black addressLinkButton" ng-click="showqr(asset.address)" alt="receive">
-            <span class="glyphicon glyphicon-qrcode"></span> {{ 'ADDRESSES_QR_CODE' | translate }}
-          </button>
-        </span>
-      </div>
-    </dd>
-  </div>
+      <a href="#!/explorer/adr/{{asset.address}}" class="btn-link-black col-xs-12 noPaddingLeftRight addressBoxAddressDeposit overflow">{{asset.address}}</a>
 
-  <!--Pagination-->
-  <div class="col-xs-offset-5 col-sm-offset-5 col-md-offset-5 col-lg-offset-5 col-xl-offset-5">
-    <dir-pagination-controls></dir-pagination-controls>
-  </div>
+      <!--<span class="col-xs-12 noPaddingLeftRight addressBoxAddressDeposit overflow">{{asset.address}}</span>-->
+
+    </div>
+    <div class="assetBoxBalance col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
+      <div class="assetBoxTitle">{{ 'BALANCE' | translate }}</div>
+      <div class="assetBoxValue overflow">{{asset.quantity | assetformat : asset.decimal_number}}</div>
+    </div>
+    <div class="assetBoxCopy col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
+      <span class="copyAddress">
+        <button class="btn btn-link-black addressLinkButton" bs-popover data-clipboard-text="{{asset.address}}" data-toggle="popover" data-placement="top" data-content="{{ 'ADDRESSES_POPOVER_COPIED' | translate }}" role="button">
+          <!--<span class="glyphicon glyphicon-copy">-->
+          </span> {{ 'ADDRESSES_COPY_ADDRESS' | translate }}
+        </button>
+      </span>
+    </div>
+    <div class="assetBoxCopy col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
+      <span class="qrCode">
+        <button id="element" class="btn btn-link-black addressLinkButton" ng-click="showqr(asset.address)" alt="receive">
+          <span class="glyphicon glyphicon-qrcode"></span> {{ 'ADDRESSES_QR_CODE' | translate }}
+        </button>
+      </span>
+    </div>
+  </dd>
+</div>
+
+<!--Pagination-->
+<div class="col-xs-offset-5 col-sm-offset-5 col-md-offset-5 col-lg-offset-5 col-xl-offset-5">
+  <dir-pagination-controls></dir-pagination-controls>
+</div>
