@@ -974,9 +974,20 @@
             return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-m', model, '-f', transactionFee]);
         }
 
-        function SecondaryIssueModel2(toDID, symbol, quantity, transactionFee, password){
-            var credentials = localStorageService.get('credentials');
-            return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-f', transactionFee]);
+        function SecondaryIssueModel2(toDID, symbol, quantity, unlockNumber, quantityLocked, periodLocked, periods, transactionFee, password){
+            var credentials = localStorageService.get('credentials'); //;UC=20000,20000,20000;UQ=3000,3000,3000
+            var uc = '';
+            var uq = '';
+            periods.forEach( (period) => {
+              uc += period.number;
+              uc += ',';
+              uq += period.quantityToSend;
+              uq += ',';
+            });
+            uc = uc.substring(0, uc.length - 1);
+            uq = uq.substring(0, uq.length - 1);
+            var model = "TYPE=2;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";UC=" + uc + ";UQ=" + uq;
+            return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-m', model, '-f', transactionFee]);
         }
 
         function Query(string) {

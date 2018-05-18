@@ -49,7 +49,8 @@
         <div class="form-group">
           <label for="unlockNumber" class="control-label">{{ 'SECONDARY_ISSUE.UNLOCK_NUMBER' | translate }}</label>
           <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_UNLOCK_NUMBER' | translate }}"></span>
-          <input type="number" placeholder="0" step="1" class="form-control" name="unlockNumber" id="" ng-model="unlockNumber">
+          <input type="number" placeholder="0" step="1" class="form-control" name="unlockNumber" id="" ng-model="unlockNumber" ng-change="updateUnlockNumber(unlockNumber)">
+          <div ng-show="model == 2 && unlockNumber > 100" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'SECONDARY_ISSUE.MODEL2_MAX_UNLOCK_NUMBER_100' | translate }}</div>
         </div>
         <!--LQ-->
         <div class="form-group">
@@ -61,7 +62,21 @@
         <div class="form-group">
           <label for="periodLocked" class="control-label">{{ 'SECONDARY_ISSUE.TOTAL_LOCKED_PERIOD' | translate }}</label>
           <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_TOTAL_LOCKED_PERIOD' | translate }}"></span>
-          <input type="number" placeholder="0" step="1" class="form-control" name="fee" id="" ng-model="periodLocked">
+          <input type="number" placeholder="0" step="1" class="form-control" name="periodLocked" id="" ng-model="periodLocked">
+        </div>
+      </div>
+      <div ng-show="model == 2" ng-repeat="period in model2 | limitTo:model2Displayed">
+        <!--LP-->
+        <div class="form-group">
+          <label for="model2quantity" class="control-label">{{ 'SECONDARY_ISSUE.MODEL2_QUANTITY' | translate }}{{period.index+1}}</label>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_MODEL2_QUANTITY' | translate }}{{period.index+1}}"></span>
+          <input type="number" placeholder="0" class="form-control" name="model2quantity" id="" ng-model="period.quantity">
+        </div>
+        <!--LP-->
+        <div class="form-group">
+          <label for="periodLocked" class="control-label">{{ 'SECONDARY_ISSUE.MODEL2_PERIOD' | translate }}{{period.index+1}}</label>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_MODEL2_PERIOD' | translate }}{{period.index+1}}"></span>
+          <input type="number" placeholder="0" step="1" class="form-control" name="fee" id="" ng-model="period.number">
         </div>
       </div>
       <!--Fee-->
@@ -74,7 +89,7 @@
       <div class="row">
         <br>
         <div class="col-xs-6">
-          <input type="submit" ng-click="checkInputs(address, password)" value="{{ 'SECONDARY_ISSUE_BUTTON' | translate }}" class="btn btn-success" ng-disabled="!submittable">
+          <input type="submit" ng-click="checkInputs(address, unlockNumber, model2, password)" value="{{ 'SECONDARY_ISSUE_BUTTON' | translate }}" class="btn btn-success" ng-disabled="!submittable">
         </div>
         <div class="col-xs-6">
           <a href="#!/asset/myassets" class="btn btn-success btn-success-secondary">{{ 'TRANSFER_BACK_ASSETS' | translate }}</a>
@@ -144,43 +159,53 @@
         </div>
         <div class="panel-body">
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</div>
-            <div class="assetValueColumn col-xs-3 noPaddingLeftRight">{{symbol}}</div>
+            <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</div>
+            <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{symbol}}</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TO_AVATAR' | translate }}</div>
-            <div class="assetValueColumn col-xs-3 noPaddingLeftRight">{{recipientAvatar}}</div>
+            <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TO_AVATAR' | translate }}</div>
+            <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{recipientAvatar}}</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.QUANTITY' | translate }}</div>
-            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{toTxConvertedQuantity | assetformat : myAsset.decimal_number}}</div>
+            <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.QUANTITY' | translate }}</div>
+            <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{toTxConvertedQuantity | assetformat : myAsset.decimal_number}}</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.CURRENT_MAX_SUPPLY' | translate }}</div>
-            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{assetOriginal + assetSecondaryIssue | assetformat : myAsset.decimal_number}}</div>
+            <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.CURRENT_MAX_SUPPLY' | translate }}</div>
+            <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{assetOriginal + assetSecondaryIssue | assetformat : myAsset.decimal_number}}</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.NEW_MAX_SUPPLY' | translate }}</div>
-            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{toTxConvertedQuantity + assetOriginal + assetSecondaryIssue | assetformat : myAsset.decimal_number}}</div>
+            <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.NEW_MAX_SUPPLY' | translate }}</div>
+            <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{toTxConvertedQuantity + assetOriginal + assetSecondaryIssue | assetformat : myAsset.decimal_number}}</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE' | translate }}</div>
-            <div ng-show="model == ''" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE_DEFAULT' | translate }}</div>
-            <div ng-show="model == 1" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE_1' | translate }}</div>
-            <div ng-show="model == 2" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE_2' | translate }}</div>
+            <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE' | translate }}</div>
+            <div ng-show="model == ''" class="assetValueColumn col-xs-6 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE_DEFAULT' | translate }}</div>
+            <div ng-show="model == 1" class="assetValueColumn col-xs-6 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE_1' | translate }}</div>
+            <div ng-show="model == 2" class="assetValueColumn col-xs-6 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE_2' | translate }}</div>
           </div>
           <div ng-show="model == 1 || model == 2">
             <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-              <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.UNLOCK_NUMBER' | translate }}</div>
-              <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{unlockNumber}}</div>
+              <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.UNLOCK_NUMBER' | translate }}</div>
+              <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{unlockNumber}}</div>
             </div>
             <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-              <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TOTAL_LOCKED_QUANTITY' | translate }}</div>
-              <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{quantityLocked}}</div>
+              <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TOTAL_LOCKED_QUANTITY' | translate }}</div>
+              <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{quantityLocked}}</div>
             </div>
             <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-              <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TOTAL_LOCKED_PERIOD' | translate }}</div>
-              <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{periodLocked}}</div>
+              <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TOTAL_LOCKED_PERIOD' | translate }}</div>
+              <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{periodLocked}}</div>
+            </div>
+          </div>
+          <div ng-show="model == 2" ng-repeat="period in model2ToSend | orderBy:'index'">
+            <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+              <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.MODEL2_QUANTITY' | translate }}{{period.index+1}}</div>
+              <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{period.quantity}}</div>
+            </div>
+            <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+              <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.MODEL2_PERIOD' | translate }}{{period.index+1}}</div>
+              <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{period.number}}</div>
             </div>
           </div>
         </div>

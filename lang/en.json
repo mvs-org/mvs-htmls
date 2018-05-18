@@ -511,9 +511,9 @@
   "ISSUE_CERT.UNUSUAL_FORMAT": "An asset symbol format is usually (domain_name).(asset_name)",
   "ISSUE_CERT.ERROR_SYMBOL_SELECT_DOMAIN_FIRST": "Please select a Domain first",
   "MESSAGES.ERROR_CERT_ISSUE": "Impossible to issue this certificate",
-  "ASSET.STATUS_UNISSUED": "Only created locally",
-  "ASSET.STATUS_ISSUED": "Registered on the blockchain",
-  "ASSET.STATUS_UNSPENT": "Available",
+  "ASSET.STATUS_UNISSUED": "Unissued",
+  "ASSET.STATUS_ISSUED": "Issued",
+  "ASSET.STATUS_UNSPENT": "Unspend",
   "HELP.SECONDARY_ISSUE_BUTTON_DISABLED": "This Asset cannot do a Secondary Issue, its Maximum supply cannot be changed",
   "DEPOSIT.AMOUNT_NOT_ENOUGH" : "You do not have enough ETP. Please remember to take into account the transaction fee",
   "MESSAGES.NOT_A_NUMBER": "Please enter a number",
@@ -581,5 +581,11 @@
   "HELP.SECONDARY_ISSUE_UNLOCK_NUMBER": "This it the total number of period that will be used",
   "HELP.SECONDARY_ISSUE_TOTAL_LOCKED_QUANTITY": "This is the total number of asset that will be locked. This quantity minus the 'Added quantity' is the number of asset directly available",
   "HELP.SECONDARY_ISSUE_TOTAL_LOCKED_PERIOD": "This is the total number of blocks till the last period terminates",
-  "MESSAGES.ERROR_SECONDARY_ISSUE": "Error during the secondary issue"
+  "MESSAGES.ERROR_SECONDARY_ISSUE": "Error during the secondary issue",
+  "SECONDARY_ISSUE.MODEL2_QUANTITY": "Unlocked quantity at end of period ",
+  "SECONDARY_ISSUE.MODEL2_PERIOD": "Number of blocks of period ",
+  "SECONDARY_ISSUE.MODEL2_MAX_UNLOCK_NUMBER_100": "The number of period for the model 2 is limited to 100. If you want to use more periods, please use the command line or use the model 1",
+  "MESSAGES.SECONDARY_ISSUE_MODEL2_MISSING_PERIOD_INPUT": "Please complete all the fields",
+  "HELP.SECONDARY_ISSUE_MODEL2_QUANTITY": "This is the number of asset that will be unfrozen at the end of period ",
+  "HELP.SECONDARY_ISSUE_MODEL2_PERIOD": "This is the duration, in number of blocks, of period "
 }

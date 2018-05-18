@@ -2282,6 +2282,18 @@
     $scope.recipientAvatar = '';
     $scope.avatar = '';
     $scope.availableBalanceAsset = 0;
+    $scope.model2 = [];
+    $scope.model2ToSend = [];
+    $scope.model2Displayed = 0;
+    $scope.updateUnlockNumber = updateUnlockNumber;
+
+    function init(){
+      for(var i = 0, value = {"index":i,"number": "", "quantity": ""}, size = 100, array = new Array(100); i < size; i++, value = {"index":i,"number": "", "quantity": ""}) array[i] = value;
+      $scope.model2 = array;
+    }
+
+    init();
+
 
 
     function listAddresses() {
@@ -2440,11 +2452,37 @@
       $scope.toTxConvertedQuantity = parseInt($filter('convertfortx')(quantity, $scope.myAsset.decimal_number));
     }
 
-    function checkInputs(address, password) {
+    function updateUnlockNumber(unlockNumber) {
+      if(unlockNumber == undefined || unlockNumber == ''){
+        $scope.model2Displayed = 0;
+      } else {
+        $scope.model2Displayed = unlockNumber;
+      }
+    }
+
+    function checkInputs(address, unlockNumber, model2, password) {
       $scope.quantityLockedToSend = $filter('convertfortx')($scope.quantityLocked, $scope.myAsset.decimal_number);
       $scope.recipientAvatar = $scope.myDidsAddresses[address];
-      $scope.confirmation = true;
-      delete $rootScope.flash;
+      if($scope.model == 2){
+        var inputOK = true;
+        $scope.model2ToSend = model2.slice(0, unlockNumber);
+        $scope.model2ToSend.forEach( (period) => {
+          period.quantityToSend = $filter('convertfortx')(period.quantity, $scope.myAsset.decimal_number);
+          if(period.number == '' || period.quantity == ''){
+            inputOK = false;
+            $scope.confirmation = false;
+            $translate('MESSAGES.SECONDARY_ISSUE_MODEL2_MISSING_PERIOD_INPUT').then( (data) => FlashService.Error(data) );
+            $window.scrollTo(0,0);
+          }
+        });
+        if(inputOK == true) {
+          $scope.confirmation = true;
+          delete $rootScope.flash;
+        }
+      } else {
+        $scope.confirmation = true;
+        delete $rootScope.flash;
+      }
     }
 
     function secondaryIssue() {
@@ -2453,21 +2491,19 @@
       var SendPromise;
       switch($scope.model){
         case '':
-          console.log("here")
           SendPromise = MetaverseService.SecondaryIssueDefault($scope.recipientAvatar, $scope.symbol, $scope.toTxConvertedQuantity, fee_value, $scope.password);
           break;
         case '1':
           SendPromise = MetaverseService.SecondaryIssueModel1($scope.recipientAvatar, $scope.symbol, $scope.toTxConvertedQuantity, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, fee_value, $scope.password);
           break;
         case '2':
-          SendPromise = MetaverseService.SecondaryIssueModel2($scope.recipientAvatar, $scope.symbol, $scope.toTxConvertedQuantity, fee_value, $scope.password);
+          SendPromise = MetaverseService.SecondaryIssueModel2($scope.recipientAvatar, $scope.symbol, $scope.toTxConvertedQuantity, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, fee_value, $scope.password);
           break;
         default:
           console.log("Unknow secondary issue model");
       }
       SendPromise
       .then( (response) => {
-        console.log(response)
         if (typeof response.success !== 'undefined' && response.success) {
           $translate('MESSAGES.SECONDARY_ISSUE_SUCCESS').then( (data) =>  FlashService.Success(data, true, response.data.result.transaction.hash));
           $location.path('/avatar/myavatars');
