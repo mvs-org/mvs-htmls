@@ -1980,7 +1980,9 @@ h2 {
 }
 
 .assetDataLine {
-  margin-top: 12px;
+  padding-top: 12px;
+  padding-left: 15px;
+  padding-right: 15px;
   border-bottom: 1px solid #f2f2f2;
 }
 
@@ -2183,8 +2185,7 @@ h2 {
 }
 
 .assetDetailsPanel .panel-body {
-  padding-top: 0;
-  padding-bottom: 0;
+  padding: 0;
 }
 
 .help-tooltip {

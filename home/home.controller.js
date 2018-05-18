@@ -473,14 +473,9 @@
       $scope.period_select=period;
     }
 
-    function checkInputs(value, transactionFee, period_select, password) {
-      if (password != localStorageService.get('credentials').password) {
-        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else {
-        $scope.confirmation = true;
-        delete $rootScope.flash;
-      }
+    function checkInputs() {
+      $scope.confirmation = true;
+      delete $rootScope.flash;
     }
 
     function deposit(value, transactionFee, period_select, password) {
@@ -489,29 +484,33 @@
       var deposit_value = $filter('convertfortx')(value, $scope.decimal_number);
       var fee_value = $filter('convertfortx')(transactionFee, $scope.decimal_number);
 
-      var SendPromise = ($scope.symbol == 'ETP') ? MetaverseService.Deposit($scope.deposit_options[period_select][2], deposit_value, fee_value, password, ($scope.address_option) ? $scope.deposit_address : undefined) : MetaverseService.FrozenAsset($scope.deposit_options[period_select][2], deposit_value, fee_value, password, $scope.symbol, ($scope.address_option) ? $scope.deposit_address : undefined);
-      SendPromise
-      .then( (response) => {
-        NProgress.done();
-        if (typeof response.success !== 'undefined' && response.success) {
-          init();
-          //Transaction was successful
-          $translate('MESSAGES.DEPOSIT_SUCCESS').then( (data) => FlashService.Success(data, false, response.data.result.transaction.hash) );
-          $window.scrollTo(0,0);
-          init();
-        } else {
-          //Transaction problem
-          $translate('MESSAGES.DEPOSIT_ERROR').then( (data) => {
-            if (response.message.message != undefined) {
-              FlashService.Error(data + " " + response.message.message);
-            } else {
-              FlashService.Error(data);
-            }
-          });
-          $window.scrollTo(0,0);
-          $scope.password = '';
-        }
-      });
+      if (password != localStorageService.get('credentials').password) {
+        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else {
+        var SendPromise = ($scope.symbol == 'ETP') ? MetaverseService.Deposit($scope.deposit_options[period_select][2], deposit_value, fee_value, password, ($scope.address_option) ? $scope.deposit_address : undefined) : MetaverseService.FrozenAsset($scope.deposit_options[period_select][2], deposit_value, fee_value, password, $scope.symbol, ($scope.address_option) ? $scope.deposit_address : undefined);
+        SendPromise
+        .then( (response) => {
+          NProgress.done();
+          if (typeof response.success !== 'undefined' && response.success) {
+            //Transaction was successful
+            $translate('MESSAGES.DEPOSIT_SUCCESS').then( (data) => FlashService.Success(data, false, response.data.result.transaction.hash) );
+            $window.scrollTo(0,0);
+            init();
+          } else {
+            //Transaction problem
+            $translate('MESSAGES.DEPOSIT_ERROR').then( (data) => {
+              if (response.message.message != undefined) {
+                FlashService.Error(data + " " + response.message.message);
+              } else {
+                FlashService.Error(data);
+              }
+            });
+            $window.scrollTo(0,0);
+            $scope.password = '';
+          }
+        });
+      }
     }
 
     //Check if the form is submittable
@@ -564,7 +563,7 @@
 
     //Check if the password is valid
     $scope.$watch('password', (newVal, oldVal) => {
-      $scope.error.password = (newVal == undefined || newVal == '');
+      $scope.errorPassword = (newVal == undefined || newVal == '');
       checkready();
     });
 
