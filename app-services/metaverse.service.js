@@ -106,6 +106,7 @@
         service.SecondIssue = SecondIssue;
         service.Delete = Delete;
         service.GetAccountAsset = GetAccountAsset;
+        service.SecondaryIssueDefault = SecondaryIssueDefault;
 
 
         //Chain
@@ -960,6 +961,11 @@
             return _sendV2('didsendmore', query);
         }
 
+        function SecondaryIssueDefault(toDID, symbol, quantity, transactionFee, password){
+            var credentials = localStorageService.get('credentials');
+            return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-f', transactionFee]);
+        }
+
         function Query(string) {
             var command = string;
             var params = [];
@@ -1225,7 +1231,7 @@
                                                 transaction.recipents.push({
                                                     "address": output.address
                                                 });
-                                                if(output.attachment.certs == '4') {
+                                                if(output.attachment.certs == 'naming') {
                                                     transaction.type = output.attachment.symbol;
                                                 } else if (typeof transaction.type == 'undefined') {
                                                     transaction.type = output.attachment.symbol;

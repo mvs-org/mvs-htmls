@@ -24,10 +24,10 @@
         <label for="certType" class="control-label">{{ 'TRANSFER_CERT.TYPE' | translate }}</label>
         <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.TRANSFER_CERT_TYPE' | translate }}"></span>
         <span ng-hide="myCertsLoaded" class="miniSpinner"></span>
-        <div ng-hide="certType == 'ISSUE' || certType == 'DOMAIN' || certType == 'NAMING'" class="form-control" name="certType" id="" name="certType" ng-class="{validInput: !error.certType, wrongInput: error.certType}" disabled></div>
-        <div ng-show="certType == 'ISSUE'" class="form-control" name="certType" id="" name="certType" ng-class="{validInput: !error.certType, wrongInput: error.certType}" disabled>{{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }}</div>
-        <div ng-show="certType == 'DOMAIN'" class="form-control" name="certType" id="" name="certType" ng-class="{validInput: !error.certType, wrongInput: error.certType}" disabled>{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
-        <div ng-show="certType == 'NAMING'" class="form-control" name="certType" id="" name="certType" ng-class="{validInput: !error.certType, wrongInput: error.certType}" disabled>{{ 'PROFIL.CERT_NAMING' | translate }}</div>
+        <div ng-hide="certType == 'issue' || certType == 'domain' || certType == 'naming'" class="form-control" name="certType" id="" name="certType" ng-class="{validInput: !error.certType, wrongInput: error.certType}" disabled></div>
+        <div ng-show="certType == 'issue'" class="form-control" name="certType" id="" name="certType" ng-class="{validInput: !error.certType, wrongInput: error.certType}" disabled>{{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }}</div>
+        <div ng-show="certType == 'domain'" class="form-control" name="certType" id="" name="certType" ng-class="{validInput: !error.certType, wrongInput: error.certType}" disabled>{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
+        <div ng-show="certType == 'naming'" class="form-control" name="certType" id="" name="certType" ng-class="{validInput: !error.certType, wrongInput: error.certType}" disabled>{{ 'PROFIL.CERT_NAMING' | translate }}</div>
       </div>
       <!--Recipient DID-->
       <div class="form-group">
@@ -91,9 +91,9 @@
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_CERT.TYPE' | translate }}</div>
-            <div ng-show="certType == 'ISSUE'" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }}</div>
-            <div ng-show="certType == 'DOMAIN'" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
-            <div ng-show="certType == 'NAMING'" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'PROFIL.CERT_NAMING' | translate }}</div>
+            <div ng-show="certType == 'issue'" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }}</div>
+            <div ng-show="certType == 'domain'" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
+            <div ng-show="certType == 'naming'" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'PROFIL.CERT_NAMING' | translate }}</div>
           </div>
           <div ng-show="certType == 3" class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_CERT.TYPE_SEND_WHICH_ONE' | translate }}</div>

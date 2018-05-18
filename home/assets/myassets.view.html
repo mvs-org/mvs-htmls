@@ -29,7 +29,7 @@
               <div class="assetBoxTitle">{{ 'BALANCE' | translate }}</div>
               <div class="assetBoxValue overflow">{{asset.quantity | assetformat : asset.decimal_number}}</div>
             </div>
-            <div class="assetBoxFrozen col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 noPaddingLeftRight">
+            <div class="assetBoxFrozen col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
               <div class="assetBoxTitle">{{ 'STATUS' | translate }}</div>
               <span ng-show="asset.status == 'unissued'" class="assetBoxValue">{{ 'ASSET.STATUS_UNISSUED' | translate }}</span>
               <span ng-show="asset.status == 'issued'" class="assetBoxValue">{{ 'ASSET.STATUS_ISSUED' | translate }}</span>
@@ -42,6 +42,7 @@
             </div>
             <div ng-hide="asset.status=='unissued'" class="assetBoxButtons">
               <!--<a href="#!/deposit/{{asset.symbol}}" class="btn btn-link-red smallButton assetBoxButton">{{ 'DEPOSIT.HEADLINE' | translate}}</a>-->
+              <!--a class="btn btn-success btn-success-secondary smallButton assetBoxButton" href="#!/secondaryissue/{{asset.symbol}}/">{{ 'ASSET_CREATE.SECONDARY_ISSUE_BUTTON' | translate}}</a-->
               <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/{{asset.symbol}}/">{{ 'ASSETS_SEND' | translate}}</a>
             </div>
           </div>

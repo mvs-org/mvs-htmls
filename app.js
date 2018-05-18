@@ -266,7 +266,7 @@
             })
 
             .state('home.profile.transfercert', {
-                url: "/avatar/transfercert/:symbol/:type",
+                url: "/avatar/transfercert/:symbol&type",
                 templateUrl: "home/avatar/transfercert.view.html",
                 controller: 'TransferCertController'
             })

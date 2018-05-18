@@ -19,11 +19,12 @@
   		<div class="form-group">
 				<label for="useAddress" class=" ddd control-label">{{ 'CREATE_PROFILE.SELECT_ADDRESS' | translate }}</label>
         <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.CREATE_AVATAR_LINKED_ADDRESS' | translate }}"></span>
-        <select name="useAddress" type="address" name="didAddress" class="form-control" placeholder="" ng-model="didAddress" ng-class="{validInput: !error.didAddress_empty && !error.didAddress_already_used, wrongInput: error.didAddress_empty || error.didAddress_already_used}" required>
+        <select name="useAddress" type="address" name="didAddress" class="form-control" placeholder="" ng-model="didAddress" ng-class="{validInput: !error.didAddress_empty && !error.didAddress_already_used && !error.didAddress_not_enough_etp, wrongInput: error.didAddress_empty || error.didAddress_already_used || error.didAddress_not_enough_etp}" required>
 					<option ng-repeat="oneAddress in listAddresses | orderBy:'available':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-show="addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
 				</select>
         <div ng-show="error.didAddress_already_used" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'PROFIL_MODIFY_ADDRESS.ADDRESS_ALREADY_USED' | translate }}</div>
-  		</div>
+    		<div ng-show="error.didAddress_not_enough_etp" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_PROFILE.RECIPIENT_NOT_ENOUGH_ETP' | translate }}</div>
+      </div>
       <!--Buttons-->
       <div class="row">
         <br>
