@@ -94,7 +94,7 @@
 <div dir-paginate="asset in assetAddresses | orderBy:'quantity':true | itemsPerPage: 10" ng-hide="(asset.quantity == 0)">
   <dd class="assetBox col-xs-12 col-sm-12 col-md-12" >
     <div class="assetBoxBalance col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-      <span nh-show="myDidsAddresses[asset.address]" class="addressBoxName" readonly="true" id="editAddressName">{{myDidsAddresses[asset.address]}}</span>
+      <span ng-show="myDidsAddresses[asset.address]" class="addressBoxName" readonly="true" id="editAddressName">{{myDidsAddresses[asset.address]}}</span>
       <!--Display editable name of the address-->
       <div ng-hide="asset.edit || myDidsAddresses[asset.address]">
         <span class="addressBoxName" readonly="true" id="editAddressName">{{asset.name}}</span>
@@ -111,9 +111,6 @@
         </span>
       </div>
       <a href="#!/explorer/adr/{{asset.address}}" class="btn-link-black col-xs-12 noPaddingLeftRight addressBoxAddressDeposit overflow">{{asset.address}}</a>
-
-      <!--<span class="col-xs-12 noPaddingLeftRight addressBoxAddressDeposit overflow">{{asset.address}}</span>-->
-
     </div>
     <div class="assetBoxBalance col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
       <div class="assetBoxTitle">{{ 'BALANCE' | translate }}</div>

@@ -1372,6 +1372,8 @@
     $scope.endEditAddressName = endEditAddressName;
     $scope.cancelEditAddressName = cancelEditAddressName;
     $scope.newName = 'New Address';
+    $scope.myDidsAddresses = [];
+    $scope.myDidsSymbols = [];
 
     $scope.balance = {};
 
@@ -1537,6 +1539,26 @@
         $window.scrollTo(0,0);
       } else {
         $scope.balance = balance;
+      }
+    });
+
+    MetaverseService.ListMyDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.myDids = response.data.result.dids;
+        $scope.balancesLoaded = true;
+        if(typeof $scope.myDids != 'undefined' && $scope.myDids != null) {
+          $scope.myDids.forEach(function(did) {
+            //$scope.myDidsSymbols.push(did.symbol);
+            $scope.myDidsAddresses[did.address] = did.symbol;
+          });
+          console.log($scope.myDidsAddresses)
+        } else {
+          $scope.myDids = [];
+        }
+      } else {
+        $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
       }
     });
   }
