@@ -34,7 +34,7 @@
           {{ 'SECONDARY_ISSUE.NEW_MAX_SUPPLY' | translate }}: {{toTxConvertedQuantity + assetOriginal + assetSecondaryIssue | assetformat : myAsset.decimal_number}}
         </div>
       </div>
-      <!--Type-->
+      <!--Model-->
       <div class="form-group">
         <label for="model" class="control-label">{{ 'SECONDARY_ISSUE.TYPE' | translate }}</label>
         <select name="model" type="model" class="form-control" placeholder="" ng-model="model" ng-class="{validInput: !error.model, wrongInput: error.model}">
@@ -42,6 +42,27 @@
           <option value="1">{{ 'SECONDARY_ISSUE.TYPE_1' | translate }}</option>
           <option value="2">{{ 'SECONDARY_ISSUE.TYPE_2' | translate }}</option>
         </select>
+      </div>
+      <!--Type 1-->
+      <div ng-show="model == 1 || model == 2">
+        <!--UN-->
+        <div class="form-group">
+          <label for="unlockNumber" class="control-label">{{ 'SECONDARY_ISSUE.UNLOCK_NUMBER' | translate }}</label>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_UNLOCK_NUMBER' | translate }}"></span>
+          <input type="number" placeholder="0" step="1" class="form-control" name="unlockNumber" id="" ng-model="unlockNumber">
+        </div>
+        <!--LQ-->
+        <div class="form-group">
+          <label for="quantityLocked" class="control-label">{{ 'SECONDARY_ISSUE.TOTAL_LOCKED_QUANTITY' | translate }}</label>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_TOTAL_LOCKED_QUANTITY' | translate }}"></span>
+          <input type="number" placeholder="0" class="form-control" name="quantityLocked" id="" ng-model="quantityLocked">
+        </div>
+        <!--LP-->
+        <div class="form-group">
+          <label for="periodLocked" class="control-label">{{ 'SECONDARY_ISSUE.TOTAL_LOCKED_PERIOD' | translate }}</label>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_TOTAL_LOCKED_PERIOD' | translate }}"></span>
+          <input type="number" placeholder="0" step="1" class="form-control" name="fee" id="" ng-model="periodLocked">
+        </div>
       </div>
       <!--Fee-->
       <div class="form-group">
@@ -141,6 +162,26 @@
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.NEW_MAX_SUPPLY' | translate }}</div>
             <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{toTxConvertedQuantity + assetOriginal + assetSecondaryIssue | assetformat : myAsset.decimal_number}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE' | translate }}</div>
+            <div ng-show="model == ''" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE_DEFAULT' | translate }}</div>
+            <div ng-show="model == 1" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE_1' | translate }}</div>
+            <div ng-show="model == 2" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE_2' | translate }}</div>
+          </div>
+          <div ng-show="model == 1 || model == 2">
+            <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+              <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.UNLOCK_NUMBER' | translate }}</div>
+              <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{unlockNumber}}</div>
+            </div>
+            <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+              <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TOTAL_LOCKED_QUANTITY' | translate }}</div>
+              <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{quantityLocked}}</div>
+            </div>
+            <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+              <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TOTAL_LOCKED_PERIOD' | translate }}</div>
+              <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{periodLocked}}</div>
+            </div>
           </div>
         </div>
       </div>

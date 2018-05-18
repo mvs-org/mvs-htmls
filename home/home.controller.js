@@ -2334,8 +2334,8 @@
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.myDids = response.data.result.dids;
-        $scope.address = $scope.myDids[0].address;
-        availBalance($scope.address);
+        //$scope.address = $scope.myDids[0].address;
+        //availBalance($scope.address);
         $scope.balancesLoaded = true;
         $scope.myDidsSymbols = [];
         if(typeof $scope.myDids != 'undefined' && $scope.myDids != null) {
@@ -2441,6 +2441,7 @@
     }
 
     function checkInputs(address, password) {
+      $scope.quantityLockedToSend = $filter('convertfortx')($scope.quantityLocked, $scope.myAsset.decimal_number);
       $scope.recipientAvatar = $scope.myDidsAddresses[address];
       $scope.confirmation = true;
       delete $rootScope.flash;
@@ -2449,13 +2450,29 @@
     function secondaryIssue() {
       NProgress.start();
       var fee_value = $filter('convertfortx')($scope.transactionFee, 8);
-      MetaverseService.SecondaryIssueDefault($scope.recipientAvatar, $scope.symbol, $scope.toTxConvertedQuantity, fee_value, $scope.password)
+      var SendPromise;
+      switch($scope.model){
+        case '':
+          console.log("here")
+          SendPromise = MetaverseService.SecondaryIssueDefault($scope.recipientAvatar, $scope.symbol, $scope.toTxConvertedQuantity, fee_value, $scope.password);
+          break;
+        case '1':
+          SendPromise = MetaverseService.SecondaryIssueModel1($scope.recipientAvatar, $scope.symbol, $scope.toTxConvertedQuantity, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, fee_value, $scope.password);
+          break;
+        case '2':
+          SendPromise = MetaverseService.SecondaryIssueModel2($scope.recipientAvatar, $scope.symbol, $scope.toTxConvertedQuantity, fee_value, $scope.password);
+          break;
+        default:
+          console.log("Unknow secondary issue model");
+      }
+      SendPromise
       .then( (response) => {
+        console.log(response)
         if (typeof response.success !== 'undefined' && response.success) {
           $translate('MESSAGES.SECONDARY_ISSUE_SUCCESS').then( (data) =>  FlashService.Success(data, true, response.data.result.transaction.hash));
           $location.path('/avatar/myavatars');
         } else {
-          $translate('MESSAGES.ERROR_DID_CREATION').then( (data) => {
+          $translate('MESSAGES.ERROR_SECONDARY_ISSUE').then( (data) => {
             $scope.confirmation = false;
             if (response.message.message != undefined) {
               FlashService.Error(data + " : " + response.message.message);
@@ -2465,12 +2482,14 @@
             $window.scrollTo(0,0);
           });
         }
+        NProgress.done();
+        $scope.password = '';
       });
     }
 
     function availBalance(address) {
-      $scope.availableBalance = address != '' && $scope.addresses[address] != undefined ? $scope.addresses[address].available : 0;
-      $scope.availableBalanceAsset = address != '' && $scope.getAssetBalance[address] != undefined ? $scope.getAssetBalance[address] : 0;
+      $scope.availableBalance = address != '' && $scope.addresses != undefined && $scope.addresses[address] != undefined ? $scope.addresses[address].available : 0;
+      $scope.availableBalanceAsset = address != '' && $scope.getAssetBalance != undefined && $scope.getAssetBalance[address] != undefined ? $scope.getAssetBalance[address] : 0;
       checkready();
     }
 
@@ -2517,7 +2536,7 @@
     //Check if the avatar is valid
     $scope.$watch('address', (newVal, oldVal) => {
       $scope.error.address_empty = (newVal == undefined || newVal == '');
-      $scope.error.address_not_enough_etp = newVal != undefined ? $scope.addresses[newVal].available<$scope.transactionFee : false;
+      $scope.error.address_not_enough_etp = newVal != undefined && $scope.addresses != undefined && $scope.addresses[newVal] != undefined ? $scope.addresses[newVal].available<$scope.transactionFee : false;
       $scope.error.address_not_enough_asset = newVal != undefined && $scope.myAsset != undefined && $scope.myAsset.secondaryissue_threshold != 127 && $scope.myAsset.secondaryissue_threshold != 0 ? ($scope.getAssetBalance[newVal]/($scope.assetOriginal + $scope.assetSecondaryIssue)*100 < $scope.myAsset.secondaryissue_threshold) || $scope.getAssetBalance[newVal] == undefined : false;
       checkready();
     });

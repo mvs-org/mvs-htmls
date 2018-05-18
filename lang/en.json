@@ -574,5 +574,12 @@
   "SECONDARY_ISSUE.RECIPIENT_NOT_ENOUGH_ETP": "This avatar doesn't have enough ETP to pay the transaction fee",
   "CREATE_PROFILE.RECIPIENT_NOT_ENOUGH_ETP": "This address doesn't have enough ETP to pay the transaction fee (1 ETP)",
   "MESSAGES.SECONDARY_ISSUE_SUCCESS": "Secondary issue successful! Your transaction hash is: ",
-  "SECONDARY_ISSUE.RECIPIENT_NOT_ENOUGH_ASSET": "This avatar does not own enough if this asset to do a secondary issue"
+  "SECONDARY_ISSUE.RECIPIENT_NOT_ENOUGH_ASSET": "This avatar does not own enough of this asset to do a secondary issue",
+  "SECONDARY_ISSUE.UNLOCK_NUMBER": "Number of periods",
+  "SECONDARY_ISSUE.TOTAL_LOCKED_QUANTITY": "Total locked quantity",
+  "SECONDARY_ISSUE.TOTAL_LOCKED_PERIOD": "Total locked period",
+  "HELP.SECONDARY_ISSUE_UNLOCK_NUMBER": "This it the total number of period that will be used",
+  "HELP.SECONDARY_ISSUE_TOTAL_LOCKED_QUANTITY": "This is the total number of asset that will be locked. This quantity minus the 'Added quantity' is the number of asset directly available",
+  "HELP.SECONDARY_ISSUE_TOTAL_LOCKED_PERIOD": "This is the total number of blocks till the last period terminates",
+  "MESSAGES.ERROR_SECONDARY_ISSUE": "Error during the secondary issue"
 }

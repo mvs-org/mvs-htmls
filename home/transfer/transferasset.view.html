@@ -22,7 +22,7 @@
       <!--Recipient-->
       <div class="form-group">
         <label for="sendto" class="control-label">{{ 'TRANSFER_RECIPENT_ADDRESS_OR_AVATAR' | translate }}</label>
-        <input type="etpaddress" class="form-control" name="sendto" id="" ng-model="sendto" ng-change="checkRecipent(sendto)" required autocomplete="off" ng-class="{validInput: (correctEtpAddress || correctAvatar || burnAddress) && !error.sendto_empty, wrongInput: (!correctEtpAddress && !correctAvatar && !burnAddress) || error.sendto_empty || correctMultiSignAddress}">
+        <input type="etpaddress" class="form-control" name="sendto" id="" ng-model="sendto" ng-change="checkRecipent(sendto)" autocomplete="off" ng-class="{validInput: (correctEtpAddress || correctAvatar || burnAddress) && !error.sendto_empty, wrongInput: (!correctEtpAddress && !correctAvatar && !burnAddress) || error.sendto_empty || correctMultiSignAddress}">
         <div ng-show="!correctEtpAddress && !correctAvatar && !burnAddress && !correctMultiSignAddress && !error.sendto_empty" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.INCORRECT_RECIPIENT' | translate }}</div>
         <div ng-show="correctEtpAddress" class="correctInputComment"><span class="glyphicon glyphicon-ok"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_ADDRESS' | translate }}</div>
         <div ng-show="correctAvatar" class="correctInputComment"><span class="glyphicon glyphicon-ok"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_AVATAR' | translate }}</div>
@@ -37,7 +37,7 @@
         <div class="col-xs-6 noPaddingLeftRight addRecipent">
           <button type="button" class="btn-link-red addRecipentButton" ng-click="sendAll()" tabIndex="-1">{{ 'TRANSFER_AMOUNT_AVALAIBLE' | translate }}: {{availableBalance | assetformat : asset.decimal_number}}</button>
         </div>
-        <input type="number" ng-model="quantity" name="quantity" min=0 required class="form-control" placeholder="0" autocomplete="off" ng-class="{validInput: !error.quantity_empty && !error.quantity_not_enough_balance, wrongInput: error.quantity_empty || error.quantity_not_enough_balance}">
+        <input type="number" ng-model="quantity" name="quantity" min=0 class="form-control" placeholder="0" autocomplete="off" ng-class="{validInput: !error.quantity_empty && !error.quantity_not_enough_balance, wrongInput: error.quantity_empty || error.quantity_not_enough_balance}">
         <span ng-show="error.quantity_not_enough_balance" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.QUANTITY_NOT_ENOUGH_ASSET' | translate }} {{symbol}}</span>
       </div>
 
@@ -91,7 +91,7 @@
       <!--Password-->
 			<div class="form-group">
 				<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
-				<input type="password" class="form-control" name="password" id="" required ng-model="password" ng-class="{validInput: !errorPassword, wrongInput: errorPassword}">
+				<input type="password" class="form-control" name="password" id="" ng-model="password" ng-class="{validInput: !errorPassword, wrongInput: errorPassword}">
 			</div>
     </div>
 

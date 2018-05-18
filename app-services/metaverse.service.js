@@ -107,6 +107,8 @@
         service.Delete = Delete;
         service.GetAccountAsset = GetAccountAsset;
         service.SecondaryIssueDefault = SecondaryIssueDefault;
+        service.SecondaryIssueModel1 = SecondaryIssueModel1;
+        service.SecondaryIssueModel2 = SecondaryIssueModel2;
 
 
         //Chain
@@ -966,6 +968,17 @@
             return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-f', transactionFee]);
         }
 
+        function SecondaryIssueModel1(toDID, symbol, quantity, unlockNumber, quantityLocked, periodLocked, transactionFee, password){
+            var credentials = localStorageService.get('credentials');
+            var model = "TYPE=1;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber;
+            return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-m', model, '-f', transactionFee]);
+        }
+
+        function SecondaryIssueModel2(toDID, symbol, quantity, transactionFee, password){
+            var credentials = localStorageService.get('credentials');
+            return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-f', transactionFee]);
+        }
+
         function Query(string) {
             var command = string;
             var params = [];
@@ -1090,7 +1103,7 @@
                 tx.outputs.forEach(function(output) {
                     if (output.attachment.type === 'asset-issue') //an asset issue has the priority, and contains certs
                         result = TX_TYPE_ISSUE;
-                    if (output.attachment.type === 'asset-transfer')
+                    if (output.attachment.type === 'asset-transfer' && result != TX_TYPE_ISSUE)
                         result = TX_TYPE_ASSET;
                     if (output.attachment.type === 'asset-cert' && result != TX_TYPE_ISSUE)
                         result = TX_TYPE_CERT;
