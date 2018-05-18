@@ -22,7 +22,8 @@
                 <img class="assetSymbol" check-image ng-src="{{'icon/'+asset.icon+'.png'}}">
               </div>
               <div class="assetBoxSymbolName overflow">
-                <a href="#!/asset/details/{{asset.symbol}}" class="btn-link-black">{{asset.symbol}}</a>
+                <a ng-hide="asset.status=='unissued'" href="#!/asset/details/{{asset.symbol}}" class="btn-link-black">{{asset.symbol}}</a>
+                <span ng-show="asset.status=='unissued'" href="#!/asset/details/{{asset.symbol}}">{{asset.symbol}}</span>
               </div>
             </div>
             <div class="assetBoxBalance col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 noPaddingLeftRight">
@@ -41,8 +42,6 @@
               <a href="" ng-click="issue(asset.symbol)" class="btn btn-success smallButton assetBoxButton">{{'ASSET_ISSUE' | translate}}</a>
             </div>
             <div ng-hide="asset.status=='unissued'" class="assetBoxButtons">
-              <!--<a href="#!/deposit/{{asset.symbol}}" class="btn btn-link-red smallButton assetBoxButton">{{ 'DEPOSIT.HEADLINE' | translate}}</a>-->
-              <!--a class="btn btn-success btn-success-secondary smallButton assetBoxButton" href="#!/secondaryissue/{{asset.symbol}}/">{{ 'ASSET_CREATE.SECONDARY_ISSUE_BUTTON' | translate}}</a-->
               <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/{{asset.symbol}}/">{{ 'ASSETS_SEND' | translate}}</a>
             </div>
           </div>

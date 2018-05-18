@@ -2019,41 +2019,12 @@
     $scope.assets = [];
     $scope.issue = issue;
     $scope.deleteAsset = deleteAsset;
-    $scope.editMaxSupply = false;
-    $scope.enableEditAssetMaxSupply = enableEditAssetMaxSupply;
-    $scope.endEditAssetMaxSupply = endEditAssetMaxSupply;
-    $scope.cancelEditAssetMaxSupply = cancelEditAssetMaxSupply;
-    $scope.increase_maximum_supply = 0;  //the maximum supply increase
-    $scope.owner = false;               //true if the user is the owner of this asset
 
-    $scope.listBalances = listBalances;
-    $scope.listAssetBalances = listAssetBalances;
-    $scope.enableEditAddressName = enableEditAddressName;
-    $scope.endEditAddressName = endEditAddressName;
-    $scope.cancelEditAddressName = cancelEditAddressName;
-    $scope.showqr = showqr;
+    //$scope.listAssetBalances = listAssetBalances;
     $scope.buttonCopyToClipboard = new Clipboard('.btn');
     $scope.icons = MetaverseService.hasIcon;
     $scope.assetsLoaded = false;
     $scope.assets = [];
-
-
-    //Shows a modal of the address incl. a qr code
-    function showqr(address) {
-      $('#showqrmodal').modal();
-      $("#modal_address").html(address);
-      $('#modal_qr').html('');
-      var qrcode = new QRCode(document.getElementById("modal_qr"), {
-        text: address,
-        width: 300,
-        height: 300,
-        colorDark: "#000000",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H
-      });
-      $('#showqrmodal').modal('show');
-    }
-
 
 
     //Load assets
@@ -2092,7 +2063,6 @@
       MetaverseService.Issue(symbol)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
-          loadasset($scope.symbol);
           $translate('MESSAGES.ASSETS_ISSUE_SUCCESS').then( (data) => FlashService.Success(data, false, response.data.result.transaction.hash) );
           $window.scrollTo(0,0);
         } else {
@@ -2100,118 +2070,6 @@
           $window.scrollTo(0,0);
         }
         NProgress.done();
-      });
-    }
-
-
-    //Loads a given asset, used in the page asset/details
-    function loadasset(symbol) {
-      MetaverseService.GetAsset(symbol)
-      .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
-          if(response.data.assets != "") {    //if the user has some assets
-            $scope.asset = response.data.assets[0];
-            if ($scope.asset.issuer == localStorageService.get('credentials').user) {
-              $scope.owner = true;
-            }
-            //$scope.initial_maximum_supply = parseFloat($scope.asset.maximum_supply)/Math.pow(10,$scope.asset.decimal_number);
-            //$scope.initial_maximum_supply = $filter('converttodisplay')($scope.asset.maximum_supply, $scope.asset.decimal_number);
-            //$scope.current_maximum_supply = $scope.initial_maximum_supply;
-            //$scope.new_maximum_supply = $scope.initial_maximum_supply;
-            $scope.details = false;
-            $scope.assets.forEach( (a) => {
-              if (a.symbol == symbol) {
-                $scope.asset.quantity = a.quantity;
-              }
-            });
-          } else {
-            //The user as no Assets
-          }
-        } else {
-          //Asset could not be loaded
-          $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) =>  FlashService.Error(data));
-          $window.scrollTo(0,0);
-        }
-        NProgress.done();
-      });
-    }
-
-
-    //We first load the list of all the addresses
-    function listBalances() {
-      NProgress.start();
-      MetaverseService.ListBalances()
-      .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
-          $scope.allAddresses = [];
-          response.data.balances.forEach( (e) => {
-            $scope.allAddresses.push({
-              "address": e.balance.address
-            });
-          });
-          listAssetBalances();
-        } else {
-          $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) =>  FlashService.Error(data));
-          $window.scrollTo(0,0);
-        }
-        NProgress.done();
-      });
-    }
-
-    listBalances();
-
-    function listAssetBalances() {
-      NProgress.start();
-      $scope.assetAddresses = [];
-      $scope.allAddresses.forEach( (e) => {
-        MetaverseService.GetAddressAsset(e.address)
-        .then( (response) => {
-          if (typeof response.success !== 'undefined' && response.success && response.data.assets != '') {    //If the address doesn't contain any asset, we don't need it
-            response.data.assets.forEach( (a) => {
-              if(a.symbol == $scope.symbol) {
-                var name = "New address";
-                if (localStorageService.get(a.address) != undefined) {
-                  name = localStorageService.get(a.address);
-                }
-                a.name = name;
-                a.edit = false;
-                $scope.assetAddresses.push(a);
-              }
-            });
-          }
-        });
-      });
-      NProgress.done();
-    }
-
-    //Enable the edition of the Address Name
-    function enableEditAddressName(address) {
-      $scope.assetAddresses.forEach( (e) => {
-        if (e.address == address) {
-          e.newName = e.name;
-          e.edit = true;
-        }
-      });
-    }
-
-    //Save the edited name in the local storage
-    function endEditAddressName(address, newName) {
-      localStorageService.set(address,newName);
-      $scope.assetAddresses.forEach( (e) => {
-        if (e.address == address) {
-          e.name = newName;
-          e.edit = false;
-        }
-      });
-    }
-
-    //Cancel the edition
-    function cancelEditAddressName(address) {
-      $scope.assetAddresses.forEach( (e) => {
-        if (e.address == address) {
-          e.newName = e.name;
-          e.edit = false;
-        }
       });
     }
 
@@ -2233,22 +2091,6 @@
       });
     }
 
-    //Enable the edition of the Address Name
-    function enableEditAssetMaxSupply() {
-      $scope.editMaxSupply = true;
-    }
-
-    //Save the edited name in the local storage
-    function endEditAssetMaxSupply() {
-      $scope.editMaxSupply = false;
-    }
-
-    //Cancel the change
-    function cancelEditAssetMaxSupply() {
-      $scope.increase_maximum_supply = 0;
-      $scope.editMaxSupply = false;
-    }
-
     //Close the pop-up after asset creation
     $scope.closeAll = function () {
       ngDialog.closeAll();
@@ -2261,7 +2103,6 @@
     $scope.symbol = $stateParams.symbol;
     $scope.asset = [];
     $scope.assets = [];
-    $scope.owner = false;               //true if the user is the owner of this asset
     $scope.enableEditAddressName = enableEditAddressName;
     $scope.endEditAddressName = endEditAddressName;
     $scope.cancelEditAddressName = cancelEditAddressName;

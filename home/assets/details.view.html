@@ -80,11 +80,6 @@
 
 </table>
 
-<div ng-show="asset.status=='unissued'" class="col-xs-12 col-sm-6 col-md-4">
-  <a class="col-xs-6 col-xl-6" href="" ng-click="issue(asset.symbol)"><div class="btn btn-info">{{'ASSET_ISSUE' | translate}}</div></a>
-  <a class="col-xs-6 col-xl-6" href="" ng-click="deleteAsset(asset.symbol)"><div class="btn btn-danger">{{'ASSET_DELETE_ASSET' | translate}}</div></a>
-</div>
-
 <!--QR Code pop-up-->
 <div class="modal fade" id="showqrmodal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog">
