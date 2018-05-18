@@ -425,8 +425,8 @@
   "TRANSFER.CORRECT_RECIPIENT_BURN_ETP": "Send to Burn address. Those ETP will be definitely burned!",
   "ASSET_CREATE.SECONDARY_ISSUE_CHECKBOX": "Allow additionnal issuance in the future",
   "ASSET_CREATE.SECONDARY_ISSUE": "Secondary issue rate",
-  "ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED": "No restriction",
-  "ASSET_CREATE.SECONDARY_ISSUE_DISABLED": "No secondary issue",
+  "ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED": "No stacking restriction",
+  "ASSET_CREATE.SECONDARY_ISSUE_DISABLED": "Secondary issue impossible",
   "ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS": "Secondary issue rate",
   "ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_MINUS1": "There is no owning percentage condition, the owner of the Secondary issue certificate can do a secondary issue no matter how many token he own",
   "ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_0": "The asset is not allowed to be secondary issued forever, the Maximum Supply cannot be changed (default value)",
@@ -587,5 +587,7 @@
   "SECONDARY_ISSUE.MODEL2_MAX_UNLOCK_NUMBER_100": "The number of period for the model 2 is limited to 100. If you want to use more periods, please use the command line or use the model 1",
   "MESSAGES.SECONDARY_ISSUE_MODEL2_MISSING_PERIOD_INPUT": "Please complete all the fields",
   "HELP.SECONDARY_ISSUE_MODEL2_QUANTITY": "This is the number of asset that will be unfrozen at the end of period ",
-  "HELP.SECONDARY_ISSUE_MODEL2_PERIOD": "This is the duration, in number of blocks, of period "
+  "HELP.SECONDARY_ISSUE_MODEL2_PERIOD": "This is the duration, in number of blocks, of period ",
+  "ASSET_ALL.INITIAL_MAX_SUPPLY": "Initial max supply",
+  "ASSET_ALL.ADDED_VIA_SECONDARY_ISSUE": "Added via secondary issue"
 }

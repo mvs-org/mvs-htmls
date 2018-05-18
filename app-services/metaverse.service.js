@@ -922,9 +922,9 @@
             return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee]);
         }
 
-        function DidModifyAddress(symbol, fromAddress, toAddress, transactionFee, password) {
+        function DidModifyAddress(symbol, toAddress, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
-            return _sendV2('didmodifyaddress', [credentials.user, password, fromAddress, toAddress, symbol, '-f', transactionFee]);
+            return _sendV2('didmodifyaddress', [credentials.user, password, toAddress, symbol, '-f', transactionFee]);
         }
 
         function ListDidAddresses(symbol) {

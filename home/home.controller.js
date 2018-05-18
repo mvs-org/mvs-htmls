@@ -3637,14 +3637,14 @@
     }
 
 
-    function modifyAddress(selectedDid, selectedDidAddress, toAddress, transactionFee, password) {
+    function modifyAddress(selectedDid, toAddress, transactionFee, password) {
       if (localStorageService.get('credentials').password != password) {
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else {
         NProgress.start();
         var fee_value = $filter('convertfortx')(transactionFee, 8);
-        MetaverseService.DidModifyAddress(selectedDid, selectedDidAddress, toAddress, fee_value, password)
+        MetaverseService.DidModifyAddress(selectedDid, toAddress, fee_value, password)
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success) {
             $translate('MESSAGES.DID_ADDRESS_UPDATED').then( (data) => FlashService.Success(data, true, response.data.result.transaction.hash) );
