@@ -24,7 +24,10 @@
 
     <div class="assetBoxBalance col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
       <div class="assetBoxTitle">{{ 'STATUS' | translate }}</div>
-      <div class="assetBoxValue col-xd-12 noPaddingLeftRight overflow">{{did.status}}</div>
+      <span ng-show="did.status == 'unissued'" class="assetBoxValue">{{ 'ASSET.STATUS_UNISSUED' | translate }}</span>
+      <span ng-show="did.status == 'issued'" class="assetBoxValue">{{ 'ASSET.STATUS_ISSUED' | translate }}</span>
+      <span ng-show="did.status == 'unspent'" class="assetBoxValue">{{ 'ASSET.STATUS_UNSPENT' | translate }}</span>
+      <span ng-hide="did.status == 'unissued' || did.status == 'issued' || did.status == 'unspent'" class="assetBoxValue">{{did.status}}</span>
     </div>
   </dd>
 </div>

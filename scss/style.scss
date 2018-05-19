@@ -227,9 +227,10 @@ Bootstrap 4 breakpoints
 
 }
 
-.assetBoxWrapper .col-xs-offset-5 {
-  margin: 0 20px 0 15%;
-  width: 260px;
+.assetBoxWrapper .detailsOneLine .assetBoxTitle {
+  margin: 0 20px 0 0;
+  //margin: 0 20px 0 15%;
+  //width: 260px;
   height: auto;
   font-size: 16px;
   text-align: right;
@@ -522,11 +523,13 @@ _____  ._______  ___.___ _______
 }
 
 .btn:focus {
-  outline: 0;
+  outline: 0 !important;
+  box-shadow: none !important;
 }
 
 .btn:active {
-  outline: 0;
+  outline: 0 !important;
+  box-shadow: none !important;
 }
 
 .btn-success {
@@ -2195,4 +2198,15 @@ h2 {
 
 .panel-heading {
   min-height: 40px;
+}
+
+.detailsOneLine .assetBoxButton {
+  position: absolute;
+}
+
+.btnCopySmall {
+  text-align: right;
+  height: auto;
+  width: auto;
+  padding: 1px 6px;
 }

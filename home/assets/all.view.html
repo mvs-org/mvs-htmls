@@ -33,26 +33,26 @@
           </button>
           <div ng-show="asset.details" class="assetBoxdetail">
             <div class="detailsOneLine">
-              <span class="assetBoxTitle col-xs-offset-5 col-md-2 noPaddingLeftRight">{{ 'ASSET_ALL_ISSUER' | translate }}:</span>
+              <span class="assetBoxTitle col-xs-5 noPaddingLeftRight">{{ 'ASSET_ALL_ISSUER' | translate }}:</span>
               <span class="assetBoxValue">{{asset.issuer}}</span>
             </div>
             <div class="detailsOneLine">
-              <span class="assetBoxTitle col-xs-offset-5 col-xs-2 noPaddingLeftRight">{{ 'ASSET_ALL_DESCRIPTION' | translate }}:</span>
+              <span class="assetBoxTitle col-xs-5 noPaddingLeftRight">{{ 'ASSET_ALL_DESCRIPTION' | translate }}:</span>
               <span class="assetBoxValue">{{asset.description}}</span>
             </div>
             <div class="detailsOneLine">
-              <span class="assetBoxTitle col-xs-offset-5 col-xs-2 noPaddingLeftRight">{{ 'ASSET_ALL_NBR_DIGITS' | translate }}:</span>
+              <span class="assetBoxTitle col-xs-5 noPaddingLeftRight">{{ 'ASSET_ALL_NBR_DIGITS' | translate }}:</span>
               <span class="assetBoxValue">{{asset.decimal_number}}</span>
             </div>
             <div class="detailsOneLine">
-              <span class="assetBoxTitle col-xs-offset-5 col-xs-2 noPaddingLeftRight">{{ 'ASSET_ALL_STATUS' | translate }}:</span>
+              <span class="assetBoxTitle col-xs-5 noPaddingLeftRight">{{ 'ASSET_ALL_STATUS' | translate }}:</span>
               <span ng-show="asset.status == 'unissued'" class="assetBoxValue">{{ 'ASSET.STATUS_UNISSUED' | translate }}</span>
               <span ng-show="asset.status == 'issued'" class="assetBoxValue">{{ 'ASSET.STATUS_ISSUED' | translate }}</span>
               <span ng-show="asset.status == 'unspent'" class="assetBoxValue">{{ 'ASSET.STATUS_UNSPENT' | translate }}</span>
               <span ng-hide="asset.status == 'unissued' || asset.status == 'issued' || asset.status == 'unspent'" class="assetBoxValue">{{asset.status}}</span>
             </div>
             <div class="detailsOneLine">
-              <span class="assetBoxTitle col-xs-offset-5 col-xs-2 noPaddingLeftRight">{{ 'ASSET_CREATE.SECONDARY_ISSUE' | translate }}:</span>
+              <span class="assetBoxTitle col-xs-5 noPaddingLeftRight">{{ 'ASSET_CREATE.SECONDARY_ISSUE' | translate }}:</span>
               <span ng-show="asset.secondaryissue_threshold == 0" class="assetBoxValue">{{ 'ASSET_CREATE.SECONDARY_ISSUE_DISABLED' | translate }}</span>
               <span ng-show="asset.secondaryissue_threshold != 0 && asset.secondaryissue_threshold != 127" class="assetBoxValue">{{asset.secondaryissue_threshold}}%</span>
               <span ng-show="asset.secondaryissue_threshold == 127" class="assetBoxValue">{{ 'ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED' | translate }}</span>
@@ -61,12 +61,12 @@
               </a>
             </div>
             <div ng-show="asset.secondaryissue_threshold != 0" class="detailsOneLine">
-              <span class="assetBoxTitle col-xs-offset-5 col-xs-2 noPaddingLeftRight">{{ 'ASSET_ALL.INITIAL_MAX_SUPPLY' | translate }}:</span>
-              <span class="assetBoxValue">{{asset.maximum_supply | number : 0}}</span>
+              <span class="assetBoxTitle col-xs-5 noPaddingLeftRight">{{ 'ASSET_ALL.INITIAL_MAX_SUPPLY' | translate }}:</span>
+              <span class="assetBoxValue">{{asset.maximum_supply | assetformat : asset.decimal_number}}</span>
             </div>
             <div ng-show="asset.secondaryissue_threshold != 0" class="detailsOneLine">
-              <span class="assetBoxTitle col-xs-offset-5 col-xs-2 noPaddingLeftRight">{{ 'ASSET_ALL.ADDED_VIA_SECONDARY_ISSUE' | translate }}:</span>
-              <span ng-show="assetsSecondaryIssue[asset.symbol] != undefined" class="assetBoxValue">{{assetsSecondaryIssue[asset.symbol] | number : 0}}</span>
+              <span class="assetBoxTitle col-xs-5 noPaddingLeftRight">{{ 'ASSET_ALL.ADDED_VIA_SECONDARY_ISSUE' | translate }}:</span>
+              <span ng-show="assetsSecondaryIssue[asset.symbol] != undefined" class="assetBoxValue">{{assetsSecondaryIssue[asset.symbol] | assetformat : asset.decimal_number}}</span>
               <span ng-show="assetsSecondaryIssue[asset.symbol] == undefined" class="assetBoxValue">0</span>
             </div>
           </div>

@@ -219,7 +219,7 @@
             .state('home.createmultisignature', {
                 url: "/addresses/newmultisignature",
                 templateUrl: "home/addresses/createmultisignature.view.html",
-                controller: 'ETPMultiSignController',
+                controller: 'NewMultiSignController',
                 controllerAs: 'vm'
             })
 
@@ -266,7 +266,7 @@
             })
 
             .state('home.profile.transfercert', {
-                url: "/avatar/transfercert/:symbol&type",
+                url: "/avatar/transfercert/:symboltype",
                 templateUrl: "home/avatar/transfercert.view.html",
                 controller: 'TransferCertController'
             })

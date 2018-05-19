@@ -368,7 +368,7 @@
   "MESSAGES.TRANSACTION_NOT_FOUND" : "Could not find a transaction for given hash.",
   "MESSAGES.BLOCK_NOT_FOUND" : "Could not find a block for given number.",
   "MESSAGES.ADDRESS_NOT_FOUND" : "Could not find this address.",
-  "MESSAGES.CREATE_MULTISIGNATURE_SUCCESS" : "Multi-signature address successfully created.",
+  "MESSAGES.CREATE_MULTISIGNATURE_SUCCESS" : "Multi-signature address successfully created",
   "MESSAGES.CREATE_MULTISIGNATURE_ERROR" : "Could not create this multi-signature.",
   "MESSAGES.CREATE_MULTISIGNATURE_WRONG_PUBLIC_KEY" : "Wrong public key.",
   "MESSAGES.SIGN_SUCCESS" : "Transaction successfully signed.",
@@ -513,7 +513,7 @@
   "MESSAGES.ERROR_CERT_ISSUE": "Impossible to issue this certificate",
   "ASSET.STATUS_UNISSUED": "Unissued",
   "ASSET.STATUS_ISSUED": "Issued",
-  "ASSET.STATUS_UNSPENT": "Unspend",
+  "ASSET.STATUS_UNSPENT": "Unspent",
   "HELP.SECONDARY_ISSUE_BUTTON_DISABLED": "This Asset cannot do a Secondary Issue, its Maximum supply cannot be changed",
   "DEPOSIT.AMOUNT_NOT_ENOUGH" : "You do not have enough ETP. Please remember to take into account the transaction fee",
   "MESSAGES.NOT_A_NUMBER": "Please enter a number",
@@ -589,5 +589,6 @@
   "HELP.SECONDARY_ISSUE_MODEL2_QUANTITY": "This is the number of asset that will be unfrozen at the end of period ",
   "HELP.SECONDARY_ISSUE_MODEL2_PERIOD": "This is the duration, in number of blocks, of period ",
   "ASSET_ALL.INITIAL_MAX_SUPPLY": "Initial max supply",
-  "ASSET_ALL.ADDED_VIA_SECONDARY_ISSUE": "Added via secondary issue"
+  "ASSET_ALL.ADDED_VIA_SECONDARY_ISSUE": "Added via secondary issue",
+  "CREATE_MULTISIGNATURE.COPY_PUBLIC_KEY": "Copy public key"
 }

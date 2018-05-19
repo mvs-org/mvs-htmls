@@ -16,7 +16,7 @@
         <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.ISSUE_CERT_DOMAIN' | translate }}"></span>
         <span ng-hide="myCertsLoaded" class="miniSpinner"></span>
         <select name="domain" type="domain" name="domain" class="form-control" placeholder="" ng-model="domain" ng-class="{validInput: !error.domain_empty && myCertsLoaded, wrongInput: error.domain_empty || !myCertsLoaded}" ng-change="changeDomain(domain)" required>
-					<option ng-repeat="cert in myCerts" ng-if="cert.cert == 'DOMAIN'" value="{{cert.symbol}}" title="{{cert.symbol}}">{{cert.symbol}}</option>
+					<option ng-repeat="cert in myCerts" ng-if="cert.cert == 'domain'" value="{{cert.symbol}}" title="{{cert.symbol}}">{{cert.symbol}}</option>
 				</select>
       </div>
       <!--Type-->

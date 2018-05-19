@@ -848,7 +848,7 @@
             });
             query.push(credentials.user);
             query.push(credentials.password);
-            return _send('getnewmultisig', query);
+            return _sendV2('getnewmultisig', query);
         }
 
         function ListMultiSig() {
