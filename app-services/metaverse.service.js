@@ -857,17 +857,17 @@
         }
 
 
-        function CreateMultisigTx(fromAddress, toAddress, amount, transactionFee) {
+        function CreateMultisigTx(fromAddress, toAddress, amount, transactionFee, password) {
           var credentials = localStorageService.get('credentials');
-          return _send('createmultisigtx', [credentials.user, credentials.password, fromAddress, toAddress, amount, '-f', transactionFee]);
+          return _sendV2('createmultisigtx', [credentials.user, password, fromAddress, toAddress, amount, '-f', transactionFee]);
         }
 
         function SignMultisigTx(message, lastTx) {
           var credentials = localStorageService.get('credentials');
           if(lastTx) {
-            return _send('signmultisigtx', [credentials.user, credentials.password, message, '-b']);
+            return _sendV2('signmultisigtx', [credentials.user, credentials.password, message, '-b']);
           } else {
-            return _send('signmultisigtx', [credentials.user, credentials.password, message]);
+            return _sendV2('signmultisigtx', [credentials.user, credentials.password, message]);
           }
         }
 

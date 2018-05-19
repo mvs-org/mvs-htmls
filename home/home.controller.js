@@ -16,6 +16,7 @@
   .controller('ShowAllAssetsController', ShowAllAssetsController)
   .controller('ETPController', ETPController)
   .controller('ETPMultiSignController', ETPMultiSignController)
+  .controller('SendMultiSignController', SendMultiSignController)
   .controller('NewMultiSignController', NewMultiSignController)
   .controller('DepositController', DepositController)
   .controller('ExplorerController', ExplorerController)
@@ -653,11 +654,6 @@
       $scope.option.memo_empty = true;
       $scope.recipientOK = [];
       $scope.amountOK = [];
-      MetaverseService.ListBalances(true)
-      .then( (response) => {
-        if (response.success)
-        $scope.from_addresses = response.data.balances;
-      });
       $scope.recipents = [];
       $scope.recipents.push({'index': 1, 'address': '', 'value': '', 'correctEtpAddress': false, 'correctAvatar': false, 'burnAddress': false, 'emptyAmount': true, 'wrongAmount': false, 'notEnough': false});
     }
@@ -1023,7 +1019,6 @@
 
   }
 
-
   /**
   * The ETPMultiSign Controller provides ETP multi-signatures transaction functionality.
   */
@@ -1067,11 +1062,6 @@
       $scope.password = '';
       $scope.availableBalance = 0;
       $scope.publicKey = '';
-      MetaverseService.ListBalances(true)
-      .then( (response) => {
-        if (response.success)
-        $scope.from_addresses = response.data.balances;
-      });
       $scope.recipents = [];
       $scope.recipents.push({'index': 1, 'address': '', 'value': ''});
       $scope.cosigners = [];
@@ -1312,34 +1302,28 @@
 
 
   /**
-  * Create new multi-signature address
+  * The ETPMultiSign Controller provides ETP multi-signatures transaction functionality.
   */
-  function NewMultiSignController(MetaverseService, MetaverseHelperService, $filter, $rootScope, $scope, FlashService, localStorageService, $translate, $window) {
+  function SendMultiSignController(MetaverseService, MetaverseHelperService, $filter, $rootScope, $scope, FlashService, localStorageService, $translate, $window) {
 
     $window.scrollTo(0,0);
     //Start loading animation
     NProgress.start();
 
-    $scope.displayEmptyAdresses = false;
-
-    $scope.recipents = [];
-
-    $scope.buttonCopyToClipboard = new Clipboard('.btn');
-
-    $scope.getPublicKey = getPublicKey;
-    $scope.publicKey = '';
-    $scope.cosigners = [];
-    $scope.getNewMultisign = getNewMultisign;
-    $scope.nbrCosignersRequired = 0;
-
-    $scope.availableBalance = 0;
-
+    $scope.sendAllMultisig = sendAllMultisig;
     $scope.transactionFee = 0.0001;
     $scope.listAddresses = [];                    //List of addresses
 
     $scope.listMultiSig = [];
-    $scope.error = [];
-    $scope.checkHash = checkHash;
+    $scope.createMultisigTx = createMultisigTx;
+    $scope.transferSuccess = false;                 //Change to True after a successful transaction
+    $scope.resultCreateTx = '';
+    $scope.checkRecipent = checkRecipent;
+    $scope.allDids = [];
+    $scope.allDidsSymbols = [];
+    $scope.checkInputs = checkInputs;
+    $scope.didFromAddress = [];
+    $scope.allDidsAddresses = [];
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -1350,12 +1334,271 @@
       $scope.value = '';
       $scope.password = '';
       $scope.availableBalance = 0;
+      $scope.error = [];
+      $scope.transferSuccess = false;
+      $scope.resultCreateTx = '';
+      $scope.correctEtpAddress = false;
+      $scope.correctAvatar = false;
+      $scope.burnAddress = false;
+      $scope.confirmation = false;
+    }
+
+
+    MetaverseHelperService.GetBalance( (err, balance, message) => {
+      if (err) {
+        FlashService.Error(message);
+        $window.scrollTo(0,0);
+      } else {
+        $scope.balance = balance;
+      }
+    });
+
+    NProgress.start();
+    //Load users ETP balance
+    //Load the addresses and their balances
+    MetaverseService.ListBalances()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.addresses = [];
+        response.data.balances.forEach( (e) => {
+          var name = "New address";
+          if (localStorageService.get(e.balance.address) != undefined) {
+            name = localStorageService.get(e.balance.address);
+          }
+          $scope.addresses[e.balance.address] = ({
+            "balance": parseInt(e.balance.unspent),
+            "available": parseInt(e.balance.available),
+            "address": e.balance.address,
+            "name": name,
+            "frozen": e.balance.frozen,
+            "type": "single"
+          });
+          $scope.listAddresses.push({
+            "balance": parseInt(e.balance.unspent),
+            "available": parseInt(e.balance.available),
+            "address": e.balance.address
+          });
+        });
+
+        //After loading the balances, we load the multisig addresses
+        MetaverseService.ListMultiSig()
+        .then( (response) => {
+          if (typeof response.success !== 'undefined' && response.success) {
+            if(response.data.multisig != "") {    //if the user has some assets
+              response.data.multisig.forEach( (e) => {
+                $scope.addresses[e.address].type = "multisig";
+                var name = "New address";
+                if (localStorageService.get(e.address) != undefined) {
+                  name = localStorageService.get(e.address);
+                }
+                var balance = '';
+                $scope.listMultiSig.push({
+                  "index": e.index,
+                  "m": e.m,
+                  "n": e.n,
+                  "selfpublickey": e["self-publickey"],
+                  "description": e.description,
+                  "address": e.address,
+                  "name": name,
+                  "balance": $scope.addresses[e.address].balance,
+                  "available": $scope.addresses[e.address].available,
+                  "publicKeys": e["public-keys"]
+                });
+              });
+            } else {
+              //The account has no multi-signature address
+            }
+          } else {
+            //Fail
+          }
+        });
+      }
+      NProgress.done();
+    });
+
+    MetaverseService.ListAllDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.allDids = response.data.result.dids;
+        if(typeof $scope.allDids != 'undefined' && $scope.allDids != null) {
+          $scope.allDids.forEach(function(did) {
+            $scope.allDidsSymbols.push(did.symbol);
+            $scope.allDidsAddresses[did.address] = did.symbol;
+            $scope.didFromAddress[did.symbol] = did.address;
+          });
+        } else {
+          $scope.allDids = [];
+        }
+      } else {
+        $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
+      //Once all the DIDs have been loaded, we look for the one entered by the user
+      checkRecipent($scope.sendTo);
+    });
+
+    function checkInputs() {
+      //Since multi sig to did is not available, we replace it by the address
+      $scope.sendTo = $scope.didFromAddress[$scope.sendTo];
+      $scope.confirmation = true;
+      delete $rootScope.flash;
+    }
+
+
+    function createMultisigTx(sendFrom, sendTo, quantity, transactionFee, password) {
+      //var quantityToSend = ("" + quantity * Math.pow(10,8)).split(".")[0];
+      var quantityToSend = $filter('convertfortx')(quantity, 8);
+      //var transactionFeeToSend = ("" + transactionFee * Math.pow(10,8)).split(".")[0];
+      var transactionFeeToSend = $filter('convertfortx')(transactionFee, 8);
+      if (password === '') { //Check for empty password
+        $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else if (quantityToSend > ($scope.availableBalance - transactionFeeToSend)) {
+        $translate('MESSAGES.TRANSACTION_AMOUNT_NOT_ENOUGH').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else {
+        MetaverseService.CreateMultisigTx(sendFrom, sendTo, quantityToSend, transactionFeeToSend, password)
+        .then( (response) => {
+          NProgress.done();
+          if (typeof response.success !== 'undefined' && response.success) {
+            //Transaction was successful
+            $translate('MESSAGES.CREATE_MULTISIGNATURE_SUCCESS').then( (data) => FlashService.Success(data) );
+            $window.scrollTo(0,0);
+            init();
+            $scope.transferSuccess = true;
+            $scope.resultCreateTx = response.data.result;
+          } else {
+            //Transaction problem
+            $translate('MESSAGES.CREATE_MULTISIGNATURE_ERROR').then( (data) => {
+              if (response.message != undefined && response.message.message != undefined) {
+                FlashService.Error(data + " " + response.message.message);
+                $window.scrollTo(0,0);
+              } else {
+                FlashService.Error(data);
+                $window.scrollTo(0,0);
+              }
+            });
+            $scope.password = '';
+          }
+        });
+      }
+    }
+
+    function sendAllMultisig() {
+      $scope.quantity = ($scope.availableBalance - $scope.transactionFee*100000000)/100000000;
+      if($scope.quantity < 0)
+        $scope.quantity = 0;
+    }
+
+    function checkRecipent(input) {
+      if (typeof input == 'undefined' || input == '') {
+        $scope.correctEtpAddress = false;
+        $scope.correctAvatar = false;
+        $scope.burnAddress = false;
+        $scope.correctMutliSignAddress = false;
+      } else if((($rootScope.network == 'testnet' && input.charAt(0) == 't') || ($rootScope.network == 'mainnet' && input.charAt(0) == 'M') || input.charAt(0) == '3') && input.length == 34 && input.match(/^[0-9A-Za-z]+$/)) {
+        $scope.correctEtpAddress = true;
+        $scope.correctAvatar = false;
+        $scope.burnAddress = false;
+        $scope.correctMultiSignAddress = false;
+      } else if ($scope.allDidsSymbols.indexOf(input) > -1) {
+        $scope.correctEtpAddress = false;
+        $scope.correctAvatar = true;
+        $scope.burnAddress = false;
+        $scope.correctMultiSignAddress = false;
+      } else if (input == MetaverseService.burnAddress) {
+        $scope.correctEtpAddress = false;
+        $scope.correctAvatar = false;
+        $scope.burnAddress = true;
+        $scope.correctMultiSignAddress = false;
+      } else {
+        $scope.correctEtpAddress = false;
+        $scope.correctAvatar = false;
+        $scope.burnAddress = false;
+        $scope.correctMultiSignAddress = false;
+      }
+      checkready();
+    }
+
+    //Check if the form is submittable
+    function checkready() {
+      //Check for errors
+      for (var error in $scope.error) {
+        if ($scope.error[error]) {
+          $scope.submittable = false;
+          return;
+        }
+      }
+      if(!$scope.correctEtpAddress && !$scope.correctAvatar && !$scope.burnAddress) {
+        $scope.submittable = false;
+        return;
+      }
+      $scope.submittable = true;
+    }
+
+    //Check if the send from address is valid
+    $scope.$watch('sendfrom', (newVal, oldVal) => {
+      $scope.error.sendfrom = (newVal == undefined || newVal == '');
+      checkready();
+    });
+
+    //Check if the recipient is valid
+    $scope.$watch('sendTo', (newVal, oldVal) => {
+      $scope.error.sendTo_empty = (newVal == undefined || newVal == '');
+      checkready();
+    });
+
+    //Check if the amount is valid
+    $scope.$watch('quantity', (newVal, oldVal) => {
+      $scope.error.quantity_empty = (newVal == undefined);
+      $scope.error.quantity_not_enough_balance = (newVal != undefined && newVal != '') ? parseInt($filter('convertfortx')(newVal, 8)) > parseInt($scope.availableBalance) - parseInt($filter('convertfortx')($scope.transactionFee, 8)) : false;
+      checkready();
+    });
+
+    //Check if the fee is valid
+    $scope.$watch('transactionFee', (newVal, oldVal) => {
+      $scope.error.fee_empty = (newVal == undefined);
+      $scope.error.fee_too_low = newVal != undefined ? newVal<0.0001 : false;
+      checkready();
+    });
+
+    //Check if the password is valid
+    $scope.$watch('password', (newVal, oldVal) => {
+      $scope.errorPassword = (newVal == undefined || newVal == '');
+    });
+
+    //Initialize
+    init();
+
+  }
+
+
+  /**
+  * Create new multi-signature address
+  */
+  function NewMultiSignController(MetaverseService, MetaverseHelperService, $filter, $rootScope, $scope, FlashService, localStorageService, $translate, $window) {
+
+    $window.scrollTo(0,0);
+    //Start loading animation
+    NProgress.start();
+    $scope.displayEmptyAdresses = false;
+    $scope.recipents = [];
+    $scope.buttonCopyToClipboard = new Clipboard('.btn');
+    $scope.getPublicKey = getPublicKey;
+    $scope.publicKey = '';
+    $scope.cosigners = [];
+    $scope.getNewMultisign = getNewMultisign;
+    $scope.nbrCosignersRequired = 0;
+
+    $scope.listAddresses = [];                    //List of addresses
+    $scope.listMultiSig = [];
+    $scope.error = [];
+    $scope.checkHash = checkHash;
+
+    // Initializes all transaction parameters with empty strings.
+    function init() {
+      $scope.sendfrom = '';
       $scope.publicKey = '';
-      MetaverseService.ListBalances(true)
-      .then( (response) => {
-        if (response.success)
-        $scope.from_addresses = response.data.balances;
-      });
       $scope.cosigners = [];
       $scope.cosigners.push({'index': 1, 'publicKey': ''});
       $scope.cosignersError = [];
@@ -1460,43 +1703,29 @@
 
     function getNewMultisign() {
       NProgress.start();
-      var transactionOK=true;
-      //Check for unimplemented parameters
-      $scope.cosigners.forEach( (e) => {
-        if (e.publicKey.length != 66) { //Check for public keys
-          $translate('MESSAGES.CREATE_MULTISIGNATURE_WRONG_PUBLIC_KEY').then( (data) => FlashService.Error(data + ' ' + e.index) );
+      var SendPromise = MetaverseService.GetNewMultiSig($scope.nbrCosignersRequired, $scope.cosigners.length+1, $scope.publicKey, $scope.cosigners);
+      SendPromise
+      .then( (response) => {
+        NProgress.done();
+        if (typeof response.success !== 'undefined' && response.success) {
+          //Creation was successful
+          $translate('MESSAGES.CREATE_MULTISIGNATURE_SUCCESS').then( (data) => FlashService.Success(data + " : " + response.data.result.address) );
           $window.scrollTo(0,0);
-          transactionOK = false;
+          init();
+        } else {
+          //Transaction problem
+          $translate('MESSAGES.CREATE_MULTISIGNATURE_ERROR').then( (data) => {
+            if (response.message != undefined && response.message.message != undefined) {
+              FlashService.Error(data + " : " + response.message.message);
+              $window.scrollTo(0,0);
+            } else {
+              FlashService.Error(data);
+              $window.scrollTo(0,0);
+            }
+          });
         }
+        NProgress.done();
       });
-
-      if (transactionOK == false) {
-        //error already handle
-      } else {
-        var SendPromise = MetaverseService.GetNewMultiSig($scope.nbrCosignersRequired, $scope.cosigners.length+1, $scope.publicKey, $scope.cosigners);
-        SendPromise
-        .then( (response) => {
-          NProgress.done();
-          if (typeof response.success !== 'undefined' && response.success) {
-            //Creation was successful
-            $translate('MESSAGES.CREATE_MULTISIGNATURE_SUCCESS').then( (data) => FlashService.Success(data + " : " + response.data.result.address) );
-            $window.scrollTo(0,0);
-            init();
-          } else {
-            //Transaction problem
-            $translate('MESSAGES.CREATE_MULTISIGNATURE_ERROR').then( (data) => {
-              if (response.message != undefined && response.message.message != undefined) {
-                FlashService.Error(data + " : " + response.message.message);
-                $window.scrollTo(0,0);
-              } else {
-                FlashService.Error(data);
-                $window.scrollTo(0,0);
-              }
-            });
-          }
-        });
-      }
-      NProgress.done();
     }
 
     function checkHash(publicKey, index) {
@@ -1524,12 +1753,6 @@
           return;
         }
       }
-      /*for (var amount in $scope.amountOK) {
-        if (!$scope.amountOK[amount]) {
-          $scope.submittable = false;
-          return;
-        }
-      }*/
       $scope.submittable = true;
     }
 
@@ -1551,15 +1774,10 @@
       checkready();
     });
 
-
-
-
-
     //Initialize
     init();
 
   }
-
 
 
   function AddressesController(MetaverseHelperService, MetaverseService, $translate, $rootScope, $scope, FlashService, $location, localStorageService, $window) {

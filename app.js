@@ -205,7 +205,7 @@
             .state('home.multisignature', {
                 url: "/transfer/multisignature",
                 templateUrl: "home/transfer/multisignature.view.html",
-                controller: 'ETPMultiSignController',
+                controller: 'SendMultiSignController',
                 controllerAs: 'vm'
             })
 
