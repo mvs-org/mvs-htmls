@@ -619,11 +619,8 @@
 
     $scope.transfer = transfer;
     $scope.typeTransaction = "simple",
-
     $scope.getBalance = getBalance;
-
     $scope.listAddresses = [];
-
     $scope.symbol = 'ETP';
 
     $scope.availBalance = availBalance;
@@ -880,6 +877,10 @@
       //value = Math.round(value);
       var fee = $filter('convertfortx')(transactionFee, 8);
       value = $filter('convertfortx')(value, 8);
+      //Update send from it is from an avatar
+      if($scope.allDidsAddresses[sendfrom]) {
+        sendfrom = $scope.allDidsAddresses[sendfrom];
+      }
       if (recipents[0].correctEtpAddress || recipents[0].burnAddress) {
         var SendPromise = (sendfrom) ? MetaverseService.SendFrom(sendfrom, sendTo, value, fee, memo, password) : MetaverseService.Send(sendTo, value, fee, memo, password);
       } else {
@@ -954,7 +955,7 @@
       if(address == '') {
         $scope.availableBalance = $scope.balance['total-available'];
       } else {
-        $scope.availableBalance = $scope.addresses[address].balance - $scope.addresses[address].frozen;
+        $scope.availableBalance = $scope.addresses[address].available;
       }
     }
 
@@ -979,6 +980,7 @@
             }
             $scope.addresses[e.balance.address] = ({
               "balance": parseInt(e.balance.unspent),
+              "available": parseInt(e.balance.available),
               "address": e.balance.address,
               "name": name,
               "frozen": e.balance.frozen,
@@ -2042,6 +2044,10 @@
         $window.scrollTo(0,0);
       } else {
         NProgress.start();
+        //Update send from it is from an avatar
+        if($scope.allDidsAddresses[sendfrom]) {
+          sendfrom = $scope.allDidsAddresses[sendfrom];
+        }
         //Modify number to fit to number of decimals defined for asset
         //quantity *= Math.pow(10,$scope.asset.decimal_number);
         //quantity = Math.round(quantity);

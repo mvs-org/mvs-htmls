@@ -856,7 +856,6 @@
           return _send('listmultisig', [credentials.user, credentials.password]);
         }
 
-
         function CreateMultisigTx(fromAddress, toAddress, amount, transactionFee, password) {
           var credentials = localStorageService.get('credentials');
           return _sendV2('createmultisigtx', [credentials.user, password, fromAddress, toAddress, amount, '-f', transactionFee]);
