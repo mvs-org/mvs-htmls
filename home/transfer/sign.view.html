@@ -6,29 +6,36 @@
 			<li role="presentation"><a href="#!/transfer/ETP" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIMPLE' | translate }}</a></li>
 			<li role="presentation"><a href="#!/transfer/multisignature" class="btn-link-menu">{{ 'TRANSFER_TYPE_MULTISIG' | translate }}</a></li>
 			<li role="presentation" class="active"><a href="#!/transfer/sign" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIGN' | translate }}</a></li>
-			<!--<li role="presentation"><a href="#!/account/subscribe" class="btn-link-menu">{{ 'NAV_ACCOUNT_SUBSCRIBE' | translate }}</a></li>-->
 		</ul>
 		<br/>
-		<div class="form-group">{{ 'TRANSFER_SIGN_HEADER' | translate}}:</div>
-		<textarea class="form-control" ng-model="transaction" rows="5"></textarea>
-		<br>
-		<div class="col-xs-12 noPaddingLeftRight spe-addrbox">
-			<div class="checkboxCircle">
-				<div class="checkbox-box">
-					<input type="checkbox" checked ng-model="lastTx" id="checkboxAgree" ng-click="!displayEmptyAdresses && displayEmpty() ; displayEmptyAdresses && hideEmpty()"  >
-					<label for="checkboxAgree"></label>
+		<form>
+			<div class="form-group">{{ 'TRANSFER_SIGN_HEADER' | translate}}:</div>
+			<textarea class="form-control" ng-model="transaction" rows="5"></textarea>
+			<br>
+			<div class="col-xs-12 noPaddingLeftRight spe-addrbox">
+				<div class="checkboxCircle">
+					<div class="checkbox-box">
+						<input type="checkbox" checked ng-model="lastTx" id="checkboxAgree" tabIndex="-1">
+						<label for="checkboxAgree"></label>
+					</div>
+					<span class="textCheckbox">{{ 'TRANSFER_SIGN_IS_LAST_TRANSACTION' | translate}}</span>
 				</div>
-				<span class="textCheckbox">{{ 'TRANSFER_SIGN_IS_LAST_TRANSACTION' | translate}}</span>
 			</div>
-		</div>
-		<div class="col-xs-6 col-sm-3 col-md-3 noPaddingLeftRight">
-			<br/>
-			<button type="submit" class="btn btn-success" ng-click="signMultisigTx(transaction, lastTx)">{{ 'TRANSFER_SIGN_SIGN_BUTTON' | translate }}</button>
-		</div>
-		<div class="col-xs-6 col-sm-3 col-md-3 noPaddingLeftRight">
-			<br/>
-			<a href="#!/home" class="btn btn-link-red">{{ 'TRANSFER_MULTISIGNATURE_BACK_WALLET' | translate }}</a>
-		</div>
+			<div class="row col-xs-12 col-sm-6 noPaddingLeftRight">
+				</br>
+				<!--Password-->
+				<div class="form-group col-xs-12">
+					<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
+					<input type="password" class="form-control" name="password" id="" ng-model="password" required ng-model="password" ng-class="{validInput: !errorPassword, wrongInput: errorPassword}">
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-6">
+					<input type="submit" class="btn btn-success" ng-click="signMultisigTx(transaction, password, lastTx)" ng-disabled="errorPassword || transaction.length == 0" value="{{ 'TRANSFER_SIGN_SIGN_BUTTON' | translate }}">
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-6">
+					<a href="#!/home" class="btn btn-success btn-success-secondary">{{ 'TRANSFER_MULTISIGNATURE_BACK_WALLET' | translate }}</a>
+				</div>
+			</div>
+		</form>
 	</div>
 
 	<!--After the signature-->

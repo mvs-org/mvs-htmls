@@ -862,12 +862,12 @@
           return _sendV2('createmultisigtx', [credentials.user, password, fromAddress, toAddress, amount, '-f', transactionFee]);
         }
 
-        function SignMultisigTx(message, lastTx) {
+        function SignMultisigTx(message, password, lastTx) {
           var credentials = localStorageService.get('credentials');
           if(lastTx) {
-            return _sendV2('signmultisigtx', [credentials.user, credentials.password, message, '-b']);
+            return _sendV2('signmultisigtx', [credentials.user, password, message, '-b']);
           } else {
-            return _sendV2('signmultisigtx', [credentials.user, credentials.password, message]);
+            return _sendV2('signmultisigtx', [credentials.user, password, message]);
           }
         }
 

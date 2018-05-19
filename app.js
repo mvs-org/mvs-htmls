@@ -212,7 +212,7 @@
             .state('home.sign', {
                 url: "/transfer/sign",
                 templateUrl: "home/transfer/sign.view.html",
-                controller: 'ETPMultiSignController',
+                controller: 'SignMultiSignController',
                 controllerAs: 'vm'
             })
 
