@@ -775,6 +775,7 @@
     //Check if the send from address is valid
     $scope.$watch('sendfrom', (newVal, oldVal) => {
       $scope.error.sendfrom = (newVal == undefined);
+      checkAmount($scope.recipents[0].value, 1);
       checkready();
     });
 
@@ -806,6 +807,7 @@
       $scope.sendfrom='';
       $scope.recipientOK.push(false);
       $scope.amountOK.push(false);
+      availBalance('');
       checkready();
     }
 
@@ -813,6 +815,8 @@
       $scope.recipents.splice($scope.recipents.length-1, 1);
       $scope.recipientOK.splice($scope.recipientOK.length-1, 1);
       $scope.amountOK.splice($scope.recipientOK.length-1, 1);
+      checkAmount($scope.recipents[0].value, 1);
+      availBalance('');
       checkready();
     }
 
@@ -957,11 +961,12 @@
       } else {
         $scope.availableBalance = $scope.addresses[address].available;
       }
+      checkAmount($scope.recipents[0].value, 1);
     }
 
     function sendAll() {
       $scope.recipents[0].value = ($scope.availableBalance - 100000000*$scope.transactionFee)/100000000;
-      checkAmount($scope.recipents[0].value, 1)
+      checkAmount($scope.recipents[0].value, 1);
     }
 
 
@@ -1106,6 +1111,7 @@
     $scope.checkInputs = checkInputs;
     $scope.didFromAddress = [];
     $scope.allDidsAddresses = [];
+    $scope.availBalance = availBalance;
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -1292,6 +1298,11 @@
         $scope.correctMultiSignAddress = false;
       }
       checkready();
+    }
+
+    function availBalance(address) {
+      $scope.availableBalance = $scope.addresses[address].available;
+      $scope.error.quantity_not_enough_balance = ($scope.quantity != undefined && $scope.quantity != '') ? parseInt($filter('convertfortx')($scope.quantity, 8)) > parseInt($scope.availableBalance) - parseInt($filter('convertfortx')($scope.transactionFee, 8)) : false;
     }
 
     //Check if the form is submittable
@@ -2089,6 +2100,7 @@
           }
         });
       }
+      $scope.error.quantity_not_enough_balance = ($scope.quantity != undefined && $scope.quantity != '' && typeof $scope.asset.decimal_number != 'undefined') ? parseInt($filter('convertfortx')($scope.quantity, $scope.asset.decimal_number)) > parseInt($scope.availableBalance) : false;
     }
 
     function checkRecipent(input) {
