@@ -2668,26 +2668,45 @@
       }
     }
 
-    function checkInputs(address, unlockNumber, model2, password) {
-      $scope.quantityLockedToSend = $filter('convertfortx')($scope.quantityLocked, $scope.myAsset.decimal_number);
+    function checkInputs(address, unlockNumber, quantityLocked, model2, password) {
       $scope.recipientAvatar = $scope.myDidsAddresses[address];
       if($scope.model == 2){
         var inputOK = true;
         $scope.model2ToSend = model2.slice(0, unlockNumber);
+        var sumNumber = 0;
+        var sumQuantity = 0;
         $scope.model2ToSend.forEach( (period) => {
+          sumNumber += period.number;
+          sumQuantity += period.quantity;
           period.quantityToSend = $filter('convertfortx')(period.quantity, $scope.myAsset.decimal_number);
           if(period.number == '' || period.quantity == ''){
             inputOK = false;
-            $scope.confirmation = false;
             $translate('MESSAGES.SECONDARY_ISSUE_MODEL2_MISSING_PERIOD_INPUT').then( (data) => FlashService.Error(data) );
             $window.scrollTo(0,0);
           }
         });
+        $scope.periodLocked = sumNumber;
+        $scope.quantityLocked = sumQuantity;
+        if($scope.quantityLocked > $scope.quantity){
+          inputOK = false;
+          $translate('MESSAGES.SECONDARY_ISSUE_MODEL2_LOCKED_HIGHER_ISSUED').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
+        }
         if(inputOK == true) {
+          $scope.quantityLockedToSend = $filter('convertfortx')($scope.quantityLocked, $scope.myAsset.decimal_number);
           $scope.confirmation = true;
           delete $rootScope.flash;
         }
-      } else {
+      } else if ($scope.model == 1) {
+        if($scope.quantityLocked > $scope.quantity){
+          $translate('MESSAGES.SECONDARY_ISSUE_MODEL1_LOCKED_HIGHER_ISSUED').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
+        } else {
+          $scope.quantityLockedToSend = $filter('convertfortx')($scope.quantityLocked, $scope.myAsset.decimal_number);
+          $scope.confirmation = true;
+          delete $rootScope.flash;
+        }
+      } else {      //Default model
         $scope.confirmation = true;
         delete $rootScope.flash;
       }
