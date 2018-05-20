@@ -133,17 +133,17 @@
           <h3 class="panel-title">{{'SECONDARY_ISSUE.TYPE' | translate}}</h3>
         </div>
         <div class="panel-body">
-          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-class="{'selected_row' : model == ''}">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE_DEFAULT' | translate }}</div>
             <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'SECONDARY_ISSUE.EXPLANATION_TYPE_DEFAULT' | translate}}</div>
           </div>
-          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-class="{'selected_row' : model == 1}">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE_1' | translate }}</div>
             <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'SECONDARY_ISSUE.EXPLANATION_TYPE_1' | translate}}</div>
           </div>
-          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-class="{'selected_row' : model == 2}">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE_2' | translate }}</div>
-            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'SECONDARY_ISSUE.EXPLANATION_TYPE_1' | translate}}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'SECONDARY_ISSUE.EXPLANATION_TYPE_2' | translate}}</div>
           </div>
         </div>
       </div>

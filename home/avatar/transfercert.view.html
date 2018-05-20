@@ -50,15 +50,15 @@
           <h3 class="panel-title">{{'PROFIL.CERTIFICATES_EXPLANATION_TITLE' | translate}}</h3>
         </div>
         <div class="panel-body">
-          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-class="{'selected_row' : certType == 'issue'}">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }}</div>
             <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_ISSUE' | translate}}</div>
           </div>
-          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-class="{'selected_row' : certType == 'domain'}">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
             <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_DOMAIN' | translate}}</div>
           </div>
-          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-class="{'selected_row' : certType == 'naming'}">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_NAMING' | translate }}</div>
             <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_NAMING' | translate}}</div>
           </div>

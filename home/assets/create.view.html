@@ -64,9 +64,9 @@
           {{ 'ASSET_CREATE.SECONDARY_ISSUE' | translate }}
         </label>
         <select name="secondaryissue_rate" type="number" class="form-control" ng-model="secondaryissue_rate" ng-change="availBalance(sendfrom)">
-          <option ng-selected="secondaryissue" value="0">0% ({{ 'ASSET_CREATE.SECONDARY_ISSUE_DISABLED' | translate }})</option>
-          <option ng-repeat="rate in [].constructor(100) track by $index" value="{{$index+1}}">{{$index+1}} %</option>
+          <option ng-selected="secondaryissue" value="0">{{ 'ASSET_CREATE.SECONDARY_ISSUE_DISABLED' | translate }}</option>
           <option value="-1">{{ 'ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED' | translate }}</option>
+          <option ng-repeat="rate in [].constructor(100) track by $index" value="{{$index+1}}">{{$index+1}} %</option>
         </select>
       </div>
     </div>
@@ -77,17 +77,20 @@
           <h3 class="panel-title">{{'ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS' | translate}}</h3>
         </div>
         <div class="panel-body">
-          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">0%</div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-class="{'selected_row' : secondaryissue_rate == 0}">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_CREATE.SECONDARY_ISSUE_DISABLED' | translate }}</div>
             <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_0' | translate}}</div>
           </div>
-          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-class="{'selected_row' : secondaryissue_rate == -1}">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_MINUS1' | translate}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-class="{'selected_row' : secondaryissue_rate > 0}">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">1 - 100%</div>
             <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_1_TO_100' | translate}}</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED' | translate }}</div>
-            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_MINUS1' | translate}}</div>
+            <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{'ASSET_CREATE.SECONDARY_ISSUE_AVATAR_GET_CERT' | translate}}</div>
           </div>
         </div>
       </div>
