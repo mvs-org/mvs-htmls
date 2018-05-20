@@ -16,7 +16,7 @@
   .controller('ShowAllAssetsController', ShowAllAssetsController)
   .controller('ETPController', ETPController)
   .controller('SignMultiSignController', SignMultiSignController)
-  .controller('SendMultiSignController', SendMultiSignController)
+  .controller('TransferMultiSignController', TransferMultiSignController)
   .controller('NewMultiSignController', NewMultiSignController)
   .controller('DepositController', DepositController)
   .controller('ExplorerController', ExplorerController)
@@ -1091,7 +1091,7 @@
   /**
   * The ETPMultiSign Controller provides ETP multi-signatures transaction functionality.
   */
-  function SendMultiSignController(MetaverseService, MetaverseHelperService, $filter, $rootScope, $scope, FlashService, localStorageService, $translate, $window) {
+  function TransferMultiSignController(MetaverseService, MetaverseHelperService, $filter, $rootScope, $scope, FlashService, localStorageService, $translate, $window) {
 
     $window.scrollTo(0,0);
     //Start loading animation
@@ -1973,10 +1973,12 @@
               $scope.assetsIssued.push({
                 "symbol": e.symbol,
                 "quantity": e.quantity,
+                "available": e.quantity - e.locked_quantity,
                 "decimal_number": e.decimal_number
               });
             }
           });
+          loadasset($scope.symbol);
         } else {    //if the user has 0 asset
 
         }
@@ -2029,7 +2031,8 @@
           $scope.assetsIssued.forEach( (a) => {
             if (a.symbol == symbol) {
               $scope.asset.quantity = a.quantity;
-              $scope.availableBalance = a.quantity;
+              $scope.asset.available = a.available;
+              $scope.availableBalance = a.available;
             }
           });
         } else {
@@ -2092,11 +2095,11 @@
 
     function availBalance(address) {
       if (address == '') {
-        $scope.availableBalance = $scope.asset.quantity;
+        $scope.availableBalance = $scope.asset.available;
       } else {
         $scope.assetAddresses.forEach( (a) => {
           if(a.address == address) {
-            $scope.availableBalance = a.quantity; // - a.frozen;
+            $scope.availableBalance = a.quantity - a.locked_quantity;
           }
         });
       }
@@ -2193,7 +2196,6 @@
     });
 
     init();
-    loadasset($scope.symbol);
 
   }
 

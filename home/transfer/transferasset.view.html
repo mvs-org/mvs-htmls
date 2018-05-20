@@ -13,9 +13,9 @@
 			<div class="form-group">
         <label for="addressFrom" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
         <select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" ng-change="availBalance(sendfrom)" ng-class="{validInput: !error.sendfrom, wrongInput: error.sendfrom}">
-          <option value="" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</option>
-          <option ng-repeat="asset in assetAddresses | orderBy:'quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-if="allDidsAddresses[asset.address]">{{allDidsAddresses[asset.address]}} - {{asset.address}} - {{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
-          <option ng-repeat="asset in assetAddresses | orderBy:'quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-if="!allDidsAddresses[asset.address]">{{asset.address}} - {{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
+          <option value="" title="{{asset.quantity - asset.lock_quantity | assetformat : asset.decimal_number}} {{asset.symbol}}">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</option>
+          <option ng-repeat="asset in assetAddresses | orderBy:'quantity - lock_quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-if="allDidsAddresses[asset.address]">{{allDidsAddresses[asset.address]}} - {{asset.address}} - {{asset.quantity - asset.lock_quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
+          <option ng-repeat="asset in assetAddresses | orderBy:'quantity - lock_quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-if="!allDidsAddresses[asset.address]">{{asset.address}} - {{asset.quantity - asset.lock_quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
         </select>
       </div>
 
