@@ -91,16 +91,16 @@
 </div>
 
 <!--Display all the adresses having this Asset-->
-<div dir-paginate="asset in assetAddresses | orderBy:'quantity':true | itemsPerPage: 10" ng-hide="(asset.quantity == 0)">
-  <dd class="assetBox col-xs-12 col-sm-12 col-md-12" >
+<div dir-paginate="address in assetAddresses | orderBy:'quantity':true | itemsPerPage: 10" ng-hide="(asset.quantity == 0)">
+  <!--dd class="assetBox col-xs-12 col-sm-12 col-md-12" >
     <div class="assetBoxBalance col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
       <span ng-show="myDidsAddresses[asset.address]" class="addressBoxName" readonly="true" id="editAddressName">{{myDidsAddresses[asset.address]}}</span>
-      <!--Display editable name of the address-->
+
       <div ng-hide="asset.edit || myDidsAddresses[asset.address]">
         <span class="addressBoxName" readonly="true" id="editAddressName">{{asset.name}}</span>
         <button class="fa fa-edit editAddressNameButton" bs-tooltip data-placement="top" title="{{ 'ADDRESSES_TOOLTIP_EDIT_NAME' | translate }}" ng-click="enableEditAddressName(asset.address)"></button>
       </div>
-      <!--Display while editing-->
+
       <div class="input-group" ng-show="asset.edit">
         <input type="text" ng-model="asset.newName" class="form-control addressBoxNameUpdate" id="editAddressNameEditing" maxlength="40" ng-keyup="$event.keyCode == 13 && endEditAddressName(asset.address, asset.newName)">
         <span class="input-group-addon editAddressName">
@@ -119,7 +119,7 @@
     <div class="assetBoxCopy col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
       <span class="copyAddress">
         <button class="btn btn-link-black addressLinkButton" bs-popover data-clipboard-text="{{asset.address}}" data-toggle="popover" data-placement="top" data-content="{{ 'ADDRESSES_POPOVER_COPIED' | translate }}" role="button">
-          <!--<span class="glyphicon glyphicon-copy">-->
+
           </span> {{ 'ADDRESSES_COPY_ADDRESS' | translate }}
         </button>
       </span>
@@ -127,6 +127,52 @@
     <div class="assetBoxCopy col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
       <span class="qrCode">
         <button id="element" class="btn btn-link-black addressLinkButton" ng-click="showqr(asset.address)" alt="receive">
+          <span class="glyphicon glyphicon-qrcode"></span> {{ 'ADDRESSES_QR_CODE' | translate }}
+        </button>
+      </span>
+    </div>
+  </dd-->
+
+  <dd class="assetBoxAdd assetBox col-xs-12 col-sm-12 col-md-12" >
+    <div class="assetBoxBalance col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+      <!--Display editable name of the address-->
+      <span ng-show="myDidsAddresses[address.address]" class="addressBoxName" readonly="true" id="editAddressName">{{myDidsAddresses[address.address]}}</span>
+      <!--Display editable name of the address-->
+      <div ng-hide="address.edit || myDidsAddresses[address.address]">
+        <span class="addressBoxName" readonly="true" id="editAddressName">{{address.name}}</span>
+        <button class="fa fa-edit editAddressNameButton" bs-tooltip data-placement="top" title="{{ 'ADDRESSES_TOOLTIP_EDIT_NAME' | translate }}" ng-click="enableEditAddressName(address.address)"></button>
+      </div>
+      <!--Display while editing-->
+      <div class="input-group" ng-show="address.edit">
+        <input type="text" ng-model="address.newName" class="form-control addressBoxNameUpdate" id="editAddressNameEditing" maxlength="40" ng-keyup="$event.keyCode == 13 && endEditAddressName(address.address, address.newName)">
+        <span class="input-group-addon editAddressName">
+          <button class="glyphicon glyphicon-floppy-saved editAddressNameButtonEditing" ng-click="endEditAddressName(address.address, address.newName)"></button>
+        </span>
+        <span class="input-group-addon editAddressName">
+          <button class="glyphicon glyphicon-remove editAddressNameButtonEditing" ng-click="cancelEditAddressName(address.address)"></button>
+        </span>
+      </div>
+      <a href="#!/explorer/adr/{{address.address}}" class="btn-link-black col-xs-12 noPaddingLeftRight addressBoxAddressDeposit overflow">{{address.address}}</a>
+    </div>
+
+    <div class="assetBoxBalance col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
+      <div class="assetBoxTitle">{{ 'BALANCE' | translate }}</div>
+      <div class="assetBoxValue col-xd-12 noPaddingLeftRight overflow">{{address.quantity | assetformat : asset.decimal_number}}</div>
+    </div>
+    <div class="assetBoxFrozen col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 noPaddingLeftRight">
+      <div class="assetBoxTitle">{{ 'FROZEN' | translate}}</div>
+      <div class="assetBoxValue col-xd-12 noPaddingLeftRight">{{address.locked_quantity | assetformat : asset.decimal_number}}</div>
+    </div>
+    <div class="assetBoxCopy col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
+      <span class="copyAddress">
+        <button class="btn btn-link-black addressLinkButton" bs-popover data-clipboard-text="{{address.address}}" data-toggle="popover" data-placement="top" data-content="{{ 'ADDRESSES_POPOVER_COPIED' | translate }}" role="button">
+          <span class="glyphicon"></span> {{ 'ADDRESSES_COPY_ADDRESS' | translate }}
+        </button>
+      </span>
+    </div>
+    <div class="assetBoxCopy col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
+      <span class="qrCode">
+        <button id="element" class="btn btn-link-black addressLinkButton" ng-click="showqr(address.address)" alt="receive">
           <span class="glyphicon glyphicon-qrcode"></span> {{ 'ADDRESSES_QR_CODE' | translate }}
         </button>
       </span>

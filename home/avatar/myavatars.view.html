@@ -31,85 +31,80 @@
 		</div>
 	</div>
 
-	<form ng-show="onChain">
+	<form ng-show="onChain" class="row">
 		<!--Address-->
-    <div class="col-xs-12 noPaddingLeftRight">
-  		<div class="col-md-6 col-sm-12 noPaddingLeftRight" ng-hide="noDids">
-        <div class="assetDetailsPanel panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title col-md-6 noPaddingLeftRight">{{'PROFIL.ADDRESSES_HISTORY' | translate}}</h3>
-            <div class="sendAssetButton assetDetailsBoxButton col-md-6 noPaddingLeftRight">
-              <a href="#!/avatar/modifyaddress/{{selectedDid}}">
-                <button class="btn btn-success smallButton assetBoxButton">{{'PROFIL.UPDATE_ADDRESS' | translate}}</button>
+    <div class="col-md-6 col-sm-12" ng-hide="noDids">
+      <div class="assetDetailsPanel panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title col-xs-6 noPaddingLeftRight">{{'PROFIL.ADDRESSES_HISTORY' | translate}}</h3>
+          <div class="sendAssetButton assetDetailsBoxButton col-xs-6 noPaddingLeftRight">
+            <a href="#!/avatar/modifyaddress/{{selectedDid}}">
+              <button class="btn btn-success smallButton assetBoxButton">{{'PROFIL.UPDATE_ADDRESS' | translate}}</button>
+            </a>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div ng-show="loadingAddressHistory && !myCertsLoaded" class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="mediumSpinner"></div>
+          </div>
+          <div ng-hide="loadingAddressHistory && !myCertsLoaded" ng-repeat="address in addressesHistory" class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div ng-show="address.status == 'current'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CURRENT_ADDRESS' | translate }}</div>
+            <div ng-hide="address.status == 'current'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.PREVIOUS_ADDRESS' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{address.address}}</div>
+          </div>
+        </div>
+      </div>
+
+      <!--Certs-->
+      <div class="assetDetailsPanel panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title col-xs-6 noPaddingLeftRight">{{'PROFIL.AVATAR_CERTIFICATES' | translate}}</h3>
+          <div class="sendAssetButton assetDetailsBoxButton col-xs-6 noPaddingLeftRight">
+            <a href="#!/avatar/issuecert/">
+              <button class="btn btn-success smallButton assetBoxButton">{{'PROFIL.ISSUE_CERT_BUTTON' | translate}}</button>
+            </a>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div ng-hide="myCertsLoaded" class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="mediumSpinner"></div>
+          </div>
+          <div ng-show="myCertsLoaded && cert.owner == selectedDid" ng-repeat="cert in myCerts" class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div ng-show="cert.cert == 'issue'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }}</div>
+            <div ng-show="cert.cert == 'domain'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
+            <div ng-show="cert.cert == 'naming'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_NAMING' | translate }}</div>
+            <div class="assetValueColumn col-xs-3 noPaddingLeftRight">{{cert.symbol}}</div>
+            <div class="sendAssetButton col-xs-6 noPaddingLeftRight assetDetailsBoxButton">
+              <a href="#!/avatar/transfercert/{{cert.symbol}}:{{cert.cert}}">
+                <button class="btn btn-success smallButton assetBoxButton">{{'PROFIL.CERT_TRANSFER_BUTTON' | translate}}</button>
               </a>
             </div>
           </div>
-          <div class="panel-body">
-            <div ng-show="loadingAddressHistory && !myCertsLoaded" class="col-xs-12 noPaddingLeftRight assetDataLine">
-              <div class="mediumSpinner"></div>
-            </div>
-            <div ng-hide="loadingAddressHistory && !myCertsLoaded" ng-repeat="address in addressesHistory" class="col-xs-12 noPaddingLeftRight assetDataLine">
-              <div ng-show="address.status == 'current'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CURRENT_ADDRESS' | translate }}</div>
-              <div ng-hide="address.status == 'current'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.PREVIOUS_ADDRESS' | translate }}</div>
-              <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{address.address}}</div>
-            </div>
+          <div ng-show="myCertsLoaded && myCerts.length == 0" class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{'PROFIL.NO_CERTIFICATES' | translate}}</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!--Certs-->
-    <div class="col-xs-12 noPaddingLeftRight" ng-hide="noDids">
-    	<div class="col-md-6 col-sm-12 noPaddingLeftRight">
-        <div class="assetDetailsPanel panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title col-md-6 noPaddingLeftRight">{{'PROFIL.AVATAR_CERTIFICATES' | translate}}</h3>
-            <div class="sendAssetButton assetDetailsBoxButton col-md-6 noPaddingLeftRight">
-              <a href="#!/avatar/issuecert/">
-                <button class="btn btn-success smallButton assetBoxButton">{{'PROFIL.ISSUE_CERT_BUTTON' | translate}}</button>
-              </a>
-            </div>
-          </div>
-          <div class="panel-body">
-            <div ng-hide="myCertsLoaded" class="col-xs-12 noPaddingLeftRight assetDataLine">
-              <div class="mediumSpinner"></div>
-            </div>
-            <div ng-show="myCertsLoaded && cert.owner == selectedDid" ng-repeat="cert in myCerts" class="col-xs-12 noPaddingLeftRight assetDataLine">
-              <div ng-show="cert.cert == 'issue'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }}</div>
-              <div ng-show="cert.cert == 'domain'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
-              <div ng-show="cert.cert == 'naming'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_NAMING' | translate }}</div>
-              <div class="assetValueColumn col-xs-3 noPaddingLeftRight">{{cert.symbol}}</div>
-              <div class="sendAssetButton col-xs-6 noPaddingLeftRight assetDetailsBoxButton">
-                <a href="#!/avatar/transfercert/{{cert.symbol}}:{{cert.cert}}">
-                  <button class="btn btn-success smallButton assetBoxButton">{{'PROFIL.CERT_TRANSFER_BUTTON' | translate}}</button>
-                </a>
-              </div>
-            </div>
-            <div ng-show="myCertsLoaded && myCerts.length == 0" class="col-xs-12 noPaddingLeftRight assetDataLine">
-              <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{'PROFIL.NO_CERTIFICATES' | translate}}</div>
-            </div>
-          </div>
+    <!--Certificates details-->
+    <div class="col-md-6 col-sm-12">
+      <div class="assetDetailsPanel panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{'PROFIL.CERTIFICATES_EXPLANATION_TITLE' | translate}}</h3>
         </div>
-      </div>
-      <!--Certificates details-->
-      <div class="col-md-6 col-sm-12">
-        <div class="assetDetailsPanel panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">{{'PROFIL.CERTIFICATES_EXPLANATION_TITLE' | translate}}</h3>
+        <div class="panel-body">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_ISSUE' | translate}}</div>
           </div>
-          <div class="panel-body">
-            <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-              <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }}</div>
-              <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_ISSUE' | translate}}</div>
-            </div>
-            <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-              <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
-              <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_DOMAIN' | translate}}</div>
-            </div>
-            <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-              <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_NAMING' | translate }}</div>
-              <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_NAMING' | translate}}</div>
-            </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_DOMAIN' | translate}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_NAMING' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_NAMING' | translate}}</div>
           </div>
         </div>
       </div>
