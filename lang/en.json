@@ -596,5 +596,7 @@
   "MESSAGES.SECONDARY_ISSUE_MODEL2_LOCKED_HIGHER_ISSUED": "The 'Added quantity' has to be highter than the sum of all the locked quantity",
   "SECONDARY_ISSUE.DIRECTLY_AVAILABLE_QUANTITY": "Quantity directly available",
   "HELP.SECONDARY_ISSUE_DIRECTLY_AVAILABLE_QUANTITY": "This is the quantity that will directly be available, it is equal to 'Added quantity' - 'Total locked quantity'",
-  "HELP.ASSET_RECIPIENT_ADDRESS_AVATAR_BURN": "The recipient can be and Address or an Avatar. To burn an asset, you can use the key 'black hole', with a space"
+  "HELP.ASSET_RECIPIENT_ADDRESS_AVATAR_BURN": "The recipient can be and Address or an Avatar. To burn an asset, you can use the key 'black hole', with a space",
+  "TRANSFER_CERT.NO_CERT": "You do not have any certificate yet",
+  "ISSUE_CERT.NO_DOMAIN": "You need to own a Domain certificate to issue a Naming certificate"
 }

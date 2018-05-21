@@ -17,7 +17,8 @@
         <span ng-hide="myCertsLoaded" class="miniSpinner"></span>
         <select name="certSymbol" type="certSymbol" name="certSymbol" class="form-control" placeholder="" ng-model="selectedCert" ng-change="changeSymbol(selectedCert)" ng-class="{validInput: !error.certSymbol && myCertsLoaded, wrongInput: error.certSymbol || !myCertsLoaded}" required>
 					<option ng-repeat="cert in myCerts" value="{{cert.symbol}}:{{cert.cert}}" title="{{cert.symbol}}">{{cert.symbol}} ({{cert.cert}})</option>
-				</select>
+          <option ng-if="noCerts" value="">{{ 'TRANSFER_CERT.NO_CERT' | translate }}</option>
+        </select>
       </div>
       <!--Type-->
       <div class="form-group">

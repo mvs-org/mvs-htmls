@@ -2874,6 +2874,7 @@
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
         if (response.data.result.dids) {
+          $scope.noDids = false;
           $scope.myDids = response.data.result.dids;
         } else {
           $scope.noDids = true;
@@ -3453,7 +3454,7 @@
     $scope.listMultiSig = [];
     $scope.myDids = [];
     $scope.myCerts = [];
-    $scope.noDids = false;
+    $scope.loadingDids = true;
 
     $scope.onChain = true;
     $scope.selectedDid = '';
@@ -3541,12 +3542,13 @@
     MetaverseService.ListMyDids()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
+        $scope.loadingDids = false;
         if (response.data.result.dids) {
           $scope.myDids = response.data.result.dids;
           $scope.selectedDid = $scope.myDids[0].symbol;
           listDidsAddresses($scope.selectedDid);
         } else {
-          $scope.noDids = true;
+          $scope.myDids = [];
           $scope.selectedDid = "";
         }
       } else {
@@ -3758,7 +3760,7 @@
     //Check if the avatar name is valid
     $scope.$watch('didSymbol', (newVal, oldVal) => {
       $scope.error.symbol_empty = (newVal == undefined);
-      $scope.error.symbol_wrong_char = newVal != undefined ? !newVal.match(/^[0-9A-Za-z.@]+$/) : false;
+      $scope.error.symbol_wrong_char = newVal != undefined ? !newVal.match(/^[0-9A-Za-z.@-_]+$/) : false;
       $scope.error.symbol_already_exist = newVal != undefined ? ($scope.allDidsSymbols.indexOf(newVal) > -1) : false;
       checkready();
     });
@@ -3953,7 +3955,7 @@
     $scope.myDids = [];
     $scope.myCerts = [];
     $scope.certs = [];
-    $scope.noDids = false;
+    $scope.noCerts = false;
     $scope.error = [];
     $scope.changeSymbol = changeSymbol;
     $scope.transactionFee = 0.0001;
@@ -4051,6 +4053,7 @@
             });
           } else {
             $scope.myCerts = [];
+            $scope.noCerts = true;
           }
           $scope.myCertsLoaded = true;
         } else {
@@ -4165,7 +4168,6 @@
     $scope.myDids = [];
     $scope.myCerts = [];
     $scope.certs = [];
-    $scope.noDids = false;
     $scope.error = [];
     $scope.warning = [];
     $scope.certType = '';

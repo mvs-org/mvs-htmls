@@ -17,6 +17,7 @@
         <span ng-hide="myCertsLoaded" class="miniSpinner"></span>
         <select name="domain" type="domain" name="domain" class="form-control" placeholder="" ng-model="domain" ng-class="{validInput: !error.domain_empty && myCertsLoaded, wrongInput: error.domain_empty || !myCertsLoaded}" ng-change="changeDomain(domain)" required>
 					<option ng-repeat="cert in myCerts" ng-if="cert.cert == 'domain'" value="{{cert.symbol}}" title="{{cert.symbol}}">{{cert.symbol}}</option>
+          <option ng-if="myCertsLoaded && myCerts.length == 0" value="">{{ 'ISSUE_CERT.NO_DOMAIN' | translate }}</option>
 				</select>
       </div>
       <!--Type-->

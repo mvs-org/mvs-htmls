@@ -24,16 +24,17 @@
 	<div class="row">
 		<div class="col-md-6 form-group">
       <label for="useDid" class="control-label">{{ 'PROFIL.DID' | translate }}</label>
+      <span ng-show="loadingDids" class="miniSpinner"></span>
       <select name="useDid" type="text" class="form-control" placeholder="" ng-model="selectedDid" ng-change="changeDid(selectedDid)">
         <option ng-repeat="did in myDids" value="{{did.symbol}}" title="{{did.symbol}}">{{did.symbol}} - {{did.address}}</option>
-        <option ng-if="noDids" value="">{{ 'PROFIL.NO_DID' | translate }}</option>
+        <option ng-if="!loadingDids && myDids.length == 0" value="">{{ 'PROFIL.NO_DID' | translate }}</option>
       </select>
 		</div>
 	</div>
 
 	<form ng-show="onChain" class="row">
 		<!--Address-->
-    <div class="col-md-6 col-sm-12" ng-hide="noDids">
+    <div class="col-md-6 col-sm-12" ng-show="myDids.length != 0">
       <div class="assetDetailsPanel panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title col-xs-6 noPaddingLeftRight">{{'PROFIL.ADDRESSES_HISTORY' | translate}}</h3>
@@ -88,7 +89,7 @@
     </div>
 
     <!--Certificates details-->
-    <div class="col-md-6 col-sm-12">
+    <div class="col-md-6 col-sm-12" ng-show="myDids.length != 0">
       <div class="assetDetailsPanel panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">{{'PROFIL.CERTIFICATES_EXPLANATION_TITLE' | translate}}</h3>
