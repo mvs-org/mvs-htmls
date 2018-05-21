@@ -21,8 +21,8 @@
   </div>
 
 	<!--DID-->
-	<div class="col-md-12 form-group noPaddingLeftRight">
-		<div class="col-md-6 form-group noPaddingLeftRight">
+	<div class="row">
+		<div class="col-md-6 form-group">
       <label for="useDid" class="control-label">{{ 'PROFIL.DID' | translate }}</label>
       <select name="useDid" type="text" class="form-control" placeholder="" ng-model="selectedDid" ng-change="changeDid(selectedDid)">
         <option ng-repeat="did in myDids" value="{{did.symbol}}" title="{{did.symbol}}">{{did.symbol}} - {{did.address}}</option>

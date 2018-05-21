@@ -709,7 +709,7 @@
         $scope.recipents[index-1].correctAvatar = true;
         $scope.recipents[index-1].burnAddress = false;
         $scope.recipientOK[index-1] = true;
-      } else if (input == MetaverseService.burnAddress) {
+      } else if (input == MetaverseService.burnAddress || $filter('lowercase')(input) == MetaverseService.burnAddress_short) {
         $scope.recipents[index-1].correctEtpAddress = false;
         $scope.recipents[index-1].correctAvatar = false;
         $scope.recipents[index-1].burnAddress = true;
@@ -885,8 +885,10 @@
       if($scope.allDidsAddresses[sendfrom]) {
         sendfrom = $scope.allDidsAddresses[sendfrom];
       }
-      if (recipents[0].correctEtpAddress || recipents[0].burnAddress) {
+      if (recipents[0].correctEtpAddress) {
         var SendPromise = (sendfrom) ? MetaverseService.SendFrom(sendfrom, sendTo, value, fee, memo, password) : MetaverseService.Send(sendTo, value, fee, memo, password);
+      } else if (recipents[0].burnAddress) {
+        var SendPromise = (sendfrom) ? MetaverseService.SendFrom(MetaverseService.burnAddress, sendTo, value, fee, memo, password) : MetaverseService.Send(MetaverseService.burnAddress, value, fee, memo, password);
       } else {
         var SendPromise = (sendfrom) ? MetaverseService.DidSendFrom(sendfrom, sendTo, value, fee, memo, password) : MetaverseService.DidSend(sendTo, value, fee, memo, password);
       }
@@ -924,6 +926,9 @@
         var value = e.value;
         value *= 100000000;
         value = Math.round(value);
+        if(e.burnAddress) {
+          e.address = MetaverseService.burnAddress;
+        }
         recipentsQuery.push({
           "address": e.address,
           "value": value
@@ -1033,12 +1038,12 @@
 
     $scope.transferSuccess = false;
     $scope.signMultisigTx = signMultisigTx;
+    $scope.lastTx = false;
 
     // Initializes all transaction parameters with empty strings.
     function init() {
       $scope.resultSignTx = '';
       $scope.error = [];
-      $scope.lastTx = false;
       $scope.transaction = '';
     }
 
@@ -1112,6 +1117,7 @@
     $scope.didFromAddress = [];
     $scope.allDidsAddresses = [];
     $scope.availBalance = availBalance;
+    $scope.burnAddress_short = MetaverseService.burnAddress_short;
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -1227,7 +1233,11 @@
 
     function checkInputs() {
       //Since multi sig to did is not available, we replace it by the address
-      $scope.sendTo = $scope.didFromAddress[$scope.sendTo];
+      if($scope.burnAddress) {
+        $scope.sendTo = MetaverseService.burnAddress;
+      } else {
+        $scope.sendTo = $scope.didFromAddress[$scope.sendTo];
+      }
       $scope.confirmation = true;
       delete $rootScope.flash;
     }
@@ -1286,7 +1296,7 @@
         $scope.correctAvatar = true;
         $scope.burnAddress = false;
         $scope.correctMultiSignAddress = false;
-      } else if (input == MetaverseService.burnAddress) {
+      } else if (input == MetaverseService.burnAddress || $filter('lowercase')(input) == MetaverseService.burnAddress_short) {
         $scope.correctEtpAddress = false;
         $scope.correctAvatar = false;
         $scope.burnAddress = true;
@@ -2068,8 +2078,10 @@
         quantity = $filter('convertfortx')(quantity, $scope.asset.decimal_number);
         var fee_value = $filter('convertfortx')(transactionFee, 8);
 
-        if ($scope.correctEtpAddress || $scope.burnAddress) {
+        if ($scope.correctEtpAddress) {
           var SendPromise = (sendfrom) ? MetaverseService.SendAssetFrom(sendfrom, sendto, symbol, quantity, fee_value, password) : MetaverseService.SendAsset(sendto, symbol, quantity, fee_value, password);
+        } else if($scope.burnAddress) {
+          var SendPromise = (sendfrom) ? MetaverseService.SendAssetFrom(sendfrom, MetaverseService.burnAddress, symbol, quantity, fee_value, password) : MetaverseService.SendAsset(MetaverseService.burnAddress, symbol, quantity, fee_value, password);
         } else {
           var SendPromise = (sendfrom) ? MetaverseService.DidSendAssetFrom(sendfrom, sendto, symbol, quantity, fee_value, password) : MetaverseService.DidSendAsset(sendto, symbol, quantity, fee_value, password);
         }
@@ -2127,7 +2139,7 @@
         $scope.correctAvatar = true;
         $scope.burnAddress = false;
         $scope.correctMultiSignAddress = false;
-      } else if (input == MetaverseService.burnAddress) {
+      } else if (input == MetaverseService.burnAddress || $filter('lowercase')(input) == MetaverseService.burnAddress_short) {
         $scope.correctEtpAddress = false;
         $scope.correctAvatar = false;
         $scope.burnAddress = true;
@@ -3399,7 +3411,7 @@
         $location.path('/addresses/myaddresses');
       } else if (search.length === 64) {
         $location.path('/explorer/tx/' + search);
-      } else if (search.length === 34 || search == MetaverseService.burnAddress) {
+      } else if (search.length === 34 || search == MetaverseService.burnAddress || search == $filter('lowercase')(MetaverseService.burnAddress_short)) {
         $location.path('/explorer/adr/' + search);
       } else if (!isNaN(search)) {
         $location.path('/explorer/blk/' + search);
