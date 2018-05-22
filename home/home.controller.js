@@ -694,7 +694,6 @@
     });
 
     function checkRecipent(input, index) {
-      console.log($scope.recipents)
       if (typeof input == 'undefined' || '') {
         $scope.recipents[index-1].correctEtpAddress = false;
         $scope.recipents[index-1].correctAvatar = false;
@@ -1120,7 +1119,6 @@
     $scope.didFromAddress = [];
     $scope.allDidsAddresses = [];
     $scope.availBalance = availBalance;
-    $scope.burnAddress_short = MetaverseService.burnAddress_short;
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -1236,17 +1234,20 @@
 
     function checkInputs() {
       //Since multi sig to did is not available, we replace it by the address
-      if($scope.burnAddress) {
-        $scope.sendTo = MetaverseService.burnAddress;
-      } else {
-        $scope.sendTo = $scope.didFromAddress[$scope.sendTo];
-      }
       $scope.confirmation = true;
       delete $rootScope.flash;
     }
 
 
     function createMultisigTx(sendFrom, sendTo, quantity, transactionFee, password) {
+      if($scope.burnAddress) {
+        sendTo = MetaverseService.burnAddress;
+      } else if ($scope.correctAvatar){   //if send to avatar
+        sendTo = $scope.didFromAddress[sendTo];
+      }
+      if ($scope.didFromAddress[sendFrom]) {    //if send from avatar
+        sendFrom = $scope.didFromAddress[sendFrom];
+      }
       //var quantityToSend = ("" + quantity * Math.pow(10,8)).split(".")[0];
       var quantityToSend = $filter('convertfortx')(quantity, 8);
       //var transactionFeeToSend = ("" + transactionFee * Math.pow(10,8)).split(".")[0];

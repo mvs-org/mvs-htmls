@@ -28,7 +28,7 @@
 				<label for="useAddress" class=" ddd control-label">{{ 'PROFIL_MODIFY_ADDRESS.TO_ADDRESS' | translate }}</label>
         <span ng-show="listAddresses.length == 0" class="miniSpinner"></span>
         <select name="useAddress" type="address" name="toAddress" class="form-control" placeholder="" ng-model="toAddress" ng-class="{validInput: !error.toAddress_empty && !error.toAddress_already_used && !error.toAddress_not_enough_balance, wrongInput: error.toAddress_empty || error.toAddress_already_used || error.toAddress_not_enough_balance}" required>
-					<option ng-repeat="oneAddress in listAddresses | orderBy:'balance':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-show="addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
+					<option ng-repeat="oneAddress in listAddresses | orderBy:'balance':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP">{{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
 				</select>
         <div ng-show="error.toAddress_already_used" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'PROFIL_MODIFY_ADDRESS.ADDRESS_ALREADY_USED' | translate }}</div>
         <div ng-show="error.toAddress_not_enough_balance" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'PROFIL_MODIFY_ADDRESS.ADDRESS_NOT_ENOUGH_BALANCE' | translate }}</div>
