@@ -694,6 +694,7 @@
     });
 
     function checkRecipent(input, index) {
+      console.log($scope.recipents)
       if (typeof input == 'undefined' || '') {
         $scope.recipents[index-1].correctEtpAddress = false;
         $scope.recipents[index-1].correctAvatar = false;
@@ -876,6 +877,7 @@
       NProgress.start();
       var value = recipents[0].value;
       var sendTo = recipents[0].address;
+      var sendFromAvatar = false;
       //var fee = transactionFee * 100000000;
       //value *= 100000000;
       //value = Math.round(value);
@@ -884,11 +886,12 @@
       //Update send from it is from an avatar
       if($scope.allDidsAddresses[sendfrom]) {
         sendfrom = $scope.allDidsAddresses[sendfrom];
+        sendFromAvatar = true;
       }
-      if (recipents[0].correctEtpAddress) {
+      if (recipents[0].correctEtpAddress && !sendFromAvatar) {
         var SendPromise = (sendfrom) ? MetaverseService.SendFrom(sendfrom, sendTo, value, fee, memo, password) : MetaverseService.Send(sendTo, value, fee, memo, password);
       } else if (recipents[0].burnAddress) {
-        var SendPromise = (sendfrom) ? MetaverseService.SendFrom(MetaverseService.burnAddress, sendTo, value, fee, memo, password) : MetaverseService.Send(MetaverseService.burnAddress, value, fee, memo, password);
+        var SendPromise = (sendfrom) ? MetaverseService.DidSendFrom(MetaverseService.burnAddress, sendTo, value, fee, memo, password) : MetaverseService.DidSend(MetaverseService.burnAddress, value, fee, memo, password);
       } else {
         var SendPromise = (sendfrom) ? MetaverseService.DidSendFrom(sendfrom, sendTo, value, fee, memo, password) : MetaverseService.DidSend(sendTo, value, fee, memo, password);
       }
