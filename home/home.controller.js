@@ -3760,7 +3760,7 @@
     //Check if the avatar name is valid
     $scope.$watch('didSymbol', (newVal, oldVal) => {
       $scope.error.symbol_empty = (newVal == undefined);
-      $scope.error.symbol_wrong_char = newVal != undefined ? !newVal.match(/^[0-9A-Za-z.@-_]+$/) : false;
+      $scope.error.symbol_wrong_char = newVal != undefined ? !newVal.match(/^[0-9A-Za-z.@_-]+$/) : false;
       $scope.error.symbol_already_exist = newVal != undefined ? ($scope.allDidsSymbols.indexOf(newVal) > -1) : false;
       checkready();
     });
