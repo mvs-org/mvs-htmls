@@ -62,7 +62,8 @@
       <div ng-repeat="output in transaction.outputs" ng-hide="output.attachment.type == 'message'" class="explorerTransaction">
         <div>
           <div class="overflow col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 noPaddingLeftRight">
-            <a class="btn-link" href="#!/explorer/adr/{{output.address}}" bs-tooltip data-placement="top" title="{{ 'ADDRESS' | translate }}">{{output.address}}</a>
+            <a ng-show="output.attachment.from_did" class="btn-link overflow" href="#!/explorer/adr/{{output.address}}" bs-tooltip data-placement="top" title="{{ 'ADDRESS' | translate }}">{{output.attachment.from_did}} / {{output.address}}</a>
+            <a ng-hide="output.attachment.from_did" class="btn-link" href="#!/explorer/adr/{{output.address}}" bs-tooltip data-placement="top" title="{{ 'ADDRESS' | translate }}">{{output.address}}</a>
           </div>
           <div class="explorerRightInfo col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 noPaddingLeftRight">
             <span class="numbersSearch" ng-show="output.attachment.type=='etp'">{{output.value | assetformat : 8}} ETP</span>

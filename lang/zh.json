@@ -10,7 +10,6 @@
   "NAV_ACCOUNT":   "我的账户",
   "NAV_ACCOUNT_ADDRESSES" : "地址",
   "NAV_ACCOUNT_SETTING":   "账户设置",
-  "NAV_ACCOUNT_SUBSCRIBE": "Subscribe",
   "NAV_DIGITAL_IDENTITY":   "数字身份",
   "NAV_ASSETS" :      "资产",
   "NAV_MORE_ASSETS" : "更多资产",
@@ -145,7 +144,7 @@
   "ASSET_ASSET_CUSTOM_DETAILS" : "自定义资产详情",
   "ASSET_ASSET_CREATE_ISSUE_ADDRESS" : "当前地址",
   "ASSET_ASSET_CREATE_MAX_SUPPLY" : "总量",
-  "ASSET_ASSET_CREATE_SECONDARY_OFFERING" : "Secondary Offering",
+  "ASSET_ASSET_CREATE_SECONDARY_OFFERING" : "Secondary Offering rate",
   "ASSET_ASSET_CREATE_SYMBOL" : "符号",
   "ASSET_ASSET_CREATE_DESCRIPTION" : "资产描述",
   "ASSET_ASSET_CREATE_PASSWORD" : "密码",
@@ -418,7 +417,7 @@
   "PROFIL.ADDRESSES_HISTORY": "Avatar addresses",
   "PROFIL.CURRENT_ADDRESS": "Current address",
   "PROFIL.PREVIOUS_ADDRESS": "Previous address",
-  "CREATE_PROFILE.CREATE_ID_WRONG_CHARACTER": "Wrong character. Please only use numbers, letters and dots",
+  "CREATE_PROFILE.CREATE_ID_WRONG_CHARACTER": "Wrong character. Please only use numbers, letters, dots, dash, underscore or @",
   "CREATE_PROFILE.CREATE_ID_ALREADY_EXIST": "This Avatar name already exist",
   "TRANSFER_RECIPIENT_BURN": "Burn address",
   "TRANSFER.CORRECT_RECIPIENT_BURN": "Send to Burn address. Be careful, those tokens will be definitely burned!",
@@ -522,7 +521,7 @@
   "EXPLORER.CERT_TRANSFER": "Transfer Certificate",
   "EXPLORER.AVATAR_ISSUE": "Avatar Issue",
   "EXPLORER.AVATAR_TRANSFER": "Avatar Transfer",
-  "HELP.CREATE_AVATAR_NAME": "Your Avatar name is a unique symbol. It can contains uppercase letters, lowercase letters, dots and @. It be used instead of your ETP address to receive ETP and other assets.",
+  "HELP.CREATE_AVATAR_NAME": "Your Avatar name is a unique symbol. It can contains numbers, uppercase letters, lowercase letters, dots, dash, underscore and @. It can be used instead of your ETP address to receive ETP and other assets.",
   "HELP.CREATE_AVATAR_LINKED_ADDRESS": "The address linked to the Avatar can be changed to another address of the same account in the future.",
   "MESSAGES.CERT_ISSUED": "Certificate successfully created! Your transaction hash is: ",
   "TRANSFER_CERT.TYPE_SEND_WHICH_ONE": "Certificate to be sent",
@@ -596,5 +595,7 @@
   "MESSAGES.SECONDARY_ISSUE_MODEL2_LOCKED_HIGHER_ISSUED": "The 'Added quantity' has to be highter than the sum of all the locked quantity",
   "SECONDARY_ISSUE.DIRECTLY_AVAILABLE_QUANTITY": "Quantity directly available",
   "HELP.SECONDARY_ISSUE_DIRECTLY_AVAILABLE_QUANTITY": "This is the quantity that will directly be available, it is equal to 'Added quantity' - 'Total locked quantity'",
-  "HELP.ASSET_RECIPIENT_ADDRESS_AVATAR_BURN": "The recipient can be and Address or an Avatar. To burn an asset, you can use the key 'black hole', with a space"
+  "HELP.ASSET_RECIPIENT_ADDRESS_AVATAR_BURN": "The recipient can be and Address or an Avatar. To burn an asset, you can use the key word 'blackhole'",
+  "TRANSFER_CERT.NO_CERT": "You do not have any certificate yet",
+  "ISSUE_CERT.NO_DOMAIN": "You need to own a Domain certificate to issue a Naming certificate"
 }
