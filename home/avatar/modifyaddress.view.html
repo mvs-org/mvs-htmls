@@ -6,7 +6,7 @@
 
 <div class="row">
   <br/>
-  <form ng-hide="confirmation">
+  <form ng-show="!confirmation && resultMultisigTx == ''">
     <div class="col-xs-12 col-sm-6">
       <!--DID-->
       <div class="form-group">
@@ -52,7 +52,7 @@
     </div>
   </form>
 
-  <form ng-show="confirmation">
+  <form ng-show="confirmation && resultMultisigTx == ''">
     <br/>
     <div class="col-lg-6 col-md-12">
       <div class="assetDetailsPanel panel panel-default">
@@ -97,4 +97,24 @@
       </div>
     </div>
   </form>
+  <div ng-show="resultMultisigTx != ''">
+    <div class="form-group">{{ 'TRANSFER_MULTISIGNATURE_SUCCESS' | translate}}</div>
+    <textarea class="form-control" rows="5">{{resultMultisigTx}}</textarea>
+    <br>
+    <div class="col-xs-12 noPaddingLeftRight spe-addrbox">
+      <div class="checkboxCircle">
+        <div class="checkbox-box">
+          <input type="checkbox" checked ng-model="resultMultisigTxSaved" id="checkboxAgree">
+          <label for="checkboxAgree"></label>
+        </div>
+        <span class="textCheckbox">{{ 'TRANSFER_MULTISIGNATURE_I_HAVE_COPIED' | translate}}</span>
+      </div>
+    </div>
+    <div ng-show="resultMultisigTxSaved">
+      <div class="col-xs-12 col-sm-6 col-md-3 ">
+        <br/>
+        <a href="#!/avatar/myavatars" class="btn btn-success">{{ 'CREATE_PROFILE.BACK_TO_PROFILE' | translate }}</a>
+      </div>
+    </div>
+  </div>
 </div>

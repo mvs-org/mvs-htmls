@@ -3639,6 +3639,8 @@
     $scope.allDidsAddresses = [];
     $scope.didAddress = '';
     $scope.addresses = [];
+    $scope.resultMultisigTx = '';
+    $scope.resultMultisigTxSaved = false;
 
 
     function listAddresses() {
@@ -3719,8 +3721,13 @@
       MetaverseService.IssueDid(didAddress, didSymbol, password)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
-          $translate('MESSAGES.DID_CREATED').then( (data) => FlashService.Success(data, true, response.data.result.transaction.hash) );
-          $location.path('/avatar/myavatars');
+          if(response.data.result.transaction) {
+            $translate('MESSAGES.DID_CREATED').then( (data) => FlashService.Success(data, true, response.data.result.transaction.hash) );
+            $location.path('/avatar/myavatars');
+          } else {
+            $translate('MESSAGES.MULTISIGNATURE_SUCCESS').then( (data) => FlashService.Success(data) );
+            $scope.resultMultisigTx = response.data.result;
+          }
         } else {
           $translate('MESSAGES.ERROR_DID_CREATION').then( (data) => {
             if (response.message.message != undefined) {
@@ -3800,6 +3807,8 @@
     $scope.selectedDidAddress = '';
     $scope.changeDid = changeDid;
     $scope.transactionFee = 0.0001;
+    $scope.resultMultisigTx = '';
+    $scope.resultMultisigTxSaved = false;
 
 
     function listAddresses() {
@@ -3896,8 +3905,13 @@
         MetaverseService.DidModifyAddress(selectedDid, toAddress, fee_value, password)
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success) {
-            $translate('MESSAGES.DID_ADDRESS_UPDATED').then( (data) => FlashService.Success(data, true, response.data.result.transaction.hash) );
-            $location.path('/avatar/myavatars');
+            if(response.data.result.transaction) {
+              $translate('MESSAGES.DID_ADDRESS_UPDATED').then( (data) => FlashService.Success(data, true, response.data.result.transaction.hash) );
+              $location.path('/avatar/myavatars');
+            } else {
+              $translate('MESSAGES.MULTISIGNATURE_SUCCESS').then( (data) => FlashService.Success(data) );
+              $scope.resultMultisigTx = response.data.result;
+            }
           } else {
             $translate('MESSAGES.ERROR_DID_MODIFY_ADDRESS').then( (data) => {
               if (response.message.message != undefined) {
@@ -4103,7 +4117,7 @@
         NProgress.start();
         MetaverseService.TransferCert(certSymbol, certType, toDID, fee_value, password)
         .then( (response) => {
-          if (typeof response.success !== 'undefined' && response.success) {
+          if (typeof response.success !== 'undefined' && response.success && response.data.result.transaction) {
             $translate('MESSAGES.CERT_TRANSFERED').then( (data) => FlashService.Success(data, true, response.data.result.transaction.hash) );
             $location.path('/avatar/myavatars');
           } else {
