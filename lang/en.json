@@ -597,5 +597,6 @@
   "HELP.SECONDARY_ISSUE_DIRECTLY_AVAILABLE_QUANTITY": "This is the quantity that will directly be available, it is equal to 'Added quantity' - 'Total locked quantity'",
   "HELP.ASSET_RECIPIENT_ADDRESS_AVATAR_BURN": "The recipient can be and Address or an Avatar. To burn an asset, you can use the key word 'blackhole'",
   "TRANSFER_CERT.NO_CERT": "You do not have any certificate yet",
-  "ISSUE_CERT.NO_DOMAIN": "You need to own a Domain certificate to issue a Naming certificate"
+  "ISSUE_CERT.NO_DOMAIN": "You need to own a Domain certificate to issue a Naming certificate",
+  "EXPLORER.TRANSACTION_COMING_FROM_AVATAR": "Coming from avatar "
 }

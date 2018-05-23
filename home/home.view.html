@@ -148,7 +148,6 @@
         <div class="noPaddingLeftRight col-md-4 col-lg-4">
           <!--Value-->
           <div class="noPaddingLeftRight transactionBoxField col-md-4 col-lg-4">
-            {{transaction}}
             <span ng-show="transaction.direction=='receive' || transaction.direction=='issue'" class="receiveSign overflow"><span class="p-empty">+</span>{{transaction.value | assetformat : transaction.decimal_number}}</span>
             <span ng-show="transaction.direction=='send'" class="sendSign overflow"><span class="p-empty">-</span>{{transaction.value | assetformat : transaction.decimal_number}}</span>
             <span ng-show="transaction.direction=='intra'" class="intrawalletSign overflow">{{'HISTORY.INTRAWALLET_TX' | translate}}</span>
