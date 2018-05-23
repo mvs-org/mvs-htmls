@@ -297,7 +297,7 @@
 
 
     //Used to find the value of an Input
-    function searchInputValue(transaction_hash, address, index) {
+    /*function searchInputValue(transaction_hash, address, index) {
       if ( typeof transaction_hash !== 'undefined') {
         MetaverseService.FetchTx(transaction_hash)
         .then( (response) => {
@@ -337,7 +337,7 @@
           }
         });
       }
-    }
+    }*/
 
 
 
@@ -2072,9 +2072,11 @@
         $window.scrollTo(0,0);
       } else {
         NProgress.start();
+        var sendFromAvatar = false;
         //Update send from it is from an avatar
         if($scope.allDidsAddresses[sendfrom]) {
           sendfrom = $scope.allDidsAddresses[sendfrom];
+          sendFromAvatar = true;
         }
         //Modify number to fit to number of decimals defined for asset
         //quantity *= Math.pow(10,$scope.asset.decimal_number);
@@ -2082,7 +2084,7 @@
         quantity = $filter('convertfortx')(quantity, $scope.asset.decimal_number);
         var fee_value = $filter('convertfortx')(transactionFee, 8);
 
-        if ($scope.correctEtpAddress) {
+        if ($scope.correctEtpAddress && !sendFromAvatar) {
           var SendPromise = (sendfrom) ? MetaverseService.SendAssetFrom(sendfrom, sendto, symbol, quantity, fee_value, password) : MetaverseService.SendAsset(sendto, symbol, quantity, fee_value, password);
         } else if($scope.burnAddress) {
           var SendPromise = (sendfrom) ? MetaverseService.SendAssetFrom(sendfrom, MetaverseService.burnAddress, symbol, quantity, fee_value, password) : MetaverseService.SendAsset(MetaverseService.burnAddress, symbol, quantity, fee_value, password);

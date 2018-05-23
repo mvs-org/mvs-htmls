@@ -1220,9 +1220,9 @@
                                             if(output.own==='true' && output.attachment.type==='asset-issue'){
                                                 transaction.recipents.push({
                                                     "address": output.address,
-                                                    "value": parseInt(output.attachment.quantity)
+                                                    "value": parseInt(output.attachment.maximum_supply)
                                                 });
-                                                transaction.value += parseInt(output.attachment.quantity);
+                                                transaction.value += parseInt(output.attachment.maximum_supply);
                                                 transaction.type = output.attachment.symbol;
                                                 transaction.decimal_number=output.attachment.decimal_number;
                                             }/* else if(output.own==='true' && output.attachment.type==='asset-cert'){
