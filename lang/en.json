@@ -599,5 +599,6 @@
   "TRANSFER_CERT.NO_CERT": "You do not have any certificate yet",
   "ISSUE_CERT.NO_DOMAIN": "You need to own a Domain certificate to issue a Naming certificate",
   "EXPLORER.TRANSACTION_COMING_FROM_AVATAR": "Coming from avatar ",
-  "MESSAGES.MULTISIGNATURE_SUCCESS": "Multi-signature transaction successfully created"
+  "MESSAGES.MULTISIGNATURE_SUCCESS": "Multi-signature transaction successfully created",
+  "HELP.ADDRESS_INDEX": "This is the index of your address. If you export your account to the lightwallet, make sure to load at least this number of addresses to load this address"
 }

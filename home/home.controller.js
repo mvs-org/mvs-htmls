@@ -1282,8 +1282,6 @@
       //var transactionFeeToSend = ("" + transactionFee * Math.pow(10,8)).split(".")[0];
       var transactionFeeToSend = $filter('convertfortx')(transactionFee, 8);
       var SendPromise = ($scope.symbol == 'ETP') ? MetaverseService.CreateMultisigTx(sendFrom, sendTo, quantityToSend, transactionFeeToSend, password) : MetaverseService.CreateAssetMultisigTx($scope.symbol, sendFrom, sendTo, quantityToSend, transactionFeeToSend, password);
-
-
       SendPromise
       .then( (response) => {
         NProgress.done();
@@ -1709,7 +1707,9 @@
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.addresses = [];
-          response.data.balances.forEach( (e) => {
+          console.log(response)
+          response.data.balances.forEach( (e, i) => {
+            var nbrAddresses = response.data.balances.length;
             var name = localStorageService.get(e.balance.address);
             if (name == undefined) {
               name = "New Address";
@@ -1719,7 +1719,8 @@
               "address": e.balance.address,
               "frozen": e.balance.frozen,
               "name": name,
-              "edit": false
+              "edit": false,
+              "index": response.data.balances.length-i
             });
           });
           $scope.addressesDisplay = $scope.addresses;
