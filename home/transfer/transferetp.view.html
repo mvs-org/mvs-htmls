@@ -2,9 +2,9 @@
 	<span class="headline">{{ 'HEADLINE_ETP_TRANSFER' | translate }}</span>
 
 	<ul ng-hide="confirmation" class="nav nav-pills tabsMenu">
-		<li role="presentation" class="active"><a href="#!/transfer/ETP" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIMPLE' | translate }}</a></li>
-		<li role="presentation"><a href="#!/transfer/multisignature" class="btn-link-menu">{{ 'TRANSFER_TYPE_MULTISIG' | translate }}</a></li>
-		<li role="presentation"><a href="#!/transfer/sign" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIGN' | translate }}</a></li>
+		<li role="presentation" class="active"><a class="btn-link-menu">{{ 'TRANSFER_TYPE_SIMPLE' | translate }}</a></li>
+		<li role="presentation"><a href="#!/transfer/multisignature/ETP" class="btn-link-menu">{{ 'TRANSFER_TYPE_MULTISIG' | translate }}</a></li>
+		<li role="presentation"><a href="#!/transfer/sign/ETP" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIGN' | translate }}</a></li>
 	</ul>
 
 	<!--Select type of Asset-->
@@ -16,12 +16,12 @@
 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 <li><a ng-click="selectAssetType('ETP')" href="#!/transfer/ETP" >ETP</a></li>
 <li class="divider" role="separator"></li>
-<li ng-repeat="asset in assetsIssued | orderBy:'symbol'"><a ng-click="selectAssetType(asset.symbol)" href="#!/transfer/{{asset.symbol}}/" >{{asset.symbol}}</a></li>
+<li ng-repeat="asset in assetsIssued | orderBy:'symbol'"><a ng-click="selectAssetType(asset.symbol)" href="#!/transfer/asset/{{asset.symbol}}/" >{{asset.symbol}}</a></li>
 </ul>-->
 
 
 	<!--<div class="selectAssetType">
-		<a href="#!/transfer/multisignature" class="btn btn-success smallButton">{{ 'TRANSFER_GO_TO_MULTISIGNATURE' | translate }}</a>
+		<a href="#!/transfer/multisignature/{{symbol}}" class="btn btn-success smallButton">{{ 'TRANSFER_GO_TO_MULTISIGNATURE' | translate }}</a>
 	</div>-->
 
 	<form ng-hide="confirmation" class="ddbr row">

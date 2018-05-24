@@ -1,13 +1,16 @@
 <div class="content">
-	<span class="headline">{{ 'HEADLINE_ETP_TRANSFER' | translate }}</span>
+	<span ng-show="symbol == 'ETP'" class="headline">{{ 'HEADLINE_ETP_TRANSFER' | translate }}</span>
+	<span ng-hide="symbol == 'ETP'" class="headline">{{ 'HEADLINE_ASSET_TRANSFER' | translate }} - {{symbol}}</span>
+
 
 
 	<!--Before sending a transaction-->
 	<div ng-hide="transferSuccess">
 		<ul class="nav nav-pills tabsMenu">
-			<li role="presentation"><a href="#!/transfer/ETP" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIMPLE' | translate }}</a></li>
-			<li role="presentation" class="active"><a href="#!/transfer/multisignature" class="btn-link-menu">{{ 'TRANSFER_TYPE_MULTISIG' | translate }}</a></li>
-			<li role="presentation"><a href="#!/transfer/sign" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIGN' | translate }}</a></li>
+			<li ng-show="symbol == 'ETP'" role="presentation"><a href="#!/transfer/ETP" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIMPLE' | translate }}</a></li>
+			<li ng-hide="symbol == 'ETP'" role="presentation"><a href="#!/transfer/asset/{{symbol}}" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIMPLE' | translate }}</a></li>
+			<li role="presentation" class="active"><a class="btn-link-menu">{{ 'TRANSFER_TYPE_MULTISIG' | translate }}</a></li>
+			<li role="presentation"><a href="#!/transfer/sign/{{symbol}}" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIGN' | translate }}</a></li>
 			<!--<li role="presentation"><a href="#!/account/subscribe" class="btn-link-menu">{{ 'NAV_ACCOUNT_SUBSCRIBE' | translate }}</a></li>-->
 		</ul>
 
@@ -20,9 +23,13 @@
 					<div class="createAddress col-xs-9 col-sm-9 col-md-9 noPaddingLeftRight">
 						<a href="#!/addresses/newmultisignature" class="btn-link-black smallButton" tabIndex="-1"><span class="glyphicon glyphicon-plus"></span>{{ 'TRANSFER_MULTISIGNATURE_ADD' | translate }}</a>
 					</div>
-					<select ng-hide="listMultiSig.length == 0" name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom"  ng-change="availBalance(sendfrom)" ng-class="{validInput: !error.sendfrom, wrongInput: error.sendfrom}">
+					<select ng-hide="listMultiSig.length == 0 || symbol != 'ETP'" name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom"  ng-change="availBalance(sendfrom)" ng-class="{validInput: !error.sendfrom, wrongInput: error.sendfrom}">
 						<option ng-repeat="multiSig in listMultiSig | orderBy:'available':true" title="{{multiSig.balance | assetformat : 8}} ETP" value="{{multiSig.address}}" ng-if="allDidsAddresses[multiSig.address]">{{allDidsAddresses[multiSig.address]}} - {{multiSig.address}} - {{multiSig.available | assetformat : 8}} ETP</option>
 						<option ng-repeat="multiSig in listMultiSig | orderBy:'available':true" title="{{multiSig.balance | assetformat : 8}} ETP" value="{{multiSig.address}}" ng-if="!allDidsAddresses[multiSig.address]">{{multiSig.address}} - {{multiSig.available | assetformat : 8}} ETP</option>
+					</select>
+					<select ng-hide="listMultiSig.length == 0 || symbol == 'ETP'" name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" ng-change="availBalanceAsset(sendfrom)" ng-class="{validInput: !error.sendfrom, wrongInput: error.sendfrom}">
+						<option ng-repeat="asset in assetAddresses | orderBy:'quantity - lock_quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : decimal_number}} {{symbol}}" ng-if="allDidsAddresses[asset.address] && asset.address.charAt(0) == '3'">{{allDidsAddresses[asset.address]}} - {{asset.address}} - {{asset.quantity - asset.lock_quantity | assetformat : decimal_number}} {{symbol}}</option>
+						<option ng-repeat="asset in assetAddresses | orderBy:'quantity - lock_quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : decimal_number}} {{symbol}}" ng-if="!allDidsAddresses[asset.address] && asset.address.charAt(0) == '3'">{{asset.address}} - {{asset.quantity - asset.lock_quantity | assetformat : decimal_number}} {{symbol}}</option>
 					</select>
 					<select ng-show="listMultiSig.length == 0" name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" disabled bs-tooltip data-placement="top" title="{{ 'TRANSFER_NO_MULTISIG_ADDR' | translate }}" ng-class="{wrongInput: true}">
 					</select>
@@ -43,10 +50,11 @@
 					<label for="value" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_VALUE' | translate }}</label>
 					<!--Available Balance-->
 					<div class="col-xs-6 noPaddingLeftRight addRecipent">
-						<button type="button" class="btn-link-red addRecipentButton" ng-click="sendAllMultisig()" tabIndex="-1">{{ 'TRANSFER_AMOUNT_AVALAIBLE' | translate }}: {{availableBalance | assetformat : 8}} ETP</button>
+						<button type="button" class="btn-link-red addRecipentButton" ng-click="sendAllMultisig()" tabIndex="-1">{{ 'TRANSFER_AMOUNT_AVALAIBLE' | translate }}: {{availableBalance | assetformat : decimal_number}} {{symbol}}</button>
 					</div>
 					<input type="number" min=0 step="0.00000001" class="form-control" placeholder="0.00000000" name="value" ng-model="quantity" autocomplete="off" ng-class="{validInput: !error.quantity_empty && !error.quantity_not_enough_balance, wrongInput: error.quantity_empty || error.quantity_not_enough_balance}">
-					<span ng-show="error.quantity_not_enough_balance" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.NOT_ENOUGH_ETP' | translate }}</span>
+					<span ng-show="error.quantity_not_enough_ETP_balance" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.NOT_ENOUGH_ETP' | translate }}</span>
+					<span ng-show="error.quantity_not_enough_balance" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.QUANTITY_NOT_ENOUGH_ASSET' | translate }} {{symbol}}</span>
 				</div>
 
 				<!--Fee-->
@@ -74,6 +82,10 @@
           <h3 class="panel-title">{{'TRANSFER.CONFIRMATION_TITLE' | translate}}</h3>
         </div>
         <div class="panel-body">
+					<div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-show="symbol != 'ETP'">
+						<div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</div>
+						<div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{symbol}}</div>
+					</div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</div>
             <div ng-show="sendfrom == ''" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</div>
@@ -90,7 +102,7 @@
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_VALUE' | translate }}</div>
-            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{quantity}} {{asset.symbol}}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{quantity}} {{symbol}}</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
 						<div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</div>

@@ -69,7 +69,7 @@
           <div class="assetValueColumn col-xs-4 noPaddingLeftRight" ng-show="asset.quantity != undefined">{{asset.quantity | assetformat : asset.decimal_number}}</div>
           <div class="assetValueColumn col-xs-4 noPaddingLeftRight" ng-hide="asset.quantity != undefined">0</div>
           <div class="sendAssetButton col-xs-4 noPaddingLeftRight assetDetailsBoxButton" ng-show="asset.status=='issued'">
-            <a href="#!/transfer/{{asset.symbol}}/">
+            <a href="#!/transfer/asset/{{asset.symbol}}">
               <button class="btn btn-success smallButton assetBoxButton">{{'ASSETS_SEND' | translate}}</button>
             </a>
           </div>

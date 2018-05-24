@@ -1,6 +1,12 @@
 <div class="content">
   <span class="headline">{{ 'HEADLINE_ASSET_TRANSFER' | translate }} - {{symbol}}</span>
 
+  <ul ng-hide="confirmation" class="nav nav-pills tabsMenu">
+    <li role="presentation" class="active"><a class="btn-link-menu">{{ 'TRANSFER_TYPE_SIMPLE' | translate }}</a></li>
+    <li role="presentation"><a href="#!/transfer/multisignature/{{symbol}}" class="btn-link-menu">{{ 'TRANSFER_TYPE_MULTISIG' | translate }}</a></li>
+    <li role="presentation"><a href="#!/transfer/sign/{{symbol}}" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIGN' | translate }}</a></li>
+  </ul>
+
   <div ng-hide="confirmation">
     <br/>
     <span>{{ 'TRANSFER_ASSET_FEE_START' | translate }} <b class="red">0.0001</b> {{ 'TRANSFER_ASSET_FEE_END' | translate }}</span>
@@ -14,8 +20,8 @@
         <label for="addressFrom" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
         <select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" ng-change="availBalance(sendfrom)" ng-class="{validInput: !error.sendfrom, wrongInput: error.sendfrom}">
           <option value="" title="{{asset.quantity - asset.lock_quantity | assetformat : asset.decimal_number}} {{asset.symbol}}">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</option>
-          <option ng-repeat="asset in assetAddresses | orderBy:'quantity - lock_quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-if="allDidsAddresses[asset.address]">{{allDidsAddresses[asset.address]}} - {{asset.address}} - {{asset.quantity - asset.lock_quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
-          <option ng-repeat="asset in assetAddresses | orderBy:'quantity - lock_quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-if="!allDidsAddresses[asset.address]">{{asset.address}} - {{asset.quantity - asset.lock_quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
+          <option ng-repeat="asset in assetAddresses | orderBy:'quantity - lock_quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-if="allDidsAddresses[asset.address] && asset.address.charAt(0) != '3'">{{allDidsAddresses[asset.address]}} - {{asset.address}} - {{asset.quantity - asset.lock_quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
+          <option ng-repeat="asset in assetAddresses | orderBy:'quantity - lock_quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-if="!allDidsAddresses[asset.address] && asset.address.charAt(0) != '3'">{{asset.address}} - {{asset.quantity - asset.lock_quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
         </select>
       </div>
 
@@ -23,12 +29,11 @@
       <div class="form-group">
         <label for="sendto" class="control-label">{{ 'TRANSFER_RECIPENT_ADDRESS_OR_AVATAR' | translate }}</label>
         <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.ASSET_RECIPIENT_ADDRESS_AVATAR_BURN' | translate }}"></span>
-        <input type="etpaddress" class="form-control" name="sendto" id="" ng-model="sendto" ng-change="checkRecipent(sendto)" autocomplete="off" ng-class="{validInput: (correctEtpAddress || correctAvatar || burnAddress) && !error.sendto_empty, wrongInput: (!correctEtpAddress && !correctAvatar && !burnAddress) || error.sendto_empty || correctMultiSignAddress}">
-        <div ng-show="!correctEtpAddress && !correctAvatar && !burnAddress && !correctMultiSignAddress && !error.sendto_empty" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.INCORRECT_RECIPIENT' | translate }}</div>
+        <input type="etpaddress" class="form-control" name="sendto" id="" ng-model="sendto" ng-change="checkRecipent(sendto)" autocomplete="off" ng-class="{validInput: (correctEtpAddress || correctAvatar || burnAddress) && !error.sendto_empty, wrongInput: (!correctEtpAddress && !correctAvatar && !burnAddress) || error.sendto_empty}">
+        <div ng-show="!correctEtpAddress && !correctAvatar && !burnAddress && !error.sendto_empty" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.INCORRECT_RECIPIENT' | translate }}</div>
         <div ng-show="correctEtpAddress" class="correctInputComment"><span class="glyphicon glyphicon-ok"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_ADDRESS' | translate }}</div>
         <div ng-show="correctAvatar" class="correctInputComment"><span class="glyphicon glyphicon-ok"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_AVATAR' | translate }}</div>
         <div ng-show="burnAddress" class="warningInputComment"><span class="glyphicon glyphicon-warning-sign"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_BURN' | translate }}</div>
-        <div ng-show="correctMultiSignAddress" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.ASSET_CORRECT_MULTI_SIGN' | translate }}</div>
       </div>
 
       <!--Amount-->

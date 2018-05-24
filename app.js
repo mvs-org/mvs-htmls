@@ -189,7 +189,7 @@
             })
 
             .state('home.transferasset', {
-                url: "/transfer/:symbol/:sender_address",
+                url: "/transfer/asset/:symbol",
                 templateUrl: "home/transfer/transferasset.view.html",
                 controller: 'TransferAssetController',
                 controllerAs: 'vm'
@@ -203,14 +203,14 @@
             })
 
             .state('home.multisignature', {
-                url: "/transfer/multisignature",
+                url: "/transfer/multisignature/:symbol",
                 templateUrl: "home/transfer/multisignature.view.html",
                 controller: 'TransferMultiSignController',
                 controllerAs: 'vm'
             })
 
             .state('home.sign', {
-                url: "/transfer/sign",
+                url: "/transfer/sign/:symbol",
                 templateUrl: "home/transfer/sign.view.html",
                 controller: 'SignMultiSignController',
                 controllerAs: 'vm'

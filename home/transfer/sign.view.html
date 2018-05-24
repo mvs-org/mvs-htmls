@@ -1,11 +1,13 @@
 <div class="content">
-	<span class="headline">{{ 'HEADLINE_ETP_TRANSFER' | translate }}</span>
+	<span ng-show="symbol == 'ETP'" class="headline">{{ 'HEADLINE_ETP_TRANSFER' | translate }}</span>
+	<span ng-hide="symbol == 'ETP'" class="headline">{{ 'HEADLINE_ASSET_TRANSFER' | translate }} - {{symbol}}</span>
 	<!--Before sending a transaction-->
 	<div ng-hide="transferSuccess">
 		<ul class="nav nav-pills tabsMenu">
-			<li role="presentation"><a href="#!/transfer/ETP" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIMPLE' | translate }}</a></li>
-			<li role="presentation"><a href="#!/transfer/multisignature" class="btn-link-menu">{{ 'TRANSFER_TYPE_MULTISIG' | translate }}</a></li>
-			<li role="presentation" class="active"><a href="#!/transfer/sign" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIGN' | translate }}</a></li>
+			<li ng-show="symbol == 'ETP'" role="presentation"><a href="#!/transfer/ETP" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIMPLE' | translate }}</a></li>
+			<li ng-hide="symbol == 'ETP'" role="presentation"><a href="#!/transfer/asset/{{symbol}}" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIMPLE' | translate }}</a></li>
+			<li role="presentation"><a href="#!/transfer/multisignature/{{symbol}}" class="btn-link-menu">{{ 'TRANSFER_TYPE_MULTISIG' | translate }}</a></li>
+			<li role="presentation" class="active"><a class="btn-link-menu">{{ 'TRANSFER_TYPE_SIGN' | translate }}</a></li>
 		</ul>
 		<br/>
 		<form>

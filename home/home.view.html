@@ -50,7 +50,7 @@
                 <span ng-hide="asset.status == 'unissued' || asset.status == 'issued' || asset.status == 'unspent'" class="assetBoxValue">{{asset.status}}</span>
               </div>
               <div ng-show="asset.status == 'unspent'" class="assetBoxButtons">
-                <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/{{asset.symbol}}/">{{ 'ASSETS_SEND' | translate}}</a>
+                <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/asset/{{asset.symbol}}">{{ 'ASSETS_SEND' | translate}}</a>
               </div>
             </dd>
           </div>

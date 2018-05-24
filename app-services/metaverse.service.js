@@ -110,6 +110,7 @@
         service.SecondaryIssueDefault = SecondaryIssueDefault;
         service.SecondaryIssueModel1 = SecondaryIssueModel1;
         service.SecondaryIssueModel2 = SecondaryIssueModel2;
+        service.CreateAssetMultisigTx = CreateAssetMultisigTx;
 
 
         //Chain
@@ -860,6 +861,11 @@
         function CreateMultisigTx(fromAddress, toAddress, amount, transactionFee, password) {
           var credentials = localStorageService.get('credentials');
           return _sendV2('createmultisigtx', [credentials.user, password, fromAddress, toAddress, amount, '-f', transactionFee]);
+        }
+
+        function CreateAssetMultisigTx(symbol, fromAddress, toAddress, amount, transactionFee, password) {
+          var credentials = localStorageService.get('credentials');
+          return _sendV2('createmultisigtx', [credentials.user, password, fromAddress, toAddress, amount, '-t', '3', '-s', symbol, '-f', transactionFee]);
         }
 
         function SignMultisigTx(message, password, lastTx) {

@@ -1036,11 +1036,12 @@
   /**
   * The ETPMultiSign Controller provides ETP multi-signatures transaction functionality.
   */
-  function SignMultiSignController(MetaverseService, MetaverseHelperService, $filter, $rootScope, $scope, FlashService, localStorageService, $translate, $window) {
+  function SignMultiSignController(MetaverseService, MetaverseHelperService, $filter, $location, $rootScope, $scope, FlashService, localStorageService, $translate, $window) {
 
     $scope.transferSuccess = false;
     $scope.signMultisigTx = signMultisigTx;
     $scope.lastTx = false;
+    $scope.symbol = $filter('uppercase')($location.path().split('/')[3]);
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -1098,17 +1099,19 @@
   /**
   * The ETPMultiSign Controller provides ETP multi-signatures transaction functionality.
   */
-  function TransferMultiSignController(MetaverseService, MetaverseHelperService, $filter, $rootScope, $scope, FlashService, localStorageService, $translate, $window) {
+  function TransferMultiSignController(MetaverseService, MetaverseHelperService, $location, $filter, $rootScope, $scope, FlashService, localStorageService, $translate, $window) {
 
     $window.scrollTo(0,0);
     //Start loading animation
     NProgress.start();
+    $scope.symbol = $filter('uppercase')($location.path().split('/')[3]);
 
     $scope.sendAllMultisig = sendAllMultisig;
     $scope.transactionFee = 0.0001;
     $scope.listAddresses = [];                    //List of addresses
 
     $scope.listMultiSig = [];
+    $scope.listAssetMultiSig = [];
     $scope.createMultisigTx = createMultisigTx;
     $scope.transferSuccess = false;                 //Change to True after a successful transaction
     $scope.resultCreateTx = '';
@@ -1119,6 +1122,8 @@
     $scope.didFromAddress = [];
     $scope.allDidsAddresses = [];
     $scope.availBalance = availBalance;
+    $scope.availBalanceAsset = availBalanceAsset;
+    $scope.assetAddresses = [];
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -1211,6 +1216,30 @@
       NProgress.done();
     });
 
+    if($scope.symbol != 'ETP') {
+      MetaverseService.GetAccountAsset($scope.symbol)
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.assetAddresses = response.data.result.assets;
+          if($scope.assetAddresses) {
+            $scope.decimal_number = $scope.assetAddresses[0].decimal_number;
+            $scope.assetAddresses.forEach( (address) => {
+              var balance = '';
+              if(address.address.charAt(0) == '3') {
+                $scope.listAssetMultiSig.push(address);
+              }
+            });
+          }
+
+        } else {
+          $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
+        }
+      });
+    } else {
+      $scope.decimal_number = 8;
+    }
+
     MetaverseService.ListAllDids()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
@@ -1249,10 +1278,13 @@
         sendFrom = $scope.didFromAddress[sendFrom];
       }
       //var quantityToSend = ("" + quantity * Math.pow(10,8)).split(".")[0];
-      var quantityToSend = $filter('convertfortx')(quantity, 8);
+      var quantityToSend = $filter('convertfortx')(quantity, $scope.decimal_number);
       //var transactionFeeToSend = ("" + transactionFee * Math.pow(10,8)).split(".")[0];
       var transactionFeeToSend = $filter('convertfortx')(transactionFee, 8);
-      MetaverseService.CreateMultisigTx(sendFrom, sendTo, quantityToSend, transactionFeeToSend, password)
+      var SendPromise = ($scope.symbol == 'ETP') ? MetaverseService.CreateMultisigTx(sendFrom, sendTo, quantityToSend, transactionFeeToSend, password) : MetaverseService.CreateAssetMultisigTx($scope.symbol, sendFrom, sendTo, quantityToSend, transactionFeeToSend, password);
+
+
+      SendPromise
       .then( (response) => {
         NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
@@ -1279,7 +1311,7 @@
     }
 
     function sendAllMultisig() {
-      $scope.quantity = ($scope.availableBalance - $scope.transactionFee*100000000)/100000000;
+      $scope.quantity = $scope.symbol == 'ETP' ? ($scope.availableBalance - $scope.transactionFee*100000000)/100000000 : parseFloat($filter('converttodisplay')($scope.availableBalance, $scope.decimal_number));
       if($scope.quantity < 0)
         $scope.quantity = 0;
     }
@@ -1316,7 +1348,16 @@
 
     function availBalance(address) {
       $scope.availableBalance = $scope.addresses[address].available;
-      $scope.error.quantity_not_enough_balance = ($scope.quantity != undefined && $scope.quantity != '') ? parseInt($filter('convertfortx')($scope.quantity, 8)) > parseInt($scope.availableBalance) - parseInt($filter('convertfortx')($scope.transactionFee, 8)) : false;
+      $scope.error.quantity_not_enough_ETP_balance = ($scope.quantity != undefined && $scope.quantity != '' && $scope.symbol == 'ETP') ? parseInt($filter('convertfortx')($scope.quantity, 8)) > parseInt($scope.availableBalance) - parseInt($filter('convertfortx')($scope.transactionFee, 8)) : false;
+    }
+
+    function availBalanceAsset(address) {
+      $scope.assetAddresses.forEach( (a) => {
+        if(a.address == address) {
+          $scope.availableBalance = a.quantity - a.locked_quantity;
+        }
+      });
+      $scope.error.quantity_not_enough_balance = ($scope.quantity != undefined && $scope.quantity != '' && $scope.symbol != 'ETP') ? parseInt($filter('convertfortx')($scope.quantity, $scope.decimal_number)) > parseInt($scope.availableBalance) : false;
     }
 
     //Check if the form is submittable
@@ -1350,7 +1391,8 @@
     //Check if the amount is valid
     $scope.$watch('quantity', (newVal, oldVal) => {
       $scope.error.quantity_empty = (newVal == undefined);
-      $scope.error.quantity_not_enough_balance = (newVal != undefined && newVal != '') ? parseInt($filter('convertfortx')(newVal, 8)) > parseInt($scope.availableBalance) - parseInt($filter('convertfortx')($scope.transactionFee, 8)) : false;
+      $scope.error.quantity_not_enough_ETP_balance = ($scope.quantity != undefined && $scope.quantity != '' && $scope.symbol == 'ETP') ? parseInt($filter('convertfortx')($scope.quantity, 8)) > parseInt($scope.availableBalance) - parseInt($filter('convertfortx')($scope.transactionFee, 8)) : false;
+      $scope.error.quantity_not_enough_balance = ($scope.quantity != undefined && $scope.quantity != '' && $scope.symbol != 'ETP') ? parseInt($filter('convertfortx')($scope.quantity, $scope.decimal_number)) > parseInt($scope.availableBalance) : false;
       checkready();
     });
 
@@ -1945,8 +1987,7 @@
 
     $window.scrollTo(0,0);
     //$scope.symbol = $stateParams.symbol;
-    $scope.symbol = $filter('uppercase')($location.path().split('/')[2]);
-    $scope.sender_address = $stateParams.sender_address;
+    $scope.symbol = $filter('uppercase')($location.path().split('/')[3]);
     $scope.sendasset = sendasset;
 
     $scope.assetsIssued = [];
@@ -1973,7 +2014,6 @@
       $scope.correctEtpAddress = false;
       $scope.correctAvatar = false;
       $scope.burnAddress = false;
-      $scope.correctMultiSignAddress = false;
       $scope.confirmation = false;
       $scope.transactionFee = 0.0001;
     }
@@ -2057,13 +2097,8 @@
     }
 
     function checkInputs(sendto, symbol, quantity, transactionFee) {
-      if (sendto.charAt(0) == '3') {
-        $translate('MESSAGES.TRANSACTION_ASSET_MULTISIG').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else {
-        $scope.confirmation = true;
-        delete $rootScope.flash;
-      }
+      $scope.confirmation = true;
+      delete $rootScope.flash;
     }
 
     function sendasset(sendfrom, sendto, symbol, quantity, transactionFee, password) {
@@ -2129,32 +2164,26 @@
         $scope.correctEtpAddress = false;
         $scope.correctAvatar = false;
         $scope.burnAddress = false;
-        $scope.correctMutliSignAddress = false;
-      } else if((($rootScope.network == 'testnet' && input.charAt(0) == 't') || ($rootScope.network == 'mainnet' && input.charAt(0) == 'M')) && input.length == 34 && input.match(/^[0-9A-Za-z]+$/)) {
+      } else if((($rootScope.network == 'testnet' && input.charAt(0) == 't') || ($rootScope.network == 'mainnet' && input.charAt(0) == 'M') || input.charAt(0) == '3') && input.length == 34 && input.match(/^[0-9A-Za-z]+$/)) {
         $scope.correctEtpAddress = true;
         $scope.correctAvatar = false;
         $scope.burnAddress = false;
-        $scope.correctMultiSignAddress = false;
       } else if(input.charAt(0) == '3' && input.length == 34 && input.match(/^[0-9A-Za-z]+$/)) {
         $scope.correctEtpAddress = false;
         $scope.correctAvatar = false;
         $scope.burnAddress = false;
-        $scope.correctMultiSignAddress = true;
       } else if ($scope.allDidsSymbols.indexOf(input) > -1) {
         $scope.correctEtpAddress = false;
         $scope.correctAvatar = true;
         $scope.burnAddress = false;
-        $scope.correctMultiSignAddress = false;
       } else if (input == MetaverseService.burnAddress || $filter('lowercase')(input) == MetaverseService.burnAddress_short) {
         $scope.correctEtpAddress = false;
         $scope.correctAvatar = false;
         $scope.burnAddress = true;
-        $scope.correctMultiSignAddress = false;
       } else {
         $scope.correctEtpAddress = false;
         $scope.correctAvatar = false;
         $scope.burnAddress = false;
-        $scope.correctMultiSignAddress = false;
       }
       checkready();
     }

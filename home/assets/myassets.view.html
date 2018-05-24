@@ -47,7 +47,7 @@
               <a href="" ng-click="issue(asset.symbol)" class="btn btn-success smallButton assetBoxButton">{{'ASSET_ISSUE' | translate}}</a>
             </div>
             <div ng-hide="asset.status=='unissued'" class="assetBoxButtons">
-              <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/{{asset.symbol}}/">{{ 'ASSETS_SEND' | translate}}</a>
+              <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/asset/{{asset.symbol}}">{{ 'ASSETS_SEND' | translate}}</a>
             </div>
           </div>
         </div>
