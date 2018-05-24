@@ -104,7 +104,6 @@
         service.SendAssetFrom = SendAssetFrom;
         service.SendAsset = SendAsset;
         service.Issue = Issue;
-        service.SecondIssue = SecondIssue;
         service.Delete = Delete;
         service.GetAccountAsset = GetAccountAsset;
         service.SecondaryIssueDefault = SecondaryIssueDefault;
@@ -676,14 +675,6 @@
           return _sendV2('issue', [credentials.user, credentials.password, symbol]);
         }
 
-
-
-        function SecondIssue(symbol, increase_maximum_supply) {
-          var credentials = localStorageService.get('credentials');
-          return _send('secondissue', [credentials.user, credentials.password, symbol, increase_maximum_supply]);
-        }
-
-
         /**
          * @api {post} /rpc Delete asset
          * @apiName Delete an asset
@@ -1226,9 +1217,9 @@
                                             if(output.own==='true' && output.attachment.type==='asset-issue'){
                                                 transaction.recipents.push({
                                                     "address": output.address,
-                                                    "value": parseInt(output.attachment.maximum_supply)
+                                                    "value": parseInt(output.attachment.quantity)
                                                 });
-                                                transaction.value += parseInt(output.attachment.maximum_supply);
+                                                transaction.value += parseInt(output.attachment.quantity);
                                                 transaction.type = output.attachment.symbol;
                                                 transaction.decimal_number=output.attachment.decimal_number;
                                             }/* else if(output.own==='true' && output.attachment.type==='asset-cert'){
