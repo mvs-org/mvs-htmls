@@ -246,7 +246,7 @@
 
         function DumpKeyFile(password, last_word) {
           var credentials = localStorageService.get('credentials');
-          return _sendV2('dumpkeyfile', [credentials.user, password, last_word]);
+          return _sendV2('dumpkeyfile', [credentials.user, password, last_word, '-d']);
         }
 
 

@@ -26,11 +26,8 @@
       <input type="password" class="form-control" name="password" id="" ng-model="last_word" autocomplete="off" required>
     </div>
   </div>
-  <div class="col-xs-12 col-sm-6">
-    <div class="red"><span class="glyphicon glyphicon-warning-sign"></span> {{ 'SETTINGS.EXPORT_WARNING_KEEP_KEYFILE' | translate }}</div>
-  </br>
-  </div>
   <div class="col-xs-12 col-sm-12 col-md-12 form-group noPaddingLeftRight">
+    <br/>
     <!--Submit button-->
     <div class="col-xs-6 col-sm-3">
       <button type="submit" class="btn btn-success" ng-click="exportAccount(password, last_word, true)">{{ 'SETTINGS_EXPORT_ACCOUNT_BUTTON' | translate }}</button>

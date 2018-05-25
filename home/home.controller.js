@@ -1707,7 +1707,6 @@
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.addresses = [];
-          console.log(response)
           response.data.balances.forEach( (e, i) => {
             var nbrAddresses = response.data.balances.length;
             var name = localStorageService.get(e.balance.address);
@@ -1948,22 +1947,12 @@
         MetaverseService.DumpKeyFile(password, last_word)
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success) {
-            $http.get('./keys/mvs_keystore_' + localStorageService.get('credentials').user + '.' + $scope.empty + 'json')
-              .then(function onSuccess(response) {
-                if (toFile) {
-                  download(response.data, 'mvs_keystore_' + localStorageService.get('credentials').user);
-                  $translate('MESSAGES.EXPORT_ACCOUNT_FILE_SUCCESS').then( (data) => {
-                    FlashService.Success(data);
-                  });
-                } else {
-                  showqr(response.data, password);
-                }
-              })
-              .catch(function onError(response) {
-                $translate('MESSAGES.EXPORT_ACCOUNT_DOWNLOAD_FILE_ERROR').then( (data) => {
-                  FlashService.Warning(data);
-                });
-              });
+            if (toFile) {
+              download(response.data.result, 'mvs_keystore_' + localStorageService.get('credentials').user);
+              $translate('MESSAGES.EXPORT_ACCOUNT_FILE_SUCCESS').then( (data) => FlashService.Success(data));
+            } else {
+              showqr(response.data.result, password);
+            }
             $window.scrollTo(0,0);
           } else {
             //Show export error
