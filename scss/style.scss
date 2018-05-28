@@ -1641,7 +1641,7 @@ form label {
 }
 
 .modal-content {
-  height: 520px;
+  //height: 520px;
   width: inherit;
 }
 
@@ -1656,12 +1656,20 @@ form label {
 .addressQRCode {
   text-align: center;
   font-size: 18px;
+  margin-bottom: 10px;
 }
 
 .titleQRCode {
   margin-top: 50px;
   text-align: center;
   font-size: 18px;
+}
+
+.contentQRCode {
+  text-align: center;
+  margin-bottom: 50px;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
 

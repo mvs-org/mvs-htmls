@@ -1839,6 +1839,7 @@
     $scope.download = download;
     $scope.showqr = showqr;
     $scope.empty = '';
+    $scope.addressesNbr = 0;
 
     $scope.setDeugger = setDeugger;
 
@@ -1913,6 +1914,7 @@
     function showqr(text, password) {
       let mnemonic = text.mnemonic;
       let index = text.index;
+      $scope.addressesNbr = index;
 
       let decryptedmnemonic = JSON.parse(CryptoJS.AES.decrypt(mnemonic, password).toString(CryptoJS.enc.Utf8));
       let seed = bip39.mnemonicToSeed(decryptedmnemonic, MetaverseService.MetaverseNetwork[$rootScope.network]);

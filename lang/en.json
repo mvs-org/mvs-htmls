@@ -604,5 +604,8 @@
   "SETTINGS.EXPORT_TO_FILE": "Export to file",
   "SETTINGS.EXPORT_TO_FILE_EXPLANATION": "Your can export your account to a json file. This file can be used to import your account to another full node wallet or to the lightwallet on your computer (myetpwallet.com)",
   "SETTINGS.EXPORT_TO_APP": "Export to app",
-  "SETTINGS.EXPORT_TO_APP_EXPLANATION": "You can export your account via QRCode to the lightwallet mobile application 'MyETPWallet'. In the application login page, select the option 'Open wallet from QR Code'"
+  "SETTINGS.EXPORT_TO_APP_EXPLANATION": "You can export your account via QRCode to the lightwallet mobile application 'MyETPWallet'. In the application login page, select the option 'Open wallet from QR Code'",
+  "SETTINGS.EXPORT_EXPLANATION_WARNING": "Please note that by default, the lightwallet only load your 50 first addresses",
+  "SETTINGS.QRCODE_TOO_MANY_ADDRESSES1": "Please note the lightwallet only load the first 50 addresses, while your wallet currently contains ",
+  "SETTINGS.QRCODE_TOO_MANY_ADDRESSES2": " addresses. If you cannot see your full balance in the lightwallet, please go to the 'Addresses' page of this wallet and move your ETP and assets to addresses with an index lower than 50."
 }
