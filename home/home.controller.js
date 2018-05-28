@@ -1708,7 +1708,6 @@
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.addresses = [];
           response.data.balances.forEach( (e, i) => {
-            var nbrAddresses = response.data.balances.length;
             var name = localStorageService.get(e.balance.address);
             if (name == undefined) {
               name = "New Address";
@@ -2466,6 +2465,20 @@
         $window.scrollTo(0,0);
       }
     });
+
+    //Load the addresses and their balances
+    NProgress.start();
+    MetaverseService.ListBalances()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.addressIndex = [];
+        response.data.balances.forEach( (e, i) => {
+          $scope.addressIndex[e.balance.address] = response.data.balances.length-i;
+        });
+      }
+      NProgress.done();
+    });
+
 
 
     //Enable the edition of the Address Name
