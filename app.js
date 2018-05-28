@@ -242,7 +242,7 @@
             })
 
             .state('home.profile.myprofile', {
-                url: "/avatar/myavatars",
+                url: "/avatar/myavatars/:avatar",
                 templateUrl: "home/avatar/myavatars.view.html",
                 controller: 'ProfileController'
             })

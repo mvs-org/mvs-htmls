@@ -74,7 +74,7 @@
 			<div class="assetDetailsPanel panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title col-xs-6 noPaddingLeftRight">{{ 'DEPOSIT.NBR_BLOCKS' | translate }}</h3>
-					<h3 class="panel-title col-xs-6 noPaddingLeftRight">{{ 'DEPOSIT.INTEREST_RATE' | translate }}</h3>
+					<h3 class="panel-title assetValueColumn col-xs-6 noPaddingLeftRight">{{ 'DEPOSIT.INTEREST_RATE' | translate }}</h3>
 				</div>
 				<div class="panel-body">
 					<div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-class="{'selected_row' : period_select == deposit_option}" ng-repeat="(deposit_option, interest_rate) in deposit_options">

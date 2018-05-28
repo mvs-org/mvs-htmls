@@ -598,7 +598,7 @@
   "ISSUE_CERT.NO_DOMAIN": "You need to own a Domain certificate to issue a Naming certificate",
   "EXPLORER.TRANSACTION_COMING_FROM_AVATAR": "Coming from avatar ",
   "MESSAGES.MULTISIGNATURE_SUCCESS": "Multi-signature transaction successfully created",
-  "HELP.ADDRESS_INDEX": "This is the index of your address. If you export your account to the lightwallet, make sure to load at least this number of addresses to load this address",
+  "HELP.ADDRESS_INDEX": "This is the index of your address. If you export your account to the lightwallet, please note the lightwallet only load the 50 first addresses",
   "SETTINGS.QRCODE_TITLE": "Scan this QR Code from MyETPWallet app!",
   "SETTINGS.EXPORT_EXPLANATION_TITLE": "Two ways to export your account",
   "SETTINGS.EXPORT_TO_FILE": "Export to file",

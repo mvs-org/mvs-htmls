@@ -2772,7 +2772,7 @@
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $translate('MESSAGES.SECONDARY_ISSUE_SUCCESS').then( (data) =>  FlashService.Success(data, true, response.data.result.transaction.hash));
-          $location.path('/avatar/myavatars');
+          $location.path('/avatar/myavatars/');
         } else {
           $translate('MESSAGES.ERROR_SECONDARY_ISSUE').then( (data) => {
             $scope.confirmation = false;
@@ -3473,95 +3473,21 @@
     }
   }
 
-  function ProfileController(MetaverseHelperService, MetaverseService, $scope, $translate, $window, localStorageService, FlashService) {
+  function ProfileController(MetaverseHelperService, MetaverseService, $scope, $location, $translate, $window, localStorageService, FlashService) {
 
-    $scope.listAddresses = [];
-    $scope.listMultiSig = [];
+    $scope.selectedDid = $location.path().split('/')[3];
     $scope.myDids = [];
     $scope.myCerts = [];
     $scope.loadingDids = true;
 
     $scope.onChain = true;
-    $scope.selectedDid = '';
     $scope.myCertsLoaded = false;
     $scope.loadingAddressHistory = true;
 
     $scope.listDidsAddresses = listDidsAddresses;
-    $scope.listMyCerts = listMyCerts;
 
     $scope.addressesHistory = [];
     $scope.changeDid = changeDid;
-
-    function listMultiSign() {
-      NProgress.start();
-      //Load users ETP balance
-      //Load the addresses and their balances
-      MetaverseService.ListBalances()
-      .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
-          $scope.addresses = [];
-          response.data.balances.forEach( (e) => {
-            var name = "New address";
-            if (localStorageService.get(e.balance.address) != undefined) {
-              name = localStorageService.get(e.balance.address);
-            }
-            $scope.addresses[e.balance.address] = ({
-              "balance": parseInt(e.balance.unspent),
-              "available": parseInt(e.balance.available),
-              "address": e.balance.address,
-              "name": name,
-              "frozen": e.balance.frozen,
-              "type": "single"
-            });
-            $scope.listAddresses.push({
-              "balance": parseInt(e.balance.unspent),
-              "available": parseInt(e.balance.available),
-              "address": e.balance.address
-            });
-          });
-
-          //After loading the balances, we load the multisig addresses
-          MetaverseService.ListMultiSig()
-          .then( (response) => {
-            if (typeof response.success !== 'undefined' && response.success) {
-              if(response.data.multisig != "") {    //if the user has some assets
-                response.data.multisig.forEach( (e) => {
-                  $scope.addresses[e.address].type = "multisig";
-                  var name = "New address";
-                  if (localStorageService.get(e.address) != undefined) {
-                    name = localStorageService.get(e.address);
-                  }
-                  var balance = '';
-                  $scope.listMultiSig.push({
-                    "index": e.index,
-                    "m": e.m,
-                    "n": e.n,
-                    "selfpublickey": e["self-publickey"],
-                    "description": e.description,
-                    "address": e.address,
-                    "name": name,
-                    "balance": $scope.addresses[e.address].balance,
-                    "available": $scope.addresses[e.address].available,
-                    "publicKeys": e["public-keys"]
-                  });
-                });
-              } else {
-                //The account has no multi-signature address
-              }
-            } else {
-              //Fail
-            }
-          });
-        }
-      });
-      NProgress.done();
-    }
-
-    listMultiSign();
-
-    function changeDid(symbol) {
-      listDidsAddresses(symbol);
-    }
 
 
     MetaverseService.ListMyDids()
@@ -3570,7 +3496,9 @@
         $scope.loadingDids = false;
         if (response.data.result.dids) {
           $scope.myDids = response.data.result.dids;
-          $scope.selectedDid = $scope.myDids[0].symbol;
+          if(typeof $scope.selectedDid == 'indefined' || $scope.selectedDid == '') {
+            $scope.selectedDid = $scope.myDids[0].symbol;
+          }
           listDidsAddresses($scope.selectedDid);
         } else {
           $scope.myDids = [];
@@ -3582,6 +3510,9 @@
       }
     });
 
+    function changeDid(symbol) {
+      listDidsAddresses(symbol);
+    }
 
     function listDidsAddresses(symbol) {
       $scope.loadingAddressHistory = true;
@@ -3589,9 +3520,6 @@
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.addressesHistory = response.data.result.addresses;
-          if(!$scope.myCertsLoaded) {
-            listMyCerts();
-          }
         } else {
           $translate('MESSAGES.LISTDIDSADDRESSE_LOAD_ERROR').then( (data) => {
             if (response.message.message != undefined) {
@@ -3606,22 +3534,21 @@
       });
     }
 
-    function listMyCerts() {
-      MetaverseService.AccountAssetCert()
-      .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
-          if(response.data.result.assetcerts != null) {
-            $scope.myCerts = response.data.result.assetcerts;
-          } else {
-            $scope.myCerts = [];
-          }
-          $scope.myCertsLoaded = true;
+    MetaverseService.AccountAssetCert()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        if(response.data.result.assetcerts != null) {
+          $scope.myCerts = response.data.result.assetcerts;
         } else {
-          $translate('MESSAGES.CANT_LOAD_MY_CERTS').then( (data) => FlashService.Error(data) );
-          $window.scrollTo(0,0);
+          $scope.myCerts = [];
         }
-      });
-    }
+        $scope.myCertsLoaded = true;
+      } else {
+        $translate('MESSAGES.CANT_LOAD_MY_CERTS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
+    });
+
 
   }
 
@@ -3742,7 +3669,7 @@
         if (typeof response.success !== 'undefined' && response.success) {
           if(response.data.result.transaction) {
             $translate('MESSAGES.DID_CREATED').then( (data) => FlashService.Success(data, true, response.data.result.transaction.hash) );
-            $location.path('/avatar/myavatars');
+            $location.path('/avatar/myavatars/');
           } else {
             $translate('MESSAGES.MULTISIGNATURE_SUCCESS').then( (data) => FlashService.Success(data) );
             $scope.resultMultisigTx = response.data.result;
@@ -3926,7 +3853,7 @@
           if (typeof response.success !== 'undefined' && response.success) {
             if(response.data.result.transaction) {
               $translate('MESSAGES.DID_ADDRESS_UPDATED').then( (data) => FlashService.Success(data, true, response.data.result.transaction.hash) );
-              $location.path('/avatar/myavatars');
+              $location.path('/avatar/myavatars/');
             } else {
               $translate('MESSAGES.MULTISIGNATURE_SUCCESS').then( (data) => FlashService.Success(data) );
               $scope.resultMultisigTx = response.data.result;
@@ -4138,7 +4065,7 @@
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success && response.data.result.transaction) {
             $translate('MESSAGES.CERT_TRANSFERED').then( (data) => FlashService.Success(data, true, response.data.result.transaction.hash) );
-            $location.path('/avatar/myavatars');
+            $location.path('/avatar/myavatars/');
           } else {
             $translate('MESSAGES.ERROR_CERT_TRANSFERED').then( (data) => {
               if (response.message.message != undefined) {
@@ -4368,7 +4295,7 @@
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success) {
             $translate('MESSAGES.CERT_ISSUED').then( (data) => FlashService.Success(data, true, response.data.result.transaction.hash) );
-            $location.path('/avatar/myavatars');
+            $location.path('/avatar/myavatars/');
           } else {
             $translate('MESSAGES.ERROR_CERT_ISSUE').then( (data) => {
               if (response.message.message != undefined) {

@@ -55,7 +55,11 @@
   <dd class="assetBoxAdd assetBox col-xs-12 col-sm-12 col-md-12" >
     <div class="assetBoxBalance col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
       <!--Display editable name of the address-->
-      <span ng-show="myDidsAddresses[address.address]" class="addressBoxName" readonly="true" id="editAddressName">{{myDidsAddresses[address.address]}}</span>
+      <div ng-show="myDidsAddresses[address.address]" class="addressBoxName" readonly="true" id="editAddressName">
+        <a href="#!/avatar/myavatars/{{myDidsAddresses[address.address]}}" class="btn-link-black">{{myDidsAddresses[address.address]}}
+          <span class="fa fa-user"></span>
+        </a>
+      </div>
       <!--Display editable name of the address-->
       <div ng-hide="address.edit || myDidsAddresses[address.address]">
         <span class="addressBoxName" readonly="true" id="editAddressName">{{address.name}}</span>
@@ -96,7 +100,7 @@
         </button>
       </span>
     </div>
-    <span class="addressIndex" bs-tooltip data-placement="top" title="{{ 'HELP.ADDRESS_INDEX' | translate }}">{{address.index}}
+    <span class="addressIndex" bs-tooltip data-placement="left" title="{{ 'HELP.ADDRESS_INDEX' | translate }}">{{address.index}}
   </dd>
 </div>
 

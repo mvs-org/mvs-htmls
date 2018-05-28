@@ -281,6 +281,7 @@ _____  ._______  ___.___ _______
     }
 
   } @else if $type == 'link' {
+    cursor: pointer;
     width: 100%;
     color: $btn-color !important;
     background-color: transparent !important;
