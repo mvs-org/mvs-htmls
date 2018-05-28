@@ -598,5 +598,11 @@
   "ISSUE_CERT.NO_DOMAIN": "You need to own a Domain certificate to issue a Naming certificate",
   "EXPLORER.TRANSACTION_COMING_FROM_AVATAR": "Coming from avatar ",
   "MESSAGES.MULTISIGNATURE_SUCCESS": "Multi-signature transaction successfully created",
-  "HELP.ADDRESS_INDEX": "This is the index of your address. If you export your account to the lightwallet, make sure to load at least this number of addresses to load this address"
+  "HELP.ADDRESS_INDEX": "This is the index of your address. If you export your account to the lightwallet, make sure to load at least this number of addresses to load this address",
+  "SETTINGS.QRCODE_TITLE": "Scan this QR Code from MyETPWallet app!",
+  "SETTINGS.EXPORT_EXPLANATION_TITLE": "Two ways to export your account",
+  "SETTINGS.EXPORT_TO_FILE": "Export to file",
+  "SETTINGS.EXPORT_TO_FILE_EXPLANATION": "Your can export your account to a json file. This file can be used to import your account to another full node wallet or to the lightwallet on your computer (myetpwallet.com)",
+  "SETTINGS.EXPORT_TO_APP": "Export to app",
+  "SETTINGS.EXPORT_TO_APP_EXPLANATION": "You can export your account via QRCode to the lightwallet mobile application 'MyETPWallet'. In the application login page, select the option 'Open wallet from QR Code'"
 }

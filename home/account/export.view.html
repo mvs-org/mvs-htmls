@@ -9,6 +9,7 @@
 <div class="modal fade" id="showqrmodal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content panel">
+      <div class="titleQRCode">{{ 'SETTINGS.QRCODE_TITLE' | translate }}</div>
       <div class="qrCodePopUp" id="modal_qr"></div>
       <div class="addressQRCode" id="modal_account"></div>
     </div>
@@ -25,16 +26,36 @@
       <label for="password" class="control-label">{{ 'SETTINGS.MNEMONIC_LAST_WORD' | translate }}</label>
       <input type="password" class="form-control" name="password" id="" ng-model="last_word" autocomplete="off" required>
     </div>
-  </div>
-  <div class="col-xs-12 col-sm-12 col-md-12 form-group noPaddingLeftRight">
-    <br/>
-    <!--Submit button-->
-    <div class="col-xs-6 col-sm-3">
-      <button type="submit" class="btn btn-success" ng-click="exportAccount(password, last_word, true)">{{ 'SETTINGS_EXPORT_ACCOUNT_BUTTON' | translate }}</button>
+    <!--Buttons-->
+    <div class="row">
+      <br>
+      <div class="col-xs-6">
+        <button type="submit" class="btn btn-success" ng-click="exportAccount(password, last_word, true)">{{ 'SETTINGS_EXPORT_ACCOUNT_BUTTON' | translate }}</button>
+      </div>
+      <div class="col-xs-6">
+        <button type="submit" class="btn btn-success btn-success-secondary" ng-click="exportAccount(password, last_word, false)">{{ 'SETTINGS_EXPORT_ACCOUNT_BUTTON_TO_APP' | translate }}</button>
+      </div>
     </div>
-    <!--Return button-->
-    <div class="col-xs-6 col-sm-3">
-      <button type="submit" class="btn btn-success btn-success-secondary" ng-click="exportAccount(password, last_word, false)">{{ 'SETTINGS_EXPORT_ACCOUNT_BUTTON_TO_APP' | translate }}</button>
+    <br>
+  </div>
+
+  <!--Certificates details-->
+  <div class="col-xs-12 col-sm-6">
+    <div class="assetDetailsPanel panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{'SETTINGS.EXPORT_EXPLANATION_TITLE' | translate}}</h3>
+      </div>
+      <div class="panel-body">
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'SETTINGS.EXPORT_TO_FILE' | translate }}</div>
+          <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'SETTINGS.EXPORT_TO_FILE_EXPLANATION' | translate}}</div>
+        </div>
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'SETTINGS.EXPORT_TO_APP' | translate }}</div>
+          <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'SETTINGS.EXPORT_TO_APP_EXPLANATION' | translate}}</div>
+        </div>
+      </div>
     </div>
   </div>
+
 </form>
