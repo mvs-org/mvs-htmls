@@ -786,11 +786,10 @@
       checkready();
     });
 
-    //Check if the memo is valid TODO check max length memo and char
+    //Check if the memo is valid TODO check char
     $scope.$watch('memo', (newVal, oldVal) => {
       $scope.option.memo_empty = (newVal == undefined || newVal == '');
       $scope.error.memo_wrong_char = newVal != undefined ? false : false;
-      $scope.error.memo_too_long = newVal != undefined ? newVal.length > 1000 : false;
       checkready();
     });
 
@@ -2419,7 +2418,7 @@
             }
           });
         } else {
-          //The user as no Assets
+          //The user has no Assets
         }
       } else {
         //Asset could not be loaded

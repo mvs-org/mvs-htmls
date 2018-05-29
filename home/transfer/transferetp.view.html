@@ -81,7 +81,7 @@
 			<div class="form-group" ng-show="(recipents.length == 1)">
 				<label for="memo" class="control-label">{{ 'TRANSFER_MEMO' | translate }}</label>
 				<span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.MEMO' | translate }}"></span>
-				<input type="memo" class="form-control" name="memo" id="" ng-model="memo" ng-class="{validInput: !option.memo_empty && !error.memo_wrong_char && !error.memo_too_long, wrongInput: error.memo_wrong_char || error.memo_too_long}" >
+				<input type="memo" class="form-control" name="memo" maxlength="255" id="" ng-model="memo" ng-class="{validInput: !option.memo_empty && !error.memo_wrong_char, wrongInput: error.memo_wrong_char}" >
 			</div>
 		</div>
 
