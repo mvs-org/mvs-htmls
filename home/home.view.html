@@ -43,12 +43,16 @@
                 <div class="assetBoxValue overflow">{{asset.quantity | assetformat : asset.decimal_number}}</div>
               </div>
               <div class="assetBoxFrozen col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 noPaddingLeftRight">
+                <div class="assetBoxTitle">{{ 'FROZEN' | translate}}</div>
+                <div class="assetBoxValue">{{asset.locked_quantity | assetformat : asset.decimal_number}}</div>
+              </div>
+              <!--div class="assetBoxFrozen col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 noPaddingLeftRight">
                 <div class="assetBoxTitle">{{ 'STATUS' | translate}}</div>
                 <span ng-show="asset.status == 'unissued'" class="assetBoxValue">{{ 'ASSET.STATUS_UNISSUED' | translate }}</span>
                 <span ng-show="asset.status == 'issued'" class="assetBoxValue">{{ 'ASSET.STATUS_ISSUED' | translate }}</span>
                 <span ng-show="asset.status == 'unspent'" class="assetBoxValue">{{ 'ASSET.STATUS_UNSPENT' | translate }}</span>
                 <span ng-hide="asset.status == 'unissued' || asset.status == 'issued' || asset.status == 'unspent'" class="assetBoxValue">{{asset.status}}</span>
-              </div>
+              </div-->
               <div ng-show="asset.status == 'unspent'" class="assetBoxButtons">
                 <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/asset/{{asset.symbol}}">{{ 'ASSETS_SEND' | translate}}</a>
               </div>
