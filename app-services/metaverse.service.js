@@ -123,15 +123,15 @@
         service.GetInfoV2 = GetInfoV2;
 
         //DID
-        service.IssueDid = IssueDid;
+        service.RegisterDid = RegisterDid;
         service.ListMyDids = ListMyDids;
         service.ListAllDids = ListAllDids;
         service.DidSendFrom = DidSendFrom;
         service.DidSend = DidSend;
         service.DidSendAssetFrom = DidSendAssetFrom;
         service.DidSendAsset = DidSendAsset;
-        service.DidModifyAddress = DidModifyAddress;
-        service.ListDidAddresses = ListDidAddresses;
+        service.DidChangeAddress = DidChangeAddress;
+        service.GetDid = GetDid;
         service.DidSendMore = DidSendMore;
 
         //Cert
@@ -840,9 +840,9 @@
           return _send('importaccount', ['-n', user, '-p', password, '-i', address_count, phrase]);
         }
 
-        function IssueDid(address, symbol, password) {
+        function RegisterDid(address, symbol, password) {
             var credentials = localStorageService.get('credentials');
-            return _sendV2('issuedid', [credentials.user, password, address, symbol]);
+            return _sendV2('registerdid', [credentials.user, password, address, symbol]);
         }
 
         function ListMyDids() {
@@ -906,14 +906,14 @@
             }
         }
 
-        function DidModifyAddress(symbol, toAddress, transactionFee, password) {
+        function DidChangeAddress(symbol, toAddress, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
-            return _sendV2('didmodifyaddress', [credentials.user, password, toAddress, symbol, '-f', transactionFee]);
+            return _sendV2('didchangeaddress', [credentials.user, password, toAddress, symbol, '-f', transactionFee]);
         }
 
-        function ListDidAddresses(symbol) {
+        function GetDid(symbol) {
             var credentials = localStorageService.get('credentials');
-            return _sendV2('listdidaddresses', [credentials.user, credentials.password, symbol]);
+            return _sendV2('getdid', [symbol]);
         }
 
         function AccountAssetCert() {

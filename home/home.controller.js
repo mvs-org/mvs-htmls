@@ -3582,7 +3582,7 @@
 
     function listDidsAddresses(symbol) {
       $scope.loadingAddressHistory = true;
-      MetaverseService.ListDidAddresses(symbol)
+      MetaverseService.GetDid(symbol)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.addressesHistory = response.data.result.addresses;
@@ -3730,7 +3730,7 @@
 
     function createProfile(didAddress, didSymbol, password) {
       NProgress.start();
-      MetaverseService.IssueDid(didAddress, didSymbol, password)
+      MetaverseService.RegisterDid(didAddress, didSymbol, password)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           if(response.data.result.transaction) {
@@ -3914,7 +3914,7 @@
       } else {
         NProgress.start();
         var fee_value = $filter('convertfortx')(transactionFee, 8);
-        MetaverseService.DidModifyAddress(selectedDid, toAddress, fee_value, password)
+        MetaverseService.DidChangeAddress(selectedDid, toAddress, fee_value, password)
         .then( (response) => {
           if (typeof response.success !== 'undefined' && response.success) {
             if(response.data.result.transaction) {

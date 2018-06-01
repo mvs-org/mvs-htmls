@@ -610,8 +610,12 @@
   "SETTINGS.QRCODE_TOO_MANY_ADDRESSES2": " addresses. If you cannot see your full balance in the lightwallet, please go to the 'Addresses' page of this wallet and move your ETP and assets to addresses with an index lower than 50.",
   "ASSET.DEPOSIT": "I want to deposit this asset",
   "HELP.ASSET_DEPOSIT": "You can deposit assets, they will be frozen for the number of blocks mentionned. Be aware that at the opposite of ETP, deposit assets does not provide any reward!",
-  "ASSET.DEPOSIT_SIMPLE": "Simple",
+  "ASSET_TRANSFERT.SIMPLE_DEPOSIT": "Simple Deposit",
+  "ASSET_TRANSFERT.EXPLANATION_SIMPLE_DEPOSIT": "This model will simply deposit the full quantity of assets for the number of blocks specified",
   "ASSET.LOCKED_PERIOD": "Locked period",
-  "HELP.ASSET_LOCKED_PERIOD": "The asset will be locked for this number of blocks"
+  "HELP.ASSET_LOCKED_PERIOD": "The asset will be locked for this number of blocks",
+  "SECONDARY_ISSUE.TYPE_3": "Attenuation type 3",
+  "SECONDARY_ISSUE.EXPLANATION_TYPE_3": "The attenuation type 3 let you unlock the asset following a specified rate"
+
 
 }
