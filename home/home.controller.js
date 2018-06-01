@@ -2008,6 +2008,7 @@
       $scope.confirmation = false;
       $scope.transactionFee = 0.0001;
       $scope.unlockNumber = '1';
+      $scope.interestRate = '0';
       $scope.model = '0';
       $scope.model2ToSend = [];
       $scope.model2Displayed = 1;
@@ -2122,7 +2123,7 @@
             $scope.confirmation = true;
             delete $rootScope.flash;
           }
-        } else if ($scope.model == 1) {
+        } else if ($scope.model == 1 || $scope.model == 3) {
           if($scope.quantityLocked > $scope.quantity){
             $translate('MESSAGES.SECONDARY_ISSUE_MODEL1_LOCKED_HIGHER_ISSUED').then( (data) => FlashService.Error(data) );
             $window.scrollTo(0,0);
@@ -2156,9 +2157,9 @@
         $scope.model = ($scope.frozen_option) ? $scope.model : '-1';
 
         if($scope.burnAddress) {
-          var SendPromise = (sendfrom) ? MetaverseService.DidSendAssetFrom(sendfrom, MetaverseService.burnAddress, symbol, quantity, $scope.model, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, fee_value, password) : MetaverseService.DidSendAsset(MetaverseService.burnAddress, symbol, quantity, $scope.model, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, fee_value, password);
+          var SendPromise = (sendfrom) ? MetaverseService.DidSendAssetFrom(sendfrom, MetaverseService.burnAddress, symbol, quantity, $scope.model, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, password) : MetaverseService.DidSendAsset(MetaverseService.burnAddress, symbol, quantity, $scope.model, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, password);
         } else {
-          var SendPromise = (sendfrom) ? MetaverseService.DidSendAssetFrom(sendfrom, sendto, symbol, quantity, $scope.model, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, fee_value, password) : MetaverseService.DidSendAsset(sendto, symbol, quantity, $scope.model, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, fee_value, password);
+          var SendPromise = (sendfrom) ? MetaverseService.DidSendAssetFrom(sendfrom, sendto, symbol, quantity, $scope.model, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, password) : MetaverseService.DidSendAsset(sendto, symbol, quantity, $scope.model, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, password);
         }
 
         SendPromise
@@ -2597,6 +2598,7 @@
     $scope.model2ToSend = [];
     $scope.model2Displayed = 1;
     $scope.updateUnlockNumber = updateUnlockNumber;
+    $scope.interestRate = '0';
 
     function init(){
       for(var i = 0, value = {"index":i,"number": "", "quantity": ""}, size = 100, array = new Array(100); i < size; i++, value = {"index":i,"number": "", "quantity": ""}) array[i] = value;
@@ -2818,22 +2820,8 @@
     function secondaryIssue() {
       NProgress.start();
       var fee_value = $filter('convertfortx')($scope.transactionFee, 8);
-      var SendPromise;
-      switch($scope.model){
-        case '':
-          SendPromise = MetaverseService.SecondaryIssueDefault($scope.recipientAvatar, $scope.symbol, $scope.toTxConvertedQuantity, fee_value, $scope.password);
-          break;
-        case '1':
-          SendPromise = MetaverseService.SecondaryIssueModel1($scope.recipientAvatar, $scope.symbol, $scope.toTxConvertedQuantity, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, fee_value, $scope.password);
-          break;
-        case '2':
-          SendPromise = MetaverseService.SecondaryIssueModel2($scope.recipientAvatar, $scope.symbol, $scope.toTxConvertedQuantity, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, fee_value, $scope.password);
-          break;
-        default:
-          console.log("Unknow secondary issue model");
-          NProgress.done();
-          return;
-      }
+      var SendPromise = MetaverseService.SecondaryIssue($scope.recipientAvatar, $scope.symbol, $scope.toTxConvertedQuantity, $scope.model, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, $scope.password);
+
       SendPromise
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {

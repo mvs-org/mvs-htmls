@@ -580,8 +580,8 @@
   "HELP.SECONDARY_ISSUE_TOTAL_LOCKED_QUANTITY": "This is the total number of asset that will be locked. The 'Added quantity' minus this quantity is the number of asset directly available",
   "HELP.SECONDARY_ISSUE_TOTAL_LOCKED_PERIOD": "This is the total number of blocks till the last period terminates",
   "MESSAGES.ERROR_SECONDARY_ISSUE": "Error during the secondary issue",
-  "SECONDARY_ISSUE.MODEL2_QUANTITY": "Unlocked quantity at end of period ",
-  "SECONDARY_ISSUE.MODEL2_PERIOD": "Number of blocks of period ",
+  "SECONDARY_ISSUE.MODEL2_QUANTITY": "Unlocked quantity period ",
+  "SECONDARY_ISSUE.MODEL2_PERIOD": "Number of blocks period ",
   "SECONDARY_ISSUE.MODEL2_MAX_UNLOCK_NUMBER_100": "The number of period for the model 2 is limited to 100. If you want to use more periods, please use the command line or use the model 1",
   "MESSAGES.SECONDARY_ISSUE_MODEL2_MISSING_PERIOD_INPUT": "Please complete all the fields",
   "HELP.SECONDARY_ISSUE_MODEL2_QUANTITY": "This is the number of asset that will be unfrozen at the end of period ",
@@ -615,7 +615,7 @@
   "ASSET.LOCKED_PERIOD": "Locked period",
   "HELP.ASSET_LOCKED_PERIOD": "The asset will be locked for this number of blocks",
   "SECONDARY_ISSUE.TYPE_3": "Attenuation type 3",
-  "SECONDARY_ISSUE.EXPLANATION_TYPE_3": "The attenuation type 3 let you unlock the asset following a specified rate"
-
-
+  "SECONDARY_ISSUE.EXPLANATION_TYPE_3": "The attenuation type 3 let you unlock the asset following a specified rate",
+  "SECONDARY_ISSUE.INTEREST_RATE": "Interest Rate",
+  "HELP.SECONDARY_ISSUE_INTEREST_RATE": "This is the interest rate that will be used by the model"
 }

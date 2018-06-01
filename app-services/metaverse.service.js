@@ -872,9 +872,9 @@
             }
         }
 
-        function DidSendAssetFrom(sender_address, recipent_address, symbol, quantity, model, unlockNumber, quantityLocked, periodLocked, model2ToSend, transactionFee, password) {
+        function DidSendAssetFrom(sender_address, recipent_address, symbol, quantity, type, unlockNumber, quantityLocked, periodLocked, model2ToSend, interestRate, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
-            switch(model){
+            switch(type){
               case '0':
                 var modelToSend = "TYPE=1;LQ=" + quantity + ";LP=" + periodLocked + ";UN=1";
                 return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
@@ -882,16 +882,29 @@
                 var modelToSend = "TYPE=1;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber;
                 return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
               case '2':
+                var uc = '';
+                var uq = '';
+                periods.forEach( (period) => {
+                  uc += period.number;
+                  uc += ',';
+                  uq += period.quantityToSend;
+                  uq += ',';
+                });
+                uc = uc.substring(0, uc.length - 1);
+                uq = uq.substring(0, uq.length - 1);
                 var modelToSend = "TYPE=2;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";UC=" + uc + ";UQ=" + uq;
+                return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
+              case '3':
+                var modelToSend = "TYPE=3;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
                 return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
               default:
                 return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee]);
             }
         }
 
-        function DidSendAsset(recipent_address, symbol, quantity, model, unlockNumber, quantityLocked, periodLocked, model2ToSend, transactionFee, password) {
+        function DidSendAsset(recipent_address, symbol, quantity, type, unlockNumber, quantityLocked, periodLocked, model2ToSend, interestRate, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
-            switch(model){
+            switch(type){
               case '0':
                 var modelToSend = "TYPE=1;LQ=" + quantity + ";LP=" + periodLocked + ";UN=1";
                 return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
@@ -899,8 +912,21 @@
                 var modelToSend = "TYPE=1;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber;
                 return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
               case '2':
+                var uc = '';
+                var uq = '';
+                periods.forEach( (period) => {
+                  uc += period.number;
+                  uc += ',';
+                  uq += period.quantityToSend;
+                  uq += ',';
+                });
+                uc = uc.substring(0, uc.length - 1);
+                uq = uq.substring(0, uq.length - 1);
                 var modelToSend = "TYPE=2;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";UC=" + uc + ";UQ=" + uq;
                 return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
+              case '3':
+                var modelToSend = "TYPE=3;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
+                return _sendV2('didsendassetfrom', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
               default:
                 return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee]);
             }
@@ -972,6 +998,36 @@
             uq = uq.substring(0, uq.length - 1);
             var model = "TYPE=2;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";UC=" + uc + ";UQ=" + uq;
             return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-m', model, '-f', transactionFee]);
+        }
+
+        function SecondaryIssue(toDID, symbol, quantity, unlockNumber, quantityLocked, type, periodLocked, periods, transactionFee, password){
+            var credentials = localStorageService.get('credentials');
+            switch(type){
+              case '':
+                return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-f', transactionFee]);
+              case '1':
+                var modelToSend = "TYPE=1;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber;
+                return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-m', modelToSend, '-f', transactionFee]);
+              case '2':
+                var credentials = localStorageService.get('credentials'); //;UC=20000,20000,20000;UQ=3000,3000,3000
+                var uc = '';
+                var uq = '';
+                periods.forEach( (period) => {
+                  uc += period.number;
+                  uc += ',';
+                  uq += period.quantityToSend;
+                  uq += ',';
+                });
+                uc = uc.substring(0, uc.length - 1);
+                uq = uq.substring(0, uq.length - 1);
+                var modelToSend = "TYPE=2;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";UC=" + uc + ";UQ=" + uq;
+                return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-m', modelToSend, '-f', transactionFee]);
+              case '3':
+                var modelToSend = "TYPE=3;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
+                return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
+              default:
+                return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee]);
+            }
         }
 
         function Query(string) {
