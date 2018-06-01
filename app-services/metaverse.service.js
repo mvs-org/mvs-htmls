@@ -70,8 +70,6 @@
         service.GetNewAddress = GetNewAddress;
         service.ChangePassword = ChangePassword;
         service.ResetPassword = ResetPassword;
-        //service.ExportAccountAsFile = ExportAccountAsFile;
-        //service.ImportAccountFromFile = ImportAccountFromFile;
         service.DumpKeyFile = DumpKeyFile;
         service.ImportKeyFile = ImportKeyFile;
 
@@ -101,8 +99,6 @@
         service.ListAllAssets = ListAllAssets;
         service.GetAsset = GetAsset;
         service.GetAddressAsset = GetAddressAsset;
-        service.SendAssetFrom = SendAssetFrom;
-        service.SendAsset = SendAsset;
         service.Issue = Issue;
         service.Delete = Delete;
         service.GetAccountAsset = GetAccountAsset;
@@ -759,22 +755,6 @@
         }
 
         /**
-         * @api {post} /rpc Send asset
-         * @apiName Send asset
-         * @apiGroup Assets
-         *
-         * @apiDescription Sends an asset to a specified address.
-         *
-         * @apiParam {Const} method sendasset
-         * @apiParam {List} params [username, password, recipent_address, symbol, quantity]
-         *
-         **/
-        function SendAsset(recipent_address, symbol, quantity, transactionFee, password) {
-            var credentials = localStorageService.get('credentials');
-            return _sendV2('sendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee]);
-        }
-
-        /**
          * @api {post} /rpc Deposit ETP
          * @apiName Deposit
          * @apiGroup Deposit
@@ -803,23 +783,6 @@
                 return _send('frozenasset', [credentials.user, password, symbol, amount, deposit_period]);
             }
         }
-
-        /**
-         * @api {post} /rpc Send asset from
-         * @apiName Send asset from
-         * @apiGroup Assets
-         *
-         * @apiDescription Sends an asset from a specified address.
-         *
-         * @apiParam {Const} method sendassetfrom
-         * @apiParam {List} params [username, password, sender_address, recipent_address, symbol, quantity]
-         *
-         **/
-        function SendAssetFrom(sender_address, recipent_address, symbol, quantity, transactionFee, password) {
-            var credentials = localStorageService.get('credentials');
-            return _sendV2('sendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee]);
-        }
-
 
         function GetPublicKey(address) {
             var credentials = localStorageService.get('credentials');
@@ -909,14 +872,38 @@
             }
         }
 
-        function DidSendAssetFrom(sender_address, recipent_address, symbol, quantity, transactionFee, password) {
+        function DidSendAssetFrom(sender_address, recipent_address, symbol, quantity, model, unlockNumber, quantityLocked, periodLocked, model2ToSend, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
-            return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee]);
+            switch(model){
+              case '0':
+                var modelToSend = "TYPE=1;LQ=" + quantity + ";LP=" + periodLocked + ";UN=1";
+                return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
+              case '1':
+                var modelToSend = "TYPE=1;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber;
+                return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
+              case '2':
+                var modelToSend = "TYPE=2;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";UC=" + uc + ";UQ=" + uq;
+                return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
+              default:
+                return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee]);
+            }
         }
 
-        function DidSendAsset(recipent_address, symbol, quantity, transactionFee, password) {
+        function DidSendAsset(recipent_address, symbol, quantity, model, unlockNumber, quantityLocked, periodLocked, model2ToSend, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
-            return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee]);
+            switch(model){
+              case '0':
+                var modelToSend = "TYPE=1;LQ=" + quantity + ";LP=" + periodLocked + ";UN=1";
+                return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
+              case '1':
+                var modelToSend = "TYPE=1;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber;
+                return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
+              case '2':
+                var modelToSend = "TYPE=2;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";UC=" + uc + ";UQ=" + uq;
+                return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
+              default:
+                return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee]);
+            }
         }
 
         function DidModifyAddress(symbol, toAddress, transactionFee, password) {

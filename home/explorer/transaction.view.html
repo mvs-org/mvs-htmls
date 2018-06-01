@@ -58,7 +58,7 @@
         <div class="overflow col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 noPaddingLeftRight">
           <a ng-show="output.attachment.to_did" class="btn-link overflow" href="#!/explorer/adr/{{output.address}}" bs-tooltip data-placement="top" title="{{ 'ADDRESS' | translate }}">{{output.attachment.to_did}} / {{output.address}}</a>
           <a ng-hide="output.attachment.to_did" class="btn-link" href="#!/explorer/adr/{{output.address}}" bs-tooltip data-placement="top" title="{{ 'ADDRESS' | translate }}">{{output.address}}</a>
-          <div ng-show="output.attachment.from_did">{{ 'EXPLORER.TRANSACTION_COMING_FROM_AVATAR' | translate }}{{output.attachment.from_did}}</div>
+          <div ng-show="output.attachment.from_did">{{ 'EXPLORER.TRANSACTION_COMING_FROM_AVATAR' | translate }}<b>{{output.attachment.from_did}}</b></div>
         </div>
         <div class="explorerRightInfo col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 noPaddingLeftRight">
           <span class="numbersSearch" ng-show="output.attachment.type=='etp'">{{output.value | assetformat : 8}} ETP</span>

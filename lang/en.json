@@ -562,7 +562,7 @@
   "SECONDARY_ISSUE.TYPE_DEFAULT": "Default",
   "SECONDARY_ISSUE.TYPE_1": "Attenuation type 1",
   "SECONDARY_ISSUE.TYPE_2": "Attenuation type 2",
-  "SECONDARY_ISSUE.EXPLANATION_TYPE_DEFAULT": "The model by default generate the quantity of asset specified, which are directly avalaible. The created assets are sent to the specified Avatar",
+  "SECONDARY_ISSUE.EXPLANATION_TYPE_DEFAULT": "The model by default generate the quantity of asset specified, which are directly available. The created assets are sent to the specified Avatar",
   "SECONDARY_ISSUE.EXPLANATION_TYPE_1": "The attenuation type 1 specified a fix quantity of asset to be unlocked at a specified interval",
   "SECONDARY_ISSUE.EXPLANATION_TYPE_2": "The attenuation type 2 let you custom the quantity of asset generated and the duration of each interval",
   "SECONDARY_ISSUE.CURRENT_MAX_SUPPLY": "Current Maximum Supply",
@@ -607,5 +607,11 @@
   "SETTINGS.EXPORT_TO_APP_EXPLANATION": "You can export your account via QRCode to the lightwallet mobile application 'MyETPWallet'. In the application login page, select the option 'Open wallet from QR Code'",
   "SETTINGS.EXPORT_EXPLANATION_WARNING": "Please note that by default, the lightwallet only load your 50 first addresses",
   "SETTINGS.QRCODE_TOO_MANY_ADDRESSES1": "Please note the lightwallet only load the first 50 addresses, while your wallet currently contains ",
-  "SETTINGS.QRCODE_TOO_MANY_ADDRESSES2": " addresses. If you cannot see your full balance in the lightwallet, please go to the 'Addresses' page of this wallet and move your ETP and assets to addresses with an index lower than 50."
+  "SETTINGS.QRCODE_TOO_MANY_ADDRESSES2": " addresses. If you cannot see your full balance in the lightwallet, please go to the 'Addresses' page of this wallet and move your ETP and assets to addresses with an index lower than 50.",
+  "ASSET.DEPOSIT": "I want to deposit this asset",
+  "HELP.ASSET_DEPOSIT": "You can deposit assets, they will be frozen for the number of blocks mentionned. Be aware that at the opposite of ETP, deposit assets does not provide any reward!",
+  "ASSET.DEPOSIT_SIMPLE": "Simple",
+  "ASSET.LOCKED_PERIOD": "Locked period",
+  "HELP.ASSET_LOCKED_PERIOD": "The asset will be locked for this number of blocks"
+
 }

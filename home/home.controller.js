@@ -1993,6 +1993,7 @@
     $scope.checkInputs = checkInputs;
     $scope.error = [];
     $scope.didFromAddress = [];
+    $scope.updateUnlockNumber = updateUnlockNumber;
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -2006,6 +2007,12 @@
       $scope.burnAddress = false;
       $scope.confirmation = false;
       $scope.transactionFee = 0.0001;
+      $scope.unlockNumber = '1';
+      $scope.model = '0';
+      $scope.model2ToSend = [];
+      $scope.model2Displayed = 1;
+      for(var i = 0, value = {"index":i,"number": "", "quantity": ""}, size = 100, array = new Array(100); i < size; i++, value = {"index":i,"number": "", "quantity": ""}) array[i] = value;
+      $scope.model2 = array;
     }
 
     MetaverseService.ListAssets()
@@ -2086,9 +2093,49 @@
       });
     }
 
-    function checkInputs(sendto, symbol, quantity, transactionFee) {
-      $scope.confirmation = true;
-      delete $rootScope.flash;
+    function checkInputs(unlockNumber, quantityLocked, model2) {
+      if($scope.frozen_option && $scope.model != 0) {
+        if($scope.model == 2){
+          var inputOK = true;
+          $scope.model2ToSend = model2.slice(0, unlockNumber);
+          var sumNumber = 0;
+          var sumQuantity = 0;
+          $scope.model2ToSend.forEach( (period) => {
+            sumNumber += period.number;
+            sumQuantity += period.quantity;
+            period.quantityToSend = $filter('convertfortx')(period.quantity, $scope.asset.decimal_number);
+            if(period.number == '' || period.quantity == ''){
+              inputOK = false;
+              $translate('MESSAGES.SECONDARY_ISSUE_MODEL2_MISSING_PERIOD_INPUT').then( (data) => FlashService.Error(data) );
+              $window.scrollTo(0,0);
+            }
+          });
+          $scope.periodLocked = sumNumber;
+          $scope.quantityLocked = sumQuantity;
+          if($scope.quantityLocked > $scope.quantity){
+            inputOK = false;
+            $translate('MESSAGES.SECONDARY_ISSUE_MODEL2_LOCKED_HIGHER_ISSUED').then( (data) => FlashService.Error(data) );
+            $window.scrollTo(0,0);
+          }
+          if(inputOK == true) {
+            $scope.quantityLockedToSend = $filter('convertfortx')($scope.quantityLocked, $scope.asset.decimal_number);
+            $scope.confirmation = true;
+            delete $rootScope.flash;
+          }
+        } else if ($scope.model == 1) {
+          if($scope.quantityLocked > $scope.quantity){
+            $translate('MESSAGES.SECONDARY_ISSUE_MODEL1_LOCKED_HIGHER_ISSUED').then( (data) => FlashService.Error(data) );
+            $window.scrollTo(0,0);
+          } else {
+            $scope.quantityLockedToSend = $filter('convertfortx')($scope.quantityLocked, $scope.asset.decimal_number);
+            $scope.confirmation = true;
+            delete $rootScope.flash;
+          }
+        }
+      } else {      //Default model
+        $scope.confirmation = true;
+        delete $rootScope.flash;
+      }
     }
 
     function sendasset(sendfrom, sendto, symbol, quantity, transactionFee, password) {
@@ -2097,25 +2144,23 @@
         $window.scrollTo(0,0);
       } else {
         NProgress.start();
-        var sendFromAvatar = false;
         //Update send from it is from an avatar
         if($scope.allDidsAddresses[sendfrom]) {
           sendfrom = $scope.allDidsAddresses[sendfrom];
-          sendFromAvatar = true;
         }
         //Modify number to fit to number of decimals defined for asset
         //quantity *= Math.pow(10,$scope.asset.decimal_number);
         //quantity = Math.round(quantity);
         quantity = $filter('convertfortx')(quantity, $scope.asset.decimal_number);
         var fee_value = $filter('convertfortx')(transactionFee, 8);
+        $scope.model = ($scope.frozen_option) ? $scope.model : '-1';
 
-        if ($scope.correctEtpAddress && !sendFromAvatar) {
-          var SendPromise = (sendfrom) ? MetaverseService.SendAssetFrom(sendfrom, sendto, symbol, quantity, fee_value, password) : MetaverseService.SendAsset(sendto, symbol, quantity, fee_value, password);
-        } else if($scope.burnAddress) {
-          var SendPromise = (sendfrom) ? MetaverseService.SendAssetFrom(sendfrom, MetaverseService.burnAddress, symbol, quantity, fee_value, password) : MetaverseService.SendAsset(MetaverseService.burnAddress, symbol, quantity, fee_value, password);
+        if($scope.burnAddress) {
+          var SendPromise = (sendfrom) ? MetaverseService.DidSendAssetFrom(sendfrom, MetaverseService.burnAddress, symbol, quantity, $scope.model, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, fee_value, password) : MetaverseService.DidSendAsset(MetaverseService.burnAddress, symbol, quantity, $scope.model, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, fee_value, password);
         } else {
-          var SendPromise = (sendfrom) ? MetaverseService.DidSendAssetFrom(sendfrom, sendto, symbol, quantity, fee_value, password) : MetaverseService.DidSendAsset(sendto, symbol, quantity, fee_value, password);
+          var SendPromise = (sendfrom) ? MetaverseService.DidSendAssetFrom(sendfrom, sendto, symbol, quantity, $scope.model, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, fee_value, password) : MetaverseService.DidSendAsset(sendto, symbol, quantity, $scope.model, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, fee_value, password);
         }
+
         SendPromise
         .then( (response) => {
           NProgress.done();
@@ -2147,6 +2192,14 @@
         });
       }
       $scope.error.quantity_not_enough_balance = ($scope.quantity != undefined && $scope.quantity != '' && typeof $scope.asset.decimal_number != 'undefined') ? parseInt($filter('convertfortx')($scope.quantity, $scope.asset.decimal_number)) > parseInt($scope.availableBalance) : false;
+    }
+
+    function updateUnlockNumber(unlockNumber) {
+      if(unlockNumber == undefined || unlockNumber == ''){
+        $scope.model2Displayed = 0;
+      } else {
+        $scope.model2Displayed = unlockNumber;
+      }
     }
 
     function checkRecipent(input) {
@@ -2541,9 +2594,8 @@
     $scope.recipientAvatar = '';
     $scope.avatar = '';
     $scope.availableBalanceAsset = 0;
-    $scope.model2 = [];
     $scope.model2ToSend = [];
-    $scope.model2Displayed = 0;
+    $scope.model2Displayed = 1;
     $scope.updateUnlockNumber = updateUnlockNumber;
 
     function init(){
@@ -2719,7 +2771,7 @@
       }
     }
 
-    function checkInputs(address, unlockNumber, quantityLocked, model2, password) {
+    function checkInputs(address, unlockNumber, quantityLocked, model2) {
       $scope.recipientAvatar = $scope.myDidsAddresses[address];
       if($scope.model == 2){
         var inputOK = true;
