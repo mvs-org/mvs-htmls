@@ -4,7 +4,7 @@
   "HEADER_TRANSFER": "Transfer",
   "HEADER_LOGOUT": "Logout",
   "HEADER_SEARCH": "Search",
-  "HEADER_SEARCH_PLACEHOLDER": "No of Txs / Hash / Address",
+  "HEADER_SEARCH_PLACEHOLDER": "Asset / Address / Block / Txs",
   "NAV_HOME":      "Home",
   "NAV_WALLET":      "Wallet",
   "NAV_ACCOUNT":   "Account",

@@ -1225,7 +1225,7 @@
             $scope.assetAddresses.forEach( (address) => {
               var balance = '';
               if(address.address.charAt(0) == '3') {
-                $scope.listAssetMultiSig.push(address);
+                $scope.listAssetMultiSig[address.address] = address;
               }
             });
           }
