@@ -560,11 +560,11 @@
   "SECONDARY_ISSUE.TO_AVATAR": "Recipient Avatar",
   "SECONDARY_ISSUE.TYPE": "Type of Secondary Issue",
   "SECONDARY_ISSUE.TYPE_DEFAULT": "Default",
-  "SECONDARY_ISSUE.TYPE_1": "Attenuation type 1",
-  "SECONDARY_ISSUE.TYPE_2": "Attenuation type 2",
+  "SECONDARY_ISSUE.TYPE_1": "Attenuation model 1",
+  "SECONDARY_ISSUE.TYPE_2": "Attenuation model 2",
   "SECONDARY_ISSUE.EXPLANATION_TYPE_DEFAULT": "The model by default generate the quantity of asset specified, which are directly available. The created assets are sent to the specified Avatar",
-  "SECONDARY_ISSUE.EXPLANATION_TYPE_1": "The attenuation type 1 specified a fix quantity of asset to be unlocked at a specified interval",
-  "SECONDARY_ISSUE.EXPLANATION_TYPE_2": "The attenuation type 2 let you custom the quantity of asset generated and the duration of each interval",
+  "SECONDARY_ISSUE.EXPLANATION_TYPE_1": "The attenuation model 1 specified a fix quantity of asset to be unlocked at a specified interval",
+  "SECONDARY_ISSUE.EXPLANATION_TYPE_2": "The attenuation model 2 let you custom the quantity of asset generated and the duration of each interval",
   "SECONDARY_ISSUE.CURRENT_MAX_SUPPLY": "Current Maximum Supply",
   "SECONDARY_ISSUE.NEW_MAX_SUPPLY": "New Maximum Supply",
   "HELP.SECONDARY_ISSUE_AVATAR": "This Avatar is the one that will receive the newly created asset. It will also pay the transaction fee in ETP",
@@ -614,8 +614,9 @@
   "ASSET_TRANSFERT.EXPLANATION_SIMPLE_DEPOSIT": "This model will simply deposit the full quantity of assets for the number of blocks specified",
   "ASSET.LOCKED_PERIOD": "Locked period",
   "HELP.ASSET_LOCKED_PERIOD": "The asset will be locked for this number of blocks",
-  "SECONDARY_ISSUE.TYPE_3": "Attenuation type 3",
-  "SECONDARY_ISSUE.EXPLANATION_TYPE_3": "The attenuation type 3 let you unlock the asset following a specified rate",
+  "SECONDARY_ISSUE.TYPE_3": "Attenuation model 3",
+  "SECONDARY_ISSUE.EXPLANATION_TYPE_3": "The attenuation model 3 let you unlock the asset following a specified rate",
   "SECONDARY_ISSUE.INTEREST_RATE": "Interest Rate",
-  "HELP.SECONDARY_ISSUE_INTEREST_RATE": "This is the interest rate that will be used by the model"
+  "HELP.SECONDARY_ISSUE_INTEREST_RATE": "This is the interest rate that will be used by the model",
+  "MESSAGES.QUANTITY_DEPOSIT_LOWER_QUANTITY": "The Total locked quantity has to be equal to or lower than the sent Quantity"
 }

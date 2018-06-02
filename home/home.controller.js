@@ -1991,9 +1991,9 @@
     $scope.allDids = [];
     $scope.allDidsAddresses = [];
     $scope.checkInputs = checkInputs;
-    $scope.error = [];
     $scope.didFromAddress = [];
     $scope.updateUnlockNumber = updateUnlockNumber;
+    $scope.checkready = checkready;
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -2007,7 +2007,10 @@
       $scope.burnAddress = false;
       $scope.confirmation = false;
       $scope.transactionFee = 0.0001;
-      $scope.unlockNumber = '1';
+      $scope.error = [];
+      $scope.errorDeposit = [];
+      $scope.unlockNumber = 1;
+      $scope.unlockNumberString = '1';
       $scope.interestRate = '0';
       $scope.model = '0';
       $scope.model2ToSend = [];
@@ -2094,44 +2097,33 @@
       });
     }
 
-    function checkInputs(unlockNumber, quantityLocked, model2) {
-      if($scope.frozen_option && $scope.model != 0) {
-        if($scope.model == 2){
-          var inputOK = true;
-          $scope.model2ToSend = model2.slice(0, unlockNumber);
-          var sumNumber = 0;
-          var sumQuantity = 0;
-          $scope.model2ToSend.forEach( (period) => {
-            sumNumber += period.number;
-            sumQuantity += period.quantity;
-            period.quantityToSend = $filter('convertfortx')(period.quantity, $scope.asset.decimal_number);
-            if(period.number == '' || period.quantity == ''){
-              inputOK = false;
-              $translate('MESSAGES.SECONDARY_ISSUE_MODEL2_MISSING_PERIOD_INPUT').then( (data) => FlashService.Error(data) );
-              $window.scrollTo(0,0);
-            }
-          });
-          $scope.periodLocked = sumNumber;
-          $scope.quantityLocked = sumQuantity;
-          if($scope.quantityLocked > $scope.quantity){
+    function checkInputs(quantityLocked, model2) {
+      if($scope.frozen_option && $scope.model == 2) {
+        var inputOK = true;
+        $scope.unlockNumber = parseInt($scope.unlockNumberString);
+        $scope.model2ToSend = model2.slice(0, $scope.unlockNumber);
+        var sumNumber = 0;
+        var sumQuantity = 0;
+        $scope.model2ToSend.forEach( (period) => {
+          sumNumber += period.number;
+          sumQuantity += period.quantity;
+          period.quantityToSend = $filter('convertfortx')(period.quantity, $scope.asset.decimal_number);
+          if(period.number == '' || period.quantity == ''){
             inputOK = false;
-            $translate('MESSAGES.SECONDARY_ISSUE_MODEL2_LOCKED_HIGHER_ISSUED').then( (data) => FlashService.Error(data) );
+            $translate('MESSAGES.SECONDARY_ISSUE_MODEL2_MISSING_PERIOD_INPUT').then( (data) => FlashService.Error(data) );
             $window.scrollTo(0,0);
           }
-          if(inputOK == true) {
-            $scope.quantityLockedToSend = $filter('convertfortx')($scope.quantityLocked, $scope.asset.decimal_number);
-            $scope.confirmation = true;
-            delete $rootScope.flash;
-          }
-        } else if ($scope.model == 1 || $scope.model == 3) {
-          if($scope.quantityLocked > $scope.quantity){
-            $translate('MESSAGES.SECONDARY_ISSUE_MODEL1_LOCKED_HIGHER_ISSUED').then( (data) => FlashService.Error(data) );
-            $window.scrollTo(0,0);
-          } else {
-            $scope.quantityLockedToSend = $filter('convertfortx')($scope.quantityLocked, $scope.asset.decimal_number);
-            $scope.confirmation = true;
-            delete $rootScope.flash;
-          }
+        });
+        $scope.periodLocked = sumNumber;
+        $scope.quantityLocked = sumQuantity;
+        if($scope.quantityLocked > $scope.quantity){
+          inputOK = false;
+          $translate('MESSAGES.SECONDARY_ISSUE_MODEL2_LOCKED_HIGHER_ISSUED').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
+        }
+        if(inputOK == true) {
+          $scope.confirmation = true;
+          delete $rootScope.flash;
         }
       } else {      //Default model
         $scope.confirmation = true;
@@ -2153,13 +2145,14 @@
         //quantity *= Math.pow(10,$scope.asset.decimal_number);
         //quantity = Math.round(quantity);
         quantity = $filter('convertfortx')(quantity, $scope.asset.decimal_number);
+        var quantityLockedToSend = $filter('convertfortx')($scope.quantityLocked, $scope.asset.decimal_number);
         var fee_value = $filter('convertfortx')(transactionFee, 8);
         $scope.model = ($scope.frozen_option) ? $scope.model : '-1';
 
         if($scope.burnAddress) {
-          var SendPromise = (sendfrom) ? MetaverseService.DidSendAssetFrom(sendfrom, MetaverseService.burnAddress, symbol, quantity, $scope.model, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, password) : MetaverseService.DidSendAsset(MetaverseService.burnAddress, symbol, quantity, $scope.model, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, password);
+          var SendPromise = (sendfrom) ? MetaverseService.DidSendAssetFrom(sendfrom, MetaverseService.burnAddress, symbol, quantity, $scope.model, $scope.unlockNumber, quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, password) : MetaverseService.DidSendAsset(MetaverseService.burnAddress, symbol, quantity, $scope.model, $scope.unlockNumber, quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, password);
         } else {
-          var SendPromise = (sendfrom) ? MetaverseService.DidSendAssetFrom(sendfrom, sendto, symbol, quantity, $scope.model, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, password) : MetaverseService.DidSendAsset(sendto, symbol, quantity, $scope.model, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, password);
+          var SendPromise = (sendfrom) ? MetaverseService.DidSendAssetFrom(sendfrom, sendto, symbol, quantity, $scope.model, $scope.unlockNumber, quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, password) : MetaverseService.DidSendAsset(sendto, symbol, quantity, $scope.model, $scope.unlockNumber, quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, password);
         }
 
         SendPromise
@@ -2252,6 +2245,18 @@
         $scope.submittable = false;
         return;
       }
+      if($scope.frozen_option){
+        if($scope.model == 0 && $scope.errorDeposit.periodLocked_empty) {
+          $scope.submittable = false;
+          return;
+        } else if (($scope.model == 1 || $scope.model == 3) && ($scope.errorDeposit.unlock_number_empty || $scope.errorDeposit.quantityLocked_empty || $scope.errorDeposit.quantityLocked_lower_quantity || $scope.errorDeposit.periodLocked_empty)) {
+          $scope.submittable = false;
+          return;
+        } else if ($scope.model == 2 && ($scope.errorDeposit.unlockNumber_empty)) {
+          $scope.submittable = false;
+          return;
+        }
+      }
       $scope.submittable = true;
     }
 
@@ -2271,6 +2276,26 @@
     $scope.$watch('quantity', (newVal, oldVal) => {
       $scope.error.quantity_empty = (newVal == undefined);
       $scope.error.quantity_not_enough_balance = (newVal != undefined && newVal != '' && typeof $scope.asset.decimal_number != 'undefined') ? parseInt($filter('convertfortx')(newVal, $scope.asset.decimal_number)) > parseInt($scope.availableBalance) : false;
+      $scope.errorDeposit.quantityLocked_lower_quantity = newVal != undefined ? $scope.quantityLocked > newVal : false;
+      checkready();
+    });
+
+    //Check if the number of periods is valid
+    $scope.$watch('unlockNumber', (newVal, oldVal) => {
+      $scope.errorDeposit.unlock_number_empty = (newVal == undefined || newVal == '');
+      checkready();
+    });
+
+    //Check if the total locked quantity is valid
+    $scope.$watch('quantityLocked', (newVal, oldVal) => {
+      $scope.errorDeposit.quantityLocked_empty = (newVal == undefined || newVal == '');
+      $scope.errorDeposit.quantityLocked_lower_quantity = newVal != undefined ? newVal > $scope.quantity : false;
+      checkready();
+    });
+
+    //Check if the total locked period is valid
+    $scope.$watch('periodLocked', (newVal, oldVal) => {
+      $scope.errorDeposit.periodLocked_empty = (newVal == undefined || newVal == '');
       checkready();
     });
 
@@ -2573,40 +2598,42 @@
     $scope.listAddresses = [];
     $scope.listMultiSig = [];
     $scope.secondaryIssue = secondaryIssue;
-    $scope.error = [];
-    $scope.didAddress = '';
-    $scope.confirmation = false;
     $scope.checkInputs = checkInputs;
-    $scope.transactionFee = 0.0001;
-    $scope.model = '';
     $scope.myAssets = [];
-    $scope.assetOriginal = 0;
-    $scope.assetSecondaryIssue = 0;
     $scope.updateQuantity = updateQuantity;
-    $scope.issueCertOwner = false;
-    $scope.myCertsLoaded = false;
     $scope.availBalance = availBalance;
-    $scope.availableBalance = 0;
-    $scope.balancesLoaded = false;
     $scope.myDids = [];
     $scope.myDidsSymbols = [];
     $scope.myDidsAddresses = [];
     $scope.popupSecondaryIssue = popupSecondaryIssue;
-    $scope.recipientAvatar = '';
-    $scope.avatar = '';
-    $scope.availableBalanceAsset = 0;
-    $scope.model2ToSend = [];
-    $scope.model2Displayed = 1;
     $scope.updateUnlockNumber = updateUnlockNumber;
-    $scope.interestRate = '0';
+    $scope.assetAddresses = [];
+    $scope.getAssetBalance = [];
 
     function init(){
+      $scope.didAddress = '';
+      $scope.confirmation = false;
+      $scope.transactionFee = 0.0001;
+      $scope.model = '';
+      $scope.assetOriginal = 0;
+      $scope.assetSecondaryIssue = 0;
+      $scope.issueCertOwner = false;
+      $scope.myCertsLoaded = false;
+      $scope.availableBalance = 0;
+      $scope.balancesLoaded = false;
+      $scope.recipientAvatar = '';
+      $scope.avatar = '';
+      $scope.availableBalanceAsset = 0;
+      $scope.model2Displayed = 1;
+      $scope.unlockNumber = 1;
+      $scope.unlockNumberString = '1';
+      $scope.interestRate = '0';
+      $scope.error = [];
+      $scope.errorDeposit = [];
+      $scope.model2ToSend = [];
       for(var i = 0, value = {"index":i,"number": "", "quantity": ""}, size = 100, array = new Array(100); i < size; i++, value = {"index":i,"number": "", "quantity": ""}) array[i] = value;
       $scope.model2 = array;
     }
-
-    init();
-
 
 
     function listAddresses() {
@@ -2706,9 +2733,6 @@
     });
 
 
-
-    $scope.assetAddresses = [];
-    $scope.getAssetBalance = [];
     MetaverseService.GetAccountAsset($scope.symbol)
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success && response.data.result.assets != null) {    //If the address doesn't contain any asset, we don't need it
@@ -2773,11 +2797,12 @@
       }
     }
 
-    function checkInputs(address, unlockNumber, quantityLocked, model2) {
+    function checkInputs(address, quantityLocked, model2) {
       $scope.recipientAvatar = $scope.myDidsAddresses[address];
-      if($scope.model == 2){
+      if($scope.frozen_option && $scope.model == 2) {
         var inputOK = true;
-        $scope.model2ToSend = model2.slice(0, unlockNumber);
+        $scope.unlockNumber = parseInt($scope.unlockNumberString);
+        $scope.model2ToSend = model2.slice(0, $scope.unlockNumber);
         var sumNumber = 0;
         var sumQuantity = 0;
         $scope.model2ToSend.forEach( (period) => {
@@ -2798,16 +2823,6 @@
           $window.scrollTo(0,0);
         }
         if(inputOK == true) {
-          $scope.quantityLockedToSend = $filter('convertfortx')($scope.quantityLocked, $scope.myAsset.decimal_number);
-          $scope.confirmation = true;
-          delete $rootScope.flash;
-        }
-      } else if ($scope.model == 1) {
-        if($scope.quantityLocked > $scope.quantity){
-          $translate('MESSAGES.SECONDARY_ISSUE_MODEL1_LOCKED_HIGHER_ISSUED').then( (data) => FlashService.Error(data) );
-          $window.scrollTo(0,0);
-        } else {
-          $scope.quantityLockedToSend = $filter('convertfortx')($scope.quantityLocked, $scope.myAsset.decimal_number);
           $scope.confirmation = true;
           delete $rootScope.flash;
         }
@@ -2820,7 +2835,8 @@
     function secondaryIssue() {
       NProgress.start();
       var fee_value = $filter('convertfortx')($scope.transactionFee, 8);
-      var SendPromise = MetaverseService.SecondaryIssue($scope.recipientAvatar, $scope.symbol, $scope.toTxConvertedQuantity, $scope.model, $scope.unlockNumber, $scope.quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, $scope.password);
+      var quantityLockedToSend = $filter('convertfortx')($scope.quantityLocked, $scope.asset.decimal_number);
+      var SendPromise = MetaverseService.SecondaryIssue($scope.recipientAvatar, $scope.symbol, $scope.toTxConvertedQuantity, $scope.model, $scope.unlockNumber, quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, $scope.password);
 
       SendPromise
       .then( (response) => {
@@ -2886,6 +2902,18 @@
         $scope.submittable = false;
         return;
       }
+      if($scope.frozen_option){
+        if($scope.model == 0 && $scope.errorDeposit.periodLocked_empty) {
+          $scope.submittable = false;
+          return;
+        } else if (($scope.model == 1 || $scope.model == 3) && ($scope.errorDeposit.unlock_number_empty || $scope.errorDeposit.quantityLocked_empty || $scope.errorDeposit.quantityLocked_lower_quantity || $scope.errorDeposit.periodLocked_empty)) {
+          $scope.submittable = false;
+          return;
+        } else if ($scope.model == 2 && ($scope.errorDeposit.unlockNumber_empty)) {
+          $scope.submittable = false;
+          return;
+        }
+      }
       $scope.submittable = true;
     }
 
@@ -2899,7 +2927,28 @@
 
     //Check if the quantity is valid
     $scope.$watch('quantity', (newVal, oldVal) => {
-      $scope.error.quantity = (newVal == undefined || newVal === '' || newVal < 0);
+      $scope.error.quantity_empty = (newVal == undefined);
+      $scope.error.quantity_not_enough_balance = (newVal != undefined && newVal != '' && typeof $scope.asset.decimal_number != 'undefined') ? parseInt($filter('convertfortx')(newVal, $scope.asset.decimal_number)) > parseInt($scope.availableBalance) : false;
+      $scope.errorDeposit.quantityLocked_lower_quantity = newVal != undefined ? $scope.quantityLocked > newVal : false;
+      checkready();
+    });
+
+    //Check if the number of periods is valid
+    $scope.$watch('unlockNumber', (newVal, oldVal) => {
+      $scope.errorDeposit.unlock_number_empty = (newVal == undefined || newVal == '');
+      checkready();
+    });
+
+    //Check if the total locked quantity is valid
+    $scope.$watch('quantityLocked', (newVal, oldVal) => {
+      $scope.errorDeposit.quantityLocked_empty = (newVal == undefined || newVal == '');
+      $scope.errorDeposit.quantityLocked_lower_quantity = newVal != undefined ? newVal > $scope.quantity : false;
+      checkready();
+    });
+
+    //Check if the total locked period is valid
+    $scope.$watch('periodLocked', (newVal, oldVal) => {
+      $scope.errorDeposit.periodLocked_empty = (newVal == undefined || newVal == '');
       checkready();
     });
 
@@ -2915,6 +2964,8 @@
       $scope.errorPassword = (newVal == undefined || newVal == '');
       checkready();
     });
+
+    init();
 
   }
 

@@ -902,7 +902,7 @@
             }
         }
 
-        function DidSendAsset(recipent_address, symbol, quantity, type, unlockNumber, quantityLocked, periodLocked, model2ToSend, interestRate, transactionFee, password) {
+        function DidSendAsset(recipent_address, symbol, quantity, type, unlockNumber, quantityLocked, periodLocked, periods, interestRate, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
             switch(type){
               case '0':

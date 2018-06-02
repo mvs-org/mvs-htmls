@@ -53,15 +53,15 @@
 						<button type="button" class="btn-link-red addRecipentButton" ng-click="sendAllMultisig()" tabIndex="-1">{{ 'TRANSFER_AMOUNT_AVALAIBLE' | translate }}: {{availableBalance | assetformat : decimal_number}} {{symbol}}</button>
 					</div>
 					<input type="number" min=0 step="0.00000001" class="form-control" placeholder="0.00000000" name="value" ng-model="quantity" autocomplete="off" ng-class="{validInput: !error.quantity_empty && !error.quantity_not_enough_balance, wrongInput: error.quantity_empty || error.quantity_not_enough_balance}">
-					<span ng-show="error.quantity_not_enough_ETP_balance" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.NOT_ENOUGH_ETP' | translate }}</span>
-					<span ng-show="error.quantity_not_enough_balance" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.QUANTITY_NOT_ENOUGH_ASSET' | translate }} {{symbol}}</span>
+					<div ng-show="error.quantity_not_enough_ETP_balance" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.NOT_ENOUGH_ETP' | translate }}</div>
+					<div ng-show="error.quantity_not_enough_balance" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.QUANTITY_NOT_ENOUGH_ASSET' | translate }} {{symbol}}</div>
 				</div>
 
 				<!--Fee-->
 				<div class="form-group">
 					<label for="fee" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</label>
 					<input type="number" step="0.00000001" class="form-control" name="fee" id="" ng-model="transactionFee" ng-class="{validInput: !error.fee_empty && !error.fee_too_low, wrongInput: error.fee_empty || error.fee_too_low}">
-					<span ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</span>
+					<div ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</div>
 	      </div>
 			</div>
 
