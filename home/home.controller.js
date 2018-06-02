@@ -3393,12 +3393,13 @@
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.height = response.data.result.height;
         $rootScope.network = response.data.result.testnet ? 'testnet' : 'mainnet';
-        $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100);
         $scope.version = response.data.result['wallet-version'];
         $scope.checkVersion();
         $scope.peers = response.data.result.peers;
       }
-    });
+    })
+    .then(() => getHeightFromExplorer())
+    .then(() => $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100));
 
 
     $scope.ClickCloseFlashMessage = () => {
@@ -3509,7 +3510,6 @@
         if (typeof response != 'undefined' && response.success) {
           $scope.height = response.data.result.height;
           $rootScope.network = response.data.result.testnet ? 'testnet' : 'mainnet';
-
           $scope.peers = response.data.result.peers;
         }
       })

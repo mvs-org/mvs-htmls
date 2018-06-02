@@ -36,19 +36,21 @@
     vm.version = "";
     vm.peers = "";
 
-    MetaverseService.GetInfo()
+    MetaverseService.GetInfoV2()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
-        vm.height = response.data.height;
-        vm.height = response.data;
-        vm.loadingPercent = Math.floor(vm.height/vm.heightFromExplorer*100);
-        vm.version = response.data['wallet-version'];
-        vm.peers = response.data.peers;
+        vm.height = response.data.result.height;
+        $rootScope.network = response.data.result.testnet ? 'testnet' : 'mainnet';
+        vm.version = response.data.result['wallet-version'];
+        vm.peers = response.data.result.peers;
       }
-    });
+    })
+    .then(() => getHeightFromExplorer())
+    .then(() => vm.loadingPercent = Math.floor(vm.height/vm.heightFromExplorer*100));
 
     function getHeightFromExplorer() {
-      $http.get('https://explorer.mvs.org/api/height')
+      let url = $rootScope.network == 'testnet' ? 'https://explorer-testnet.mvs.org/api/height' : 'https://explorer.mvs.org/api/height'
+      $http.get(url)
         .then((response)=>{
           if(!vm.popoverSynchShown) {
             $(function () { $('.popover-show').popover('show');});
