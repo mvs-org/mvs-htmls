@@ -575,8 +575,8 @@
   "SECONDARY_ISSUE.RECIPIENT_NOT_ENOUGH_ASSET": "This avatar does not own enough of this asset to do a secondary issue",
   "SECONDARY_ISSUE.UNLOCK_NUMBER": "Number of periods",
   "SECONDARY_ISSUE.TOTAL_LOCKED_QUANTITY": "Total locked quantity",
-  "SECONDARY_ISSUE.TOTAL_LOCKED_PERIOD": "Total locked period",
-  "HELP.SECONDARY_ISSUE_UNLOCK_NUMBER": "This it the total number of period that will be used",
+  "SECONDARY_ISSUE.TOTAL_LOCKED_PERIOD": "Total locked duration",
+  "HELP.SECONDARY_ISSUE_UNLOCK_NUMBER": "This it the total number of periods that will be used",
   "HELP.SECONDARY_ISSUE_TOTAL_LOCKED_QUANTITY": "This is the total number of asset that will be locked. The 'Added quantity' minus this quantity is the number of asset directly available",
   "HELP.SECONDARY_ISSUE_TOTAL_LOCKED_PERIOD": "This is the total number of blocks till the last period terminates",
   "MESSAGES.ERROR_SECONDARY_ISSUE": "Error during the secondary issue",
@@ -584,7 +584,7 @@
   "SECONDARY_ISSUE.MODEL2_PERIOD": "Number of blocks period ",
   "SECONDARY_ISSUE.MODEL2_MAX_UNLOCK_NUMBER_100": "The number of period for the model 2 is limited to 100. If you want to use more periods, please use the command line or use the model 1",
   "MESSAGES.SECONDARY_ISSUE_MODEL2_MISSING_PERIOD_INPUT": "Please complete all the fields",
-  "HELP.SECONDARY_ISSUE_MODEL2_QUANTITY": "This is the number of asset that will be unfrozen at the end of period ",
+  "HELP.SECONDARY_ISSUE_MODEL2_QUANTITY": "This is the amount that will be unfrozen at the end of period ",
   "HELP.SECONDARY_ISSUE_MODEL2_PERIOD": "This is the duration, in number of blocks, of period ",
   "ASSET_ALL.INITIAL_MAX_SUPPLY": "Initial max supply",
   "ASSET_ALL.ADDED_VIA_SECONDARY_ISSUE": "Added via secondary issue",
@@ -618,5 +618,7 @@
   "SECONDARY_ISSUE.EXPLANATION_TYPE_3": "The attenuation model 3 let you unlock the asset following a specified rate",
   "SECONDARY_ISSUE.INTEREST_RATE": "Interest Rate",
   "HELP.SECONDARY_ISSUE_INTEREST_RATE": "This is the interest rate that will be used by the model",
-  "MESSAGES.QUANTITY_DEPOSIT_LOWER_QUANTITY": "The Total locked quantity has to be equal to or lower than the sent Quantity"
+  "MESSAGES.QUANTITY_DEPOSIT_LOWER_QUANTITY": "The Total locked quantity has to be equal to or lower than the sent Quantity",
+  "SECONDARY_ISSUE.PERIODS": " periods",
+  "SECONDARY_ISSUE.BLOCKS": " blocks"
 }

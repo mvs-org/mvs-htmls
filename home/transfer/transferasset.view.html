@@ -215,7 +215,7 @@
                 {{ 'SECONDARY_ISSUE.UNLOCK_NUMBER' | translate }}
                 <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_UNLOCK_NUMBER' | translate }}"></span>
               </div>
-              <div class="assetValueColumn col-xs-7 noPaddingLeftRight">{{unlockNumber}}</div>
+              <div class="assetValueColumn col-xs-7 noPaddingLeftRight">{{unlockNumber}}{{ 'SECONDARY_ISSUE.PERIODS' | translate }}</div>
             </div>
             <div ng-show="model == 1 || model == 2 || model == 3" class="col-xs-12 noPaddingLeftRight assetDataLine">
               <div class="assetDataColumn col-xs-5 noPaddingLeftRight">
@@ -229,7 +229,7 @@
                 {{ 'SECONDARY_ISSUE.TOTAL_LOCKED_PERIOD' | translate }}
                 <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_TOTAL_LOCKED_PERIOD' | translate }}"></span>
               </div>
-              <div class="assetValueColumn col-xs-7 noPaddingLeftRight">{{periodLocked}} {{ 'BLOCKS' | translate }}</div>
+              <div class="assetValueColumn col-xs-7 noPaddingLeftRight">{{periodLocked}} {{ 'SECONDARY_ISSUE.BLOCKS' | translate }}</div>
             </div>
             <div ng-show="model == 3" class="col-xs-12 noPaddingLeftRight assetDataLine">
               <div class="assetDataColumn col-xs-5 noPaddingLeftRight">
@@ -252,7 +252,7 @@
                   {{ 'SECONDARY_ISSUE.MODEL2_PERIOD' | translate }}{{period.index+1}}
                   <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_MODEL2_PERIOD' | translate }}{{period.index+1}}"></span>
                 </div>
-                <div class="assetValueColumn col-xs-7 noPaddingLeftRight">{{period.number}} {{ 'BLOCKS' | translate }}</div>
+                <div class="assetValueColumn col-xs-7 noPaddingLeftRight">{{period.number}} {{ 'SECONDARY_ISSUE.BLOCKS' | translate }}</div>
               </div>
             </div>
           </div>

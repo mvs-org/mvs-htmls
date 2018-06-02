@@ -2609,6 +2609,7 @@
     $scope.updateUnlockNumber = updateUnlockNumber;
     $scope.assetAddresses = [];
     $scope.getAssetBalance = [];
+    $scope.checkready = checkready;
 
     function init(){
       $scope.didAddress = '';
@@ -2799,7 +2800,7 @@
 
     function checkInputs(address, quantityLocked, model2) {
       $scope.recipientAvatar = $scope.myDidsAddresses[address];
-      if($scope.frozen_option && $scope.model == 2) {
+      if($scope.model == 2) {
         var inputOK = true;
         $scope.unlockNumber = parseInt($scope.unlockNumberString);
         $scope.model2ToSend = model2.slice(0, $scope.unlockNumber);
@@ -2835,7 +2836,7 @@
     function secondaryIssue() {
       NProgress.start();
       var fee_value = $filter('convertfortx')($scope.transactionFee, 8);
-      var quantityLockedToSend = $filter('convertfortx')($scope.quantityLocked, $scope.asset.decimal_number);
+      var quantityLockedToSend = $filter('convertfortx')($scope.quantityLocked, $scope.myAsset.decimal_number);
       var SendPromise = MetaverseService.SecondaryIssue($scope.recipientAvatar, $scope.symbol, $scope.toTxConvertedQuantity, $scope.model, $scope.unlockNumber, quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, $scope.password);
 
       SendPromise
@@ -2902,17 +2903,12 @@
         $scope.submittable = false;
         return;
       }
-      if($scope.frozen_option){
-        if($scope.model == 0 && $scope.errorDeposit.periodLocked_empty) {
-          $scope.submittable = false;
-          return;
-        } else if (($scope.model == 1 || $scope.model == 3) && ($scope.errorDeposit.unlock_number_empty || $scope.errorDeposit.quantityLocked_empty || $scope.errorDeposit.quantityLocked_lower_quantity || $scope.errorDeposit.periodLocked_empty)) {
-          $scope.submittable = false;
-          return;
-        } else if ($scope.model == 2 && ($scope.errorDeposit.unlockNumber_empty)) {
-          $scope.submittable = false;
-          return;
-        }
+      if (($scope.model == 1 || $scope.model == 3) && ($scope.errorDeposit.unlock_number_empty || $scope.errorDeposit.quantityLocked_empty || $scope.errorDeposit.quantityLocked_lower_quantity || $scope.errorDeposit.periodLocked_empty)) {
+        $scope.submittable = false;
+        return;
+      } else if ($scope.model == 2 && ($scope.errorDeposit.unlockNumber_empty)) {
+        $scope.submittable = false;
+        return;
       }
       $scope.submittable = true;
     }
@@ -2927,8 +2923,7 @@
 
     //Check if the quantity is valid
     $scope.$watch('quantity', (newVal, oldVal) => {
-      $scope.error.quantity_empty = (newVal == undefined);
-      $scope.error.quantity_not_enough_balance = (newVal != undefined && newVal != '' && typeof $scope.asset.decimal_number != 'undefined') ? parseInt($filter('convertfortx')(newVal, $scope.asset.decimal_number)) > parseInt($scope.availableBalance) : false;
+      $scope.error.quantity = (newVal == undefined || newVal == '');
       $scope.errorDeposit.quantityLocked_lower_quantity = newVal != undefined ? $scope.quantityLocked > newVal : false;
       checkready();
     });
@@ -3479,7 +3474,8 @@
     };
 
     function getHeightFromExplorer() {
-      $http.get('https://explorer.mvs.org/api/height')
+      let url = $rootScope.network == 'testnet' ? 'https://explorer-testnet.mvs.org/api/height' : 'https://explorer.mvs.org/api/height'
+      $http.get(url)
         .then((response)=>{
           if(!$scope.popoverSynchShown) {
             $(function () { $('.popover-show').popover('show');});
@@ -3508,16 +3504,17 @@
 
 
     function updateHeight() {
-      getHeightFromExplorer();
       MetaverseService.GetInfoV2()
       .then( (response) => {
         if (typeof response != 'undefined' && response.success) {
           $scope.height = response.data.result.height;
           $rootScope.network = response.data.result.testnet ? 'testnet' : 'mainnet';
-          $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100);
+
           $scope.peers = response.data.result.peers;
         }
-      });
+      })
+      .then(() => getHeightFromExplorer())
+      .then(() => $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100));
     }
 
     updateHeight();

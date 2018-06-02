@@ -102,9 +102,7 @@
         service.Issue = Issue;
         service.Delete = Delete;
         service.GetAccountAsset = GetAccountAsset;
-        service.SecondaryIssueDefault = SecondaryIssueDefault;
-        service.SecondaryIssueModel1 = SecondaryIssueModel1;
-        service.SecondaryIssueModel2 = SecondaryIssueModel2;
+        service.SecondaryIssue = SecondaryIssue;
         service.CreateAssetMultisigTx = CreateAssetMultisigTx;
 
 
@@ -872,7 +870,7 @@
             }
         }
 
-        function DidSendAssetFrom(sender_address, recipent_address, symbol, quantity, type, unlockNumber, quantityLocked, periodLocked, model2ToSend, interestRate, transactionFee, password) {
+        function DidSendAssetFrom(sender_address, recipent_address, symbol, quantity, type, unlockNumber, quantityLocked, periodLocked, periodsModel2, interestRate, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
             switch(type){
               case '0':
@@ -884,7 +882,7 @@
               case '2':
                 var uc = '';
                 var uq = '';
-                periods.forEach( (period) => {
+                periodsModel2.forEach( (period) => {
                   uc += period.number;
                   uc += ',';
                   uq += period.quantityToSend;
@@ -902,7 +900,7 @@
             }
         }
 
-        function DidSendAsset(recipent_address, symbol, quantity, type, unlockNumber, quantityLocked, periodLocked, periods, interestRate, transactionFee, password) {
+        function DidSendAsset(recipent_address, symbol, quantity, type, unlockNumber, quantityLocked, periodLocked, periodsModel2, interestRate, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
             switch(type){
               case '0':
@@ -914,7 +912,7 @@
               case '2':
                 var uc = '';
                 var uq = '';
-                periods.forEach( (period) => {
+                periodsModel2.forEach( (period) => {
                   uc += period.number;
                   uc += ',';
                   uq += period.quantityToSend;
@@ -973,38 +971,9 @@
             return _sendV2('didsendmore', query);
         }
 
-        function SecondaryIssueDefault(toDID, symbol, quantity, transactionFee, password){
-            var credentials = localStorageService.get('credentials');
-            return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-f', transactionFee]);
-        }
-
-        function SecondaryIssueModel1(toDID, symbol, quantity, unlockNumber, quantityLocked, periodLocked, transactionFee, password){
-            var credentials = localStorageService.get('credentials');
-            var model = "TYPE=1;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber;
-            return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-m', model, '-f', transactionFee]);
-        }
-
-        function SecondaryIssueModel2(toDID, symbol, quantity, unlockNumber, quantityLocked, periodLocked, periods, transactionFee, password){
-            var credentials = localStorageService.get('credentials'); //;UC=20000,20000,20000;UQ=3000,3000,3000
-            var uc = '';
-            var uq = '';
-            periods.forEach( (period) => {
-              uc += period.number;
-              uc += ',';
-              uq += period.quantityToSend;
-              uq += ',';
-            });
-            uc = uc.substring(0, uc.length - 1);
-            uq = uq.substring(0, uq.length - 1);
-            var model = "TYPE=2;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";UC=" + uc + ";UQ=" + uq;
-            return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-m', model, '-f', transactionFee]);
-        }
-
-        function SecondaryIssue(toDID, symbol, quantity, unlockNumber, quantityLocked, type, periodLocked, periods, transactionFee, password){
+        function SecondaryIssue(toDID, symbol, quantity, type, unlockNumber, quantityLocked, periodLocked, periodsModel2, interestRate, transactionFee, password){
             var credentials = localStorageService.get('credentials');
             switch(type){
-              case '':
-                return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-f', transactionFee]);
               case '1':
                 var modelToSend = "TYPE=1;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber;
                 return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-m', modelToSend, '-f', transactionFee]);
@@ -1012,7 +981,7 @@
                 var credentials = localStorageService.get('credentials'); //;UC=20000,20000,20000;UQ=3000,3000,3000
                 var uc = '';
                 var uq = '';
-                periods.forEach( (period) => {
+                periodsModel2.forEach( (period) => {
                   uc += period.number;
                   uc += ',';
                   uq += period.quantityToSend;
@@ -1024,9 +993,9 @@
                 return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-m', modelToSend, '-f', transactionFee]);
               case '3':
                 var modelToSend = "TYPE=3;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
-                return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
+                return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
               default:
-                return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee]);
+                return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-f', transactionFee]);
             }
         }
 
