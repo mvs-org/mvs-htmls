@@ -1305,6 +1305,7 @@ _____  ._______  ___.___ _______
 .assetValueColumn {
   padding-left: 20px;
   padding-bottom: 10px;
+  word-wrap:break-word;
 }
 
 .popupButtons {
@@ -1462,7 +1463,7 @@ form label {
   color: #8a8f92;
 }
 .historyMemo{
-
+  word-wrap:break-word;
 }
 .spe-blueft{
   color: #27a7ea !important;

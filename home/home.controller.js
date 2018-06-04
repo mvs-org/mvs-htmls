@@ -4519,6 +4519,7 @@
     function init() {
       $scope.mitSymbol = '';
       $scope.mitAvatar = '';
+      $scope.content = '';
       $scope.password = '';
       $scope.transactionFee = 0.0001;
       $scope.confirmation = false;
@@ -4607,7 +4608,7 @@
     function registerMIT(password) {
       NProgress.start();
       var fee_value = $filter('convertfortx')($scope.transactionFee, 8);
-      MetaverseService.RegisterMIT($scope.mitSymbol, $scope.mitAvatar, fee_value, password)
+      MetaverseService.RegisterMIT($scope.mitSymbol, $scope.mitAvatar, $scope.content, fee_value, password)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           if(response.data.result.transaction) {

@@ -633,5 +633,7 @@
   "HELP.CONTENT": "You can use this field to link any content to your MIT. You can enter up to 256 characters in this field",
   "CREATE_MIT.BACK_TO_MIT": "Back to My MIT",
   "MESSAGES.MIT_CREATED": "New MIT created successfully ! Your transaction hash is: ",
-  "MESSAGES.ERROR_MIT_CREATION": "This MIT hasn't been created"
+  "MESSAGES.ERROR_MIT_CREATION": "This MIT hasn't been created",
+  "HISTORY.MIT_ISSUE": "MIT Issue",
+  "HISTORY.MIT_TRANSFER": "MIT transfer"
 }

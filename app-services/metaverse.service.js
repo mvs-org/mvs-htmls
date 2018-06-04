@@ -967,9 +967,9 @@
             return _sendV2('listmits', [credentials.user, credentials.password]);
         }
 
-        function RegisterMIT(symbol, avatar, transactionFee, password) {
+        function RegisterMIT(symbol, avatar, content, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
-            return _sendV2('registermit', [credentials.user, password, avatar, symbol, '-f', transactionFee]);
+            return _sendV2('registermit', [credentials.user, password, avatar, symbol, '-c', content, '-f', transactionFee]);
         }
 
         function DidSendMore(recipents, transactionFee, password) {
@@ -1111,6 +1111,7 @@
         const TX_TYPE_CERT = 'CERT';
         const TX_TYPE_DID_ISSUE = 'DID_ISSUE';
         const TX_TYPE_DID_TRANSFER = 'DID_TRANSFER';
+        const TX_TYPE_MIT = 'MIT';
         const TX_TYPE_UNKNOWN = 'UNKNOWN';
 
         service.LoadTransactions = LoadTransactions;
@@ -1148,6 +1149,8 @@
                         result = TX_TYPE_DID_ISSUE;
                     if (output.attachment.type === 'did-transfer')
                         result = TX_TYPE_DID_TRANSFER;
+                    if (output.attachment.type === 'mit')
+                        result = TX_TYPE_MIT;
                 });
                 return (result) ? result : TX_TYPE_ETP;
             } else {
@@ -1306,6 +1309,25 @@
                                         transaction.direction='did-transfer';
                                         e.outputs.forEach(function(output){
                                             if(output.own==='true' && output.attachment.type==='did-transfer'){
+                                                transaction.recipents.push({
+                                                    "address": output.address
+                                                });
+                                                transaction.type = output.attachment.symbol;
+                                            }
+                                        });
+                                        transactions.push(transaction);
+                                        break;
+                                    case TX_TYPE_MIT:
+                                        e.outputs.forEach(function(output){
+                                            if(output.attachment.type==='mit'){
+                                                if(output.attachment.status == 'transfered') {
+                                                    transaction.direction='mit-transfer';
+                                                } else {
+                                                    transaction.direction='mit-issue';
+                                                }
+                                                if (typeof output.attachment.content != 'undefined') {
+                                                  transaction.memo = output.attachment.content;
+                                                }
                                                 transaction.recipents.push({
                                                     "address": output.address
                                                 });
