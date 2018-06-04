@@ -26,6 +26,8 @@
   .controller('ModifyAddressController', ModifyAddressController)
   .controller('TransferCertController', TransferCertController)
   .controller('IssueCertController', IssueCertController)
+  .controller('ShowMITsController', ShowMITsController)
+  .controller('ShowAllMITsController', ShowAllMITsController)
   .directive('bsTooltip', function() {
     return {
       restrict: 'A',
@@ -4458,6 +4460,43 @@
     //Check if the password is valid
     $scope.$watch('password', (newVal, oldVal) => {
       $scope.errorPassword = (newVal == undefined || newVal == '');
+    });
+
+
+  }
+
+  function ShowMITsController(MetaverseHelperService, MetaverseService, $scope, $filter, $rootScope, $location, $translate, $window, localStorageService, FlashService) {
+
+    $scope.loaded = false;
+    $scope.mymits = [];
+
+    NProgress.start();
+    MetaverseService.ListMITs()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.mymits = response.data.result.mits;
+      } else {
+        $translate('MESSAGES.MITS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+      }
+      $scope.loaded = true;
+      NProgress.done();
+    });
+  }
+
+  function ShowAllMITsController(MetaverseHelperService, MetaverseService, $scope, $filter, $rootScope, $location, $translate, $window, localStorageService, FlashService) {
+
+    $scope.loaded = false;
+
+    NProgress.start();
+    MetaverseService.ListAllMITs()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.allmits = response.data.result.mits;
+      } else {
+        $translate('MESSAGES.MITS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+      }
+      $scope.loaded = true;
+      NProgress.done();
     });
 
 

@@ -167,6 +167,20 @@
                 controllerAs: 'vm'
             })
 
+            .state('home.asset.allmits', {
+                url: "/asset/allmits",
+                templateUrl: "home/assets/allmits.view.html",
+                controller: 'ShowAllMITsController',
+                controllerAs: 'vm'
+            })
+
+            .state('home.asset.mymits', {
+                url: "/asset/mymits",
+                templateUrl: "home/assets/mymits.view.html",
+                controller: 'ShowMITsController',
+                controllerAs: 'vm'
+            })
+
             .state('home.asset.details', {
                 url: "/asset/details/:symbol",
                 templateUrl: "home/assets/details.view.html",

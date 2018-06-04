@@ -20,8 +20,8 @@
         <label for="addressFrom" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
         <select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" ng-change="availBalance(sendfrom)" ng-class="{validInput: !error.sendfrom, wrongInput: error.sendfrom}">
           <option value="" title="{{asset.quantity - asset.lock_quantity | assetformat : asset.decimal_number}} {{asset.symbol}}">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</option>
-          <option ng-repeat="asset in assetAddresses | orderBy:'quantity - lock_quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-if="allDidsAddresses[asset.address] && asset.address.charAt(0) != '3'">{{allDidsAddresses[asset.address]}} - {{asset.address}} - {{asset.quantity - asset.lock_quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
-          <option ng-repeat="asset in assetAddresses | orderBy:'quantity - lock_quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-if="!allDidsAddresses[asset.address] && asset.address.charAt(0) != '3'">{{asset.address}} - {{asset.quantity - asset.lock_quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
+          <option ng-repeat="asset in assetAddresses | orderBy:'quantity - locked_quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-if="allDidsAddresses[asset.address] && asset.address.charAt(0) != '3'">{{allDidsAddresses[asset.address]}} - {{asset.address}} - {{asset.quantity - asset.locked_quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
+          <option ng-repeat="asset in assetAddresses | orderBy:'quantity - locked_quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-if="!allDidsAddresses[asset.address] && asset.address.charAt(0) != '3'">{{asset.address}} - {{asset.quantity - asset.locked_quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
         </select>
       </div>
 
@@ -36,7 +36,7 @@
         <div ng-show="burnAddress" class="warningInputComment"><span class="glyphicon glyphicon-warning-sign"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_BURN' | translate }}</div>
       </div>
 
-      <!--Amount-->
+      <!--Quantity-->
       <div class="form-group">
         <label for="value" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_QUANTITY' | translate }}</label>
         <!--AvailableBalance-->

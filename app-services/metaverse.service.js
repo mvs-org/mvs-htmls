@@ -104,6 +104,8 @@
         service.GetAccountAsset = GetAccountAsset;
         service.SecondaryIssue = SecondaryIssue;
         service.CreateAssetMultisigTx = CreateAssetMultisigTx;
+        service.ListMITs = ListMITs;
+        service.ListAllMITs = ListAllMITs;
 
 
         //Chain
@@ -953,6 +955,15 @@
         function IssueCert(domain, type, symbol, toDID, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
             return _sendV2('issuecert', [credentials.user, password, toDID, symbol, type, '-f', transactionFee]);
+        }
+
+        function ListAllMITs() {
+            return _sendV2('listmits');
+        }
+
+        function ListMITs() {
+            var credentials = localStorageService.get('credentials');
+            return _sendV2('listmits', [credentials.user, credentials.password]);
         }
 
         function DidSendMore(recipents, transactionFee, password) {
