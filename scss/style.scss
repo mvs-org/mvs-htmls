@@ -1645,7 +1645,21 @@ form label {
   width: inherit;
 }
 
-.qrCodePopUp {
+.addressQRCodePopUp {
+  height: 300px;
+  width: 300px;
+  margin-left: 100px;
+  margin-top: 100px;
+  margin-bottom: 25px;
+}
+
+.addressQRCode {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 50px;
+}
+
+.exportQRCodePopUp {
   height: 300px;
   width: 300px;
   margin-left: 100px;
@@ -1653,7 +1667,7 @@ form label {
   margin-bottom: 20px;
 }
 
-.addressQRCode {
+.exportQRCode {
   text-align: center;
   font-size: 18px;
   margin-bottom: 10px;

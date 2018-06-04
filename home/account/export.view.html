@@ -10,9 +10,9 @@
   <div class="modal-dialog">
     <div class="modal-content panel">
       <div class="titleQRCode">{{ 'SETTINGS.QRCODE_TITLE' | translate }}</div>
-      <div class="qrCodePopUp" id="modal_qr"></div>
+      <div class="exportQRCodePopUp" id="modal_qr"></div>
       <div class="contentQRCode">
-        <div class="addressQRCode" id="modal_account"></div>
+        <div class="exportQRCode" id="modal_account"></div>
         <div ng-show="addressesNbr > 50" class="wrongInputComment"><span class="glyphicon glyphicon-warning-sign"></span> {{ 'SETTINGS.QRCODE_TOO_MANY_ADDRESSES1' | translate }}{{addressesNbr}}{{ 'SETTINGS.QRCODE_TOO_MANY_ADDRESSES2' | translate }}</div>
       </div>
     </div>
