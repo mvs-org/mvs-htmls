@@ -202,6 +202,13 @@
                 controllerAs: 'vm'
             })
 
+            .state('home.asset.createmit', {
+                url: "/asset/createmit",
+                templateUrl: "home/assets/createmit.view.html",
+                controller: 'CreateMITController',
+                controllerAs: 'vm'
+            })
+
             .state('home.transferasset', {
                 url: "/transfer/asset/:symbol",
                 templateUrl: "home/transfer/transferasset.view.html",

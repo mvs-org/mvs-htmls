@@ -1,6 +1,12 @@
 <div class="headline">{{ 'HEADLINE_ASSETS_CREATE' | translate }}</div>
-<br/>
+<div>
+  <ul class="nav nav-pills tabsMenu">
+    <li role="presentation" class="active"><a href="#!/asset/create" class="btn-link-menu">{{ 'ASSET.CREATE_MST' | translate }}</a></li>
+    <li role="presentation"><a href="#!/asset/createmit" class="btn-link-menu">{{ 'ASSET.CREATE_MIT' | translate }}</a></li>
+  </ul>
+</div>
 <form ng-hide="confirmation" class="row">
+  <br/>
   <div class="col-md-12 col-lg-12 noPaddingLeftRight">
     <div class="col-md-12 col-lg-6">
       <!--Symbol-->
@@ -15,7 +21,7 @@
       <div class="form-group">
         <label for="useDid" class="control-label">{{ 'ASSET_CREATE.DID' | translate }}</label>
         <select name="useDid" type="text" class="form-control" placeholder="" ng-model="selectedDid" ng-change="changeDid(selectedDid)" ng-class="{validInput: !error.avatar, wrongInput: error.avatar}" >
-          <option ng-repeat="did in myDids" value="{{did.symbol}}" title="{{did.symbol}}">{{did.symbol}} - {{did.address}}</option>
+          <option ng-repeat="did in myDids" value="{{did.symbol}}" title="{{did.symbol}}">{{did.symbol}} - {{did.address}} - {{addresses[did.address].available | assetformat : 8}} ETP</option>
           <option ng-show="noDids" value="nodid">{{ 'ASSET_CREATE.NO_DID' | translate }}</option>
         </select>
       </div>

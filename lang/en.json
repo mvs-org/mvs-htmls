@@ -38,7 +38,7 @@
   "HEADLINE_MINING":      "Mining",
   "HEADLINE_CONSOLE":      "Console",
   "HEADLINE_ASSETS":      "Assets",
-  "HEADLINE_ASSETS_CREATE":      "Create MST",
+  "HEADLINE_ASSETS_CREATE":      "Create Asset",
   "HEADLINE_ASSETS_DETAILS":      "MST Details",
   "HEADLINE_ASSETS_TRANSFER":      "Transfer MST",
   "HEADLINE_TRANSACTIONS":      "Transactions record",
@@ -529,7 +529,7 @@
   "TRANSFER_CERT.TYPE_SEND_WHICH_ONE_SECONDARY_ISSUE": "Only send Secondary Issue certificate",
   "TRANSFER_CERT.TYPE_SEND_WHICH_ONE_DOMAIN": "Only send Domain certificate",
   "HELP.TRANSFER_CERT_TO_AVATAR": "You can transfer you certificate(s) to another one of your avatars or to someone else avatar",
-  "CREATE_ASSET.ERROR_SYMBOL_ALREADY_EXIST": "This Asset already exist on the blockchain",
+  "CREATE_ASSET.ERROR_SYMBOL_ALREADY_EXIST": "This MST symbol already exist on the blockchain",
   "HELP.COMING_SOON": "Coming soon!",
   "PROFILE.ON_CHAIN": "On-chain",
   "PROFILE.OFF_CHAIN": "Off-chain",
@@ -625,5 +625,13 @@
   "ASSET.ALL_MIT" : "All MIT",
   "ASSET.NO_MITS": "You don't have any MIT yet. You can create one by clicking on the Create MIT button",
   "ASSET.CREATE_MIT_BTN": "Create MIT",
-  "CONTENT": "Content"
+  "CONTENT": "Content",
+  "ASSET.CREATE_MST": "Create MST",
+  "ASSET.CREATE_MIT": "Create MIT",
+  "CREATE_MIT.SYMBOL_ALREADY_EXIST": "This MIT symbol already exist on the blockchain",
+  "CONTENT": "Content",
+  "HELP.CONTENT": "You can use this field to link any content to your MIT. You can enter up to 256 characters in this field",
+  "CREATE_MIT.BACK_TO_MIT": "Back to My MIT",
+  "MESSAGES.MIT_CREATED": "New MIT created successfully ! Your transaction hash is: ",
+  "MESSAGES.ERROR_MIT_CREATION": "This MIT hasn't been created"
 }

@@ -106,6 +106,7 @@
         service.CreateAssetMultisigTx = CreateAssetMultisigTx;
         service.ListMITs = ListMITs;
         service.ListAllMITs = ListAllMITs;
+        service.RegisterMIT = RegisterMIT;
 
 
         //Chain
@@ -964,6 +965,11 @@
         function ListMITs() {
             var credentials = localStorageService.get('credentials');
             return _sendV2('listmits', [credentials.user, credentials.password]);
+        }
+
+        function RegisterMIT(symbol, avatar, transactionFee, password) {
+            var credentials = localStorageService.get('credentials');
+            return _sendV2('registermit', [credentials.user, password, avatar, symbol, '-f', transactionFee]);
         }
 
         function DidSendMore(recipents, transactionFee, password) {

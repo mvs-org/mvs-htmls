@@ -28,6 +28,7 @@
   .controller('IssueCertController', IssueCertController)
   .controller('ShowMITsController', ShowMITsController)
   .controller('ShowAllMITsController', ShowAllMITsController)
+  .controller('CreateMITController', CreateMITController)
   .directive('bsTooltip', function() {
     return {
       restrict: 'A',
@@ -3028,6 +3029,23 @@
       }
     });
 
+
+    MetaverseService.ListBalances()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.addresses = [];
+        response.data.balances.forEach( (e) => {
+          $scope.addresses[e.balance.address] = ({
+            "balance": parseInt(e.balance.unspent),
+            "available": parseInt(e.balance.available),
+            "address": e.balance.address,
+            "name": name,
+            "frozen": e.balance.frozen
+          });
+        });
+      }
+    });
+
     //Check if the form is submittable
     function checkready() {
       //Check for errors
@@ -3719,22 +3737,6 @@
               "available": parseInt(e.balance.available),
               "address": e.balance.address
             });
-          });
-
-          //After loading the balances, we load the multisig addresses
-          MetaverseService.ListMultiSig()
-          .then( (response) => {
-            if (typeof response.success !== 'undefined' && response.success) {
-              if(response.data.multisig != "") {    //if the user has some assets
-                response.data.multisig.forEach( (e) => {
-                  $scope.addresses[e.address].type = "multisig";
-                });
-              } else {
-                //The account has no multi-signature address
-              }
-            } else {
-              //Fail
-            }
           });
         }
       });
@@ -4465,7 +4467,7 @@
 
   }
 
-  function ShowMITsController(MetaverseHelperService, MetaverseService, $scope, $filter, $rootScope, $location, $translate, $window, localStorageService, FlashService) {
+  function ShowMITsController(MetaverseHelperService, MetaverseService, $scope, $translate, $window, localStorageService, FlashService) {
 
     $scope.loaded = false;
     $scope.mymits = [];
@@ -4483,7 +4485,7 @@
     });
   }
 
-  function ShowAllMITsController(MetaverseHelperService, MetaverseService, $scope, $filter, $rootScope, $location, $translate, $window, localStorageService, FlashService) {
+  function ShowAllMITsController(MetaverseHelperService, MetaverseService, $scope, $translate, $window, localStorageService, FlashService) {
 
     $scope.loaded = false;
 
@@ -4498,7 +4500,178 @@
       $scope.loaded = true;
       NProgress.done();
     });
+  }
 
+
+  function CreateMITController(MetaverseHelperService, MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $location, $rootScope, $filter) {
+
+    $scope.listAddresses = [];
+    $scope.registerMIT = registerMIT;
+    $scope.error = [];
+    $scope.checkInputs = checkInputs;
+    $scope.addresses = [];
+
+    $scope.allMitsSymbols = [];
+    $scope.myDidsAddresses = [];
+    $scope.symbolAddress = [];
+    $scope.noDids = false;
+
+    function init() {
+      $scope.mitSymbol = '';
+      $scope.mitAvatar = '';
+      $scope.password = '';
+      $scope.transactionFee = 0.0001;
+      $scope.confirmation = false;
+      $scope.submittable = false;
+    }
+
+
+    function listAddresses() {
+      NProgress.start();
+      //Load users ETP balance
+      //Load the addresses and their balances
+      MetaverseService.ListBalances()
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.addresses = [];
+          response.data.balances.forEach( (e) => {
+            var name = "New address";
+            if (localStorageService.get(e.balance.address) != undefined) {
+              name = localStorageService.get(e.balance.address);
+            }
+            $scope.addresses[e.balance.address] = ({
+              "balance": parseInt(e.balance.unspent),
+              "available": parseInt(e.balance.available),
+              "address": e.balance.address,
+              "name": name,
+              "frozen": e.balance.frozen
+            });
+            $scope.listAddresses.push({
+              "balance": parseInt(e.balance.unspent),
+              "available": parseInt(e.balance.available),
+              "address": e.balance.address
+            });
+          });
+        }
+      });
+      NProgress.done();
+    }
+
+    listAddresses();
+
+    NProgress.start();
+    MetaverseService.ListAllMITs()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.allmits = response.data.result.mits;
+        if(typeof $scope.allmits != 'undefined' && $scope.allmits != null) {
+          $scope.allmits.forEach(function(mit) {
+            $scope.allMitsSymbols.push(mit.symbol);
+          });
+        } else {
+          $scope.allmits = [];
+        }
+      } else {
+        $translate('MESSAGES.MITS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+      }
+      NProgress.done();
+    });
+
+    function checkInputs(password) {
+      $scope.confirmation = true;
+      delete $rootScope.flash;
+    }
+
+    MetaverseService.ListMyDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        if (response.data.result.dids) {
+          $scope.myDids = response.data.result.dids;
+          if(typeof $scope.myDids != 'undefined' && $scope.myDids != null) {
+            $scope.myDids.forEach(function(did) {
+              $scope.myDidsAddresses.push(did.address);
+              $scope.symbolAddress[did.symbol] = did.address;
+            })
+          } else {
+          }
+        } else {
+          $scope.noDids = true;
+          $scope.selectedDid = "";
+        }
+      } else {
+        $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
+    });
+
+    function registerMIT(password) {
+      NProgress.start();
+      var fee_value = $filter('convertfortx')($scope.transactionFee, 8);
+      MetaverseService.RegisterMIT($scope.mitSymbol, $scope.mitAvatar, fee_value, password)
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          if(response.data.result.transaction) {
+            $translate('MESSAGES.MIT_CREATED').then( (data) => FlashService.Success(data, true, response.data.result.transaction.hash) );
+            init();
+          }
+        } else {
+          $translate('MESSAGES.ERROR_MIT_CREATION').then( (data) => {
+            if (response.message.message != undefined) {
+              FlashService.Error(data + " : " + response.message.message);
+            } else {
+              FlashService.Error(data);
+            }
+          });
+        }
+        NProgress.done();
+        $scope.password = '';
+      });
+    }
+
+    $scope.closeAll = function () {
+      ngDialog.closeAll();
+    };
+
+    //Check if the form is submittable
+    function checkready() {
+      //Check for errors
+      for (var error in $scope.error) {
+        if ($scope.error[error]) {
+          $scope.submittable = false;
+          return;
+        }
+      }
+      $scope.submittable = true;
+    }
+
+    //Check if the avatar name is valid
+    $scope.$watch('mitSymbol', (newVal, oldVal) => {
+      $scope.error.symbol_empty = (newVal == undefined || newVal == '');
+      $scope.error.symbol_wrong_char = newVal != undefined && newVal != '' ? !newVal.match(/^[0-9A-Za-z.@_-]+$/) : false;
+      $scope.error.symbol_already_exist = newVal != undefined && newVal != '' ? ($scope.allMitsSymbols.indexOf(newVal) > -1) : false;
+      checkready();
+    });
+
+    //Check if the address is valid
+    $scope.$watch('mitAvatar', (newVal, oldVal) => {
+      $scope.error.mitAvatar_empty = (newVal == undefined || newVal == '');
+      $scope.error.mitAvatar_not_enough_etp = newVal != undefined && $scope.addresses[newVal] != undefined ? ($scope.addresses[newVal].available < 0.0001) : false;
+      checkready();
+    });
+
+    //Check if the fee is valid
+    $scope.$watch('transactionFee', (newVal, oldVal) => {
+      $scope.error.fee_empty = (newVal == undefined);
+      $scope.error.fee_too_low = newVal != undefined ? newVal<0.0001 : false;
+      checkready();
+    });
+
+    //Check if the password is valid
+    $scope.$watch('password', (newVal, oldVal) => {
+      $scope.errorPassword = (newVal == undefined || newVal == '');
+    });
+
+    init();
 
   }
 
