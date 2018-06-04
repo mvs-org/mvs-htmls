@@ -38,7 +38,7 @@
   "HEADLINE_MINING":      "Mining",
   "HEADLINE_CONSOLE":      "Console",
   "HEADLINE_ASSETS":      "Assets",
-  "HEADLINE_ASSETS_CREATE":      "Create Asset",
+  "HEADLINE_ASSETS_CREATE":      "Create Metaverse Smart Token",
   "HEADLINE_ASSETS_DETAILS":      "MST Details",
   "HEADLINE_ASSETS_TRANSFER":      "Transfer MST",
   "HEADLINE_TRANSACTIONS":      "Transactions record",
@@ -47,7 +47,7 @@
   "HEADLINE_ETP_TRANSFER":      "ETP Transfer",
   "HEADLINE_ETP_TRANSFER_MULTISIGNATURE": "Transfer ETP via multi-signature transaction",
   "HEADLINE_ETP_CREATE_MULTISIGNATURE" : "Create new multi-signature address",
-  "HEADLINE_ASSET_TRANSFER" : "Asset transfer",
+  "HEADLINE_ASSET_TRANSFER" : "Metaverse Smart Token",
   "TRANSFER_TYPE_SIMPLE" : "Simple transfer",
   "TRANSFER_TYPE_MULTISIG" : "Multi-signature transfer",
   "TRANSFER_TYPE_SIGN" : "Sign transaction",
@@ -635,5 +635,7 @@
   "MESSAGES.MIT_CREATED": "New MIT created successfully ! Your transaction hash is: ",
   "MESSAGES.ERROR_MIT_CREATION": "This MIT hasn't been created",
   "HISTORY.MIT_ISSUE": "MIT Issue",
-  "HISTORY.MIT_TRANSFER": "MIT transfer"
+  "HISTORY.MIT_TRANSFER": "MIT transfer",
+  "TRANSFER.MIT": "MIT transfer",
+  "HEADLINE_MST": "Metaverse Smart Token"
 }

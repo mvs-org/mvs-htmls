@@ -1,6 +1,7 @@
-<div class="headline">{{symbol}}</div>
+<div class="headline">{{ 'HEADLINE_MST' | translate }}</div>
 <div>
   <ul class="nav nav-pills tabsMenu">
+    <li role="presentation"><a href="#!/asset/create" class="btn-link-menu">{{ 'ASSET.CREATE_MST' | translate }}</a></li>
     <li role="presentation" class="active"><a class="btn-link-menu">{{ 'SECONDARY_ISSUE.SECONDARY_ISSUE' | translate }}</a></li>
   </ul>
 </div>
@@ -8,6 +9,13 @@
   <br/>
   <form ng-hide="confirmation">
     <div class="col-xs-12 col-sm-6">
+      <!--Symbol-->
+      <div class="form-group">
+        <label for="addressFrom" class="control-label">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</label>
+        <select name="symbol" type="address" class="form-control" ng-model="symbol" ng-change="updateSymbol(symbol)" ng-class="{validInput: true, wrongInput: false}">
+          <option ng-repeat="asset in myAssetsBalances | orderBy:'symbol'" value="{{asset.symbol}}">{{asset.symbol}}</option>
+        </select>
+      </div>
       <!--Sender-->
       <div class="form-group">
         <label for="addressFrom" class="control-label">{{ 'SECONDARY_ISSUE.TO_AVATAR' | translate }}</label>

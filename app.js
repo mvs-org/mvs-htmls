@@ -223,6 +223,13 @@
                 controllerAs: 'vm'
             })
 
+            .state('home.transfermit', {
+                url: "/transfer/mit/:symbol",
+                templateUrl: "home/transfer/transfermit.view.html",
+                controller: 'TransferMITController',
+                controllerAs: 'vm'
+            })
+
             .state('home.multisignature', {
                 url: "/transfer/multisignature/:symbol",
                 templateUrl: "home/transfer/multisignature.view.html",

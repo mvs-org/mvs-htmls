@@ -29,6 +29,7 @@
   .controller('ShowMITsController', ShowMITsController)
   .controller('ShowAllMITsController', ShowAllMITsController)
   .controller('CreateMITController', CreateMITController)
+  .controller('TransferMITController', TransferMITController)
   .directive('bsTooltip', function() {
     return {
       restrict: 'A',
@@ -2613,6 +2614,10 @@
     $scope.assetAddresses = [];
     $scope.getAssetBalance = [];
     $scope.checkready = checkready;
+    $scope.updateSymbol = updateSymbol;
+    $scope.getAsset = getAsset;
+    $scope.getAccountAsset = getAccountAsset;
+
 
     function init(){
       $scope.didAddress = '';
@@ -2637,6 +2642,8 @@
       $scope.model2ToSend = [];
       for(var i = 0, value = {"index":i,"number": "", "quantity": ""}, size = 100, array = new Array(100); i < size; i++, value = {"index":i,"number": "", "quantity": ""}) array[i] = value;
       $scope.model2 = array;
+      getAsset($scope.symbol);
+      getAccountAsset($scope.symbol);
     }
 
 
@@ -2708,46 +2715,49 @@
       }
     });
 
-    //Loads a given asset, used in the page asset/details
-    MetaverseService.GetAsset($scope.symbol)
-    .then( (response) => {
-      if (typeof response.success !== 'undefined' && response.success) {
-        if(response.data.assets != "") {    //if the user has some assets
-          $scope.assets = response.data.assets;
-          $scope.assets.forEach( (asset) => {
-            if(asset.is_secondaryissue == 'false'){
-              $scope.assetOriginal = parseInt(asset.maximum_supply);
-            } else {
-              if(typeof $scope.assetsSecondaryIssue == 'undefined') {
-                $scope.assetSecondaryIssue = parseInt(asset.maximum_supply);
+    function getAsset(symbol) {
+      //Loads a given asset, used in the page asset/details
+      MetaverseService.GetAsset(symbol)
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          if(response.data.assets != "") {    //if the user has some assets
+            $scope.assets = response.data.assets;
+            $scope.assetSecondaryIssue = 0;
+            $scope.assets.forEach( (asset) => {
+              if(asset.is_secondaryissue == 'false'){
+                $scope.assetOriginal = parseInt(asset.maximum_supply);
               } else {
-                $scope.assetSecondaryIssue += parseInt(asset.maximum_supply);
+                if(typeof $scope.assetSecondaryIssue == 0) {
+                  $scope.assetSecondaryIssue = parseInt(asset.maximum_supply);
+                } else {
+                  $scope.assetSecondaryIssue += parseInt(asset.maximum_supply);
+                }
               }
-            }
-          });
+            });
+          } else {
+            //The user as no Assets
+          }
         } else {
-          //The user as no Assets
+          //Asset could not be loaded
+          $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) =>  FlashService.Error(data));
+          $window.scrollTo(0,0);
         }
-      } else {
-        //Asset could not be loaded
-        $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) =>  FlashService.Error(data));
-        $window.scrollTo(0,0);
-      }
-      NProgress.done();
-    });
+        NProgress.done();
+      });
+    }
 
-
-    MetaverseService.GetAccountAsset($scope.symbol)
-    .then( (response) => {
-      if (typeof response.success !== 'undefined' && response.success && response.data.result.assets != null) {    //If the address doesn't contain any asset, we don't need it
-        $scope.assetAddresses = response.data.result.assets;
-        $scope.assetAddresses.forEach( (address) => {
-          $scope.getAssetBalance[address.address] = address.quantity;
-        });
-      }
-    });
-
-
+    function getAccountAsset (symbol) {
+      $scope.getAssetBalance = [];
+      MetaverseService.GetAccountAsset(symbol)
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success && response.data.result.assets != null) {    //If the address doesn't contain any asset, we don't need it
+          $scope.assetAddresses = response.data.result.assets;
+          $scope.assetAddresses.forEach( (address) => {
+            $scope.getAssetBalance[address.address] = address.quantity;
+          });
+        }
+      });
+    }
 
     //Load assets
     NProgress.start();
@@ -2788,6 +2798,21 @@
         $window.scrollTo(0,0);
       }
     });
+
+    function updateSymbol (symbol) {
+      getAsset(symbol);
+      getAccountAsset(symbol);
+      $scope.myAssetsBalances.forEach( (asset) => {
+        if(asset.symbol == symbol)
+          $scope.myAsset = asset;
+      });
+      $scope.issueCertOwner = false;
+      $scope.myCerts.forEach( (cert) => {
+        if(cert.symbol == symbol && cert.cert == 'issue')
+          $scope.issueCertOwner = true;
+      });
+      checkready();
+    }
 
     function updateQuantity(quantity) {
       $scope.toTxConvertedQuantity = parseInt($filter('convertfortx')(quantity, $scope.myAsset.decimal_number));
@@ -4606,6 +4631,137 @@
     });
 
     function registerMIT(password) {
+      NProgress.start();
+      var fee_value = $filter('convertfortx')($scope.transactionFee, 8);
+      MetaverseService.RegisterMIT($scope.mitSymbol, $scope.mitAvatar, $scope.content, fee_value, password)
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          if(response.data.result.transaction) {
+            $translate('MESSAGES.MIT_CREATED').then( (data) => FlashService.Success(data, true, response.data.result.transaction.hash) );
+            init();
+          }
+        } else {
+          $translate('MESSAGES.ERROR_MIT_CREATION').then( (data) => {
+            if (response.message.message != undefined) {
+              FlashService.Error(data + " : " + response.message.message);
+            } else {
+              FlashService.Error(data);
+            }
+          });
+        }
+        NProgress.done();
+        $scope.password = '';
+      });
+    }
+
+    $scope.closeAll = function () {
+      ngDialog.closeAll();
+    };
+
+    //Check if the form is submittable
+    function checkready() {
+      //Check for errors
+      for (var error in $scope.error) {
+        if ($scope.error[error]) {
+          $scope.submittable = false;
+          return;
+        }
+      }
+      $scope.submittable = true;
+    }
+
+    //Check if the avatar name is valid
+    $scope.$watch('mitSymbol', (newVal, oldVal) => {
+      $scope.error.symbol_empty = (newVal == undefined || newVal == '');
+      $scope.error.symbol_wrong_char = newVal != undefined && newVal != '' ? !newVal.match(/^[0-9A-Za-z.@_-]+$/) : false;
+      $scope.error.symbol_already_exist = newVal != undefined && newVal != '' ? ($scope.allMitsSymbols.indexOf(newVal) > -1) : false;
+      checkready();
+    });
+
+    //Check if the address is valid
+    $scope.$watch('mitAvatar', (newVal, oldVal) => {
+      $scope.error.mitAvatar_empty = (newVal == undefined || newVal == '');
+      $scope.error.mitAvatar_not_enough_etp = newVal != undefined && $scope.addresses[newVal] != undefined ? ($scope.addresses[newVal].available < 0.0001) : false;
+      checkready();
+    });
+
+    //Check if the fee is valid
+    $scope.$watch('transactionFee', (newVal, oldVal) => {
+      $scope.error.fee_empty = (newVal == undefined);
+      $scope.error.fee_too_low = newVal != undefined ? newVal<0.0001 : false;
+      checkready();
+    });
+
+    //Check if the password is valid
+    $scope.$watch('password', (newVal, oldVal) => {
+      $scope.errorPassword = (newVal == undefined || newVal == '');
+    });
+
+    init();
+
+  }
+
+  function TransferMITController(MetaverseHelperService, MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $location, $rootScope, $filter) {
+
+    $scope.transferMIT = transferMIT;
+    $scope.error = [];
+    $scope.checkInputs = checkInputs;
+    $scope.addresses = [];
+    $scope.allMitsSymbols = [];
+    $scope.myDidsAddresses = [];
+    $scope.symbolAddress = [];
+
+    $scope.allDidsSymbols = [];
+
+    function init() {
+      $scope.mitSymbol = '';
+      $scope.mitAvatar = '';
+      $scope.content = '';
+      $scope.password = '';
+      $scope.transactionFee = 0.0001;
+      $scope.confirmation = false;
+      $scope.submittable = false;
+    }
+
+    $scope.loaded = false;
+    $scope.mymits = [];
+
+    NProgress.start();
+    MetaverseService.ListMITs()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.mymits = response.data.result.mits;
+      } else {
+        $translate('MESSAGES.MITS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+      }
+      $scope.loaded = true;
+      NProgress.done();
+    });
+
+    MetaverseService.ListAllDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.allDids = response.data.result.dids;
+        if(typeof $scope.allDids != 'undefined' && $scope.allDids != null) {
+          $scope.allDids.forEach(function(did) {
+            $scope.allDidsSymbols.push(did.symbol);
+          });
+        }
+      } else {
+        $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
+      //Once all the DIDs have been loaded, we look for the one entered by the user
+      //checkRecipent($scope.sendTo);
+    });
+
+    function checkInputs(password) {
+      $scope.confirmation = true;
+      delete $rootScope.flash;
+    }
+
+
+    function transferMIT(password) {
       NProgress.start();
       var fee_value = $filter('convertfortx')($scope.transactionFee, 8);
       MetaverseService.RegisterMIT($scope.mitSymbol, $scope.mitAvatar, $scope.content, fee_value, password)

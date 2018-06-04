@@ -31,9 +31,12 @@
               <div class="assetBoxTitle">{{ 'STATUS' | translate }}</div>
               <span class="assetBoxValue">{{mit.status}}</span>
             </div>
-            <div class="assetBoxBalance col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 noPaddingLeftRight overflow">
+            <div class="assetBoxBalance col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 noPaddingLeftRight overflow">
               <div class="assetBoxTitle">{{ 'CONTENT' | translate }}</div>
               <span class="assetBoxValue">{{mit.content}}</span>
+            </div>
+            <div class="assetBoxButtons">
+              <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/mit/{{asset.symbol}}">{{ 'ASSETS_SEND' | translate}}</a>
             </div>
           </dd>
         </div>
