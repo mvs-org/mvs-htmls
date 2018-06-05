@@ -27,7 +27,7 @@
   .controller('TransferCertController', TransferCertController)
   .controller('IssueCertController', IssueCertController)
   .controller('ShowMITsController', ShowMITsController)
-  .controller('ShowAllMITsController', ShowAllMITsController)
+  //.controller('ShowAllMITsController', ShowAllMITsController)
   .controller('CreateMITController', CreateMITController)
   .controller('TransferMITController', TransferMITController)
   .directive('bsTooltip', function() {
@@ -4511,7 +4511,7 @@
     MetaverseService.ListMITs()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.mymits = response.data.result.mits;
+        $scope.mymits = response.data.result.mits != null ? response.data.result.mits : [];
       } else {
         $translate('MESSAGES.MITS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
       }
@@ -4520,7 +4520,7 @@
     });
   }
 
-  function ShowAllMITsController(MetaverseHelperService, MetaverseService, $scope, $translate, $window, localStorageService, FlashService) {
+  /*function ShowAllMITsController(MetaverseHelperService, MetaverseService, $scope, $translate, $window, localStorageService, FlashService) {
 
     $scope.loaded = false;
 
@@ -4535,7 +4535,7 @@
       $scope.loaded = true;
       NProgress.done();
     });
-  }
+  }*/
 
 
   function CreateMITController(MetaverseHelperService, MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $location, $rootScope, $filter) {
@@ -4720,8 +4720,10 @@
     $scope.allMitsSymbols = [];
     $scope.myDidsAddresses = [];
     $scope.symbolAddress = [];
+    $scope.mymits = [];
 
     $scope.allDidsSymbols = [];
+    $scope.loaded = false;
 
     function init() {
       $scope.mitSymbol = '';
@@ -4731,6 +4733,7 @@
       $scope.transactionFee = 0.0001;
       $scope.confirmation = false;
       $scope.submittable = false;
+      $scope.nomits = false;
     }
 
     $scope.loaded = false;
@@ -4740,7 +4743,7 @@
     MetaverseService.ListMITs()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.mymits = response.data.result.mits;
+        $scope.mymits = response.data.result.mits != null ? response.data.result.mits : [];
       } else {
         $translate('MESSAGES.MITS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
       }
@@ -4774,7 +4777,7 @@
     function transferMIT(password) {
       NProgress.start();
       var fee_value = $filter('convertfortx')($scope.transactionFee, 8);
-      MetaverseService.RegisterMIT($scope.mitSymbol, $scope.mitAvatar, $scope.content, fee_value, password)
+      MetaverseService.TransferMIT($scope.mitSymbol, $scope.sendto, fee_value, password)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           if(response.data.result.transaction) {
@@ -4811,18 +4814,16 @@
       $scope.submittable = true;
     }
 
-    //Check if the avatar name is valid
+    //Check if the MIT symbol is valid
     $scope.$watch('mitSymbol', (newVal, oldVal) => {
-      $scope.error.symbol_empty = (newVal == undefined || newVal == '');
-      $scope.error.symbol_wrong_char = newVal != undefined && newVal != '' ? !newVal.match(/^[0-9A-Za-z.@_-]+$/) : false;
-      $scope.error.symbol_already_exist = newVal != undefined && newVal != '' ? ($scope.allMitsSymbols.indexOf(newVal) > -1) : false;
+      $scope.error.mitSymbol_empty = (newVal == undefined || newVal == '');
       checkready();
     });
 
     //Check if the address is valid
-    $scope.$watch('mitAvatar', (newVal, oldVal) => {
-      $scope.error.mitAvatar_empty = (newVal == undefined || newVal == '');
-      $scope.error.mitAvatar_not_enough_etp = newVal != undefined && $scope.addresses[newVal] != undefined ? ($scope.addresses[newVal].available < 0.0001) : false;
+    $scope.$watch('sendto', (newVal, oldVal) => {
+      $scope.error.sendto_empty = (newVal == undefined || newVal == '');
+      $scope.error.sendto_not_exist = newVal != undefined && newVal != '' ? !($scope.allDidsSymbols.indexOf(newVal) > -1) : false;
       checkready();
     });
 

@@ -107,6 +107,7 @@
         service.ListMITs = ListMITs;
         service.ListAllMITs = ListAllMITs;
         service.RegisterMIT = RegisterMIT;
+        service.TransferMIT = TransferMIT;
 
 
         //Chain
@@ -970,6 +971,11 @@
         function RegisterMIT(symbol, avatar, content, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
             return _sendV2('registermit', [credentials.user, password, avatar, symbol, '-c', content, '-f', transactionFee]);
+        }
+
+        function TransferMIT(symbol, sendto, transactionFee, password) {
+            var credentials = localStorageService.get('credentials');
+            return _sendV2('transfermit', [credentials.user, password, sendto, symbol, '-f', transactionFee]);
         }
 
         function DidSendMore(recipents, transactionFee, password) {

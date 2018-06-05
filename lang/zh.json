@@ -348,7 +348,7 @@
   "MESSAGES.INVALID_VALUE" : "输入的数值无效。",
   "MESSAGES.INVALID_TIME_PERIOD" : "时间段无效。",
   "MESSAGES.CONTAINS_SPACE" : "导出路径中不支持空格",
-  "MESSAGES.ASSETS_CREATE_ERROR" : "该资产已经存在。",
+  "MESSAGES.ASSETS_CREATE_ERROR" : "无法创建该资产。",
   "MESSAGES.TOO_LOW_FEE" : "手续费不少于0.0001个ETP。",
   "MESSAGES.TRANSACTION_ASSET_MULTISIG" : "对不起，目前暂不支持通过多重签名进行资产转移。",
   "CONSOLE.INSERT_PROMPT" : "请输入相关内容",
@@ -637,5 +637,12 @@
   "HISTORY.MIT_ISSUE": "MIT Issue",
   "HISTORY.MIT_TRANSFER": "MIT transfer",
   "TRANSFER.MIT": "MIT transfer",
-  "HEADLINE_MST": "Metaverse Smart Token"
+  "HEADLINE_MST": "Metaverse Smart Token",
+  "EXPLORER.CONTENT": "Content",
+  "HEADLINE_MIT": "Metaverse Identifiable Token",
+  "ASSET_CREATE.NO_MIT": "You don't have any MIT yet",
+  "TRANSFER_MIT.SYMBOL": "MIT Symbol",
+  "CREATE_MIT.EXPLANATION_TITLE": "Metaverse Identifiable Token",
+  "CREATE_MIT.EXPLANATION_1": "Metaverse Identifiable Token (MIT) is a set of token standards that allow everyone to register asset from off-chain. MIT is different with MST, which is a light token for tracking/verification for real-world asset.",
+  "CREATE_MIT.EXPLANATION_2": "At the opposite of MST, each MIT is unique, which make it easy to track and identity."
 }

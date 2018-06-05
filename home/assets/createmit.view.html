@@ -1,7 +1,7 @@
-<div class="headline">{{ 'HEADLINE_ASSETS_CREATE' | translate }}</div>
+<div class="headline">{{ 'HEADLINE_MIT' | translate }}</div>
 <div>
   <ul class="nav nav-pills tabsMenu">
-    <li role="presentation"><a href="#!/asset/create" class="btn-link-menu">{{ 'ASSET.CREATE_MST' | translate }}</a></li>
+    <li role="presentation"><a href="#!/transfer/mit/" class="btn-link-menu">{{ 'TRANSFER.MIT' | translate }}</a></li>
     <li role="presentation" class="active"><a href="#!/asset/createmit" class="btn-link-menu">{{ 'ASSET.CREATE_MIT' | translate }}</a></li>
   </ul>
 </div>
@@ -20,7 +20,7 @@
 
       <!--Avatar-->
   		<div class="form-group">
-				<label for="useAddress" class=" ddd control-label">{{ 'ASSET_CREATE.DID' | translate }}</label>
+				<label for="useAddress" class="control-label">{{ 'ASSET_CREATE.DID' | translate }}</label>
         <select name="useAddress" type="address" name="mitAvatar" class="form-control" placeholder="" ng-model="mitAvatar" ng-class="{validInput: !error.mitAvatar_empty && !error.mitAvatar_not_enough_etp, wrongInput: error.mitAvatar_empty || error.mitAvatar_not_enough_etp}">
           <option ng-repeat="did in myDids" value="{{did.symbol}}" title="{{did.symbol}}">{{did.symbol}} - {{did.address}} - {{addresses[did.address].available | assetformat : 8}} ETP</option>
           <option ng-show="noDids" value="nodid">{{ 'ASSET_CREATE.NO_DID' | translate }}</option>
@@ -55,24 +55,21 @@
       </br>
     </div>
     <!--MIT advise-->
-    <!--div class="col-xs-12 col-sm-6">
+    <div class="col-xs-12 col-sm-6">
       <div class="assetDetailsPanel panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{'CREATE_PROFILE.EXPLANATION_TITLE' | translate}}</h3>
+          <h3 class="panel-title">{{'CREATE_MIT.EXPLANATION_TITLE' | translate}}</h3>
         </div>
         <div class="panel-body">
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'CREATE_PROFILE.EXPLANATION_1' | translate }}</div>
+            <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'CREATE_MIT.EXPLANATION_1' | translate }}</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'CREATE_PROFILE.EXPLANATION_2' | translate }}</div>
-          </div>
-          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-            <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'CREATE_PROFILE.EXPLANATION_3' | translate }}</div>
+            <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'CREATE_MIT.EXPLANATION_2' | translate }}</div>
           </div>
         </div>
       </div>
-    </div-->
+    </div>
   </form>
 
   <form ng-show="confirmation">
