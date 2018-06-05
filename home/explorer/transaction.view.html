@@ -80,10 +80,9 @@
     </div>
     <!--Memo-->
     <div class="col-sm-12 col-md-12 form-group noPaddingLeftRight">
-      <div ng-repeat="output in transaction.outputs" ng-show="output.attachment.type == 'message'" class="">
-        <label class="control-label">
-          {{ 'EXPLORER.MEMO' | translate }}
-        </label>
+      <div ng-repeat="output in transaction.outputs" ng-show="output.attachment.type == 'message' || (output.attachment.type == 'mit' && output.attachment.content != '')" class="breakWord">
+        <label ng-show="output.attachment.type == 'message'" class="control-label">{{ 'EXPLORER.MEMO' | translate }}</label>
+        <label ng-show="output.attachment.type == 'mit'" class="control-label">{{ 'EXPLORER.CONTENT' | translate }}</label>
         <div>{{output.attachment.content}}</div>
       </div>
     </div>
