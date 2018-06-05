@@ -2602,6 +2602,7 @@
     $scope.listMultiSig = [];
     $scope.secondaryIssue = secondaryIssue;
     $scope.checkInputs = checkInputs;
+    $scope.myAsset = [];
     $scope.myAssets = [];
     $scope.updateQuantity = updateQuantity;
     $scope.availBalance = availBalance;
@@ -2616,6 +2617,7 @@
     $scope.updateSymbol = updateSymbol;
     $scope.getAsset = getAsset;
     $scope.getAccountAsset = getAccountAsset;
+    $scope.avatarsLoaded = false;
 
 
     function init(){
@@ -2742,11 +2744,14 @@
           $window.scrollTo(0,0);
         }
         NProgress.done();
+        $scope.error.address_not_enough_asset = $scope.address != undefined && $scope.myAsset != undefined && $scope.myAsset.secondaryissue_threshold != 127 && $scope.myAsset.secondaryissue_threshold != 0 ? ($scope.getAssetBalance[$scope.address]/($scope.assetOriginal + $scope.assetSecondaryIssue)*100 < $scope.myAsset.secondaryissue_threshold) || $scope.getAssetBalance[$scope.address] == undefined : false;
+        checkready();
       });
     }
 
     function getAccountAsset (symbol) {
       $scope.getAssetBalance = [];
+      $scope.loadingAvatars = true;
       MetaverseService.GetAccountAsset(symbol)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success && response.data.result.assets != null) {    //If the address doesn't contain any asset, we don't need it
@@ -2754,8 +2759,13 @@
           $scope.assetAddresses.forEach( (address) => {
             $scope.getAssetBalance[address.address] = address.quantity;
           });
+          availBalance($scope.address);
+          $scope.error.address_not_enough_asset = $scope.address != undefined && $scope.myAsset != undefined && $scope.myAsset.secondaryissue_threshold != 127 && $scope.myAsset.secondaryissue_threshold != 0 ? ($scope.getAssetBalance[$scope.address]/($scope.assetOriginal + $scope.assetSecondaryIssue)*100 < $scope.myAsset.secondaryissue_threshold) || $scope.getAssetBalance[$scope.address] == undefined : false;
+          checkready();
         }
+        $scope.avatarsLoaded = true;
       });
+
     }
 
     //Load assets
@@ -2799,6 +2809,7 @@
     });
 
     function updateSymbol (symbol) {
+      $scope.avatarsLoaded = false;
       getAsset(symbol);
       getAccountAsset(symbol);
       $scope.myAssetsBalances.forEach( (asset) => {
@@ -2810,9 +2821,7 @@
         if(cert.symbol == symbol && cert.cert == 'issue')
           $scope.issueCertOwner = true;
       });
-      availBalance($scope.address);
       $scope.error.address_not_enough_etp = $scope.address != undefined && $scope.addresses != undefined && $scope.addresses[$scope.address] != undefined ? $scope.addresses[$scope.address].available<$scope.transactionFee : false;
-      $scope.error.address_not_enough_asset = $scope.address != undefined && $scope.myAsset != undefined && $scope.myAsset.secondaryissue_threshold != 127 && $scope.myAsset.secondaryissue_threshold != 0 ? ($scope.getAssetBalance[$scope.address]/($scope.assetOriginal + $scope.assetSecondaryIssue)*100 < $scope.myAsset.secondaryissue_threshold) || $scope.getAssetBalance[$scope.address] == undefined : false;
       checkready();
     }
 
@@ -2925,7 +2934,7 @@
         $scope.submittable = false;
         return;
       }
-      if($scope.myAsset.secondaryissue_threshold == 0 || ($scope.availableBalanceAsset/($scope.assetOriginal + $scope.assetSecondaryIssue)*100) < $scope.myAsset.secondaryissue_threshold) {
+      if($scope.myAsset.secondaryissue_threshold == 0 || (($scope.myAsset.secondaryissue_threshold != 127) && ($scope.availableBalanceAsset/($scope.assetOriginal + $scope.assetSecondaryIssue)*100) < $scope.myAsset.secondaryissue_threshold)) {
         $scope.submittable = false;
         return;
       }
@@ -2946,7 +2955,7 @@
     //Check if symbol
     $scope.$watch('symbol', (newVal, oldVal) => {
       $scope.error.symbol_empty = (newVal == undefined || newVal == '');
-      $scope.error.symbol_no_secondary_issue = newVal != undefined ? $scope.myAsset.secondaryissue_threshold == 0 : false;
+      $scope.error.symbol_no_secondary_issue = newVal != undefined && $scope.myAsset != undefined ? $scope.myAsset.secondaryissue_threshold == 0 : false;
       checkready();
     });
 

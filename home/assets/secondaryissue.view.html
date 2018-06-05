@@ -21,11 +21,12 @@
       <div class="form-group">
         <label for="addressFrom" class="control-label">{{ 'SECONDARY_ISSUE.TO_AVATAR' | translate }}</label>
         <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_AVATAR' | translate }}"></span>
+        <span ng-hide="avatarsLoaded" class="miniSpinner"></span>
         <select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="address" ng-change="availBalance(address)" ng-class="{validInput: !error.address_empty && !error.address_not_enough_etp && !error.address_not_enough_asset, wrongInput: error.address_empty || error.address_not_enough_etp || error.address_not_enough_asset}">
           <option ng-repeat="oneAddress in listAddresses | orderBy:'available':true" value="{{oneAddress.address}}" ng-if="myDidsAddresses[oneAddress.address]">{{myDidsAddresses[oneAddress.address]}} - {{oneAddress.address}} - {{getAssetBalance[oneAddress.address] | assetformat : myAsset.decimal_number}} {{myAsset.symbol}}</option>
         </select>
-        <div ng-show="error.address_not_enough_etp" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'SECONDARY_ISSUE.RECIPIENT_NOT_ENOUGH_ETP' | translate }}</div>
-        <div ng-show="error.address_not_enough_asset" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'SECONDARY_ISSUE.RECIPIENT_NOT_ENOUGH_ASSET' | translate }}</div>
+        <div ng-show="error.address_not_enough_etp && avatarsLoaded" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'SECONDARY_ISSUE.RECIPIENT_NOT_ENOUGH_ETP' | translate }}</div>
+        <div ng-show="error.address_not_enough_asset && avatarsLoaded" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'SECONDARY_ISSUE.RECIPIENT_NOT_ENOUGH_ASSET' | translate }}</div>
       </div>
       <!--Quantity-->
       <div class="form-group">
