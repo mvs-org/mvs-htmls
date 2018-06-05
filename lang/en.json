@@ -644,5 +644,5 @@
   "TRANSFER_MIT.SYMBOL": "MIT Symbol",
   "CREATE_MIT.EXPLANATION_TITLE": "Metaverse Identifiable Token",
   "CREATE_MIT.EXPLANATION_1": "Metaverse Identifiable Token (MIT) is a set of token standards that allow everyone to register assets from off-chain. MIT is different from MST, it is a light token for tracking/verification of real-world assets.",
-  "CREATE_MIT.EXPLANATION_2": "At the opposite of MST, each MIT is unique, which make it easy to track and identify."
+  "CREATE_MIT.EXPLANATION_2": "As a subset of MST, each MIT is identifiable, which make it easy to track and identity."
 }

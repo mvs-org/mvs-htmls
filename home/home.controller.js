@@ -4714,7 +4714,7 @@
     $scope.mitSymbol = $location.path().split('/')[3];
 
     function init() {
-      $scope.sento = '';
+      $scope.sendto = '';
       $scope.password = '';
       $scope.transactionFee = 0.0001;
       $scope.confirmation = false;
