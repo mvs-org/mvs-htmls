@@ -2811,6 +2811,9 @@
         if(cert.symbol == symbol && cert.cert == 'issue')
           $scope.issueCertOwner = true;
       });
+      availBalance($scope.address);
+      $scope.error.address_not_enough_etp = $scope.address != undefined && $scope.addresses != undefined && $scope.addresses[$scope.address] != undefined ? $scope.addresses[$scope.address].available<$scope.transactionFee : false;
+      $scope.error.address_not_enough_asset = $scope.address != undefined && $scope.myAsset != undefined && $scope.myAsset.secondaryissue_threshold != 127 && $scope.myAsset.secondaryissue_threshold != 0 ? ($scope.getAssetBalance[$scope.address]/($scope.assetOriginal + $scope.assetSecondaryIssue)*100 < $scope.myAsset.secondaryissue_threshold) || $scope.getAssetBalance[$scope.address] == undefined : false;
       checkready();
     }
 
@@ -2940,6 +2943,13 @@
       }
       $scope.submittable = true;
     }
+
+    //Check if symbol
+    $scope.$watch('symbol', (newVal, oldVal) => {
+      $scope.error.symbol_empty = (newVal == undefined || newVal == '');
+      $scope.error.symbol_no_secondary_issue = newVal != undefined ? $scope.myAsset.secondaryissue_threshold == 0 : false;
+      checkready();
+    });
 
     //Check if the avatar is valid
     $scope.$watch('address', (newVal, oldVal) => {

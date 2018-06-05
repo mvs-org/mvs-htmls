@@ -12,9 +12,10 @@
       <!--Symbol-->
       <div class="form-group">
         <label for="addressFrom" class="control-label">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</label>
-        <select name="symbol" type="address" class="form-control" ng-model="symbol" ng-change="updateSymbol(symbol)" ng-class="{validInput: true, wrongInput: false}">
+        <select name="symbol" type="address" class="form-control" ng-model="symbol" ng-change="updateSymbol(symbol)" ng-class="{validInput: !error.symbol_empty && !error.symbol_no_secondary_issue, wrongInput: error.symbol_empty || error.symbol_no_secondary_issue}">
           <option ng-repeat="asset in myAssetsBalances | orderBy:'symbol'" value="{{asset.symbol}}">{{asset.symbol}}</option>
         </select>
+        <div ng-show="error.symbol_no_secondary_issue" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'ASSET_CREATE.SECONDARY_ISSUE_DISABLED' | translate }}</div>
       </div>
       <!--Sender-->
       <div class="form-group">

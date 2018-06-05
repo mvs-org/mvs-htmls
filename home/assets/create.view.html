@@ -52,7 +52,7 @@
       <!--Description-->
       <div class="form-group">
         <label for="description" class="control-label">{{ 'ASSET_ASSET_CREATE_DESCRIPTION' | translate }}</label>
-        <textarea class="form-control" name="description" required rows="6" cols="35" ng-model="description" ng-class="{validInput: !error.description_empty && !error.description_too_long, wrongInput: error.description_empty || error.description_too_long}" autocomplete="off"></textarea>
+        <textarea class="form-control" name="description" maxlength="64" required rows="1" cols="35" ng-model="description" ng-class="{validInput: !error.description_empty && !error.description_too_long, wrongInput: error.description_empty || error.description_too_long}" autocomplete="off"></textarea>
         <div ng-show="error.description_too_long" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_ASSET.DESCRIPTION_TOO_LONG' | translate }}</div>
       </div>
       <!--Checkbox for secondaryissue-->
