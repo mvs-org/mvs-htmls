@@ -10,12 +10,11 @@
   <form ng-show="!confirmation">
     <div class="col-xs-12 col-sm-6">
 
-      <!--ID-->
+      <!--MIT Symbol-->
       <div class="form-group">
-        <label class="control-label">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</label>
-        <input type="text" class="form-control" name="mitSymbol" ng-model="mitSymbol" ng-class="{validInput: !error.symbol_empty && !error.symbol_wrong_char && !error.symbol_already_exist, wrongInput: error.symbol_empty || error.symbol_wrong_char || error.symbol_already_exist}">
+        <label class="control-label">{{ 'TRANSFER_MIT.SYMBOL' | translate }}</label>
+        <input type="text" class="form-control" name="mitSymbol" ng-model="mitSymbol" ng-class="{validInput: !error.symbol_empty && !error.symbol_wrong_char, wrongInput: error.symbol_empty || error.symbol_wrong_char}">
         <div ng-show="error.symbol_wrong_char" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_PROFILE.CREATE_ID_WRONG_CHARACTER' | translate }}</div>
-        <div ng-show="error.symbol_already_exist" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_MIT.SYMBOL_ALREADY_EXIST' | translate }}</div>
       </div>
 
       <!--Avatar-->

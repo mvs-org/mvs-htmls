@@ -27,7 +27,6 @@
   .controller('TransferCertController', TransferCertController)
   .controller('IssueCertController', IssueCertController)
   .controller('ShowMITsController', ShowMITsController)
-  //.controller('ShowAllMITsController', ShowAllMITsController)
   .controller('CreateMITController', CreateMITController)
   .controller('TransferMITController', TransferMITController)
   .directive('bsTooltip', function() {
@@ -4520,23 +4519,6 @@
     });
   }
 
-  /*function ShowAllMITsController(MetaverseHelperService, MetaverseService, $scope, $translate, $window, localStorageService, FlashService) {
-
-    $scope.loaded = false;
-
-    NProgress.start();
-    MetaverseService.ListAllMITs()
-    .then( (response) => {
-      if (typeof response.success !== 'undefined' && response.success) {
-        $scope.allmits = response.data.result.mits;
-      } else {
-        $translate('MESSAGES.MITS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
-      }
-      $scope.loaded = true;
-      NProgress.done();
-    });
-  }*/
-
 
   function CreateMITController(MetaverseHelperService, MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $location, $rootScope, $filter) {
 
@@ -4546,7 +4528,7 @@
     $scope.checkInputs = checkInputs;
     $scope.addresses = [];
 
-    $scope.allMitsSymbols = [];
+    //$scope.allMitsSymbols = [];
     $scope.myDidsAddresses = [];
     $scope.symbolAddress = [];
     $scope.noDids = false;
@@ -4595,7 +4577,7 @@
 
     listAddresses();
 
-    NProgress.start();
+    /*NProgress.start();
     MetaverseService.ListAllMITs()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
@@ -4611,7 +4593,7 @@
         $translate('MESSAGES.MITS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
       }
       NProgress.done();
-    });
+    });*/
 
     function checkInputs(password) {
       $scope.confirmation = true;
@@ -4684,7 +4666,7 @@
     $scope.$watch('mitSymbol', (newVal, oldVal) => {
       $scope.error.symbol_empty = (newVal == undefined || newVal == '');
       $scope.error.symbol_wrong_char = newVal != undefined && newVal != '' ? !newVal.match(/^[0-9A-Za-z.@_-]+$/) : false;
-      $scope.error.symbol_already_exist = newVal != undefined && newVal != '' ? ($scope.allMitsSymbols.indexOf(newVal) > -1) : false;
+      //$scope.error.symbol_already_exist = newVal != undefined && newVal != '' ? ($scope.allMitsSymbols.indexOf(newVal) > -1) : false;
       checkready();
     });
 
@@ -4716,28 +4698,19 @@
     $scope.transferMIT = transferMIT;
     $scope.error = [];
     $scope.checkInputs = checkInputs;
-    $scope.addresses = [];
-    $scope.allMitsSymbols = [];
-    $scope.myDidsAddresses = [];
-    $scope.symbolAddress = [];
     $scope.mymits = [];
-
     $scope.allDidsSymbols = [];
     $scope.loaded = false;
 
+    $scope.mitSymbol = $location.path().split('/')[3];
+
     function init() {
-      $scope.mitSymbol = '';
-      $scope.mitAvatar = '';
-      $scope.content = '';
+      $scope.sento = '';
       $scope.password = '';
       $scope.transactionFee = 0.0001;
       $scope.confirmation = false;
       $scope.submittable = false;
-      $scope.nomits = false;
     }
-
-    $scope.loaded = false;
-    $scope.mymits = [];
 
     NProgress.start();
     MetaverseService.ListMITs()

@@ -634,7 +634,7 @@
   "CREATE_MIT.BACK_TO_MIT": "Back to My MIT",
   "MESSAGES.MIT_CREATED": "New MIT created successfully ! Your transaction hash is: ",
   "MESSAGES.ERROR_MIT_CREATION": "This MIT hasn't been created",
-  "HISTORY.MIT_ISSUE": "MIT Issue",
+  "HISTORY.MIT_ISSUE": "MIT register",
   "HISTORY.MIT_TRANSFER": "MIT transfer",
   "TRANSFER.MIT": "MIT transfer",
   "HEADLINE_MST": "Metaverse Smart Token",
@@ -643,6 +643,6 @@
   "ASSET_CREATE.NO_MIT": "You don't have any MIT yet",
   "TRANSFER_MIT.SYMBOL": "MIT Symbol",
   "CREATE_MIT.EXPLANATION_TITLE": "Metaverse Identifiable Token",
-  "CREATE_MIT.EXPLANATION_1": "Metaverse Identifiable Token (MIT) is a set of token standards that allow everyone to register asset from off-chain. MIT is different with MST, which is a light token for tracking/verification for real-world asset.",
-  "CREATE_MIT.EXPLANATION_2": "At the opposite of MST, each MIT is unique, which make it easy to track and identity."
+  "CREATE_MIT.EXPLANATION_1": "Metaverse Identifiable Token (MIT) is a set of token standards that allow everyone to register assets from off-chain. MIT is different from MST, it is a light token for tracking/verification of real-world assets.",
+  "CREATE_MIT.EXPLANATION_2": "At the opposite of MST, each MIT is unique, which make it easy to track and identify."
 }

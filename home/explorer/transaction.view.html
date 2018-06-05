@@ -69,6 +69,8 @@
           <span class="numbersSearch" ng-show="output.attachment.type=='asset-cert' && output.attachment.cert == 'naming'">{{ 'EXPLORER.CERT_TRANSFER' | translate }} - {{ 'PROFIL.CERT_NAMING' | translate }} - {{output.attachment.symbol}}</span>
           <span class="numbersSearch" ng-show="output.attachment.type=='did-issue'">{{ 'EXPLORER.AVATAR_ISSUE' | translate }} - {{output.attachment.symbol}}</span>
           <span class="numbersSearch" ng-show="output.attachment.type=='did-transfer'">{{ 'EXPLORER.AVATAR_TRANSFER' | translate }} - {{output.attachment.symbol}}</span>
+          <span class="numbersSearch" ng-show="output.attachment.type=='mit' && output.attachment.status == 'registered'">{{'HISTORY.MIT_ISSUE' | translate}} - {{output.attachment.symbol}}</span>
+          <span class="numbersSearch" ng-show="output.attachment.type=='mit' && output.attachment.status == 'transfered'">{{'HISTORY.MIT_TRANSFER' | translate}} - {{output.attachment.symbol}}</span>
           <button class="btn-link-black smallButton noPaddingTopBottomButton" ng-click="output.display = !output.display">{{ 'EXPLORER.TRANSACTION_SCRIPT' | translate }}</button>
         </div>
         <div ng-show="output.display" class="col-sm-12 col-md-11 form-group noPaddingLeftRight">
@@ -80,7 +82,7 @@
     </div>
     <!--Memo-->
     <div class="col-sm-12 col-md-12 form-group noPaddingLeftRight">
-      <div ng-repeat="output in transaction.outputs" ng-show="output.attachment.type == 'message' || (output.attachment.type == 'mit' && output.attachment.content != '')" class="breakWord">
+      <div ng-repeat="output in transaction.outputs" ng-show="output.attachment.type == 'message' || (output.attachment.type == 'mit' && output.attachment.content && output.attachment.content != '')" class="breakWord">
         <label ng-show="output.attachment.type == 'message'" class="control-label">{{ 'EXPLORER.MEMO' | translate }}</label>
         <label ng-show="output.attachment.type == 'mit'" class="control-label">{{ 'EXPLORER.CONTENT' | translate }}</label>
         <div>{{output.attachment.content}}</div>
