@@ -156,7 +156,7 @@
             <span ng-show="transaction.direction=='send'" class="sendSign overflow"><span class="p-empty">-</span>{{transaction.value | assetformat : transaction.decimal_number}}</span>
             <span ng-show="transaction.direction=='intra'" class="intrawalletSign overflow">{{'HISTORY.INTRAWALLET_TX' | translate}}</span>
             <span ng-show="transaction.direction=='cert'" class="intrawalletSign overflow">{{'HISTORY.CERT' | translate}}</span>
-            <span ng-show="transaction.direction=='did-issue'" class="intrawalletSign overflow">{{'HISTORY.DID_ISSUE' | translate}}</span>
+            <span ng-show="transaction.direction=='did-register'" class="intrawalletSign overflow">{{'HISTORY.DID_ISSUE' | translate}}</span>
             <span ng-show="transaction.direction=='did-transfer'" class="intrawalletSign overflow">{{'HISTORY.DID_TRANSFER' | translate}}</span>
             <span ng-show="transaction.direction=='mit-issue'" class="intrawalletSign overflow">{{'HISTORY.MIT_ISSUE' | translate}}</span>
             <span ng-show="transaction.direction=='mit-transfer'" class="intrawalletSign overflow">{{'HISTORY.MIT_TRANSFER' | translate}}</span>
@@ -206,8 +206,10 @@
             <span ng-show="transaction.direction=='send'" class="sendSign overflow"><span class="p-empty">-</span>{{transaction.value | assetformat : transaction.decimal_number}} {{transaction.type}}</span>
             <span ng-show="transaction.direction=='intra'" class="intrawalletSign overflow">{{'HISTORY.INTRAWALLET_TX' | translate}} {{transaction.type}}</span>
             <span ng-show="transaction.direction=='cert'" class="intrawalletSign overflow">{{'HISTORY.CERT' | translate}} {{transaction.type}}</span>
-            <span ng-show="transaction.direction=='did-issue'" class="intrawalletSign overflow">{{'HISTORY.DID_ISSUE' | translate}} {{transaction.type}}</span>
+            <span ng-show="transaction.direction=='did-register'" class="intrawalletSign overflow">{{'HISTORY.DID_ISSUE' | translate}} {{transaction.type}}</span>
             <span ng-show="transaction.direction=='did-transfer'" class="intrawalletSign overflow">{{'HISTORY.DID_TRANSFER' | translate}} {{transaction.type}}</span>
+            <span ng-show="transaction.direction=='mit-issue'" class="intrawalletSign overflow">{{'HISTORY.MIT_ISSUE' | translate}}</span>
+            <span ng-show="transaction.direction=='mit-transfer'" class="intrawalletSign overflow">{{'HISTORY.MIT_TRANSFER' | translate}}</span>
           </div>
           <div class="transactionBoxSmallAddress overflow">
             <a class="btn-link" href="#!/explorer/tx/{{transaction.hash}}">

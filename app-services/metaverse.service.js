@@ -1110,7 +1110,7 @@
         const TX_TYPE_ASSET = 'ASSET';
         const TX_TYPE_ISSUE = 'ISSUE';
         const TX_TYPE_CERT = 'CERT';
-        const TX_TYPE_DID_ISSUE = 'DID_ISSUE';
+        const TX_TYPE_DID_REGISTER = 'DID_REGISTER';
         const TX_TYPE_DID_TRANSFER = 'DID_TRANSFER';
         const TX_TYPE_MIT = 'MIT';
         const TX_TYPE_UNKNOWN = 'UNKNOWN';
@@ -1146,8 +1146,8 @@
                         result = TX_TYPE_ASSET;
                     if (output.attachment.type === 'asset-cert' && result != TX_TYPE_ISSUE)
                         result = TX_TYPE_CERT;
-                    if (output.attachment.type === 'did-issue')
-                        result = TX_TYPE_DID_ISSUE;
+                    if (output.attachment.type === 'did-register')
+                        result = TX_TYPE_DID_REGISTER;
                     if (output.attachment.type === 'did-transfer')
                         result = TX_TYPE_DID_TRANSFER;
                     if (output.attachment.type === 'mit')
@@ -1294,10 +1294,10 @@
                                         });
                                         transactions.push(transaction);
                                         break;
-                                    case TX_TYPE_DID_ISSUE:
-                                        transaction.direction='did-issue';
+                                    case TX_TYPE_DID_REGISTER:
+                                        transaction.direction='did-register';
                                         e.outputs.forEach(function(output){
-                                            if(output.own==='true' && output.attachment.type==='did-issue'){
+                                            if(output.own==='true' && output.attachment.type==='did-register'){
                                                 transaction.recipents.push({
                                                     "address": output.address
                                                 });
