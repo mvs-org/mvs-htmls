@@ -419,6 +419,7 @@
 
     $scope.confirmation = false;
     $scope.checkInputs = checkInputs;
+    $scope.checkready = checkready;
 
 
     function init() {
@@ -2466,6 +2467,8 @@
     $scope.assetAddresses = [];
     $scope.getAssetBalance = [];
     $scope.myDidsAddresses = [];
+    $scope.myAssetsBalances = [];
+    $scope.myAsset = [];
 
 
     //Shows a modal of the address incl. a qr code
@@ -2524,6 +2527,24 @@
           address.edit = false;
           $scope.getAssetBalance[address.address] = address.quantity;
         });
+      }
+    });
+
+    //Load assets
+    MetaverseService.ListAssets()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success && response.data.assets != "") {
+        $scope.myAssetsBalances = response.data.assets;
+        //If asset is defined -> load it
+        if (typeof $scope.symbol != 'undefined' && $scope.symbol != "") {
+          $scope.myAssetsBalances.forEach( (asset) => {
+            if(asset.symbol == $scope.symbol)
+              $scope.myAsset = asset;
+          });
+        }
+      } else {
+        //Show asset load error
+        $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
       }
     });
 
