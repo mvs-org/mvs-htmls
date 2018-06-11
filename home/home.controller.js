@@ -2253,10 +2253,13 @@
         if($scope.model == 0 && $scope.errorDeposit.periodLocked_empty) {
           $scope.submittable = false;
           return;
-        } else if (($scope.model == 1 || $scope.model == 3) && ($scope.errorDeposit.unlock_number_empty || $scope.errorDeposit.quantityLocked_empty || $scope.errorDeposit.quantityLocked_lower_quantity || $scope.errorDeposit.periodLocked_empty)) {
+        } else if ($scope.model == 1 && ($scope.errorDeposit.unlock_number_empty || $scope.errorDeposit.quantityLocked_empty || $scope.errorDeposit.quantityLocked_lower_quantity || $scope.errorDeposit.periodLocked_empty)) {
           $scope.submittable = false;
           return;
         } else if ($scope.model == 2 && ($scope.errorDeposit.unlockNumber_empty)) {
+          $scope.submittable = false;
+          return;
+        } else if ($scope.model == 3 && ($scope.errorDeposit.unlock_number_empty || $scope.errorDeposit.periodLocked_empty)) {
           $scope.submittable = false;
           return;
         }
@@ -2963,10 +2966,13 @@
         $scope.submittable = false;
         return;
       }
-      if (($scope.model == 1 || $scope.model == 3) && ($scope.errorDeposit.unlock_number_empty || $scope.errorDeposit.quantityLocked_empty || $scope.errorDeposit.quantityLocked_lower_quantity || $scope.errorDeposit.periodLocked_empty)) {
+      if ($scope.model == 1 && ($scope.errorDeposit.unlock_number_empty || $scope.errorDeposit.quantityLocked_empty || $scope.errorDeposit.quantityLocked_lower_quantity || $scope.errorDeposit.periodLocked_empty)) {
         $scope.submittable = false;
         return;
       } else if ($scope.model == 2 && ($scope.errorDeposit.unlockNumber_empty)) {
+        $scope.submittable = false;
+        return;
+      } else if ($scope.model == 3 && ($scope.errorDeposit.unlock_number_empty || $scope.errorDeposit.periodLocked_empty)) {
         $scope.submittable = false;
         return;
       }
@@ -3262,7 +3268,7 @@
         $scope.transactionsFiltered = $scope.transactions;
       /*} else if  (asset == 'Avatars') {
         $scope.transactions.forEach(function(e) {
-          if (e.direction=='did-issue' || e.direction=='did-transfer') {
+          if (e.direction=='did-register' || e.direction=='did-transfer') {
             $scope.transactionsFiltered.push(e);
           }
         });

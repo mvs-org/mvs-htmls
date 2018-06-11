@@ -896,7 +896,7 @@
                 var modelToSend = "TYPE=2;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";UC=" + uc + ";UQ=" + uq;
                 return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
               case '3':
-                var modelToSend = "TYPE=3;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
+                var modelToSend = "TYPE=3;LQ=" + quantity + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
                 return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
               default:
                 return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee]);
@@ -926,7 +926,7 @@
                 var modelToSend = "TYPE=2;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";UC=" + uc + ";UQ=" + uq;
                 return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
               case '3':
-                var modelToSend = "TYPE=3;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
+                var modelToSend = "TYPE=3;LQ=" + quantity + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
                 return _sendV2('didsendassetfrom', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
               default:
                 return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee]);
@@ -1010,7 +1010,7 @@
                 var modelToSend = "TYPE=2;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";UC=" + uc + ";UQ=" + uq;
                 return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-m', modelToSend, '-f', transactionFee]);
               case '3':
-                var modelToSend = "TYPE=3;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
+                var modelToSend = "TYPE=3;LQ=" + quantity + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
                 return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
               default:
                 return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-f', transactionFee]);

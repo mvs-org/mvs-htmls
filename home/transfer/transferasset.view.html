@@ -86,7 +86,7 @@
         </div>
 
         <!--LQ-->
-        <div class="form-group" ng-show="model == 1 || model == 3">
+        <div class="form-group" ng-show="model == 1">
           <label for="quantityLocked" class="control-label">{{ 'SECONDARY_ISSUE.TOTAL_LOCKED_QUANTITY' | translate }}</label>
           <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_TOTAL_LOCKED_QUANTITY' | translate }}"></span>
           <input type="number" min="0" placeholder="0" class="form-control" name="quantityLocked" id="" ng-model="quantityLocked" ng-class="{validInput: !errorDeposit.quantityLocked_empty && !errorDeposit.quantityLocked_lower_quantity, wrongInput: errorDeposit.quantityLocked_empty || errorDeposit.quantityLocked_lower_quantity}">
@@ -197,7 +197,7 @@
             <div class="assetValueColumn col-xs-7 noPaddingLeftRight">{{quantity | number : asset.decimal_number}} {{asset.symbol}}</div>
           </div>
           <div ng-show="frozen_option">
-            <div ng-show="model != 0" class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div ng-show="model == 1 || model == 2" class="col-xs-12 noPaddingLeftRight assetDataLine">
               <div class="assetDataColumn col-xs-5 noPaddingLeftRight">
                 {{ 'SECONDARY_ISSUE.DIRECTLY_AVAILABLE_QUANTITY' | translate }}
                 <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_DIRECTLY_AVAILABLE_QUANTITY' | translate }}"></span>
@@ -218,7 +218,7 @@
               </div>
               <div class="assetValueColumn col-xs-7 noPaddingLeftRight">{{unlockNumber}}{{ 'SECONDARY_ISSUE.PERIODS' | translate }}</div>
             </div>
-            <div ng-show="model == 1 || model == 2 || model == 3" class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div ng-show="model == 1 || model == 2" class="col-xs-12 noPaddingLeftRight assetDataLine">
               <div class="assetDataColumn col-xs-5 noPaddingLeftRight">
                 {{ 'SECONDARY_ISSUE.TOTAL_LOCKED_QUANTITY' | translate }}
                 <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_TOTAL_LOCKED_QUANTITY' | translate }}"></span>
