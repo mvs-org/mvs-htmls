@@ -927,7 +927,7 @@
                 return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
               case '3':
                 var modelToSend = "TYPE=3;LQ=" + quantity + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
-                return _sendV2('didsendassetfrom', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
+                return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
               default:
                 return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee]);
             }
