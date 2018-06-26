@@ -3,11 +3,11 @@
 
     angular.module('app', ['ui.router', 'ngCookies', 'LocalStorageModule', 'pascalprecht.translate', 'angularUtils.directives.dirPagination', 'ngDialog', 'ngFileSaver'])
         .config(config)
-  	    .filter('assetformat',function(){
-			      return function(input, asset_type){
+        .filter('assetformat',function(){
+            return function(input, asset_type){
                 if(typeof asset_type === 'undefined')
                     asset_type=8;
-                return parseFloat(input)/Math.pow(10,asset_type);
+                return bigDecimal.getPrettyValue(bigDecimal.divide(input, Math.pow(10,asset_type), parseInt(asset_type)));
             };
         })
         .config(['$compileProvider', function($compileProvider) {
@@ -87,14 +87,6 @@
                 controllerAs: 'vm'
             })
 
-            /*.state('home.account.subscribe', {
-                url: "/account/subscribe",
-                templateUrl: "home/account/subscribe.view.html",
-                controller: 'AccountController',
-                controllerAs: 'vm'
-            })*/
-
-
             .state('home.addresses', {
                 templateUrl: "home/addresses/index.view.html",
                 controller: 'AddressesController'
@@ -113,7 +105,6 @@
                 controller: 'AddressesController',
                 controllerAs: 'vm'
             })*/
-
 
             .state('home.home', {
                 url: "/home",
@@ -176,10 +167,24 @@
                 controllerAs: 'vm'
             })
 
+            .state('home.asset.mymits', {
+                url: "/asset/mymits",
+                templateUrl: "home/assets/mymits.view.html",
+                controller: 'ShowMITsController',
+                controllerAs: 'vm'
+            })
+
             .state('home.asset.details', {
                 url: "/asset/details/:symbol",
                 templateUrl: "home/assets/details.view.html",
-                controller: 'ShowAssetsController',
+                controller: 'AssetDetailController',
+                controllerAs: 'vm'
+            })
+
+            .state('home.asset.secondaryissue', {
+                url: "/asset/secondaryissue/:symbol",
+                templateUrl: "home/assets/secondaryissue.view.html",
+                controller: 'AssetSecondaryIssueController',
                 controllerAs: 'vm'
             })
 
@@ -190,8 +195,15 @@
                 controllerAs: 'vm'
             })
 
+            .state('home.asset.createmit', {
+                url: "/asset/createmit",
+                templateUrl: "home/assets/createmit.view.html",
+                controller: 'CreateMITController',
+                controllerAs: 'vm'
+            })
+
             .state('home.transferasset', {
-                url: "/transfer/:symbol/:sender_address",
+                url: "/transfer/asset/:symbol",
                 templateUrl: "home/transfer/transferasset.view.html",
                 controller: 'TransferAssetController',
                 controllerAs: 'vm'
@@ -204,24 +216,31 @@
                 controllerAs: 'vm'
             })
 
+            .state('home.transfermit', {
+                url: "/transfer/mit/:symbol",
+                templateUrl: "home/transfer/transfermit.view.html",
+                controller: 'TransferMITController',
+                controllerAs: 'vm'
+            })
+
             .state('home.multisignature', {
-                url: "/transfer/multisignature",
+                url: "/transfer/multisignature/:symbol",
                 templateUrl: "home/transfer/multisignature.view.html",
-                controller: 'ETPMultiSignController',
+                controller: 'TransferMultiSignController',
                 controllerAs: 'vm'
             })
 
             .state('home.sign', {
-                url: "/transfer/sign",
+                url: "/transfer/sign/:symbol",
                 templateUrl: "home/transfer/sign.view.html",
-                controller: 'ETPMultiSignController',
+                controller: 'SignMultiSignController',
                 controllerAs: 'vm'
             })
 
             .state('home.createmultisignature', {
                 url: "/addresses/newmultisignature",
                 templateUrl: "home/addresses/createmultisignature.view.html",
-                controller: 'ETPMultiSignController',
+                controller: 'NewMultiSignController',
                 controllerAs: 'vm'
             })
 
@@ -236,7 +255,48 @@
                 url: "/advanced",
                 templateUrl: "home/console.view.html",
                 controller: 'ConsoleController'
-            });
+            })
+
+            .state('home.profile', {
+                templateUrl: "home/avatar/index.view.html",
+                controller: 'ProfileController'
+            })
+
+            .state('home.profile.myprofile', {
+                url: "/avatar/myavatars/:avatar",
+                templateUrl: "home/avatar/myavatars.view.html",
+                controller: 'ProfileController'
+            })
+
+            .state('home.profile.create', {
+                url: "/avatar/create",
+                templateUrl: "home/avatar/create.view.html",
+                controller: 'CreateProfileController'
+            })
+
+            .state('home.profile.all', {
+                url: "/avatar/all",
+                templateUrl: "home/avatar/all.view.html",
+                controller: 'AllProfilesController'
+            })
+
+            .state('home.profile.modifyaddress', {
+                url: "/avatar/modifyaddress/:didsymbol",
+                templateUrl: "home/avatar/modifyaddress.view.html",
+                controller: 'ModifyAddressController'
+            })
+
+            .state('home.profile.transfercert', {
+                url: "/avatar/transfercert/:symboltype",
+                templateUrl: "home/avatar/transfercert.view.html",
+                controller: 'TransferCertController'
+            })
+
+            .state('home.profile.issuecert', {
+                url: "/avatar/issuecert/:symbol",
+                templateUrl: "home/avatar/issuecert.view.html",
+                controller: 'IssueCertController'
+            })
 
         $urlRouterProvider.otherwise("/login");
     };

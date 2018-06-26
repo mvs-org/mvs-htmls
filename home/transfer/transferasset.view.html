@@ -1,66 +1,286 @@
 <div class="content">
-  <div class="">
-    <span class="headline">{{ 'HEADLINE_ASSET_TRANSFER' | translate }} - {{symbol}}</span>
+  <span class="headline">{{ 'HEADLINE_ASSET_TRANSFER' | translate }} - {{symbol}}</span>
 
-    <div>
+  <ul ng-hide="confirmation" class="nav nav-pills tabsMenu">
+    <li role="presentation" class="active"><a class="btn-link-menu">{{ 'TRANSFER_TYPE_SIMPLE' | translate }}</a></li>
+    <li role="presentation"><a href="#!/transfer/multisignature/{{symbol}}" class="btn-link-menu">{{ 'TRANSFER_TYPE_MULTISIG' | translate }}</a></li>
+    <li role="presentation"><a href="#!/transfer/sign/{{symbol}}" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIGN' | translate }}</a></li>
+  </ul>
+
+  <div ng-hide="confirmation">
+    <br/>
+    <span>{{ 'TRANSFER_ASSET_FEE_START' | translate }} <b class="red">0.0001</b> {{ 'TRANSFER_ASSET_FEE_END' | translate }}</span>
+  </div>
+
+  <form ng-hide="confirmation" class="row">
+		<div class="col-sm-12 col-md-6">
       <br/>
-      <span>{{ 'TRANSFER_ASSET_FEE_START' | translate }} <b class="red">0.0001</b> {{ 'TRANSFER_ASSET_FEE_END' | translate }}<span>
-    </div>
-
-    <form class="row">
       <!--Sender-->
-      <div class="col-md-12 form-group">
-        <br/>
-        <div class="col-md-6 noPaddingLeftRight">
-          <label for="addressFrom" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
-          <select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" ng-change="availBalance(sendfrom)">
-            <option value="" ng-show="(asset.symbol == symbol)" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</option>
-            <option ng-repeat="asset in assetAddresses | orderBy:'quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}">{{asset.address}}</option>
-            <!--{{asset.address}} - {{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}-->
-          </select>
-        </div>
+			<div class="form-group">
+        <label for="addressFrom" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
+        <select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" ng-change="availBalance(sendfrom)" ng-class="{validInput: !error.sendfrom, wrongInput: error.sendfrom}">
+          <option value="" title="{{asset.quantity - asset.lock_quantity | assetformat : asset.decimal_number}} {{asset.symbol}}">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</option>
+          <option ng-repeat="asset in assetAddresses | orderBy:'quantity - locked_quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-if="allDidsAddresses[asset.address] && asset.address.charAt(0) != '3'">{{allDidsAddresses[asset.address]}} - {{asset.address}} - {{asset.quantity - asset.locked_quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
+          <option ng-repeat="asset in assetAddresses | orderBy:'quantity - locked_quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-if="!allDidsAddresses[asset.address] && asset.address.charAt(0) != '3'">{{asset.address}} - {{asset.quantity - asset.locked_quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
+        </select>
       </div>
 
       <!--Recipient-->
-      <div class="col-md-12 form-group">
-        <div class="col-md-6 noPaddingLeftRight">
-          <label for="recipent_address" class="control-label">{{ 'TRANSFER_RECIPENT_ADDRESS' | translate }}</label>
-          <input type="etpaddress" class="form-control" name="recipent_address" id="" ng-model="recipent_address" required autocomplete="off">
+      <div class="form-group">
+        <label for="sendto" class="control-label">{{ 'TRANSFER_RECIPENT_ADDRESS_OR_AVATAR' | translate }}</label>
+        <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.ASSET_RECIPIENT_ADDRESS_AVATAR_BURN' | translate }}"></span>
+        <input type="etpaddress" class="form-control" name="sendto" id="" ng-model="sendto" ng-change="checkRecipent(sendto)" autocomplete="off" ng-class="{validInput: (correctEtpAddress || correctAvatar || burnAddress) && !error.sendto_empty, wrongInput: (!correctEtpAddress && !correctAvatar && !burnAddress) || error.sendto_empty}">
+        <div ng-show="!correctEtpAddress && !correctAvatar && !burnAddress && !error.sendto_empty" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.INCORRECT_RECIPIENT' | translate }}</div>
+        <div ng-show="correctEtpAddress" class="correctInputComment"><span class="glyphicon glyphicon-ok"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_ADDRESS' | translate }}</div>
+        <div ng-show="correctAvatar" class="correctInputComment"><span class="glyphicon glyphicon-ok"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_AVATAR' | translate }}</div>
+        <div ng-show="burnAddress" class="warningInputComment"><span class="glyphicon glyphicon-warning-sign"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_BURN' | translate }}</div>
+      </div>
+
+      <!--Quantity-->
+      <div class="form-group">
+        <label for="value" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_QUANTITY' | translate }}</label>
+        <!--AvailableBalance-->
+        <div class="col-xs-6 noPaddingLeftRight addRecipent">
+          <button type="button" class="btn-link-red addRecipentButton" ng-click="sendAll()" tabIndex="-1">{{ 'TRANSFER_AMOUNT_AVALAIBLE' | translate }}: {{availableBalance | assetformat : asset.decimal_number}}</button>
+        </div>
+        <input type="number" ng-model="quantity" name="quantity" min=0 class="form-control" placeholder="0" autocomplete="off" ng-class="{validInput: !error.quantity_empty && !error.quantity_not_enough_balance, wrongInput: error.quantity_empty || error.quantity_not_enough_balance}">
+        <div ng-show="error.quantity_not_enough_balance" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.QUANTITY_NOT_ENOUGH_ASSET' | translate }} {{symbol}}</div>
+      </div>
+
+      <!--Checkbox to deposit-->
+      <div class="form-group col-xs-12 spe-addrbox depositAddressCheckbox">
+        <div class="checkboxCircle">
+          <div class="checkbox-box">
+            <input type="checkbox" tabIndex="-1" name="frozen_option" ng-model="frozen_option" ng-click="checkready()" id="checkboxCircleDeposit">
+            <label for="checkboxCircleDeposit"></label>
+          </div>
+          <span class="textCheckbox">{{ 'ASSET.DEPOSIT' | translate }}</span>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.ASSET_DEPOSIT' | translate }}"></span>
         </div>
       </div>
 
-      <!--Amount-->
-      <div class="col-md-12 form-group">
-        <div class="col-md-6 noPaddingLeftRight">
+      <div ng-show="frozen_option">
+        <!--Model-->
+        <div class="form-group">
+          <label for="model" class="control-label">{{ 'SECONDARY_ISSUE.TYPE' | translate }}</label>
+          <select name="model" type="model" class="form-control" placeholder="" ng-model="model" ng-change="checkready()" ng-class="{validInput: true, wrongInput: false}">
+            <option value="0">{{ 'ASSET_TRANSFERT.SIMPLE_DEPOSIT' | translate }}</option>
+            <option value="1">{{ 'SECONDARY_ISSUE.TYPE_1' | translate }}</option>
+            <option value="2">{{ 'SECONDARY_ISSUE.TYPE_2' | translate }}</option>
+            <option value="3">{{ 'SECONDARY_ISSUE.TYPE_3' | translate }}</option>
+          </select>
+        </div>
+
+        <!--UN-->
+        <div class="form-group" ng-show="model == 1 || model == 3">
+          <label for="unlockNumber" class="control-label">{{ 'SECONDARY_ISSUE.UNLOCK_NUMBER' | translate }}</label>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_UNLOCK_NUMBER' | translate }}"></span>
+          <input type="number" step="1" min="1" placeholder="1" class="form-control" name="unlockNumber" id="" ng-model="unlockNumber" ng-change="updateUnlockNumber(unlockNumber)" ng-class="{validInput: !errorDeposit.unlock_number_empty, wrongInput: errorDeposit.unlock_number_empty}">
+        </div>
+        <div class="form-group" ng-show="model == 2">
+          <label for="unlockNumberString" class="control-label">{{ 'SECONDARY_ISSUE.UNLOCK_NUMBER' | translate }}</label>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_UNLOCK_NUMBER' | translate }}"></span>
+          <select name="unlockNumberString" class="form-control" ng-model="unlockNumberString" ng-change="updateUnlockNumber(unlockNumberString)" ng-class="{validInput: true, wrongInput: false}">
+            <option ng-repeat="rate in [].constructor(100) track by $index" value="{{$index+1}}">{{$index+1}}</option>
+          </select>
+        </div>
+
+        <!--LQ-->
+        <div class="form-group" ng-show="model == 1 || model == 3">
+          <label for="quantityLocked" class="control-label">{{ 'SECONDARY_ISSUE.TOTAL_LOCKED_QUANTITY' | translate }}</label>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_TOTAL_LOCKED_QUANTITY' | translate }}"></span>
+          <input type="number" min="0" placeholder="0" class="form-control" name="quantityLocked" id="" ng-model="quantityLocked" ng-class="{validInput: !errorDeposit.quantityLocked_empty && !errorDeposit.quantityLocked_lower_quantity, wrongInput: errorDeposit.quantityLocked_empty || errorDeposit.quantityLocked_lower_quantity}">
+          <div ng-show="errorDeposit.quantityLocked_lower_quantity" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.QUANTITY_DEPOSIT_LOWER_QUANTITY' | translate }}</div>
+        </div>
+        <!--LP-->
+        <div class="form-group" ng-show="model == 0 || model == 1 || model == 3">
+          <label ng-show="model == 1 || model == 3" for="periodLocked" class="control-label">{{ 'SECONDARY_ISSUE.TOTAL_LOCKED_PERIOD' | translate }}</label>
+          <label ng-show="model == 0" for="periodLocked" class="control-label">{{ 'ASSET.LOCKED_PERIOD' | translate }}</label>
+          <span ng-show="model == 1 || model == 3" class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_TOTAL_LOCKED_PERIOD' | translate }}"></span>
+          <span ng-show="model == 0" class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.ASSET_LOCKED_PERIOD' | translate }}"></span>
+          <input type="number" placeholder="0" step="1" class="form-control" name="periodLocked" id="" ng-model="periodLocked"  ng-class="{validInput: !errorDeposit.periodLocked_empty, wrongInput: errorDeposit.periodLocked_empty}">
+        </div>
+
+        <!--IR-->
+        <div class="form-group" ng-show="model == 3">
+          <label for="interestRate" class="control-label">{{ 'SECONDARY_ISSUE.INTEREST_RATE' | translate }}</label>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_INTEREST_RATE' | translate }}"></span>
+          <select name="interestRate" class="form-control" ng-model="interestRate" ng-class="{validInput: true, wrongInput: false}">
+            <option ng-repeat="rate in [].constructor(101) track by $index" value="{{$index}}">{{$index}} %</option>
+          </select>
+        </div>
+
+        <div ng-show="model == 2" ng-repeat="period in model2 | limitTo:model2Displayed">
+          <!--LP-->
           <div class="form-group">
-            <label for="value" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_VALUE' | translate }}</label>
-            <!--AvailableBalance-->
-            <div class="col-xs-6 noPaddingLeftRight addRecipent">
-              <button type="button" class="btn-link-red addRecipentButton" ng-click="sendAll()">{{ 'TRANSFER_AMOUNT_AVALAIBLE' | translate }}: {{availableBalance | assetformat : asset.decimal_number}}</button>
-            </div>
-            <input type="number" ng-model="quantity" name="quantity" min=0 required class="form-control" placeholder="0" autocomplete="off">
+            <label for="model2quantity" class="control-label">{{ 'SECONDARY_ISSUE.MODEL2_QUANTITY' | translate }}{{period.index+1}}</label>
+            <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_MODEL2_QUANTITY' | translate }}{{period.index+1}}"></span>
+            <input type="number" placeholder="0" class="form-control" name="model2quantity" id="" ng-model="period.quantity">
+          </div>
+          <!--LP-->
+          <div class="form-group">
+            <label for="periodLocked" class="control-label">{{ 'SECONDARY_ISSUE.MODEL2_PERIOD' | translate }}{{period.index+1}}</label>
+            <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_MODEL2_PERIOD' | translate }}{{period.index+1}}"></span>
+            <input type="number" placeholder="0" step="1" class="form-control" name="fee" id="" ng-model="period.number">
           </div>
         </div>
       </div>
 
-      <!--Password-->
-      <div class="col-md-12 form-group">
-        <div class="col-md-6 noPaddingLeftRight">
-          <label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
-          <input type="password" class="form-control" name="password" id="" autocomplete="new-password" required ng-model="password">
+      <!--Fee-->
+      <div class="form-group">
+        <label for="fee" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</label>
+        <input type="number" step="0.00000001" class="form-control" name="fee" id="" ng-model="transactionFee" ng-class="{validInput: !error.fee_empty && !error.fee_too_low, wrongInput: error.fee_empty || error.fee_too_low}">
+        <div ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</div>
+      </div>
+    </div>
+
+    <!--Models details-->
+    <div ng-show="frozen_option" class="col-sm-12 col-md-6">
+      <br/>
+      <div class="assetDetailsPanel panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{'SECONDARY_ISSUE.TYPE' | translate}}</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-class="{'selected_row' : model == 0}">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_TRANSFERT.SIMPLE_DEPOSIT' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'ASSET_TRANSFERT.EXPLANATION_SIMPLE_DEPOSIT' | translate}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-class="{'selected_row' : model == 1}">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE_1' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'SECONDARY_ISSUE.EXPLANATION_TYPE_1' | translate}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-class="{'selected_row' : model == 2}">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE_2' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'SECONDARY_ISSUE.EXPLANATION_TYPE_2' | translate}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-class="{'selected_row' : model == 3}">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE_3' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'SECONDARY_ISSUE.EXPLANATION_TYPE_3' | translate}}</div>
+          </div>
         </div>
       </div>
+    </div>
 
-      <!--Submit button-->
-      <div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
-        <div class="col-xs-12 col-sm-6 col-md-3 ">
-          <br/>
-          <input type="submit" class="btn btn-success" ng-click="sendasset(recipent_address,symbol,quantity)" value="{{ 'TRANSFER_SEND' | translate }}">
-          <!--Back to Assets button-->
-          <!--<div class="form-group col-xs-6 col-md-6">
-          <a href="#!/asset/myassets" class="btn btn-info">{{ 'TRANSFER_BACK_ASSETS' | translate }}</a>
-        </div>-->
+    <!--Submit button-->
+    <div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
+      <div class="col-xs-12 col-sm-6 col-md-3 ">
+        <br/>
+        <input type="submit" class="btn btn-success" ng-click="checkInputs(quantityLocked, model2)" value="{{ 'TRANSFER_SEND' | translate }}" ng-disabled="!submittable">
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
+
+  <form ng-show="confirmation" class="row">
+    <br/>
+    <div class="col-lg-6 col-md-12">
+      <div class="assetDetailsPanel panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{'TRANSFER.CONFIRMATION_TITLE' | translate}}</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-5 noPaddingLeftRight">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</div>
+            <div ng-show="sendfrom == ''" class="assetValueColumn col-xs-7 noPaddingLeftRight">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</div>
+            <div ng-show="sendfrom != '' && !allDidsAddresses[sendfrom]" class="assetValueColumn col-xs-7 noPaddingLeftRight">{{sendfrom}}</div>
+            <div ng-show="sendfrom != '' && allDidsAddresses[sendfrom]" class="assetValueColumn col-xs-7 noPaddingLeftRight">{{allDidsAddresses[sendfrom]}} ({{sendfrom}})</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div ng-show="correctEtpAddress" class="assetDataColumn col-xs-5 noPaddingLeftRight">{{ 'TRANSFER_RECIPENT_ADDRESS' | translate }}</div>
+            <div ng-show="correctAvatar" class="assetDataColumn col-xs-5 noPaddingLeftRight">{{ 'TRANSFER_RECIPENT_AVATAR' | translate }}</div>
+            <div ng-show="burnAddress" class="assetDataColumn col-xs-5 noPaddingLeftRight">{{ 'TRANSFER_RECIPIENT_BURN' | translate }}</div>
+            <div ng-hide="correctAvatar" class="assetValueColumn col-xs-7 noPaddingLeftRight">{{sendto}}</div>
+            <div ng-show="correctAvatar" class="assetValueColumn col-xs-7 noPaddingLeftRight">{{sendto}} ({{didFromAddress[sendto]}})</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-5 noPaddingLeftRight">{{ 'TRANSFER_VALUE' | translate }}</div>
+            <div class="assetValueColumn col-xs-7 noPaddingLeftRight">{{quantity | number : asset.decimal_number}} {{asset.symbol}}</div>
+          </div>
+          <div ng-show="frozen_option">
+            <div ng-show="model != 0" class="col-xs-12 noPaddingLeftRight assetDataLine">
+              <div class="assetDataColumn col-xs-5 noPaddingLeftRight">
+                {{ 'SECONDARY_ISSUE.DIRECTLY_AVAILABLE_QUANTITY' | translate }}
+                <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_DIRECTLY_AVAILABLE_QUANTITY' | translate }}"></span>
+              </div>
+              <div class="assetValueColumn col-xs-7 noPaddingLeftRight">{{quantity - quantityLocked | number : asset.decimal_number}} {{asset.symbol}}</div>
+            </div>
+            <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+              <div class="assetDataColumn col-xs-5 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE' | translate }}</div>
+              <div ng-show="model == 0" class="assetValueColumn col-xs-7 noPaddingLeftRight">{{ 'ASSET_TRANSFERT.SIMPLE_DEPOSIT' | translate }}</div>
+              <div ng-show="model == 1" class="assetValueColumn col-xs-7 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE_1' | translate }}</div>
+              <div ng-show="model == 2" class="assetValueColumn col-xs-7 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE_2' | translate }}</div>
+              <div ng-show="model == 3" class="assetValueColumn col-xs-7 noPaddingLeftRight">{{ 'SECONDARY_ISSUE.TYPE_3' | translate }}</div>
+            </div>
+            <div ng-show="model == 1 || model == 2 || model == 3" class="col-xs-12 noPaddingLeftRight assetDataLine">
+              <div class="assetDataColumn col-xs-5 noPaddingLeftRight">
+                {{ 'SECONDARY_ISSUE.UNLOCK_NUMBER' | translate }}
+                <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_UNLOCK_NUMBER' | translate }}"></span>
+              </div>
+              <div class="assetValueColumn col-xs-7 noPaddingLeftRight">{{unlockNumber}}{{ 'SECONDARY_ISSUE.PERIODS' | translate }}</div>
+            </div>
+            <div ng-show="model == 1 || model == 2 || model == 3" class="col-xs-12 noPaddingLeftRight assetDataLine">
+              <div class="assetDataColumn col-xs-5 noPaddingLeftRight">
+                {{ 'SECONDARY_ISSUE.TOTAL_LOCKED_QUANTITY' | translate }}
+                <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_TOTAL_LOCKED_QUANTITY' | translate }}"></span>
+              </div>
+              <div class="assetValueColumn col-xs-7 noPaddingLeftRight">{{quantityLocked | number : asset.decimal_number}} {{asset.symbol}}</div>
+            </div>
+            <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+              <div class="assetDataColumn col-xs-5 noPaddingLeftRight">
+                {{ 'SECONDARY_ISSUE.TOTAL_LOCKED_PERIOD' | translate }}
+                <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_TOTAL_LOCKED_PERIOD' | translate }}"></span>
+              </div>
+              <div class="assetValueColumn col-xs-7 noPaddingLeftRight">{{periodLocked}} {{ 'SECONDARY_ISSUE.BLOCKS' | translate }}</div>
+            </div>
+            <div ng-show="model == 3" class="col-xs-12 noPaddingLeftRight assetDataLine">
+              <div class="assetDataColumn col-xs-5 noPaddingLeftRight">
+                {{ 'SECONDARY_ISSUE.INTEREST_RATE' | translate }}
+                <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_INTESREST_RATE' | translate }}"></span>
+              </div>
+              <div class="assetValueColumn col-xs-7 noPaddingLeftRight">{{interestRate}} %</div>
+            </div>
+
+            <div ng-show="model == 2" ng-repeat="period in model2ToSend | orderBy:'index'">
+              <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+                <div class="assetDataColumn col-xs-5 noPaddingLeftRight">
+                  {{ 'SECONDARY_ISSUE.MODEL2_QUANTITY' | translate }}{{period.index+1}}
+                  <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_MODEL2_QUANTITY' | translate }}{{period.index+1}}"></span>
+                </div>
+                <div class="assetValueColumn col-xs-7 noPaddingLeftRight">{{period.quantity | number : asset.decimal_number}} {{asset.symbol}}</div>
+              </div>
+              <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+                <div class="assetDataColumn col-xs-5 noPaddingLeftRight">
+                  {{ 'SECONDARY_ISSUE.MODEL2_PERIOD' | translate }}{{period.index+1}}
+                  <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_MODEL2_PERIOD' | translate }}{{period.index+1}}"></span>
+                </div>
+                <div class="assetValueColumn col-xs-7 noPaddingLeftRight">{{period.number}} {{ 'SECONDARY_ISSUE.BLOCKS' | translate }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+						<div class="assetDataColumn col-xs-5 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</div>
+						<div class="assetValueColumn col-xs-7 noPaddingLeftRight">{{transactionFee}} ETP</div>
+					</div>
+        </div>
+      </div>
+      <!--Password-->
+			<div class="form-group">
+				<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
+				<input type="password" class="form-control" name="password" id="" ng-model="password" ng-class="{validInput: !errorPassword, wrongInput: errorPassword}">
+			</div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 form-group noPaddingLeftRight">
+      <br>
+      <!--Submit button-->
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <input type="submit" class="btn btn-success" ng-click="sendasset(sendfrom, sendto, symbol, quantity, transactionFee, password)" value="{{ 'TRANSFER_SEND' | translate }}" ng-disabled="errorPassword">
+      </div>
+      <!--Return button-->
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <button class="btn btn-success btn-success-secondary" ng-click="confirmation = false; password = ''">{{ 'CANCEL_BUTTON' | translate }}</button>
+      </div>
+    </div>
+  </form>
+
 </div>

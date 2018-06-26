@@ -1,0 +1,229 @@
+<div class="AStitle-tabs">
+  <ul class="nav nav-pills tabsMenu">
+    <li class="active" role="presentation"><a href="#!/avatar/myavatars/" class="btn-link-menu">{{'PROFILE.MY_PROFILE' | translate}}</a></li>
+    <li role="presentation"><a href="#!/avatar/all" class="btn-link-menu">{{'PROFILE.ALL' | translate}}</a></li>
+    <li role="presentation"><a href="#!/avatar/transfercert/" class="btn-link-menu">{{ 'TRANSFER_CERT.HEADLINE' | translate }}</a></li>
+    <li role="presentation"><a href="#!/avatar/issuecert/" class="btn-link-menu">{{ 'ISSUE_CERT.HEADLINE' | translate }}</a></li>
+  </ul>
+</div>
+
+<div class=" ">
+  <div class="row">
+    <div class="col-xs-6 onOffChainButtons">
+      <button class="btn-link-black smallButton menuButton" ng-click="onChain = true" ng-class="{selectedOnOffChain:onChain === true}">{{ 'PROFILE.ON_CHAIN' | translate }}</button>
+      <span> / </span>
+      <!--button class="btn-link-black smallButton menuButton" ng-click="onChain = false" ng-class="{selectedOnOffChain:onChain === false}">Off-chain</button-->
+      <button class="btn-link-black smallButton menuButton" ng-class="{selectedOnOffChain:onChain === false}"  bs-tooltip data-placement="top" title="{{ 'HELP.COMING_SOON' | translate }}">{{ 'PROFILE.OFF_CHAIN' | translate }}</button>
+    </div>
+    <div class="col-xs-6 moreAssetsButton noPaddingLeftRight">
+      <a href="#!/avatar/create" class="btn btn-success smallButton"><span class="glyphicon glyphicon-plus"></span> {{ 'PROFILE.CREATE_NEW_PROFILE_BUTTON' | translate }}</a>
+    </div>
+  </div>
+
+	<!--DID-->
+	<div class="row">
+		<div class="col-md-6 form-group">
+      <label for="useDid" class="control-label">{{ 'PROFIL.DID' | translate }}</label>
+      <span ng-show="loadingDids" class="miniSpinner"></span>
+      <select name="useDid" type="text" class="form-control" placeholder="" ng-model="selectedDid" ng-change="changeDid(selectedDid)">
+        <option ng-repeat="did in myDids" value="{{did.symbol}}" title="{{did.symbol}}">{{did.symbol}} - {{did.address}}</option>
+        <option ng-if="!loadingDids && myDids.length == 0" value="">{{ 'PROFIL.NO_DID' | translate }}</option>
+      </select>
+		</div>
+	</div>
+
+	<form ng-show="onChain" class="row">
+		<!--Address-->
+    <div class="col-md-6 col-sm-12" ng-show="myDids.length != 0">
+      <div class="assetDetailsPanel panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title col-xs-6 noPaddingLeftRight">{{'PROFIL.ADDRESSES_HISTORY' | translate}}</h3>
+          <div class="sendAssetButton assetDetailsBoxButton col-xs-6 noPaddingLeftRight">
+            <a href="#!/avatar/modifyaddress/{{selectedDid}}">
+              <button class="btn btn-success smallButton assetBoxButton">{{'PROFIL.UPDATE_ADDRESS' | translate}}</button>
+            </a>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div ng-show="loadingAddressHistory && !myCertsLoaded" class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="mediumSpinner"></div>
+          </div>
+          <div ng-hide="loadingAddressHistory && !myCertsLoaded" ng-repeat="address in addressesHistory" class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div ng-show="address.status == 'current'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CURRENT_ADDRESS' | translate }}</div>
+            <div ng-hide="address.status == 'current'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.PREVIOUS_ADDRESS' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{address.address}}</div>
+          </div>
+        </div>
+      </div>
+
+      <!--Certs-->
+      <div class="assetDetailsPanel panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title col-xs-6 noPaddingLeftRight">{{'PROFIL.AVATAR_CERTIFICATES' | translate}}</h3>
+          <div class="sendAssetButton assetDetailsBoxButton col-xs-6 noPaddingLeftRight">
+            <a href="#!/avatar/issuecert/">
+              <button class="btn btn-success smallButton assetBoxButton">{{'PROFIL.ISSUE_CERT_BUTTON' | translate}}</button>
+            </a>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div ng-hide="myCertsLoaded" class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="mediumSpinner"></div>
+          </div>
+          <div ng-show="myCertsLoaded && cert.owner == selectedDid" ng-repeat="cert in myCerts" class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div ng-show="cert.cert == 'issue'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }}</div>
+            <div ng-show="cert.cert == 'domain'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
+            <div ng-show="cert.cert == 'naming'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_NAMING' | translate }}</div>
+            <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{cert.symbol}}</div>
+            <div class="sendAssetButton col-xs-3 noPaddingLeftRight assetDetailsBoxButton">
+              <a href="#!/avatar/transfercert/{{cert.symbol}}:{{cert.cert}}">
+                <button class="btn btn-success smallButton assetBoxButton">{{'PROFIL.CERT_TRANSFER_BUTTON' | translate}}</button>
+              </a>
+            </div>
+          </div>
+          <div ng-show="myCertsLoaded && myCerts.length == 0" class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{'PROFIL.NO_CERTIFICATES' | translate}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Certificates details-->
+    <div class="col-md-6 col-sm-12" ng-show="myDids.length != 0">
+      <div class="assetDetailsPanel panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{'PROFIL.CERTIFICATES_EXPLANATION_TITLE' | translate}}</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_ISSUE' | translate}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_DOMAIN' | translate}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_NAMING' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_NAMING' | translate}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+	</form>
+
+  <form ng-hide="onChain" class="row">
+    <!--Field 1-->
+		<div class="col-xs-12">
+			<div class="col-xs-6 noPaddingLeftRight">
+				<div class="form-group">
+					<label for="field1" class="control-label col-xs-6 noPaddingLeftRight">{{ 'PROFILE.DATA_FIELD' | translate }}1</label>
+					<input type="test" class="form-control" name="field1" ng-model="field1">
+				</div>
+			</div>
+      <div class="profilFieldButtons">
+          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Edit" class="btn btn-success">
+          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Remove" class="btn btn-success btn-success-secondary">
+      </div>
+		</div>
+
+    <!--Field 1-->
+		<div class="col-xs-12">
+			<div class="col-xs-6 noPaddingLeftRight">
+				<div class="form-group">
+					<label for="field1" class="control-label col-xs-6 noPaddingLeftRight">{{ 'PROFILE.DATA_FIELD' | translate }}2</label>
+					<input type="test" class="form-control" name="field1" ng-model="field1">
+				</div>
+			</div>
+      <div class="profilFieldButtons">
+          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Edit" class="btn btn-success">
+          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Remove" class="btn btn-success btn-success-secondary">
+      </div>
+		</div>
+
+    <!--Field 1-->
+    <div class="col-xs-12">
+      <div class="col-xs-6 noPaddingLeftRight">
+        <div class="form-group">
+          <label for="field1" class="control-label col-xs-6 noPaddingLeftRight">{{ 'PROFILE.DATA_FIELD' | translate }}3</label>
+          <input type="test" class="form-control" name="field1" ng-model="field1">
+        </div>
+      </div>
+      <div class="profilFieldButtons">
+          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Edit" class="btn btn-success">
+          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Remove" class="btn btn-success btn-success-secondary">
+      </div>
+    </div>
+
+    <!--Field 1-->
+    <div class="col-xs-12">
+      <div class="col-xs-6 noPaddingLeftRight">
+        <div class="form-group">
+          <label for="field1" class="control-label col-xs-6 noPaddingLeftRight">{{ 'PROFILE.DATA_FIELD' | translate }}4</label>
+          <input type="test" class="form-control" name="field1" ng-model="field1">
+        </div>
+      </div>
+      <div class="profilFieldButtons">
+          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Edit" class="btn btn-success">
+          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Remove" class="btn btn-success btn-success-secondary">
+      </div>
+    </div>
+
+    <!--Field 1-->
+    <div class="col-xs-12">
+      <div class="col-xs-6 noPaddingLeftRight">
+        <div class="form-group">
+          <label for="field1" class="control-label col-xs-6 noPaddingLeftRight">{{ 'PROFILE.DATA_FIELD' | translate }}5</label>
+          <input type="test" class="form-control" name="field1" ng-model="field1">
+        </div>
+      </div>
+      <div class="profilFieldButtons">
+          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Edit" class="btn btn-success">
+          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Remove" class="btn btn-success btn-success-secondary">
+      </div>
+    </div>
+
+    <!--Field 1-->
+    <div class="col-xs-12">
+      <div class="col-xs-6 noPaddingLeftRight">
+        <div class="form-group">
+          <label for="field1" class="control-label col-xs-6 noPaddingLeftRight">{{ 'PROFILE.DATA_FIELD' | translate }}6</label>
+          <input type="test" class="form-control" name="field1" ng-model="field1">
+        </div>
+      </div>
+      <div class="profilFieldButtons">
+          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Edit" class="btn btn-success">
+          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Remove" class="btn btn-success btn-success-secondary">
+      </div>
+    </div>
+
+    <!--Field 1-->
+    <div class="col-xs-12">
+      <div class="col-xs-6 noPaddingLeftRight">
+        <div class="form-group">
+          <label for="field1" class="control-label col-xs-6 noPaddingLeftRight">{{ 'PROFILE.DATA_FIELD' | translate }}7</label>
+          <input type="test" class="form-control" name="field1" ng-model="field1">
+        </div>
+      </div>
+      <div class="profilFieldButtons">
+          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Edit" class="btn btn-success">
+          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Remove" class="btn btn-success btn-success-secondary">
+      </div>
+    </div>
+
+    <!--Field 1-->
+    <div class="col-xs-12">
+      <div class="col-xs-6 noPaddingLeftRight">
+        <div class="form-group">
+          <label for="field1" class="control-label col-xs-6 noPaddingLeftRight">{{ 'PROFILE.DATA_FIELD' | translate }}8</label>
+          <input type="test" class="form-control" name="field1" ng-model="field1">
+        </div>
+      </div>
+      <div class="profilFieldButtons">
+          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Edit" class="btn btn-success">
+          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Remove" class="btn btn-success btn-success-secondary">
+      </div>
+    </div>
+
+  </form>
+</div>

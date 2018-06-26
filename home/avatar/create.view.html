@@ -1,0 +1,140 @@
+<div>
+  <ul class="nav nav-pills tabsMenu">
+    <li role="presentation" class="active"><a class="btn-link-menu">{{ 'CREATE_PROFILE.CREATE_PROFILE' | translate }}</a></li>
+  </ul>
+</div>
+<div class="row">
+  <br/>
+  <form ng-show="!confirmation && resultMultisigTx == ''">
+    <div class="col-xs-12 col-sm-6">
+      <!--ID-->
+      <div class="form-group">
+        <label class="control-label">{{ 'CREATE_PROFILE.CREATE_ID' | translate }}</label>
+        <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.CREATE_AVATAR_NAME' | translate }}"></span>
+        <input type="text" class="form-control" name="didSymbol" ng-model="didSymbol" ng-class="{validInput: !error.symbol_empty && !error.symbol_wrong_char && !error.symbol_already_exist, wrongInput: error.symbol_empty || error.symbol_wrong_char || error.symbol_already_exist}">
+        <div ng-show="error.symbol_wrong_char" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_PROFILE.CREATE_ID_WRONG_CHARACTER' | translate }}</div>
+        <div ng-show="error.symbol_already_exist" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_PROFILE.CREATE_ID_ALREADY_EXIST' | translate }}</div>
+      </div>
+      <!--Address-->
+  		<div class="form-group">
+				<label for="useAddress" class=" ddd control-label">{{ 'CREATE_PROFILE.SELECT_ADDRESS' | translate }}</label>
+        <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.CREATE_AVATAR_LINKED_ADDRESS' | translate }}"></span>
+        <select name="useAddress" type="address" name="didAddress" class="form-control" placeholder="" ng-model="didAddress" ng-class="{validInput: !error.didAddress_empty && !error.didAddress_already_used && !error.didAddress_not_enough_etp, wrongInput: error.didAddress_empty || error.didAddress_already_used || error.didAddress_not_enough_etp}">
+					<option ng-repeat="oneAddress in listAddresses | orderBy:'available':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP">{{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
+				</select>
+        <div ng-show="error.didAddress_already_used" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'PROFIL_MODIFY_ADDRESS.ADDRESS_ALREADY_USED' | translate }}</div>
+    		<div ng-show="error.didAddress_not_enough_etp" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_PROFILE.RECIPIENT_NOT_ENOUGH_ETP' | translate }}</div>
+      </div>
+      <!--Buttons-->
+      <div class="row">
+        <br>
+        <div class="col-xs-6">
+          <input type="submit" ng-click="checkInputs()" value="{{ 'CREATE_PROFILE.CREATE_PROFILE_BUTTON' | translate }}" class="btn btn-success" ng-disabled="!submittable">
+        </div>
+        <div class="col-xs-6">
+          <a href="#!/avatar/myavatars/" class="btn btn-success btn-success-secondary">{{ 'CREATE_PROFILE.BACK_TO_PROFILE' | translate }}</a>
+        </div>
+      </div>
+    </br>
+    </div>
+    <!--Avatar name advise-->
+    <div class="col-xs-12 col-sm-6">
+      <div class="assetDetailsPanel panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{'CREATE_PROFILE.EXPLANATION_TITLE' | translate}}</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'CREATE_PROFILE.EXPLANATION_1' | translate }}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'CREATE_PROFILE.EXPLANATION_2' | translate }}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'CREATE_PROFILE.EXPLANATION_3' | translate }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <form ng-show="confirmation && resultMultisigTx == ''">
+    <br/>
+    <div class="col-lg-6 col-md-12">
+      <div class="assetDetailsPanel panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{'TRANSFER.CONFIRMATION_TITLE' | translate}}</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'CREATE_PROFILE.CREATE_ID' | translate }}</div>
+            <div class="assetValueColumn col-xs-3 noPaddingLeftRight">{{didSymbol}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'CREATE_PROFILE.SELECT_ADDRESS' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{didAddress}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">1 ETP</div>
+          </div>
+        </div>
+      </div>
+      <!--Password-->
+      <div class="form-group">
+        <label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
+        <input type="password" class="form-control" name="password" id="" name="password" ng-model="password" ng-class="{validInput: !errorPassword, wrongInput: errorPassword}" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 form-group noPaddingLeftRight">
+      <br>
+      <!--Submit button-->
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <input type="submit" class="btn btn-success" ng-click="popupIssueDid(password)" value="{{ 'CREATE_PROFILE.CREATE_PROFILE_BUTTON' | translate }}" ng-disabled="errorPassword">
+      </div>
+      <!--Return button-->
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <button class="btn btn-success btn-success-secondary" ng-click="confirmation = false; password = ''">{{ 'CANCEL_BUTTON' | translate }}</button>
+      </div>
+    </div>
+  </form>
+  <div ng-show="resultMultisigTx != ''">
+    <div class="form-group">{{ 'TRANSFER_MULTISIGNATURE_SUCCESS' | translate}}</div>
+    <textarea class="form-control" rows="5">{{resultMultisigTx}}</textarea>
+    <br>
+    <div class="col-xs-12 noPaddingLeftRight spe-addrbox">
+      <div class="checkboxCircle">
+        <div class="checkbox-box">
+          <input type="checkbox" checked ng-model="resultMultisigTxSaved" id="checkboxAgree">
+          <label for="checkboxAgree"></label>
+        </div>
+        <span class="textCheckbox">{{ 'TRANSFER_MULTISIGNATURE_I_HAVE_COPIED' | translate}}</span>
+      </div>
+    </div>
+    <div ng-show="resultMultisigTxSaved">
+      <div class="col-xs-12 col-sm-6 col-md-3 ">
+        <br/>
+        <a href="#!/avatar/myavatars/" class="btn btn-success">{{ 'CREATE_PROFILE.BACK_TO_PROFILE' | translate }}</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/ng-template" id="issueDid">
+  <h2 class="center">
+    {{ 'CREATE_PROFILE_VALIDATION.TITLE' | translate }}
+  </h2>
+  <div class="it-list">
+    {{ 'CREATE_PROFILE_VALIDATION.TEXT' | translate }}
+  </div>
+  <div class="popupButtons">
+    <button class="btn btn-link-red createAssetPopupButtons col-xs-6" ng-click="closeAll()">
+      {{ 'CANCEL_BUTTON' | translate }}
+    </button>
+    <button class="btn btn-success createAssetPopupButtons col-xs-6" ng-click="createProfile(didAddress, didSymbol, password);closeAll()">
+      {{ 'CREATE_PROFILE_VALIDATION.ISSUE_NOW' | translate }}
+    </button>
+  </div>
+</script>

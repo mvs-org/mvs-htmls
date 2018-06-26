@@ -1,0 +1,134 @@
+<div>
+  <ul class="nav nav-pills tabsMenu">
+    <li role="presentation"><a href="#!/avatar/myavatars/" class="btn-link-menu">{{'PROFILE.MY_PROFILE' | translate}}</a></li>
+    <li role="presentation"><a href="#!/avatar/all" class="btn-link-menu">{{'PROFILE.ALL' | translate}}</a></li>
+    <li class="active" role="presentation"><a href="#!/avatar/transfercert/" class="btn-link-menu">{{ 'TRANSFER_CERT.HEADLINE' | translate }}</a></li>
+    <li role="presentation"><a href="#!/avatar/issuecert/" class="btn-link-menu">{{ 'ISSUE_CERT.HEADLINE' | translate }}</a></li>
+  </ul>
+</div>
+<div class="row">
+  <br/>
+  <form ng-show="!confirmation">
+    <div class="col-sm-12 col-md-6">
+      <!--Cert-->
+      <div class="form-group">
+        <label class="control-label">{{ 'TRANSFER_CERT.SYMBOL' | translate }}</label>
+        <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.TRANSFER_CERT_SYMBOL' | translate }}"></span>
+        <span ng-hide="myCertsLoaded" class="miniSpinner"></span>
+        <select name="certSymbol" type="certSymbol" name="certSymbol" class="form-control" placeholder="" ng-model="selectedCert" ng-change="changeSymbol(selectedCert)" ng-class="{validInput: !error.certSymbol && myCertsLoaded, wrongInput: error.certSymbol || !myCertsLoaded}" required>
+					<option ng-repeat="cert in myCerts" value="{{cert.symbol}}:{{cert.cert}}" title="{{cert.symbol}}">{{cert.symbol}} ({{cert.cert}})</option>
+          <option ng-if="noCerts" value="">{{ 'TRANSFER_CERT.NO_CERT' | translate }}</option>
+        </select>
+      </div>
+      <!--Type-->
+      <div class="form-group">
+        <label for="certType" class="control-label">{{ 'TRANSFER_CERT.TYPE' | translate }}</label>
+        <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.TRANSFER_CERT_TYPE' | translate }}"></span>
+        <span ng-hide="myCertsLoaded" class="miniSpinner"></span>
+        <div ng-hide="certType == 'issue' || certType == 'domain' || certType == 'naming'" class="form-control" name="certType" id="" name="certType" ng-class="{validInput: !error.certType, wrongInput: error.certType}" disabled></div>
+        <div ng-show="certType == 'issue'" class="form-control" name="certType" id="" name="certType" ng-class="{validInput: !error.certType, wrongInput: error.certType}" disabled>{{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }}</div>
+        <div ng-show="certType == 'domain'" class="form-control" name="certType" id="" name="certType" ng-class="{validInput: !error.certType, wrongInput: error.certType}" disabled>{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
+        <div ng-show="certType == 'naming'" class="form-control" name="certType" id="" name="certType" ng-class="{validInput: !error.certType, wrongInput: error.certType}" disabled>{{ 'PROFIL.CERT_NAMING' | translate }}</div>
+      </div>
+      <!--Recipient DID-->
+      <div class="form-group">
+        <label for="toDID" class="control-label">{{ 'TRANSFER_CERT.TODID' | translate }}</label>
+        <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.TRANSFER_CERT_TO_AVATAR' | translate }}"></span>
+        <input class="form-control" name="toDID" ng-model="toDID" ng-class="{validInput: !error.toDID_empty && !error.toDID_not_exist, wrongInput: error.toDID_empty || error.toDID_not_exist}" required>
+        <div ng-show="error.toDID_not_exist" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.INCORRECT_RECIPIENT_AVATAR' | translate }}</div>
+      </div>
+      <!--Fee-->
+      <div class="form-group">
+        <label for="fee" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</label>
+        <input type="number" step="0.00000001" class="form-control" name="fee" id="" ng-model="transactionFee" ng-class="{validInput: !error.fee_empty && !error.fee_too_low, wrongInput: error.fee_empty || error.fee_too_low}">
+        <div ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</div>
+      </div>
+    </div>
+    <!--Certificates details-->
+    <div class="col-sm-12 col-md-6">
+      <div class="assetDetailsPanel panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{'PROFIL.CERTIFICATES_EXPLANATION_TITLE' | translate}}</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-class="{'selected_row' : certType == 'issue'}">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_ISSUE' | translate}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-class="{'selected_row' : certType == 'domain'}">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_DOMAIN' | translate}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-class="{'selected_row' : certType == 'naming'}">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_NAMING' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_NAMING' | translate}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-12 noPaddingLeftRight">
+      <br>
+      <!--Buttons-->
+      <div class="col-xs-6 col-sm-3">
+        <input type="submit" ng-click="checkInputs()" value="{{ 'TRANSFER_CERT.TRANSFER_BUTTON' | translate }}" class="btn btn-success" ng-disabled="!submittable">
+      </div>
+      <div class="col-xs-6 col-sm-3">
+        <a href="#!/avatar/myavatars/" class="btn btn-success btn-success-secondary">{{ 'CREATE_PROFILE.BACK_TO_PROFILE' | translate }}</a>
+      </div>
+    </div>
+  </form>
+
+  <form ng-show="confirmation">
+    <br/>
+    <div class="col-lg-6 col-md-12">
+      <div class="assetDetailsPanel panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{'TRANSFER.CONFIRMATION_TITLE' | translate}}</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_CERT.SYMBOL' | translate }}</div>
+            <div class="assetValueColumn col-xs-3 noPaddingLeftRight">{{certSymbol}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_CERT.TYPE' | translate }}</div>
+            <div ng-show="certType == 'issue'" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }}</div>
+            <div ng-show="certType == 'domain'" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
+            <div ng-show="certType == 'naming'" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'PROFIL.CERT_NAMING' | translate }}</div>
+          </div>
+          <div ng-show="certType == 3" class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_CERT.TYPE_SEND_WHICH_ONE' | translate }}</div>
+            <div ng-show="selectType == 1" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'TRANSFER_CERT.TYPE_SEND_WHICH_ONE_SECONDARY_ISSUE' | translate }}</div>
+            <div ng-show="selectType == 2" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'TRANSFER_CERT.TYPE_SEND_WHICH_ONE_DOMAIN' | translate }}</div>
+            <div ng-show="selectType == 3" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'TRANSFER_CERT.TYPE_SEND_WHICH_ONE_BOTH' | translate }}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_CERT.TODID' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{toDID}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{transactionFee}} ETP</div>
+          </div>
+        </div>
+      </div>
+      <!--Password-->
+      <div class="form-group">
+        <label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
+        <input type="password" class="form-control" name="password" id="" name="password" ng-model="password" ng-class="{validInput: !errorPassword, wrongInput: errorPassword}" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 form-group noPaddingLeftRight">
+      <br>
+      <!--Submit button-->
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <input type="submit" class="btn btn-success" ng-click="transferCert(certSymbol, certType, toDID, transactionFee, password)" value="{{ 'TRANSFER_CERT.TRANSFER_BUTTON' | translate }}" ng-disabled="errorPassword">
+      </div>
+      <!--Return button-->
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <button class="btn btn-success btn-success-secondary" ng-click="confirmation = false; password = ''">{{ 'CANCEL_BUTTON' | translate }}</button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -77,6 +77,7 @@ module.exports = function(grunt) {
                     //'./js/calendar.js',
                     './js/qrcode.min.js',
                     './js/clipboard.js',
+                    './js/bip39.js'
                 ],
                 dest: './min/libs.min.js'
             },
@@ -90,7 +91,9 @@ module.exports = function(grunt) {
                     './node_modules/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js',
                     './node_modules/angular-utils-pagination/dirPagination.js',
                     './node_modules/ng-dialog/js/ngDialog.min.js',
-                    './node_modules/angular-file-saver/dist/angular-file-saver.bundle.js'
+                    './node_modules/angular-file-saver/dist/angular-file-saver.bundle.js',
+                    './node_modules/crypto-js/crypto-js.js',
+                    './node_modules/js-big-decimal/dist/web/js-big-decimal.min.js'
                 ],
                 dest: './min/framework.min.js'
             },
@@ -229,5 +232,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-ng-annotate');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.registerTask('default', ['browserSync', 'sass', 'watch']);
-    grunt.registerTask('build', ['clean','ngAnnotate', 'concat', 'babel', 'uglify', 'cssmin', 'copy','revPackage','string-replace']);
+    grunt.registerTask('build', ['clean', 'ngAnnotate', 'concat', 'babel', 'uglify', 'cssmin', 'copy', 'revPackage', 'string-replace']);
 };

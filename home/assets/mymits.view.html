@@ -1,0 +1,53 @@
+<!--My Assets-->
+<span class="headline">{{ 'HEADLINE_ASSETS' | translate }}</span>
+<div class="AStitle-tabs">
+  <ul class="nav nav-pills tabsMenu">
+    <li role="presentation"><a href="#!/asset/myassets" class="btn-link-menu">{{'ASSET_MY_ASSETS' | translate}}</a></li>
+    <li role="presentation"><a href="#!/asset/all" class="btn-link-menu">{{'ASSET_ALL_ASSETS' | translate}}</a></li>
+    <li role="presentation" class="active"><a href="#!/asset/mymits" class="btn-link-menu">{{'ASSET.MY_MIT' | translate}}</a></li>
+    <!--li role="presentation"><a href="#!/asset/allmits" class="btn-link-menu">{{'ASSET.ALL_MIT' | translate}}</a></li-->
+  </ul>
+</div>
+<div class=" ">
+  <div class="mainContent1">
+    <div class="assetBoxWrapper">
+      <dl class="noMarginTopBottom">
+        <div class="col-xs-12 moreAssetsButton noPaddingLeftRight">
+          <a href="#!/asset/createmit" class="btn btn-success smallButton"><span class="glyphicon glyphicon-plus"></span> {{ 'ASSET.CREATE_MIT_BTN' | translate }}</a>
+        </div>
+
+        <div ng-hide="loaded" class="mediumSpinner"></div>
+        <div ng-show="loaded && mymits.length == 0">{{ 'ASSET.NO_MITS' | translate }}</div>
+
+        <!--Display all the DIDs-->
+        <div dir-paginate="mit in mymits | orderBy:'symbol' | itemsPerPage: 10">
+          <dd class="assetBoxAdd assetBox col-xs-12 col-sm-12 col-md-12" >
+            <div class="assetBoxBalance col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+              <span class="addressBoxName" readonly="true" id="editAddressName">{{mit.symbol}}</span>
+              <a href="#!/explorer/adr/{{mit.address}}" class="btn-link-black col-xs-12 noPaddingLeftRight addressBoxAddressDeposit overflow">{{mit.address}}</a>
+            </div>
+
+            <div class="assetBoxBalance col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
+              <div class="assetBoxTitle">{{ 'STATUS' | translate }}</div>
+              <span class="assetBoxValue">{{mit.status}}</span>
+            </div>
+            <div class="assetBoxBalance col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 noPaddingLeftRight overflow">
+              <div class="assetBoxTitle">
+                {{ 'CONTENT' | translate }}
+                <button ng-show="mit.content" class="btn btn-link-black btnCopySmall" data-clipboard-text="{{mit.content}}" role="button" tabIndex="-1"><span class="glyphicon glyphicon-copy btnCopySmall"></span></button>
+              </div>
+              <span class="assetBoxValue">{{mit.content}}</span>
+            </div>
+            <div class="assetBoxButtons">
+              <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/mit/{{mit.symbol}}">{{ 'ASSETS_SEND' | translate}}</a>
+            </div>
+          </dd>
+        </div>
+      </div>
+      <!--Pagination-->
+      <div class="col-xs-offset-5 col-sm-offset-5 col-md-offset-5 col-lg-offset-5 col-xl-offset-5">
+        <dir-pagination-controls></dir-pagination-controls>
+      </div>
+    </dl>
+  </div>
+</div>

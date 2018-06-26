@@ -1,0 +1,112 @@
+<div class="content">
+  <div class="headline">{{ 'HEADLINE_MIT' | translate }}</div>
+  <div>
+    <ul class="nav nav-pills tabsMenu">
+      <li role="presentation" class="active"><a href="#!/transfer/mit/" class="btn-link-menu">{{ 'TRANSFER.MIT' | translate }}</a></li>
+      <li role="presentation"><a href="#!/asset/createmit" class="btn-link-menu">{{ 'ASSET.CREATE_MIT' | translate }}</a></li>
+    </ul>
+  </div>
+  <div class="row">
+    <br/>
+    <form ng-show="!confirmation">
+      <div class="col-xs-12 col-sm-6">
+
+        <!--My MITs-->
+        <div class="form-group">
+          <label for="mitSymbol" class="control-label">{{ 'TRANSFER_MIT.SYMBOL' | translate }}</label>
+          <select name="mitSymbol" type="address" name="mitSymbol" class="form-control" placeholder="" ng-model="mitSymbol" ng-class="{validInput: !error.mitSymbol_empty, wrongInput: error.mitSymbol_empty}">
+            <option ng-repeat="mit in mymits" value="{{mit.symbol}}" title="{{mit.symbol}}">{{mit.symbol}}</option>
+            <option ng-if="loaded && mymits.length == 0" value="">{{ 'ASSET_CREATE.NO_MIT' | translate }}</option>
+          </select>
+        </div>
+
+        <!--Recipient-->
+        <div class="form-group">
+          <label for="sendto" class="control-label">{{ 'TRANSFER_CERT.TODID' | translate }}</label>
+          <input type="avatar" class="form-control" name="sendto" id="" ng-model="sendto" ng-class="{validInput: !error.sendto_empty && !error.sendto_not_exist, wrongInput: error.sendto_empty || error.sendto_not_exist}">
+          <div ng-show="error.sendto_not_exist" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.INCORRECT_RECIPIENT_AVATAR' | translate }}</div>
+        </div>
+
+        <!--Fee-->
+        <div class="form-group">
+          <label for="fee" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</label>
+          <input type="number" step="0.00000001" class="form-control" name="fee" id="" ng-model="transactionFee" ng-class="{validInput: !error.fee_empty && !error.fee_too_low, wrongInput: error.fee_empty || error.fee_too_low}">
+          <div ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</div>
+        </div>
+
+        <!--Buttons-->
+        <div class="row">
+          <br>
+          <div class="col-xs-6">
+            <input type="submit" ng-click="checkInputs()" value="{{ 'TRANSFER_SEND' | translate }}" class="btn btn-success" ng-disabled="!submittable">
+          </div>
+          <div class="col-xs-6">
+            <a href="#!/asset/mymits" class="btn btn-success btn-success-secondary">{{ 'CREATE_MIT.BACK_TO_MIT' | translate }}</a>
+          </div>
+        </div>
+        </br>
+      </div>
+      <!--MIT advise-->
+      <!--div class="col-xs-12 col-sm-6">
+        <div class="assetDetailsPanel panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{'CREATE_PROFILE.EXPLANATION_TITLE' | translate}}</h3>
+          </div>
+          <div class="panel-body">
+            <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+              <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'CREATE_PROFILE.EXPLANATION_1' | translate }}</div>
+            </div>
+            <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+              <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'CREATE_PROFILE.EXPLANATION_2' | translate }}</div>
+            </div>
+            <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+              <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'CREATE_PROFILE.EXPLANATION_3' | translate }}</div>
+            </div>
+          </div>
+        </div>
+      </div-->
+    </form>
+
+    <form ng-show="confirmation">
+      <br/>
+      <div class="col-lg-6 col-md-12">
+        <div class="assetDetailsPanel panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{'TRANSFER.CONFIRMATION_TITLE' | translate}}</h3>
+          </div>
+          <div class="panel-body">
+            <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+              <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_MIT.SYMBOL' | translate }}</div>
+              <div class="assetValueColumn col-xs-3 noPaddingLeftRight">{{mitSymbol}}</div>
+            </div>
+            <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+              <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_CERT.TODID' | translate }}</div>
+              <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{sendto}}</div>
+            </div>
+            <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+  						<div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</div>
+  						<div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{transactionFee}} ETP</div>
+  					</div>
+          </div>
+        </div>
+        <!--Password-->
+        <div class="form-group">
+          <label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
+          <input type="password" class="form-control" name="password" id="" name="password" ng-model="password" ng-class="{validInput: !errorPassword, wrongInput: errorPassword}" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-12 col-md-12 form-group noPaddingLeftRight">
+        <br>
+        <!--Submit button-->
+        <div class="col-xs-6 col-sm-6 col-md-3">
+          <input type="submit" class="btn btn-success" ng-click="transferMIT(password)" value="{{ 'TRANSFER_SEND' | translate }}" ng-disabled="errorPassword">
+        </div>
+        <!--Return button-->
+        <div class="col-xs-6 col-sm-6 col-md-3">
+          <button class="btn btn-success btn-success-secondary" ng-click="confirmation = false; password = ''">{{ 'CANCEL_BUTTON' | translate }}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

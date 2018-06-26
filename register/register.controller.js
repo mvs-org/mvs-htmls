@@ -14,6 +14,7 @@
     vm.confirmKey = '';
     vm.countWords = countWords;
     vm.countBackupWords = 0;
+    $scope.new_account = true;
 
     vm.register = register;
     vm.user={
@@ -35,19 +36,21 @@
     vm.version = "";
     vm.peers = "";
 
-    MetaverseService.GetInfo()
+    MetaverseService.GetInfoV2()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
-        vm.height = response.data.height;
-        vm.height = response.data;
-        vm.loadingPercent = Math.floor(vm.height/vm.heightFromExplorer*100);
-        vm.version = response.data['wallet-version'];
-        vm.peers = response.data.peers;
+        vm.height = response.data.result.height;
+        $rootScope.network = response.data.result.testnet ? 'testnet' : 'mainnet';
+        vm.version = response.data.result['wallet-version'];
+        vm.peers = response.data.result.peers;
       }
-    });
+    })
+    .then(() => getHeightFromExplorer())
+    .then(() => vm.loadingPercent = Math.floor(vm.height/vm.heightFromExplorer*100));
 
     function getHeightFromExplorer() {
-      $http.get('https://explorer.mvs.org/api/height')
+      let url = $rootScope.network == 'testnet' ? 'https://explorer-testnet.mvs.org/api/height' : 'https://explorer.mvs.org/api/height'
+      $http.get(url)
         .then((response)=>{
           if(!vm.popoverSynchShown) {
             $(function () { $('.popover-show').popover('show');});
@@ -56,6 +59,7 @@
           vm.heightFromExplorer = response.data.result;
           vm.loadingPercent = Math.floor(vm.height/vm.heightFromExplorer*100);
         })
+        .catch( (error) => console.log("Cannot get Height from explorer") );
     }
 
     function updateHeight() {
@@ -160,15 +164,16 @@
             });
           }
         }
-      } else if($scope.import_from_file){ //Import account from file
-        //MetaverseService.ImportAccountFromFile($scope.accountInfo, vm.user.password)
-        //.then(function (response) {
-        MetaverseService.ImportAccountFromFile($scope.path, vm.user.password)
+      } else if($scope.import_from_file){
+        //Import account from file
+        //MetaverseService.ImportAccountFromFile(vm.user.username, vm.user.password, '.', $scope.accountInfo)
+        MetaverseService.ImportKeyFile(vm.user.username, vm.user.password, '.', $scope.accountInfo)
         .then(function (response) {
           if (typeof response.success !== 'undefined' && response.success) {
               $translate('MESSAGES.IMPORT_SUCCESS').then( (data) => {
                   FlashService.Success(data,true);
                   $location.path('/login');
+                  $window.scrollTo(0,0);
               });
           } else {
             $translate('MESSAGES.IMPORT_ERROR').then( (data) => {
@@ -183,7 +188,8 @@
           }
         });
 
-      } else { //Create a new account
+      } else {
+        //Create a new account
         MetaverseService.GetNewAccount(vm.user.username, vm.user.password)
         .then( (response) => {
           if ( typeof response.success !== 'undefined' && response.success) {

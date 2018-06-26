@@ -17,11 +17,6 @@
           <div class="col-md-1 col-lg-1 col-xl-1 hidden-xs hidden-sm" ng-show="input.first">
             <span class="btn-link-black glyphicon glyphicon-arrow-right"></span>
           </div>
-          <!--Input value from mining or deposit
-          <div class="numbersSearch" ng-repeat="output in transaction.outputs">
-            <div class="numbersSearch" ng-show="output.attachment.type=='etp'">{{output.value/100000000}} ETP</div>
-            <div class="numbersSearch" ng-hide="output.attachment.type=='etp'">{{output.attachment.quantity | assetformat : asset.decimal_number}} {{output.attachment.symbol}}</div>
-          </div>-->
         </div>
         <div ng-hide="input.previous_output.hash=='0000000000000000000000000000000000000000000000000000000000000000'">
           <div class="overflow col-xs-7 col-sm-8 col-md-7 col-lg-8 col-xl-8 noPaddingLeftRight">
@@ -59,16 +54,24 @@
       <label class="control-label">
         {{ 'EXPLORER.TRANSACTION_OUTPUTS' | translate }}
       </label>
-      <div ng-repeat="output in transaction.outputs" ng-hide="output.attachment.type == 'message'" class="explorerTransaction">
-        <div>
-          <div class="overflow col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 noPaddingLeftRight">
-            <a class="btn-link" href="#!/explorer/adr/{{output.address}}" bs-tooltip data-placement="top" title="{{ 'ADDRESS' | translate }}">{{output.address}}</a>
-          </div>
-          <div class="explorerRightInfo col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 noPaddingLeftRight">
-            <span class="numbersSearch" ng-show="output.attachment.type=='etp'">{{output.value/100000000}} ETP</span>
-            <span class="numbersSearch" ng-hide="output.attachment.type=='etp'">{{output.attachment.quantity | assetformat : asset.decimal_number}} {{output.attachment.symbol}}</span>
-            <button class="btn-link-black smallButton noPaddingTopBottomButton" ng-click="output.display = !output.display">{{ 'EXPLORER.TRANSACTION_SCRIPT' | translate }}</button>
-          </div>
+      <div ng-repeat="output in transaction.outputs" ng-hide="output.attachment.type == 'message'" class="explorerTransaction col-xs-12 noPaddingLeftRight">
+        <div class="overflow col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 noPaddingLeftRight">
+          <a ng-show="output.attachment.to_did" class="btn-link overflow" href="#!/explorer/adr/{{output.address}}" bs-tooltip data-placement="top" title="{{ 'ADDRESS' | translate }}">{{output.attachment.to_did}} / {{output.address}}</a>
+          <a ng-hide="output.attachment.to_did" class="btn-link" href="#!/explorer/adr/{{output.address}}" bs-tooltip data-placement="top" title="{{ 'ADDRESS' | translate }}">{{output.address}}</a>
+          <div ng-show="output.attachment.from_did">{{ 'EXPLORER.TRANSACTION_COMING_FROM_AVATAR' | translate }}<b>{{output.attachment.from_did}}</b></div>
+        </div>
+        <div class="explorerRightInfo col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 noPaddingLeftRight">
+          <span class="numbersSearch" ng-show="output.attachment.type=='etp'">{{output.value | assetformat : 8}} ETP</span>
+          <span class="numbersSearch" ng-show="output.attachment.type=='asset-transfer'">{{output.attachment.quantity | assetformat : asset.decimal_number}} {{output.attachment.symbol}}</span>
+          <span class="numbersSearch" ng-show="output.attachment.type=='asset-issue'">{{output.attachment.quantity | assetformat : asset.decimal_number}} {{output.attachment.symbol}}</span>
+          <span class="numbersSearch" ng-show="output.attachment.type=='asset-cert' && output.attachment.cert == 'issue'">{{ 'EXPLORER.CERT_TRANSFER' | translate }} - {{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }} - {{output.attachment.symbol}}</span>
+          <span class="numbersSearch" ng-show="output.attachment.type=='asset-cert' && output.attachment.cert == 'domain'">{{ 'EXPLORER.CERT_TRANSFER' | translate }} - {{ 'PROFIL.CERT_DOMAIN' | translate }} - {{output.attachment.symbol}}</span>
+          <span class="numbersSearch" ng-show="output.attachment.type=='asset-cert' && output.attachment.cert == 'naming'">{{ 'EXPLORER.CERT_TRANSFER' | translate }} - {{ 'PROFIL.CERT_NAMING' | translate }} - {{output.attachment.symbol}}</span>
+          <span class="numbersSearch" ng-show="output.attachment.type=='did-issue'">{{ 'EXPLORER.AVATAR_ISSUE' | translate }} - {{output.attachment.symbol}}</span>
+          <span class="numbersSearch" ng-show="output.attachment.type=='did-transfer'">{{ 'EXPLORER.AVATAR_TRANSFER' | translate }} - {{output.attachment.symbol}}</span>
+          <span class="numbersSearch" ng-show="output.attachment.type=='mit' && output.attachment.status == 'registered'">{{'HISTORY.MIT_ISSUE' | translate}} - {{output.attachment.symbol}}</span>
+          <span class="numbersSearch" ng-show="output.attachment.type=='mit' && output.attachment.status == 'transfered'">{{'HISTORY.MIT_TRANSFER' | translate}} - {{output.attachment.symbol}}</span>
+          <button class="btn-link-black smallButton noPaddingTopBottomButton" ng-click="output.display = !output.display">{{ 'EXPLORER.TRANSACTION_SCRIPT' | translate }}</button>
         </div>
         <div ng-show="output.display" class="col-sm-12 col-md-11 form-group noPaddingLeftRight">
           <div class="explorerScript">
@@ -79,10 +82,9 @@
     </div>
     <!--Memo-->
     <div class="col-sm-12 col-md-12 form-group noPaddingLeftRight">
-      <div ng-repeat="output in transaction.outputs" ng-show="output.attachment.type == 'message'" class="">
-        <label class="control-label">
-          {{ 'EXPLORER.MEMO' | translate }}
-        </label>
+      <div ng-repeat="output in transaction.outputs" ng-show="output.attachment.type == 'message' || (output.attachment.type == 'mit' && output.attachment.content && output.attachment.content != '')" class="breakWord">
+        <label ng-show="output.attachment.type == 'message'" class="control-label">{{ 'EXPLORER.MEMO' | translate }}</label>
+        <label ng-show="output.attachment.type == 'mit'" class="control-label">{{ 'EXPLORER.CONTENT' | translate }}</label>
         <div>{{output.attachment.content}}</div>
       </div>
     </div>

@@ -1,0 +1,119 @@
+<div class="headline">{{ 'HEADLINE_MIT' | translate }}</div>
+<div>
+  <ul class="nav nav-pills tabsMenu">
+    <li role="presentation"><a href="#!/transfer/mit/" class="btn-link-menu">{{ 'TRANSFER.MIT' | translate }}</a></li>
+    <li role="presentation" class="active"><a href="#!/asset/createmit" class="btn-link-menu">{{ 'ASSET.CREATE_MIT' | translate }}</a></li>
+  </ul>
+</div>
+<div class="row">
+  <br/>
+  <form ng-show="!confirmation">
+    <div class="col-xs-12 col-sm-6">
+
+      <!--MIT Symbol-->
+      <div class="form-group">
+        <label class="control-label">{{ 'TRANSFER_MIT.SYMBOL' | translate }}</label>
+        <input type="text" class="form-control" name="mitSymbol" ng-model="mitSymbol" ng-class="{validInput: !error.symbol_empty && !error.symbol_wrong_char, wrongInput: error.symbol_empty || error.symbol_wrong_char}">
+        <div ng-show="error.symbol_wrong_char" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_PROFILE.CREATE_ID_WRONG_CHARACTER' | translate }}</div>
+      </div>
+
+      <!--Avatar-->
+  		<div class="form-group">
+				<label for="useAddress" class="control-label">{{ 'ASSET_CREATE.DID' | translate }}</label>
+        <select name="useAddress" type="address" name="mitAvatar" class="form-control" placeholder="" ng-model="mitAvatar" ng-class="{validInput: !error.mitAvatar_empty && !error.mitAvatar_not_enough_etp, wrongInput: error.mitAvatar_empty || error.mitAvatar_not_enough_etp}">
+          <option ng-repeat="did in myDids" value="{{did.symbol}}" title="{{did.symbol}}">{{did.symbol}} - {{did.address}} - {{addresses[did.address].available | assetformat : 8}} ETP</option>
+          <option ng-show="noDids" value="nodid">{{ 'ASSET_CREATE.NO_DID' | translate }}</option>
+        </select>
+        <div ng-show="error.mitAvatar_not_enough_etp" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_PROFILE.RECIPIENT_NOT_ENOUGH_ETP' | translate }}</div>
+      </div>
+
+      <!--Content-->
+			<div class="form-group">
+				<label for="content" class="control-label">{{ 'CONTENT' | translate }}</label>
+				<span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.CONTENT' | translate }}"></span>
+				<input type="content" class="form-control" name="content" maxlength="255" id="" ng-model="content" ng-class="{validInput: true, wrongInput: false}" >
+			</div>
+
+      <!--Fee-->
+      <div class="form-group">
+        <label for="fee" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</label>
+        <input type="number" step="0.00000001" class="form-control" name="fee" id="" ng-model="transactionFee" ng-class="{validInput: !error.fee_empty && !error.fee_too_low, wrongInput: error.fee_empty || error.fee_too_low}">
+        <div ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</div>
+      </div>
+
+      <!--Buttons-->
+      <div class="row">
+        <br>
+        <div class="col-xs-6">
+          <input type="submit" ng-click="checkInputs()" value="{{ 'ASSET_ASSET_CREATE_SUBMIT_BUTTON' | translate }}" class="btn btn-success" ng-disabled="!submittable">
+        </div>
+        <div class="col-xs-6">
+          <a href="#!/asset/mymits" class="btn btn-success btn-success-secondary">{{ 'CREATE_MIT.BACK_TO_MIT' | translate }}</a>
+        </div>
+      </div>
+      </br>
+    </div>
+    <!--MIT advise-->
+    <div class="col-xs-12 col-sm-6">
+      <div class="assetDetailsPanel panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{'CREATE_MIT.EXPLANATION_TITLE' | translate}}</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'CREATE_MIT.EXPLANATION_1' | translate }}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'CREATE_MIT.EXPLANATION_2' | translate }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <form ng-show="confirmation">
+    <br/>
+    <div class="col-lg-6 col-md-12">
+      <div class="assetDetailsPanel panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{'TRANSFER.CONFIRMATION_TITLE' | translate}}</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</div>
+            <div class="assetValueColumn col-xs-3 noPaddingLeftRight">{{mitSymbol}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_CREATE.DID' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{mitAvatar}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'CONTENT' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{content}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+						<div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</div>
+						<div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{transactionFee}} ETP</div>
+					</div>
+        </div>
+      </div>
+      <!--Password-->
+      <div class="form-group">
+        <label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
+        <input type="password" class="form-control" name="password" id="" name="password" ng-model="password" ng-class="{validInput: !errorPassword, wrongInput: errorPassword}" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 form-group noPaddingLeftRight">
+      <br>
+      <!--Submit button-->
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <input type="submit" class="btn btn-success" ng-click="registerMIT(password)" value="{{ 'ASSET_ASSET_CREATE_SUBMIT_BUTTON' | translate }}" ng-disabled="errorPassword">
+      </div>
+      <!--Return button-->
+      <div class="col-xs-6 col-sm-6 col-md-3">
+        <button class="btn btn-success btn-success-secondary" ng-click="confirmation = false; password = ''">{{ 'CANCEL_BUTTON' | translate }}</button>
+      </div>
+    </div>
+  </form>
+</div>
