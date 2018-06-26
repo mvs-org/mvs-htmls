@@ -643,6 +643,7 @@
   "ASSET_CREATE.NO_MIT": "你还没有任何MIT",
   "TRANSFER_MIT.SYMBOL": "MIT的ID",
   "CREATE_MIT.EXPLANATION_TITLE": "Metaverse Identifiable Token",
-  "CREATE_MIT.EXPLANATION_1": "Metaverse Identifiable Token (MIT) is 是一种新的token标准，可以帮助你登记链下资产. 与MST不同，MIT是一种轻量级Token可以用于追踪和验证现实世界的实体资产。",
-  "CREATE_MIT.EXPLANATION_2": "每个MIT是独立的，可被追踪、可辨别。"
+  "CREATE_MIT.EXPLANATION_1": "Metaverse Identifiable Token (MIT) 是一种新的token标准，可以帮助你登记链下资产. 与MST不同，MIT是一种轻量级Token可以用于追踪和验证现实世界的实体资产。",
+  "CREATE_MIT.EXPLANATION_2": "每个MIT是独立的，可被追踪、可辨别。",
+  "CREATE_PROFILE_VALIDATION.TEXT2": "验证之后，请等待在下个区块中查看你的数字身份，数字身份将显示在账户中。"
 }
