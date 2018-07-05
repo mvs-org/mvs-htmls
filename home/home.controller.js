@@ -4022,7 +4022,7 @@
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else {
-        NProgress.start();
+        /*NProgress.start();
         var fee_value = $filter('convertfortx')(transactionFee, 8);
         MetaverseService.DidChangeAddress(selectedDid, toAddress, fee_value, password)
         .then( (response) => {
@@ -4045,7 +4045,7 @@
           }
           NProgress.done();
           $scope.password = '';
-        });
+        });*/
       }
     }
 

@@ -934,8 +934,8 @@
         }
 
         function DidChangeAddress(symbol, toAddress, transactionFee, password) {
-            var credentials = localStorageService.get('credentials');
-            return _sendV2('didchangeaddress', [credentials.user, password, toAddress, symbol, '-f', transactionFee]);
+            //var credentials = localStorageService.get('credentials');
+            //return _sendV2('didchangeaddress', [credentials.user, password, toAddress, symbol, '-f', transactionFee]);
         }
 
         function GetDid(symbol) {
