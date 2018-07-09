@@ -54,10 +54,10 @@
 <div dir-paginate="address in addressesDisplay | orderBy:'balance':true | itemsPerPage: 10" ng-hide="(displayEmptyAdresses == true && address.balance == 0)" ng-model='chkMonitor'>
   <dd class="assetBoxAdd assetBox col-xs-12 col-sm-12 col-md-12" >
     <div class="assetBoxBalance col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
-      <!--Display editable name of the address-->
+      <!--Display when the address is linked to an Avatar-->
       <div ng-show="myDidsAddresses[address.address]" class="addressBoxName" readonly="true" id="editAddressName">
+        <img class="smallAvatarLogo" ng-src="{{'icon/default_avatar.png'}}">
         <a href="#!/avatar/myavatars/{{myDidsAddresses[address.address]}}" class="btn-link-black">{{myDidsAddresses[address.address]}}
-          <span class="fa fa-user"></span>
         </a>
       </div>
       <!--Display editable name of the address-->
