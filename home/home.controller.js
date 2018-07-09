@@ -76,7 +76,7 @@
    return {
       link: function(scope, element, attrs) {
          element.bind('error', function() {
-            element.attr('src', 'icon/default.png'); // set default image
+            element.attr('src', 'icon/default_mst.png'); // set default image
          });
        }
      }
@@ -2343,7 +2343,7 @@
         if ($scope.assets != '') {
           $scope.assets.forEach( (asset) => {
             asset.details = false;
-            asset.icon = ($scope.icons.indexOf(asset.symbol) > -1) ? asset.symbol : 'default';
+            asset.icon = ($scope.icons.indexOf(asset.symbol) > -1) ? asset.symbol : 'default_mst';
             if(asset.is_secondaryissue == 'false'){
               asset.maximum_supply = parseInt(asset.maximum_supply);
               $scope.assetsOriginal.push(asset);
@@ -2390,7 +2390,7 @@
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.assets = response.data.assets;
           $scope.assets.forEach( (asset) => {
-            asset.icon = ($scope.icons.indexOf(asset.symbol) > -1) ? asset.symbol : 'default';
+            asset.icon = ($scope.icons.indexOf(asset.symbol) > -1) ? asset.symbol : 'default_mst';
           });
           //If asset is defined -> load it
           if ($scope.symbol != undefined && $scope.symbol != "") {
@@ -3303,7 +3303,7 @@
         if(typeof response.data.assets != 'undefined' && response.data.assets != "") {    //if the user has some assets
           $scope.assets = response.data.assets;
           $scope.assets.forEach( (asset) => {
-            asset.icon = ($scope.icons.indexOf(asset.symbol) > -1) ? asset.symbol : 'default';
+            asset.icon = ($scope.icons.indexOf(asset.symbol) > -1) ? asset.symbol : 'default_mst';
           });
         } else {
           //the user has no asset
