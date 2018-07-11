@@ -45,7 +45,7 @@
       <div class="row">
         <br>
         <div class="col-xs-6">
-          <input type="submit" ng-click="checkInputs()" value="{{ 'CREATE_PROFILE.CREATE_PROFILE_BUTTON' | translate }}" class="btn btn-success" ng-disabled="!submittable">
+          <button type="submit" ng-click="checkInputs()" class="btn btn-success" ng-disabled="!submittable">{{ 'CREATE_PROFILE.CREATE_PROFILE_BUTTON' | translate }}</button>
         </div>
         <div class="col-xs-6">
           <a href="#!/avatar/myavatars/" class="btn btn-success btn-success-secondary">{{ 'CREATE_PROFILE.BACK_TO_PROFILE' | translate }}</a>
@@ -114,7 +114,7 @@
       <br>
       <!--Submit button-->
       <div class="col-xs-6 col-sm-6 col-md-3">
-        <input type="submit" class="btn btn-success" ng-click="popupIssueDid(password)" value="{{ 'CREATE_PROFILE.CREATE_PROFILE_BUTTON' | translate }}" ng-disabled="errorPassword">
+        <button type="submit" class="btn btn-success" ng-click="popupIssueDid(password)" ng-disabled="errorPassword">{{ 'CREATE_PROFILE.CREATE_PROFILE_BUTTON' | translate }}</button>
       </div>
       <!--Return button-->
       <div class="col-xs-6 col-sm-6 col-md-3">

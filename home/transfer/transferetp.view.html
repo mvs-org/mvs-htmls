@@ -143,7 +143,7 @@
 			<br>
 			<!--Submit button-->
 			<div class="col-xs-6 col-sm-6 col-md-3">
-				<input type="submit" class="btn btn-success" ng-click="transfer(sendfrom, recipents, transactionFee, memo, password)" value="{{ 'TRANSFER_SEND' | translate }}" ng-disabled="errorPassword">
+				<button type="submit" class="btn btn-success" ng-click="transfer(sendfrom, recipents, transactionFee, memo, password)" ng-disabled="errorPassword">{{ 'TRANSFER_SEND' | translate }}</button>
 			</div>
 			<!--Return button-->
 			<div class="col-xs-6 col-sm-6 col-md-3">

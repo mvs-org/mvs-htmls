@@ -117,7 +117,7 @@
       <div class="row">
         <br>
         <div class="col-xs-6">
-          <input type="submit" ng-click="checkInputs(address, quantityLocked, model2)" value="{{ 'SECONDARY_ISSUE_BUTTON' | translate }}" class="btn btn-success" ng-disabled="!submittable">
+          <button type="submit" ng-click="checkInputs(address, quantityLocked, model2)" class="btn btn-success" ng-disabled="!submittable">{{ 'SECONDARY_ISSUE_BUTTON' | translate }}</button>
         </div>
         <div class="col-xs-6">
           <a href="#!/asset/myassets" class="btn btn-success btn-success-secondary">{{ 'TRANSFER_BACK_ASSETS' | translate }}</a>
@@ -289,7 +289,7 @@
       <br>
       <!--Submit button-->
       <div class="col-xs-6 col-sm-6 col-md-3">
-        <input type="submit" class="btn btn-success" ng-click="popupSecondaryIssue(password)" value="{{ 'SECONDARY_ISSUE_BUTTON' | translate }}" ng-disabled="errorPassword">
+        <button type="submit" class="btn btn-success" ng-click="popupSecondaryIssue(password)" ng-disabled="errorPassword">{{ 'SECONDARY_ISSUE_BUTTON' | translate }}</button>
       </div>
       <!--Return button-->
       <div class="col-xs-6 col-sm-6 col-md-3">

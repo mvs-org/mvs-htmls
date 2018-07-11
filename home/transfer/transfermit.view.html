@@ -38,7 +38,7 @@
         <div class="row">
           <br>
           <div class="col-xs-6">
-            <input type="submit" ng-click="checkInputs()" value="{{ 'TRANSFER_SEND' | translate }}" class="btn btn-success" ng-disabled="!submittable">
+            <button type="submit" ng-click="checkInputs()" class="btn btn-success" ng-disabled="!submittable">{{ 'TRANSFER_SEND' | translate }}</button>
           </div>
           <div class="col-xs-6">
             <a href="#!/asset/mymits" class="btn btn-success btn-success-secondary">{{ 'CREATE_MIT.BACK_TO_MIT' | translate }}</a>
@@ -100,7 +100,7 @@
         <br>
         <!--Submit button-->
         <div class="col-xs-6 col-sm-6 col-md-3">
-          <input type="submit" class="btn btn-success" ng-click="transferMIT(password)" value="{{ 'TRANSFER_SEND' | translate }}" ng-disabled="errorPassword">
+          <button type="submit" class="btn btn-success" ng-click="transferMIT(password)" ng-disabled="errorPassword">{{ 'TRANSFER_SEND' | translate }}</button>
         </div>
         <!--Return button-->
         <div class="col-xs-6 col-sm-6 col-md-3">
