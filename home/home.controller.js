@@ -3051,6 +3051,7 @@
     $scope.selectedDid = "";
     $scope.assets = [];
     $scope.listAllAssets = [];
+    $scope.bountyFeeUpdate = bountyFeeUpdate;
 
     //Initialize form data
     function init() {
@@ -3064,6 +3065,8 @@
       $scope.secondaryissue_rate = 0;
       //This object contains all form errors
       $scope.error = [];
+      $scope.bountyFee = 80;
+      $scope.bountyFeeMinMiner = 20;
     }
 
     init();
@@ -3115,6 +3118,11 @@
         });
       }
     });
+
+    function bountyFeeUpdate(bountyFee) {
+      if(bountyFee > 100 - $scope.bountyFeeMinMiner)
+        this.bountyFee = 100 - $scope.bountyFeeMinMiner;
+    }
 
     //Check if the form is submittable
     function checkready() {
@@ -3779,6 +3787,9 @@
     $scope.addresses = [];
     $scope.resultMultisigTx = '';
     $scope.resultMultisigTxSaved = false;
+    $scope.bountyFee = 80;
+    $scope.bountyFeeUpdate = bountyFeeUpdate;
+    $scope.bountyFeeMinMiner = 20;
 
 
     function listAddresses() {
@@ -3832,6 +3843,11 @@
         $window.scrollTo(0,0);
       }
     });
+
+    function bountyFeeUpdate(bountyFee) {
+      if(bountyFee > 100 - $scope.bountyFeeMinMiner)
+        this.bountyFee = 100 - $scope.bountyFeeMinMiner;
+    }
 
     function checkInputs(password) {
       $scope.confirmation = true;

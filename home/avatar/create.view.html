@@ -17,13 +17,29 @@
       </div>
       <!--Address-->
   		<div class="form-group">
-				<label for="useAddress" class=" ddd control-label">{{ 'CREATE_PROFILE.SELECT_ADDRESS' | translate }}</label>
+				<label for="useAddress" class="control-label">{{ 'CREATE_PROFILE.SELECT_ADDRESS' | translate }}</label>
         <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.CREATE_AVATAR_LINKED_ADDRESS' | translate }}"></span>
         <select name="useAddress" type="address" name="didAddress" class="form-control" placeholder="" ng-model="didAddress" ng-class="{validInput: !error.didAddress_empty && !error.didAddress_already_used && !error.didAddress_not_enough_etp, wrongInput: error.didAddress_empty || error.didAddress_already_used || error.didAddress_not_enough_etp}">
 					<option ng-repeat="oneAddress in listAddresses | orderBy:'available':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP">{{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
 				</select>
         <div ng-show="error.didAddress_already_used" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'PROFIL_MODIFY_ADDRESS.ADDRESS_ALREADY_USED' | translate }}</div>
     		<div ng-show="error.didAddress_not_enough_etp" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_PROFILE.RECIPIENT_NOT_ENOUGH_ETP' | translate }}</div>
+      </div>
+      <div class="form-group">
+        <label for="useAddress" class="control-label">{{ 'CREATE_PROFILE.BOUNTY_FEE' | translate }}</label>
+        <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.BOUNTY_FEE' | translate }}"></span>
+        <md-slider-container>
+            <md-input-container>
+              <div>{{ 'MINERS' | translate }}</div>
+              <div>{{(100-bountyFee)/100}} ETP</div>
+            </md-input-container>
+            <md-slider ng-model="bountyFee" aria-label="regular-slider" step="10" min="0" max="100" ng-change="bountyFeeUpdate(bountyFee)">
+            </md-slider>
+            <md-input-container>
+              <div>{{ 'DEVELOPERS' | translate }}</div>
+              <div>{{bountyFee/100}} ETP</div>
+            </md-input-container>
+        </md-slider-container>
       </div>
       <!--Buttons-->
       <div class="row">
@@ -77,6 +93,13 @@
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</div>
             <div class="assetValueColumn col-xs-9 noPaddingLeftRight">1 ETP</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_FEE_DISTRIBUTION' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">
+              <div>{{ 'MINERS' | translate }}: {{(100-bountyFee)/100}} ETP</div>
+              <div>{{ 'DEVELOPERS' | translate }}: {{bountyFee/100}} ETP</div>
+            </div>
           </div>
         </div>
       </div>

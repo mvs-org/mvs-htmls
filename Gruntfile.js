@@ -46,6 +46,7 @@ module.exports = function(grunt) {
                         './node_modules/font-awesome/css/font-awesome.min.css',
                         './node_modules/ng-dialog/css/ngDialog.min.css',
                         './node_modules/ng-dialog/css/ngDialog-theme-default.min.css',
+                        './node_modules/angular-material/angular-material.css',
                         //'./css/calendar.css',
                         //'./css/mining.css',
                         './css/style.css'
@@ -92,6 +93,11 @@ module.exports = function(grunt) {
                     './node_modules/angular-utils-pagination/dirPagination.js',
                     './node_modules/ng-dialog/js/ngDialog.min.js',
                     './node_modules/angular-file-saver/dist/angular-file-saver.bundle.js',
+                    './node_modules/angular-aria/angular-aria.js',
+                    './node_modules/angular-animate/angular-animate.js',
+                    './node_modules/angular-messages/angular-messages.js',
+                    './node_modules/angular-material/angular-material.js',
+                    './node_modules/angular-sanitize/angular-sanitize.js',
                     './node_modules/crypto-js/crypto-js.js',
                     './node_modules/js-big-decimal/dist/web/js-big-decimal.min.js'
                 ],

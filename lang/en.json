@@ -645,5 +645,10 @@
   "CREATE_MIT.EXPLANATION_TITLE": "Metaverse Identifiable Token",
   "CREATE_MIT.EXPLANATION_1": "Metaverse Identifiable Token (MIT) is a set of token standards that allow everyone to register assets from off-chain. MIT is different from MST. It is a light token for tracking/verification of real-world assets.",
   "CREATE_MIT.EXPLANATION_2": "As a subset of MST, each MIT is identifiable, which makes it easy to track and identity.",
-  "CREATE_PROFILE_VALIDATION.TEXT2": "After validation, please wait next block to see your Avatar in your account"
+  "CREATE_PROFILE_VALIDATION.TEXT2": "After validation, please wait next block to see your Avatar in your account",
+  "CREATE_PROFILE.BOUNTY_FEE": "Split of the fee",
+  "HELP.BOUNTY_FEE": "You can choose how your fee will be distributed, between the Miners and the Developer Community. This does not impact the fee that you pay for the transaction. The minimum share for Miners is 20%.",
+  "MINERS": "Miners",
+  "DEVELOPERS": "Developer Community",
+  "TRANSFER_FEE_DISTRIBUTION": "Transaction fee distribution"
 }

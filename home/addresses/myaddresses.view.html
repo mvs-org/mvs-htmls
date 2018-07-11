@@ -51,7 +51,7 @@
 <br/>
 
 <!--Display all the ETP adresses-->
-<div dir-paginate="address in addressesDisplay | orderBy:'balance':true | itemsPerPage: 10" ng-hide="(displayEmptyAdresses == true && address.balance == 0)" ng-model='chkMonitor'>
+<div dir-paginate="address in addressesDisplay | orderBy:'balance':true | itemsPerPage: 10" ng-hide="(displayEmptyAdresses == true && address.balance == 0)">
   <dd class="assetBoxAdd assetBox col-xs-12 col-sm-12 col-md-12" >
     <div class="assetBoxBalance col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
       <!--Display when the address is linked to an Avatar-->

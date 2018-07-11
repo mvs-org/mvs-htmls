@@ -27,6 +27,10 @@ $headerHeight: 65px;
   font-family: Arial,sans-serif,微软雅黑;
 }
 
+body {
+  height: auto;
+}
+
 h4 {
   line-height: 40px;
 }
@@ -747,12 +751,15 @@ _____  ._______  ___.___ _______
 
 .loginArea {
   background-color: white;
+  position: absolute;
+  top: 80px;
+  left: calc(50% - 275px);
+  height: 100%;
+  margin-top: 100px;
   border-radius: 10px;
   padding: 55px;
-  margin: 165px auto 100px;
   width: 550px;
   height: auto;
-  display: table;
 }
 .headerRightXS {
   margin-top: 0;
@@ -2260,4 +2267,28 @@ h2 {
   height: 80px;
   width: auto;
   float: right;
+}
+
+md-input-container {
+  max-width: 80px !important;
+  text-align: center;
+  outline: none;
+}
+
+md-slider .md-track, md-slider .md-track:focus {
+    background-color: $successButtonColorSecondary;
+}
+
+md-slider .md-track.md-track-fill, md-slider .md-track.md-track-fill:focus {
+    background-color: $successButtonColor;
+    outline: none;
+}
+
+md-slider {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }

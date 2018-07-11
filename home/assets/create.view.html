@@ -75,6 +75,22 @@
           <option ng-repeat="rate in [].constructor(100) track by $index" value="{{100-$index}}">{{100-$index}} %</option>
         </select>
       </div>
+      <div class="form-group">
+        <label for="useAddress" class="control-label">{{ 'CREATE_PROFILE.BOUNTY_FEE' | translate }}</label>
+        <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.BOUNTY_FEE' | translate }}"></span>
+        <md-slider-container>
+            <md-input-container>
+              <div>{{ 'MINERS' | translate }}</div>
+              <div>{{(100-bountyFee)/10}} ETP</div>
+            </md-input-container>
+            <md-slider ng-model="bountyFee" aria-label="regular-slider" step="10" min="0" max="100" ng-change="bountyFeeUpdate(bountyFee)">
+            </md-slider>
+            <md-input-container>
+              <div>{{ 'DEVELOPERS' | translate }}</div>
+              <div>{{bountyFee/10}} ETP</div>
+            </md-input-container>
+        </md-slider-container>
+      </div>
     </div>
     <!--Rate details-->
     <div ng-show="secondaryissue" class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
@@ -147,6 +163,17 @@
           <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_CREATE.SECONDARY_ISSUE' | translate }}</div>
           <div ng-hide="secondaryissue_rate == -1" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{secondaryissue_rate}} %</div>
           <div ng-show="secondaryissue_rate == -1" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED' | translate }}</div>
+        </div>
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</div>
+          <div class="assetValueColumn col-xs-9 noPaddingLeftRight">10 ETP</div>
+        </div>
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_FEE_DISTRIBUTION' | translate }}</div>
+          <div class="assetValueColumn col-xs-9 noPaddingLeftRight">
+            <div>{{ 'MINERS' | translate }}: {{(100-bountyFee)/10}} ETP</div>
+            <div>{{ 'DEVELOPERS' | translate }}: {{bountyFee/10}} ETP</div>
+          </div>
         </div>
       </div>
     </div>
