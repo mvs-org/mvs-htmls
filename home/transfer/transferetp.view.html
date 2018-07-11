@@ -30,6 +30,7 @@
 			<!--Sender-->
 			<div class="form-group">
 				<label for="addressFrom" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
+				<span ng-show="loadingSender" class="miniSpinner"></span>
 				<select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" ng-change="availBalance(sendfrom)" ng-class="{validInput: !error.sendfrom, wrongInput: error.sendfrom}">
 					<option title="{{balance['total-available'] | assetformat : 8}} ETP" value="">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</option>
 					<option ng-repeat="oneAddress in listAddresses | orderBy:'available':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-if="allDidsAddresses[oneAddress.address] && recipents.length == 1 && addresses[oneAddress.address].type == 'single'">{{allDidsAddresses[oneAddress.address]}} - {{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
@@ -59,7 +60,10 @@
 				<!--Amount-->
 				<div ng-show="false">{{availableBalance | assetformat : 8}}</div>  <!--Needed to update the available balance in the button-->
 				<div class="form-group">
-					<label for="value" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_VALUE' | translate }}<span ng-show="recipents.length > 1"> {{recipent.index}}<span></label>
+					<div class="col-xs-6 noPaddingLeftRight">
+						<label for="value" class="control-label">{{ 'TRANSFER_VALUE' | translate }}<span ng-show="recipents.length > 1"> {{recipent.index}}<span></label>
+						<span ng-show="loadingBalances" class="miniSpinner"></span>
+					</div>
 					<!--AvailableBalance-->
 					<div class="col-xs-6 noPaddingLeftRight addRecipent" ng-show="(recipent.index == 1)">
 						<button type="button" tabIndex="-1" class="btn-link-red addRecipentButton" ng-click="sendAll()">{{ 'TRANSFER_AMOUNT_AVALAIBLE' | translate }}: {{availableBalance | assetformat : 8}} ETP</button>

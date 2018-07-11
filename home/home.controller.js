@@ -420,6 +420,7 @@
     $scope.confirmation = false;
     $scope.checkInputs = checkInputs;
     $scope.checkready = checkready;
+    $scope.loadingBalances = true;
 
 
     function init() {
@@ -583,6 +584,7 @@
           $scope.balance = balance;
           $scope.decimal_number = 8;
           $scope.availableBalance = balance['total-available'];
+          $scope.loadingBalances = false;
         }
       });
     }
@@ -637,6 +639,8 @@
     $scope.allDidsAddresses = [];
     $scope.checkInputs = checkInputs;
     $scope.didFromAddress = [];
+    $scope.loadingSender = true;
+    $scope.loadingBalances = true;
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -668,6 +672,7 @@
         } else {
           $scope.balance = balance;
           $scope.availableBalance = balance['total-available'];
+          $scope.loadingBalances = false;
         }
       });
     }
@@ -1007,6 +1012,7 @@
               "address": e.balance.address
             });
           });
+          $scope.loadingSender = false;
 
           //After loading the balances, we load the multisig addresses
           MetaverseService.ListMultiSig()
@@ -1998,6 +2004,8 @@
     $scope.didFromAddress = [];
     $scope.updateUnlockNumber = updateUnlockNumber;
     $scope.checkready = checkready;
+    $scope.loadingBalances = true;
+    $scope.loadingSender = true;
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -2051,6 +2059,7 @@
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.assetAddresses = response.data.result.assets;
+        $scope.loadingSender = false;
       } else {
         $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -2092,6 +2101,7 @@
               $scope.asset.quantity = a.quantity;
               $scope.asset.available = a.available;
               $scope.availableBalance = a.available;
+              $scope.loadingBalances = false;
             }
           });
         } else {

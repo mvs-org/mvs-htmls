@@ -5,7 +5,10 @@
 		<div class="col-sm-12 col-md-6">
 			<!--Amount-->
 			<div class="form-group">
-				<label for="value" class="control-label col-md-6 noPaddingLeftRight">{{ 'TRANSFER_VALUE' | translate }}</label>
+				<div class="col-md-6 noPaddingLeftRight">
+					<label for="value" class="control-label">{{ 'TRANSFER_VALUE' | translate }}</label>
+					<span ng-show="loadingBalances" class="miniSpinner"></span>
+				</div>
 				<!--AvailableBalance-->
 				<div class="col-md-6 noPaddingLeftRight addRecipent">
 					<button type="button" class="btn-link-red addRecipentButton" ng-click="sendAll()">{{ 'TRANSFER_AMOUNT_AVALAIBLE' | translate }}: {{availableBalance | assetformat : 8}} ETP</button>
