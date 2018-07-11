@@ -2421,7 +2421,13 @@
           $translate('MESSAGES.ASSETS_ISSUE_SUCCESS').then( (data) => FlashService.Success(data, false, response.data.result.transaction.hash) );
           $window.scrollTo(0,0);
         } else {
-          $translate('MESSAGES.ASSETS_ISSUE_ERROR').then( (data) => FlashService.Error(data) );
+          $translate('MESSAGES.ASSETS_ISSUE_ERROR').then( (data) => {
+            if (response.message.message != undefined) {
+              FlashService.Error(data + " : " + response.message.message);
+            } else {
+              FlashService.Error(data);
+            }
+          });
           $window.scrollTo(0,0);
         }
         NProgress.done();
@@ -3229,10 +3235,15 @@
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $translate('MESSAGES.ASSETS_ISSUE_SUCCESS').then( (data) => FlashService.Success(data, false, response.data.result.transaction.hash) );
-
           $window.scrollTo(0,0);
         } else {
-          $translate('MESSAGES.ASSETS_ISSUE_ERROR').then( (data) => FlashService.Error(data) );
+          $translate('MESSAGES.ASSETS_ISSUE_ERROR').then( (data) => {
+            if (response.message.message != undefined) {
+              FlashService.Error(data + " : " + response.message.message);
+            } else {
+              FlashService.Error(data);
+            }
+          });
           $window.scrollTo(0,0);
         }
         NProgress.done();

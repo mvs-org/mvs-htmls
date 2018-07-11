@@ -340,7 +340,7 @@
   "MESSAGES.ASSETS_DELETE_ERROR" : "The asset could not be deleted",
   "MESSAGES.ASSETS_DELETE_SUCCESS" : "The asset has been deleted",
   "MESSAGES.ASSETS_ISSUE_SUCCESS" : "The asset will be issued within the next blocks, please wait. Your transaction hash is: ",
-  "MESSAGES.ASSETS_ISSUE_ERROR" : "The asset could not be issued.",
+  "MESSAGES.ASSETS_ISSUE_ERROR" : "The asset could not be issued",
   "MESSAGES.ASSETS_SECOND_ISSUE_SUCCESS" : "The maximum supply will be updated within the next blocks. Please wait.",
   "MESSAGES.ASSETS_SECOND_ISSUE_ERROR" : "The maximum supply could not be increased.",
   "MESSAGES.DEPOSIT_SUCCESS" : "Deposit successful. The transaction hash is: ",
