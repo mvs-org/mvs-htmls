@@ -844,9 +844,9 @@
           return _send('importaccount', ['-n', user, '-p', password, '-i', address_count, phrase]);
         }
 
-        function RegisterDid(address, symbol, password) {
+        function RegisterDid(address, symbol, password, minerFee) {
             var credentials = localStorageService.get('credentials');
-            return _sendV2('registerdid', [credentials.user, password, address, symbol]);
+            return _sendV2('registerdid', [credentials.user, password, address, symbol, '-p', minerFee]);
         }
 
         function ListMyDids() {

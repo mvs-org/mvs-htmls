@@ -3890,9 +3890,9 @@
       delete $rootScope.flash;
     }
 
-    function createProfile(didAddress, didSymbol, password) {
+    function createProfile(didAddress, didSymbol, password, bountyFee) {
       NProgress.start();
-      MetaverseService.RegisterDid(didAddress, didSymbol, password)
+      MetaverseService.RegisterDid(didAddress, didSymbol, password, 100-bountyFee)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           if(response.data.result.transaction) {
