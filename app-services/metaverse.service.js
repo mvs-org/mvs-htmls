@@ -59,6 +59,9 @@
         service.burnAddress = '1111111111111111111114oLvT2';
         service.burnAddress_short = 'blackhole';
 
+        service.defaultBountyFee = 80;
+        service.bountyFeeMinMiner = 20;
+
         service.CheckAccount = CheckAccount;
 
         service.GetNewAccount = GetNewAccount;
@@ -667,9 +670,9 @@
          * @apiParam {List} params [username, password,symbol]
          *
          **/
-        function Issue(symbol) {
+        function Issue(symbol, minerFee) {
           var credentials = localStorageService.get('credentials');
-          return _sendV2('issue', [credentials.user, credentials.password, symbol]);
+          return _sendV2('issue', [credentials.user, credentials.password, symbol, '-p', minerFee]);
         }
 
         /**

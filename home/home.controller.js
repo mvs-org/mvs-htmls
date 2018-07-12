@@ -2390,6 +2390,10 @@
     $scope.icons = MetaverseService.hasIcon;
     $scope.assetsLoaded = false;
     $scope.assets = [];
+    $scope.bountyFee = MetaverseService.defaultBountyFee;
+    $scope.bountyFeeUpdate = bountyFeeUpdate;
+    $scope.bountyFeeMinMiner = MetaverseService.bountyFeeMinMiner;
+    $scope.popupIssue = popupIssue;
 
 
     //Load assets
@@ -2421,11 +2425,22 @@
       $scope.assetsLoaded = true;
     });
 
+    function popupIssue(symbol) {
+      $scope.symbol = symbol;
+      ngDialog.open({
+          template: 'templateId',
+          scope: $scope
+      });
+    }
 
+    function bountyFeeUpdate(bountyFee) {
+      if(bountyFee > 100 - $scope.bountyFeeMinMiner)
+        this.bountyFee = 100 - $scope.bountyFeeMinMiner;
+    }
 
-    function issue(symbol) {
+    function issue(symbol, bountyFee) {
       NProgress.start();
-      MetaverseService.Issue(symbol)
+      MetaverseService.Issue(symbol, 100-bountyFee)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $translate('MESSAGES.ASSETS_ISSUE_SUCCESS').then( (data) => FlashService.Success(data, false, response.data.result.transaction.hash) );
@@ -3081,8 +3096,8 @@
       $scope.secondaryissue_rate = 0;
       //This object contains all form errors
       $scope.error = [];
-      $scope.bountyFee = 80;
-      $scope.bountyFeeMinMiner = 20;
+      $scope.bountyFee = MetaverseService.defaultBountyFee;
+      $scope.bountyFeeMinMiner = MetaverseService.bountyFeeMinMiner;
     }
 
     init();
@@ -3239,9 +3254,9 @@
       });
     }
 
-    function issue(symbol) {
+    function issue(symbol, bountyFee) {
       NProgress.start();
-      MetaverseService.Issue(symbol)
+      MetaverseService.Issue(symbol, 100-bountyFee)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $translate('MESSAGES.ASSETS_ISSUE_SUCCESS').then( (data) => FlashService.Success(data, false, response.data.result.transaction.hash) );
@@ -3808,9 +3823,9 @@
     $scope.addresses = [];
     $scope.resultMultisigTx = '';
     $scope.resultMultisigTxSaved = false;
-    $scope.bountyFee = 80;
+    $scope.bountyFee = MetaverseService.defaultBountyFee;
     $scope.bountyFeeUpdate = bountyFeeUpdate;
-    $scope.bountyFeeMinMiner = 20;
+    $scope.bountyFeeMinMiner = MetaverseService.bountyFeeMinMiner;
 
 
     function listAddresses() {
