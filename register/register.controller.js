@@ -63,7 +63,8 @@
     }
 
     function updateHeight() {
-      vm.getHeightFromExplorer();
+      if(vm.heightFromExplorer == 0)
+          vm.getHeightFromExplorer();
       MetaverseService.GetInfo()
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {

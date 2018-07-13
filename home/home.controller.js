@@ -3510,6 +3510,7 @@
     $scope.heightFromExplorer = 0;
     $scope.loadingPercent = 0;
     $scope.subscribed = false;
+    $scope.heightFromExplorer = 0;
 
     //var ws = new WebSocket('ws://localhost:8821/ws');
     var ws = new WebSocket('ws://' + MetaverseService.SERVER2 + '/ws');  //Live
@@ -3521,20 +3522,6 @@
     $scope.version = "";
     $scope.popoverSynchShown = false;
     $scope.peers = "";
-
-    MetaverseService.GetInfoV2()
-    .then( (response) => {
-      if (typeof response.success !== 'undefined' && response.success) {
-        $scope.height = response.data.result.height;
-        $rootScope.network = response.data.result.testnet ? 'testnet' : 'mainnet';
-        $scope.version = response.data.result['wallet-version'];
-        $scope.checkVersion();
-        $scope.peers = response.data.result.peers;
-      }
-    })
-    .then(() => getHeightFromExplorer())
-    .then(() => $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100));
-
 
     $scope.ClickCloseFlashMessage = () => {
       FlashService.CloseFlashMessage();
@@ -3647,7 +3634,10 @@
           $scope.peers = response.data.result.peers;
         }
       })
-      .then(() => getHeightFromExplorer())
+      .then(() => {
+        if($scope.heightFromExplorer == 0)
+          getHeightFromExplorer()
+      })
       .then(() => $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100));
     }
 
