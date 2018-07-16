@@ -3633,6 +3633,7 @@
         if (typeof response != 'undefined' && response.success) {
           $scope.height = response.data.result.height;
           $rootScope.network = response.data.result.testnet ? 'testnet' : 'mainnet';
+          $scope.version = response.data.result['wallet-version'];
           $scope.peers = response.data.result.peers;
         }
       })
