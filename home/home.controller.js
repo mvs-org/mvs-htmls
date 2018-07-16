@@ -3523,6 +3523,8 @@
     $scope.popoverSynchShown = false;
     $scope.peers = "";
 
+    $scope.logout = logout;
+
     $scope.ClickCloseFlashMessage = () => {
       FlashService.CloseFlashMessage();
     }
@@ -3635,14 +3637,23 @@
         }
       })
       .then(() => {
-        if($scope.heightFromExplorer == 0)
+        if($scope.heightFromExplorer == 0) {
           getHeightFromExplorer()
+        } else {
+          $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100);
+        }
       })
-      .then(() => $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100));
     }
 
     updateHeight();
-    $interval( () => updateHeight(), 10000);
+    $scope.stopUpdateHeight = $interval(updateHeight, 10000);
+    $scope.stopGetHeightFromExplorer = $interval(getHeightFromExplorer, 600000);
+
+    function logout() {
+      $interval.cancel($scope.stopUpdateHeight);
+      $interval.cancel($scope.stopGetHeightFromExplorer);
+      $location.path('/login');
+    }
 
     $scope.show_account_menu = () => {
       $scope.menu.account.show = 1 - $scope.menu.account.show;
