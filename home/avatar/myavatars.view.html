@@ -70,7 +70,7 @@
           <div ng-hide="myCertsLoaded" class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="mediumSpinner"></div>
           </div>
-          <div ng-show="myCertsLoaded && cert.owner == selectedDid" ng-repeat="cert in myCerts" class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div ng-show="myCertsLoaded && cert.address == symbolAddress[selectedDid]" ng-repeat="cert in myCerts" class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div ng-show="cert.cert == 'issue'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }}</div>
             <div ng-show="cert.cert == 'domain'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
             <div ng-show="cert.cert == 'naming'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_NAMING' | translate }}</div>

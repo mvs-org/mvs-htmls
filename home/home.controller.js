@@ -3726,6 +3726,8 @@
 
     $scope.addressesHistory = [];
     $scope.changeDid = changeDid;
+    $scope.symbolAddress = [];
+    $scope.selectedDidAddress = '';
 
 
     MetaverseService.ListMyDids()
@@ -3736,6 +3738,11 @@
           $scope.myDids = response.data.result.dids;
           if(typeof $scope.selectedDid == 'indefined' || $scope.selectedDid == '') {
             $scope.selectedDid = $scope.myDids[0].symbol;
+            $scope.myDids.forEach(function(did) {
+              $scope.symbolAddress[did.symbol] = did.address;
+              if(did.symbol == $scope.selectedDid)
+                $scope.selectedDidAddress = did.address;
+            })
           }
           listDidsAddresses($scope.selectedDid);
         } else {
