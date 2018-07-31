@@ -59,6 +59,9 @@
         service.burnAddress = '1111111111111111111114oLvT2';
         service.burnAddress_short = 'blackhole';
 
+        service.defaultBountyFee = 80;
+        service.bountyFeeMinMiner = 20;
+
         service.CheckAccount = CheckAccount;
 
         service.GetNewAccount = GetNewAccount;
@@ -667,9 +670,9 @@
          * @apiParam {List} params [username, password,symbol]
          *
          **/
-        function Issue(symbol) {
+        function Issue(symbol, minerFee) {
           var credentials = localStorageService.get('credentials');
-          return _sendV2('issue', [credentials.user, credentials.password, symbol]);
+          return _sendV2('issue', [credentials.user, credentials.password, symbol, '-p', minerFee]);
         }
 
         /**
@@ -841,9 +844,9 @@
           return _send('importaccount', ['-n', user, '-p', password, '-i', address_count, phrase]);
         }
 
-        function RegisterDid(address, symbol, password) {
+        function RegisterDid(address, symbol, password, minerFee) {
             var credentials = localStorageService.get('credentials');
-            return _sendV2('registerdid', [credentials.user, password, address, symbol]);
+            return _sendV2('registerdid', [credentials.user, password, address, symbol, '-p', minerFee]);
         }
 
         function ListMyDids() {
@@ -896,7 +899,7 @@
                 var modelToSend = "TYPE=2;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";UC=" + uc + ";UQ=" + uq;
                 return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
               case '3':
-                var modelToSend = "TYPE=3;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
+                var modelToSend = "TYPE=3;LQ=" + quantity + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
                 return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
               default:
                 return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee]);
@@ -926,16 +929,16 @@
                 var modelToSend = "TYPE=2;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";UC=" + uc + ";UQ=" + uq;
                 return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
               case '3':
-                var modelToSend = "TYPE=3;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
-                return _sendV2('didsendassetfrom', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
+                var modelToSend = "TYPE=3;LQ=" + quantity + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
+                return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
               default:
                 return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee]);
             }
         }
 
         function DidChangeAddress(symbol, toAddress, transactionFee, password) {
-            var credentials = localStorageService.get('credentials');
-            return _sendV2('didchangeaddress', [credentials.user, password, toAddress, symbol, '-f', transactionFee]);
+            //var credentials = localStorageService.get('credentials');
+            //return _sendV2('didchangeaddress', [credentials.user, password, toAddress, symbol, '-f', transactionFee]);
         }
 
         function GetDid(symbol) {
@@ -1010,7 +1013,7 @@
                 var modelToSend = "TYPE=2;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";UC=" + uc + ";UQ=" + uq;
                 return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-m', modelToSend, '-f', transactionFee]);
               case '3':
-                var modelToSend = "TYPE=3;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
+                var modelToSend = "TYPE=3;LQ=" + quantity + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
                 return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
               default:
                 return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-f', transactionFee]);
@@ -1110,7 +1113,7 @@
         const TX_TYPE_ASSET = 'ASSET';
         const TX_TYPE_ISSUE = 'ISSUE';
         const TX_TYPE_CERT = 'CERT';
-        const TX_TYPE_DID_ISSUE = 'DID_ISSUE';
+        const TX_TYPE_DID_REGISTER = 'DID_REGISTER';
         const TX_TYPE_DID_TRANSFER = 'DID_TRANSFER';
         const TX_TYPE_MIT = 'MIT';
         const TX_TYPE_UNKNOWN = 'UNKNOWN';
@@ -1146,8 +1149,8 @@
                         result = TX_TYPE_ASSET;
                     if (output.attachment.type === 'asset-cert' && result != TX_TYPE_ISSUE)
                         result = TX_TYPE_CERT;
-                    if (output.attachment.type === 'did-issue')
-                        result = TX_TYPE_DID_ISSUE;
+                    if (output.attachment.type === 'did-register')
+                        result = TX_TYPE_DID_REGISTER;
                     if (output.attachment.type === 'did-transfer')
                         result = TX_TYPE_DID_TRANSFER;
                     if (output.attachment.type === 'mit')
@@ -1294,10 +1297,10 @@
                                         });
                                         transactions.push(transaction);
                                         break;
-                                    case TX_TYPE_DID_ISSUE:
-                                        transaction.direction='did-issue';
+                                    case TX_TYPE_DID_REGISTER:
+                                        transaction.direction='did-register';
                                         e.outputs.forEach(function(output){
-                                            if(output.own==='true' && output.attachment.type==='did-issue'){
+                                            if(output.own==='true' && output.attachment.type==='did-register'){
                                                 transaction.recipents.push({
                                                     "address": output.address
                                                 });

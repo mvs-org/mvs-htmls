@@ -15,14 +15,6 @@
         <li role="presentation"><a href="#!/avatar/myavatars/" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='avatar'}">{{ 'NAV_PROFILE' | translate }}</span></a></li>
         <li role="presentation"> <a href="#!/account/details" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='account'}">{{ 'USER_SETTING' | translate }}</span></a></li>
         <li role="presentation"><a href="#!/advanced" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='advanced'}">{{ 'NAV_PRO' | translate }}</span></a></li>
-        <!--<li role="presentation" class="visible-xs visible-sm"><a href="#!/explorer/search/" class="topMenuButtonLeft" ng-class="{selectedMenu: selectedMenu.main==='explorer'}">{{ 'NAV_EXPLORER' | translate }}</span></a></li>-->
-
-        <!--<form class="navbar-form navbar-left hidden-xs hidden-sm col-md-4 col-lg-4">
-        <div class="form-group">
-        <input type="search" name="search" class="form-control researchTextBox" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
-      </div>
-      <input type="submit" class="btn btn-success smallButton" value="{{ 'HEADER_SEARCH' | translate }}" ng-click="vm.search(stringToSearch)"></input>
-    </form>-->
       </ul>
 
       <!--Right header-->
@@ -93,7 +85,7 @@
 
           <!--Logout button-->
           <span class="topMenuButtonRight">
-            <a href="#!/login" class="btn-link-black smallButton menuButton">
+            <a class="btn-link-black smallButton menuButton" ng-click="logout()">
               <p>
                 <span class="hidden-xs hidden-sm hidden-md">{{ 'HEADER_LOGOUT' | translate }}</span> <span class="glyphicon glyphicon-log-out"></span>
               </p>
@@ -149,10 +141,10 @@
         <li role="presentation"><a href="#!/asset/myassets" class="btn">{{ 'NAV_ASSETS' | translate }}</span></a></li>
         <li role="presentation"><a href="#!/avatar/myavatars/" class="btn">{{ 'NAV_PROFILE' | translate }}</span></a></li>
         <li class="divider" role="separator"></li>
-        <li role="presentation"> <a href="#!/account/details" class="btn">{{ 'USER_SETTING' | translate }}</span></a></li>
+        <li role="presentation"><a href="#!/account/details" class="btn">{{ 'USER_SETTING' | translate }}</span></a></li>
         <li role="presentation"><a href="#!/advanced" class="btn">{{ 'NAV_PRO' | translate }}</a></li>
         <li class="divider" role="separator"></li>
-        <li role="presentation"><a href="#!/login" class="btn">{{ 'HEADER_LOGOUT' | translate }}</a></li>
+        <li role="presentation"><a class="btn" ng-click="logout()">{{ 'HEADER_LOGOUT' | translate }}</a></li>
       </ul>
     </div></div>
 </div>

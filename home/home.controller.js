@@ -76,7 +76,7 @@
    return {
       link: function(scope, element, attrs) {
          element.bind('error', function() {
-            element.attr('src', 'icon/default.png'); // set default image
+            element.attr('src', 'icon/default_mst.png'); // set default image
          });
        }
      }
@@ -419,6 +419,8 @@
 
     $scope.confirmation = false;
     $scope.checkInputs = checkInputs;
+    $scope.checkready = checkready;
+    $scope.loadingBalances = true;
 
 
     function init() {
@@ -582,6 +584,7 @@
           $scope.balance = balance;
           $scope.decimal_number = 8;
           $scope.availableBalance = balance['total-available'];
+          $scope.loadingBalances = false;
         }
       });
     }
@@ -636,6 +639,8 @@
     $scope.allDidsAddresses = [];
     $scope.checkInputs = checkInputs;
     $scope.didFromAddress = [];
+    $scope.loadingSender = true;
+    $scope.loadingBalances = true;
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -667,6 +672,7 @@
         } else {
           $scope.balance = balance;
           $scope.availableBalance = balance['total-available'];
+          $scope.loadingBalances = false;
         }
       });
     }
@@ -1006,6 +1012,7 @@
               "address": e.balance.address
             });
           });
+          $scope.loadingSender = false;
 
           //After loading the balances, we load the multisig addresses
           MetaverseService.ListMultiSig()
@@ -1997,6 +2004,8 @@
     $scope.didFromAddress = [];
     $scope.updateUnlockNumber = updateUnlockNumber;
     $scope.checkready = checkready;
+    $scope.loadingBalances = true;
+    $scope.loadingSender = true;
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -2050,6 +2059,7 @@
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.assetAddresses = response.data.result.assets;
+        $scope.loadingSender = false;
       } else {
         $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -2091,6 +2101,7 @@
               $scope.asset.quantity = a.quantity;
               $scope.asset.available = a.available;
               $scope.availableBalance = a.available;
+              $scope.loadingBalances = false;
             }
           });
         } else {
@@ -2252,10 +2263,13 @@
         if($scope.model == 0 && $scope.errorDeposit.periodLocked_empty) {
           $scope.submittable = false;
           return;
-        } else if (($scope.model == 1 || $scope.model == 3) && ($scope.errorDeposit.unlock_number_empty || $scope.errorDeposit.quantityLocked_empty || $scope.errorDeposit.quantityLocked_lower_quantity || $scope.errorDeposit.periodLocked_empty)) {
+        } else if ($scope.model == 1 && ($scope.errorDeposit.unlock_number_empty || $scope.errorDeposit.quantityLocked_empty || $scope.errorDeposit.quantityLocked_lower_quantity || $scope.errorDeposit.periodLocked_empty)) {
           $scope.submittable = false;
           return;
         } else if ($scope.model == 2 && ($scope.errorDeposit.unlockNumber_empty)) {
+          $scope.submittable = false;
+          return;
+        } else if ($scope.model == 3 && ($scope.errorDeposit.unlock_number_empty || $scope.errorDeposit.periodLocked_empty)) {
           $scope.submittable = false;
           return;
         }
@@ -2339,7 +2353,7 @@
         if ($scope.assets != '') {
           $scope.assets.forEach( (asset) => {
             asset.details = false;
-            asset.icon = ($scope.icons.indexOf(asset.symbol) > -1) ? asset.symbol : 'default';
+            asset.icon = ($scope.icons.indexOf(asset.symbol) > -1) ? asset.symbol : 'default_mst';
             if(asset.is_secondaryissue == 'false'){
               asset.maximum_supply = parseInt(asset.maximum_supply);
               $scope.assetsOriginal.push(asset);
@@ -2376,6 +2390,10 @@
     $scope.icons = MetaverseService.hasIcon;
     $scope.assetsLoaded = false;
     $scope.assets = [];
+    $scope.bountyFee = MetaverseService.defaultBountyFee;
+    $scope.bountyFeeUpdate = bountyFeeUpdate;
+    $scope.bountyFeeMinMiner = MetaverseService.bountyFeeMinMiner;
+    $scope.popupIssue = popupIssue;
 
 
     //Load assets
@@ -2386,7 +2404,7 @@
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.assets = response.data.assets;
           $scope.assets.forEach( (asset) => {
-            asset.icon = ($scope.icons.indexOf(asset.symbol) > -1) ? asset.symbol : 'default';
+            asset.icon = ($scope.icons.indexOf(asset.symbol) > -1) ? asset.symbol : 'default_mst';
           });
           //If asset is defined -> load it
           if ($scope.symbol != undefined && $scope.symbol != "") {
@@ -2407,17 +2425,34 @@
       $scope.assetsLoaded = true;
     });
 
+    function popupIssue(symbol) {
+      $scope.symbol = symbol;
+      ngDialog.open({
+          template: 'templateId',
+          scope: $scope
+      });
+    }
 
+    function bountyFeeUpdate(bountyFee) {
+      if(bountyFee > 100 - $scope.bountyFeeMinMiner)
+        this.bountyFee = 100 - $scope.bountyFeeMinMiner;
+    }
 
-    function issue(symbol) {
+    function issue(symbol, bountyFee) {
       NProgress.start();
-      MetaverseService.Issue(symbol)
+      MetaverseService.Issue(symbol, 100-bountyFee)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $translate('MESSAGES.ASSETS_ISSUE_SUCCESS').then( (data) => FlashService.Success(data, false, response.data.result.transaction.hash) );
           $window.scrollTo(0,0);
         } else {
-          $translate('MESSAGES.ASSETS_ISSUE_ERROR').then( (data) => FlashService.Error(data) );
+          $translate('MESSAGES.ASSETS_ISSUE_ERROR').then( (data) => {
+            if (response.message.message != undefined) {
+              FlashService.Error(data + " : " + response.message.message);
+            } else {
+              FlashService.Error(data);
+            }
+          });
           $window.scrollTo(0,0);
         }
         NProgress.done();
@@ -2466,6 +2501,8 @@
     $scope.assetAddresses = [];
     $scope.getAssetBalance = [];
     $scope.myDidsAddresses = [];
+    $scope.myAssetsBalances = [];
+    $scope.myAsset = [];
 
 
     //Shows a modal of the address incl. a qr code
@@ -2524,6 +2561,24 @@
           address.edit = false;
           $scope.getAssetBalance[address.address] = address.quantity;
         });
+      }
+    });
+
+    //Load assets
+    MetaverseService.ListAssets()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success && response.data.assets != "") {
+        $scope.myAssetsBalances = response.data.assets;
+        //If asset is defined -> load it
+        if (typeof $scope.symbol != 'undefined' && $scope.symbol != "") {
+          $scope.myAssetsBalances.forEach( (asset) => {
+            if(asset.symbol == $scope.symbol)
+              $scope.myAsset = asset;
+          });
+        }
+      } else {
+        //Show asset load error
+        $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
       }
     });
 
@@ -2942,10 +2997,13 @@
         $scope.submittable = false;
         return;
       }
-      if (($scope.model == 1 || $scope.model == 3) && ($scope.errorDeposit.unlock_number_empty || $scope.errorDeposit.quantityLocked_empty || $scope.errorDeposit.quantityLocked_lower_quantity || $scope.errorDeposit.periodLocked_empty)) {
+      if ($scope.model == 1 && ($scope.errorDeposit.unlock_number_empty || $scope.errorDeposit.quantityLocked_empty || $scope.errorDeposit.quantityLocked_lower_quantity || $scope.errorDeposit.periodLocked_empty)) {
         $scope.submittable = false;
         return;
       } else if ($scope.model == 2 && ($scope.errorDeposit.unlockNumber_empty)) {
+        $scope.submittable = false;
+        return;
+      } else if ($scope.model == 3 && ($scope.errorDeposit.unlock_number_empty || $scope.errorDeposit.periodLocked_empty)) {
         $scope.submittable = false;
         return;
       }
@@ -3024,6 +3082,7 @@
     $scope.selectedDid = "";
     $scope.assets = [];
     $scope.listAllAssets = [];
+    $scope.bountyFeeUpdate = bountyFeeUpdate;
 
     //Initialize form data
     function init() {
@@ -3037,6 +3096,8 @@
       $scope.secondaryissue_rate = 0;
       //This object contains all form errors
       $scope.error = [];
+      $scope.bountyFee = MetaverseService.defaultBountyFee;
+      $scope.bountyFeeMinMiner = MetaverseService.bountyFeeMinMiner;
     }
 
     init();
@@ -3088,6 +3149,11 @@
         });
       }
     });
+
+    function bountyFeeUpdate(bountyFee) {
+      if(bountyFee > 100 - $scope.bountyFeeMinMiner)
+        this.bountyFee = 100 - $scope.bountyFeeMinMiner;
+    }
 
     //Check if the form is submittable
     function checkready() {
@@ -3188,16 +3254,21 @@
       });
     }
 
-    function issue(symbol) {
+    function issue(symbol, bountyFee) {
       NProgress.start();
-      MetaverseService.Issue(symbol)
+      MetaverseService.Issue(symbol, 100-bountyFee)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $translate('MESSAGES.ASSETS_ISSUE_SUCCESS').then( (data) => FlashService.Success(data, false, response.data.result.transaction.hash) );
-
           $window.scrollTo(0,0);
         } else {
-          $translate('MESSAGES.ASSETS_ISSUE_ERROR').then( (data) => FlashService.Error(data) );
+          $translate('MESSAGES.ASSETS_ISSUE_ERROR').then( (data) => {
+            if (response.message.message != undefined) {
+              FlashService.Error(data + " : " + response.message.message);
+            } else {
+              FlashService.Error(data);
+            }
+          });
           $window.scrollTo(0,0);
         }
         NProgress.done();
@@ -3241,7 +3312,7 @@
         $scope.transactionsFiltered = $scope.transactions;
       /*} else if  (asset == 'Avatars') {
         $scope.transactions.forEach(function(e) {
-          if (e.direction=='did-issue' || e.direction=='did-transfer') {
+          if (e.direction=='did-register' || e.direction=='did-transfer') {
             $scope.transactionsFiltered.push(e);
           }
         });
@@ -3276,7 +3347,7 @@
         if(typeof response.data.assets != 'undefined' && response.data.assets != "") {    //if the user has some assets
           $scope.assets = response.data.assets;
           $scope.assets.forEach( (asset) => {
-            asset.icon = ($scope.icons.indexOf(asset.symbol) > -1) ? asset.symbol : 'default';
+            asset.icon = ($scope.icons.indexOf(asset.symbol) > -1) ? asset.symbol : 'default_mst';
           });
         } else {
           //the user has no asset
@@ -3439,6 +3510,7 @@
     $scope.heightFromExplorer = 0;
     $scope.loadingPercent = 0;
     $scope.subscribed = false;
+    $scope.heightFromExplorer = 0;
 
     //var ws = new WebSocket('ws://localhost:8821/ws');
     var ws = new WebSocket('ws://' + MetaverseService.SERVER2 + '/ws');  //Live
@@ -3451,19 +3523,7 @@
     $scope.popoverSynchShown = false;
     $scope.peers = "";
 
-    MetaverseService.GetInfoV2()
-    .then( (response) => {
-      if (typeof response.success !== 'undefined' && response.success) {
-        $scope.height = response.data.result.height;
-        $rootScope.network = response.data.result.testnet ? 'testnet' : 'mainnet';
-        $scope.version = response.data.result['wallet-version'];
-        $scope.checkVersion();
-        $scope.peers = response.data.result.peers;
-      }
-    })
-    .then(() => getHeightFromExplorer())
-    .then(() => $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100));
-
+    $scope.logout = logout;
 
     $scope.ClickCloseFlashMessage = () => {
       FlashService.CloseFlashMessage();
@@ -3573,15 +3633,28 @@
         if (typeof response != 'undefined' && response.success) {
           $scope.height = response.data.result.height;
           $rootScope.network = response.data.result.testnet ? 'testnet' : 'mainnet';
+          $scope.version = response.data.result['wallet-version'];
           $scope.peers = response.data.result.peers;
         }
       })
-      .then(() => getHeightFromExplorer())
-      .then(() => $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100));
+      .then(() => {
+        if($scope.heightFromExplorer == 0) {
+          getHeightFromExplorer()
+        } else {
+          $scope.loadingPercent = Math.floor($scope.height/$scope.heightFromExplorer*100);
+        }
+      })
     }
 
     updateHeight();
-    $interval( () => updateHeight(), 10000);
+    $scope.stopUpdateHeight = $interval(updateHeight, 10000);
+    $scope.stopGetHeightFromExplorer = $interval(getHeightFromExplorer, 600000);
+
+    function logout() {
+      $interval.cancel($scope.stopUpdateHeight);
+      $interval.cancel($scope.stopGetHeightFromExplorer);
+      $location.path('/login');
+    }
 
     $scope.show_account_menu = () => {
       $scope.menu.account.show = 1 - $scope.menu.account.show;
@@ -3752,6 +3825,9 @@
     $scope.addresses = [];
     $scope.resultMultisigTx = '';
     $scope.resultMultisigTxSaved = false;
+    $scope.bountyFee = MetaverseService.defaultBountyFee;
+    $scope.bountyFeeUpdate = bountyFeeUpdate;
+    $scope.bountyFeeMinMiner = MetaverseService.bountyFeeMinMiner;
 
 
     function listAddresses() {
@@ -3806,14 +3882,19 @@
       }
     });
 
+    function bountyFeeUpdate(bountyFee) {
+      if(bountyFee > 100 - $scope.bountyFeeMinMiner)
+        this.bountyFee = 100 - $scope.bountyFeeMinMiner;
+    }
+
     function checkInputs(password) {
       $scope.confirmation = true;
       delete $rootScope.flash;
     }
 
-    function createProfile(didAddress, didSymbol, password) {
+    function createProfile(didAddress, didSymbol, password, bountyFee) {
       NProgress.start();
-      MetaverseService.RegisterDid(didAddress, didSymbol, password)
+      MetaverseService.RegisterDid(didAddress, didSymbol, password, 100-bountyFee)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           if(response.data.result.transaction) {
@@ -3995,7 +4076,7 @@
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else {
-        NProgress.start();
+        /*NProgress.start();
         var fee_value = $filter('convertfortx')(transactionFee, 8);
         MetaverseService.DidChangeAddress(selectedDid, toAddress, fee_value, password)
         .then( (response) => {
@@ -4018,7 +4099,7 @@
           }
           NProgress.done();
           $scope.password = '';
-        });
+        });*/
       }
     }
 

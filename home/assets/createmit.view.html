@@ -1,4 +1,4 @@
-<div class="headline">{{ 'HEADLINE_MIT' | translate }}</div>
+<div class="headline">{{ 'HEADLINE_MIT' | translate }}<img class="topPageLogo" ng-src="{{'icon/default_mit.png'}}"></div>
 <div>
   <ul class="nav nav-pills tabsMenu">
     <li role="presentation"><a href="#!/transfer/mit/" class="btn-link-menu">{{ 'TRANSFER.MIT' | translate }}</a></li>
@@ -45,7 +45,7 @@
       <div class="row">
         <br>
         <div class="col-xs-6">
-          <input type="submit" ng-click="checkInputs()" value="{{ 'ASSET_ASSET_CREATE_SUBMIT_BUTTON' | translate }}" class="btn btn-success" ng-disabled="!submittable">
+          <button type="submit" ng-click="checkInputs()" class="btn btn-success" ng-disabled="!submittable">{{ 'ASSET_ASSET_CREATE_SUBMIT_BUTTON' | translate }}</button>
         </div>
         <div class="col-xs-6">
           <a href="#!/asset/mymits" class="btn btn-success btn-success-secondary">{{ 'CREATE_MIT.BACK_TO_MIT' | translate }}</a>
@@ -108,7 +108,7 @@
       <br>
       <!--Submit button-->
       <div class="col-xs-6 col-sm-6 col-md-3">
-        <input type="submit" class="btn btn-success" ng-click="registerMIT(password)" value="{{ 'ASSET_ASSET_CREATE_SUBMIT_BUTTON' | translate }}" ng-disabled="errorPassword">
+        <button type="submit" class="btn btn-success" ng-click="registerMIT(password)" ng-disabled="errorPassword">{{ 'ASSET_ASSET_CREATE_SUBMIT_BUTTON' | translate }}</button>
       </div>
       <!--Return button-->
       <div class="col-xs-6 col-sm-6 col-md-3">

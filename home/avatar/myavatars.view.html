@@ -38,11 +38,11 @@
       <div class="assetDetailsPanel panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title col-xs-6 noPaddingLeftRight">{{'PROFIL.ADDRESSES_HISTORY' | translate}}</h3>
-          <div class="sendAssetButton assetDetailsBoxButton col-xs-6 noPaddingLeftRight">
+          <!--div class="sendAssetButton assetDetailsBoxButton col-xs-6 noPaddingLeftRight">
             <a href="#!/avatar/modifyaddress/{{selectedDid}}">
               <button class="btn btn-success smallButton assetBoxButton">{{'PROFIL.UPDATE_ADDRESS' | translate}}</button>
             </a>
-          </div>
+          </div-->
         </div>
         <div class="panel-body">
           <div ng-show="loadingAddressHistory && !myCertsLoaded" class="col-xs-12 noPaddingLeftRight assetDataLine">
@@ -122,108 +122,10 @@
 				</div>
 			</div>
       <div class="profilFieldButtons">
-          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Edit" class="btn btn-success">
-          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Remove" class="btn btn-success btn-success-secondary">
+          <button type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" class="btn btn-success">Edit</button>
+          <button type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" class="btn btn-success btn-success-secondary">Remove</button>
       </div>
 		</div>
-
-    <!--Field 1-->
-		<div class="col-xs-12">
-			<div class="col-xs-6 noPaddingLeftRight">
-				<div class="form-group">
-					<label for="field1" class="control-label col-xs-6 noPaddingLeftRight">{{ 'PROFILE.DATA_FIELD' | translate }}2</label>
-					<input type="test" class="form-control" name="field1" ng-model="field1">
-				</div>
-			</div>
-      <div class="profilFieldButtons">
-          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Edit" class="btn btn-success">
-          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Remove" class="btn btn-success btn-success-secondary">
-      </div>
-		</div>
-
-    <!--Field 1-->
-    <div class="col-xs-12">
-      <div class="col-xs-6 noPaddingLeftRight">
-        <div class="form-group">
-          <label for="field1" class="control-label col-xs-6 noPaddingLeftRight">{{ 'PROFILE.DATA_FIELD' | translate }}3</label>
-          <input type="test" class="form-control" name="field1" ng-model="field1">
-        </div>
-      </div>
-      <div class="profilFieldButtons">
-          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Edit" class="btn btn-success">
-          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Remove" class="btn btn-success btn-success-secondary">
-      </div>
-    </div>
-
-    <!--Field 1-->
-    <div class="col-xs-12">
-      <div class="col-xs-6 noPaddingLeftRight">
-        <div class="form-group">
-          <label for="field1" class="control-label col-xs-6 noPaddingLeftRight">{{ 'PROFILE.DATA_FIELD' | translate }}4</label>
-          <input type="test" class="form-control" name="field1" ng-model="field1">
-        </div>
-      </div>
-      <div class="profilFieldButtons">
-          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Edit" class="btn btn-success">
-          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Remove" class="btn btn-success btn-success-secondary">
-      </div>
-    </div>
-
-    <!--Field 1-->
-    <div class="col-xs-12">
-      <div class="col-xs-6 noPaddingLeftRight">
-        <div class="form-group">
-          <label for="field1" class="control-label col-xs-6 noPaddingLeftRight">{{ 'PROFILE.DATA_FIELD' | translate }}5</label>
-          <input type="test" class="form-control" name="field1" ng-model="field1">
-        </div>
-      </div>
-      <div class="profilFieldButtons">
-          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Edit" class="btn btn-success">
-          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Remove" class="btn btn-success btn-success-secondary">
-      </div>
-    </div>
-
-    <!--Field 1-->
-    <div class="col-xs-12">
-      <div class="col-xs-6 noPaddingLeftRight">
-        <div class="form-group">
-          <label for="field1" class="control-label col-xs-6 noPaddingLeftRight">{{ 'PROFILE.DATA_FIELD' | translate }}6</label>
-          <input type="test" class="form-control" name="field1" ng-model="field1">
-        </div>
-      </div>
-      <div class="profilFieldButtons">
-          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Edit" class="btn btn-success">
-          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Remove" class="btn btn-success btn-success-secondary">
-      </div>
-    </div>
-
-    <!--Field 1-->
-    <div class="col-xs-12">
-      <div class="col-xs-6 noPaddingLeftRight">
-        <div class="form-group">
-          <label for="field1" class="control-label col-xs-6 noPaddingLeftRight">{{ 'PROFILE.DATA_FIELD' | translate }}7</label>
-          <input type="test" class="form-control" name="field1" ng-model="field1">
-        </div>
-      </div>
-      <div class="profilFieldButtons">
-          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Edit" class="btn btn-success">
-          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Remove" class="btn btn-success btn-success-secondary">
-      </div>
-    </div>
-
-    <!--Field 1-->
-    <div class="col-xs-12">
-      <div class="col-xs-6 noPaddingLeftRight">
-        <div class="form-group">
-          <label for="field1" class="control-label col-xs-6 noPaddingLeftRight">{{ 'PROFILE.DATA_FIELD' | translate }}8</label>
-          <input type="test" class="form-control" name="field1" ng-model="field1">
-        </div>
-      </div>
-      <div class="profilFieldButtons">
-          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Edit" class="btn btn-success">
-          <input type="submit" ng-click="showprivatekey(privatekey_password, privatekey_last_word)" value="Remove" class="btn btn-success btn-success-secondary">
-      </div>
-    </div>
 
   </form>
 </div>

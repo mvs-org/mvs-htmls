@@ -6,6 +6,7 @@
       -moz-background-size: cover;
       -o-background-size: cover;
       background-size: cover;
+      min-height: 1000px;
     }
   </style>
   <!--Alert Invalid login credentials-->
@@ -30,15 +31,6 @@
         <!--Right header-->
         <ul class="nav navbar-nav navbar-right">
           <form class="navbar-form">
-            <!--Block height-->
-            <!--<span class="topMenuButtonRight blockHeaderLarge">
-              <p>
-                <span>{{ 'CONNECTION_BLOCKS' | translate }}: </span>
-                <span ng-if="vm.heightFromExplorer==0">{{vm.height}}</span>
-                <span ng-if="vm.heightFromExplorer!=0 && vm.height>=vm.heightFromExplorer">{{vm.height}}/{{vm.height}}</span>
-                <span ng-if="vm.heightFromExplorer!=0 && vm.height<vm.heightFromExplorer">{{vm.height}}/{{vm.heightFromExplorer}}</span>
-              </p>
-            </span>-->
             <!--Language button Large screens-->
             <span class="topMenuButtonRight languageHeaderLarge" ng-show="('LANG_CODE' | translate)=='zh'">
               <button class="selectedLanguage btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">
@@ -78,13 +70,6 @@
       <div class="col-xs-9 headerLoginXsLanguageButton">
         <!--Right header-->
         <form class="navbar-form headerRightXS">
-          <!--Block height-->
-          <span class="topMenuButtonRight blockHeaderLarge">
-            <p>
-              <span>{{ 'CONNECTION_BLOCKS' | translate }}:</span>
-              <span>{{vm.height}}</span>
-            </p>
-          </span>
           <!--Language button Large screens-->
           <span class="topMenuButtonRight languageHeaderSmall" ng-show="('LANG_CODE' | translate)=='zh'">
             <button class="selectedLanguage btn-link-black smallButton languageButtonLogin" type="button" ng-click="vm.changeLang('zh_ZH')" alt="">

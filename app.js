@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('app', ['ui.router', 'ngCookies', 'LocalStorageModule', 'pascalprecht.translate', 'angularUtils.directives.dirPagination', 'ngDialog', 'ngFileSaver'])
+    angular.module('app', ['ui.router', 'ngCookies', 'LocalStorageModule', 'pascalprecht.translate', 'angularUtils.directives.dirPagination', 'ngDialog', 'ngFileSaver', 'ngSanitize', 'ngMessages', 'ngAria', 'ngMaterial', 'ngAnimate'])
         .config(config)
         .filter('assetformat',function(){
             return function(input, asset_type){

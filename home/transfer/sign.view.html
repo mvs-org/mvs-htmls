@@ -31,7 +31,7 @@
 					<input type="password" class="form-control" name="password" id="" ng-model="password" required ng-model="password" ng-class="{validInput: !errorPassword, wrongInput: errorPassword}">
 				</div>
 				<div class="col-xs-6 col-sm-6 col-md-6">
-					<input type="submit" class="btn btn-success" ng-click="signMultisigTx(transaction, password, lastTx)" ng-disabled="errorPassword || transaction.length == 0" value="{{ 'TRANSFER_SIGN_SIGN_BUTTON' | translate }}">
+					<button type="submit" class="btn btn-success" ng-click="signMultisigTx(transaction, password, lastTx)" ng-disabled="errorPassword || transaction.length == 0">{{ 'TRANSFER_SIGN_SIGN_BUTTON' | translate }}</button>
 				</div>
 				<div class="col-xs-6 col-sm-6 col-md-6">
 					<a href="#!/home" class="btn btn-success btn-success-secondary">{{ 'TRANSFER_MULTISIGNATURE_BACK_WALLET' | translate }}</a>

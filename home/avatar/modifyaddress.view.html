@@ -44,7 +44,8 @@
       <br>
       <!--Buttons-->
       <div class="col-xs-6 col-sm-3">
-        <input type="submit" ng-click="checkInputs(password)" value="{{ 'PROFIL_MODIFY_ADDRESS.MODIFY_BUTTON' | translate }}" class="btn btn-success" ng-disabled="!submittable">
+        <!--input type="submit" ng-click="checkInputs(password)" value="{{ 'PROFIL_MODIFY_ADDRESS.MODIFY_BUTTON' | translate }}" class="btn btn-success" ng-disabled="!submittable"-->
+        <button type="submit" ng-click="" class="btn btn-success" ng-disabled="true">{{ 'PROFIL_MODIFY_ADDRESS.MODIFY_BUTTON' | translate }}</button>
       </div>
       <div class="col-xs-6 col-sm-3">
         <a href="#!/avatar/myavatars/" class="btn btn-success btn-success-secondary">{{ 'CREATE_PROFILE.BACK_TO_PROFILE' | translate }}</a>
@@ -89,7 +90,8 @@
       <br>
       <!--Submit button-->
       <div class="col-xs-6 col-sm-6 col-md-3">
-        <input type="submit" class="btn btn-success" ng-click="modifyAddress(selectedDid, toAddress, transactionFee, password)" value="{{ 'PROFIL_MODIFY_ADDRESS.MODIFY_BUTTON' | translate }}" ng-disabled="errorPassword">
+        <!--input type="submit" class="btn btn-success" ng-click="modifyAddress(selectedDid, toAddress, transactionFee, password)" value="{{ 'PROFIL_MODIFY_ADDRESS.MODIFY_BUTTON' | translate }}" ng-disabled="errorPassword"-->
+        <button type="submit" class="btn btn-success" ng-disabled="true">{{ 'PROFIL_MODIFY_ADDRESS.MODIFY_BUTTON' | translate }}</button>
       </div>
       <!--Return button-->
       <div class="col-xs-6 col-sm-6 col-md-3">

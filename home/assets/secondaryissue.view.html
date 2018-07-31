@@ -1,4 +1,4 @@
-<div class="headline">{{ 'HEADLINE_MST' | translate }}</div>
+<div class="headline">{{ 'HEADLINE_MST' | translate }}<img class="topPageLogo" ng-src="{{'icon/default_mst.png'}}"></div>
 <div>
   <ul class="nav nav-pills tabsMenu">
     <li role="presentation"><a href="#!/asset/create" class="btn-link-menu">{{ 'ASSET.CREATE_MST' | translate }}</a></li>
@@ -71,7 +71,7 @@
       </div>
 
       <!--LQ-->
-      <div class="form-group" ng-show="model == 1 || model == 3">
+      <div class="form-group" ng-show="model == 1">
         <label for="quantityLocked" class="control-label">{{ 'SECONDARY_ISSUE.TOTAL_LOCKED_QUANTITY' | translate }}</label>
         <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_TOTAL_LOCKED_QUANTITY' | translate }}"></span>
         <input type="number" min="0" placeholder="0" class="form-control" name="quantityLocked" id="" ng-model="quantityLocked" ng-class="{validInput: !errorDeposit.quantityLocked_empty && !errorDeposit.quantityLocked_lower_quantity, wrongInput: errorDeposit.quantityLocked_empty || errorDeposit.quantityLocked_lower_quantity}">
@@ -117,7 +117,7 @@
       <div class="row">
         <br>
         <div class="col-xs-6">
-          <input type="submit" ng-click="checkInputs(address, quantityLocked, model2)" value="{{ 'SECONDARY_ISSUE_BUTTON' | translate }}" class="btn btn-success" ng-disabled="!submittable">
+          <button type="submit" ng-click="checkInputs(address, quantityLocked, model2)" class="btn btn-success" ng-disabled="!submittable">{{ 'SECONDARY_ISSUE_BUTTON' | translate }}</button>
         </div>
         <div class="col-xs-6">
           <a href="#!/asset/myassets" class="btn btn-success btn-success-secondary">{{ 'TRANSFER_BACK_ASSETS' | translate }}</a>
@@ -238,7 +238,7 @@
               </div>
               <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{unlockNumber}}{{ 'SECONDARY_ISSUE.PERIODS' | translate }}</div>
             </div>
-            <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div ng-show="model == 1 || model == 2" class="col-xs-12 noPaddingLeftRight assetDataLine">
               <div class="assetDataColumn col-xs-6 noPaddingLeftRight">
                 {{ 'SECONDARY_ISSUE.TOTAL_LOCKED_QUANTITY' | translate }}
                 <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SECONDARY_ISSUE_TOTAL_LOCKED_QUANTITY' | translate }}"></span>
@@ -289,7 +289,7 @@
       <br>
       <!--Submit button-->
       <div class="col-xs-6 col-sm-6 col-md-3">
-        <input type="submit" class="btn btn-success" ng-click="popupSecondaryIssue(password)" value="{{ 'SECONDARY_ISSUE_BUTTON' | translate }}" ng-disabled="errorPassword">
+        <button type="submit" class="btn btn-success" ng-click="popupSecondaryIssue(password)" ng-disabled="errorPassword">{{ 'SECONDARY_ISSUE_BUTTON' | translate }}</button>
       </div>
       <!--Return button-->
       <div class="col-xs-6 col-sm-6 col-md-3">

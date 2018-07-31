@@ -62,12 +62,12 @@
         </div>
         <div class="explorerRightInfo col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 noPaddingLeftRight">
           <span class="numbersSearch" ng-show="output.attachment.type=='etp'">{{output.value | assetformat : 8}} ETP</span>
-          <span class="numbersSearch" ng-show="output.attachment.type=='asset-transfer'">{{output.attachment.quantity | assetformat : asset.decimal_number}} {{output.attachment.symbol}}</span>
-          <span class="numbersSearch" ng-show="output.attachment.type=='asset-issue'">{{output.attachment.quantity | assetformat : asset.decimal_number}} {{output.attachment.symbol}}</span>
+          <span class="numbersSearch" ng-show="output.attachment.type=='asset-transfer'">{{output.attachment.quantity | assetformat : output.attachment.decimal_number}} {{output.attachment.symbol}}</span>
+          <span class="numbersSearch" ng-show="output.attachment.type=='asset-issue'">{{output.attachment.quantity | assetformat : output.attachment.decimal_number}} {{output.attachment.symbol}}</span>
           <span class="numbersSearch" ng-show="output.attachment.type=='asset-cert' && output.attachment.cert == 'issue'">{{ 'EXPLORER.CERT_TRANSFER' | translate }} - {{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }} - {{output.attachment.symbol}}</span>
           <span class="numbersSearch" ng-show="output.attachment.type=='asset-cert' && output.attachment.cert == 'domain'">{{ 'EXPLORER.CERT_TRANSFER' | translate }} - {{ 'PROFIL.CERT_DOMAIN' | translate }} - {{output.attachment.symbol}}</span>
           <span class="numbersSearch" ng-show="output.attachment.type=='asset-cert' && output.attachment.cert == 'naming'">{{ 'EXPLORER.CERT_TRANSFER' | translate }} - {{ 'PROFIL.CERT_NAMING' | translate }} - {{output.attachment.symbol}}</span>
-          <span class="numbersSearch" ng-show="output.attachment.type=='did-issue'">{{ 'EXPLORER.AVATAR_ISSUE' | translate }} - {{output.attachment.symbol}}</span>
+          <span class="numbersSearch" ng-show="output.attachment.type=='did-register'">{{ 'EXPLORER.AVATAR_ISSUE' | translate }} - {{output.attachment.symbol}}</span>
           <span class="numbersSearch" ng-show="output.attachment.type=='did-transfer'">{{ 'EXPLORER.AVATAR_TRANSFER' | translate }} - {{output.attachment.symbol}}</span>
           <span class="numbersSearch" ng-show="output.attachment.type=='mit' && output.attachment.status == 'registered'">{{'HISTORY.MIT_ISSUE' | translate}} - {{output.attachment.symbol}}</span>
           <span class="numbersSearch" ng-show="output.attachment.type=='mit' && output.attachment.status == 'transfered'">{{'HISTORY.MIT_TRANSFER' | translate}} - {{output.attachment.symbol}}</span>

@@ -36,18 +36,6 @@
     vm.version = "";
     vm.peers = "";
 
-    MetaverseService.GetInfoV2()
-    .then( (response) => {
-      if (typeof response.success !== 'undefined' && response.success) {
-        vm.height = response.data.result.height;
-        $rootScope.network = response.data.result.testnet ? 'testnet' : 'mainnet';
-        vm.version = response.data.result['wallet-version'];
-        vm.peers = response.data.result.peers;
-      }
-    })
-    .then(() => getHeightFromExplorer())
-    .then(() => vm.loadingPercent = Math.floor(vm.height/vm.heightFromExplorer*100));
-
     function getHeightFromExplorer() {
       let url = $rootScope.network == 'testnet' ? 'https://explorer-testnet.mvs.org/api/height' : 'https://explorer.mvs.org/api/height'
       $http.get(url)
@@ -57,22 +45,39 @@
             vm.popoverSynchShown = true;
           }
           vm.heightFromExplorer = response.data.result;
-          vm.loadingPercent = Math.floor(vm.height/vm.heightFromExplorer*100);
+          vm.loadingPercent = Math.floor(vm.height/vm.heightFromExplorer*100)
         })
         .catch( (error) => console.log("Cannot get Height from explorer") );
     }
 
     function updateHeight() {
-      vm.getHeightFromExplorer();
-      MetaverseService.GetInfo()
+      MetaverseService.GetInfoV2()
       .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
-          vm.height = response.data.height;
-          vm.loadingPercent = Math.floor(vm.height/vm.heightFromExplorer*100);
-          vm.peers = response.data.peers;
+        if (typeof response != 'undefined' && response.success) {
+          vm.height = response.data.result.height;
+          $rootScope.network = response.data.result.testnet ? 'testnet' : 'mainnet';
+          vm.version = response.data.result['wallet-version'];
+          vm.peers = response.data.result.peers;
         }
-      });
+      })
+      .then(() => {
+        if(vm.heightFromExplorer == 0) {
+          getHeightFromExplorer()
+        } else {
+          vm.loadingPercent = Math.floor(vm.height/vm.heightFromExplorer*100)
+        }
+      })
     }
+
+    updateHeight();
+    vm.stopUpdateHeight = $interval(updateHeight, 10000);
+    vm.stopGetHeightFromExplorer = $interval(getHeightFromExplorer, 600000);
+
+    var dereg = $rootScope.$on('$locationChangeSuccess', function() {
+      $interval.cancel(vm.stopUpdateHeight);
+      $interval.cancel(vm.stopGetHeightFromExplorer);
+      dereg();
+    });
 
     function countWords() {
       if(vm.confirmKey == ''){
@@ -83,9 +88,6 @@
         vm.countBackupWords = vm.confirmKey.split(" ").length;
       }
     }
-
-    updateHeight();
-    $interval( () => updateHeight(), 10000);
 
     function register() {
       NProgress.start();
