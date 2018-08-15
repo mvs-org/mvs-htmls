@@ -133,7 +133,6 @@
     $scope.assets = [];
     $scope.exists = false;
     $scope.noResult = false;
-    $scope.transactionInputsValues = [];
 
     $scope.asset = '';
 
@@ -266,16 +265,6 @@
                 $window.scrollTo(0,0);
                 return;*/
             });
-
-            //Search for the value of the input and put it in $scope.transactionInputsValues
-            $scope.transactionInputsValues = [];
-            /*response.data.transaction.inputs.forEach(function(e) { Removed, too slow
-              if (e.previous_output.hash != '0000000000000000000000000000000000000000000000000000000000000000') {
-                searchInputValue(e.previous_output.hash, e.address, e.previous_output.index);
-              } else {
-                //It's coming from Deposit interests or Mining
-              }
-            });*/
           }
           NProgress.done();
         });
@@ -297,51 +286,6 @@
         }
       });
     }
-
-
-    //Used to find the value of an Input
-    /*function searchInputValue(transaction_hash, address, index) {
-      if ( typeof transaction_hash !== 'undefined') {
-        MetaverseService.FetchTx(transaction_hash)
-        .then( (response) => {
-          if (typeof response.success == 'undefined' || response.success == false) {
-            $scope.noResult = true;
-            $translate('MESSAGES.TRANSACTION_NOT_FOUND').then( (data) => {
-              FlashService.Error(data);
-            });
-            $window.scrollTo(0,0);
-          } else {
-            response.data.transaction.outputs.forEach(function(e) {
-              if(e.address == address && e.index == index) {
-                if(e.attachment.type=='etp') {
-                  var input = {
-                    "address" : address,
-                    "value" : e.value,
-                    "hash" : transaction_hash,
-                    "index" : e.index,
-                    "type" : e.attachment.type
-                  }
-                } else {
-                  //loadasset(e.attachment.symbol); //already calculated when this asset is an output
-                  var input = {
-                    "address" : address,
-                    "value" : e.value,
-                    "hash" : transaction_hash,
-                    "index" : e.index,
-                    "type" : e.attachment.type,
-                    "quantity" : e.attachment.quantity,
-                    "symbol" : e.attachment.symbol,
-                    "decimal_number" :  $scope.asset.decimal_number
-                  }
-                }
-                $scope.transactionInputsValues.push(input);
-              }
-            });
-          }
-        });
-      }
-    }*/
-
 
 
     //Used if we search a Block
@@ -693,6 +637,8 @@
         } else {
           $scope.allDids = [];
         }
+      } else if (response.message.message == "no record in this page") {
+        //No avatar
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -1262,6 +1208,8 @@
         } else {
           $scope.allDids = [];
         }
+      } else if (response.message.message == "no record in this page") {
+        //No avatar
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -1828,6 +1776,9 @@
         } else {
           $scope.myDids = [];
         }
+      } else if (response.message.message == "no record in this page") {
+        $scope.noDids = true;
+        $scope.selectedDid = "";
       } else {
         $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -2080,6 +2031,8 @@
         } else {
           $scope.allDids = [];
         }
+      } else if (response.message.message == "no record in this page") {
+        //No avatar
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -2584,10 +2537,10 @@
 
     MetaverseService.ListMyDids()
     .then( (response) => {
+      $scope.balancesLoaded = true;
+      $scope.myDidsSymbols = [];
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.myDids = response.data.result.dids;
-        $scope.balancesLoaded = true;
-        $scope.myDidsSymbols = [];
         if(typeof $scope.myDids != 'undefined' && $scope.myDids != null) {
           $scope.myDids.forEach(function(did) {
             //$scope.myDidsSymbols.push(did.symbol);
@@ -2596,6 +2549,8 @@
         } else {
           $scope.myDids = [];
         }
+      } else if (response.message.message == "no record in this page") {
+        $scope.myDids = [];
       } else {
         $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -2751,12 +2706,10 @@
 
     MetaverseService.ListMyDids()
     .then( (response) => {
+      $scope.balancesLoaded = true;
+      $scope.myDidsSymbols = [];
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.myDids = response.data.result.dids;
-        //$scope.address = $scope.myDids[0].address;
-        //availBalance($scope.address);
-        $scope.balancesLoaded = true;
-        $scope.myDidsSymbols = [];
         if(typeof $scope.myDids != 'undefined' && $scope.myDids != null) {
           $scope.myDids.forEach(function(did) {
             $scope.myDidsSymbols.push(did.symbol);
@@ -2765,6 +2718,8 @@
         } else {
           $scope.myDids = [];
         }
+      } else if (response.message.message == "no record in this page") {
+        $scope.myDids = [];
       } else {
         $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -3112,6 +3067,9 @@
           $scope.noDids = true;
           $scope.selectedDid = "nodid";
         }
+      } else if (response.message.message == "no record in this page") {
+        $scope.noDids = true;
+        $scope.selectedDid = "nodid";
       } else {
         $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -3732,8 +3690,8 @@
 
     MetaverseService.ListMyDids()
     .then( (response) => {
+      $scope.loadingDids = false;
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.loadingDids = false;
         if (response.data.result.dids) {
           $scope.myDids = response.data.result.dids;
           if(typeof $scope.selectedDid == 'indefined' || $scope.selectedDid == '') {
@@ -3749,6 +3707,9 @@
           $scope.myDids = [];
           $scope.selectedDid = "";
         }
+      } else if (response.message.message == "no record in this page") {
+        $scope.myDids = [];
+        $scope.selectedDid = "";
       } else {
         $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -3883,6 +3844,8 @@
         } else {
           $scope.allDids = [];
         }
+      } else if (response.message.message == "no record in this page") {
+        //No avatar
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -4056,12 +4019,14 @@
               if(did.symbol == $scope.selectedDid)
                 $scope.selectedDidAddress = did.address;
             })
-          } else {
           }
         } else {
           $scope.noDids = true;
           $scope.selectedDid = "";
         }
+      } else if (response.message.message == "no record in this page") {
+        $scope.noDids = true;
+        $scope.selectedDid = "";
       } else {
         $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -4279,6 +4244,8 @@
         } else {
           $scope.allDids = [];
         }
+      } else if (response.message.message == "no record in this page") {
+        //No avatar
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -4508,6 +4475,8 @@
         } else {
           $scope.allDids = [];
         }
+      } else if (response.message.message == "no record in this page") {
+        //No avatar
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -4713,6 +4682,9 @@
           $scope.noDids = true;
           $scope.selectedDid = "";
         }
+      } else if (response.message.message == "no record in this page") {
+        $scope.noDids = true;
+        $scope.selectedDid = "";
       } else {
         $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -4830,6 +4802,8 @@
             $scope.allDidsSymbols.push(did.symbol);
           });
         }
+      } else if (response.message.message == "no record in this page") {
+        //No avatar
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);

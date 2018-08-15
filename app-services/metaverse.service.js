@@ -1350,7 +1350,7 @@
                             //Empty transaction list
                             callback(null, []);
                         }
-                    } else if (response.error = "no record in this page") {
+                    } else if (response.message == "no record in this page") {
                       //Empty transaction list
                       callback(null, []);
                     } else {
