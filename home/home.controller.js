@@ -43,7 +43,7 @@
       }
     };
   })
-  .directive('z', function($compile, $timeout){
+  .directive('bsPopover', function($compile, $timeout){
     return function(scope, element) {
       $(element).popover();
       $('body').on('click', function (e) {
