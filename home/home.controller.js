@@ -3859,6 +3859,8 @@
       $scope.loadingDids = false;
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.allDidsSymbols = response.data.result.dids;
+        $scope.error.symbol_already_exist = $scope.didSymbol != undefined ? ($scope.allDidsSymbols.indexOf($scope.didSymbol) > -1) : false;
+        checkready();
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -4159,12 +4161,11 @@
     $scope.error = [];
     $scope.changeSymbol = changeSymbol;
     $scope.transactionFee = 0.0001;
-    $scope.allDidsAddresses = [];
-    $scope.listMyCerts = listMyCerts;
     $scope.checkInputs = checkInputs;
     $scope.transferCert = transferCert;
     $scope.myCertsLoaded = false;
     $scope.allDidsSymbols = [];
+    $scope.loadingDids = true;
 
     $scope.onChain = true;
     $scope.selectedCert = $location.path().split('/')[3];
@@ -4242,47 +4243,38 @@
       $scope.certType = cert.split(":")[1];
     }
 
-    function listMyCerts() {
-      MetaverseService.AccountAssetCert()
-      .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
-          if(response.data.result.assetcerts != null && response.data.result.assetcerts != '') {
-            $scope.myCerts = response.data.result.assetcerts;
-            $scope.myCerts.forEach( (e) => {
-              $scope.certs[e.symbol] = e;
-            });
-          } else {
-            $scope.myCerts = [];
-            $scope.noCerts = true;
-          }
-          $scope.myCertsLoaded = true;
-        } else {
-          $translate('MESSAGES.CANT_LOAD_MY_CERTS').then( (data) => FlashService.Error(data) );
-          $window.scrollTo(0,0);
-        }
-      });
-    }
 
-    MetaverseService.ListAllDids(1, 100)
+    MetaverseService.AccountAssetCert()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.allDids = response.data.result.dids;
-        $scope.allDidsSymbols = [];
-        if(typeof $scope.allDids != 'undefined' && $scope.allDids != null) {
-          $scope.allDids.forEach(function(did) {
-            $scope.allDidsSymbols.push(did.symbol);
-            //$scope.allDidsAddresses[did.address] = did.symbol;
+        if(response.data.result.assetcerts != null && response.data.result.assetcerts != '') {
+          $scope.myCerts = response.data.result.assetcerts;
+          $scope.myCerts.forEach( (e) => {
+            $scope.certs[e.symbol] = e;
           });
         } else {
-          $scope.allDids = [];
+          $scope.myCerts = [];
+          $scope.noCerts = true;
         }
-      } else if (response.message.message == "no record in this page") {
-        //No avatar
+        $scope.myCertsLoaded = true;
+      } else {
+        $translate('MESSAGES.CANT_LOAD_MY_CERTS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
+    });
+
+
+    MetaverseService.GetAllDids()
+    .then( (response) => {
+      $scope.loadingDids = false;
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.allDidsSymbols = response.data.result.dids;
+        $scope.error.toDID_not_exist = $scope.toDID != undefined && $scope.allDidsSymbols != undefined ? !($scope.allDidsSymbols.indexOf($scope.toDID) > -1) : false;
+        checkready();
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       }
-      listMyCerts();
     });
 
     function checkInputs() {

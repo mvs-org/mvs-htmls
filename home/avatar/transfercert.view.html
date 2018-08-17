@@ -30,10 +30,11 @@
         <div ng-show="certType == 'domain'" class="form-control" name="certType" id="" name="certType" ng-class="{validInput: !error.certType, wrongInput: error.certType}" disabled>{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
         <div ng-show="certType == 'naming'" class="form-control" name="certType" id="" name="certType" ng-class="{validInput: !error.certType, wrongInput: error.certType}" disabled>{{ 'PROFIL.CERT_NAMING' | translate }}</div>
       </div>
-      <!--Recipient DID-->
+      <!--Recipient Avatar-->
       <div class="form-group">
         <label for="toDID" class="control-label">{{ 'TRANSFER_CERT.TODID' | translate }}</label>
         <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.TRANSFER_CERT_TO_AVATAR' | translate }}"></span>
+        <span ng-show="loadingDids" class="miniSpinner"></span>
         <input class="form-control" name="toDID" ng-model="toDID" ng-class="{validInput: !error.toDID_empty && !error.toDID_not_exist, wrongInput: error.toDID_empty || error.toDID_not_exist}" required>
         <div ng-show="error.toDID_not_exist" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.INCORRECT_RECIPIENT_AVATAR' | translate }}</div>
       </div>
