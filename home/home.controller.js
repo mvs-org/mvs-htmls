@@ -3807,9 +3807,8 @@
     $scope.didAddress = '';
     $scope.confirmation = false;
     $scope.checkInputs = checkInputs;
-    $scope.allDids = [];
     $scope.allDidsSymbols = [];
-    $scope.allDidsAddresses = [];
+    $scope.myDidsAddresses = [];
     $scope.didAddress = '';
     $scope.addresses = [];
     $scope.resultMultisigTx = '';
@@ -3817,6 +3816,8 @@
     $scope.bountyFee = MetaverseService.defaultBountyFee;
     $scope.bountyFeeUpdate = bountyFeeUpdate;
     $scope.bountyFeeMinMiner = MetaverseService.bountyFeeMinMiner;
+    $scope.myDids = [];
+    $scope.loadingDids = true;
 
 
     function listAddresses() {
@@ -3853,22 +3854,32 @@
 
     listAddresses();
 
-    MetaverseService.ListAllDids(1, 100)
+    MetaverseService.GetAllDids()
     .then( (response) => {
+      $scope.loadingDids = false;
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.allDids = response.data.result.dids;
-        if(typeof $scope.allDids != 'undefined' && $scope.allDids != null) {
-          $scope.allDids.forEach(function(did) {
-            $scope.allDidsSymbols.push(did.symbol);
-            $scope.allDidsAddresses.push(did.address);
-          });
-        } else {
-          $scope.allDids = [];
-        }
-      } else if (response.message.message == "no record in this page") {
-        //No avatar
+        $scope.allDidsSymbols = response.data.result.dids;
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
+    });
+
+    MetaverseService.ListMyDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        if (response.data.result.dids) {
+          $scope.myDids = response.data.result.dids;
+          if(typeof $scope.myDids != 'undefined' && $scope.myDids != null) {
+            $scope.myDids.forEach(function(did) {
+              $scope.myDidsAddresses.push(did.address);
+            })
+          }
+        }
+      } else if (response.message.message == "no record in this page") {
+        //No Avatar
+      } else {
+        $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       }
     });
@@ -3948,7 +3959,7 @@
     //Check if the address is valid
     $scope.$watch('didAddress', (newVal, oldVal) => {
       $scope.error.didAddress_empty = (newVal == undefined || newVal == '');
-      $scope.error.didAddress_already_used = newVal != undefined ? ($scope.allDidsAddresses.indexOf(newVal) > -1) : false;
+      $scope.error.didAddress_already_used = newVal != undefined ? ($scope.myDidsAddresses.indexOf(newVal) > -1) : false;
       $scope.error.didAddress_not_enough_etp = newVal != undefined && $scope.addresses[newVal] != undefined ? ($scope.addresses[newVal].available < 1) : false;
       checkready();
     });

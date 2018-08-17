@@ -137,6 +137,7 @@
         service.DidChangeAddress = DidChangeAddress;
         service.GetDid = GetDid;
         service.DidSendMore = DidSendMore;
+        service.GetAllDids = GetAllDids;
 
         //Cert
         service.AccountAssetCert = AccountAssetCert;
@@ -942,8 +943,11 @@
         }
 
         function GetDid(symbol) {
-            var credentials = localStorageService.get('credentials');
             return _sendV2('getdid', [symbol]);
+        }
+
+        function GetAllDids() {
+            return _sendV2('getdid', []);
         }
 
         function AccountAssetCert() {
