@@ -1056,11 +1056,9 @@
     $scope.transferSuccess = false;                 //Change to True after a successful transaction
     $scope.resultCreateTx = '';
     $scope.checkRecipent = checkRecipent;
-    $scope.allDids = [];
     $scope.allDidsSymbols = [];
     $scope.checkInputs = checkInputs;
-    $scope.didFromAddress = [];
-    $scope.allDidsAddresses = [];
+    $scope.myDidsAddresses = [];
     $scope.availBalance = availBalance;
     $scope.availBalanceAsset = availBalanceAsset;
     $scope.assetAddresses = [];
@@ -1081,6 +1079,7 @@
       $scope.correctAvatar = false;
       $scope.burnAddress = false;
       $scope.confirmation = false;
+      $scope.avatarRecipient = '';
     }
 
 
@@ -1180,45 +1179,64 @@
       $scope.decimal_number = 8;
     }
 
-    MetaverseService.ListAllDids(1, 100)
+    MetaverseService.GetAllDids()
     .then( (response) => {
+      $scope.loadingDids = false;
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.allDids = response.data.result.dids;
-        if(typeof $scope.allDids != 'undefined' && $scope.allDids != null) {
-          $scope.allDids.forEach(function(did) {
-            $scope.allDidsSymbols.push(did.symbol);
-            $scope.allDidsAddresses[did.address] = did.symbol;
-            $scope.didFromAddress[did.symbol] = did.address;
-          });
-        } else {
-          $scope.allDids = [];
-        }
-      } else if (response.message.message == "no record in this page") {
-        //No avatar
+        $scope.allDidsSymbols = response.data.result.dids;
+        //Once all the DIDs have been loaded, we look for the one entered by the user
+        checkRecipent($scope.sendTo);
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       }
-      //Once all the DIDs have been loaded, we look for the one entered by the user
-      checkRecipent($scope.sendTo);
+    });
+
+    MetaverseService.ListMyDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.myDids = response.data.result.dids;
+        $scope.balancesLoaded = true;
+        if(typeof $scope.myDids != 'undefined' && $scope.myDids != null) {
+          $scope.myDids.forEach(function(did) {
+            $scope.myDidsAddresses[did.address] = did.symbol;
+          });
+        } else {
+          $scope.myDids = [];
+        }
+      } else if (response.message.message == "no record in this page") {
+        $scope.noDids = true;
+        $scope.selectedDid = "";
+      } else {
+        $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
     });
 
     function checkInputs() {
       //Since multi sig to did is not available, we replace it by the address
+      if($scope.burnAddress) {
+        $scope.sendTo = MetaverseService.burnAddress;
+      } else if ($scope.correctAvatar){   //if send to avatar
+        MetaverseService.GetDid($scope.sendTo)
+        .then( (response) => {
+          $scope.avatarRecipient = $scope.sendTo;
+          response.data.result.addresses.forEach( (address) => {
+            if(address.status == 'current') {
+              $scope.sendTo = address.address;
+            }
+          });
+        });
+      }
+      if ($scope.myDidsAddresses[this.sendFrom]) {    //if send from avatar
+        $scope.sendFrom = $scope.myDidsAddresses[$scope.sendFrom];
+      }
       $scope.confirmation = true;
       delete $rootScope.flash;
     }
 
 
     function createMultisigTx(sendFrom, sendTo, quantity, transactionFee, password) {
-      if($scope.burnAddress) {
-        sendTo = MetaverseService.burnAddress;
-      } else if ($scope.correctAvatar){   //if send to avatar
-        sendTo = $scope.didFromAddress[sendTo];
-      }
-      if ($scope.didFromAddress[sendFrom]) {    //if send from avatar
-        sendFrom = $scope.didFromAddress[sendFrom];
-      }
       //var quantityToSend = ("" + quantity * Math.pow(10,8)).split(".")[0];
       var quantityToSend = $filter('convertfortx')(quantity, $scope.decimal_number);
       //var transactionFeeToSend = ("" + transactionFee * Math.pow(10,8)).split(".")[0];
