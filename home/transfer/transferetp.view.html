@@ -114,7 +114,7 @@
 						<div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</div>
 						<div ng-show="sendfrom == ''" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</div>
 						<div ng-show="sendfrom != '' && !myDidsAddresses[sendfrom]" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{sendfrom}}</div>
-						<div ng-show="sendfrom != '' && myDidsAddresses[sendfrom]" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{myDidsAddresses[sendfrom]}} ({{sendfrom}})</div>
+						<div ng-show="sendfrom != '' && myDidsAddresses[sendfrom]" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{myDidsAddresses[sendfrom]}}</div>
 					</div>
 					<div ng-repeat="recipent in recipents | orderBy:'index'">
 						<div class="col-xs-12 noPaddingLeftRight assetDataLine">

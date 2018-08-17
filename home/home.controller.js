@@ -1952,14 +1952,14 @@
     $scope.availableBalance = 0;
     $scope.sendAll = sendAll;
     $scope.checkRecipent = checkRecipent;
-    $scope.allDids = [];
-    $scope.allDidsAddresses = [];
     $scope.checkInputs = checkInputs;
-    $scope.didFromAddress = [];
     $scope.updateUnlockNumber = updateUnlockNumber;
     $scope.checkready = checkready;
     $scope.loadingBalances = true;
     $scope.loadingSender = true;
+    $scope.allDidsSymbols = [];
+    $scope.myDidsAddresses = [];
+    $scope.loadingDids = true;
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -2020,30 +2020,39 @@
       }
     });
 
-    MetaverseService.ListAllDids(1, 100)
+    MetaverseService.GetAllDids()
     .then( (response) => {
+      $scope.loadingDids = false;
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.allDids = response.data.result.dids;
-        $scope.allDidsSymbols = [];
-        if(typeof $scope.allDids != 'undefined' && $scope.allDids != null) {
-          $scope.allDids.forEach(function(did) {
-            $scope.allDidsSymbols.push(did.symbol);
-            $scope.allDidsAddresses[did.address] = did.symbol;
-            $scope.didFromAddress[did.symbol] = did.address;
-          });
-        } else {
-          $scope.allDids = [];
-        }
-      } else if (response.message.message == "no record in this page") {
-        //No avatar
+        $scope.allDidsSymbols = response.data.result.dids;
+        //Once all the DIDs have been loaded, we look for the one entered by the user
+        checkRecipent($scope.sendto);
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       }
-      //Once all the DIDs have been loaded, we look for the one entered by the user
-      checkRecipent($scope.sendto);
     });
 
+    MetaverseService.ListMyDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.myDids = response.data.result.dids;
+        $scope.balancesLoaded = true;
+        if(typeof $scope.myDids != 'undefined' && $scope.myDids != null) {
+          $scope.myDids.forEach(function(did) {
+            $scope.myDidsAddresses[did.address] = did.symbol;
+          });
+        } else {
+          $scope.myDids = [];
+        }
+      } else if (response.message.message == "no record in this page") {
+        $scope.noDids = true;
+        $scope.selectedDid = "";
+      } else {
+        $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
+    });
 
     //Loads a given asset
     function loadasset(symbol) {
@@ -2108,8 +2117,8 @@
       } else {
         NProgress.start();
         //Update send from it is from an avatar
-        if($scope.allDidsAddresses[sendfrom]) {
-          sendfrom = $scope.allDidsAddresses[sendfrom];
+        if($scope.myDidsAddresses[sendfrom]) {
+          sendfrom = $scope.myDidsAddresses[sendfrom];
         }
         //Modify number to fit to number of decimals defined for asset
         //quantity *= Math.pow(10,$scope.asset.decimal_number);
@@ -4370,7 +4379,6 @@
     $scope.certType = '';
     $scope.changeDomain = changeDomain;
     $scope.transactionFee = 0.0001;
-    $scope.allDidsAddresses = [];
     $scope.checkInputs = checkInputs;
     $scope.issueCert = issueCert;
     $scope.myCertsLoaded = false;
