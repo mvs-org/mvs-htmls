@@ -623,7 +623,7 @@
 
     getBalance();
 
-    MetaverseService.ListAllDids()
+    MetaverseService.ListAllDids(1, 100)
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.allDids = response.data.result.dids;
@@ -1195,7 +1195,7 @@
       $scope.decimal_number = 8;
     }
 
-    MetaverseService.ListAllDids()
+    MetaverseService.ListAllDids(1, 100)
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.allDids = response.data.result.dids;
@@ -2017,7 +2017,7 @@
       }
     });
 
-    MetaverseService.ListAllDids()
+    MetaverseService.ListAllDids(1, 100)
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.allDids = response.data.result.dids;
@@ -3762,17 +3762,38 @@
 
     $scope.allDids = [];
     $scope.loaded = false;
+    $scope.items_per_page = 10;
 
-    MetaverseService.ListAllDids()
-    .then( (response) => {
-      if (typeof response.success !== 'undefined' && response.success) {
-        $scope.allDids = response.data.result.dids;
-      } else {
-        $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      }
-      $scope.loaded = true;
-    });
+    function load () {
+      MetaverseService.ListAllDids($scope.current_page, $scope.items_per_page)
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.allDids = response.data.result.dids;
+          $scope.total_count = response.data.result.total_count;
+        } else if (response.message.message == "no record in this page") {
+          //No avatar
+        } else {
+          $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
+        }
+        $scope.loaded = true;
+      });
+    };
+
+
+
+    $scope.switchPage = (page) => {
+        $scope.current_page = page;
+        return load();
+    };
+
+    $scope.applyFilters = () => {
+        $scope.current_page = 1;
+        return load();
+    };
+
+    $scope.switchPage(1);
+
   }
 
 
@@ -3832,7 +3853,7 @@
 
     listAddresses();
 
-    MetaverseService.ListAllDids()
+    MetaverseService.ListAllDids(1, 100)
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.allDids = response.data.result.dids;
@@ -4231,7 +4252,7 @@
       });
     }
 
-    MetaverseService.ListAllDids()
+    MetaverseService.ListAllDids(1, 100)
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.allDids = response.data.result.dids;
@@ -4463,7 +4484,7 @@
       }
     });
 
-    MetaverseService.ListAllDids()
+    MetaverseService.ListAllDids(1, 100)
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.allDids = response.data.result.dids;
@@ -4793,7 +4814,7 @@
       NProgress.done();
     });
 
-    MetaverseService.ListAllDids()
+    MetaverseService.ListAllDids(1, 100)
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.allDids = response.data.result.dids;

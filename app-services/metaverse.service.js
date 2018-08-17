@@ -854,8 +854,8 @@
             return _sendV2('listdids', [credentials.user, credentials.password]);
         }
 
-        function ListAllDids() {
-            return _sendV2('listdids', []);
+        function ListAllDids(index, limit) {
+            return _sendV2('listdids', ['-i', index, '-l', limit]);
         }
 
         function DidSendFrom(sendfrom, sendTo, value, transactionFee, memo, password) {
