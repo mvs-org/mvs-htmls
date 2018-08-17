@@ -579,12 +579,16 @@
 
     $scope.checkRecipent = checkRecipent;
     $scope.checkAmount = checkAmount;
-    $scope.allDids = [];
-    $scope.allDidsAddresses = [];
+    $scope.allDidsSymbols = [];
+    $scope.myDidsAddresses = [];
     $scope.checkInputs = checkInputs;
-    $scope.didFromAddress = [];
-    $scope.loadingSender = true;
+    $scope.senderAddressesLoaded = false;
     $scope.loadingBalances = true;
+    $scope.loadingDids = true;
+    $scope.balancesLoaded = false;
+
+    $scope.myDids = [];
+    $scope.myDidsAddresses = [];
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -623,29 +627,40 @@
 
     getBalance();
 
-    MetaverseService.ListAllDids(1, 100)
+    MetaverseService.GetAllDids()
     .then( (response) => {
+      $scope.loadingDids = false;
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.allDids = response.data.result.dids;
-        $scope.allDidsSymbols = [];
-        if(typeof $scope.allDids != 'undefined' && $scope.allDids != null) {
-          $scope.allDids.forEach(function(did) {
-            $scope.allDidsSymbols.push(did.symbol);
-            $scope.allDidsAddresses[did.address] = did.symbol;
-            $scope.didFromAddress[did.symbol] = did.address;
-          });
-        } else {
-          $scope.allDids = [];
-        }
-      } else if (response.message.message == "no record in this page") {
-        //No avatar
+        $scope.allDidsSymbols = response.data.result.dids;
+        //Once all the DIDs have been loaded, we look for the one entered by the user
+        checkRecipent($scope.recipents[0].address, 1);
+        checkAmount('', 1);
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       }
-      //Once all the DIDs have been loaded, we look for the one entered by the user
-      checkRecipent($scope.recipents[0].address, 1);
-      checkAmount('', 1);
+    });
+
+    MetaverseService.ListMyDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.myDids = response.data.result.dids;
+        $scope.balancesLoaded = true;
+        if(typeof $scope.myDids != 'undefined' && $scope.myDids != null) {
+          $scope.myDids.forEach(function(did) {
+            //$scope.myDidsSymbols.push(did.symbol);
+            $scope.myDidsAddresses[did.address] = did.symbol;
+          });
+        } else {
+          $scope.myDids = [];
+        }
+      } else if (response.message.message == "no record in this page") {
+        $scope.noDids = true;
+        $scope.selectedDid = "";
+      } else {
+        $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
     });
 
     function checkRecipent(input, index) {
@@ -754,8 +769,7 @@
       checkready();
     });
 
-
-
+    //Add a recipient
     $scope.addRecipent = function() {
       $scope.recipents.push({'index': $scope.recipents.length+1, 'address': '', 'value': '', 'correctEtpAddress': false, 'correctAvatar': false, 'burnAddress': false, 'emptyAmount': true, 'wrongAmount': false, 'notEnough': false});
       $scope.sendfrom='';
@@ -776,34 +790,6 @@
 
     //Check Inputs
     function checkInputs(sendfrom, recipents, transactionFee, memo, password) {
-      //var transactionOK = true;
-      //Check for unimplemented parameters
-      /*recipents.forEach( (e) => {
-        if (!e.correctEtpAddress && !e.correctAvatar && !e.burnAddress) { //Check for recipent address
-          $translate('TRANSFER.INCORRECT_RECIPIENT').then( (data) =>
-            $translate('TRANSFER_RECIPENT_ADDRESS').then( (data2) => FlashService.Error(data + ' (' + data2 + ' ' + e.index + ')' ))
-          );
-          $window.scrollTo(0,0);
-          transactionOK = false;
-        } else if (typeof e.value == 'undefined' || e.value === '') { //Check for transaction value
-          $translate('MESSAGES.TRANSACTION_VALUE_NEEDED').then( (data) => FlashService.Error(data) );
-          $window.scrollTo(0,0);
-          transactionOK = false;
-        } else if (e.value > ($scope.availableBalance/100000000 - transactionFee)) { //Check for transaction value
-          $translate('MESSAGES.TRANSACTION_AMOUNT_NOT_ENOUGH').then( (data) => FlashService.Error(data) );
-          $window.scrollTo(0,0);
-          transactionOK = false;
-        }
-      });
-      if (transactionOK === false) {
-        //error already handle
-      } else if (transactionFee < 0.0001) { //Check for empty password
-        $translate('MESSAGES.TOO_LOW_FEE').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else if (password === '') { //Check for empty password
-        $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else */
       $scope.confirmation = true;
       delete $rootScope.flash;
     }
@@ -825,7 +811,6 @@
     }
 
 
-
     function transferOne(sendfrom, recipents, transactionFee, memo, password) {
       NProgress.start();
       var value = recipents[0].value;
@@ -837,8 +822,8 @@
       var fee = $filter('convertfortx')(transactionFee, 8);
       value = $filter('convertfortx')(value, 8);
       //Update send from it is from an avatar
-      if($scope.allDidsAddresses[sendfrom]) {
-        sendfrom = $scope.allDidsAddresses[sendfrom];
+      if($scope.myDidsAddresses[sendfrom]) {
+        sendfrom = $scope.myDidsAddresses[sendfrom];
         sendFromAvatar = true;
       }
       if (recipents[0].correctEtpAddress && !sendFromAvatar) {
@@ -958,7 +943,7 @@
               "address": e.balance.address
             });
           });
-          $scope.loadingSender = false;
+          $scope.senderAddressesLoaded = true;
 
           //After loading the balances, we load the multisig addresses
           MetaverseService.ListMultiSig()
@@ -4813,8 +4798,6 @@
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.allDidsSymbols = response.data.result.dids;
         $scope.error.sendto_not_exist = $scope.sendto != undefined && $scope.sendto != '' ? !($scope.allDidsSymbols.indexOf($scope.sendto) > -1) : false;
-        checkready();
-        $scope.error.toDID_not_exist = $scope.toDID != undefined && $scope.allDidsSymbols != undefined ? !($scope.allDidsSymbols.indexOf($scope.toDID) > -1) : false;
         checkready();
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
