@@ -4783,6 +4783,7 @@
     $scope.mymits = [];
     $scope.allDidsSymbols = [];
     $scope.loaded = false;
+    $scope.loadingDids = true;
 
     $scope.mitSymbol = $location.path().split('/')[3];
 
@@ -4806,23 +4807,19 @@
       NProgress.done();
     });
 
-    MetaverseService.ListAllDids(1, 100)
+    MetaverseService.GetAllDids()
     .then( (response) => {
+      $scope.loadingDids = false;
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.allDids = response.data.result.dids;
-        if(typeof $scope.allDids != 'undefined' && $scope.allDids != null) {
-          $scope.allDids.forEach(function(did) {
-            $scope.allDidsSymbols.push(did.symbol);
-          });
-        }
-      } else if (response.message.message == "no record in this page") {
-        //No avatar
+        $scope.allDidsSymbols = response.data.result.dids;
+        $scope.error.sendto_not_exist = $scope.sendto != undefined && $scope.sendto != '' ? !($scope.allDidsSymbols.indexOf($scope.sendto) > -1) : false;
+        checkready();
+        $scope.error.toDID_not_exist = $scope.toDID != undefined && $scope.allDidsSymbols != undefined ? !($scope.allDidsSymbols.indexOf($scope.toDID) > -1) : false;
+        checkready();
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       }
-      //Once all the DIDs have been loaded, we look for the one entered by the user
-      //checkRecipent($scope.sendTo);
     });
 
     function checkInputs(password) {
