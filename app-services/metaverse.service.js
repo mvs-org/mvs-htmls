@@ -373,10 +373,9 @@
          * @apiParam {List} params [username, password]
          *
          **/
-        function ListTxs(page) {
+        function ListTxs(page, limit) {
             var credentials = localStorageService.get('credentials');
-            //return _send('listtxs', ['-i', page, '-l', 1, credentials.user, credentials.password]);
-            return _send('listtxs', ['-i', page, credentials.user, credentials.password]);
+            return _send('listtxs', ['-i', page, '-l', limit, credentials.user, credentials.password]);
         }
 
         function ListTxsAddress(address, page) {
@@ -1166,10 +1165,11 @@
             }
         }
 
-        function LoadTransactions(callback, type, page) {
-            MetaverseService.ListTxs(page)
+        function LoadTransactions(callback, type, page, limit) {
+            MetaverseService.ListTxs(page, limit)
                 .then(function(response) {
                   var transactions = [];
+                  var total_page = response.data.total_page;
                     if ( response.success !== 'undefined' && response.success) {
                       if(response.data.current_page==response.data.total_page){
                         transactions.lastpage = true;
@@ -1349,7 +1349,7 @@
                                 }
                             });
                             //Return transaction list
-                            callback(null, transactions);
+                            callback(null, transactions, total_page);
                         } else {
                             //Empty transaction list
                             callback(null, []);
@@ -1359,7 +1359,7 @@
                       callback(null, []);
                     } else {
                         $translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then(function(data) {
-                            callback(1, null, data);
+                            callback(1, null, null, data);
                         });
                     }
                 });

@@ -104,7 +104,7 @@
 
     <!--Display the history in a table for large screens-->
     <div class="hidden-xs hidden-sm transactionsHistoryXl">
-      <div class="no_transaction_message" ng-show="transactionsFiltered.length==0">
+      <div class="no_transaction_message" ng-show="transactionsFiltered.length==0 && transactionsLoaded">
         {{'MESSAGES.NO_LISTED_TRANSACTIONS' | translate}}
       </div>
       <div class="transactionBoxHeader col-md-12 noPaddingLeftRight" ng-show="transactionsFiltered.length!=0">
@@ -130,7 +130,8 @@
           </div>
         </div>
       </div>
-      <div class="transactionOneLine col-md-12 noPaddingLeftRight" dir-paginate="transaction in transactionsFiltered | orderBy:'timestamp':true | itemsPerPage: 10"  pagination-id="paginationRecord">
+
+      <div class="transactionOneLine col-md-12 noPaddingLeftRight" dir-paginate="transaction in transactionsFiltered | orderBy:'timestamp':true | itemsPerPage: items_per_page" total-items="total_count" current-page="current_page">
         <!--Time-->
         <div class="date-day transactionBoxField noPaddingLeftRight col-md-2 col-lg-1">
           {{transaction.timestamp | date: ('GENERAL.DATE_FORMAT_DAY' | translate) }}
@@ -177,29 +178,19 @@
       </div>
 
     </div>
-    <div>
-      <div class="loadMoreLess" ng-hide="transactionsFiltered.length>10">
-        <input ng-hide="stopLoad" type="button" class="btn btn-success smallButton" value="{{'HISTORY_LOAD_MORE' | translate}}" ng-click="loadMore()"></input>
-      </div>
-    </div>
 
     <!--Pagination and  more button-->
     <div class="paginationHistory hidden-xs hidden-sm">
-      <dir-pagination-controls pagination-id="paginationRecord"></dir-pagination-controls>
-      <div>
-        <div class="loadMore" ng-show="transactionsFiltered.length>10">
-          <input ng-hide="stopLoad" type="button" class="btn btn-success smallButton" value="{{'HISTORY_LOAD_MORE' | translate}}" ng-click="loadMore()"></input>
-        </div>
-      </div>
+      <dir-pagination-controls max-size="7" on-page-change="switchPage(newPageNumber)"></dir-pagination-controls>
     </div>
 
     <!--Display the history in div for small screens-->
     <div class="visible-xs visible-sm">
-      <div class="no_transaction_message" ng-show="transactionsFiltered.length==0">
+      <div class="no_transaction_message" ng-show="transactionsFiltered.length==0 && transactionsLoaded">
         {{'MESSAGES.NO_LISTED_TRANSACTIONS' | translate}}
       </div>
 
-      <div class="transactionBoxSmall" ng-repeat="transaction in transactionsFiltered | orderBy:'timestamp':true">
+      <div class="transactionBoxSmall" dir-paginate="transaction in transactionsFiltered | orderBy:'timestamp':true | itemsPerPage: items_per_page" total-items="total_count" current-page="current_page">
         <div class="transactionBoxSmallInfo col-xs-12 col-sm-12">
           <div class="transactionBoxSmallAmount">
             <span ng-show="transaction.direction=='receive' || transaction.direction=='issue'" class="receiveSign overflow"><span class="p-empty">+</span>{{transaction.value | assetformat : transaction.decimal_number}} {{transaction.type}}</span>
@@ -224,12 +215,9 @@
           </div>
         </div>
       </div>
-      <div>
-        <input ng-hide="stopLoad" type="button" class="btn btn-success" value="Load more" ng-click="loadMore()"></input>
+      <div class="paginationHistory">
+        <dir-pagination-controls max-size="7" on-page-change="switchPage(newPageNumber)"></dir-pagination-controls>
       </div>
-      <!--<div ng-show="stopLoad">
-        {{ 'HISTORY_ALL_LOADED' | translate }}
-      </div>-->
     </div>
   </div>
 </div>

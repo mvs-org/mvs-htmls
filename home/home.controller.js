@@ -3268,11 +3268,10 @@
     $scope.assetType = 'ALL';
 
     $scope.loadTransactions = loadTransactions;
-    $scope.loadMore = loadMore;
-    $scope.stopLoad = false;
-    $scope.page = 3;          //By default, we load the 2 first pages
     $scope.icons = MetaverseService.hasIcon;
     $scope.filterTransactions = filterTransactions;
+    $scope.items_per_page = 10;
+    $scope.transactionsLoaded = false;
 
 
     function filterTransactions(asset) {
@@ -3330,71 +3329,58 @@
     });
 
 
-    function loadTransactions(min, max) {
-      var page = min;
-      for (; (page<max) && (!$scope.stopLoad); page++) {
-        MetaverseHelperService.LoadTransactions( (err, transactions) => {
-          if (err) {
-            $translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
-            $window.scrollTo(0,0);
-          } else {
-            if ((transactions.lastpage == true) || (transactions.lastpage == undefined)) {     //All the transactions have been loaded
-              $scope.stopLoad = true;
+    function loadTransactions() {
+      MetaverseHelperService.LoadTransactions( (err, transactions, total_page) => {
+        if (err) {
+          $translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
+        } else {
+          $scope.transactions = [];
+          $scope.total_count = total_page * $scope.items_per_page;
+          transactions.forEach(function(e) {
+            /*if($scope.averageBlockTime == 0){   //if it hasn't been calculated yet, we calculated the average block time
+              //1486815046 is the timestamp of the genesis block
+              //1497080262 is the timestamp of the genesis block on TestNet
+              $scope.averageBlockTime = ((e.timestamp/1000)-1486815046)/e.height;
+            }*/
+            if (e.frozen == true) {
+              e.recipents.forEach(function(recipent) {
+                var re = /\[ (\w+) ] numequalverify dup hash160 \[ (\w+) \] equalverify checksig/;
+                var nbrBlocksScript = recipent.script.replace(re, '$1');
+
+                var nbrBlocksScriptLenght = nbrBlocksScript.length;
+                var nbrBlocksScriptReorderer = "";
+
+                for (var i=0; i < nbrBlocksScriptLenght; i=i+2) {
+                  nbrBlocksScriptReorderer += nbrBlocksScript.charAt(nbrBlocksScriptLenght-i-2);
+                  nbrBlocksScriptReorderer += nbrBlocksScript.charAt(nbrBlocksScriptLenght-i-1);
+                }
+                var nbrBlocksDec = parseInt(nbrBlocksScriptReorderer,16);
+                e.availableBlockNo = parseInt(e.height) + parseInt(nbrBlocksDec);
+              });
             }
-            transactions.forEach(function(e) {
-              /*if($scope.averageBlockTime == 0){   //if it hasn't been calculated yet, we calculated the average block time
-                //1486815046 is the timestamp of the genesis block
-                //1497080262 is the timestamp of the genesis block on TestNet
-                $scope.averageBlockTime = ((e.timestamp/1000)-1486815046)/e.height;
-              }*/
-              if (e.frozen == true) {
-                e.recipents.forEach(function(recipent) {
-                  var re = /\[ (\w+) ] numequalverify dup hash160 \[ (\w+) \] equalverify checksig/;
-                  var nbrBlocksScript = recipent.script.replace(re, '$1');
-                  //var address = e.script.replace(re, '$2');
 
-                  var nbrBlocksScriptLenght = nbrBlocksScript.length;
-                  var nbrBlocksScriptReorderer = "";
-
-                  for (var i=0; i < nbrBlocksScriptLenght; i=i+2) {
-                    nbrBlocksScriptReorderer += nbrBlocksScript.charAt(nbrBlocksScriptLenght-i-2);
-                    nbrBlocksScriptReorderer += nbrBlocksScript.charAt(nbrBlocksScriptLenght-i-1);
-                  }
-
-                  var nbrBlocksDec = parseInt(nbrBlocksScriptReorderer,16);
-                  e.availableBlockNo = parseInt(e.height) + parseInt(nbrBlocksDec);
-
-                  /*if((e.availableBlockNo - $rootScope.height) > 0){   //If the Frozen ETP are still locked
-                    e.availableInBlock = e.availableBlockNo - $rootScope.height;
-                    //e.availableInTime = e.availableInBlock * $scope.averageBlockTime;
-                    //e.availableInTimeDays = Math.floor(e.availableInTime / 86400);
-                    //e.availableInTimeHours = Math.floor(e.availableInTime / 3600) - (e.availableInTimeDays * 24);
-                  } else {                //If the Frozen ETP are not unlocked
-                    e.availableInBlock = 0;
-                  }*/
-                });
-              }
-
-              $scope.transactions.push(e);
-            });
-            //displayUpdatedDates();
-            filterTransactions('ALL');
-          }
-          NProgress.done();
-        }, 'asset', page);
-      }
+            $scope.transactions.push(e);
+          });
+          $scope.transactionsLoaded = true;
+          //displayUpdatedDates();
+          filterTransactions('ALL');
+        }
+        NProgress.done();
+      }, 'asset', $scope.current_page, $scope.items_per_page);
     }
 
+    $scope.switchPage = (page) => {
+        $scope.current_page = page;
+        return loadTransactions();
+    };
 
-    loadTransactions(1, 3);
+    $scope.applyFilters = () => {
+        $scope.current_page = 1;
+        return loadTransactions();
+    };
 
-    function loadMore() {
-      if(!$scope.stopLoad) {
-        $scope.page = $scope.page+1;
-        loadTransactions($scope.page - 1, $scope.page);
-      }
-    }
-
+    $scope.switchPage(1);
 
   }
 
