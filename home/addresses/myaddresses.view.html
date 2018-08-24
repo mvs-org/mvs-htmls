@@ -87,18 +87,19 @@
       <div class="assetBoxValue col-xd-12 noPaddingLeftRight">{{address.frozen | assetformat : 8}}</div>
     </div>
     <div class="assetBoxCopy col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
-      <span class="copyAddress">
-        <button class="btn btn-link-black addressLinkButton" bs-popover data-clipboard-text="{{address.address}}" data-toggle="popover" data-placement="top" data-content="{{ 'ADDRESSES_POPOVER_COPIED' | translate }}" role="button">
-          <span class="glyphicon"></span> {{ 'ADDRESSES_COPY_ADDRESS' | translate }}
-        </button>
-      </span>
+      <button class="btn btn-link-black addressLinkButton" bs-popover data-clipboard-text="{{address.address}}" data-toggle="popover" data-placement="top" data-content="{{ 'ADDRESSES_POPOVER_COPIED' | translate }}" role="button">
+        <span class="glyphicon glyphicon-copy"></span> {{ 'ADDRESSES_COPY_ADDRESS' | translate }}
+      </button>
+      <button class="btn btn-link-black addressLinkButton" ng-click="showqr(address.address)" alt="receive">
+        <span class="glyphicon glyphicon-qrcode"></span> {{ 'ADDRESSES_QR_CODE' | translate }}
+      </button>
     </div>
-    <div class="assetBoxCopy col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
-      <span class="qrCode">
-        <button id="element" class="btn btn-link-black addressLinkButton" ng-click="showqr(address.address)" alt="receive">
-          <span class="glyphicon glyphicon-qrcode"></span> {{ 'ADDRESSES_QR_CODE' | translate }}
-        </button>
-      </span>
+    <div class="assetBoxConnectEth col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 noPaddingLeftRight">
+      <button class="btn btn-link-black addressLinkButton">
+        <a href="#!/addresses/linkethaddress/{{address.address}}" class="btn btn-link-black addressLinkButton">
+          <span class="glyphicon glyphicon-link"></span> {{ 'LINK_TO_ETH' | translate }}
+        </a>
+      </button>
     </div>
     <span class="addressIndex" bs-tooltip data-placement="left" title="{{ 'HELP.ADDRESS_INDEX' | translate }}">{{address.index}}</span>
   </dd>

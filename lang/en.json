@@ -650,5 +650,25 @@
   "HELP.BOUNTY_FEE": "You can choose how your fee will be distributed, between the Miners and the Developer Community. This does not impact the fee that you pay for the transaction. The minimum share for Miners is 20%.",
   "MINERS": "Miners",
   "DEVELOPERS": "Developer Community",
-  "TRANSFER_FEE_DISTRIBUTION": "Transaction fee distribution"
+  "TRANSFER_FEE_DISTRIBUTION": "Transaction fee distribution",
+  "LINK_TO_ETH": "Link to ETH",
+  "HEADLINE_LINK_ETH": "Link ETP and ETH addresses",
+  "LINK_ETH.ETP_ADDRESS_OR_AVATAR": "ETP Avatar or address",
+  "LINK_ETH.ETP_ADDRESS": "ETP address",
+  "LINK_ETH.ETP_AVATAR": "ETP Avatar",
+  "LINK_ETH.LINK_BUTTON": "Generate ETH transaction",
+  "LINK_ETH.RETURN_BUTTON": "Return",
+  "HELP.LINK_ETP_ADDRESS": "This ETP address or avatar will be linked to your ETH address and will receive the ERC20 sent from your ETH address to the ETPMap contract address on Ethereum",
+  "LINK_ETH.EXPLANATION_TITLE": "Why and How to link your ETP and ETH addresses",
+  "LINK_ETH.WHY_TITLE": "Why link your addresses",
+  "LINK_ETH.WHY_EXPLANATION": "Link your ETP and ETH addresses give you the ability the swap ERC20 tokens and their equivalent MST.",
+  "LINK_ETH.HOW_IT_WORKS_TITLE": "How it works",
+  "LINK_ETH.HOW_IT_WORKS_EXPLANATION": "The first step is to link your ETP and ETH addresses. This form helps you to generate the ETH raw transaction, that you will have to broadcast via your ETH wallet (i.e. imToken)",
+  "LINK_ETH.HOW_TO_LINK_TITLE": "How to link",
+  "LINK_ETH.HOW_TO_LINK_EXPLANATION": "In order to link your addresses, please please fill this form and broadcast an ETH transaction containing the data generated.",
+  "LINK_ETH.CONFIRMATION_TITLE": "Summary",
+  "LINK_ETH.RESULT_DATA": "Data",
+  "LINK_ETH.COPY_DATA": "Copy data",
+  "LINK_ETH.POPOVER_COPIED": "Data copied!"
+
 }

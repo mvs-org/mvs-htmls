@@ -29,6 +29,7 @@
   .controller('ShowMITsController', ShowMITsController)
   .controller('CreateMITController', CreateMITController)
   .controller('TransferMITController', TransferMITController)
+  .controller('LinkEthController', LinkEthController)
   .directive('bsTooltip', function() {
     return {
       restrict: 'A',
@@ -588,7 +589,6 @@
     $scope.balancesLoaded = false;
 
     $scope.myDids = [];
-    $scope.myDidsAddresses = [];
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -4889,6 +4889,98 @@
     });
 
     init();
+
+  }
+
+
+  function LinkEthController(MetaverseHelperService, MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $location) {
+
+    $scope.listAddresses = [];
+    $scope.senderAddressesLoaded = false;
+    $scope.error = [];
+    $scope.etpAddress = $location.path().split('/')[3];
+    $scope.generateEthRawTx = generateEthRawTx;
+    $scope.confirmation = false;
+    $scope.registerEthBridge = registerEthBridge;
+    $scope.result = "";
+
+    MetaverseService.ListBalances()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.addresses = [];
+        response.data.balances.forEach( (e) => {
+          var name = "New address";
+          if (localStorageService.get(e.balance.address) != undefined) {
+            name = localStorageService.get(e.balance.address);
+          }
+          $scope.addresses[e.balance.address] = ({
+            "balance": parseInt(e.balance.unspent),
+            "available": parseInt(e.balance.available),
+            "address": e.balance.address,
+            "name": name,
+            "frozen": e.balance.frozen
+          });
+          $scope.listAddresses.push({
+            "balance": parseInt(e.balance.unspent),
+            "available": parseInt(e.balance.available),
+            "address": e.balance.address
+          });
+        });
+        $scope.senderAddressesLoaded = true;
+      }
+    });
+
+    function generateEthRawTx() {
+
+    }
+
+    function toHex(s) {
+      var s = unescape(encodeURIComponent(s));
+      var h = '';
+      for (var i = 0; i < s.length; i++)
+        h += s.charCodeAt(i).toString(16);
+      return h;
+    }
+
+    function zerofill(content, length, direction) {
+      if(content.length>length)
+        return (zerofill(content.slice(0, 64), 64, direction) + zerofill(content.slice(64), 64, direction))
+      if(direction !== 'left')
+        direction == 'right';
+      let result = "" + content;
+      var zeros = length - (result).length;
+      for(let i = 0; i < zeros; i++)
+        result = (direction == 'left') ? "0" + result:result + "0";
+      return result;
+    }
+
+    function registerEthBridge(etpAddress) {
+      const FUNCTION_ID = "0xfa42f3e5";
+      const LOCATION = "0000000000000000000000000000000000000000000000000000000000000020";
+      var avatar_or_address = $scope.myDidsAddresses[etpAddress] ? $scope.myDidsAddresses[etpAddress] : etpAddress;
+      var dynamic = toHex(avatar_or_address);
+      var hexLength = avatar_or_address.length.toString(16);
+      $scope.result = FUNCTION_ID + LOCATION + zerofill(hexLength, 64, 'left') + zerofill(dynamic, 64, 'right');
+      $scope.confirmation = true;
+    }
+
+    //Check if the form is submittable
+    function checkready() {
+      //Check for errors
+      for (var error in $scope.error) {
+        if ($scope.error[error]) {
+          $scope.submittable = false;
+          return;
+        }
+      }
+      $scope.submittable = true;
+    }
+
+    //Check if the fee is valid
+    $scope.$watch('etpAddress', (newVal, oldVal) => {
+      $scope.error.etpAddress = (newVal == undefined || newVal == '');
+      checkready();
+    });
 
   }
 

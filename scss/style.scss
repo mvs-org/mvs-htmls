@@ -177,6 +177,11 @@ No media query since this is the default in Bootstrap because it is "mobile firs
 }
 
 .assetBoxCopy {
+  top: -6px;
+  display: inline-block;
+}
+
+.assetBoxConnectEth {
   padding-top: 10px;
   display: inline-block;
 }
