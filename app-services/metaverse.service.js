@@ -62,6 +62,9 @@
         service.defaultBountyFee = 80;
         service.bountyFeeMinMiner = 20;
 
+        service.swaptokenAvatar = 'crosschain';
+        service.swaptokenDomain = 'ERC'
+
         service.CheckAccount = CheckAccount;
 
         service.GetNewAccount = GetNewAccount;
@@ -143,6 +146,9 @@
         service.AccountAssetCert = AccountAssetCert;
         service.TransferCert = TransferCert;
         service.IssueCert = IssueCert;
+
+        //Swaptoken
+        service.Swaptoken = Swaptoken;
 
         return service;
 
@@ -1021,6 +1027,15 @@
               default:
                 return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-f', transactionFee]);
             }
+        }
+
+        function Swaptoken(sendfrom, sendto, symbol, quantity, ethAddress, swaptokenFee, transactionFee, password) {
+          var credentials = localStorageService.get('credentials');
+          if(sendfrom) {
+            return _sendV2('swaptoken', [credentials.user, password, sendto, symbol, quantity, ethAddress, '-d', sendfrom, '-s', swaptokenFee, '-f', transactionFee]);
+          } else {
+            return _sendV2('swaptoken', [credentials.user, password, sendto, symbol, quantity, ethAddress, '-s', swaptokenFee, '-f', transactionFee]);
+          }
         }
 
         function Query(string) {

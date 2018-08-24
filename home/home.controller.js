@@ -1960,6 +1960,9 @@
     $scope.allDidsSymbols = [];
     $scope.myDidsAddresses = [];
     $scope.loadingDids = true;
+    $scope.swaptokenAvatar = MetaverseService.swaptokenAvatar;
+    $scope.canSwap = $scope.symbol.split('.')[0] == MetaverseService.swaptokenDomain;
+    $scope.changeSwaptokenOption = changeSwaptokenOption;
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -1973,8 +1976,11 @@
       $scope.burnAddress = false;
       $scope.confirmation = false;
       $scope.transactionFee = 0.0001;
+      $scope.ethAddress = '';
+      $scope.swaptokenFee = 1;
       $scope.error = [];
       $scope.errorDeposit = [];
+      $scope.errorSwaptoken = [];
       $scope.unlockNumber = 1;
       $scope.unlockNumberString = '1';
       $scope.interestRate = '0';
@@ -2126,9 +2132,12 @@
         quantity = $filter('convertfortx')(quantity, $scope.asset.decimal_number);
         var quantityLockedToSend = $filter('convertfortx')($scope.quantityLocked, $scope.asset.decimal_number);
         var fee_value = $filter('convertfortx')(transactionFee, 8);
+        var swaptokenFee = $filter('convertfortx')($scope.swaptokenFee, 8);
         $scope.model = ($scope.frozen_option) ? $scope.model : '-1';
 
-        if($scope.burnAddress) {
+        if($scope.swaptoken_option) {
+          var SendPromise = MetaverseService.Swaptoken(sendfrom, $scope.swaptokenAvatar, symbol, quantity, $scope.ethAddress, swaptokenFee, fee_value, password);
+        } else if($scope.burnAddress) {
           var SendPromise = (sendfrom) ? MetaverseService.DidSendAssetFrom(sendfrom, MetaverseService.burnAddress, symbol, quantity, $scope.model, $scope.unlockNumber, quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, password) : MetaverseService.DidSendAsset(MetaverseService.burnAddress, symbol, quantity, $scope.model, $scope.unlockNumber, quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, password);
         } else {
           var SendPromise = (sendfrom) ? MetaverseService.DidSendAssetFrom(sendfrom, sendto, symbol, quantity, $scope.model, $scope.unlockNumber, quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, password) : MetaverseService.DidSendAsset(sendto, symbol, quantity, $scope.model, $scope.unlockNumber, quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, password);
@@ -2173,6 +2182,11 @@
       } else {
         $scope.model2Displayed = unlockNumber;
       }
+    }
+
+    function changeSwaptokenOption(swaptoken_option) {
+      $scope.sendto = swaptoken_option ? $scope.swaptokenAvatar : '';
+      checkRecipent($scope.sendto);
     }
 
     function checkRecipent(input) {
@@ -2220,7 +2234,7 @@
           return;
         }
       }
-      if(!$scope.correctEtpAddress && !$scope.correctAvatar && !$scope.burnAddress) {
+      if(!$scope.correctEtpAddress && !$scope.correctAvatar && !$scope.burnAddress && !$scope.swaptoken_option) {
         $scope.submittable = false;
         return;
       }
@@ -2237,6 +2251,14 @@
         } else if ($scope.model == 3 && ($scope.errorDeposit.unlock_number_empty || $scope.errorDeposit.periodLocked_empty)) {
           $scope.submittable = false;
           return;
+        }
+      }
+      if($scope.swaptoken_option){
+        for (var error in $scope.errorSwaptoken) {
+          if ($scope.errorSwaptoken[error]) {
+            $scope.submittable = false;
+            return;
+          }
         }
       }
       $scope.submittable = true;
@@ -2257,7 +2279,7 @@
     //Check if the amount is valid
     $scope.$watch('quantity', (newVal, oldVal) => {
       $scope.error.quantity_empty = (newVal == undefined);
-      $scope.error.quantity_not_enough_balance = (newVal != undefined && newVal != '' && typeof $scope.asset.decimal_number != 'undefined') ? parseInt($filter('convertfortx')(newVal, $scope.asset.decimal_number)) > parseInt($scope.availableBalance) : false;
+      $scope.error.quantity_not_enough_balance = (newVal != undefined && newVal != '' && $scope.asset != undefined && $scope.asset.decimal_number != undefined) ? parseInt($filter('convertfortx')(newVal, $scope.asset.decimal_number)) > parseInt($scope.availableBalance) : false;
       $scope.errorDeposit.quantityLocked_lower_quantity = newVal != undefined ? $scope.quantityLocked > newVal : false;
       checkready();
     });
@@ -2283,8 +2305,21 @@
 
     //Check if the fee is valid
     $scope.$watch('transactionFee', (newVal, oldVal) => {
-      $scope.error.fee_empty = (newVal == undefined);
+      $scope.error.fee_empty = (newVal == undefined || newVal == '');
       $scope.error.fee_too_low = newVal != undefined ? newVal<0.0001 : false;
+      checkready();
+    });
+
+    //Check if the swaptoken fee is valid
+    $scope.$watch('swaptokenFee', (newVal, oldVal) => {
+      $scope.errorSwaptoken.swaptoken_fee_empty = (newVal == undefined || newVal == '');
+      $scope.errorSwaptoken.swaptoken_fee_too_low = newVal != undefined ? newVal<1 : false;
+      checkready();
+    });
+
+    //Check if the ETH address is valid
+    $scope.$watch('ethAddress', (newVal, oldVal) => {
+      $scope.errorSwaptoken.ethAddress_empty = (newVal == undefined || newVal == '');
       checkready();
     });
 

@@ -651,6 +651,7 @@
   "MINERS": "Miners",
   "DEVELOPERS": "Developer Community",
   "TRANSFER_FEE_DISTRIBUTION": "Transaction fee distribution",
+
   "LINK_TO_ETH": "Link to ETH",
   "HEADLINE_LINK_ETH": "Link ETP and ETH addresses",
   "LINK_ETH.ETP_ADDRESS_OR_AVATAR": "ETP Avatar or address",
@@ -669,6 +670,15 @@
   "LINK_ETH.CONFIRMATION_TITLE": "Summary",
   "LINK_ETH.RESULT_DATA": "Data",
   "LINK_ETH.COPY_DATA": "Copy data",
-  "LINK_ETH.POPOVER_COPIED": "Data copied!"
+  "LINK_ETH.POPOVER_COPIED": "Data copied!",
 
+  "ASSET.SWAPTOKEN": "I want to swap this MST to its ERC20 equivalent",
+  "HELP.SEND_SWAPTOKEN": "By choosing this option, your MST will be sent to the avatar 'crosschain' and swapped to its ERC20 equivalent on Ethereum blockchain.",
+  "HELP.MVS_TRANSACTION_FEE": "This is the transaction fee for the transaction on the Metaverse blockchain",
+  "HELP.ETH_TRANSACTION_FEE": "This is the transaction fee for the transaction on the Ethereum blockchain. This fee is payed in ETP, and will be automatically converted in ETH to pay for the transaction",
+  "MESSAGES.TOO_LOW_SWAPTOKEN_FEE": "The swaptoken fee must be at least 1 ETP.",
+  "SWAPTOKEN_FEE": "Swaptoken fee",
+  "ETH_ADDRESS": "Etheureum address",
+  "HELP.ETH_ADDRESS": "Your token will be converted and sent to the Ethereum address",
+  "HELP.SWAPTOKEN_RECIPIENT": "The recipient of a token swap has to be the avatar 'crosschain'"
 }
