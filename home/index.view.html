@@ -172,14 +172,25 @@
   <div class="footerRight">
     <div class="heightText">{{ 'CONNECTION_BLOCKS' | translate }}: </div>
     <div ng-if="heightFromExplorer==0" class="block">{{height}}</div>
-    <div ng-if="heightFromExplorer!=0 && (heightFromExplorer-height)<1000" class="block">
-      <div class="block">{{height}}/{{height}}</div>
+
+    <div ng-if="heightFromExplorer!=0 && (heightFromExplorer-height)<1000 && && (heightFromExplorer-height)>=10" class="block">
+      <div class="block">{{height}}/{{heightFromExplorer}}</div>
       <div class="progress progress-height">
         <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-height" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:{{loadingPercent}}%">
           {{loadingPercent}}%
         </div>
       </div>
     </div>
+
+    <div ng-if="heightFromExplorer!=0 && (heightFromExplorer-height)<10" class="block">
+      <div class="block">{{height}}/{{height}}</div>
+      <div class="progress progress-height">
+        <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-height" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:{{loadingPercent}}%">
+          100%
+        </div>
+      </div>
+    </div>
+
     <div ng-if="heightFromExplorer!=0 && (heightFromExplorer-height)>=1000" class="block">
       <div class="block">{{height}}/{{heightFromExplorer}}</div>
       <div class="progress progress-height popover-show" data-toggle="popover" data-placement="top" data-content="{{ 'MESSAGE.PLEASE_WAIT_SYNCH' | translate }}">

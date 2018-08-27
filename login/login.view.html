@@ -135,11 +135,19 @@
     <div class="footerRight">
       <div class="heightText">{{ 'CONNECTION_BLOCKS' | translate }}: </div>
       <div ng-if="vm.heightFromExplorer==0" class="block">{{vm.height}}</div>
-        <div ng-if="vm.heightFromExplorer!=0 && (vm.heightFromExplorer-vm.height)<1000" class="block">
-        <div class="block">{{vm.height}}/{{vm.height}}</div>
+        <div ng-if="vm.heightFromExplorer!=0 && (vm.heightFromExplorer-vm.height)<1000  && (vm.heightFromExplorer-vm.height)>=10" class="block">
+        <div class="block">{{vm.height}}/{{vm.heightFromExplorer}}</div>
         <div class="progress progress-height">
           <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-height" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:{{vm.loadingPercent}}%">
             {{vm.loadingPercent}}%
+          </div>
+        </div>
+      </div>
+      <div ng-if="vm.heightFromExplorer!=0 && (vm.heightFromExplorer-vm.height)<10" class="block">
+        <div class="block">{{vm.height}}/{{vm.height}}</div>
+        <div class="progress progress-height">
+          <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-height" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:{{vm.loadingPercent}}%">
+            100%
           </div>
         </div>
       </div>
