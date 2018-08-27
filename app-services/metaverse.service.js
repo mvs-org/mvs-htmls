@@ -63,7 +63,7 @@
         service.bountyFeeMinMiner = 20;
 
         service.swaptokenAvatar = 'crosschain';
-        service.swaptokenDomain = 'ERC'
+        service.swaptokenDomain = 'ERC';
 
         service.CheckAccount = CheckAccount;
 

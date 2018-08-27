@@ -15,19 +15,20 @@
 				</select>
 			</div>
 
-			<div class="form-group">
+			<div class="row form-group">
 				<br>
 				<!--Submit button-->
-				<div class="col-xs-6 noPaddingLeftRight">
+				<div class="col-xs-6">
 					<button type="submit" class="btn btn-success" ng-click="registerEthBridge(etpAddress)" ng-disabled="!submittable || !senderAddressesLoaded">{{ 'LINK_ETH.LINK_BUTTON' | translate }}</button>
 				</div>
 				<!--Return button-->
 				<div class="col-xs-6">
 					<a href="#!/addresses/myaddresses" class="btn btn-link-red">{{ 'LINK_ETH.RETURN_BUTTON' | translate }}</a>
 				</div>
+				<br>
 			</div>
 		</div>
-		<!--Certificates details-->
+		<!--How to link details-->
     <div class="col-sm-12 col-md-6">
       <div class="assetDetailsPanel panel panel-default">
         <div class="panel-heading">
@@ -42,6 +43,9 @@
 						<div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'LINK_ETH.HOW_TO_LINK_TITLE' | translate }}</div>
 						<div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'LINK_ETH.HOW_TO_LINK_EXPLANATION' | translate}}</div>
 					</div>
+					<div class="col-xs-12 noPaddingLeftRight assetDataLine">
+						<div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'LINK_ETH.BOTTOM_EXPLANATION' | translate }}</div>
+					</div>
         </div>
       </div>
     </div>
@@ -49,7 +53,7 @@
 
   <form ng-show="confirmation" class="row">
     <br/>
-    <div class="col-lg-6 col-md-12">
+    <div class="col-sm-12 col-md-6">
       <div class="assetDetailsPanel panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">{{'LINK_ETH.CONFIRMATION_TITLE' | translate}}</h3>
@@ -70,19 +74,41 @@
 					</div>
         </div>
       </div>
+			<div class="row">
+				<br>
+	      <!--Copy button-->
+	      <div class="col-xs-6">
+	        <button type="submit" class="btn btn-success" bs-popover data-clipboard-text="{{result}}" data-toggle="popover" data-placement="top" data-content="{{ 'LINK_ETH.POPOVER_COPIED' | translate }}">
+						<span class="glyphicon glyphicon-copy"></span> {{ 'LINK_ETH.COPY_DATA' | translate }}
+					</button>
+	      </div>
+	      <!--Return button-->
+	      <div class="col-xs-6">
+	        <button class="btn btn-success btn-success-secondary" ng-click="confirmation = false; password = ''">{{ 'CANCEL_BUTTON' | translate }}</button>
+	      </div>
+				<br>
+			</div>
     </div>
-
-    <div class="col-xs-12 col-sm-12 col-md-12 form-group noPaddingLeftRight">
-      <br>
-      <!--Copy button-->
-      <div class="col-xs-6 col-sm-6 col-md-3">
-        <button type="submit" class="btn btn-success" bs-popover data-clipboard-text="{{result}}" data-toggle="popover" data-placement="top" data-content="{{ 'LINK_ETH.POPOVER_COPIED' | translate }}">
-					<span class="glyphicon glyphicon-copy"></span> {{ 'LINK_ETH.COPY_DATA' | translate }}
-				</button>
-      </div>
-      <!--Return button-->
-      <div class="col-xs-6 col-sm-6 col-md-3">
-        <button class="btn btn-success btn-success-secondary" ng-click="confirmation = false; password = ''">{{ 'CANCEL_BUTTON' | translate }}</button>
+		<!--Link addresses next explanation-->
+    <div class="col-sm-12 col-md-6">
+      <div class="assetDetailsPanel panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{'LINK_ETH.EXPLANATION_NEXT_TITLE' | translate}}</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'LINK_ETH.GO_ETH_WALLET_TITLE' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'LINK_ETH.GO_ETH_WALLET_EXPLANATION' | translate }}</div>
+          </div>
+					<div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'LINK_ETH.SEND_ETH_TITLE' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'LINK_ETH.SEND_ETH_EXPLANATION' | translate }}</div>
+          </div>
+					<div class="col-xs-12 noPaddingLeftRight assetDataLine">
+						<div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'LINK_ETH.LINKED_TITLE' | translate }}</div>
+						<div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'LINK_ETH.LINKED_EXPLANATION' | translate }}</div>
+					</div>
+        </div>
       </div>
     </div>
   </form>
