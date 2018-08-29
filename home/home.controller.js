@@ -138,7 +138,6 @@
     $scope.asset = '';
 
 
-
     //define if the research is a Hash, a Transaction, a Block or an Asset
     function defineTypeSearch () {
       if ($scope.typeSearch=='' || $scope.typeSearch=='noresult' || $scope.typeSearch=='search') {
@@ -4934,7 +4933,6 @@
     $scope.senderAddressesLoaded = false;
     $scope.error = [];
     $scope.etpAddress = $location.path().split('/')[3];
-    $scope.generateEthRawTx = generateEthRawTx;
     $scope.confirmation = false;
     $scope.registerEthBridge = registerEthBridge;
     $scope.result = "";
@@ -4964,10 +4962,6 @@
         $scope.senderAddressesLoaded = true;
       }
     });
-
-    function generateEthRawTx() {
-
-    }
 
     function toHex(s) {
       var s = unescape(encodeURIComponent(s));
