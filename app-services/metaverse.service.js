@@ -64,6 +64,7 @@
 
         service.swaptokenAvatar = 'crosschain';
         service.swaptokenDomain = 'ERC';
+        service.ETPMap = '0xa52b0a032139e6303b86cfeb0bb9ae780a610354';
 
         service.CheckAccount = CheckAccount;
 

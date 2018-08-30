@@ -1320,8 +1320,17 @@ _____  ._______  ___.___ _______
   word-wrap:break-word;
 }
 
+.returnLine {
+  white-space:pre-wrap;
+}
+
 .popupButtons {
   padding-bottom: 66px;
+}
+
+.ETPMap {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 
