@@ -115,7 +115,15 @@
           </div>
 					<div class="col-xs-12 noPaddingLeftRight assetDataLine">
 						<div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'LINK_ETH.LINKED_TITLE' | translate }}</div>
-						<div class="assetValueColumn returnLine col-xs-9 noPaddingLeftRight">{{ 'LINK_ETH.LINKED_EXPLANATION' | translate }}</div>
+						<div class="assetValueColumn col-xs-9 noPaddingLeftRight">
+							<div class="explanation">{{ 'LINK_ETH.LINKED_EXPLANATION1' | translate }}</div>
+							<div>{{ 'LINK_ETH.LINKED_EXPLANATION2' | translate }}</div>
+							<div class="ETPMap">
+									{{ETPMap}}
+									<button class="btn btn-link-black btnCopySmall" data-clipboard-text="{{ETPMap}}" role="button" tabIndex="-1"><span class="glyphicon glyphicon-copy btnCopySmall"></span></button>
+							</div>
+							<div>{{ 'LINK_ETH.LINKED_EXPLANATION3' | translate }}</div>
+						</div>
 					</div>
         </div>
       </div>

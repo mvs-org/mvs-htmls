@@ -1936,7 +1936,7 @@
 
   }
 
-  function TransferAssetController(MetaverseService, $stateParams, $rootScope, $scope, $translate, $location, localStorageService, FlashService, $window, $filter) {
+  function TransferAssetController(MetaverseService, $stateParams, $rootScope, $scope, $translate, $location, localStorageService, FlashService, $window, $filter, $http) {
 
     $window.scrollTo(0,0);
     //$scope.symbol = $stateParams.symbol;
@@ -1960,7 +1960,7 @@
     $scope.myDidsAddresses = [];
     $scope.loadingDids = true;
     $scope.swaptokenAvatar = MetaverseService.swaptokenAvatar;
-    $scope.canSwap = $scope.symbol.split('.')[0] == MetaverseService.swaptokenDomain;
+    $scope.canSwap = false;
     $scope.changeSwaptokenOption = changeSwaptokenOption;
 
     // Initializes all transaction parameters with empty strings.
@@ -2058,6 +2058,18 @@
         $window.scrollTo(0,0);
       }
     });
+
+    function getWhitelistFromExplorer() {
+      let url = $rootScope.network == 'testnet' ? 'https://explorer-testnet.mvs.org/api/bridge/whitelist' : 'https://explorer.mvs.org/api/bridge/whitelist'
+      $http.get(url)
+        .then((response)=>{
+          $scope.bridgeWhitelist = response.data.result;
+          $scope.canSwap = $scope.bridgeWhitelist.indexOf($scope.symbol) > -1;
+        })
+        .catch( (error) => console.log("Cannot get Whitelist from explorer") );
+    }
+
+    getWhitelistFromExplorer()
 
     //Loads a given asset
     function loadasset(symbol) {
