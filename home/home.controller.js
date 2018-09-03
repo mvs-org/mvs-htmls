@@ -4949,6 +4949,7 @@
     $scope.registerEthBridge = registerEthBridge;
     $scope.result = "";
     $scope.ETPMap = MetaverseService.ETPMap;
+    $scope.SwapAddress = MetaverseService.SwapAddress;
 
     MetaverseService.ListBalances()
     .then( (response) => {

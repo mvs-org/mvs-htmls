@@ -689,7 +689,7 @@
   "LINK_ETH.SEND_ETH_EXPLANATION2": "It is important that you add the data generated here in the transaction, in the field 'Data' (usually in the Advanced options). The value to send is 0 Ether, but you will have to pay the transaction fee in order to have your transaction processed.",
   "LINK_ETH.LINKED_TITLE": "Your Ethereum and Metaverse addresses are now linked!",
   "LINK_ETH.LINKED_EXPLANATION1": "Once the Ethereum transaction is confirmed, the Ethereum address used to send the transaction will be linked to your Metaverse avatar or address. The linked avatar or address can be updated at any time by following the same process, the latest transaction is always the one taken into account.",
-  "LINK_ETH.LINKED_EXPLANATION2": "You can now send any supported ERC20 token to the Metaverse smart contract address on Ethereum:",
+  "LINK_ETH.LINKED_EXPLANATION2": "You can now send any supported ERC20 token to the Metaverse swap center address on Ethereum:",
   "LINK_ETH.LINKED_EXPLANATION3": "You will then receive the equivalent MST on Metaverse.",
   "LINK_ETH.SEND_ERC20_TITLE": "Convert compatibles ERC20 tokens to MST",
   "LINK_ETH.SEND_ERC20_EXPLANATION": "You can now convert any supported ERC20 token from Ethereum to its MST equivalent on Metaverse. To do the reverse conversion, simply send the MST to the 'crosschain' avatar from this wallet, and spicify your Ethereum address to receive the ERC20 equivalent.",
