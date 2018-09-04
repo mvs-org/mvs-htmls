@@ -21,20 +21,28 @@
 				<span ng-show="loadingSender" class="miniSpinner"></span>
         <select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" ng-change="availBalance(sendfrom)" ng-class="{validInput: !error.sendfrom, wrongInput: error.sendfrom}">
           <option value="" title="{{asset.quantity - asset.lock_quantity | assetformat : asset.decimal_number}} {{asset.symbol}}">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</option>
-          <option ng-repeat="asset in assetAddresses | orderBy:'quantity - locked_quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-if="allDidsAddresses[asset.address] && asset.address.charAt(0) != '3'">{{allDidsAddresses[asset.address]}} - {{asset.address}} - {{asset.quantity - asset.locked_quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
-          <option ng-repeat="asset in assetAddresses | orderBy:'quantity - locked_quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-if="!allDidsAddresses[asset.address] && asset.address.charAt(0) != '3'">{{asset.address}} - {{asset.quantity - asset.locked_quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
+          <option ng-repeat="asset in assetAddresses | orderBy:'quantity - locked_quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-if="myDidsAddresses[asset.address] && asset.address.charAt(0) != '3'">{{myDidsAddresses[asset.address]}} - {{asset.address}} - {{asset.quantity - asset.locked_quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
+          <option ng-repeat="asset in assetAddresses | orderBy:'quantity - locked_quantity':true" value="{{asset.address}}" title="{{asset.quantity | assetformat : asset.decimal_number}} {{asset.symbol}}" ng-if="!myDidsAddresses[asset.address] && asset.address.charAt(0) != '3'">{{asset.address}} - {{asset.quantity - asset.locked_quantity | assetformat : asset.decimal_number}} {{asset.symbol}}</option>
         </select>
       </div>
 
       <!--Recipient-->
-      <div class="form-group">
+      <div ng-hide="swaptoken_option" class="form-group">
         <label for="sendto" class="control-label">{{ 'TRANSFER_RECIPENT_ADDRESS_OR_AVATAR' | translate }}</label>
         <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.ASSET_RECIPIENT_ADDRESS_AVATAR_BURN' | translate }}"></span>
+        <span ng-show="loadingBalances" class="miniSpinner"></span>
         <input type="etpaddress" class="form-control" name="sendto" id="" ng-model="sendto" ng-change="checkRecipent(sendto)" autocomplete="off" ng-class="{validInput: (correctEtpAddress || correctAvatar || burnAddress) && !error.sendto_empty, wrongInput: (!correctEtpAddress && !correctAvatar && !burnAddress) || error.sendto_empty}">
         <div ng-show="!correctEtpAddress && !correctAvatar && !burnAddress && !error.sendto_empty" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.INCORRECT_RECIPIENT' | translate }}</div>
         <div ng-show="correctEtpAddress" class="correctInputComment"><span class="glyphicon glyphicon-ok"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_ADDRESS' | translate }}</div>
         <div ng-show="correctAvatar" class="correctInputComment"><span class="glyphicon glyphicon-ok"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_AVATAR' | translate }}</div>
         <div ng-show="burnAddress" class="warningInputComment"><span class="glyphicon glyphicon-warning-sign"></span> {{ 'TRANSFER.CORRECT_RECIPIENT_BURN' | translate }}</div>
+      </div>
+
+      <!--Recipient-->
+      <div ng-show="swaptoken_option" class="form-group">
+        <label for="swaptokenAvatar" class="control-label">{{ 'TRANSFER_RECIPENT_ADDRESS_OR_AVATAR' | translate }}</label>
+        <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SWAPTOKEN_RECIPIENT' | translate }}"></span>
+        <input class="form-control" name="swaptokenAvatar" id="" ng-model="swaptokenAvatar" ng-class="{validInput: true, wrongInput: false}" disabled>
       </div>
 
       <!--Quantity-->
@@ -52,7 +60,7 @@
       </div>
 
       <!--Checkbox to deposit-->
-      <div class="form-group col-xs-12 spe-addrbox depositAddressCheckbox">
+      <div ng-hide="swaptoken_option" class="form-group col-xs-12 spe-addrbox depositAddressCheckbox">
         <div class="checkboxCircle">
           <div class="checkbox-box">
             <input type="checkbox" tabIndex="-1" name="frozen_option" ng-model="frozen_option" ng-click="checkready()" id="checkboxCircleDeposit">
@@ -130,12 +138,41 @@
         </div>
       </div>
 
+      <!--Checkbox to swaptoken-->
+      <div ng-hide="frozen_option || !canSwap" class="form-group col-xs-12 spe-addrbox depositAddressCheckbox">
+        <div class="checkboxCircle">
+          <div class="checkbox-box">
+            <input type="checkbox" tabIndex="-1" name="swaptoken_option" ng-model="swaptoken_option" ng-click="changeSwaptokenOption(swaptoken_option)" id="checkboxSwaptoken">
+            <label for="checkboxSwaptoken"></label>
+          </div>
+          <span class="textCheckbox">{{ 'ASSET.SWAPTOKEN' | translate }}</span>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.SEND_SWAPTOKEN' | translate }}"></span>
+        </div>
+      </div>
+
+      <!--ETH address-->
+      <div ng-show="swaptoken_option" class="form-group">
+        <label for="ethAddress" class="control-label noPaddingLeftRight">{{ 'ETH_ADDRESS' | translate }}</label>
+        <span ng-show="swaptoken_option" class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.ETH_ADDRESS' | translate }}"></span>
+        <input type="ethaddress" step="0.00000001" class="form-control" name="ethAddress" id="" ng-model="ethAddress" ng-class="{validInput: !errorSwaptoken.ethAddress_empty, wrongInput: errorSwaptoken.ethAddress_empty}">
+      </div>
+
+      <!--Fee swaptoken-->
+      <div ng-show="swaptoken_option" class="form-group">
+        <label for="swaptokenFee" class="control-label noPaddingLeftRight">{{ 'SWAPTOKEN_FEE' | translate }}</label>
+        <span ng-show="swaptoken_option" class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.MVS_TRANSACTION_FEE' | translate }}"></span>
+        <input type="number" step="0.00000001" class="form-control" name="swaptokenFee" ng-model="swaptokenFee" ng-class="{validInput: !errorSwaptoken.swaptoken_fee_empty && !errorSwaptoken.swaptoken_fee_too_low, wrongInput: errorSwaptoken.swaptoken_fee_empty || errorSwaptoken.swaptoken_fee_too_low}">
+        <div ng-show="errorSwaptoken.swaptoken_fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_SWAPTOKEN_FEE' | translate }}</div>
+      </div>
+
       <!--Fee-->
       <div class="form-group">
-        <label for="fee" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</label>
+        <label for="fee" class="control-label noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</label>
+        <span ng-show="swaptoken_option" class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.MVS_TRANSACTION_FEE' | translate }}"></span>
         <input type="number" step="0.00000001" class="form-control" name="fee" id="" ng-model="transactionFee" ng-class="{validInput: !error.fee_empty && !error.fee_too_low, wrongInput: error.fee_empty || error.fee_too_low}">
         <div ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</div>
       </div>
+
     </div>
 
     <!--Models details-->
@@ -186,15 +223,14 @@
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-5 noPaddingLeftRight">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</div>
             <div ng-show="sendfrom == ''" class="assetValueColumn col-xs-7 noPaddingLeftRight">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</div>
-            <div ng-show="sendfrom != '' && !allDidsAddresses[sendfrom]" class="assetValueColumn col-xs-7 noPaddingLeftRight">{{sendfrom}}</div>
-            <div ng-show="sendfrom != '' && allDidsAddresses[sendfrom]" class="assetValueColumn col-xs-7 noPaddingLeftRight">{{allDidsAddresses[sendfrom]}} ({{sendfrom}})</div>
+            <div ng-show="sendfrom != '' && !myDidsAddresses[sendfrom]" class="assetValueColumn col-xs-7 noPaddingLeftRight">{{sendfrom}}</div>
+            <div ng-show="sendfrom != '' && myDidsAddresses[sendfrom]" class="assetValueColumn col-xs-7 noPaddingLeftRight">{{myDidsAddresses[sendfrom]}}</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div ng-show="correctEtpAddress" class="assetDataColumn col-xs-5 noPaddingLeftRight">{{ 'TRANSFER_RECIPENT_ADDRESS' | translate }}</div>
             <div ng-show="correctAvatar" class="assetDataColumn col-xs-5 noPaddingLeftRight">{{ 'TRANSFER_RECIPENT_AVATAR' | translate }}</div>
             <div ng-show="burnAddress" class="assetDataColumn col-xs-5 noPaddingLeftRight">{{ 'TRANSFER_RECIPIENT_BURN' | translate }}</div>
-            <div ng-hide="correctAvatar" class="assetValueColumn col-xs-7 noPaddingLeftRight">{{sendto}}</div>
-            <div ng-show="correctAvatar" class="assetValueColumn col-xs-7 noPaddingLeftRight">{{sendto}} ({{didFromAddress[sendto]}})</div>
+            <div class="assetValueColumn col-xs-7 noPaddingLeftRight">{{sendto}}</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-5 noPaddingLeftRight">{{ 'TRANSFER_VALUE' | translate }}</div>
@@ -260,6 +296,14 @@
                 <div class="assetValueColumn col-xs-7 noPaddingLeftRight">{{period.number}} {{ 'SECONDARY_ISSUE.BLOCKS' | translate }}</div>
               </div>
             </div>
+          </div>
+          <div ng-show="swaptoken_option" class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-5 noPaddingLeftRight">{{ 'ETH_ADDRESS' | translate }}</div>
+            <div class="assetValueColumn col-xs-7 noPaddingLeftRight">{{ethAddress}}</div>
+          </div>
+          <div ng-show="swaptoken_option" class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-5 noPaddingLeftRight">{{ 'SWAPTOKEN_FEE' | translate }}</div>
+            <div class="assetValueColumn col-xs-7 noPaddingLeftRight">{{swaptokenFee}} ETP</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
 						<div class="assetDataColumn col-xs-5 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</div>

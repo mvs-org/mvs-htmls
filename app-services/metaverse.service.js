@@ -62,6 +62,10 @@
         service.defaultBountyFee = 80;
         service.bountyFeeMinMiner = 20;
 
+        service.swaptokenAvatar = 'droplet';
+        service.ETPMap = '0xa52b0a032139e6303b86cfeb0bb9ae780a610354';
+        service.SwapAddress = '0xc1e5fd24fa2b4a3581335fc3f2850f717dd09c86';
+
         service.CheckAccount = CheckAccount;
 
         service.GetNewAccount = GetNewAccount;
@@ -137,11 +141,15 @@
         service.DidChangeAddress = DidChangeAddress;
         service.GetDid = GetDid;
         service.DidSendMore = DidSendMore;
+        service.GetAllDids = GetAllDids;
 
         //Cert
         service.AccountAssetCert = AccountAssetCert;
         service.TransferCert = TransferCert;
         service.IssueCert = IssueCert;
+
+        //Swaptoken
+        service.Swaptoken = Swaptoken;
 
         return service;
 
@@ -372,10 +380,9 @@
          * @apiParam {List} params [username, password]
          *
          **/
-        function ListTxs(page) {
+        function ListTxs(page, limit) {
             var credentials = localStorageService.get('credentials');
-            //return _send('listtxs', ['-i', page, '-l', 1, credentials.user, credentials.password]);
-            return _send('listtxs', ['-i', page, credentials.user, credentials.password]);
+            return _send('listtxs', ['-i', page, '-l', limit, credentials.user, credentials.password]);
         }
 
         function ListTxsAddress(address, page) {
@@ -854,8 +861,8 @@
             return _sendV2('listdids', [credentials.user, credentials.password]);
         }
 
-        function ListAllDids() {
-            return _sendV2('listdids', []);
+        function ListAllDids(index, limit) {
+            return _sendV2('listdids', ['-i', index, '-l', limit]);
         }
 
         function DidSendFrom(sendfrom, sendTo, value, transactionFee, memo, password) {
@@ -942,8 +949,11 @@
         }
 
         function GetDid(symbol) {
-            var credentials = localStorageService.get('credentials');
             return _sendV2('getdid', [symbol]);
+        }
+
+        function GetAllDids() {
+            return _sendV2('getdid', []);
         }
 
         function AccountAssetCert() {
@@ -1018,6 +1028,15 @@
               default:
                 return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-f', transactionFee]);
             }
+        }
+
+        function Swaptoken(sendfrom, sendto, symbol, quantity, ethAddress, swaptokenFee, transactionFee, password) {
+          var credentials = localStorageService.get('credentials');
+          if(sendfrom) {
+            return _sendV2('swaptoken', [credentials.user, password, sendto, symbol, quantity, ethAddress, '-d', sendfrom, '-s', swaptokenFee, '-f', transactionFee]);
+          } else {
+            return _sendV2('swaptoken', [credentials.user, password, sendto, symbol, quantity, ethAddress, '-s', swaptokenFee, '-f', transactionFee]);
+          }
         }
 
         function Query(string) {
@@ -1162,10 +1181,11 @@
             }
         }
 
-        function LoadTransactions(callback, type, page) {
-            MetaverseService.ListTxs(page)
+        function LoadTransactions(callback, type, page, limit) {
+            MetaverseService.ListTxs(page, limit)
                 .then(function(response) {
                   var transactions = [];
+                  var total_page = response.data.total_page;
                     if ( response.success !== 'undefined' && response.success) {
                       if(response.data.current_page==response.data.total_page){
                         transactions.lastpage = true;
@@ -1345,17 +1365,17 @@
                                 }
                             });
                             //Return transaction list
-                            callback(null, transactions);
+                            callback(null, transactions, total_page);
                         } else {
                             //Empty transaction list
                             callback(null, []);
                         }
-                    } else if (response.error = "no record in this page") {
+                    } else if (response.message == "no record in this page") {
                       //Empty transaction list
                       callback(null, []);
                     } else {
                         $translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then(function(data) {
-                            callback(1, null, data);
+                            callback(1, null, null, data);
                         });
                     }
                 });

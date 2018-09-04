@@ -23,6 +23,7 @@
         <!--Recipient-->
         <div class="form-group">
           <label for="sendto" class="control-label">{{ 'TRANSFER_CERT.TODID' | translate }}</label>
+          <span ng-show="loadingDids" class="miniSpinner"></span>
           <input type="avatar" class="form-control" name="sendto" id="" ng-model="sendto" ng-class="{validInput: !error.sendto_empty && !error.sendto_not_exist, wrongInput: error.sendto_empty || error.sendto_not_exist}">
           <div ng-show="error.sendto_not_exist" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.INCORRECT_RECIPIENT_AVATAR' | translate }}</div>
         </div>

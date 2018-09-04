@@ -106,6 +106,12 @@
                 controllerAs: 'vm'
             })*/
 
+            .state('home.addresses.linkethaddress', {
+                url: "/addresses/linkethaddress/:address",
+                templateUrl: "home/addresses/linkethaddress.view.html",
+                controller: 'LinkEthController'
+            })
+
             .state('home.home', {
                 url: "/home",
                 templateUrl: "home/home.view.html",

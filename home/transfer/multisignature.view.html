@@ -24,12 +24,12 @@
 						<a href="#!/addresses/newmultisignature" class="btn-link-black smallButton" tabIndex="-1"><span class="glyphicon glyphicon-plus"></span>{{ 'TRANSFER_MULTISIGNATURE_ADD' | translate }}</a>
 					</div>
 					<select ng-hide="listMultiSig.length == 0 || symbol != 'ETP'" name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom"  ng-change="availBalance(sendfrom)" ng-class="{validInput: !error.sendfrom, wrongInput: error.sendfrom}">
-						<option ng-repeat="multiSig in listMultiSig | orderBy:'available':true" title="{{multiSig.balance | assetformat : 8}} ETP" value="{{multiSig.address}}" ng-if="allDidsAddresses[multiSig.address]">{{allDidsAddresses[multiSig.address]}} - {{multiSig.address}} - {{multiSig.available | assetformat : 8}} ETP</option>
-						<option ng-repeat="multiSig in listMultiSig | orderBy:'available':true" title="{{multiSig.balance | assetformat : 8}} ETP" value="{{multiSig.address}}" ng-if="!allDidsAddresses[multiSig.address]">{{multiSig.address}} - {{multiSig.available | assetformat : 8}} ETP</option>
+						<option ng-repeat="multiSig in listMultiSig | orderBy:'available':true" title="{{multiSig.balance | assetformat : 8}} ETP" value="{{multiSig.address}}" ng-if="myDidsAddresses[multiSig.address]">{{myDidsAddresses[multiSig.address]}} - {{multiSig.address}} - {{multiSig.available | assetformat : 8}} ETP</option>
+						<option ng-repeat="multiSig in listMultiSig | orderBy:'available':true" title="{{multiSig.balance | assetformat : 8}} ETP" value="{{multiSig.address}}" ng-if="!myDidsAddresses[multiSig.address]">{{multiSig.address}} - {{multiSig.available | assetformat : 8}} ETP</option>
 					</select>
 					<select ng-hide="listMultiSig.length == 0 || symbol == 'ETP'" name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" ng-change="availBalanceAsset(sendfrom)" ng-class="{validInput: !error.sendfrom, wrongInput: error.sendfrom}">
-						<option ng-repeat="multiSig in listMultiSig | orderBy:'listAssetMultiSig[multiSig.address].quantity':true" title="{{listAssetMultiSig[multiSig.address].quantity | assetformat : decimal_number}} {{symbol}}" value="{{multiSig.address}}" ng-if="allDidsAddresses[multiSig.address]">{{allDidsAddresses[multiSig.address]}} - {{multiSig.address}} - {{listAssetMultiSig[multiSig.address].quantity | assetformat : decimal_number}} {{symbol}}</option>
-						<option ng-repeat="multiSig in listMultiSig | orderBy:'listAssetMultiSig[multiSig.address].quantity':true" title="{{listAssetMultiSig[multiSig.address].quantity | assetformat : decimal_number}} {{symbol}}" value="{{multiSig.address}}" ng-if="!allDidsAddresses[multiSig.address]">{{multiSig.address}} - {{listAssetMultiSig[multiSig.address].quantity | assetformat : decimal_number}} {{symbol}}</option>
+						<option ng-repeat="multiSig in listMultiSig | orderBy:'listAssetMultiSig[multiSig.address].quantity':true" title="{{listAssetMultiSig[multiSig.address].quantity | assetformat : decimal_number}} {{symbol}}" value="{{multiSig.address}}" ng-if="myDidsAddresses[multiSig.address]">{{myDidsAddresses[multiSig.address]}} - {{multiSig.address}} - {{listAssetMultiSig[multiSig.address].quantity | assetformat : decimal_number}} {{symbol}}</option>
+						<option ng-repeat="multiSig in listMultiSig | orderBy:'listAssetMultiSig[multiSig.address].quantity':true" title="{{listAssetMultiSig[multiSig.address].quantity | assetformat : decimal_number}} {{symbol}}" value="{{multiSig.address}}" ng-if="!myDidsAddresses[multiSig.address]">{{multiSig.address}} - {{listAssetMultiSig[multiSig.address].quantity | assetformat : decimal_number}} {{symbol}}</option>
 					</select>
 					<select ng-show="listMultiSig.length == 0" name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" disabled bs-tooltip data-placement="top" title="{{ 'TRANSFER_NO_MULTISIG_ADDR' | translate }}" ng-class="{wrongInput: true}">
 					</select>
@@ -52,7 +52,7 @@
 					<div class="col-xs-6 noPaddingLeftRight addRecipent">
 						<button type="button" class="btn-link-red addRecipentButton" ng-click="sendAllMultisig()" tabIndex="-1">{{ 'TRANSFER_AMOUNT_AVALAIBLE' | translate }}: {{availableBalance | assetformat : decimal_number}} {{symbol}}</button>
 					</div>
-					<input type="number" min=0 step="0.00000001" class="form-control" placeholder="0.00000000" name="value" ng-model="quantity" autocomplete="off" ng-class="{validInput: !error.quantity_empty && !error.quantity_not_enough_balance, wrongInput: error.quantity_empty || error.quantity_not_enough_balance}">
+					<input type="number" min=0 step="0.00000001" class="form-control" placeholder="0.00000000" name="value" ng-model="quantity" autocomplete="off" ng-class="{validInput: !error.quantity_empty && !error.quantity_not_enough_balance && !error.quantity_not_enough_ETP_balance, wrongInput: error.quantity_empty || error.quantity_not_enough_balance || error.quantity_not_enough_ETP_balance}">
 					<div ng-show="error.quantity_not_enough_ETP_balance" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'TRANSFER.NOT_ENOUGH_ETP' | translate }}</div>
 					<div ng-show="error.quantity_not_enough_balance" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.QUANTITY_NOT_ENOUGH_ASSET' | translate }} {{symbol}}</div>
 				</div>
@@ -90,15 +90,15 @@
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</div>
             <div ng-show="sendfrom == ''" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</div>
-						<div ng-show="sendfrom != '' && !allDidsAddresses[sendfrom]" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{sendfrom}}</div>
-						<div ng-show="sendfrom != '' && allDidsAddresses[sendfrom]" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{sendfrom}} ({{allDidsAddresses[sendfrom]}})</div>
+						<div ng-show="sendfrom != '' && !myDidsAddresses[sendfrom]" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{sendfrom}}</div>
+						<div ng-show="sendfrom != '' && myDidsAddresses[sendfrom]" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{sendfrom}} ({{myDidsAddresses[sendfrom]}})</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div ng-show="correctEtpAddress" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_RECIPENT_ADDRESS' | translate }}</div>
             <div ng-show="correctAvatar" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_RECIPENT_AVATAR' | translate }}</div>
             <div ng-show="burnAddress" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_RECIPIENT_BURN' | translate }}</div>
             <div ng-show="correctEtpAddress" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{sendTo}}</div>
-						<div ng-show="correctAvatar" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{didFromAddress[sendTo]}} ({{sendTo}})</div>
+						<div ng-show="correctAvatar" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{avatarRecipient}} ({{sendTo}})</div>
 						<div ng-show="burnAddress" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{sendTo}}</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">

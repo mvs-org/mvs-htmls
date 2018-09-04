@@ -7,10 +7,11 @@
   <br/>
   <form ng-show="!confirmation && resultMultisigTx == ''">
     <div class="col-xs-12 col-sm-6">
-      <!--ID-->
+      <!--Avatar-->
       <div class="form-group">
         <label class="control-label">{{ 'CREATE_PROFILE.CREATE_ID' | translate }}</label>
         <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.CREATE_AVATAR_NAME' | translate }}"></span>
+        <span ng-show="loadingDids" class="miniSpinner"></span>
         <input type="text" class="form-control" name="didSymbol" ng-model="didSymbol" ng-class="{validInput: !error.symbol_empty && !error.symbol_wrong_char && !error.symbol_already_exist, wrongInput: error.symbol_empty || error.symbol_wrong_char || error.symbol_already_exist}">
         <div ng-show="error.symbol_wrong_char" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_PROFILE.CREATE_ID_WRONG_CHARACTER' | translate }}</div>
         <div ng-show="error.symbol_already_exist" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'CREATE_PROFILE.CREATE_ID_ALREADY_EXIST' | translate }}</div>

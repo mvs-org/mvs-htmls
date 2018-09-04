@@ -29,6 +29,7 @@
   .controller('ShowMITsController', ShowMITsController)
   .controller('CreateMITController', CreateMITController)
   .controller('TransferMITController', TransferMITController)
+  .controller('LinkEthController', LinkEthController)
   .directive('bsTooltip', function() {
     return {
       restrict: 'A',
@@ -43,7 +44,7 @@
       }
     };
   })
-  .directive('z', function($compile, $timeout){
+  .directive('bsPopover', function($compile, $timeout){
     return function(scope, element) {
       $(element).popover();
       $('body').on('click', function (e) {
@@ -133,10 +134,8 @@
     $scope.assets = [];
     $scope.exists = false;
     $scope.noResult = false;
-    $scope.transactionInputsValues = [];
 
     $scope.asset = '';
-
 
 
     //define if the research is a Hash, a Transaction, a Block or an Asset
@@ -266,16 +265,6 @@
                 $window.scrollTo(0,0);
                 return;*/
             });
-
-            //Search for the value of the input and put it in $scope.transactionInputsValues
-            $scope.transactionInputsValues = [];
-            /*response.data.transaction.inputs.forEach(function(e) { Removed, too slow
-              if (e.previous_output.hash != '0000000000000000000000000000000000000000000000000000000000000000') {
-                searchInputValue(e.previous_output.hash, e.address, e.previous_output.index);
-              } else {
-                //It's coming from Deposit interests or Mining
-              }
-            });*/
           }
           NProgress.done();
         });
@@ -297,51 +286,6 @@
         }
       });
     }
-
-
-    //Used to find the value of an Input
-    /*function searchInputValue(transaction_hash, address, index) {
-      if ( typeof transaction_hash !== 'undefined') {
-        MetaverseService.FetchTx(transaction_hash)
-        .then( (response) => {
-          if (typeof response.success == 'undefined' || response.success == false) {
-            $scope.noResult = true;
-            $translate('MESSAGES.TRANSACTION_NOT_FOUND').then( (data) => {
-              FlashService.Error(data);
-            });
-            $window.scrollTo(0,0);
-          } else {
-            response.data.transaction.outputs.forEach(function(e) {
-              if(e.address == address && e.index == index) {
-                if(e.attachment.type=='etp') {
-                  var input = {
-                    "address" : address,
-                    "value" : e.value,
-                    "hash" : transaction_hash,
-                    "index" : e.index,
-                    "type" : e.attachment.type
-                  }
-                } else {
-                  //loadasset(e.attachment.symbol); //already calculated when this asset is an output
-                  var input = {
-                    "address" : address,
-                    "value" : e.value,
-                    "hash" : transaction_hash,
-                    "index" : e.index,
-                    "type" : e.attachment.type,
-                    "quantity" : e.attachment.quantity,
-                    "symbol" : e.attachment.symbol,
-                    "decimal_number" :  $scope.asset.decimal_number
-                  }
-                }
-                $scope.transactionInputsValues.push(input);
-              }
-            });
-          }
-        });
-      }
-    }*/
-
 
 
     //Used if we search a Block
@@ -635,12 +579,15 @@
 
     $scope.checkRecipent = checkRecipent;
     $scope.checkAmount = checkAmount;
-    $scope.allDids = [];
-    $scope.allDidsAddresses = [];
+    $scope.allDidsSymbols = [];
+    $scope.myDidsAddresses = [];
     $scope.checkInputs = checkInputs;
-    $scope.didFromAddress = [];
-    $scope.loadingSender = true;
+    $scope.senderAddressesLoaded = false;
     $scope.loadingBalances = true;
+    $scope.loadingDids = true;
+    $scope.balancesLoaded = false;
+
+    $scope.myDids = [];
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -679,27 +626,40 @@
 
     getBalance();
 
-    MetaverseService.ListAllDids()
+    MetaverseService.GetAllDids()
     .then( (response) => {
+      $scope.loadingDids = false;
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.allDids = response.data.result.dids;
-        $scope.allDidsSymbols = [];
-        if(typeof $scope.allDids != 'undefined' && $scope.allDids != null) {
-          $scope.allDids.forEach(function(did) {
-            $scope.allDidsSymbols.push(did.symbol);
-            $scope.allDidsAddresses[did.address] = did.symbol;
-            $scope.didFromAddress[did.symbol] = did.address;
-          });
-        } else {
-          $scope.allDids = [];
-        }
+        $scope.allDidsSymbols = response.data.result.dids;
+        //Once all the DIDs have been loaded, we look for the one entered by the user
+        checkRecipent($scope.recipents[0].address, 1);
+        checkAmount('', 1);
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       }
-      //Once all the DIDs have been loaded, we look for the one entered by the user
-      checkRecipent($scope.recipents[0].address, 1);
-      checkAmount('', 1);
+    });
+
+    MetaverseService.ListMyDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.myDids = response.data.result.dids;
+        $scope.balancesLoaded = true;
+        if(typeof $scope.myDids != 'undefined' && $scope.myDids != null) {
+          $scope.myDids.forEach(function(did) {
+            //$scope.myDidsSymbols.push(did.symbol);
+            $scope.myDidsAddresses[did.address] = did.symbol;
+          });
+        } else {
+          $scope.myDids = [];
+        }
+      } else if (response.message.message == "no record in this page") {
+        $scope.noDids = true;
+        $scope.selectedDid = "";
+      } else {
+        $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
     });
 
     function checkRecipent(input, index) {
@@ -808,8 +768,7 @@
       checkready();
     });
 
-
-
+    //Add a recipient
     $scope.addRecipent = function() {
       $scope.recipents.push({'index': $scope.recipents.length+1, 'address': '', 'value': '', 'correctEtpAddress': false, 'correctAvatar': false, 'burnAddress': false, 'emptyAmount': true, 'wrongAmount': false, 'notEnough': false});
       $scope.sendfrom='';
@@ -830,34 +789,6 @@
 
     //Check Inputs
     function checkInputs(sendfrom, recipents, transactionFee, memo, password) {
-      //var transactionOK = true;
-      //Check for unimplemented parameters
-      /*recipents.forEach( (e) => {
-        if (!e.correctEtpAddress && !e.correctAvatar && !e.burnAddress) { //Check for recipent address
-          $translate('TRANSFER.INCORRECT_RECIPIENT').then( (data) =>
-            $translate('TRANSFER_RECIPENT_ADDRESS').then( (data2) => FlashService.Error(data + ' (' + data2 + ' ' + e.index + ')' ))
-          );
-          $window.scrollTo(0,0);
-          transactionOK = false;
-        } else if (typeof e.value == 'undefined' || e.value === '') { //Check for transaction value
-          $translate('MESSAGES.TRANSACTION_VALUE_NEEDED').then( (data) => FlashService.Error(data) );
-          $window.scrollTo(0,0);
-          transactionOK = false;
-        } else if (e.value > ($scope.availableBalance/100000000 - transactionFee)) { //Check for transaction value
-          $translate('MESSAGES.TRANSACTION_AMOUNT_NOT_ENOUGH').then( (data) => FlashService.Error(data) );
-          $window.scrollTo(0,0);
-          transactionOK = false;
-        }
-      });
-      if (transactionOK === false) {
-        //error already handle
-      } else if (transactionFee < 0.0001) { //Check for empty password
-        $translate('MESSAGES.TOO_LOW_FEE').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else if (password === '') { //Check for empty password
-        $translate('MESSAGES.PASSWORD_NEEDED').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      } else */
       $scope.confirmation = true;
       delete $rootScope.flash;
     }
@@ -879,7 +810,6 @@
     }
 
 
-
     function transferOne(sendfrom, recipents, transactionFee, memo, password) {
       NProgress.start();
       var value = recipents[0].value;
@@ -891,8 +821,8 @@
       var fee = $filter('convertfortx')(transactionFee, 8);
       value = $filter('convertfortx')(value, 8);
       //Update send from it is from an avatar
-      if($scope.allDidsAddresses[sendfrom]) {
-        sendfrom = $scope.allDidsAddresses[sendfrom];
+      if($scope.myDidsAddresses[sendfrom]) {
+        sendfrom = $scope.myDidsAddresses[sendfrom];
         sendFromAvatar = true;
       }
       if (recipents[0].correctEtpAddress && !sendFromAvatar) {
@@ -1012,7 +942,7 @@
               "address": e.balance.address
             });
           });
-          $scope.loadingSender = false;
+          $scope.senderAddressesLoaded = true;
 
           //After loading the balances, we load the multisig addresses
           MetaverseService.ListMultiSig()
@@ -1125,11 +1055,9 @@
     $scope.transferSuccess = false;                 //Change to True after a successful transaction
     $scope.resultCreateTx = '';
     $scope.checkRecipent = checkRecipent;
-    $scope.allDids = [];
     $scope.allDidsSymbols = [];
     $scope.checkInputs = checkInputs;
-    $scope.didFromAddress = [];
-    $scope.allDidsAddresses = [];
+    $scope.myDidsAddresses = [];
     $scope.availBalance = availBalance;
     $scope.availBalanceAsset = availBalanceAsset;
     $scope.assetAddresses = [];
@@ -1150,6 +1078,7 @@
       $scope.correctAvatar = false;
       $scope.burnAddress = false;
       $scope.confirmation = false;
+      $scope.avatarRecipient = '';
     }
 
 
@@ -1249,43 +1178,64 @@
       $scope.decimal_number = 8;
     }
 
-    MetaverseService.ListAllDids()
+    MetaverseService.GetAllDids()
     .then( (response) => {
+      $scope.loadingDids = false;
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.allDids = response.data.result.dids;
-        if(typeof $scope.allDids != 'undefined' && $scope.allDids != null) {
-          $scope.allDids.forEach(function(did) {
-            $scope.allDidsSymbols.push(did.symbol);
-            $scope.allDidsAddresses[did.address] = did.symbol;
-            $scope.didFromAddress[did.symbol] = did.address;
-          });
-        } else {
-          $scope.allDids = [];
-        }
+        $scope.allDidsSymbols = response.data.result.dids;
+        //Once all the DIDs have been loaded, we look for the one entered by the user
+        checkRecipent($scope.sendTo);
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       }
-      //Once all the DIDs have been loaded, we look for the one entered by the user
-      checkRecipent($scope.sendTo);
+    });
+
+    MetaverseService.ListMyDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.myDids = response.data.result.dids;
+        $scope.balancesLoaded = true;
+        if(typeof $scope.myDids != 'undefined' && $scope.myDids != null) {
+          $scope.myDids.forEach(function(did) {
+            $scope.myDidsAddresses[did.address] = did.symbol;
+          });
+        } else {
+          $scope.myDids = [];
+        }
+      } else if (response.message.message == "no record in this page") {
+        $scope.noDids = true;
+        $scope.selectedDid = "";
+      } else {
+        $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
     });
 
     function checkInputs() {
       //Since multi sig to did is not available, we replace it by the address
+      if($scope.burnAddress) {
+        $scope.sendTo = MetaverseService.burnAddress;
+      } else if ($scope.correctAvatar){   //if send to avatar
+        MetaverseService.GetDid($scope.sendTo)
+        .then( (response) => {
+          $scope.avatarRecipient = $scope.sendTo;
+          response.data.result.addresses.forEach( (address) => {
+            if(address.status == 'current') {
+              $scope.sendTo = address.address;
+            }
+          });
+        });
+      }
+      if ($scope.myDidsAddresses[this.sendFrom]) {    //if send from avatar
+        $scope.sendFrom = $scope.myDidsAddresses[$scope.sendFrom];
+      }
       $scope.confirmation = true;
       delete $rootScope.flash;
     }
 
 
     function createMultisigTx(sendFrom, sendTo, quantity, transactionFee, password) {
-      if($scope.burnAddress) {
-        sendTo = MetaverseService.burnAddress;
-      } else if ($scope.correctAvatar){   //if send to avatar
-        sendTo = $scope.didFromAddress[sendTo];
-      }
-      if ($scope.didFromAddress[sendFrom]) {    //if send from avatar
-        sendFrom = $scope.didFromAddress[sendFrom];
-      }
       //var quantityToSend = ("" + quantity * Math.pow(10,8)).split(".")[0];
       var quantityToSend = $filter('convertfortx')(quantity, $scope.decimal_number);
       //var transactionFeeToSend = ("" + transactionFee * Math.pow(10,8)).split(".")[0];
@@ -1828,6 +1778,9 @@
         } else {
           $scope.myDids = [];
         }
+      } else if (response.message.message == "no record in this page") {
+        $scope.noDids = true;
+        $scope.selectedDid = "";
       } else {
         $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -1983,7 +1936,7 @@
 
   }
 
-  function TransferAssetController(MetaverseService, $stateParams, $rootScope, $scope, $translate, $location, localStorageService, FlashService, $window, $filter) {
+  function TransferAssetController(MetaverseService, $stateParams, $rootScope, $scope, $translate, $location, localStorageService, FlashService, $window, $filter, $http) {
 
     $window.scrollTo(0,0);
     //$scope.symbol = $stateParams.symbol;
@@ -1998,14 +1951,17 @@
     $scope.availableBalance = 0;
     $scope.sendAll = sendAll;
     $scope.checkRecipent = checkRecipent;
-    $scope.allDids = [];
-    $scope.allDidsAddresses = [];
     $scope.checkInputs = checkInputs;
-    $scope.didFromAddress = [];
     $scope.updateUnlockNumber = updateUnlockNumber;
     $scope.checkready = checkready;
     $scope.loadingBalances = true;
     $scope.loadingSender = true;
+    $scope.allDidsSymbols = [];
+    $scope.myDidsAddresses = [];
+    $scope.loadingDids = true;
+    $scope.swaptokenAvatar = MetaverseService.swaptokenAvatar;
+    $scope.canSwap = false;
+    $scope.changeSwaptokenOption = changeSwaptokenOption;
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -2019,8 +1975,11 @@
       $scope.burnAddress = false;
       $scope.confirmation = false;
       $scope.transactionFee = 0.0001;
+      $scope.ethAddress = '';
+      $scope.swaptokenFee = 1;
       $scope.error = [];
       $scope.errorDeposit = [];
+      $scope.errorSwaptoken = [];
       $scope.unlockNumber = 1;
       $scope.unlockNumberString = '1';
       $scope.interestRate = '0';
@@ -2066,28 +2025,51 @@
       }
     });
 
-    MetaverseService.ListAllDids()
+    MetaverseService.GetAllDids()
     .then( (response) => {
+      $scope.loadingDids = false;
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.allDids = response.data.result.dids;
-        $scope.allDidsSymbols = [];
-        if(typeof $scope.allDids != 'undefined' && $scope.allDids != null) {
-          $scope.allDids.forEach(function(did) {
-            $scope.allDidsSymbols.push(did.symbol);
-            $scope.allDidsAddresses[did.address] = did.symbol;
-            $scope.didFromAddress[did.symbol] = did.address;
-          });
-        } else {
-          $scope.allDids = [];
-        }
+        $scope.allDidsSymbols = response.data.result.dids;
+        //Once all the DIDs have been loaded, we look for the one entered by the user
+        checkRecipent($scope.sendto);
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       }
-      //Once all the DIDs have been loaded, we look for the one entered by the user
-      checkRecipent($scope.sendto);
     });
 
+    MetaverseService.ListMyDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.myDids = response.data.result.dids;
+        $scope.balancesLoaded = true;
+        if(typeof $scope.myDids != 'undefined' && $scope.myDids != null) {
+          $scope.myDids.forEach(function(did) {
+            $scope.myDidsAddresses[did.address] = did.symbol;
+          });
+        } else {
+          $scope.myDids = [];
+        }
+      } else if (response.message.message == "no record in this page") {
+        $scope.noDids = true;
+        $scope.selectedDid = "";
+      } else {
+        $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
+    });
+
+    function getWhitelistFromExplorer() {
+      let url = $rootScope.network == 'testnet' ? 'https://explorer-testnet.mvs.org/api/bridge/whitelist' : 'https://explorer.mvs.org/api/bridge/whitelist'
+      $http.get(url)
+        .then((response)=>{
+          $scope.bridgeWhitelist = response.data.result;
+          $scope.canSwap = $scope.bridgeWhitelist.indexOf($scope.symbol) > -1;
+        })
+        .catch( (error) => console.log("Cannot get Whitelist from explorer") );
+    }
+
+    getWhitelistFromExplorer()
 
     //Loads a given asset
     function loadasset(symbol) {
@@ -2152,8 +2134,8 @@
       } else {
         NProgress.start();
         //Update send from it is from an avatar
-        if($scope.allDidsAddresses[sendfrom]) {
-          sendfrom = $scope.allDidsAddresses[sendfrom];
+        if($scope.myDidsAddresses[sendfrom]) {
+          sendfrom = $scope.myDidsAddresses[sendfrom];
         }
         //Modify number to fit to number of decimals defined for asset
         //quantity *= Math.pow(10,$scope.asset.decimal_number);
@@ -2161,9 +2143,12 @@
         quantity = $filter('convertfortx')(quantity, $scope.asset.decimal_number);
         var quantityLockedToSend = $filter('convertfortx')($scope.quantityLocked, $scope.asset.decimal_number);
         var fee_value = $filter('convertfortx')(transactionFee, 8);
+        var swaptokenFee = $filter('convertfortx')($scope.swaptokenFee, 8);
         $scope.model = ($scope.frozen_option) ? $scope.model : '-1';
 
-        if($scope.burnAddress) {
+        if($scope.swaptoken_option) {
+          var SendPromise = MetaverseService.Swaptoken(sendfrom, $scope.swaptokenAvatar, symbol, quantity, $scope.ethAddress, swaptokenFee, fee_value, password);
+        } else if($scope.burnAddress) {
           var SendPromise = (sendfrom) ? MetaverseService.DidSendAssetFrom(sendfrom, MetaverseService.burnAddress, symbol, quantity, $scope.model, $scope.unlockNumber, quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, password) : MetaverseService.DidSendAsset(MetaverseService.burnAddress, symbol, quantity, $scope.model, $scope.unlockNumber, quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, password);
         } else {
           var SendPromise = (sendfrom) ? MetaverseService.DidSendAssetFrom(sendfrom, sendto, symbol, quantity, $scope.model, $scope.unlockNumber, quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, password) : MetaverseService.DidSendAsset(sendto, symbol, quantity, $scope.model, $scope.unlockNumber, quantityLockedToSend, $scope.periodLocked, $scope.model2ToSend, $scope.interestRate, fee_value, password);
@@ -2208,6 +2193,11 @@
       } else {
         $scope.model2Displayed = unlockNumber;
       }
+    }
+
+    function changeSwaptokenOption(swaptoken_option) {
+      $scope.sendto = swaptoken_option ? $scope.swaptokenAvatar : '';
+      checkRecipent($scope.sendto);
     }
 
     function checkRecipent(input) {
@@ -2255,7 +2245,7 @@
           return;
         }
       }
-      if(!$scope.correctEtpAddress && !$scope.correctAvatar && !$scope.burnAddress) {
+      if(!$scope.correctEtpAddress && !$scope.correctAvatar && !$scope.burnAddress && !$scope.swaptoken_option) {
         $scope.submittable = false;
         return;
       }
@@ -2272,6 +2262,14 @@
         } else if ($scope.model == 3 && ($scope.errorDeposit.unlock_number_empty || $scope.errorDeposit.periodLocked_empty)) {
           $scope.submittable = false;
           return;
+        }
+      }
+      if($scope.swaptoken_option){
+        for (var error in $scope.errorSwaptoken) {
+          if ($scope.errorSwaptoken[error]) {
+            $scope.submittable = false;
+            return;
+          }
         }
       }
       $scope.submittable = true;
@@ -2292,7 +2290,7 @@
     //Check if the amount is valid
     $scope.$watch('quantity', (newVal, oldVal) => {
       $scope.error.quantity_empty = (newVal == undefined);
-      $scope.error.quantity_not_enough_balance = (newVal != undefined && newVal != '' && typeof $scope.asset.decimal_number != 'undefined') ? parseInt($filter('convertfortx')(newVal, $scope.asset.decimal_number)) > parseInt($scope.availableBalance) : false;
+      $scope.error.quantity_not_enough_balance = (newVal != undefined && newVal != '' && $scope.asset != undefined && $scope.asset.decimal_number != undefined) ? parseInt($filter('convertfortx')(newVal, $scope.asset.decimal_number)) > parseInt($scope.availableBalance) : false;
       $scope.errorDeposit.quantityLocked_lower_quantity = newVal != undefined ? $scope.quantityLocked > newVal : false;
       checkready();
     });
@@ -2318,8 +2316,21 @@
 
     //Check if the fee is valid
     $scope.$watch('transactionFee', (newVal, oldVal) => {
-      $scope.error.fee_empty = (newVal == undefined);
+      $scope.error.fee_empty = (newVal == undefined || newVal == '');
       $scope.error.fee_too_low = newVal != undefined ? newVal<0.0001 : false;
+      checkready();
+    });
+
+    //Check if the swaptoken fee is valid
+    $scope.$watch('swaptokenFee', (newVal, oldVal) => {
+      $scope.errorSwaptoken.swaptoken_fee_empty = (newVal == undefined || newVal == '');
+      $scope.errorSwaptoken.swaptoken_fee_too_low = newVal != undefined ? newVal<1 : false;
+      checkready();
+    });
+
+    //Check if the ETH address is valid
+    $scope.$watch('ethAddress', (newVal, oldVal) => {
+      $scope.errorSwaptoken.ethAddress_empty = (newVal == undefined || newVal == '');
       checkready();
     });
 
@@ -2584,10 +2595,10 @@
 
     MetaverseService.ListMyDids()
     .then( (response) => {
+      $scope.balancesLoaded = true;
+      $scope.myDidsSymbols = [];
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.myDids = response.data.result.dids;
-        $scope.balancesLoaded = true;
-        $scope.myDidsSymbols = [];
         if(typeof $scope.myDids != 'undefined' && $scope.myDids != null) {
           $scope.myDids.forEach(function(did) {
             //$scope.myDidsSymbols.push(did.symbol);
@@ -2596,6 +2607,8 @@
         } else {
           $scope.myDids = [];
         }
+      } else if (response.message.message == "no record in this page") {
+        $scope.myDids = [];
       } else {
         $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -2751,12 +2764,10 @@
 
     MetaverseService.ListMyDids()
     .then( (response) => {
+      $scope.balancesLoaded = true;
+      $scope.myDidsSymbols = [];
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.myDids = response.data.result.dids;
-        //$scope.address = $scope.myDids[0].address;
-        //availBalance($scope.address);
-        $scope.balancesLoaded = true;
-        $scope.myDidsSymbols = [];
         if(typeof $scope.myDids != 'undefined' && $scope.myDids != null) {
           $scope.myDids.forEach(function(did) {
             $scope.myDidsSymbols.push(did.symbol);
@@ -2765,6 +2776,8 @@
         } else {
           $scope.myDids = [];
         }
+      } else if (response.message.message == "no record in this page") {
+        $scope.myDids = [];
       } else {
         $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -3112,6 +3125,9 @@
           $scope.noDids = true;
           $scope.selectedDid = "nodid";
         }
+      } else if (response.message.message == "no record in this page") {
+        $scope.noDids = true;
+        $scope.selectedDid = "nodid";
       } else {
         $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -3298,11 +3314,10 @@
     $scope.assetType = 'ALL';
 
     $scope.loadTransactions = loadTransactions;
-    $scope.loadMore = loadMore;
-    $scope.stopLoad = false;
-    $scope.page = 3;          //By default, we load the 2 first pages
     $scope.icons = MetaverseService.hasIcon;
     $scope.filterTransactions = filterTransactions;
+    $scope.items_per_page = 10;
+    $scope.transactionsLoaded = false;
 
 
     function filterTransactions(asset) {
@@ -3360,71 +3375,58 @@
     });
 
 
-    function loadTransactions(min, max) {
-      var page = min;
-      for (; (page<max) && (!$scope.stopLoad); page++) {
-        MetaverseHelperService.LoadTransactions( (err, transactions) => {
-          if (err) {
-            $translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
-            $window.scrollTo(0,0);
-          } else {
-            if ((transactions.lastpage == true) || (transactions.lastpage == undefined)) {     //All the transactions have been loaded
-              $scope.stopLoad = true;
+    function loadTransactions() {
+      MetaverseHelperService.LoadTransactions( (err, transactions, total_page) => {
+        if (err) {
+          $translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
+        } else {
+          $scope.transactions = [];
+          $scope.total_count = total_page * $scope.items_per_page;
+          transactions.forEach(function(e) {
+            /*if($scope.averageBlockTime == 0){   //if it hasn't been calculated yet, we calculated the average block time
+              //1486815046 is the timestamp of the genesis block
+              //1497080262 is the timestamp of the genesis block on TestNet
+              $scope.averageBlockTime = ((e.timestamp/1000)-1486815046)/e.height;
+            }*/
+            if (e.frozen == true) {
+              e.recipents.forEach(function(recipent) {
+                var re = /\[ (\w+) ] numequalverify dup hash160 \[ (\w+) \] equalverify checksig/;
+                var nbrBlocksScript = recipent.script.replace(re, '$1');
+
+                var nbrBlocksScriptLenght = nbrBlocksScript.length;
+                var nbrBlocksScriptReorderer = "";
+
+                for (var i=0; i < nbrBlocksScriptLenght; i=i+2) {
+                  nbrBlocksScriptReorderer += nbrBlocksScript.charAt(nbrBlocksScriptLenght-i-2);
+                  nbrBlocksScriptReorderer += nbrBlocksScript.charAt(nbrBlocksScriptLenght-i-1);
+                }
+                var nbrBlocksDec = parseInt(nbrBlocksScriptReorderer,16);
+                e.availableBlockNo = parseInt(e.height) + parseInt(nbrBlocksDec);
+              });
             }
-            transactions.forEach(function(e) {
-              /*if($scope.averageBlockTime == 0){   //if it hasn't been calculated yet, we calculated the average block time
-                //1486815046 is the timestamp of the genesis block
-                //1497080262 is the timestamp of the genesis block on TestNet
-                $scope.averageBlockTime = ((e.timestamp/1000)-1486815046)/e.height;
-              }*/
-              if (e.frozen == true) {
-                e.recipents.forEach(function(recipent) {
-                  var re = /\[ (\w+) ] numequalverify dup hash160 \[ (\w+) \] equalverify checksig/;
-                  var nbrBlocksScript = recipent.script.replace(re, '$1');
-                  //var address = e.script.replace(re, '$2');
 
-                  var nbrBlocksScriptLenght = nbrBlocksScript.length;
-                  var nbrBlocksScriptReorderer = "";
-
-                  for (var i=0; i < nbrBlocksScriptLenght; i=i+2) {
-                    nbrBlocksScriptReorderer += nbrBlocksScript.charAt(nbrBlocksScriptLenght-i-2);
-                    nbrBlocksScriptReorderer += nbrBlocksScript.charAt(nbrBlocksScriptLenght-i-1);
-                  }
-
-                  var nbrBlocksDec = parseInt(nbrBlocksScriptReorderer,16);
-                  e.availableBlockNo = parseInt(e.height) + parseInt(nbrBlocksDec);
-
-                  /*if((e.availableBlockNo - $rootScope.height) > 0){   //If the Frozen ETP are still locked
-                    e.availableInBlock = e.availableBlockNo - $rootScope.height;
-                    //e.availableInTime = e.availableInBlock * $scope.averageBlockTime;
-                    //e.availableInTimeDays = Math.floor(e.availableInTime / 86400);
-                    //e.availableInTimeHours = Math.floor(e.availableInTime / 3600) - (e.availableInTimeDays * 24);
-                  } else {                //If the Frozen ETP are not unlocked
-                    e.availableInBlock = 0;
-                  }*/
-                });
-              }
-
-              $scope.transactions.push(e);
-            });
-            //displayUpdatedDates();
-            filterTransactions('ALL');
-          }
-          NProgress.done();
-        }, 'asset', page);
-      }
+            $scope.transactions.push(e);
+          });
+          $scope.transactionsLoaded = true;
+          //displayUpdatedDates();
+          filterTransactions('ALL');
+        }
+        NProgress.done();
+      }, 'asset', $scope.current_page, $scope.items_per_page);
     }
 
+    $scope.switchPage = (page) => {
+        $scope.current_page = page;
+        return loadTransactions();
+    };
 
-    loadTransactions(1, 3);
+    $scope.applyFilters = () => {
+        $scope.current_page = 1;
+        return loadTransactions();
+    };
 
-    function loadMore() {
-      if(!$scope.stopLoad) {
-        $scope.page = $scope.page+1;
-        loadTransactions($scope.page - 1, $scope.page);
-      }
-    }
-
+    $scope.switchPage(1);
 
   }
 
@@ -3726,22 +3728,32 @@
 
     $scope.addressesHistory = [];
     $scope.changeDid = changeDid;
+    $scope.symbolAddress = [];
+    $scope.selectedDidAddress = '';
 
 
     MetaverseService.ListMyDids()
     .then( (response) => {
+      $scope.loadingDids = false;
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.loadingDids = false;
         if (response.data.result.dids) {
           $scope.myDids = response.data.result.dids;
           if(typeof $scope.selectedDid == 'indefined' || $scope.selectedDid == '') {
             $scope.selectedDid = $scope.myDids[0].symbol;
+            $scope.myDids.forEach(function(did) {
+              $scope.symbolAddress[did.symbol] = did.address;
+              if(did.symbol == $scope.selectedDid)
+                $scope.selectedDidAddress = did.address;
+            })
           }
           listDidsAddresses($scope.selectedDid);
         } else {
           $scope.myDids = [];
           $scope.selectedDid = "";
         }
+      } else if (response.message.message == "no record in this page") {
+        $scope.myDids = [];
+        $scope.selectedDid = "";
       } else {
         $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -3794,17 +3806,38 @@
 
     $scope.allDids = [];
     $scope.loaded = false;
+    $scope.items_per_page = 10;
 
-    MetaverseService.ListAllDids()
-    .then( (response) => {
-      if (typeof response.success !== 'undefined' && response.success) {
-        $scope.allDids = response.data.result.dids;
-      } else {
-        $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
-        $window.scrollTo(0,0);
-      }
-      $scope.loaded = true;
-    });
+    function load () {
+      MetaverseService.ListAllDids($scope.current_page, $scope.items_per_page)
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.allDids = response.data.result.dids;
+          $scope.total_count = response.data.result.total_count;
+        } else if (response.message.message == "no record in this page") {
+          //No avatar
+        } else {
+          $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
+        }
+        $scope.loaded = true;
+      });
+    };
+
+
+
+    $scope.switchPage = (page) => {
+        $scope.current_page = page;
+        return load();
+    };
+
+    $scope.applyFilters = () => {
+        $scope.current_page = 1;
+        return load();
+    };
+
+    $scope.switchPage(1);
+
   }
 
 
@@ -3818,9 +3851,8 @@
     $scope.didAddress = '';
     $scope.confirmation = false;
     $scope.checkInputs = checkInputs;
-    $scope.allDids = [];
     $scope.allDidsSymbols = [];
-    $scope.allDidsAddresses = [];
+    $scope.myDidsAddresses = [];
     $scope.didAddress = '';
     $scope.addresses = [];
     $scope.resultMultisigTx = '';
@@ -3828,6 +3860,8 @@
     $scope.bountyFee = MetaverseService.defaultBountyFee;
     $scope.bountyFeeUpdate = bountyFeeUpdate;
     $scope.bountyFeeMinMiner = MetaverseService.bountyFeeMinMiner;
+    $scope.myDids = [];
+    $scope.loadingDids = true;
 
 
     function listAddresses() {
@@ -3864,20 +3898,34 @@
 
     listAddresses();
 
-    MetaverseService.ListAllDids()
+    MetaverseService.GetAllDids()
     .then( (response) => {
+      $scope.loadingDids = false;
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.allDids = response.data.result.dids;
-        if(typeof $scope.allDids != 'undefined' && $scope.allDids != null) {
-          $scope.allDids.forEach(function(did) {
-            $scope.allDidsSymbols.push(did.symbol);
-            $scope.allDidsAddresses.push(did.address);
-          });
-        } else {
-          $scope.allDids = [];
-        }
+        $scope.allDidsSymbols = response.data.result.dids;
+        $scope.error.symbol_already_exist = $scope.didSymbol != undefined ? ($scope.allDidsSymbols.indexOf($scope.didSymbol) > -1) : false;
+        checkready();
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
+    });
+
+    MetaverseService.ListMyDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        if (response.data.result.dids) {
+          $scope.myDids = response.data.result.dids;
+          if(typeof $scope.myDids != 'undefined' && $scope.myDids != null) {
+            $scope.myDids.forEach(function(did) {
+              $scope.myDidsAddresses.push(did.address);
+            })
+          }
+        }
+      } else if (response.message.message == "no record in this page") {
+        //No Avatar
+      } else {
+        $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       }
     });
@@ -3957,7 +4005,7 @@
     //Check if the address is valid
     $scope.$watch('didAddress', (newVal, oldVal) => {
       $scope.error.didAddress_empty = (newVal == undefined || newVal == '');
-      $scope.error.didAddress_already_used = newVal != undefined ? ($scope.allDidsAddresses.indexOf(newVal) > -1) : false;
+      $scope.error.didAddress_already_used = newVal != undefined ? ($scope.myDidsAddresses.indexOf(newVal) > -1) : false;
       $scope.error.didAddress_not_enough_etp = newVal != undefined && $scope.addresses[newVal] != undefined ? ($scope.addresses[newVal].available < 1) : false;
       checkready();
     });
@@ -4049,12 +4097,14 @@
               if(did.symbol == $scope.selectedDid)
                 $scope.selectedDidAddress = did.address;
             })
-          } else {
           }
         } else {
           $scope.noDids = true;
           $scope.selectedDid = "";
         }
+      } else if (response.message.message == "no record in this page") {
+        $scope.noDids = true;
+        $scope.selectedDid = "";
       } else {
         $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -4155,12 +4205,11 @@
     $scope.error = [];
     $scope.changeSymbol = changeSymbol;
     $scope.transactionFee = 0.0001;
-    $scope.allDidsAddresses = [];
-    $scope.listMyCerts = listMyCerts;
     $scope.checkInputs = checkInputs;
     $scope.transferCert = transferCert;
     $scope.myCertsLoaded = false;
     $scope.allDidsSymbols = [];
+    $scope.loadingDids = true;
 
     $scope.onChain = true;
     $scope.selectedCert = $location.path().split('/')[3];
@@ -4238,45 +4287,38 @@
       $scope.certType = cert.split(":")[1];
     }
 
-    function listMyCerts() {
-      MetaverseService.AccountAssetCert()
-      .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
-          if(response.data.result.assetcerts != null && response.data.result.assetcerts != '') {
-            $scope.myCerts = response.data.result.assetcerts;
-            $scope.myCerts.forEach( (e) => {
-              $scope.certs[e.symbol] = e;
-            });
-          } else {
-            $scope.myCerts = [];
-            $scope.noCerts = true;
-          }
-          $scope.myCertsLoaded = true;
-        } else {
-          $translate('MESSAGES.CANT_LOAD_MY_CERTS').then( (data) => FlashService.Error(data) );
-          $window.scrollTo(0,0);
-        }
-      });
-    }
 
-    MetaverseService.ListAllDids()
+    MetaverseService.AccountAssetCert()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.allDids = response.data.result.dids;
-        $scope.allDidsSymbols = [];
-        if(typeof $scope.allDids != 'undefined' && $scope.allDids != null) {
-          $scope.allDids.forEach(function(did) {
-            $scope.allDidsSymbols.push(did.symbol);
-            //$scope.allDidsAddresses[did.address] = did.symbol;
+        if(response.data.result.assetcerts != null && response.data.result.assetcerts != '') {
+          $scope.myCerts = response.data.result.assetcerts;
+          $scope.myCerts.forEach( (e) => {
+            $scope.certs[e.symbol] = e;
           });
         } else {
-          $scope.allDids = [];
+          $scope.myCerts = [];
+          $scope.noCerts = true;
         }
+        $scope.myCertsLoaded = true;
+      } else {
+        $translate('MESSAGES.CANT_LOAD_MY_CERTS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
+    });
+
+
+    MetaverseService.GetAllDids()
+    .then( (response) => {
+      $scope.loadingDids = false;
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.allDidsSymbols = response.data.result.dids;
+        $scope.error.toDID_not_exist = $scope.toDID != undefined && $scope.allDidsSymbols != undefined ? !($scope.allDidsSymbols.indexOf($scope.toDID) > -1) : false;
+        checkready();
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       }
-      listMyCerts();
     });
 
     function checkInputs() {
@@ -4369,8 +4411,6 @@
     $scope.certType = '';
     $scope.changeDomain = changeDomain;
     $scope.transactionFee = 0.0001;
-    $scope.allDidsAddresses = [];
-    $scope.listMyCerts = listMyCerts;
     $scope.checkInputs = checkInputs;
     $scope.issueCert = issueCert;
     $scope.myCertsLoaded = false;
@@ -4452,27 +4492,25 @@
       $scope.symbol = domain + '.';
     }
 
-    function listMyCerts() {
-      MetaverseService.AccountAssetCert()
-      .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
-          if(response.data.result.assetcerts != null && response.data.result.assetcerts != '') {
-            $scope.myCerts = response.data.result.assetcerts;
-            $scope.myCerts.forEach( (e) => {
-              $scope.certs[e.symbol] = e;
-              if (e.symbol == $scope.certSymbol)
-                $scope.certType = e.certs;
-            });
-          } else {
-            $scope.myCerts = [];
-          }
-          $scope.myCertsLoaded = true;
+    MetaverseService.AccountAssetCert()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        if(response.data.result.assetcerts != null && response.data.result.assetcerts != '') {
+          $scope.myCerts = response.data.result.assetcerts;
+          $scope.myCerts.forEach( (e) => {
+            $scope.certs[e.symbol] = e;
+            if (e.symbol == $scope.certSymbol)
+              $scope.certType = e.certs;
+          });
         } else {
-          $translate('MESSAGES.CANT_LOAD_MY_CERTS').then( (data) => FlashService.Error(data) );
-          $window.scrollTo(0,0);
+          $scope.myCerts = [];
         }
-      });
-    }
+        $scope.myCertsLoaded = true;
+      } else {
+        $translate('MESSAGES.CANT_LOAD_MY_CERTS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
+    });
 
     MetaverseService.ListAllAssets()
     .then( (response) => {
@@ -4489,23 +4527,17 @@
       }
     });
 
-    MetaverseService.ListAllDids()
+    MetaverseService.GetAllDids()
     .then( (response) => {
+      $scope.loadingDids = false;
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.allDids = response.data.result.dids;
-        $scope.allDidsSymbols = [];
-        if(typeof $scope.allDids != 'undefined' && $scope.allDids != null) {
-          $scope.allDids.forEach(function(did) {
-            $scope.allDidsSymbols.push(did.symbol);
-          });
-        } else {
-          $scope.allDids = [];
-        }
+        $scope.allDidsSymbols = response.data.result.dids;
+        $scope.error.toDID_not_exist = $scope.toDID != undefined && $scope.allDidsSymbols != undefined ? !($scope.allDidsSymbols.indexOf($scope.toDID) > -1) : false;
+        checkready();
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       }
-      listMyCerts();
     });
 
     function checkInputs(password) {
@@ -4572,7 +4604,7 @@
     //Check if the new address is valid
     $scope.$watch('toDID', (newVal, oldVal) => {
       $scope.error.toDID_empty = (newVal == undefined || newVal == '');
-      $scope.error.toDID_not_exist = newVal != undefined ? !($scope.allDidsSymbols.indexOf(newVal) > -1) : false;
+      $scope.error.toDID_not_exist = newVal != undefined && $scope.allDidsSymbols != undefined ? !($scope.allDidsSymbols.indexOf(newVal) > -1) : false;
       checkready();
     });
 
@@ -4706,6 +4738,9 @@
           $scope.noDids = true;
           $scope.selectedDid = "";
         }
+      } else if (response.message.message == "no record in this page") {
+        $scope.noDids = true;
+        $scope.selectedDid = "";
       } else {
         $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
@@ -4791,6 +4826,7 @@
     $scope.mymits = [];
     $scope.allDidsSymbols = [];
     $scope.loaded = false;
+    $scope.loadingDids = true;
 
     $scope.mitSymbol = $location.path().split('/')[3];
 
@@ -4814,21 +4850,17 @@
       NProgress.done();
     });
 
-    MetaverseService.ListAllDids()
+    MetaverseService.GetAllDids()
     .then( (response) => {
+      $scope.loadingDids = false;
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.allDids = response.data.result.dids;
-        if(typeof $scope.allDids != 'undefined' && $scope.allDids != null) {
-          $scope.allDids.forEach(function(did) {
-            $scope.allDidsSymbols.push(did.symbol);
-          });
-        }
+        $scope.allDidsSymbols = response.data.result.dids;
+        $scope.error.sendto_not_exist = $scope.sendto != undefined && $scope.sendto != '' ? !($scope.allDidsSymbols.indexOf($scope.sendto) > -1) : false;
+        checkready();
       } else {
         $translate('MESSAGES.CANT_LOAD_ALL_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       }
-      //Once all the DIDs have been loaded, we look for the one entered by the user
-      //checkRecipent($scope.sendTo);
     });
 
     function checkInputs(password) {
@@ -4903,6 +4935,95 @@
     });
 
     init();
+
+  }
+
+
+  function LinkEthController(MetaverseHelperService, MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $location) {
+
+    $scope.listAddresses = [];
+    $scope.senderAddressesLoaded = false;
+    $scope.error = [];
+    $scope.etpAddress = $location.path().split('/')[3];
+    $scope.confirmation = false;
+    $scope.registerEthBridge = registerEthBridge;
+    $scope.result = "";
+    $scope.ETPMap = MetaverseService.ETPMap;
+    $scope.SwapAddress = MetaverseService.SwapAddress;
+
+    MetaverseService.ListBalances()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.addresses = [];
+        response.data.balances.forEach( (e) => {
+          var name = "New address";
+          if (localStorageService.get(e.balance.address) != undefined) {
+            name = localStorageService.get(e.balance.address);
+          }
+          $scope.addresses[e.balance.address] = ({
+            "balance": parseInt(e.balance.unspent),
+            "available": parseInt(e.balance.available),
+            "address": e.balance.address,
+            "name": name,
+            "frozen": e.balance.frozen
+          });
+          $scope.listAddresses.push({
+            "balance": parseInt(e.balance.unspent),
+            "available": parseInt(e.balance.available),
+            "address": e.balance.address
+          });
+        });
+        $scope.senderAddressesLoaded = true;
+      }
+    });
+
+    function toHex(s) {
+      var s = unescape(encodeURIComponent(s));
+      var h = '';
+      for (var i = 0; i < s.length; i++)
+        h += s.charCodeAt(i).toString(16);
+      return h;
+    }
+
+    function zerofill(content, length, direction) {
+      if(content.length>length)
+        return (zerofill(content.slice(0, 64), 64, direction) + zerofill(content.slice(64), 64, direction))
+      if(direction !== 'left')
+        direction == 'right';
+      let result = "" + content;
+      var zeros = length - (result).length;
+      for(let i = 0; i < zeros; i++)
+        result = (direction == 'left') ? "0" + result:result + "0";
+      return result;
+    }
+
+    function registerEthBridge(etpAddress) {
+      const FUNCTION_ID = "0xfa42f3e5";
+      const LOCATION = "0000000000000000000000000000000000000000000000000000000000000020";
+      var avatar_or_address = $scope.myDidsAddresses[etpAddress] ? $scope.myDidsAddresses[etpAddress] : etpAddress;
+      var dynamic = toHex(avatar_or_address);
+      var hexLength = avatar_or_address.length.toString(16);
+      $scope.result = FUNCTION_ID + LOCATION + zerofill(hexLength, 64, 'left') + zerofill(dynamic, 64, 'right');
+      $scope.confirmation = true;
+    }
+
+    //Check if the form is submittable
+    function checkready() {
+      //Check for errors
+      for (var error in $scope.error) {
+        if ($scope.error[error]) {
+          $scope.submittable = false;
+          return;
+        }
+      }
+      $scope.submittable = true;
+    }
+
+    //Check if the fee is valid
+    $scope.$watch('etpAddress', (newVal, oldVal) => {
+      $scope.error.etpAddress = (newVal == undefined || newVal == '');
+      checkready();
+    });
 
   }
 

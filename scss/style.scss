@@ -177,7 +177,12 @@ No media query since this is the default in Bootstrap because it is "mobile firs
 }
 
 .assetBoxCopy {
-  padding-top: 10px;
+  top: -6px;
+  display: inline-block;
+}
+
+.assetBoxConnectEth {
+  padding-top: 2px;
   display: inline-block;
 }
 
@@ -1315,8 +1320,21 @@ _____  ._______  ___.___ _______
   word-wrap:break-word;
 }
 
+.returnLine {
+  white-space:pre-wrap;
+}
+
 .popupButtons {
   padding-bottom: 66px;
+}
+
+.ETPMap {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.explanation {
+  padding-bottom: 10px;
 }
 
 
@@ -1814,6 +1832,10 @@ form label {
   padding-left: 20px;
   height: 40px;
   border-bottom: 1px solid #f2f2f2;
+}
+
+.linkEthBtn {
+  padding-top: 14px;
 }
 
 
