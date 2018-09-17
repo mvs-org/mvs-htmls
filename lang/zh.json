@@ -200,7 +200,7 @@
   "LOGIN.ENTER_ACCOUNT_PASSWORD" : "输入您的密码",
   "LOGIN.FORGOT_PASSWORD" : "忘记密码?",
   "LOGIN.LOGIN_BUTTON" : "登录",
-  "LOGIN.REGISTER_BUTTON" : "创建账户",
+  "LOGIN.REGISTER_BUTTON" : "创建／导入账户",
   "LOGIN.DESCRIPTION" : "元界主网钱包是一款管理加密货币的全节点钱包。它并非是网页钱包，浏览器仅作为用户界面，访问的是本地后台程序。在这里，您可以真正意义上拥有自己的私钥以及数字资产。",
   "REGISTER.CHOOSE_ACCOUNT_NAME" : "请输入用户名",
   "REGISTER.CHOOSE_PASSWORD" : "请输入密码",
