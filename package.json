@@ -1,7 +1,7 @@
 {
   "name": "MVS-GUI",
   "description": "Web GUI for Metavserse.",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "repository": {
     "type": "git",
     "url": "https://github.com/mvs-org/mvs-htmls.git"
