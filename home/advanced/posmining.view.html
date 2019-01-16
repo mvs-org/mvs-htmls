@@ -1,0 +1,51 @@
+<div class="AStitle-tabs">
+  <ul class="nav nav-pills tabsMenu">
+    <li class="active" role="presentation"><a class="btn-link-menu">{{'ADVANCED.POS_TITLE' | translate}} <span ng-show="status.is_mining && status.block_version == 'PoS'" class="miniSpinner"></span></a></li>
+    <li role="presentation"><a href="#!/advanced/pow" class="btn-link-menu">{{'ADVANCED.POW_TITLE' | translate}} <span ng-show="status.is_mining && status.block_version == 'PoW'" class="miniSpinner"></span></a></li>
+    <li role="presentation"><a href="#!/advanced/console" class="btn-link-menu">{{ 'NAV_CONSOLE' | translate }}</a></li>
+  </ul>
+</div>
+
+<!--Mining-->
+<div class="mining noPaddingLeftRight col-sm-12 col-md-4">
+  <div>
+    <h4 ng-hide="info.is_mining">{{ 'ADVANCED.POS_TITLE' | translate }}</h4>
+    <h4 ng-show="info.is_mining" class="isMiningText">{{ 'MINING.IS_MINING_POS' | translate }}
+      <div class="mediumSpinner"></div>
+    </h4>
+  </div>
+
+  <div class="row">
+
+    <div class="col-xs-12 col-sm-12 col-md-12">
+      <table class="table miningTable wk-countbox">
+        <tbody>
+          <tr>
+            <td class="wd-t">{{ 'MINING_RATE' | translate }}</td>
+            <td class="color66">{{status.rate}}</td>
+          </tr>
+          <tr>
+            <td class="wd-t">{{ 'MINING_DIFFICULTY' | translate }}</td>
+            <td class="color66">{{status.difficulty}}</td>
+          </tr>
+          <tr>
+            <td class="wd-t">{{ 'MINING_HEIGHT' | translate }}</td>
+            <td class="color66">{{status.height}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div>
+
+        <button class="btn btn-success wk-beginning" ng-click="start()" ng-hide="info.is_mining">
+            {{ 'MINING_START' | translate }}
+        </button>
+
+        <button class="btn btn-secondary wk-beginning" ng-click="stop()" ng-show="info.is_mining">
+          {{ 'MINING_END' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <br/><br/>
+</div>

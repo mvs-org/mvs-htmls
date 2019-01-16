@@ -482,7 +482,7 @@
   "PROFIL.CERTIFICATES_EXPLANATION_TITLE": "Certificate types",
   "PROFIL.CERTIFICATES_EXPLANATION_ISSUE": "This certificate gives you the permission to do a Secondary Issue on a specific Asset. The issuer of an asset automatically get this certificate if the Secondary Issue option has been specified.",
   "PROFIL.CERTIFICATES_EXPLANATION_DOMAIN": "This certificate gives you ownership of a domain (i.e. if you own the Domain 'MVS', only you can create an asset whose name start with 'MVS.'). The issuer of an asset automatically get this certificate.",
-  "PROFIL.CERTIFICATES_EXPLANATION_NAMING": "This certificate gives you permission to create an asset for a specific name (i.e. if you own the name 'MVS.ASSET', you only have permission to create the Asset called 'MVS.ASSET'). This certificate can be created by the Domain owner",
+  "PROFIL.CERTIFICATES_EXPLANATION_NAMING": "This certificate gives you permission to create an asset for a specific name (i.e. if you own the name 'MVS.ASSET', you only have permission to create the Asset called 'MVS.ASSET'). This certificate can be created by the Domain owner.",
   "PROFIL.CERT_TRANSFER_BUTTON": "Transfer",
   "TRANSFER_CERT.HEADLINE": "Transfer Certificate",
   "TRANSFER_CERT.SYMBOL": "Certificate symbol",
@@ -693,6 +693,17 @@
   "LINK_ETH.LINKED_EXPLANATION3": "You will then receive the equivalent MST on Metaverse.",
   "LINK_ETH.SEND_ERC20_TITLE": "Convert compatibles ERC20 tokens to MST",
   "LINK_ETH.SEND_ERC20_EXPLANATION": "You can now convert any supported ERC20 token from Ethereum to its MST equivalent on Metaverse. To do the reverse conversion, simply send the MST to the 'crosschain' avatar from this wallet, and spicify your Ethereum address to receive the ERC20 equivalent.",
-  "LINK_ETH.BOTTOM_EXPLANATION": "*Please note this process link your addresses only on the Ethereum->Metaverse direction. To convert a token from Metaverse to Ethereum, simply send the MST to the avatar 'crosschain' from this wallet and specify your Ethereum address in the transaction."
+  "LINK_ETH.BOTTOM_EXPLANATION": "*Please note this process link your addresses only on the Ethereum->Metaverse direction. To convert a token from Metaverse to Ethereum, simply send the MST to the avatar 'crosschain' from this wallet and specify your Ethereum address in the transaction.",
+
+  "PROFIL.CERT_MINING": "Mining",
+  "PROFIL.CERTIFICATES_EXPLANATION_MINING": "This certificate doesn't provide any specific permission, its only function is to proof that this MST can be mined. It can still be transfered, but the recipient will not get any special right.",
+
+  "ADVANCED.POS_TITLE": "PoS mining",
+  "ADVANCED.POW_TITLE": "PoW mining",
+
+  "MINING.IS_MINING_POW": "Currently Mining via PoW",
+  "MINING.IS_MINING_POS": "Currently Mining via PoS",
+  "MINING.IS_MINING_DPOS": "Currently Mining via dPoS",
+  "MINING.PAYMENT_ADDRESS": "Payment address"
 
 }

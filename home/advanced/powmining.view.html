@@ -1,0 +1,47 @@
+<div class="AStitle-tabs">
+  <ul class="nav nav-pills tabsMenu">
+    <li role="presentation"><a href="#!/advanced/pos" class="btn-link-menu">{{'ADVANCED.POS_TITLE' | translate}} <span ng-show="status.is_mining && status.block_version == 'PoS'" class="miniSpinner"></span></a></li>
+    <li class="active" role="presentation"><a class="btn-link-menu">{{'ADVANCED.POW_TITLE' | translate}} <span ng-show="status.is_mining && status.block_version == 'PoS'" class="miniSpinner"></span></a></li>
+    <li role="presentation"><a href="#!/advanced/console" class="btn-link-menu">{{ 'NAV_CONSOLE' | translate }}</a></li>
+  </ul>
+</div>
+
+<!--Mining-->
+<div class="mining noPaddingLeftRight col-sm-12 col-md-4">
+  <div>
+    <h4 ng-hide="isMining">{{ 'ADVANCED.POW_TITLE' | translate }}
+      <span ng-hide="isMining" class="miningEnd wk-title">{{ 'MINING_NOT_RECOMMENDED' | translate }}   </span>
+    </h4>
+    <h4 ng-show="isMining" class="isMiningText">{{ 'MINING.IS_MINING_POW' | translate }}
+      <div class="mediumSpinner"></div>
+    </h4>
+  </div>
+
+  <div class="row">
+
+    <div class="col-xs-12 col-sm-12 col-md-12">
+      <table class="table miningTable wk-countbox">
+        <tbody>
+          <tr>
+            <td class="wd-t">{{ 'MINING_HEIGHT' | translate }}</td>
+            <td class="color66">{{status.height}}</td>
+          </tr>
+          <tr>
+            <td class="wd-t">{{ 'MINING_DIFFICULTY' | translate }}</td>
+            <td class="color66">{{status.difficulty}}</td>
+          </tr>
+          <tr>
+            <td class="wd-t">{{ 'MINING_RATE' | translate }}</td>
+            <td class="color66">{{status.rate}}</td>
+          </tr>
+          <tr ng-show="status.payment_address">
+            <td class="wd-t">{{ 'MINING.PAYMENT_ADDRESS' | translate }}</td>
+            <td class="color66">{{status.payment_address}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+  <br/><br/>
+</div>

@@ -30,6 +30,9 @@
   .controller('CreateMITController', CreateMITController)
   .controller('TransferMITController', TransferMITController)
   .controller('LinkEthController', LinkEthController)
+  .controller('PowController', PowController)
+  .controller('PosController', PosController)
+  .controller('AdvancedController', AdvancedController)
   .directive('bsTooltip', function() {
     return {
       restrict: 'A',
@@ -5024,6 +5027,61 @@
       $scope.error.etpAddress = (newVal == undefined || newVal == '');
       checkready();
     });
+
+  }
+
+  function AdvancedController(MetaverseService, $rootScope, FlashService, $translate, $scope, $window) {
+
+    /***Mining***/
+    
+    $scope.stop = StopMining;
+    $scope.status = {};
+
+    function GetMiningInfo() {
+      NProgress.start();
+      MetaverseService.GetMiningInfo()
+      .then( (response) => {
+        console.log(response)
+        NProgress.done();
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.status = response.data.result;
+        } else {
+          $translate('MESSAGES.MINING_STATUS_ERROR').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
+        }
+      });
+    }
+
+    function StopMining() {
+      NProgress.start();
+      MetaverseService.Stop()
+      .then(function(response) {
+        NProgress.done();
+        if (typeof response.success !== 'undefined' && response.success) {
+          $translate('MESSAGES.MINING_STOP_SUCCESS').then( (data) => FlashService.Success(data) );
+          $window.scrollTo(0,0);
+          GetMiningInfo();
+        } else {
+          $translate('MESSAGES.MINING_STOP_ERROR').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
+        }
+      });
+    }
+
+    GetMiningInfo();
+
+
+  }
+
+  function PowController(MetaverseService, $rootScope, FlashService, $translate, $scope, $window) {
+
+    $window.scrollTo(0,0);
+
+  }
+
+  function PosController(MetaverseService, $rootScope, FlashService, $translate, $scope, $window) {
+
+    $window.scrollTo(0,0);
 
   }
 

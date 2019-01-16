@@ -257,9 +257,26 @@
                 controllerAs: 'vm'
             })
 
-            .state('home.console', {
-                url: "/advanced",
-                templateUrl: "home/console.view.html",
+            .state('home.advanced', {
+                templateUrl: "home/advanced/index.view.html",
+                controller: 'AdvancedController'
+            })
+
+            .state('home.advanced.posmining', {
+                url: "/advanced/pos",
+                templateUrl: "home/advanced/posmining.view.html",
+                controller: 'PosController'
+            })
+
+            .state('home.advanced.powmining', {
+                url: "/advanced/pow",
+                templateUrl: "home/advanced/powmining.view.html",
+                controller: 'PowController'
+            })
+
+            .state('home.advanced.console', {
+                url: "/advanced/console",
+                templateUrl: "home/advanced/console.view.html",
                 controller: 'ConsoleController'
             })
 

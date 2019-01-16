@@ -23,6 +23,7 @@
         //var RPC_URL = window.location.protocol + '://' + SERVER + '/rpc';
         var RPC_URL = window.location.protocol + '/rpc';
         var RPC_URL_V2 = window.location.protocol + '/rpc/v2';
+        var RPC_URL_V3 = window.location.protocol + '/rpc/v3';
 
 
         service.debug = false;
@@ -580,8 +581,8 @@
          *
          **/
         function GetMiningInfo() {
-            var credentials = localStorageService.get('credentials');
-            return _send('getmininginfo', [credentials.user, credentials.password]);
+            //var credentials = localStorageService.get('credentials');
+            return _sendV3('getmininginfo');
         }
 
         /**
@@ -1076,6 +1077,31 @@
 
         function _sendV2(method, params) {
             return $http.post(RPC_URL_V2, {
+                    jsonrpc: "2.0",
+                    method: method,
+                    params: params
+                }, {
+                    headers: {}
+                })
+                .then(
+                    function(res) {
+
+                        if (service.debug)
+                            console.log({
+                                "method": method,
+                                "params": params,
+                                "result": res.data
+                            });
+                        return handleSuccess(res);
+                    },
+                    function(res) {
+                        handleError(res);
+                    }
+                );
+        }
+
+        function _sendV3(method, params) {
+            return $http.post(RPC_URL_V3, {
                     jsonrpc: "2.0",
                     method: method,
                     params: params
