@@ -74,6 +74,7 @@
             <div ng-show="cert.cert == 'issue'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_SECONDARY_ISSUE' | translate }}</div>
             <div ng-show="cert.cert == 'domain'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_DOMAIN' | translate }}</div>
             <div ng-show="cert.cert == 'naming'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_NAMING' | translate }}</div>
+            <div ng-show="cert.cert == 'mining'" class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_MINING' | translate }}</div>
             <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{cert.symbol}}</div>
             <div class="sendAssetButton col-xs-3 noPaddingLeftRight assetDetailsBoxButton">
               <a href="#!/avatar/transfercert/{{cert.symbol}}:{{cert.cert}}">
@@ -107,6 +108,10 @@
             <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_NAMING' | translate }}</div>
             <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_NAMING' | translate}}</div>
           </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+              <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_MINING' | translate }}</div>
+              <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_MINING' | translate}}</div>
+            </div>
         </div>
       </div>
     </div>
