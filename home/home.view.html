@@ -85,18 +85,14 @@
 
   </div>
 
-  <ul class="nav nav-tabs hidden-xs hidden-sm">
+  <!--ul class="nav nav-tabs hidden-xs hidden-sm">
     <li role="presentation"><a class="btn btn-radio-history" ng-click="filterTransactions('ALL')" ng-class="{selectedAsset: assetType=='ALL'}">ALL</a></li>
     <li role="presentation"><a class="btn btn-radio-history" ng-click="filterTransactions('ETP')" ng-class="{selectedAsset: assetType=='ETP'}">ETP</a></li>
-    <!--li role="presentation"><a class="btn btn-radio-history" ng-click="filterTransactions('Avatars')" ng-class="{selectedAsset: assetType=='Avatars'}">{{ 'HISTORY.AVATARS' | translate }}</a></li>
-    <li role="presentation"><a class="btn btn-radio-history" ng-click="filterTransactions('Certs')" ng-class="{selectedAsset: assetType=='Certs'}">{{ 'HISTORY.CERTIFICATES' | translate }}</a></li-->
     <li class="divider" role="separator" ng-show="assets.length>0"></li>
     <li role="presentation" ng-repeat="asset in assets | orderBy:'symbol'" ng-show="asset.status=='unspent'">
       <a ng-click="filterTransactions(asset.symbol)" class="btn btn-radio-history" ng-class="{selectedAsset: assetType==asset.symbol}">{{asset.symbol}}</a>
     </li>
-  </ul>
-
-
+  </ul-->
 
 
   <!--Display Transactions history-->
