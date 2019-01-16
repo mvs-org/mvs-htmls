@@ -166,9 +166,7 @@
 
           <!--Frozen till-->
           <div class="noPaddingLeftRight transactionBoxField overflow col-md-4 col-lg-4 historyUnfrozenColumn">
-            <span ng-show="transaction.frozen">{{transaction.availableBlockNo}}</span>
-            <!--<span ng-show="transaction.frozen">{{transaction.availableInBlock}}</span>-->
-            <!--<span ng-show="transaction.frozen && transaction.availableInBlock != 0">{{transaction.availableInTimeDays}} days</span>-->
+            <span ng-show="transaction.frozen">{{transaction.unlockblock}}</span>
           </div>
         </div>
       </div>

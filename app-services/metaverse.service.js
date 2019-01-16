@@ -1208,6 +1208,17 @@
             }
         }
 
+        function getLocktimeFromHexa(locktime) {
+            var nbrBlocksScriptLenght = locktime.length;
+            var nbrBlocksScriptReorderer = "";
+
+            for (var i=0; i < nbrBlocksScriptLenght; i=i+2) {
+                nbrBlocksScriptReorderer += locktime.charAt(nbrBlocksScriptLenght-i-2);
+                nbrBlocksScriptReorderer += locktime.charAt(nbrBlocksScriptLenght-i-1);
+            }
+            return parseInt(nbrBlocksScriptReorderer,16);
+        }
+
         function LoadTransactions(callback, type, page, limit) {
             MetaverseService.ListTxs(page, limit)
                 .then(function(response) {
@@ -1240,29 +1251,36 @@
                                         transaction.asset_type = 8;
                                         transaction.intrawallet = true;
                                         e.outputs.forEach(function(output){
-                                          if (typeof output.script != 'undefined' && output.script.match(/\[ (\w+) ] numequalverify dup hash160 \[ (\w+) \] equalverify checksig/) != null) {
-                                            transaction.frozen = true;
-                                            transaction.intrawallet = false;
-                                            transaction.recipents.push({
-                                              "address": output.address,
-                                              "value": parseInt(output['etp-value']),
-                                              "script": output.script
-                                            });
-                                            transaction.value += parseInt(output['etp-value']);
-                                          } else if((transaction.direction==='receive' && output.own==='true') || (transaction.direction==='send' && output.own==='false')){
-                                            transaction.frozen = false;
-                                            transaction.intrawallet = false;
-                                            transaction.recipents.push({
-                                              "address": output.address,
-                                              "value": parseInt(output['etp-value']),
-                                              "script": output.script
-                                            });
-                                            transaction.value += parseInt(output['etp-value']);
-                                          }
-                                          //memo
-                                          if (typeof output.attachment.content != 'undefined') {
+                                            //first match is for pre-MPC deposit, with reward
+                                            //second match is for post-MPC lock, no reward
+                                            if (typeof output.script != 'undefined' && (output.script.match(/\[ (\w+) ] numequalverify dup hash160 \[ (\w+) \] equalverify checksig/) != null) || (output.script.match(/\[ (\w+) ] checksequenceverify drop dup hash160 \[ (\w+) \] equalverify checksig/) != null)) {
+                                                var re = output.script.match(/\[ (\w+) ] numequalverify dup hash160 \[ (\w+) \] equalverify checksig/) != null ? /\[ (\w+) ] numequalverify dup hash160 \[ (\w+) \] equalverify checksig/ : /\[ (\w+) ] checksequenceverify drop dup hash160 \[ (\w+) \] equalverify checksig/;
+                                                var nbrBlocksScript = output.script.replace(re, '$1');
+                                                let locktime = getLocktimeFromHexa(nbrBlocksScript);
+                                                transaction.locktime = locktime;
+                                                transaction.unlockblock = parseInt(transaction.height) + locktime;
+                                                transaction.frozen = true;
+                                                transaction.intrawallet = true;
+                                                transaction.recipents.push({
+                                                    "address": output.address,
+                                                    "value": parseInt(output['etp-value']),
+                                                    "script": output.script
+                                                });
+                                                transaction.value += parseInt(output['etp-value']);
+                                            } else if((transaction.direction==='receive' && output.own==='true') || (transaction.direction==='send' && output.own==='false')){
+                                                transaction.frozen = false;
+                                                transaction.intrawallet = false;
+                                                transaction.recipents.push({
+                                                    "address": output.address,
+                                                    "value": parseInt(output['etp-value']),
+                                                    "script": output.script
+                                                });
+                                                transaction.value += parseInt(output['etp-value']);
+                                            }
+                                            //memo
+                                            if (typeof output.attachment.content != 'undefined') {
                                             transaction.memo = output.attachment.content;
-                                          }
+                                            }
                                         });
                                         if(transaction.intrawallet)
                                             transaction.direction = 'intra';

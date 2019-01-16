@@ -3384,33 +3384,8 @@
           $translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
           $window.scrollTo(0,0);
         } else {
-          $scope.transactions = [];
+          $scope.transactions = transactions;
           $scope.total_count = total_page * $scope.items_per_page;
-          transactions.forEach(function(e) {
-            /*if($scope.averageBlockTime == 0){   //if it hasn't been calculated yet, we calculated the average block time
-              //1486815046 is the timestamp of the genesis block
-              //1497080262 is the timestamp of the genesis block on TestNet
-              $scope.averageBlockTime = ((e.timestamp/1000)-1486815046)/e.height;
-            }*/
-            if (e.frozen == true) {
-              e.recipents.forEach(function(recipent) {
-                var re = /\[ (\w+) ] numequalverify dup hash160 \[ (\w+) \] equalverify checksig/;
-                var nbrBlocksScript = recipent.script.replace(re, '$1');
-
-                var nbrBlocksScriptLenght = nbrBlocksScript.length;
-                var nbrBlocksScriptReorderer = "";
-
-                for (var i=0; i < nbrBlocksScriptLenght; i=i+2) {
-                  nbrBlocksScriptReorderer += nbrBlocksScript.charAt(nbrBlocksScriptLenght-i-2);
-                  nbrBlocksScriptReorderer += nbrBlocksScript.charAt(nbrBlocksScriptLenght-i-1);
-                }
-                var nbrBlocksDec = parseInt(nbrBlocksScriptReorderer,16);
-                e.availableBlockNo = parseInt(e.height) + parseInt(nbrBlocksDec);
-              });
-            }
-
-            $scope.transactions.push(e);
-          });
           $scope.transactionsLoaded = true;
           //displayUpdatedDates();
           filterTransactions('ALL');
