@@ -250,10 +250,10 @@
                 controllerAs: 'vm'
             })
 
-            .state('home.deposit', {
-                url: "/deposit/:symbol",
-                templateUrl: "home/deposit.view.html",
-                controller: 'DepositController',
+            .state('home.lock', {
+                url: "/lock/:avatar",
+                templateUrl: "home/lock.view.html",
+                controller: 'LockController',
                 controllerAs: 'vm'
             })
 

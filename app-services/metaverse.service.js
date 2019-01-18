@@ -91,6 +91,7 @@
         service.Stop = Stop;
         service.GetMiningInfo = GetMiningInfo;
         service.GetLocked = GetLocked;
+        service.GetStakeInfo = GetStakeInfo;
 
         //ETP
         service.Send = Send;
@@ -128,8 +129,7 @@
 
         //Misc
         service.Query = Query;
-        service.Deposit = Deposit;
-        service.FrozenAsset = FrozenAsset;
+        service.Lock = Lock;
         service.GetInfo = GetInfo;
         service.GetInfoV2 = GetInfoV2;
 
@@ -772,36 +772,6 @@
             return _sendV2('getaccountasset', [credentials.user, credentials.password, symbol]);
         }
 
-        /**
-         * @api {post} /rpc Deposit ETP
-         * @apiName Deposit
-         * @apiGroup Deposit
-         *
-         * @apiDescription Detposits some ETP for a fixed period of time.
-         *
-         * @apiParam {Const} method deposit
-         * @apiParam {List} params [-f depositperiod,username, password, amount]
-         *
-         **/
-        function Deposit(deposit_period, amount, transactionFee, password, address) {
-            var credentials = localStorageService.get('credentials');
-            if (address != undefined) {
-                return _sendV2('deposit', ['-d', deposit_period, '-a', address, '-f', transactionFee, credentials.user, password, amount]);
-            } else {
-                return _sendV2('deposit', ['-d', deposit_period, '-f', transactionFee, credentials.user, password, amount]);
-            }
-        }
-
-        function FrozenAsset(deposit_period, amount, password, symbol, address) {
-            var credentials = localStorageService.get('credentials');
-            deposit_period *= 60*60*24;  //convert from day to second
-            if (address != undefined) {
-                return _send('frozenasset', ['-d', address, credentials.user, password, symbol, amount, deposit_period]);
-            } else {
-                return _send('frozenasset', [credentials.user, password, symbol, amount, deposit_period]);
-            }
-        }
-
         function GetPublicKey(address) {
             var credentials = localStorageService.get('credentials');
             return _send('getpublickey', [credentials.user, credentials.password, address]);
@@ -1050,8 +1020,17 @@
             return _sendV3('getlocked', [user]);
         }
 
+        function GetStakeInfo(user) {
+            return _sendV3('getstakeinfo', [user]);
+        }
+
         function GetAssetCertificates(asset) {
             return _sendV3('getasset', [asset, '-c']);
+        }
+
+        function Lock(avatar, amount, locktime, transactionFee, password) {
+            var credentials = localStorageService.get('credentials');
+            return _sendV3('lock', [credentials.user, password, avatar, amount, locktime, '-f', transactionFee, ]);
         }
 
         function Query(string) {

@@ -22,7 +22,7 @@
       <div class="form-group">
         <label for="miner" class="control-label">{{ 'TRANSFER_FROM_ADDRESS' | translate }}</label>
         <span ng-show="loadingMiner" class="miniSpinner"></span>
-        <select name="miner" type="address" class="form-control" placeholder="" ng-model="miner" ng-change="getLocked(miner)" ng-class="{validInput: miner, wrongInput: !miner}">
+        <select name="miner" type="address" class="form-control" placeholder="" ng-model="miner" ng-change="minerChanged(miner)" ng-class="{validInput: miner, wrongInput: !miner}">
           <option ng-repeat="address in listAddresses | orderBy:'available':true" value="{{myDidsAddresses[address.address]}}" ng-if="myDidsAddresses[address.address] && address.address.charAt(0) != '3'">{{myDidsAddresses[address.address]}} - {{address.address}} - {{address.available | assetformat : 8}} ETP</option>
           <option ng-repeat="address in listAddresses | orderBy:'available':true" value="{{address.address}}" ng-if="!myDidsAddresses[address.address] && address.address.charAt(0) != '3'">{{address.address}} - {{address.available | assetformat : 8}} ETP</option>
         </select>
@@ -61,16 +61,17 @@
               <b>{{ 'POS_MINING.STAKING_REQUIREMENT_BOLD' | translate }}</b>
             </div>
             <div ng-show="!stakeBalanceLoaded" class="assetValueColumn col-xs-6 noPaddingLeftRight"><span class="mediumSpinner"></span></div>
-            
             <div ng-show="stakeBalanceLoaded && !miner" class="assetValueColumn col-xs-6 noPaddingLeftRight">{{ 'POS_MINING.STAKING_REQUIREMENT_UNSELECT' | translate }}</div>
             <div ng-show="stakeBalanceLoaded && miner && can_mine_till > 0" class="assetValueColumn col-xs-6 noPaddingLeftRight correctInputComment"><span class="glyphicon glyphicon-ok"></span> {{ 'POS_MINING.STAKING_REQUIREMENT_VALID' | translate }} {{can_mine_till | assetformat : 0}}</div>
             <div ng-show="stakeBalanceLoaded && miner && can_mine_till == 0" class="assetValueColumn col-xs-6 noPaddingLeftRight wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'POS_MINING.STAKING_REQUIREMENT_FAIL' | translate }}</div>
+            <a href="#!/lock/{{miner}}" class="btn btn-success btn-success-secondary smallButton assetBoxButton">{{ 'LOCK.BUTTON' | translate}}</a>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'POS_MINING.UTXO_REQUIREMENT' | translate }}</div>
-            <div ng-show="!status.is_mining || status.block_version !== 'PoS'" class="assetValueColumn col-xs-6 noPaddingLeftRight">{{ 'POS_MINING.UTXO_REQUIREMENT_START_MINING' | translate }}</div>
-            <div ng-show="status.is_mining && status.block_version == 'PoS' && status.stake_utxo_count > 0" class="assetValueColumn col-xs-6 noPaddingLeftRight correctInputComment"><span class="glyphicon glyphicon-ok"></span> {{status.stake_utxo_count}} {{ 'POS_MINING.VOTE_AVAILABLE' | translate }}</div>
-            <div ng-show="status.is_mining && status.block_version == 'PoS' && status.stake_utxo_count == 0" class="assetValueColumn col-xs-6 noPaddingLeftRight wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{status.stake_utxo_count}} {{ 'POS_MINING.VOTE_AVAILABLE' | translate }}</div>
+            <div ng-show="!stakeUtxoLoaded" class="assetValueColumn col-xs-6 noPaddingLeftRight"><span class="mediumSpinner"></span></div>
+            <div ng-show="stakeUtxoLoaded && !miner" class="assetValueColumn col-xs-6 noPaddingLeftRight">{{ 'POS_MINING.STAKING_REQUIREMENT_UNSELECT' | translate }}</div>
+            <div ng-show="stakeUtxoLoaded && miner && nbr_vote > 0" class="assetValueColumn col-xs-6 noPaddingLeftRight correctInputComment"><span class="glyphicon glyphicon-ok"></span> {{nbr_vote}} {{ 'POS_MINING.VOTE_AVAILABLE' | translate }}</div>
+            <div ng-show="stakeUtxoLoaded && miner && nbr_vote == 0" class="assetValueColumn col-xs-6 noPaddingLeftRight wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{nbr_vote}} {{ 'POS_MINING.VOTE_AVAILABLE' | translate }}</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'POS_MINING.UTXO_REQUIREMENT_DETAILS' | translate }}</div>
