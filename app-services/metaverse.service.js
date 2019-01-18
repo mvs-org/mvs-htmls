@@ -90,6 +90,7 @@
         service.Start = Start;
         service.Stop = Stop;
         service.GetMiningInfo = GetMiningInfo;
+        service.GetLocked = GetLocked;
 
         //ETP
         service.Send = Send;
@@ -116,7 +117,7 @@
         service.ListMITs = ListMITs;
         service.RegisterMIT = RegisterMIT;
         service.TransferMIT = TransferMIT;
-
+        service.GetAssetCertificates = GetAssetCertificates;
 
         //Chain
         service.FetchHeight = FetchHeight;
@@ -548,9 +549,13 @@
          * @apiParam {List} params [username, password]
          *
          **/
-        function Start() {
+        function Start(type, miner, mst) {
             var credentials = localStorageService.get('credentials');
-            return _send('start', [credentials.user, credentials.password]);
+            if(mst) {
+                return _send('start', [credentials.user, credentials.password, '-c', type, '-a', miner, '-s', mst]);
+            } else {
+                return _send('start', [credentials.user, credentials.password, '-c', type, '-a', miner]);
+            }
         }
 
         /**
@@ -1039,6 +1044,14 @@
           } else {
             return _sendV2('swaptoken', [credentials.user, password, sendto, symbol, quantity, ethAddress, '-s', swaptokenFee, '-f', transactionFee]);
           }
+        }
+
+        function GetLocked(user) {
+            return _sendV3('getlocked', [user]);
+        }
+
+        function GetAssetCertificates(asset) {
+            return _sendV3('getasset', [asset, '-c']);
         }
 
         function Query(string) {

@@ -23,7 +23,7 @@
   "NAV_TRANSFER" : "Send",
   "NAV_DEPOSIT" : "Deposit",
   "NAV_HISTORY" : "History",
-  "NAV_PRO" : "Advanced",
+  "NAV_PRO" : "Mining",
   "USER_SETTING" : "Settings",
   "NAV_EXPLORER" : "Explorer",
   "MINING_START":      "Start mining",
@@ -704,6 +704,24 @@
   "MINING.IS_MINING_POW": "Currently Mining via PoW",
   "MINING.IS_MINING_POS": "Currently Mining via PoS",
   "MINING.IS_MINING_DPOS": "Currently Mining via dPoS",
-  "MINING.PAYMENT_ADDRESS": "Payment address"
+  "MINING.PAYMENT_ADDRESS": "Payment address",
+  "MESSAGES.GET_LOCKED_ERROR": "Error while getting the locked ETP. Please make sure this miner has enough locked ETP for PoS mining",
+  "POS_MINING.REQUIREMENT_TITLE": "PoS requirements",
+  "POS_MINING.STAKING_REQUIREMENT": "You need to lock at least 1 000 ETP, for at least 100 000 blocks. Please also note that the ETP that unlock in less than 10 000 blocks are not included.",
+  "POS_MINING.STAKING_REQUIREMENT_BOLD": "These locked ETP need to be locked in 1 time! Two lock transactions of 500 ETP will not validate this condition!",
+  "POS_MINING.UTXO_REQUIREMENT": "You also need to have available ETPs. Each output of more than 1 000 ETP and not spent since at least 1 000 block give you 1 vote*",
+  "POS_MINING.UTXO_REQUIREMENT_DETAILS": "*After succesfully mining a block, 1 vote will be spent. You will then have to wait 1 000 block to be able to vote again with those ETPs",
+  "POS_MINING.UTXO_REQUIREMENT_START_MINING": "Start to mine to know the number of vote you have!",
+  "MINING.MINER": "Miner",
+  "POS_MINING.VOTE_AVAILABLE": "Vote(s) available",
+  "MINING.NO_MST": "No MST mining",
+  "POW_MINING.REQUIREMENT_TITLE": "PoW mining",
+  "POW_MINING.REQUIREMENT_EXPLAINATION": "PoW mining difficulty being very hight for home computing, it is recommended to use a mining pool. You can find the list of most active mining pools ",
+  "POW_MINING.EXPLORER_LINK": "in the explorer",
+
+  "POS_MINING.STAKING_REQUIREMENT_VALID": "This avatar or address satisfies this requirement till block ",
+  "POS_MINING.STAKING_REQUIREMENT_FAIL": "This avatar or address does not satisfy the lock requirement to do PoS mining",
+  "POS_MINING.STAKING_REQUIREMENT_UNSELECT": "Please select an avatar or address first"
+
 
 }

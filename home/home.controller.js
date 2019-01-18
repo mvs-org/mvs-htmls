@@ -4677,24 +4677,6 @@
 
     listAddresses();
 
-    /*NProgress.start();
-    MetaverseService.ListAllMITs()
-    .then( (response) => {
-      if (typeof response.success !== 'undefined' && response.success) {
-        $scope.allmits = response.data.result.mits;
-        if(typeof $scope.allmits != 'undefined' && $scope.allmits != null) {
-          $scope.allmits.forEach(function(mit) {
-            $scope.allMitsSymbols.push(mit.symbol);
-          });
-        } else {
-          $scope.allmits = [];
-        }
-      } else {
-        $translate('MESSAGES.MITS_LOAD_ERROR').then( (data) => FlashService.Error(data) );
-      }
-      NProgress.done();
-    });*/
-
     function checkInputs(password) {
       $scope.confirmation = true;
       delete $rootScope.flash;
@@ -5005,27 +4987,100 @@
 
   }
 
-  function AdvancedController(MetaverseService, $rootScope, FlashService, $translate, $scope, $window) {
+  function AdvancedController(MetaverseService, FlashService, $translate, $scope, $window) {
+   
 
-    /***Mining***/
-    
+  }
+
+  function PosController(MetaverseService, $rootScope, FlashService, $translate, $scope, $window) {
+
+    $window.scrollTo(0,0);
+
+    $scope.startPosMining = startPosMining;
     $scope.stop = StopMining;
+    $scope.getLocked = getLocked;
+    $scope.getMinability = getMinability;
     $scope.status = {};
 
-    function GetMiningInfo() {
+    $scope.addresses = [];
+    $scope.listAddresses = [];
+    $scope.myDidsAddresses = [];
+    $scope.symbolAddress = [];
+    $scope.loadingMiner = true;
+    $scope.mst = '';
+
+    $scope.min_locked_etp = 100000000000;
+    $scope.min_locked_range = 100000;
+    $scope.forbidden_period_end_range = 10000;
+    $scope.can_mine_till = 0;
+    $scope.nbr_lock_above_min_locked_etp = 0;
+
+    $scope.stakeBalanceLoaded = true;
+    $scope.initCheckLockRequirement = true;
+
+    $scope.assets = [];
+    $scope.mstMinable = false;
+
+    GetMiningInfo();
+
+    //Load users ETP balance
+    //Load the addresses and their balances
+    MetaverseService.ListBalances()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        response.data.balances.forEach( (e) => {
+          $scope.addresses[e.balance.address] = ({
+            "balance": parseInt(e.balance.unspent),
+            "available": parseInt(e.balance.available),
+            "address": e.balance.address,
+            "frozen": e.balance.frozen
+          });
+          $scope.listAddresses.push({
+            "balance": parseInt(e.balance.unspent),
+            "available": parseInt(e.balance.available),
+            "address": e.balance.address
+          });
+        });
+        $scope.loadingMiner = false;
+      }
+    });
+
+    MetaverseService.ListMyDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.myDids = response.data.result.dids;
+        if(typeof $scope.myDids != 'undefined' && $scope.myDids != null) {
+          $scope.myDids.forEach(function(did) {
+            $scope.myDidsAddresses[did.address] = did.symbol;
+          });
+        } else {
+          $scope.myDids = [];
+        }
+      } else if (response.message.message == "no record in this page") {
+        $scope.noDids = true;
+        $scope.selectedDid = "";
+      } else {
+        $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
+    });
+
+    function startPosMining() {
       NProgress.start();
-      MetaverseService.GetMiningInfo()
+      MetaverseService.Start('pos', $scope.miner, $scope.mst)
       .then( (response) => {
         console.log(response)
         NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
-          $scope.status = response.data.result;
+          $translate('MESSAGES.MINING_START_SUCCESS').then( (data) => FlashService.Success(data) );
+          $window.scrollTo(0,0);
+          GetMiningInfo();
         } else {
-          $translate('MESSAGES.MINING_STATUS_ERROR').then( (data) => FlashService.Error(data) );
+          $translate('MESSAGES.MINING_START_ERROR').then( (data) => FlashService.Error(data) );
           $window.scrollTo(0,0);
         }
       });
-    }
+    } 
 
     function StopMining() {
       NProgress.start();
@@ -5043,8 +5098,89 @@
       });
     }
 
-    GetMiningInfo();
+    function GetMiningInfo() {
+      $scope.loadingMiningInfo = true;
+      NProgress.start();
+      MetaverseService.GetMiningInfo()
+      .then( (response) => {
+        NProgress.done();
+        $scope.loadingMiningInfo = false;
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.status = response.data.result;
+          console.log($scope.status.is_mining)
+          if($scope.initCheckLockRequirement && $scope.status.is_mining)
+            getLocked($scope.status.payment_address)
+          $scope.initCheckLockRequirement = false;
+          console.log($scope.status)
+        } else {
+          $translate('MESSAGES.MINING_STATUS_ERROR').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
+        }
+      });
+    }
 
+    function getLocked(miner) {
+      $scope.stakeBalanceLoaded = false;
+      MetaverseService.GetLocked(miner)
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          let locked_outputs = response.data.result;
+          $scope.can_mine_till = 0;
+          $scope.nbr_lock_above_min_locked_etp = 0;
+          let latest_valid_unlock = 0;
+          if(locked_outputs) {
+            locked_outputs.forEach(function(locked_output) {
+              console.log(locked_output)
+              if(locked_output.locked_balance >= $scope.min_locked_etp && locked_output.locked_height > $scope.min_locked_range && locked_output.expiration_height - $scope.status.height > $scope.forbidden_period_end_range) {
+                $scope.nbr_lock_above_min_locked_etp++;
+                latest_valid_unlock = locked_output.expiration_height > latest_valid_unlock ? locked_output.expiration_height : latest_valid_unlock;
+              }           
+            });
+            $scope.can_mine_till = latest_valid_unlock > 0 ? latest_valid_unlock - $scope.forbidden_period_end_range : 0;
+          }
+          $scope.stakeBalanceLoaded = true;
+        } else {
+          $translate('MESSAGES.GET_LOCKED_ERROR').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
+        }
+        
+      });
+    }
+
+    MetaverseService.ListAllAssets()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.assets = response.data.assets;
+      } else {
+        $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => {
+          //Show asset load error
+          FlashService.Error(data);
+        } );
+      }
+    });
+
+    function getMinability(mst) {
+      console.log(mst)
+      $scope.mstMinable = false;
+      MetaverseService.GetAssetCertificates(mst)
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          console.log(response)
+          let certificates = response.data.result;
+          if(certificates) {
+            certificates.forEach(function(certificate) {
+              if(certificate.cert == 'mining')
+                $scope.mstMinable = true;
+            });
+          }
+        } else {
+          $translate('MESSAGES.GET_LOCKED_ERROR').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
+        }
+        
+      });
+
+    }
 
   }
 
@@ -5052,11 +5188,23 @@
 
     $window.scrollTo(0,0);
 
-  }
+    $scope.status = {}
 
-  function PosController(MetaverseService, $rootScope, FlashService, $translate, $scope, $window) {
+    let testnet = $rootScope.network == 'testnet'
 
-    $window.scrollTo(0,0);
+    NProgress.start();
+    MetaverseService.GetMiningInfo()
+    .then( (response) => {
+      NProgress.done();
+      $scope.loadingMiningInfo = false;
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.status = response.data.result;
+      } else {
+        $translate('MESSAGES.MINING_STATUS_ERROR').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
+    });
+    
 
   }
 
