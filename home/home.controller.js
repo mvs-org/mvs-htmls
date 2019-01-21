@@ -452,7 +452,6 @@
         } else {
           $scope.avatars = [];
         }
-        console.log($scope.avatars)
       } else if (response.message.message == "no record in this page") {
         $scope.noDids = true;
         $scope.selectedDid = "";
@@ -2326,7 +2325,6 @@
     .then( (response) => {
       NProgress.done();
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.assets = [];
         $scope.assets = response.data.assets;
         //All the details are hidden at the loading
         if ($scope.assets != '') {
@@ -4991,6 +4989,8 @@
     $scope.stakeUtxoLoaded = true;
     $scope.nbr_vote = 0;
 
+    $scope.assetsSymbols = [];
+
     GetMiningInfo();
 
     
@@ -4999,7 +4999,6 @@
       NProgress.start();
       MetaverseService.Start('pos', $scope.miner, $scope.mst)
       .then( (response) => {
-        console.log(response)
         NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
           $translate('MESSAGES.MINING_START_SUCCESS').then( (data) => FlashService.Success(data) );
@@ -5037,11 +5036,9 @@
         $scope.loadingMiningInfo = false;
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.status = response.data.result;
-          console.log("Miner : " + $scope.miner)
           if($scope.initCheckLockRequirement && $scope.status.is_mining)
             getLocked($scope.status.payment_address)
           $scope.initCheckLockRequirement = false;
-          console.log($scope.status)
         } else {
           $translate('MESSAGES.MINING_STATUS_ERROR').then( (data) => FlashService.Error(data) );
           $window.scrollTo(0,0);
@@ -5127,6 +5124,13 @@
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
         $scope.assets = response.data.assets;
+        //All the details are hidden at the loading
+        if ($scope.assets != '') {
+          $scope.assets.forEach( (asset) => {
+            if(asset.is_secondaryissue == 'false')
+              $scope.assetsSymbols.push(asset.symbol);
+          });
+        } //else, there is no asset on the blockchain
       } else {
         $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => {
           //Show asset load error
@@ -5136,12 +5140,10 @@
     });
 
     function getMinability(mst) {
-      console.log(mst)
       $scope.mstMinable = false;
       MetaverseService.GetAssetCertificates(mst)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
-          console.log(response)
           let certificates = response.data.result;
           if(certificates) {
             certificates.forEach(function(certificate) {
@@ -5161,7 +5163,6 @@
       MetaverseService.GetStakeInfo(miner)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
-          console.log(response)
           $scope.stakeUtxoLoaded = true;
           $scope.nbr_vote = response.data.result.stake_utxo_count
         } else {

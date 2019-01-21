@@ -9,13 +9,13 @@
 <!--Mining-->
 <div class="col-md-12 noPaddingLeftRight">
   <h4 ng-hide="isMining">{{ 'ADVANCED.POW_TITLE' | translate }}
-    <span ng-hide="status.is_mining" class="miningEnd wk-title">{{ 'MINING_NOT_RECOMMENDED' | translate }}   </span>
+    <span ng-hide="status.is_mining && status.block_version == 'PoW'" class="miningEnd wk-title">{{ 'MINING_NOT_RECOMMENDED' | translate }}   </span>
   </h4>
-  <h4 ng-show="status.is_mining" class="isMiningText">{{ 'MINING.IS_MINING_POW' | translate }}</h4>
+  <h4 ng-show="status.is_mining && status.block_version == 'PoW'" class="isMiningText">{{ 'MINING.IS_MINING_POW' | translate }}</h4>
 
   <div class="row">
     <div class="col-xs-12 col-sm-6">
-      <table class="table miningTable wk-countbox">
+      <table class="table miningTable">
         <tbody>
           <tr>
             <td class="wd-t">{{ 'MINING_HEIGHT' | translate }}</td>

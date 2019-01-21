@@ -710,7 +710,7 @@
   "POS_MINING.STAKING_REQUIREMENT_EXPLAIN": "You need to lock at least 1 000 ETP, for at least 100 000 blocks in order to do PoS mining. Please also note that the ETP that unlock in less than 10 000 blocks are not included.",
   "POS_MINING.STAKING_REQUIREMENT_EXPLAIN_BOLD": "These locked ETP also need to be locked in 1 time! Two lock transactions of 500 ETP will not validate this condition!",
   "POS_MINING.UTXO_REQUIREMENT": "You also need to have available ETPs. Each output of more than 1 000 ETP and not spent recently gives you 1 vote*",
-  "POS_MINING.UTXO_REQUIREMENT_DETAILS": "*After succesfully mining a block, 1 vote will be spent. You will be able to spend it again after a period of 500 to 1 000 blocks according to the PoS difficulty",
+  "POS_MINING.UTXO_REQUIREMENT_DETAILS": "*After succesfully mining a block, 1 vote will be spent. You will be able to spend it again after a period of 500 to 1 000 blocks, according to the PoS difficulty",
   "MINING.MINER": "Miner",
   "POS_MINING.VOTE_AVAILABLE": "Vote(s) available",
   "MINING.NO_MST": "No MST mining",
@@ -737,6 +737,7 @@
   "POS_MINING.MST_CANNOT_BE_MINED": "This MST cannot be mined",
   "MINING.MINE_MST": "Mine MST",
   "MINING.MINING_MST": "Mining MST",
+  "MINING.MINING_NO_MST": "Not mining any MST",
   "POS_MINING.STAKING_REQUIREMENT": "PoS lock requirement",
 
   "HISTORY.COINSTAKE": "Coinstake"

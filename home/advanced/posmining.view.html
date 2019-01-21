@@ -6,20 +6,36 @@
   </ul>
 </div>
 
-<!--Mining-->
-<div class="col-md-12 noPaddingLeftRight">
-  <div ng-show="status.is_mining" class="isMiningText">
-    <h4>{{ 'MINING.IS_MINING_POS' | translate }}</h4>
-    <h4>{{ 'MINING.MINER' | translate }}: {{myDidsAddresses[status.payment_address] ? myDidsAddresses[status.payment_address] : status.payment_address}}</h4>
-    <h4>{{ 'MINING.MINING_MST' | translate }}: {{status.asset_symbol}}</h4>
-  </div>
-</div>
+
 
 <div class="row">
   <form>
     <div class="col-xs-12 col-sm-6">
+
+      <!--Mining info-->
+      <div ng-show="status.is_mining && status.block_version == 'PoS'" class="isMiningText">
+        <h4>{{ 'MINING.IS_MINING_POS' | translate }}</h4>
+        <table class="table miningTable">
+          <tbody>
+            <tr>
+              <td class="wd-t">{{ 'MINING.MINER' | translate }}</td>
+              <td class="color66">{{myDidsAddresses[status.payment_address] ? myDidsAddresses[status.payment_address] : status.payment_address}}</td>
+            </tr>
+            <tr>
+              <td class="wd-t">{{ 'POS_MINING.VOTE_AVAILABLE' | translate }}</td>
+              <td class="color66">{{status.stake_utxo_count}}</td>
+            </tr>
+            <tr>
+              <td class="wd-t">{{ 'MINING.MINING_MST' | translate }}</td>
+              <td class="color66" ng-show="status.asset_symbol == ''">{{ 'MINING.MINING_NO_MST' | translate }}</td>
+              <td class="color66" ng-show="status.asset_symbol != ''">{{status.asset_symbol}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       <!--Miner-->
-      <div class="form-group">
+      <div class="form-group" ng-hide="status.is_mining && status.block_version == 'PoS'">
         <label for="miner" class="control-label">{{ 'MINING.MINER' | translate }}</label>
         <span ng-show="loadingMiner" class="miniSpinner"></span>
         <select name="miner" type="address" class="form-control" placeholder="" ng-model="miner" ng-change="minerChanged(miner)" ng-class="{validInput: miner, wrongInput: !miner}">
@@ -29,11 +45,11 @@
       </div>
 
       <!--MST mined-->
-      <div class="form-group">
+      <div class="form-group" ng-hide="status.is_mining && status.block_version == 'PoS'">
         <label class="control-label">{{ 'MINING.MINE_MST' | translate }}</label>
         <select name="mst" type="asset" class="form-control" placeholder="" ng-model="mst" ng-change="getMinability(mst)" ng-class="{validInput: mstMinable || mst == '', wrongInput: !mstMinable && mst != ''}">
           <option value="">{{ 'MINING.NO_MST' | translate }}</option>
-          <option ng-repeat="asset in assets" value="{{asset.symbol}}">{{asset.symbol}}</option>
+          <option ng-repeat="asset in assetsSymbols" value="{{asset}}">{{asset}}</option>
         </select>
         <div ng-show="!mstMinable && mst != ''" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'POS_MINING.MST_CANNOT_BE_MINED' | translate }}</div>
       </div>
