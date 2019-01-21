@@ -157,6 +157,7 @@
             <span ng-show="transaction.direction=='did-transfer'" class="intrawalletSign overflow">{{'HISTORY.DID_TRANSFER' | translate}}</span>
             <span ng-show="transaction.direction=='mit-issue'" class="intrawalletSign overflow">{{'HISTORY.MIT_ISSUE' | translate}}</span>
             <span ng-show="transaction.direction=='mit-transfer'" class="intrawalletSign overflow">{{'HISTORY.MIT_TRANSFER' | translate}}</span>
+            <span ng-show="transaction.direction=='coinstake'" class="intrawalletSign overflow">{{'HISTORY.COINSTAKE' | translate}}</span>
           </div>
 
           <!--Type (ETP,...)-->
@@ -195,6 +196,7 @@
             <span ng-show="transaction.direction=='did-transfer'" class="intrawalletSign overflow">{{'HISTORY.DID_TRANSFER' | translate}} {{transaction.type}}</span>
             <span ng-show="transaction.direction=='mit-issue'" class="intrawalletSign overflow">{{'HISTORY.MIT_ISSUE' | translate}}</span>
             <span ng-show="transaction.direction=='mit-transfer'" class="intrawalletSign overflow">{{'HISTORY.MIT_TRANSFER' | translate}}</span>
+            <span ng-show="transaction.direction=='coinstake'" class="intrawalletSign overflow">{{'HISTORY.COINSTAKE' | translate}}</span>
           </div>
           <div class="transactionBoxSmallAddress overflow">
             <a class="btn-link" href="#!/explorer/tx/{{transaction.hash}}">

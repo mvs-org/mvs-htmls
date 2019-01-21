@@ -54,7 +54,7 @@
       <label class="control-label">
         {{ 'EXPLORER.TRANSACTION_OUTPUTS' | translate }}
       </label>
-      <div ng-repeat="output in transaction.outputs" ng-hide="output.attachment.type == 'message'" class="explorerTransaction col-xs-12 noPaddingLeftRight">
+      <div ng-repeat="output in transaction.outputs" ng-hide="output.attachment.type == 'message' || output.attachment.type == 'coinstake'" class="explorerTransaction col-xs-12 noPaddingLeftRight">
         <div class="overflow col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 noPaddingLeftRight">
           <a ng-show="output.attachment.to_did" class="btn-link overflow" href="#!/explorer/adr/{{output.address}}" bs-tooltip data-placement="top" title="{{ 'ADDRESS' | translate }}">{{output.attachment.to_did}} / {{output.address}}</a>
           <a ng-hide="output.attachment.to_did" class="btn-link" href="#!/explorer/adr/{{output.address}}" bs-tooltip data-placement="top" title="{{ 'ADDRESS' | translate }}">{{output.address}}</a>

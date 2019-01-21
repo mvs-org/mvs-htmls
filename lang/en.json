@@ -737,7 +737,9 @@
   "POS_MINING.MST_CANNOT_BE_MINED": "This MST cannot be mined",
   "MINING.MINE_MST": "Mine MST",
   "MINING.MINING_MST": "Mining MST",
-  "POS_MINING.STAKING_REQUIREMENT": "PoS lock requirement"
+  "POS_MINING.STAKING_REQUIREMENT": "PoS lock requirement",
+
+  "HISTORY.COINSTAKE": "Coinstake"
   
 
 }

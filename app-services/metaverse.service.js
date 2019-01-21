@@ -1155,6 +1155,7 @@
         const TX_TYPE_DID_TRANSFER = 'DID_TRANSFER';
         const TX_TYPE_MIT = 'MIT';
         const TX_TYPE_UNKNOWN = 'UNKNOWN';
+        const TX_TYPE_COINSTAKE = 'COINSTAKE'
 
         service.LoadTransactions = LoadTransactions;
         service.GetBalance = GetBalance;
@@ -1193,6 +1194,8 @@
                         result = TX_TYPE_DID_TRANSFER;
                     if (output.attachment.type === 'mit')
                         result = TX_TYPE_MIT;
+                    if (output.attachment.type === 'coinstake')
+                        result = TX_TYPE_COINSTAKE;
                 });
                 return (result) ? result : TX_TYPE_ETP;
             } else {
@@ -1395,6 +1398,11 @@
                                                 transaction.type = output.attachment.symbol;
                                             }
                                         });
+                                        transactions.push(transaction);
+                                        break;
+                                    case TX_TYPE_COINSTAKE:
+                                        transaction.direction = 'coinstake';
+                                        transaction.type = 'ETP';
                                         transactions.push(transaction);
                                         break;
                                     default:
