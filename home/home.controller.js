@@ -467,7 +467,6 @@
     function checkready() {
       //Check for errors
       for (var error in $scope.error) {
-        console.log(error)
         if ($scope.error[error]) {
           $scope.submittable = false;
           return;
@@ -479,9 +478,9 @@
     //Check if the avatar is valid
     $scope.$watch('avatar', (newVal, oldVal) => {
       $scope.error.avatar_empty = (newVal == undefined || newVal == '');
-      validQuantity($scope.quantity);
       if($scope.addresses && $scope.avatarsAddresses && $scope.avatarsAddresses[$scope.avatar])
         $scope.availableBalance = $scope.addresses[$scope.avatarsAddresses[$scope.avatar]].available;
+      validQuantity($scope.quantity);
       checkready();
     });
 
@@ -492,14 +491,17 @@
       $scope.error.quantity_empty = (newVal == undefined || newVal == '' || newVal < 0);
       $scope.error.quantity_not_enough_balance = (newVal != undefined && newVal != '') ? newVal > ($scope.availableBalance - $scope.transactionFee*100000000)/100000000 : false;
       $scope.error.quantity_not_a_number = (newVal != undefined && newVal != '') ? isNaN(newVal) : false;
+      $scope.warning.quantity_high = newVal != undefined && newVal != '' && newVal > 5000;
+      $scope.warning.quantity_low = newVal != undefined && newVal != '' && newVal < 1000;
+      
       checkready();
     }
 
     //Check if the locktime is valid
     $scope.$watch('locktime', (newVal, oldVal) => {
       $scope.error.locktime = (newVal == undefined || newVal == '');
-      $scope.warning.locktime_high = newVal > 2000000;
-      $scope.warning.locktime_low = newVal < 100000;
+      $scope.warning.locktime_high = newVal != undefined && newVal != '' && newVal > 2000000;
+      $scope.warning.locktime_low = newVal != undefined && newVal != '' && newVal < 100000;
       checkready();
     });
 

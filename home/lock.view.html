@@ -1,0 +1,120 @@
+<div class="content">
+	<span class="headline col-sm-12 noPaddingLeftRight">{{ 'LOCK.HEADLINE' | translate }}</span>
+
+	<form ng-hide="confirmation" class="row">
+		<div class="col-sm-12 col-md-6">
+			<!--Avatar-->
+	    	<div class="form-group">
+				<label for="miner" class="control-label">{{ 'PROFIL.DID' | translate }}</label>
+				<span ng-show="!avatarsLoaded || !balancesLoaded" class="miniSpinner"></span>
+				<select name="avatar" type="avatar" class="form-control" placeholder="" ng-model="avatar" ng-class="{validInput: !error.avatar_empty, wrongInput: error.avatar_empty}">
+					<option ng-repeat="avatar in avatars | orderBy:'symbol'" value="{{avatar}}">{{avatar}} - {{addresses[avatarsAddresses[avatar]].available | assetformat : 8}} ETP</option>
+				</select>
+			</div>
+
+			<!--Amount-->
+			<div class="form-group">
+				<div class="col-md-6 noPaddingLeftRight">
+					<label for="quantity" class="control-label">{{ 'TRANSFER_VALUE' | translate }}</label>
+					<span ng-show="!balancesLoaded" class="miniSpinner"></span>
+				</div>
+				<input type="number" min=0 step="0.00000001" class="form-control" placeholder="0.00000000" name="quantity" ng-model="quantity" ng-class="{validInput: !error.quantity_empty && !error.quantity_not_enough_balance && !error.quantity_not_a_number, wrongInput: error.quantity_empty || error.quantity_not_enough_balance || error.quantity_not_a_number}" autocomplete="off">
+				<div ng-show="error.quantity_not_enough_balance && !error.quantity_not_a_number" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'DEPOSIT.AMOUNT_NOT_ENOUGH' | translate }}</div>
+				<div ng-show="error.quantity_not_a_number" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.NOT_A_NUMBER' | translate }}</div>
+				<div ng-show="warning.quantity_high" class="warningInputComment"><span class="glyphicon glyphicon-warning-sign"></span> {{ 'LOCK.AMOUNT_HIGH' | translate }}</div>
+				<div ng-show="warning.quantity_low" class="warningInputComment"><span class="glyphicon glyphicon-warning-sign"></span> {{ 'LOCK.AMOUNT_LOW' | translate }}</div>
+			</div>
+
+			<!--Locktime-->
+			<div class="form-group">
+				<label for="locktime" class="control-label">{{ 'DEPOSIT.NBR_BLOCKS' | translate }}</label>
+				<input type="number" min=0 step="1" class="form-control" placeholder="0" name="locktime" ng-model="locktime" ng-class="{validInput: !error.locktime, wrongInput: error.locktime}" autocomplete="off">
+				<div ng-show="warning.locktime_high" class="warningInputComment"><span class="glyphicon glyphicon-warning-sign"></span> {{ 'LOCK.LOCKTIME_HIGH' | translate }}</div>
+				<div ng-show="warning.locktime_low" class="warningInputComment"><span class="glyphicon glyphicon-warning-sign"></span> {{ 'LOCK.LOCKTIME_LOW' | translate }}</div>
+			</div>
+
+			<!--Fee-->
+			<div class="form-group">
+				<label for="fee" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</label>
+				<input type="number" step="0.00000001" class="form-control" name="fee" ng-model="transactionFee" ng-class="{validInput: !error.fee_empty && !error.fee_too_low && !error.fee_not_a_number, wrongInput: error.fee_empty || error.fee_too_low || error.fee_not_a_number}">
+				<div ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</div>
+				<div ng-show="error.fee_not_a_number" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.NOT_A_NUMBER' | translate }}</div>
+			</div>
+
+			<!--Submit button-->
+			<div class="col-xs-12 col-md-6 noPaddingLeftRight">
+				<button class="btn btn-success" type="submit" id="transferBtn" ng-click="checkInputs()" ng-disabled="!submittable">{{ 'LOCK.BUTTON' | translate }}</button>
+			</div>
+		</div>
+
+		<!--Lock explanation-->
+		<div class="col-xs-12 col-sm-6">
+			<div class="assetDetailsPanel panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">{{'LOCK.EXPLANATION_TITLE' | translate}}</h3>
+				</div>
+				<div class="panel-body">
+					<div class="col-xs-12 noPaddingLeftRight assetDataLine">
+						<div class="assetDataColumn col-xs-12 noPaddingLeftRight">
+							{{ 'LOCK.EXPLANATION_BODY' | translate }}
+						</div>
+					</div>
+					<div class="col-xs-12 noPaddingLeftRight assetDataLine">
+						<div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'POS_MINING.STAKING_REQUIREMENT' | translate }}</div>
+						<div class="assetValueColumn col-xs-9 noPaddingLeftRight">
+							{{ 'POS_MINING.STAKING_REQUIREMENT_EXPLAIN' | translate }}
+							<b>{{ 'POS_MINING.STAKING_REQUIREMENT_EXPLAIN_BOLD' | translate }}</b>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</form>
+
+	<form ng-show="confirmation" class="row">
+		<br/>
+		<div class="col-lg-6 col-md-12">
+			<div class="assetDetailsPanel panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">{{'TRANSFER.CONFIRMATION_TITLE' | translate}}</h3>
+				</div>
+				<div class="panel-body">
+					<div class="col-xs-12 noPaddingLeftRight assetDataLine">
+						<div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_VALUE' | translate }}</div>
+						<div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{quantity | number : 8}} ETP</div>
+					</div>
+					<div class="col-xs-12 noPaddingLeftRight assetDataLine">
+						<div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'DEPOSIT.NBR_BLOCKS' | translate }}</div>
+						<div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{deposit_options[period_select][3]}} {{ 'BLOCKS' | translate }}</div>
+					</div>
+					<div ng-show="address_option && deposit_address != undefined && deposit_address != ''" class="col-xs-12 noPaddingLeftRight assetDataLine">
+						<div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'DEPOSIT.RECIPIENT_ADDRESS' | translate }}</div>
+						<div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{deposit_address}}</div>
+					</div>
+					<div class="col-xs-12 noPaddingLeftRight assetDataLine">
+						<div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</div>
+						<div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{transactionFee}} ETP</div>
+					</div>
+				</div>
+			</div>
+			<!--Password-->
+			<div  class="form-group col-xs-12 noPaddingLeftRight">
+				<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
+				<input type="password" class="form-control" name="password" autocomplete="password" ng-model="password" ng-class="{validInput: !errorPassword, wrongInput: errorPassword}">
+			</div>
+		</div>
+
+		<div class="col-xs-12 col-sm-12 col-md-12 form-group noPaddingLeftRight">
+			<br>
+			<!--Submit button-->
+			<div class="col-xs-6 col-sm-6 col-md-3">
+				<button type="submit" class="btn btn-success" ng-click="lock(avatar, quantity, locktime, transactionFee, password)" ng-disabled="errorPassword">{{ 'LOCK.BUTTON' | translate }}</button>
+			</div>
+			<!--Return button-->
+			<div class="col-xs-6 col-sm-6 col-md-3">
+				<button class="btn btn-success btn-success-secondary" ng-click="confirmation = false; password = ''">{{ 'CANCEL_BUTTON' | translate }}</button>
+			</div>
+		</div>
+	</form>
+</div>

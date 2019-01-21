@@ -707,8 +707,8 @@
   "MINING.PAYMENT_ADDRESS": "Payment address",
   "MESSAGES.GET_LOCKED_ERROR": "Error while getting the locked ETP. Please make sure this miner has enough locked ETP for PoS mining",
   "POS_MINING.REQUIREMENT_TITLE": "PoS requirements",
-  "POS_MINING.STAKING_REQUIREMENT": "You need to lock at least 1 000 ETP, for at least 100 000 blocks. Please also note that the ETP that unlock in less than 10 000 blocks are not included.",
-  "POS_MINING.STAKING_REQUIREMENT_BOLD": "These locked ETP need to be locked in 1 time! Two lock transactions of 500 ETP will not validate this condition!",
+  "POS_MINING.STAKING_REQUIREMENT_EXPLAIN": "You need to lock at least 1 000 ETP, for at least 100 000 blocks in order to do PoS mining. Please also note that the ETP that unlock in less than 10 000 blocks are not included.",
+  "POS_MINING.STAKING_REQUIREMENT_EXPLAIN_BOLD": "These locked ETP also need to be locked in 1 time! Two lock transactions of 500 ETP will not validate this condition!",
   "POS_MINING.UTXO_REQUIREMENT": "You also need to have available ETPs. Each output of more than 1 000 ETP and not spent recently gives you 1 vote*",
   "POS_MINING.UTXO_REQUIREMENT_DETAILS": "*After succesfully mining a block, 1 vote will be spent. You will be able to spend it again after a period of 500 to 1 000 blocks according to the PoS difficulty",
   "MINING.MINER": "Miner",
@@ -729,6 +729,15 @@
   "LOCK.HEADLINE": "Lock ETP",
 
   "LOCK.EXPLANATION_TITLE": "Lock description",
-  "LOCK.EXPLANATION_BODY": "Lock ETP does not provide any direct interest. However, locked ETP are required in order to do PoS and dPoS mining. Only lock ETPs if you plan to do mining, and understood the requirements of each mining type."
+  "LOCK.EXPLANATION_BODY": "Locking ETP does not provide any direct interest. However, locked ETP are required in order to do PoS and dPoS mining. Only lock ETPs if you plan to do mining, and understood the requirements of each mining type.",
+  "LOCK.LOCKTIME_HIGH": "That's a very long time! Are you sure you want to lock your ETP for so long?",
+  "LOCK.LOCKTIME_LOW": "If you lock you ETP for less than 100 000 blocks, it will not validate the requirement for PoS mining",
+  "LOCK.AMOUNT_HIGH": "That's a big amount! Are you sure you want to lock so many ETP? The lock function does not provide any interest",
+  "LOCK.AMOUNT_LOW": "If you lock less than 1 000 ETP, it will not validate the requirement for PoS mining",
+  "POS_MINING.MST_CANNOT_BE_MINED": "This MST cannot be mined",
+  "MINING.MINE_MST": "Mine MST",
+  "MINING.MINING_MST": "Mining MST",
+  "POS_MINING.STAKING_REQUIREMENT": "PoS lock requirement"
+  
 
 }
