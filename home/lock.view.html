@@ -5,7 +5,7 @@
 		<div class="col-sm-12 col-md-6">
 			<!--Avatar-->
 	    	<div class="form-group">
-				<label for="miner" class="control-label">{{ 'PROFIL.DID' | translate }}</label>
+				<label for="miner" class="control-label">{{ 'ASSET_CREATE.DID' | translate }}</label>
 				<span ng-show="!avatarsLoaded || !balancesLoaded" class="miniSpinner"></span>
 				<select name="avatar" type="avatar" class="form-control" placeholder="" ng-model="avatar" ng-class="{validInput: !error.avatar_empty, wrongInput: error.avatar_empty}">
 					<option ng-repeat="avatar in avatars | orderBy:'symbol'" value="{{avatar}}">{{avatar}} - {{addresses[avatarsAddresses[avatar]].available | assetformat : 8}} ETP</option>
@@ -80,13 +80,18 @@
 					<h3 class="panel-title">{{'TRANSFER.CONFIRMATION_TITLE' | translate}}</h3>
 				</div>
 				<div class="panel-body">
+						
+					<div class="col-xs-12 noPaddingLeftRight assetDataLine">
+						<div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_CREATE.DID' | translate }}</div>
+						<div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{avatar}}</div>
+					</div>
 					<div class="col-xs-12 noPaddingLeftRight assetDataLine">
 						<div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_VALUE' | translate }}</div>
 						<div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{quantity | number : 8}} ETP</div>
 					</div>
 					<div class="col-xs-12 noPaddingLeftRight assetDataLine">
 						<div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'DEPOSIT.NBR_BLOCKS' | translate }}</div>
-						<div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{deposit_options[period_select][3]}} {{ 'BLOCKS' | translate }}</div>
+						<div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{locktime}} {{ 'BLOCKS' | translate }}</div>
 					</div>
 					<div ng-show="address_option && deposit_address != undefined && deposit_address != ''" class="col-xs-12 noPaddingLeftRight assetDataLine">
 						<div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'DEPOSIT.RECIPIENT_ADDRESS' | translate }}</div>

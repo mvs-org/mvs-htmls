@@ -401,7 +401,7 @@
           NProgress.done();
           if (typeof response.success !== 'undefined' && response.success) {
             //Transaction was successful
-            $translate('MESSAGES.DEPOSIT_SUCCESS').then( (data) => FlashService.Success(data, false, response.data.result.transaction.hash) );
+            $translate('MESSAGES.DEPOSIT_SUCCESS').then( (data) => FlashService.Success(data, false, response.data.result.hash) );
             $window.scrollTo(0,0);
             init();
           } else {
@@ -432,8 +432,12 @@
             "available": parseInt(e.balance.available),
             "address": e.balance.address,
             "frozen": e.balance.frozen
-          });
+          });  
         });
+        if($scope.avatar && $scope.avatarsAddresses[$scope.avatar] && $scope.addresses[$scope.avatarsAddresses[$scope.avatar]]) {
+          $scope.availableBalance = $scope.addresses[$scope.avatarsAddresses[$scope.avatar]].available;
+          validQuantity($scope.quantity);
+        }
         $scope.balancesLoaded = true;
       }
     });
@@ -447,8 +451,12 @@
             $scope.avatars.push(avatar.symbol);
             $scope.avatarsAddresses[avatar.symbol] = avatar.address;
           });
-          if(!$scope.avatarsAddresses[$scope.avatar])
+          if(!$scope.avatarsAddresses[$scope.avatar]) {
             $scope.avatar = '';
+          } else if ($scope.addresses[$scope.avatarsAddresses[$scope.avatar]]) {
+            $scope.availableBalance = $scope.addresses[$scope.avatarsAddresses[$scope.avatar]].available;
+            validQuantity($scope.quantity);
+          }
         } else {
           $scope.avatars = [];
         }
