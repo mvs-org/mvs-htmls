@@ -1,7 +1,7 @@
 <div class="AStitle-tabs">
   <ul class="nav nav-pills tabsMenu">
-    <li role="presentation"><a href="#!/advanced/pos" class="btn-link-menu">{{'ADVANCED.POS_TITLE' | translate}} <span ng-show="status.is_mining && status.block_version == 'PoS'" class="miniSpinner"></span></a></li>
-    <li class="active" role="presentation"><a class="btn-link-menu">{{'ADVANCED.POW_TITLE' | translate}} <span ng-show="status.is_mining && status.block_version == 'PoW'" class="miniSpinner"></span></a></li>
+    <li role="presentation"><a href="#!/advanced/pos" class="btn-link-menu">{{'ADVANCED.POS_TITLE' | translate}} <span ng-show="status.is_mining && status.block_type == 'PoS'" class="miniSpinner"></span></a></li>
+    <li class="active" role="presentation"><a class="btn-link-menu">{{'ADVANCED.POW_TITLE' | translate}} <span ng-show="status.is_mining && status.block_type == 'PoW'" class="miniSpinner"></span></a></li>
     <li role="presentation"><a href="#!/advanced/console" class="btn-link-menu">{{ 'NAV_CONSOLE' | translate }}</a></li>
   </ul>
 </div>
@@ -9,9 +9,9 @@
 <!--Mining-->
 <div class="col-md-12 noPaddingLeftRight">
   <h4 ng-hide="isMining">{{ 'ADVANCED.POW_TITLE' | translate }}
-    <span ng-hide="status.is_mining && status.block_version == 'PoW'" class="miningEnd wk-title">{{ 'MINING_NOT_RECOMMENDED' | translate }}   </span>
+    <span ng-hide="status.is_mining && status.block_type == 'PoW'" class="miningEnd wk-title">{{ 'MINING_NOT_RECOMMENDED' | translate }}   </span>
   </h4>
-  <h4 ng-show="status.is_mining && status.block_version == 'PoW'" class="isMiningText">{{ 'MINING.IS_MINING_POW' | translate }}</h4>
+  <h4 ng-show="status.is_mining && status.block_type == 'PoW'" class="isMiningText">{{ 'MINING.IS_MINING_POW' | translate }}</h4>
 
   <div class="row">
     <div class="col-xs-12 col-sm-6">

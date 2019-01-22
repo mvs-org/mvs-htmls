@@ -1,7 +1,7 @@
 <div class="AStitle-tabs">
   <ul class="nav nav-pills tabsMenu">
-    <li class="active" role="presentation"><a class="btn-link-menu">{{'ADVANCED.POS_TITLE' | translate}} <span ng-show="status.is_mining && status.block_version == 'PoS'" class="miniSpinner"></span></a></li>
-    <li role="presentation"><a href="#!/advanced/pow" class="btn-link-menu">{{'ADVANCED.POW_TITLE' | translate}} <span ng-show="status.is_mining && status.block_version == 'PoW'" class="miniSpinner"></span></a></li>
+    <li class="active" role="presentation"><a class="btn-link-menu">{{'ADVANCED.POS_TITLE' | translate}} <span ng-show="status.is_mining && status.block_type == 'PoS'" class="miniSpinner"></span></a></li>
+    <li role="presentation"><a href="#!/advanced/pow" class="btn-link-menu">{{'ADVANCED.POW_TITLE' | translate}} <span ng-show="status.is_mining && status.block_type == 'PoW'" class="miniSpinner"></span></a></li>
     <li role="presentation"><a href="#!/advanced/console" class="btn-link-menu">{{ 'NAV_CONSOLE' | translate }}</a></li>
   </ul>
 </div>
@@ -13,7 +13,7 @@
     <div class="col-xs-12 col-sm-6">
 
       <!--Mining info-->
-      <div ng-show="status.is_mining && status.block_version == 'PoS'" class="isMiningText">
+      <div ng-show="status.is_mining && status.block_type == 'PoS'" class="isMiningText">
         <h4>{{ 'MINING.IS_MINING_POS' | translate }}</h4>
         <table class="table miningTable">
           <tbody>
@@ -23,19 +23,25 @@
             </tr>
             <tr>
               <td class="wd-t">{{ 'POS_MINING.VOTE_AVAILABLE' | translate }}</td>
-              <td class="color66">{{status.stake_utxo_count}}</td>
+              <td ng-show="!stakeBalanceLoaded" class="color66"><span class="miniSpinner"></span></td>
+              <td ng-show="stakeBalanceLoaded" cclass="color66">{{nbr_vote.stake_utxo_available}}</td>
+            </tr>
+            <tr>
+              <td class="wd-t">{{ 'POS_MINING.VOTE_WAITING' | translate }}</td>
+              <td ng-show="!stakeUtxoLoaded" class="color66"><span class="miniSpinner"></span></td>
+              <td ng-show="stakeUtxoLoaded" class="color66">{{nbr_vote.stake_utxo_waiting}}</td>
             </tr>
             <tr>
               <td class="wd-t">{{ 'MINING.MINING_MST' | translate }}</td>
-              <td class="color66" ng-show="status.asset_symbol == ''">{{ 'MINING.MINING_NO_MST' | translate }}</td>
-              <td class="color66" ng-show="status.asset_symbol != ''">{{status.asset_symbol}}</td>
+              <td class="color66" ng-show="status.mining_mst == ''">{{ 'MINING.MINING_NO_MST' | translate }}</td>
+              <td class="color66" ng-show="status.mining_mst != ''">{{status.mining_mst}}</td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <!--Miner-->
-      <div class="form-group" ng-hide="status.is_mining && status.block_version == 'PoS'">
+      <div class="form-group" ng-hide="status.is_mining && status.block_type == 'PoS'">
         <label for="miner" class="control-label">{{ 'MINING.MINER' | translate }}</label>
         <span ng-show="loadingMiner" class="miniSpinner"></span>
         <select name="miner" type="address" class="form-control" placeholder="" ng-model="miner" ng-change="minerChanged(miner)" ng-class="{validInput: miner, wrongInput: !miner}">
@@ -45,24 +51,23 @@
       </div>
 
       <!--MST mined-->
-      <div class="form-group" ng-hide="status.is_mining && status.block_version == 'PoS'">
+      <div class="form-group" ng-hide="status.is_mining && status.block_type == 'PoS'">
         <label class="control-label">{{ 'MINING.MINE_MST' | translate }}</label>
-        <select name="mst" type="asset" class="form-control" placeholder="" ng-model="mst" ng-change="getMinability(mst)" ng-class="{validInput: mstMinable || mst == '', wrongInput: !mstMinable && mst != ''}">
+        <select name="mst" type="asset" class="form-control" placeholder="" ng-model="mst" ng-class="{validInput: true, wrongInput: false}">
           <option value="">{{ 'MINING.NO_MST' | translate }}</option>
-          <option ng-repeat="asset in assetsSymbols" value="{{asset}}">{{asset}}</option>
+          <option ng-repeat="asset in mstMiningList" value="{{asset.symbol}}">{{asset.symbol}}</option>
         </select>
-        <div ng-show="!mstMinable && mst != ''" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'POS_MINING.MST_CANNOT_BE_MINED' | translate }}</div>
       </div>
 
       <!--Buttons-->
       <div class="row">
         <div class="col-xs-6">
-          <button class="btn btn-success" ng-disabled="!miner || (!mstMinable && mst != '') || status.is_mining && status.block_version == 'PoS'" ng-click="startPosMining()">
+          <button class="btn btn-success" ng-disabled="!miner || status.is_mining && status.block_type == 'PoS'" ng-click="startPosMining()">
             {{ 'MINING_START' | translate }}
           </button>
         </div>
         <div class="col-xs-6">
-          <button class="btn btn-success btn-success-secondary" ng-click="stop()" ng-disabled="!loadingMiningInfo && (!status.is_mining || !status.block_version == 'PoS')">
+          <button class="btn btn-success btn-success-secondary" ng-click="stop()" ng-disabled="!loadingMiningInfo && (!status.is_mining || !status.block_type == 'PoS')">
             {{ 'MINING_END' | translate }}
           </button>
         </div>
@@ -82,16 +87,18 @@
               <b>{{ 'POS_MINING.STAKING_REQUIREMENT_EXPLAIN_BOLD' | translate }}</b>
             </div>
             <div ng-show="!stakeBalanceLoaded" class="assetValueColumn col-xs-6 noPaddingLeftRight"><span class="mediumSpinner"></span></div>
-            <div ng-show="stakeBalanceLoaded && !miner && !(status.is_mining && status.block_version == 'PoS')" class="assetValueColumn col-xs-6 noPaddingLeftRight">{{ 'POS_MINING.STAKING_REQUIREMENT_UNSELECT' | translate }}</div>
-            <div ng-show="stakeBalanceLoaded && (miner || (status.is_mining && status.block_version == 'PoS')) && can_mine_till > 0" class="assetValueColumn col-xs-6 noPaddingLeftRight correctInputComment"><span class="glyphicon glyphicon-ok"></span> {{ 'POS_MINING.STAKING_REQUIREMENT_VALID' | translate }} {{can_mine_till | assetformat : 0}}</div>
-            <div ng-show="stakeBalanceLoaded && (miner || (status.is_mining && status.block_version == 'PoS')) && can_mine_till == 0" class="assetValueColumn col-xs-6 noPaddingLeftRight wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'POS_MINING.STAKING_REQUIREMENT_FAIL' | translate }}</div>
-            <a href="#!/lock/{{miner}}" class="btn btn-success smallButton assetBoxButton">{{ 'LOCK.BUTTON' | translate}}</a>
+            <div ng-show="stakeBalanceLoaded && !miner && !(status.is_mining && status.block_type == 'PoS')" class="assetValueColumn col-xs-6 noPaddingLeftRight">{{ 'POS_MINING.STAKING_REQUIREMENT_UNSELECT' | translate }}</div>
+            <div ng-show="stakeBalanceLoaded && (miner || (status.is_mining && status.block_type == 'PoS')) && can_mine_till > 0" class="assetValueColumn col-xs-6 noPaddingLeftRight correctInputComment"><span class="glyphicon glyphicon-ok"></span> {{ 'POS_MINING.STAKING_REQUIREMENT_VALID' | translate }} {{can_mine_till | assetformat : 0}}</div>
+            <div ng-show="stakeBalanceLoaded && (miner || (status.is_mining && status.block_type == 'PoS')) && can_mine_till == 0" class="assetValueColumn col-xs-6 noPaddingLeftRight wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'POS_MINING.STAKING_REQUIREMENT_FAIL' | translate }}</div>
+            <div class="assetValueColumn col-xs-6 col-xs-offset-6">
+              <a href="#!/lock/{{miner}}" class="btn btn-success">{{ 'LOCK.BUTTON' | translate}}</a>
+            </div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'POS_MINING.UTXO_REQUIREMENT' | translate }}</div>
             <div ng-show="!stakeUtxoLoaded" class="assetValueColumn col-xs-6 noPaddingLeftRight"><span class="mediumSpinner"></span></div>
-            <div ng-show="stakeUtxoLoaded && !miner && !(status.is_mining && status.block_version == 'PoS')" class="assetValueColumn col-xs-6 noPaddingLeftRight">{{ 'POS_MINING.STAKING_REQUIREMENT_UNSELECT' | translate }}</div>
-            <div ng-show="stakeUtxoLoaded && (miner || (status.is_mining && status.block_version == 'PoS'))" class="assetValueColumn col-xs-6 noPaddingLeftRight">
+            <div ng-show="stakeUtxoLoaded && !miner && !(status.is_mining && status.block_type == 'PoS')" class="assetValueColumn col-xs-6 noPaddingLeftRight">{{ 'POS_MINING.STAKING_REQUIREMENT_UNSELECT' | translate }}</div>
+            <div ng-show="stakeUtxoLoaded && (miner || (status.is_mining && status.block_type == 'PoS'))" class="assetValueColumn col-xs-6 noPaddingLeftRight">
               <div ng-show="nbr_vote.stake_utxo_available > 0" class="correctInputComment">
                 <span class="glyphicon glyphicon-ok"></span> {{nbr_vote.stake_utxo_available}} {{ 'POS_MINING.VOTE_AVAILABLE' | translate }}
               </div>
@@ -102,7 +109,9 @@
                 <span class="glyphicon glyphicon-plus"></span> {{nbr_vote.stake_utxo_waiting}} {{ 'POS_MINING.VOTE_WAITING' | translate }}
               </div>
             </div>
-            <a href="#!/optimizevote/{{miner}}" class="btn btn-success btn-success-secondary smallButton assetBoxButton">{{ 'LOCK.ORGANIZE' | translate}}</a>
+            <div class="assetValueColumn col-xs-6 col-xs-offset-6">
+              <a href="#!/optimizevote/{{miner}}" class="btn btn-success btn-success-secondary">{{ 'LOCK.ORGANIZE' | translate}}</a>
+            </div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'POS_MINING.UTXO_REQUIREMENT_DETAILS' | translate }}</div>

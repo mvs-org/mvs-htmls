@@ -372,6 +372,14 @@
     $scope.avatars = [];
     $scope.addresses = [];
     $scope.avatarsAddresses = [];
+    $scope.locktimeDefaultPeriod = 24000;
+    $scope.locktimePeriods = [];
+    $translate('WEEK', 'WEEKS').then( (week, weeks) => $scope.locktimePeriods.push({"blocks": $scope.locktimeDefaultPeriod.toString(), "text": "1" + week}) );
+    $translate('WEEKS').then( (weeks) => {
+      for(var i = 2; i < 11; i++) {
+        $scope.locktimePeriods.push({"blocks": ($scope.locktimeDefaultPeriod*i).toString(), "text": i.toString() + weeks});
+      }
+    });
 
     $scope.balancesLoaded = false;
     $scope.avatarsLoaded = false;
@@ -381,8 +389,8 @@
       $scope.quantity = '';
       $scope.transactionFee = 0.0001;
       $scope.confirmation = false;
-      $scope.locktime = '';
       $scope.submittable = false;
+      $scope.locktime = "24000";
     }
 
     function checkInputs() {
@@ -501,15 +509,12 @@
       $scope.error.quantity_not_a_number = (newVal != undefined && newVal != '') ? isNaN(newVal) : false;
       $scope.warning.quantity_high = newVal != undefined && newVal != '' && newVal > 5000;
       $scope.warning.quantity_low = newVal != undefined && newVal != '' && newVal < 1000;
-      
       checkready();
     }
 
     //Check if the locktime is valid
     $scope.$watch('locktime', (newVal, oldVal) => {
       $scope.error.locktime = (newVal == undefined || newVal == '');
-      $scope.warning.locktime_high = newVal != undefined && newVal != '' && newVal > 2000000;
-      $scope.warning.locktime_low = newVal != undefined && newVal != '' && newVal < 100000;
       checkready();
     });
 
@@ -4994,7 +4999,6 @@
     $scope.startPosMining = startPosMining;
     $scope.stop = StopMining;
     $scope.getLocked = getLocked;
-    $scope.getMinability = getMinability;
     $scope.getStakeInfo = getStakeInfo;
     $scope.minerChanged = minerChanged;
     $scope.status = {};
@@ -5007,21 +5011,19 @@
     $scope.mst = '';
 
     $scope.min_locked_etp = 100000000000;
-    $scope.min_locked_range = 100000;
-    $scope.forbidden_period_end_range = 10000;
+    $scope.min_locked_range = 24000;
+    $scope.forbidden_period_end_range = 1000;
     $scope.can_mine_till = 0;
     $scope.nbr_lock_above_min_locked_etp = 0;
 
     $scope.stakeBalanceLoaded = true;
     $scope.initCheckLockRequirement = true;
 
-    $scope.assets = [];
+    $scope.mstMiningList = [];
     $scope.mstMinable = false;
 
     $scope.stakeUtxoLoaded = true;
     $scope.nbr_vote = [];
-
-    $scope.assetsSymbols = [];
 
     GetMiningInfo();
 
@@ -5152,43 +5154,17 @@
       }
     });
 
-    MetaverseService.ListAllAssets()
+    MetaverseService.ListMstMiningAssets()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
-        $scope.assets = response.data.assets;
-        //All the details are hidden at the loading
-        if ($scope.assets != '') {
-          $scope.assets.forEach( (asset) => {
-            if(asset.is_secondaryissue == 'false')
-              $scope.assetsSymbols.push(asset.symbol);
-          });
-        } //else, there is no asset on the blockchain
+        $scope.mstMiningList = response.data.result;
       } else {
-        $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => {
+        $translate('MESSAGES.MST_MINING_LOAD_ERROR').then( (data) => {
           //Show asset load error
           FlashService.Error(data);
         } );
       }
     });
-
-    function getMinability(mst) {
-      $scope.mstMinable = false;
-      MetaverseService.GetAssetCertificates(mst)
-      .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
-          let certificates = response.data.result;
-          if(certificates) {
-            certificates.forEach(function(certificate) {
-              if(certificate.cert == 'mining')
-                $scope.mstMinable = true;
-            });
-          }
-        } else {
-          $translate('MESSAGES.GET_LOCKED_ERROR').then( (data) => FlashService.Error(data) );
-          $window.scrollTo(0,0);
-        }
-      });
-    }
 
     function getStakeInfo(miner) {
       $scope.stakeUtxoLoaded = false;
@@ -5246,8 +5222,8 @@
     $scope.mst = '';
 
     $scope.min_locked_etp = 100000000000;
-    $scope.min_locked_range = 100000;
-    $scope.forbidden_period_end_range = 10000;
+    $scope.min_locked_range = 24000;
+    $scope.forbidden_period_end_range = 1000;
     $scope.can_mine_till = 0;
     $scope.nbr_lock_above_min_locked_etp = 0;
 
@@ -5260,12 +5236,11 @@
     $scope.stakeUtxoLoaded = true;
     $scope.nbr_vote = [];
 
-    $scope.assetsSymbols = [];
-
     $scope.transferMore = transferMore;
     $scope.addressChanged = addressChanged;
     $scope.checkInputs = checkInputs;
     $scope.sendfrom = $location.path().split('/')[3];
+    $scope.maxRecipients = 100;
 
     // Initializes all transaction parameters with empty strings.
     function init() {
@@ -5332,7 +5307,7 @@
     }
 
     function getNbrVoteMax(address) {
-      $scope.nbrMaxVote = Math.floor($scope.addresses[address].available / 100000000 / 1000);
+      $scope.nbrMaxVote = Math.min(Math.floor($scope.addresses[address].available / 100000000 / 1000), $scope.maxRecipients);
     }
 
     function getStakeInfo(miner) {
@@ -5415,21 +5390,6 @@
       $scope.errorPassword = (newVal == undefined || newVal == '');
       checkready();
     });
-
-    //Add a recipient
-    /*$scope.addRecipent = function() {
-      $scope.recipents.push({'index': $scope.recipents.length+1, 'address': '', 'value': '', 'correctEtpAddress': false, 'correctAvatar': false, 'burnAddress': false, 'emptyAmount': true, 'wrongAmount': false, 'notEnough': false});
-      $scope.sendfrom='';
-      checkready();
-    }
-
-    //Remove a recipient
-    $scope.removeRecipent = function() {
-      $scope.recipents.splice($scope.recipents.length-1, 1);
-      $scope.recipientOK.splice($scope.recipientOK.length-1, 1);
-      $scope.amountOK.splice($scope.recipientOK.length-1, 1);
-      checkready();
-    }*/
 
     init();
 

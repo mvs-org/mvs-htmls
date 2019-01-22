@@ -118,6 +118,7 @@
         service.RegisterMIT = RegisterMIT;
         service.TransferMIT = TransferMIT;
         service.GetAssetCertificates = GetAssetCertificates;
+        service.ListMstMiningAssets = ListMstMiningAssets;
 
         //Chain
         service.FetchHeight = FetchHeight;
@@ -1025,6 +1026,10 @@
 
         function PopBlock(height) {
             return _sendV3('popblock', [height]);
+        }
+
+        function ListMstMiningAssets() {
+            return _sendV3('listassets', ['-t', 'mining']);
         }
 
 

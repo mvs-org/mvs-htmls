@@ -26,11 +26,12 @@
 			</div>
 
 			<!--Locktime-->
+
 			<div class="form-group">
-				<label for="locktime" class="control-label">{{ 'DEPOSIT.NBR_BLOCKS' | translate }}</label>
-				<input type="number" min=0 step="1" class="form-control" placeholder="0" name="locktime" ng-model="locktime" ng-class="{validInput: !error.locktime, wrongInput: error.locktime}" autocomplete="off">
-				<div ng-show="warning.locktime_high" class="warningInputComment"><span class="glyphicon glyphicon-warning-sign"></span> {{ 'LOCK.LOCKTIME_HIGH' | translate }}</div>
-				<div ng-show="warning.locktime_low" class="warningInputComment"><span class="glyphicon glyphicon-warning-sign"></span> {{ 'LOCK.LOCKTIME_LOW' | translate }}</div>
+				<label for="miner" class="control-label">{{ 'DEPOSIT.NBR_BLOCKS' | translate }}</label>
+				<select name="locktime" type="number" class="form-control" ng-model="locktime" ng-class="{validInput: !error.locktime, wrongInput: error.locktime}">
+					<option ng-repeat="locktime in locktimePeriods" value="{{locktime.blocks}}">{{locktime.blocks}}{{ 'SECONDARY_ISSUE.BLOCKS' | translate }} (~{{locktime.text}})</option>
+				</select>
 			</div>
 
 			<!--Fee-->
