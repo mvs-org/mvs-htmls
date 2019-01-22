@@ -18,10 +18,10 @@
 			<div class="form-group votesNumber" ng-show="sendfrom">
 				<span ng-hide="stakeUtxoLoaded" class="mediumSpinner"></span>
 				<div ng-hide="!stakeUtxoLoaded">
-					<h4>{{ 'OPTIMIZE.CURRENT_NBR_VOTE' | translate }}: {{nbr_vote}}</h4>
+					<h4>{{ 'OPTIMIZE.CURRENT_NBR_VOTE' | translate }}: {{nbr_vote.stake_utxo_available}} {{ 'POS_MINING.VOTE_AVAILABLE' | translate }}, {{nbr_vote.stake_utxo_waiting}} {{ 'POS_MINING.VOTE_WAITING' | translate }}</h4>
 					<h4>{{ 'OPTIMIZE.MAX_NBR_VOTE' | translate }}: 
 						<span class="totalDue">{{nbrMaxVote}}</span>
-						<span class="profit">(+{{nbrMaxVote - nbr_vote}})</span>
+						<span class="profit">(+{{nbrMaxVote - nbr_vote.stake_utxo_available - nbr_vote.stake_utxo_waiting}})</span>
 					</h4>
 				</div>
 			</div>
@@ -61,7 +61,10 @@
 					</div>
 					<div class="col-xs-12 noPaddingLeftRight assetDataLine">
 						<div class="assetDataColumn col-xs-4 noPaddingLeftRight">{{ 'OPTIMIZE.CURRENT_NBR_VOTE' | translate }}</div>
-						<div class="assetValueColumn col-xs-8 noPaddingLeftRight">{{nbr_vote}}</div>
+						<div class="assetValueColumn col-xs-8 noPaddingLeftRight">
+							<div>{{nbr_vote.stake_utxo_available}} {{ 'POS_MINING.VOTE_AVAILABLE' | translate }}</div>
+							<div>{{nbr_vote.stake_utxo_waiting}} {{ 'POS_MINING.VOTE_WAITING' | translate }}</div>
+						</div>
 					</div>
 					<div class="col-xs-12 noPaddingLeftRight assetDataLine">
 						<div class="assetDataColumn col-xs-4 noPaddingLeftRight">{{ 'OPTIMIZE.MAX_NBR_VOTE' | translate }}</div>

@@ -5258,7 +5258,7 @@
     $scope.mstMinable = false;
 
     $scope.stakeUtxoLoaded = true;
-    $scope.nbr_vote = 0;
+    $scope.nbr_vote = [];
 
     $scope.assetsSymbols = [];
 
@@ -5341,7 +5341,7 @@
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.stakeUtxoLoaded = true;
-          $scope.nbr_vote = response.data.result.stake_utxo_available
+          $scope.nbr_vote = response.data.result
         } else {
           $translate('MESSAGES.GET_STAKE_ERROR').then( (data) => FlashService.Error(data) );
           $window.scrollTo(0,0);
