@@ -2287,6 +2287,14 @@ h2 {
   float: right;
 }
 
+.votesNumber {
+  height: 50px;
+}
+
+.votesNumber .mediumSpinner {
+  float: right;
+}
+
 md-input-container {
   max-width: 80px !important;
   text-align: center;

@@ -1,0 +1,62 @@
+<div>
+  <ul class="nav nav-pills tabsMenu">
+    <li role="presentation"><a href="#!/account/details" class="btn-link-menu">{{ 'SETTINGS.CHANGE_PASSWORD' | translate }}</a></li>
+    <li role="presentation"><a href="#!/account/privatekey" class="btn-link-menu">{{ 'SETTINGS.PRIVATE_KEY' | translate }}</a></li>
+    <li role="presentation"><a href="#!/account/export" class="btn-link-menu">{{ 'SETTINGS.EXPORT' | translate }}</a></li>
+    <li role="presentation" class="active"><a href="#!/account/popblock" class="btn-link-menu">{{ 'SETTINGS.POPBLOCKS' | translate }}</a></li>
+  </ul>
+</div>
+<br/>
+<form class="row">
+  <div class="col-xs-12 col-sm-6">
+
+    <!--Number of blocks to pop-->
+    <div class="form-group">
+      <label for="blocks" class="control-label">{{ 'SETTINGS_POPBLOCKS_NBR_BLOCKS' | translate }}</label>
+      <input type="number" min=0 step="1" class="form-control" name="blocks" id="" ng-model="blocks"ng-class="{validInput: blocks, wrongInput: !blocks}"  autocomplete="off">
+      <div ng-show="blocks > 1000" class="warningInputComment"><span class="glyphicon glyphicon-warning-sign"></span> {{ 'SETTINGS.POPBLOCKS_WARNING_HIGHT_VALUE' | translate }}</div>
+    </div>
+
+    <!--Buttons-->
+    <div class="row">
+      <br>
+      <div class="col-xs-6">
+        <button type="submit" class="btn btn-success" ng-click="popblock(blocks)" ng-disabled="!blocks">{{ 'SETTINGS_EXPORT_POP_SPECIFIED_BLOCKS_BUTTON' | translate }}</button>
+      </div>
+      <div class="col-xs-6">
+        <button type="submit" class="btn btn-success btn-success-secondary" ng-click="popblock(100)">{{ 'SETTINGS_EXPORT_POP_DEFAULT_BLOCKS_BUTTON' | translate }}</button>
+      </div>
+    </div>
+  </div>
+
+  <!--Export account details-->
+  <div class="col-xs-12 col-sm-6">
+    <div class="assetDetailsPanel panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{'SETTINGS.POPBLOCKS_EXPLANATION_TITLE' | translate}}</h3>
+      </div>
+      <div class="panel-body">
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'SETTINGS.POPBLOCKS_EXPLANATION' | translate }}</div>
+        </div>
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'SETTINGS.POPBLOCKS_WARNING' | translate }}</div>
+        </div>
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'SETTINGS.POPBLOCKS_CHECK_UPGRADE' | translate }}</div>
+        </div>
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'SETTINGS.POPBLOCKS_RESYMC_FROM_START' | translate }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</form>
+
+<div class="form-group" ng-show="privatekey">
+  <label for="privatekey" class="col-sm-12 control-label">{{ 'SETTINGS_PRIVATE_KEY' | translate }}</label>
+  <div>
+    <textarea name="privatekey" class="form-group mnemonic_red col-xs-12 col-sm-12 col-md-12" ng-model="privatekey" rows="5" cols="" placeholder="">{{vm.registered.privatekey}}</textarea>
+  </div>
+</div>

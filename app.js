@@ -87,6 +87,13 @@
                 controllerAs: 'vm'
             })
 
+            .state('home.account.popblock', {
+                url: "/account/popblock",
+                templateUrl: "home/account/popblock.view.html",
+                controller: 'AccountController',
+                controllerAs: 'vm'
+            })
+
             .state('home.addresses', {
                 templateUrl: "home/addresses/index.view.html",
                 controller: 'AddressesController'
@@ -278,6 +285,12 @@
                 url: "/advanced/console",
                 templateUrl: "home/advanced/console.view.html",
                 controller: 'ConsoleController'
+            })
+
+            .state('home.optimizevote', {
+                url: "/optimizevote/:address",
+                templateUrl: "home/transfer/optimizevote.view.html",
+                controller: 'OptimizeVoteController'
             })
 
             .state('home.profile', {

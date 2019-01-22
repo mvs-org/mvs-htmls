@@ -57,7 +57,6 @@
 
         service.hasIcon = ['ETP', 'MVS.ZGC', 'MVS.ZDC', 'CSD.CSD', 'PARCELX.GPX', 'PARCELX.TEST', 'SDG', 'META', 'MVS.HUG', 'RIGHTBTC.RT', 'TIPLR.TPC', 'PANDO', 'VALOTY', 'KOALA.KT'];
 
-
         service.burnAddress = '1111111111111111111114oLvT2';
         service.burnAddress_short = 'blackhole';
 
@@ -68,8 +67,11 @@
         service.ETPMap = '0xa52b0a032139e6303b86cfeb0bb9ae780a610354';
         service.SwapAddress = '0xc1e5fd24fa2b4a3581335fc3f2850f717dd09c86';
 
-        service.CheckAccount = CheckAccount;
+        service.SERVER = SERVER;
+        service.SERVER2 = SERVER2;
 
+        //Account
+        service.CheckAccount = CheckAccount;
         service.GetNewAccount = GetNewAccount;
         service.ImportAccount = ImportAccount;
         service.GetBalance = GetBalance;
@@ -81,10 +83,7 @@
         service.ResetPassword = ResetPassword;
         service.DumpKeyFile = DumpKeyFile;
         service.ImportKeyFile = ImportKeyFile;
-
-
-        service.SERVER = SERVER;
-        service.SERVER2 = SERVER2;
+        service.PopBlock = PopBlock;
 
         //Mining
         service.Start = Start;
@@ -522,7 +521,7 @@
          *    }
          * }
          **/
-        function SendMore(recipents, transactionFee, password) {
+        function SendMore(from, recipents, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
             var query = [];
             var recipent = '';
@@ -530,6 +529,10 @@
             query.push(password);
             query.push('-f');
             query.push(transactionFee);
+            if(from) {
+                query.push('-s');
+                query.push(from);
+            }
             recipents.forEach( (e) => {
               recipent = e.address + ':' + e.value;
               query.push('-r');
@@ -602,7 +605,7 @@
          *
          **/
         function FetchHeight() {
-            return _send('fetch-height', []);
+            return _sendV3('fetch-height', []);
         }
 
         /**
@@ -1030,8 +1033,13 @@
 
         function Lock(avatar, amount, locktime, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
-            return _sendV3('lock', [credentials.user, password, avatar, amount, locktime, '-f', transactionFee, ]);
+            return _sendV3('lock', [credentials.user, password, avatar, amount, locktime, '-f', transactionFee]);
         }
+
+        function PopBlock(height) {
+            return _sendV3('popblock', [height]);
+        }
+
 
         function Query(string) {
             var command = string;

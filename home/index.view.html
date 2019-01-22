@@ -193,11 +193,11 @@
 
     <div ng-if="heightFromExplorer!=0 && (heightFromExplorer-height)>=1000" class="block">
       <div class="block">{{height}}/{{heightFromExplorer}}</div>
-      <div class="progress progress-height popover-show" data-toggle="popover" data-placement="top" data-content="{{ 'MESSAGE.PLEASE_WAIT_SYNCH' | translate }}">
+      <a href="#!/account/popblock" class="progress progress-height popover-show" data-toggle="popover" data-placement="top" data-content="{{ 'MESSAGE.PLEASE_WAIT_SYNCH' | translate }}">
         <div class="progress-bar progress-bar-danger progress-bar-striped progress-bar-height" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:{{loadingPercent}}%">
           {{loadingPercent}}%
         </div>
-      </div>
+      </a>
     </div>
     <div class="version">{{ 'METAVERSE_VERSION' | translate }} {{version}}</div>
   </div>

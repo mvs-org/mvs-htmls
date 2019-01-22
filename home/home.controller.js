@@ -33,6 +33,7 @@
   .controller('PowController', PowController)
   .controller('PosController', PosController)
   .controller('AdvancedController', AdvancedController)
+  .controller('OptimizeVoteController', OptimizeVoteController)
   .directive('bsTooltip', function() {
     return {
       restrict: 'A',
@@ -753,6 +754,7 @@
       checkready();
     }
 
+    //Remove a recipient
     $scope.removeRecipent = function() {
       $scope.recipents.splice($scope.recipents.length-1, 1);
       $scope.recipientOK.splice($scope.recipientOK.length-1, 1);
@@ -1769,6 +1771,7 @@
     $scope.showprivatekey = showprivatekey;
     $scope.changepassword = changepassword;
     $scope.exportAccount = exportAccount;
+    $scope.popblock = popblock;
     $scope.accountname = localStorageService.get('credentials').user;
     $scope.debugState = MetaverseService.debug;
     $scope.path = "";
@@ -1908,6 +1911,28 @@
       }
     }
 
+    function popblock(blocks) {
+      NProgress.start();
+      MetaverseService.FetchHeight()
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          let currentHeight = response.data.result;
+          let popHeight = currentHeight - blocks;
+          MetaverseService.PopBlock(popHeight)
+          .then( (response) => {
+            if (typeof response.success !== 'undefined' && response.success) {
+              //Show success message
+              $translate('MESSAGES.POPBLOCKS_SUCCESS').then( (data) => FlashService.Success(data) );
+            } else {
+              //Show popblocks error
+              $translate('MESSAGES.POPBLOCKS_ERROR').then( (data) => FlashService.Error(data) );
+              $window.scrollTo(0,0);
+            }
+          });
+        NProgress.done();
+        }
+      });
+    }
 
   }
 
@@ -4995,7 +5020,7 @@
     $scope.mstMinable = false;
 
     $scope.stakeUtxoLoaded = true;
-    $scope.nbr_vote = 0;
+    $scope.nbr_vote = [];
 
     $scope.assetsSymbols = [];
 
@@ -5045,7 +5070,7 @@
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.status = response.data.result;
           if($scope.initCheckLockRequirement && $scope.status.is_mining)
-            getLocked($scope.status.payment_address)
+            minerChanged($scope.status.payment_address)
           $scope.initCheckLockRequirement = false;
         } else {
           $translate('MESSAGES.MINING_STATUS_ERROR').then( (data) => FlashService.Error(data) );
@@ -5172,7 +5197,7 @@
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.stakeUtxoLoaded = true;
-          $scope.nbr_vote = response.data.result.stake_utxo_count
+          $scope.nbr_vote = response.data.result
         } else {
           $translate('MESSAGES.GET_STAKE_ERROR').then( (data) => FlashService.Error(data) );
           $window.scrollTo(0,0);
@@ -5204,6 +5229,210 @@
       }
     });
     
+
+  }
+
+  function OptimizeVoteController(MetaverseService, $rootScope, $location, localStorageService, FlashService, $translate, $scope, $window) {
+
+    $window.scrollTo(0,0);
+
+    $scope.getStakeInfo = getStakeInfo;
+    $scope.status = {};
+
+    $scope.addresses = [];
+    $scope.listAddresses = [];
+    $scope.myDidsAddresses = [];
+    $scope.symbolAddress = [];
+    $scope.loadingMiner = true;
+    $scope.mst = '';
+
+    $scope.min_locked_etp = 100000000000;
+    $scope.min_locked_range = 100000;
+    $scope.forbidden_period_end_range = 10000;
+    $scope.can_mine_till = 0;
+    $scope.nbr_lock_above_min_locked_etp = 0;
+
+    $scope.stakeBalanceLoaded = true;
+    $scope.initCheckLockRequirement = true;
+
+    $scope.assets = [];
+    $scope.mstMinable = false;
+
+    $scope.stakeUtxoLoaded = true;
+    $scope.nbr_vote = 0;
+
+    $scope.assetsSymbols = [];
+
+    $scope.transferMore = transferMore;
+    $scope.addressChanged = addressChanged;
+    $scope.checkInputs = checkInputs;
+    $scope.sendfrom = $location.path().split('/')[3];
+
+    // Initializes all transaction parameters with empty strings.
+    function init() {
+      $scope.fee = '';
+      //$scope.message = '';
+      $scope.password = '';
+      $scope.transactionFee = 0.0001;
+      //$scope.memo = '';
+      $scope.confirmation = false;
+      $scope.error = [];
+      $scope.option = [];
+      //$scope.option.memo_empty = true;
+      $scope.recipientOK = [];
+      $scope.amountOK = [];
+      $scope.recipents = [];
+      $scope.recipents.push({'index': 1, 'address': '', 'value': '', 'correctEtpAddress': false, 'correctAvatar': false, 'burnAddress': false, 'emptyAmount': true, 'wrongAmount': false, 'notEnough': false});
+    }
+  
+    //Load users ETP balance
+    //Load the addresses and their balances
+    MetaverseService.ListBalances()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        response.data.balances.forEach( (e) => {
+          $scope.addresses[e.balance.address] = ({
+            "balance": parseInt(e.balance.unspent),
+            "available": parseInt(e.balance.available),
+            "address": e.balance.address,
+            "frozen": e.balance.frozen
+          });
+          $scope.listAddresses.push({
+            "balance": parseInt(e.balance.unspent),
+            "available": parseInt(e.balance.available),
+            "address": e.balance.address
+          });
+        });
+        $scope.balancesLoaded = true;
+      }
+    });
+
+    MetaverseService.ListMyDids()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        $scope.myDids = response.data.result.dids;
+        if(typeof $scope.myDids != 'undefined' && $scope.myDids != null) {
+          $scope.myDids.forEach(function(did) {
+            $scope.myDidsAddresses[did.address] = did.symbol;
+          });
+        } else {
+          $scope.myDids = [];
+        }
+      } else if (response.message.message == "no record in this page") {
+        $scope.noDids = true;
+        $scope.selectedDid = "";
+      } else {
+        $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      }
+    });
+
+    function addressChanged(address) {
+      getNbrVoteMax(address);
+      getStakeInfo(address);
+    }
+
+    function getNbrVoteMax(address) {
+      $scope.nbrMaxVote = Math.floor($scope.addresses[address].available / 100000000 / 1000);
+    }
+
+    function getStakeInfo(miner) {
+      $scope.stakeUtxoLoaded = false;
+      MetaverseService.GetStakeInfo(miner)
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          $scope.stakeUtxoLoaded = true;
+          $scope.nbr_vote = response.data.result.stake_utxo_available
+        } else {
+          $translate('MESSAGES.GET_STAKE_ERROR').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
+        }
+        
+      });
+    }
+
+    function checkInputs() {
+      $scope.confirmation = true;
+      organizeRecipients($scope.nbrMaxVote, 100000000000, $scope.sendfrom);
+      delete $rootScope.flash;
+    }
+
+    function organizeRecipients(nbrOutputs, quantity, recipient) {
+      $scope.recipents = [];
+      for(var i = 0; i < nbrOutputs; i++) {
+        $scope.recipents.push({'index': i, 'address': recipient, 'value': quantity});
+      }
+    }
+
+    function transferMore(sendfrom, recipents, transactionFee, password) {
+      
+      if (localStorageService.get('credentials').password != password) {
+        $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
+        $window.scrollTo(0,0);
+      } else {
+        NProgress.start();
+        var fee = transactionFee * 100000000;
+
+        var SendPromise = MetaverseService.SendMore(sendfrom, recipents, fee, password);
+        SendPromise
+        .then( (response) => {
+          NProgress.done();
+          if (typeof response.success !== 'undefined' && response.success) {
+            //Transaction was successful
+            $translate('MESSAGES.TRANSFER_SUCCESS').then( (data) => FlashService.Success(data, false, response.data.result.transaction.hash) );
+            $location.path('/home');
+            $window.scrollTo(0,0);
+          } else {
+            //Transaction problem
+            $scope.confirmation = false;
+            $translate('MESSAGES.TRANSFER_ERROR').then( (data) => {
+              if (response.message.message != undefined) {
+                FlashService.Error(data + " " + response.message.message);
+              } else {
+                FlashService.Error(data);
+              }
+            });
+            $window.scrollTo(0,0);
+            $scope.password = '';
+          }
+        });
+      }
+    }
+
+    //Check if the form is submittable
+    function checkready() {
+      //Check for errors
+      for (var error in $scope.error) {
+        if ($scope.error[error]) {
+          $scope.submittable = false;
+          return;
+        }
+      }
+      $scope.submittable = true;
+    }
+
+    //Check if the password is valid
+    $scope.$watch('password', (newVal, oldVal) => {
+      $scope.errorPassword = (newVal == undefined || newVal == '');
+      checkready();
+    });
+
+    //Add a recipient
+    /*$scope.addRecipent = function() {
+      $scope.recipents.push({'index': $scope.recipents.length+1, 'address': '', 'value': '', 'correctEtpAddress': false, 'correctAvatar': false, 'burnAddress': false, 'emptyAmount': true, 'wrongAmount': false, 'notEnough': false});
+      $scope.sendfrom='';
+      checkready();
+    }
+
+    //Remove a recipient
+    $scope.removeRecipent = function() {
+      $scope.recipents.splice($scope.recipents.length-1, 1);
+      $scope.recipientOK.splice($scope.recipientOK.length-1, 1);
+      $scope.amountOK.splice($scope.recipientOK.length-1, 1);
+      checkready();
+    }*/
+
+    init();
 
   }
 
