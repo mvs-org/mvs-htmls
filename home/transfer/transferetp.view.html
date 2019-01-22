@@ -33,8 +33,8 @@
 				<span ng-show="!senderAddressesLoaded || !balancesLoaded" class="miniSpinner"></span>
 				<select name="addressFrom" type="address" class="form-control" placeholder="" ng-model="sendfrom" ng-change="availBalance(sendfrom)" ng-class="{validInput: !error.sendfrom, wrongInput: error.sendfrom}">
 					<option title="{{balance['total-available'] | assetformat : 8}} ETP" value="">{{ 'TRANSFER_FROM_ADDRESS_AUTOMATIC' | translate }}</option>
-					<option ng-repeat="oneAddress in listAddresses | orderBy:'available':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-if="myDidsAddresses[oneAddress.address] && recipents.length == 1 && addresses[oneAddress.address].type == 'single'">{{myDidsAddresses[oneAddress.address]}} - {{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
-          <option ng-repeat="oneAddress in listAddresses | orderBy:'available':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-if="!myDidsAddresses[oneAddress.address] && oneAddress.available != 0 && recipents.length == 1 && addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
+					<option ng-repeat="oneAddress in listAddresses | orderBy:'available':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-if="myDidsAddresses[oneAddress.address] && addresses[oneAddress.address].type == 'single'">{{myDidsAddresses[oneAddress.address]}} - {{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
+          			<option ng-repeat="oneAddress in listAddresses | orderBy:'available':true" value="{{oneAddress.address}}" title="{{oneAddress.available | assetformat : 8}} ETP" ng-if="!myDidsAddresses[oneAddress.address] && oneAddress.available != 0 && addresses[oneAddress.address].type == 'single'">{{oneAddress.address}} - {{oneAddress.available | assetformat : 8}} ETP</option>
 				</select>
 			</div>
 
@@ -85,7 +85,7 @@
 			</div>
 
 			<!--Memo-->
-			<div class="form-group" ng-show="(recipents.length == 1)">
+			<div class="form-group">
 				<label for="memo" class="control-label">{{ 'TRANSFER_MEMO' | translate }}</label>
 				<span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.MEMO' | translate }}"></span>
 				<input type="memo" class="form-control" name="memo" maxlength="255" id="" ng-model="memo" ng-class="{validInput: !option.memo_empty && !error.memo_wrong_char, wrongInput: error.memo_wrong_char}" >

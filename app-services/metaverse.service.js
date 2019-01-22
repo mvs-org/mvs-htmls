@@ -142,7 +142,6 @@
         service.DidSendAsset = DidSendAsset;
         service.DidChangeAddress = DidChangeAddress;
         service.GetDid = GetDid;
-        service.DidSendMore = DidSendMore;
         service.GetAllDids = GetAllDids;
 
         //Cert
@@ -521,7 +520,7 @@
          *    }
          * }
          **/
-        function SendMore(from, recipents, transactionFee, password) {
+        function SendMore(from, recipents, transactionFee, memo, password) {
             var credentials = localStorageService.get('credentials');
             var query = [];
             var recipent = '';
@@ -532,6 +531,10 @@
             if(from) {
                 query.push('-s');
                 query.push(from);
+            }
+            if(memo) {
+                query.push('-i');
+                query.push(memo);
             }
             recipents.forEach( (e) => {
               recipent = e.address + ':' + e.value;
@@ -964,22 +967,6 @@
         function TransferMIT(symbol, sendto, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
             return _sendV2('transfermit', [credentials.user, password, sendto, symbol, '-f', transactionFee]);
-        }
-
-        function DidSendMore(recipents, transactionFee, password) {
-            var credentials = localStorageService.get('credentials');
-            var query = [];
-            var recipent = '';
-            query.push(credentials.user);
-            query.push(password);
-            query.push('-f');
-            query.push(transactionFee);
-            recipents.forEach( (e) => {
-              recipent = e.address + ':' + e.value;
-              query.push('-r');
-              query.push(recipent);
-            });
-            return _sendV2('didsendmore', query);
         }
 
         function SecondaryIssue(toDID, symbol, quantity, type, unlockNumber, quantityLocked, periodLocked, periodsModel2, interestRate, transactionFee, password){

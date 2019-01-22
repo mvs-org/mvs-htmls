@@ -747,7 +747,6 @@
     //Add a recipient
     $scope.addRecipent = function() {
       $scope.recipents.push({'index': $scope.recipents.length+1, 'address': '', 'value': '', 'correctEtpAddress': false, 'correctAvatar': false, 'burnAddress': false, 'emptyAmount': true, 'wrongAmount': false, 'notEnough': false});
-      $scope.sendfrom='';
       $scope.recipientOK.push(false);
       $scope.amountOK.push(false);
       availBalance('');
@@ -852,7 +851,7 @@
         });
       });
 
-      var SendPromise = MetaverseService.DidSendMore(recipentsQuery, fee, password);
+      var SendPromise = MetaverseService.SendMore(sendfrom, recipentsQuery, fee, memo, password);
       SendPromise
       .then( (response) => {
         NProgress.done();
@@ -5373,13 +5372,13 @@
         NProgress.start();
         var fee = transactionFee * 100000000;
 
-        var SendPromise = MetaverseService.SendMore(sendfrom, recipents, fee, password);
+        var SendPromise = MetaverseService.SendMore(sendfrom, recipents, fee, undefined, password);
         SendPromise
         .then( (response) => {
           NProgress.done();
           if (typeof response.success !== 'undefined' && response.success) {
             //Transaction was successful
-            $translate('MESSAGES.TRANSFER_SUCCESS').then( (data) => FlashService.Success(data, false, response.data.result.transaction.hash) );
+            $translate('MESSAGES.TRANSFER_SUCCESS').then( (data) => FlashService.Success(data, true, response.data.result.transaction.hash) );
             $location.path('/home');
             $window.scrollTo(0,0);
           } else {
