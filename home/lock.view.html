@@ -26,12 +26,32 @@
 			</div>
 
 			<!--Locktime-->
-
 			<div class="form-group">
 				<label for="miner" class="control-label">{{ 'DEPOSIT.NBR_BLOCKS' | translate }}</label>
-				<select name="locktime" type="number" class="form-control" ng-model="locktime" ng-class="{validInput: !error.locktime, wrongInput: error.locktime}">
+				<span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.LOCKTIME' | translate }}"></span>
+				<select ng-disabled="customLocktime" name="locktime" type="number" class="form-control" ng-model="locktime" ng-class="{validInput: !customLocktime && !warning.locktime, wrongInput: !customLocktime && warning.locktime}">
 					<option ng-repeat="locktime in locktimePeriods" value="{{locktime.blocks}}">{{locktime.blocks}}{{ 'SECONDARY_ISSUE.BLOCKS' | translate }} (~{{locktime.text}})</option>
 				</select>
+			</div>
+
+			<!--Checkbox to swaptoken-->
+			<div class="form-group col-xs-12 spe-addrbox depositAddressCheckbox">
+				<div class="checkboxCircle">
+					<div class="checkbox-box">
+						<input type="checkbox" tabIndex="-1" name="customLocktime" ng-model="customLocktime" ng-click="checkboxLocktimeChange(customLocktime)" id="checkboxLocktime">
+						<label for="checkboxLocktime"></label>
+					</div>
+					<span class="textCheckbox">{{ 'LOCK.CUSTOM_LOCKTIME_CHECKBOX' | translate }}</span>
+					<span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.CUSTOM_LOCKTIME' | translate }}"></span>
+				</div>
+			</div>
+
+			<!--Locktime custom-->
+			<div class="form-group" ng-show="customLocktime">
+				<label for="miner" class="control-label">{{ 'DEPOSIT.NBR_BLOCKS' | translate }}</label>
+				<input type="number" min=0 step="1" class="form-control" placeholder="0" name="customLocktimeValue" ng-model="customLocktimeValue" ng-class="{validInput: !warning.customLocktime, wrongInput: warning.customLocktime}" autocomplete="off">
+				<div ng-show="warning.customLocktime_high" class="warningInputComment"><span class="glyphicon glyphicon-warning-sign"></span> {{ 'LOCK.LOCKTIME_HIGH' | translate }}</div>
+				<div ng-show="warning.customLocktime_low" class="warningInputComment"><span class="glyphicon glyphicon-warning-sign"></span> {{ 'LOCK.LOCKTIME_LOW' | translate }}</div>
 			</div>
 
 			<!--Fee-->
@@ -92,7 +112,7 @@
 					</div>
 					<div class="col-xs-12 noPaddingLeftRight assetDataLine">
 						<div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'DEPOSIT.NBR_BLOCKS' | translate }}</div>
-						<div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{locktime}} {{ 'BLOCKS' | translate }}</div>
+						<div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{customLocktime ? customLocktimeValue : locktime}} {{ 'BLOCKS' | translate }}</div>
 					</div>
 					<div ng-show="address_option && deposit_address != undefined && deposit_address != ''" class="col-xs-12 noPaddingLeftRight assetDataLine">
 						<div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'DEPOSIT.RECIPIENT_ADDRESS' | translate }}</div>
@@ -115,7 +135,7 @@
 			<br>
 			<!--Submit button-->
 			<div class="col-xs-6 col-sm-6 col-md-3">
-				<button type="submit" class="btn btn-success" ng-click="lock(avatar, quantity, locktime, transactionFee, password)" ng-disabled="errorPassword">{{ 'LOCK.BUTTON' | translate }}</button>
+				<button type="submit" class="btn btn-success" ng-click="lock(avatar, quantity, customLocktime ? customLocktimeValue : locktime, transactionFee, password)" ng-disabled="errorPassword">{{ 'LOCK.BUTTON' | translate }}</button>
 			</div>
 			<!--Return button-->
 			<div class="col-xs-6 col-sm-6 col-md-3">

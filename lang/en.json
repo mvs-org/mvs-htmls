@@ -771,6 +771,14 @@
   "OPTIMIZE.VOTE_LIMIT": "This optimization is limited to 100 votes. If you want to get more votes on the same address, you will have to organize your outputs manually.",
 
   "WEEK": " week",
-  "WEEKS": " weeks"
+  "WEEKS": " weeks",
+  
+  "POS_MINING.POS_MINING_DIFFICULTY": "PoS difficulty",
+
+  "LOCK.LOCKTIME_HIGH": "That's a very long time! Are you sure you want to lock your ETP for so long?",
+  "LOCK.LOCKTIME_LOW": "If you lock you ETP for less than 24 000 blocks, it will not validate the requirement for PoS mining",
+  "HELP.LOCKTIME": "The calendar estimation is only an approximation, the effective locktime will always be according to the number of blocks",
+  "LOCK.CUSTOM_LOCKTIME_CHECKBOX": "I want to use a custom lock period",
+  "HELP.CUSTOM_LOCKTIME": "Be carefull when using a custom lock period! A too short period will not validate the requirement to do PoS mining, a too long period might lock your ETP for a very long time"
 
 }

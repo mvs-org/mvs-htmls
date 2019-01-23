@@ -24,12 +24,16 @@
             <tr>
               <td class="wd-t">{{ 'POS_MINING.VOTE_AVAILABLE' | translate }}</td>
               <td ng-show="!stakeBalanceLoaded" class="color66"><span class="miniSpinner"></span></td>
-              <td ng-show="stakeBalanceLoaded" cclass="color66">{{nbr_vote.stake_utxo_available}}</td>
+              <td ng-show="stakeBalanceLoaded" class="color66">{{nbr_vote.stake_utxo_available}}</td>
             </tr>
             <tr>
               <td class="wd-t">{{ 'POS_MINING.VOTE_WAITING' | translate }}</td>
               <td ng-show="!stakeUtxoLoaded" class="color66"><span class="miniSpinner"></span></td>
               <td ng-show="stakeUtxoLoaded" class="color66">{{nbr_vote.stake_utxo_waiting}}</td>
+            </tr>
+            <tr>
+              <td class="wd-t">{{ 'POS_MINING.POS_MINING_DIFFICULTY' | translate }}</td>
+              <td class="color66">{{status.difficulty}}</td>
             </tr>
             <tr>
               <td class="wd-t">{{ 'MINING.MINING_MST' | translate }}</td>

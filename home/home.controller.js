@@ -383,6 +383,7 @@
 
     $scope.balancesLoaded = false;
     $scope.avatarsLoaded = false;
+    $scope.checkboxLocktimeChange = checkboxLocktimeChange;
 
     function init() {
       $scope.password = '';
@@ -391,6 +392,7 @@
       $scope.confirmation = false;
       $scope.submittable = false;
       $scope.locktime = "24000";
+      $scope.customLocktimeValue = undefined;
     }
 
     function checkInputs() {
@@ -479,14 +481,24 @@
       $scope.avatarsLoaded = true;
     });
 
+    function checkboxLocktimeChange(customLocktime) {
+      checkready();
+    }
+
     //Check if the form is submittable
     function checkready() {
       //Check for errors
       for (var error in $scope.error) {
         if ($scope.error[error]) {
+          console.log($scope.error)
+          console.log($scope.error[error])
           $scope.submittable = false;
           return;
         }
+      }
+      if(($scope.customLocktime && $scope.warning.customLocktime) || (!$scope.customLocktime && $scope.warning.locktime)){
+        $scope.submittable = false;
+        return;
       }
       $scope.submittable = true;
     }
@@ -514,7 +526,15 @@
 
     //Check if the locktime is valid
     $scope.$watch('locktime', (newVal, oldVal) => {
-      $scope.error.locktime = (newVal == undefined || newVal == '');
+      $scope.warning.locktime = (newVal == undefined || newVal == '');
+      checkready();
+    });
+
+    //Check if the custom locktime is valid
+    $scope.$watch('customLocktimeValue', (newVal, oldVal) => {
+      $scope.warning.customLocktime = (newVal == undefined || newVal == '');
+      $scope.warning.customLocktime_high = newVal != undefined && newVal != '' && newVal > 2000000;
+      $scope.warning.customLocktime_low = newVal != undefined && newVal != '' && newVal < 24000;
       checkready();
     });
 
