@@ -52,7 +52,7 @@
           <option ng-repeat="address in listAddresses | orderBy:'available':true" value="{{address.address}}" ng-if="myDidsAddresses[address.address] && address.address.charAt(0) != '3'">{{myDidsAddresses[address.address]}} - {{address.address}} - {{address.available | assetformat : 8}} ETP</option>
           <option ng-repeat="address in listAddresses | orderBy:'available':true" value="{{address.address}}" ng-if="!myDidsAddresses[address.address] && address.address.charAt(0) != '3'">{{address.address}} - {{address.available | assetformat : 8}} ETP</option>
         </select>
-        <div ng-show="miner && !myDidsAddresses[miner]" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.POS_MINING_NEED_AVATAR' | translate }}</div>
+        <div ng-show="miner && avatarsLoaded && !myDidsAddresses[miner]" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.POS_MINING_NEED_AVATAR' | translate }}</div>
       </div>
 
       <!--MST mined-->

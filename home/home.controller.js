@@ -5048,6 +5048,8 @@
     $scope.stakeUtxoLoaded = true;
     $scope.nbr_vote = [];
 
+    $scope.avatarsLoaded = false;
+
     GetMiningInfo();
 
     
@@ -5177,6 +5179,7 @@
         $translate('MESSAGES.CANT_LOAD_MY_DIDS').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       }
+      $scope.avatarsLoaded = true;
     });
 
     MetaverseService.ListMstMiningAssets()

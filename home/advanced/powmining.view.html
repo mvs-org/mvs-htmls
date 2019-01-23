@@ -8,8 +8,8 @@
 
 <!--Mining-->
 <div class="col-md-12 noPaddingLeftRight">
-  <h4 ng-hide="isMining">{{ 'ADVANCED.POW_TITLE' | translate }}
-    <span ng-hide="status.is_mining && status.block_type == 'PoW'" class="miningEnd wk-title">{{ 'MINING_NOT_RECOMMENDED' | translate }}   </span>
+  <h4 ng-hide="status.is_mining && status.block_type == 'PoW'">{{ 'ADVANCED.POW_TITLE' | translate }}
+    <span class="miningEnd wk-title">{{ 'MINING_NOT_RECOMMENDED' | translate }}   </span>
   </h4>
   <h4 ng-show="status.is_mining && status.block_type == 'PoW'" class="isMiningText">{{ 'MINING.IS_MINING_POW' | translate }}</h4>
 
@@ -21,7 +21,7 @@
             <td class="wd-t">{{ 'MINING_HEIGHT' | translate }}</td>
             <td class="color66">{{status.height}}</td>
           </tr>
-          <tr>
+          <tr ng-show="status.block_type == 'PoW'">
             <td class="wd-t">{{ 'MINING_DIFFICULTY' | translate }}</td>
             <td class="color66">{{status.difficulty}}</td>
           </tr>

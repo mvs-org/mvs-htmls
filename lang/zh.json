@@ -594,7 +594,7 @@
   "HELP.SECONDARY_ISSUE_DIRECTLY_AVAILABLE_QUANTITY": "这是可直接使用的资产数量，即增加的资产数量减去总共的锁仓数量",
   "HELP.ASSET_RECIPIENT_ADDRESS_AVATAR_BURN": "接收对象可以为地址或数字身份。销毁一项资产，您可以使用关键词'blackhole'",
   "TRANSFER_CERT.NO_CERT": "您尚未拥有任何证书",
-  "ISSUE_CERT.NO_DOMAIN": "您需要有一个域名证书来发行一个冠名证书",
+  "ISSUE_CERT.NO_DOMAIN_FOR_NAMING": "您需要有一个域名证书来发行一个冠名证书",
   "EXPLORER.TRANSACTION_COMING_FROM_AVATAR": "来自数字身份",
   "MESSAGES.MULTISIGNATURE_SUCCESS": "多次签名交易成功创建",
   "HELP.ADDRESS_INDEX": "这是您的地址索引。如果您将账户信息从轻钱包导出，请注意轻钱包只能加载最前面的50个地址。",
@@ -628,7 +628,6 @@
   "ASSET.CREATE_MST": "创建MST",
   "ASSET.CREATE_MIT": "创建MIT",
   "CREATE_MIT.SYMBOL_ALREADY_EXIST": "这个MIT在区块链上已经存在，您不能创建重复的MIT",
-  "CONTENT": "内容数据块",
   "HELP.CONTENT": "您可以在这里填写有关MIT的数据，最多支持256个字节。",
   "CREATE_MIT.BACK_TO_MIT": "回到我的MIT",
   "MESSAGES.MIT_CREATED": "您已经创建了新的MIT，相关的交易哈希是： ",
@@ -692,6 +691,95 @@
   "LINK_ETH.LINKED_EXPLANATION3": "这样您将在元界钱包收到等值的 MST 资产。",
   "LINK_ETH.SEND_ERC20_TITLE": "转换兼容的ERC20代币为MST资产",
   "LINK_ETH.SEND_ERC20_EXPLANATION": "现在您可以发送任何ERC20 代币到ETPMap 合约地址。完成资产置换，只需要发送MST资产发送到元界钱包跨链的数字身份地址，并给出以太坊钱包地址用于接收等值的ERC20 代币。",
-  "LINK_ETH.BOTTOM_EXPLANATION": "注意：将以太坊地址链接到元界钱包地址请参考“以太坊到元界”的操作指南。将元界的资产转换为以太坊代币，只需要发送MST资产发送到元界钱包跨链的数字身份地址，并给出以太坊钱包地址用于接收等值的ERC20 代币。"
+  "LINK_ETH.BOTTOM_EXPLANATION": "注意：将以太坊地址链接到元界钱包地址请参考“以太坊到元界”的操作指南。将元界的资产转换为以太坊代币，只需要发送MST资产发送到元界钱包跨链的数字身份地址，并给出以太坊钱包地址用于接收等值的ERC20 代币。",
+
+  "PROFIL.CERT_MINING": "Mining",
+  "PROFIL.CERTIFICATES_EXPLANATION_MINING": "This certificate doesn't provide any specific permission, its only function is to proof that this MST can be mined. It can still be transfered, but the recipient will not get any special right.",
+
+  "ADVANCED.POS_TITLE": "PoS mining",
+  "ADVANCED.POW_TITLE": "PoW mining",
+
+  "MINING.IS_MINING_POW": "Currently Mining via PoW",
+  "MINING.IS_MINING_POS": "Currently Mining via PoS",
+  "MINING.IS_MINING_DPOS": "Currently Mining via dPoS",
+  "MINING.PAYMENT_ADDRESS": "Payment address",
+  "MESSAGES.GET_LOCKED_ERROR": "Error while getting the locked ETP. Please make sure this miner has enough locked ETP for PoS mining",
+  "POS_MINING.REQUIREMENT_TITLE": "PoS requirements",
+  "POS_MINING.STAKING_REQUIREMENT_EXPLAIN": "You need to lock at least 1 000 ETP, for at least 24 000 blocks in order to do PoS mining. Please note that the ETP that unlock in less than 1 000 blocks are excluded.",
+  "POS_MINING.STAKING_REQUIREMENT_EXPLAIN_BOLD": "These locked ETP also need to be locked in 1 time! Two lock transactions of 500 ETP will not validate this condition!",
+  "POS_MINING.UTXO_REQUIREMENT": "You also need to have available ETP. Each output of more than 1 000 ETP and not spent recently gives you 1 vote*",
+  "POS_MINING.UTXO_REQUIREMENT_DETAILS": "*Sending a transaction, even to yourself, will set the aging of its outputs to 0. They will then display as pending votes, and you will have to wait between 500 to 1 000 blocks in order to use this votes for PoS mining. Find a block will also bring the aging of the used vote to 0",
+  "MINING.MINER": "Miner",
+  "POS_MINING.VOTE_AVAILABLE": "Vote(s) available",
+  "POS_MINING.VOTE_WAITING": "Vote(s) pending",
+  "MINING.NO_MST": "No MST mining",
+  "POW_MINING.REQUIREMENT_TITLE": "PoW mining",
+  "POW_MINING.REQUIREMENT_EXPLAINATION": "PoW mining difficulty being very high for home computing, it is recommended to use a mining pool. You can find the list of most active mining pools ",
+  "POW_MINING.EXPLORER_LINK": "in the official explorer",
+
+  "POS_MINING.STAKING_REQUIREMENT_VALID": "This avatar or address has enough ETP locked to do PoS mining till block ",
+  "POS_MINING.STAKING_REQUIREMENT_FAIL": "This avatar or address does not have enough ETP locked to do PoS mining",
+  "POS_MINING.STAKING_REQUIREMENT_UNSELECT": "Please select an avatar or address first",
+
+  "MESSAGES.GET_STAKE_ERROR": "Error while getting the number of stake of this address",
+
+  "LOCK.BUTTON": "Lock",
+  "MESSAGES.LOCK_ERROR": "The lock transaction failed",
+  "LOCK.HEADLINE": "Lock ETP",
+
+  "LOCK.EXPLANATION_TITLE": "Lock description",
+  "LOCK.EXPLANATION_BODY": "Locking ETP does not provide any direct interest. However, locked ETP are required in order to do PoS and dPoS mining. Only lock ETP if you plan to do mining, and understood the requirements of each mining type.",
+  "LOCK.AMOUNT_HIGH": "That's a big amount! Are you sure you want to lock so many ETP? The lock function does not provide any interest",
+  "LOCK.AMOUNT_LOW": "If you lock less than 1 000 ETP, it will not validate the requirement for PoS mining",
+  "POS_MINING.MST_CANNOT_BE_MINED": "This MST cannot be mined",
+  "MINING.MINE_MST": "Mine MST",
+  "MINING.MINING_MST": "Mining MST",
+  "MINING.MINING_NO_MST": "Not mining any MST",
+  "POS_MINING.STAKING_REQUIREMENT": "PoS lock requirement",
+
+  "HISTORY.COINSTAKE": "Coinstake",
+
+  "SETTINGS.POPBLOCKS": "Unlock synchronisation",
+  "SETTINGS_POPBLOCKS_NBR_BLOCKS": "Number of blocks to remove",
+
+  "SETTINGS_EXPORT_POP_SPECIFIED_BLOCKS_BUTTON": "Pop blocks",
+  "SETTINGS_EXPORT_POP_DEFAULT_BLOCKS_BUTTON": "Pop last 100 blocks",
+
+  "SETTINGS.POPBLOCKS_EXPLANATION_TITLE": "Pop blocks to fix your wallet",
+  "SETTINGS.POPBLOCKS_EXPLANATION": "Pop blocks will remove the number of blocks specified from your wallet, that will restart to synchronize. This command is useful if your wallet cannot synchronize and is stucked since a long period of time.",
+  "SETTINGS.POPBLOCKS_WARNING": "Only use this option if your wallet cannont fully synchronize!",
+  "SETTINGS.POPBLOCKS_CHECK_UPGRADE": "Also make sure you are using the latest version of the wallet.",
+  "SETTINGS.POPBLOCKS_RESYMC_FROM_START": "If your wallet keep getting stuck at the same height, you will have to fully uninstall and reinstall your wallet.",
+  "SETTINGS.POPBLOCKS_WARNING_HIGHT_VALUE": "That's a lot of blocks! Only remove so many blocks if you know what you are doing.",
+  "MESSAGES.POPBLOCKS_SUCCESS": "Blocks have been removed successfully!",
+  "MESSAGES.POPBLOCKS_ERROR": "Error while removing the latest blocks",
+
+  "LOCK.ORGANIZE": "Optimize",
+  "OPTIMIZE.CURRENT_NBR_VOTE": "Current number of votes",
+  "OPTIMIZE.MAX_NBR_VOTE": "New number of votes",
+  "AVATAR": "Avatar",
+
+  "HEADLINE_OPTIMIZE_VOTE": "Optimize your votes",
+  "OPTIMIZE.EXPLANATION_TITLE": "Reorganize your outputs",
+  "OPTIMIZE.EXPLANATION_INTRO": "For PoS mining, your voting power is based on the number of outputs you have of more than 1 000 ETP, and with a sufficient aging (it should not have been spent since 500 to 1 000 blocks, depending on the PoS difficulty).",
+  "OPTIMIZE.EXPLANATION_ACTION": "This step will send back to yourself your available ETP, split in outputs of exactly 1 000 ETP. This will help you to mine PoS with the highest efficiency.",
+  "OPTIMIZE.EXPLANATION_WARNING_AGE": "Please be aware this action will bring back the aging of all your votes to 0. You will have to wait a few hundred blocks after performing this action till their age reach the mininum aging requirement to do PoS mining again.",
+
+  "MESSAGES.MST_MINING_LOAD_ERROR": "Error while loading the list of MSTs that can be mined",
+  "MESSAGES.MINING_START_SUCCESS" : "Mining started. Don't close your wallet or stop your computer to keep mining!",
+  "OPTIMIZE.VOTE_LIMIT": "This optimization is limited to 100 votes. If you want to get more votes on the same address, you will have to organize your outputs manually.",
+
+  "WEEK": " week",
+  "WEEKS": " weeks",
+  
+  "POS_MINING.POS_MINING_DIFFICULTY": "PoS difficulty",
+
+  "LOCK.LOCKTIME_HIGH": "That's a very long time! Are you sure you want to lock your ETP for so long?",
+  "LOCK.LOCKTIME_LOW": "If you lock you ETP for less than 24 000 blocks, it will not validate the requirement for PoS mining",
+  "HELP.LOCKTIME": "The calendar estimation is only an approximation, the effective locktime will always be according to the number of blocks",
+  "LOCK.CUSTOM_LOCKTIME_CHECKBOX": "I want to use a custom number of blocks",
+  "HELP.CUSTOM_LOCKTIME": "Be carefull when using a custom locktime! A too short period will not validate the requirement to do PoS mining, a too long period might lock your ETP for a very long time",
+  "MESSAGES.OPTIMIZE_NOTHING_TO_SPLIT": "There is nothing to optimize",
+  "MESSAGES.POS_MINING_NEED_AVATAR": "You have to use and avatar to do PoS mining!"
 
 }
