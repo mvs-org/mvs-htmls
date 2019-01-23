@@ -257,9 +257,9 @@
                 controllerAs: 'vm'
             })
 
-            .state('home.lock', {
-                url: "/lock/:avatar",
-                templateUrl: "home/lock.view.html",
+            .state('home.advanced.lock', {
+                url: "/advanced/lock/:avatar",
+                templateUrl: "home/advanced/lock.view.html",
                 controller: 'LockController',
                 controllerAs: 'vm'
             })
@@ -287,9 +287,9 @@
                 controller: 'ConsoleController'
             })
 
-            .state('home.optimizevote', {
-                url: "/optimizevote/:address",
-                templateUrl: "home/transfer/optimizevote.view.html",
+            .state('home.advanced.optimizevote', {
+                url: "/advanced/optimizevote/:address",
+                templateUrl: "home/advanced/optimizevote.view.html",
                 controller: 'OptimizeVoteController'
             })
 

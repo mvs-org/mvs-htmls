@@ -706,7 +706,7 @@
   "MINING.PAYMENT_ADDRESS": "Payment address",
   "MESSAGES.GET_LOCKED_ERROR": "Error while getting the locked ETP. Please make sure this miner has enough locked ETP for PoS mining",
   "POS_MINING.REQUIREMENT_TITLE": "PoS requirements",
-  "POS_MINING.STAKING_REQUIREMENT_EXPLAIN": "You need to lock at least 1 000 ETP, for at least 24 000 blocks in order to do PoS mining. Please also note that the ETP that unlock in less than 1 000 blocks are not included.",
+  "POS_MINING.STAKING_REQUIREMENT_EXPLAIN": "You need to lock at least 1 000 ETP, for at least 24 000 blocks in order to do PoS mining. Please note that the ETP that unlock in less than 1 000 blocks are excluded.",
   "POS_MINING.STAKING_REQUIREMENT_EXPLAIN_BOLD": "These locked ETP also need to be locked in 1 time! Two lock transactions of 500 ETP will not validate this condition!",
   "POS_MINING.UTXO_REQUIREMENT": "You also need to have available ETP. Each output of more than 1 000 ETP and not spent recently gives you 1 vote*",
   "POS_MINING.UTXO_REQUIREMENT_DETAILS": "*Sending a transaction, even to yourself, will set the aging of its outputs to 0. They will then display as pending votes, and you will have to wait between 500 to 1 000 blocks in order to use this votes for PoS mining. Find a block will also bring the aging of the used vote to 0",
@@ -762,8 +762,8 @@
 
   "HEADLINE_OPTIMIZE_VOTE": "Optimize your votes",
   "OPTIMIZE.EXPLANATION_TITLE": "Reorganize your outputs",
-  "OPTIMIZE.EXPLANATION_INTRO": "For PoS mining, your voting power is based on the number of outputs you have of more than 1 000 ETP, and with a sufficient aging (it should not have been spent since 500 to 1 000 blocks, depending on the PoS difficulty)",
-  "OPTIMIZE.EXPLANATION_ACTION": "This step will send back to yourself your available ETP, split in outputs of exactly 1 000 ETP. This will help you to mine PoS with the highest efficiency",
+  "OPTIMIZE.EXPLANATION_INTRO": "For PoS mining, your voting power is based on the number of outputs you have of more than 1 000 ETP, and with a sufficient aging (it should not have been spent since 500 to 1 000 blocks, depending on the PoS difficulty).",
+  "OPTIMIZE.EXPLANATION_ACTION": "This step will send back to yourself your available ETP, split in outputs of exactly 1 000 ETP. This will help you to mine PoS with the highest efficiency.",
   "OPTIMIZE.EXPLANATION_WARNING_AGE": "Please be aware this action will bring back the aging of all your votes to 0. You will have to wait a few hundred blocks after performing this action till their age reach the mininum aging requirement to do PoS mining again.",
 
   "MESSAGES.MST_MINING_LOAD_ERROR": "Error while loading the list of MSTs that can be mined",
@@ -778,7 +778,9 @@
   "LOCK.LOCKTIME_HIGH": "That's a very long time! Are you sure you want to lock your ETP for so long?",
   "LOCK.LOCKTIME_LOW": "If you lock you ETP for less than 24 000 blocks, it will not validate the requirement for PoS mining",
   "HELP.LOCKTIME": "The calendar estimation is only an approximation, the effective locktime will always be according to the number of blocks",
-  "LOCK.CUSTOM_LOCKTIME_CHECKBOX": "I want to use a custom lock period",
-  "HELP.CUSTOM_LOCKTIME": "Be carefull when using a custom lock period! A too short period will not validate the requirement to do PoS mining, a too long period might lock your ETP for a very long time"
+  "LOCK.CUSTOM_LOCKTIME_CHECKBOX": "I want to use a custom number of blocks",
+  "HELP.CUSTOM_LOCKTIME": "Be carefull when using a custom locktime! A too short period will not validate the requirement to do PoS mining, a too long period might lock your ETP for a very long time",
+  "MESSAGES.OPTIMIZE_NOTHING_TO_SPLIT": "There is nothing to optimize",
+  "MESSAGES.POS_MINING_NEED_AVATAR": "You have to use and avatar to do PoS mining!"
 
 }

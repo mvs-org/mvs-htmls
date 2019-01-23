@@ -48,10 +48,11 @@
       <div class="form-group" ng-hide="status.is_mining && status.block_type == 'PoS'">
         <label for="miner" class="control-label">{{ 'MINING.MINER' | translate }}</label>
         <span ng-show="loadingMiner" class="miniSpinner"></span>
-        <select name="miner" type="address" class="form-control" placeholder="" ng-model="miner" ng-change="minerChanged(miner)" ng-class="{validInput: miner, wrongInput: !miner}">
-          <option ng-repeat="address in listAddresses | orderBy:'available':true" value="{{myDidsAddresses[address.address]}}" ng-if="myDidsAddresses[address.address] && address.address.charAt(0) != '3'">{{myDidsAddresses[address.address]}} - {{address.address}} - {{address.available | assetformat : 8}} ETP</option>
+        <select name="miner" type="address" class="form-control" placeholder="" ng-model="miner" ng-change="minerChanged(miner)" ng-class="{validInput: miner && myDidsAddresses[miner], wrongInput: !miner || !myDidsAddresses[miner]}">
+          <option ng-repeat="address in listAddresses | orderBy:'available':true" value="{{address.address}}" ng-if="myDidsAddresses[address.address] && address.address.charAt(0) != '3'">{{myDidsAddresses[address.address]}} - {{address.address}} - {{address.available | assetformat : 8}} ETP</option>
           <option ng-repeat="address in listAddresses | orderBy:'available':true" value="{{address.address}}" ng-if="!myDidsAddresses[address.address] && address.address.charAt(0) != '3'">{{address.address}} - {{address.available | assetformat : 8}} ETP</option>
         </select>
+        <div ng-show="miner && !myDidsAddresses[miner]" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.POS_MINING_NEED_AVATAR' | translate }}</div>
       </div>
 
       <!--MST mined-->
@@ -66,7 +67,7 @@
       <!--Buttons-->
       <div class="row">
         <div class="col-xs-6">
-          <button class="btn btn-success" ng-disabled="!miner || status.is_mining && status.block_type == 'PoS'" ng-click="startPosMining()">
+          <button class="btn btn-success" ng-disabled="!miner || !myDidsAddresses[miner] || (status.is_mining && status.block_type == 'PoS')" ng-click="startPosMining(myDidsAddresses[miner] ? myDidsAddresses[miner] : miner, mst)">
             {{ 'MINING_START' | translate }}
           </button>
         </div>
@@ -95,7 +96,7 @@
             <div ng-show="stakeBalanceLoaded && (miner || (status.is_mining && status.block_type == 'PoS')) && can_mine_till > 0" class="assetValueColumn col-xs-6 noPaddingLeftRight correctInputComment"><span class="glyphicon glyphicon-ok"></span> {{ 'POS_MINING.STAKING_REQUIREMENT_VALID' | translate }} {{can_mine_till | assetformat : 0}}</div>
             <div ng-show="stakeBalanceLoaded && (miner || (status.is_mining && status.block_type == 'PoS')) && can_mine_till == 0" class="assetValueColumn col-xs-6 noPaddingLeftRight wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'POS_MINING.STAKING_REQUIREMENT_FAIL' | translate }}</div>
             <div class="assetValueColumn col-xs-6 col-xs-offset-6">
-              <a href="#!/lock/{{miner}}" class="btn btn-success">{{ 'LOCK.BUTTON' | translate}}</a>
+              <a href="#!/advanced/lock/{{miner}}" class="btn btn-success">{{ 'LOCK.BUTTON' | translate}}</a>
             </div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
@@ -114,7 +115,7 @@
               </div>
             </div>
             <div class="assetValueColumn col-xs-6 col-xs-offset-6">
-              <a href="#!/optimizevote/{{miner}}" class="btn btn-success btn-success-secondary">{{ 'LOCK.ORGANIZE' | translate}}</a>
+              <a href="#!/advanced/optimizevote/{{miner}}" class="btn btn-success btn-success-secondary">{{ 'LOCK.ORGANIZE' | translate}}</a>
             </div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">

@@ -355,7 +355,8 @@
   function LockController(MetaverseService, MetaverseHelperService, $rootScope, $scope, FlashService, localStorageService, $translate, $window, $location, $filter) {
 
     $window.scrollTo(0,0);
-    $scope.avatar = $location.path().split('/')[2];
+    $scope.addressURL = $location.path().split('/')[3];
+    $scope.avatar = '';
     $scope.lock = lock;
     $scope.decimal_number = 8;
 
@@ -372,6 +373,7 @@
     $scope.avatars = [];
     $scope.addresses = [];
     $scope.avatarsAddresses = [];
+    $scope.avatarsFromAddresses = [];
     $scope.locktimeDefaultPeriod = 24000;
     $scope.locktimePeriods = [];
     $translate('WEEK', 'WEEKS').then( (week, weeks) => $scope.locktimePeriods.push({"blocks": $scope.locktimeDefaultPeriod.toString(), "text": "1" + week}) );
@@ -461,11 +463,13 @@
           avatarsDetails.forEach(function(avatar) {
             $scope.avatars.push(avatar.symbol);
             $scope.avatarsAddresses[avatar.symbol] = avatar.address;
+            $scope.avatarsFromAddresses[avatar.address] = avatar.symbol;
           });
-          if(!$scope.avatarsAddresses[$scope.avatar]) {
+          if(!$scope.avatarsFromAddresses[$scope.addressURL]) {
             $scope.avatar = '';
-          } else if ($scope.addresses[$scope.avatarsAddresses[$scope.avatar]]) {
-            $scope.availableBalance = $scope.addresses[$scope.avatarsAddresses[$scope.avatar]].available;
+          } else {
+            $scope.avatar = $scope.avatarsFromAddresses[$scope.addressURL];
+            $scope.availableBalance = $scope.addresses[$scope.addressURL] ? $scope.addresses[$scope.addressURL].available : 0;
             validQuantity($scope.quantity);
           }
         } else {
@@ -490,8 +494,6 @@
       //Check for errors
       for (var error in $scope.error) {
         if ($scope.error[error]) {
-          console.log($scope.error)
-          console.log($scope.error[error])
           $scope.submittable = false;
           return;
         }
@@ -506,7 +508,8 @@
     //Check if the avatar is valid
     $scope.$watch('avatar', (newVal, oldVal) => {
       $scope.error.avatar_empty = (newVal == undefined || newVal == '');
-      if($scope.addresses && $scope.avatarsAddresses && $scope.avatarsAddresses[$scope.avatar])
+      $scope.error.avatar_empty = (newVal == undefined || newVal == '');
+      if($scope.addresses && $scope.avatarsAddresses && $scope.avatarsAddresses[$scope.avatar] && $scope.addresses[$scope.avatarsAddresses[$scope.avatar]])
         $scope.availableBalance = $scope.addresses[$scope.avatarsAddresses[$scope.avatar]].available;
       validQuantity($scope.quantity);
       checkready();
@@ -5049,9 +5052,9 @@
 
     
 
-    function startPosMining() {
+    function startPosMining(miner, mst) {
       NProgress.start();
-      MetaverseService.Start('pos', $scope.miner, $scope.mst)
+      MetaverseService.Start('pos', miner, mst)
       .then( (response) => {
         NProgress.done();
         if (typeof response.success !== 'undefined' && response.success) {
@@ -5090,6 +5093,8 @@
         $scope.loadingMiningInfo = false;
         if (typeof response.success !== 'undefined' && response.success) {
           $scope.status = response.data.result;
+          if($scope.status.is_mining)
+            $scope.miner = $scope.status.payment_address;
           if($scope.initCheckLockRequirement && $scope.status.is_mining)
             minerChanged($scope.status.payment_address)
           $scope.initCheckLockRequirement = false;
@@ -5259,24 +5264,17 @@
     $scope.transferMore = transferMore;
     $scope.addressChanged = addressChanged;
     $scope.checkInputs = checkInputs;
-    $scope.sendfrom = $location.path().split('/')[3];
     $scope.maxRecipients = 100;
+    $scope.sendfrom = $location.path().split('/')[3];    
 
     // Initializes all transaction parameters with empty strings.
     function init() {
       $scope.fee = '';
-      //$scope.message = '';
       $scope.password = '';
       $scope.transactionFee = 0.0001;
-      //$scope.memo = '';
       $scope.confirmation = false;
       $scope.error = [];
-      $scope.option = [];
-      //$scope.option.memo_empty = true;
-      $scope.recipientOK = [];
-      $scope.amountOK = [];
       $scope.recipents = [];
-      $scope.recipents.push({'index': 1, 'address': '', 'value': '', 'correctEtpAddress': false, 'correctAvatar': false, 'burnAddress': false, 'emptyAmount': true, 'wrongAmount': false, 'notEnough': false});
     }
   
     //Load users ETP balance
@@ -5298,6 +5296,8 @@
           });
         });
         $scope.balancesLoaded = true;
+        if($scope.sendfrom)
+          addressChanged($scope.sendfrom) 
       }
     });
 
@@ -5327,7 +5327,7 @@
     }
 
     function getNbrVoteMax(address) {
-      $scope.nbrMaxVote = Math.min(Math.floor($scope.addresses[address].available / 100000000 / 1000), $scope.maxRecipients);
+      $scope.nbrMaxVote = $scope.addresses[address] ? Math.min(Math.floor($scope.addresses[address].available / 100000000 / 1000), $scope.maxRecipients) : 0;
     }
 
     function getStakeInfo(miner) {
@@ -5404,6 +5404,13 @@
       }
       $scope.submittable = true;
     }
+
+    //Check if the send from address is valid
+    $scope.$watch('sendfrom', (newVal, oldVal) => {
+      $scope.error.sendfrom = (newVal == undefined || newVal == '');
+      $scope.error.sendfrom_nothing_to_split = $scope.addresses && $scope.addresses[newVal] ? $scope.addresses[newVal].available < 2000 : false;
+      checkready();
+    });
 
     //Check if the password is valid
     $scope.$watch('password', (newVal, oldVal) => {
