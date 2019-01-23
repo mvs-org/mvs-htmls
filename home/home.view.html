@@ -46,13 +46,6 @@
                 <div class="assetBoxTitle">{{ 'FROZEN' | translate}}</div>
                 <div class="assetBoxValue">{{asset.locked_quantity | assetformat : asset.decimal_number}}</div>
               </div>
-              <!--div class="assetBoxFrozen col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 noPaddingLeftRight">
-                <div class="assetBoxTitle">{{ 'STATUS' | translate}}</div>
-                <span ng-show="asset.status == 'unissued'" class="assetBoxValue">{{ 'ASSET.STATUS_UNISSUED' | translate }}</span>
-                <span ng-show="asset.status == 'issued'" class="assetBoxValue">{{ 'ASSET.STATUS_ISSUED' | translate }}</span>
-                <span ng-show="asset.status == 'unspent'" class="assetBoxValue">{{ 'ASSET.STATUS_UNSPENT' | translate }}</span>
-                <span ng-hide="asset.status == 'unissued' || asset.status == 'issued' || asset.status == 'unspent'" class="assetBoxValue">{{asset.status}}</span>
-              </div-->
               <div ng-show="asset.status == 'unspent'" class="assetBoxButtons">
                 <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/asset/{{asset.symbol}}">{{ 'ASSETS_SEND' | translate}}</a>
               </div>
@@ -66,33 +59,7 @@
 
   </form>
 
-  <div>
-    <div class="headline">{{ 'HEADLINE_TRANSACTIONS' | translate }}</div>
-    <div class="selectAssetType hidden-md hidden-lg hidden-xl">
-      <button class="dropdown-togglen assetTypeButton" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-        {{assetType}}
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-        <li><a ng-click="filterTransactions('All')">All</a></li>
-        <li><a ng-click="filterTransactions('ETP')">ETP</a></li>
-        <!--li><a ng-click="filterTransactions('Avatars')">{{ 'HISTORY.AVATARS' | translate }}</a></li>
-        <li><a ng-click="filterTransactions('Certs')">{{ 'HISTORY.CERTIFICATES' | translate }}</a></li-->
-        <li class="divider" role="separator" ng-show="assets.length>0"></li>
-        <li ng-repeat="asset in assets | orderBy:'symbol'" ng-show="asset.status=='unspent'"><a ng-click="filterTransactions(asset.symbol)">{{asset.symbol}}</a></li>
-      </ul>
-    </div>
-
-  </div>
-
-  <!--ul class="nav nav-tabs hidden-xs hidden-sm">
-    <li role="presentation"><a class="btn btn-radio-history" ng-click="filterTransactions('ALL')" ng-class="{selectedAsset: assetType=='ALL'}">ALL</a></li>
-    <li role="presentation"><a class="btn btn-radio-history" ng-click="filterTransactions('ETP')" ng-class="{selectedAsset: assetType=='ETP'}">ETP</a></li>
-    <li class="divider" role="separator" ng-show="assets.length>0"></li>
-    <li role="presentation" ng-repeat="asset in assets | orderBy:'symbol'" ng-show="asset.status=='unspent'">
-      <a ng-click="filterTransactions(asset.symbol)" class="btn btn-radio-history" ng-class="{selectedAsset: assetType==asset.symbol}">{{asset.symbol}}</a>
-    </li>
-  </ul-->
+  <div class="headline">{{ 'HEADLINE_TRANSACTIONS' | translate }}</div>
 
 
   <!--Display Transactions history-->
@@ -158,11 +125,19 @@
             <span ng-show="transaction.direction=='mit-issue'" class="intrawalletSign overflow">{{'HISTORY.MIT_ISSUE' | translate}}</span>
             <span ng-show="transaction.direction=='mit-transfer'" class="intrawalletSign overflow">{{'HISTORY.MIT_TRANSFER' | translate}}</span>
             <span ng-show="transaction.direction=='coinstake'" class="intrawalletSign overflow">{{'HISTORY.COINSTAKE' | translate}}</span>
+            <span ng-show="transaction.direction=='mstmining'" class="receiveSign overflow">
+              <div><span class="p-empty">+</span>{{transaction.value_etp | assetformat : transaction.decimal_number_etp}}</div>
+              <div><span class="p-empty">+</span>{{transaction.value_mst | assetformat : transaction.decimal_number_mst}}</div>
+            </span>     
           </div>
 
           <!--Type (ETP,...)-->
           <div class="noPaddingLeftRight transactionBoxField col-md-4 col-lg-4">
-            <span>{{transaction.type}}</span>
+            <span ng-hide="transaction.direction=='mstmining'">{{transaction.type}}</span>
+            <span ng-show="transaction.direction=='mstmining'">
+              <div>{{transaction.type_etp}}</div>
+              <div>{{transaction.type_mst}}</div>
+            </span>
           </div>
 
           <!--Frozen till-->
@@ -174,7 +149,7 @@
 
     </div>
 
-    <!--Pagination and  more button-->
+    <!--Pagination buttons-->
     <div class="paginationHistory hidden-xs hidden-sm">
       <dir-pagination-controls max-size="7" on-page-change="switchPage(newPageNumber)"></dir-pagination-controls>
     </div>
@@ -197,6 +172,10 @@
             <span ng-show="transaction.direction=='mit-issue'" class="intrawalletSign overflow">{{'HISTORY.MIT_ISSUE' | translate}}</span>
             <span ng-show="transaction.direction=='mit-transfer'" class="intrawalletSign overflow">{{'HISTORY.MIT_TRANSFER' | translate}}</span>
             <span ng-show="transaction.direction=='coinstake'" class="intrawalletSign overflow">{{'HISTORY.COINSTAKE' | translate}}</span>
+            <span ng-show="transaction.direction=='mstmining'" class="receiveSign overflow">
+                <div><span class="p-empty">+</span>{{transaction.value_etp | assetformat : transaction.decimal_number_etp}} {{transaction.type_etp}}</div>
+                <div><span class="p-empty">+</span>{{transaction.value_mst | assetformat : transaction.decimal_number_mst}} {{transaction.type_mst}}</div>
+              </span>
           </div>
           <div class="transactionBoxSmallAddress overflow">
             <a class="btn-link" href="#!/explorer/tx/{{transaction.hash}}">

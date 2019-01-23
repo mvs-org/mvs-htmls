@@ -1155,7 +1155,8 @@
         const TX_TYPE_DID_TRANSFER = 'DID_TRANSFER';
         const TX_TYPE_MIT = 'MIT';
         const TX_TYPE_UNKNOWN = 'UNKNOWN';
-        const TX_TYPE_COINSTAKE = 'COINSTAKE'
+        const TX_TYPE_COINSTAKE = 'COINSTAKE';
+        const TX_TYPE_MST_MINING = 'MST_MINING';
 
         service.LoadTransactions = LoadTransactions;
         service.GetBalance = GetBalance;
@@ -1182,20 +1183,25 @@
             if (tx.outputs != undefined && Array.isArray(tx.outputs)) {
                 var result;
                 tx.outputs.forEach(function(output) {
-                    if (output.attachment.type === 'asset-issue') //an asset issue has the priority, and contains certs
+                    if (output.attachment.type === 'asset-issue') { //an asset issue has the priority, and contains certs
                         result = TX_TYPE_ISSUE;
-                    if (output.attachment.type === 'asset-transfer' && result != TX_TYPE_ISSUE)
-                        result = TX_TYPE_ASSET;
-                    if (output.attachment.type === 'asset-cert' && result != TX_TYPE_ISSUE)
+                    } else if (output.attachment.type === 'asset-transfer' && result != TX_TYPE_ISSUE) {
+                        if(tx.inputs != undefined && Array.isArray(tx.inputs) && tx.inputs[0] && tx.inputs[0].address=='') {
+                            result = TX_TYPE_MST_MINING;
+                        } else {
+                            result = TX_TYPE_ASSET;
+                        }
+                    } else if (output.attachment.type === 'asset-cert' && result != TX_TYPE_ISSUE) {
                         result = TX_TYPE_CERT;
-                    if (output.attachment.type === 'did-register')
+                    } else if (output.attachment.type === 'did-register') {
                         result = TX_TYPE_DID_REGISTER;
-                    if (output.attachment.type === 'did-transfer')
+                    } else if (output.attachment.type === 'did-transfer') {
                         result = TX_TYPE_DID_TRANSFER;
-                    if (output.attachment.type === 'mit')
+                    } else if (output.attachment.type === 'mit') {
                         result = TX_TYPE_MIT;
-                    if (output.attachment.type === 'coinstake')
+                    } else if (output.attachment.type === 'coinstake') {
                         result = TX_TYPE_COINSTAKE;
+                    }
                 });
                 return (result) ? result : TX_TYPE_ETP;
             } else {
@@ -1287,7 +1293,7 @@
                                         e.outputs.forEach(function(output){
                                             if(output.attachment.type==='asset-transfer') {
                                                 transaction.type = output.attachment.symbol;
-                                                transaction.decimal_number=output.attachment.decimal_number;
+                                                transaction.decimal_number = output.attachment.decimal_number;
                                                 if((transaction.direction==='receive' && output.own==='true') || (transaction.direction==='send' && output.own==='false')){
                                                     transaction.intrawallet = false;
                                                     transaction.recipents.push({
@@ -1403,6 +1409,22 @@
                                     case TX_TYPE_COINSTAKE:
                                         transaction.direction = 'coinstake';
                                         transaction.type = 'ETP';
+                                        transactions.push(transaction);
+                                        break;
+                                    case TX_TYPE_MST_MINING:
+                                        transaction.direction = 'mstmining';
+                                        transaction.intrawallet = false;
+                                        e.outputs.forEach(function(output){
+                                            if(output.attachment.type==='asset-transfer') {
+                                                transaction.type_mst = output.attachment.symbol;
+                                                transaction.decimal_number_mst = output.attachment.decimal_number;
+                                                transaction.value_mst = parseInt(output.attachment.quantity);
+                                            } else {
+                                                transaction.type_etp = 'ETP';
+                                                transaction.decimal_number_etp = 8;
+                                                transaction.value_etp = parseInt(output['etp-value']);                                             
+                                            }
+                                        });
                                         transactions.push(transaction);
                                         break;
                                     default:
