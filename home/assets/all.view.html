@@ -71,6 +71,25 @@
               <span ng-show="assetsSecondaryIssue[asset.symbol] != undefined" class="assetBoxValue">{{assetsSecondaryIssue[asset.symbol] | assetformat : asset.decimal_number}}</span>
               <span ng-show="assetsSecondaryIssue[asset.symbol] == undefined" class="assetBoxValue">0</span>
             </div>
+            <div class="detailsOneLine">
+              <span class="assetBoxTitle col-xs-5 noPaddingLeftRight">{{ 'ASSET_ALL.MST_MINING' | translate }}:</span>
+              <span ng-show="mstMiningInfo[asset.symbol] != undefined" class="assetBoxValue">{{ 'ASSET_ALL.MST_MINING_AVAILABLE' | translate }}</span>
+              <span ng-show="mstMiningInfo[asset.symbol] == undefined" class="assetBoxValue">{{ 'ASSET_ALL.MST_MINING_NOT_AVAILABLE' | translate }}</span>
+            </div>
+            <div ng-show="mstMiningInfo[asset.symbol]">
+              <div class="detailsOneLine">
+                <span class="assetBoxTitle col-xs-5 noPaddingLeftRight">{{ 'ASSET_CREATE.MST_MINING_INITIAL' | translate }}:</span>
+                <span class="assetBoxValue">{{mstMiningInfo[asset.symbol].initial | assetformat : asset.decimal_number}} {{asset.symbol}}</span>
+              </div>
+              <div class="detailsOneLine">
+                <span class="assetBoxTitle col-xs-5 noPaddingLeftRight">{{ 'ASSET_CREATE.MST_MINING_INTERVAL' | translate }}:</span>
+                <span class="assetBoxValue">{{mstMiningInfo[asset.symbol].interval| assetformat : 0}} {{ 'BLOCKS' | translate }}</span>
+              </div>
+              <div class="detailsOneLine">
+                <span class="assetBoxTitle col-xs-5 noPaddingLeftRight">{{ 'ASSET_CREATE.MST_MINING_BASE' | translate }}:</span>
+                <span class="assetBoxValue">{{mstMiningInfo[asset.symbol].base}} ({{mstMiningInfo[asset.symbol].rate}}%)</span>
+              </div>
+            </div>
           </div>
         </div>
 

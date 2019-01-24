@@ -2377,6 +2377,7 @@
     $scope.assets = [];
     $scope.assetsOriginal = [];
     $scope.assetsSecondaryIssue = [];
+    $scope.mstMiningInfo = {};
     $scope.icons = MetaverseService.hasIcon;
 
     //Load assets
@@ -2405,6 +2406,28 @@
         } //else, there is no asset on the blockchain
       } else {
         $translate('MESSAGES.ASSETS_LOAD_ERROR').then( (data) => {
+          //Show asset load error
+          FlashService.Error(data);
+        } );
+      }
+    });
+
+    MetaverseService.ListMstMiningAssets()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        let mstMiningList = response.data.result;
+        if(mstMiningList && mstMiningList != []) {
+          mstMiningList.forEach( (asset) => {
+            let content = asset.content.split(/,|:/);
+            $scope.mstMiningInfo[asset.symbol] = {};
+            $scope.mstMiningInfo[asset.symbol][content[0]] = content[1];
+            $scope.mstMiningInfo[asset.symbol][content[2]] = content[3];
+            $scope.mstMiningInfo[asset.symbol][content[4]] = content[5];
+            $scope.mstMiningInfo[asset.symbol].rate = Math.round((1-content[5])*100);
+          });
+        }
+      } else {
+        $translate('MESSAGES.MST_MINING_LOAD_ERROR').then( (data) => {
           //Show asset load error
           FlashService.Error(data);
         } );
