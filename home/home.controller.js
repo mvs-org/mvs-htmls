@@ -2419,7 +2419,6 @@
     $window.scrollTo(0,0);
     $scope.symbol = $stateParams.symbol;
     $scope.assets = [];
-    $scope.issue = issue;
     $scope.deleteAsset = deleteAsset;
 
     //$scope.listAssetBalances = listAssetBalances;
@@ -2427,11 +2426,6 @@
     $scope.icons = MetaverseService.hasIcon;
     $scope.assetsLoaded = false;
     $scope.assets = [];
-    $scope.bountyFee = MetaverseService.defaultBountyFee;
-    $scope.bountyFeeUpdate = bountyFeeUpdate;
-    $scope.bountyFeeMinMiner = MetaverseService.bountyFeeMinMiner;
-    $scope.popupIssue = popupIssue;
-
 
     //Load assets
     NProgress.start();
@@ -2461,41 +2455,6 @@
       NProgress.done();
       $scope.assetsLoaded = true;
     });
-
-    function popupIssue(symbol) {
-      $scope.symbol = symbol;
-      ngDialog.open({
-          template: 'templateId',
-          scope: $scope
-      });
-    }
-
-    function bountyFeeUpdate(bountyFee) {
-      if(bountyFee > 100 - $scope.bountyFeeMinMiner)
-        this.bountyFee = 100 - $scope.bountyFeeMinMiner;
-    }
-
-    function issue(symbol, bountyFee) {
-      NProgress.start();
-      MetaverseService.Issue(symbol, 100-bountyFee)
-      .then( (response) => {
-        if (typeof response.success !== 'undefined' && response.success) {
-          $translate('MESSAGES.ASSETS_ISSUE_SUCCESS').then( (data) => FlashService.Success(data, false, response.data.result.transaction.hash) );
-          $window.scrollTo(0,0);
-        } else {
-          $translate('MESSAGES.ASSETS_ISSUE_ERROR').then( (data) => {
-            if (response.message.message != undefined) {
-              FlashService.Error(data + " : " + response.message.message);
-            } else {
-              FlashService.Error(data);
-            }
-          });
-          $window.scrollTo(0,0);
-        }
-        NProgress.done();
-      });
-    }
-
 
     //Delete a not issued Asset
     function deleteAsset(symbol) {
@@ -3107,9 +3066,11 @@
 
   }
 
-  function CreateAssetController(MetaverseService, $rootScope, $scope, FlashService, localStorageService, $location, $translate, $window, ngDialog, $filter) {
+  function CreateAssetController(MetaverseService, $stateParams, $rootScope, $scope, FlashService, localStorageService, $location, $translate, $window, ngDialog, $filter) {
 
     $window.scrollTo(0,0);
+    //Is it create or issue
+    $scope.actionType = $location.path().split('/')[2]; 
     //Function to create a new asset
     $scope.createasset = createasset;
     $scope.popupIssue = popupIssue;
@@ -3129,7 +3090,7 @@
 
     //Initialize form data
     function init() {
-      $scope.symbol = '';
+      $scope.symbol = $stateParams.symbol;
       $scope.description = '';
       $scope.max_supply = '';
       $scope.secondary_offering = 0;
@@ -3209,10 +3170,12 @@
     //Check if the form is submittable
     function checkready() {
       //Check for errors
-      for (var error in $scope.error) {
-        if ($scope.error[error]) {
-          $scope.submittable = false;
-          return;
+      if($scope.actionType == 'create') {
+        for (var error in $scope.error) {
+          if ($scope.error[error]) {
+            $scope.submittable = false;
+            return;
+          }
         }
       }
       if($scope.mstmining) {
@@ -3297,6 +3260,8 @@
       if (localStorageService.get('credentials').password != $scope.password) {
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
+      } else if ($scope.actionType == 'issue') {
+        popupIssue($scope.symbol);
       } else {
         var quantity = $filter('convertfortx')($scope.max_supply, $scope.decimals);
         NProgress.start();

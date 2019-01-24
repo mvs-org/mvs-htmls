@@ -208,6 +208,13 @@
                 controllerAs: 'vm'
             })
 
+            .state('home.asset.issue', {
+                url: "/asset/issue/:symbol",
+                templateUrl: "home/assets/issue.view.html",
+                controller: 'CreateAssetController',
+                controllerAs: 'vm'
+            })
+
             .state('home.asset.createmit', {
                 url: "/asset/createmit",
                 templateUrl: "home/assets/createmit.view.html",

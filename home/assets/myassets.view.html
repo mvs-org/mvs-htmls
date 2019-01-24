@@ -46,7 +46,7 @@
             </div>
             <div ng-show="asset.status=='unissued'" class="assetBoxButtons">
               <a href="" ng-click="deleteAsset(asset.symbol)" class="btn-link-red smallButton assetBoxButton">{{'ASSET_DELETE_ASSET' | translate}}</a>
-              <a href="" ng-click="popupIssue(asset.symbol)" class="btn btn-success smallButton assetBoxButton">{{'ASSET_ISSUE' | translate}}</a>
+              <a href="#!/asset/issue/{{asset.symbol}}" class="btn btn-success smallButton assetBoxButton">{{'ASSET_ISSUE' | translate}}</a>
             </div>
             <div ng-hide="asset.status=='unissued'" class="assetBoxButtons">
               <a class="btn btn-success smallButton assetBoxButton" href="#!/transfer/asset/{{asset.symbol}}">{{ 'ASSETS_SEND' | translate}}</a>
@@ -62,29 +62,3 @@
   </div>
 </div>
 
-
-<script type="text/ng-template" id="templateId">
-  <h2 class="center">
-    {{ 'ASSET_CREATE_SUCCESS_TEXT01' | translate }} <b>{{ 'ASSET_CREATE_SUCCESS_TEXT02' | translate }}</b>
-  </h2>
-  <div class="it-list">
-    {{ 'HELP.BOUNTY_FEE' | translate }}
-  </div>
-  <md-slider-container>
-      <md-input-container>
-        <div>{{ 'MINERS' | translate }}</div>
-        <div>{{(100-bountyFee)/10}} ETP</div>
-      </md-input-container>
-      <md-slider ng-model="bountyFee" aria-label="regular-slider" step="10" min="0" max="100" ng-change="bountyFeeUpdate(bountyFee)">
-      </md-slider>
-      <md-input-container>
-        <div>{{ 'DEVELOPERS' | translate }}</div>
-        <div>{{bountyFee/10}} ETP</div>
-      </md-input-container>
-  </md-slider-container>
-  <br/>
-  <div class="popupButtons">
-    <a href="#!/asset/myassets" class="btn btn-link-red createAssetPopupButtons col-xs-6" ng-click="closeAll()">{{ 'ASSET_CREATE_SUCCESS_CANCEL_BUTTON' | translate }}</a>
-    <a href="#!/asset/myassets" class="btn btn-success createAssetPopupButtons col-xs-6" ng-click="issue(symbol, bountyFee);closeAll()">{{ 'ASSET_CREATE_SUCCESS_ISSUE_NOW' | translate }}</a>
-  </div>
-</script>
