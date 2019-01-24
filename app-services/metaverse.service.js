@@ -703,7 +703,6 @@
               query.push('-s');
               query.push(subsidy);
           }
-          console.log(query)
           return _sendV2('issue', query);
         }
 
@@ -1335,8 +1334,8 @@
                                                 transaction.value += parseInt(output.attachment.quantity);
                                                 transaction.type = output.attachment.symbol;
                                                 transaction.decimal_number=output.attachment.decimal_number;
-                                            }/* else if(output.own==='true' && output.attachment.type==='asset-cert'){
-                                                var cert = {
+                                            } else if(output.own==='true' && output.attachment.type==='asset-cert'){
+                                                /*var cert = {
                                                     "height": e.height,
                                                     "hash": e.hash,
                                                     "timestamp": new Date(e.timestamp * 1000),
@@ -1349,10 +1348,9 @@
                                                 cert.recipents.push({
                                                     "address": output.address
                                                 });
-                                                transactions.push(cert);
-                                            }*/
-                                            //memo
-                                            if (typeof output.attachment.content != 'undefined') {
+                                                transactions.push(cert);*/
+                                            } else if (typeof output.attachment.content != 'undefined') {
+                                              //memo
                                               transaction.memo = output.attachment.content;
                                             }
                                         });
