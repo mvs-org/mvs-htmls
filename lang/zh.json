@@ -398,7 +398,7 @@
   "CREATE_PROFILE_VALIDATION.TITLE": "每创建一个数字身份花费 1 个 ETP",
   "CREATE_PROFILE_VALIDATION.TEXT": "确认创建此数字身份么？",
   "CREATE_PROFILE_VALIDATION.ISSUE_NOW": "支付 1 个 ETP",
-  "CANCEL_BUTTON": "取消创建",
+  "CANCEL_BUTTON": "取消",
   "MESSAGES.DID_CREATED": "数字身份已成功创建，交易详情可在下个区块中查询，交易哈希为 ",
   "MESSAGES.ERROR_DID_CREATION": "数字身份未能创建",
   "PROFILE.ALL": "所有的数字身份",
@@ -708,7 +708,7 @@
   "POS_MINING.STAKING_REQUIREMENT_EXPLAIN": "要进行 PoS 挖矿，挖矿地址需要满足一定的锁定条件：即单次锁定至少 1000 ETP，并且锁定高度不低于 24000 块。 请注意最后 1000 块的锁定高度内，不能用于 PoS 挖矿。",
   "POS_MINING.STAKING_REQUIREMENT_EXPLAIN_BOLD": "用于挖矿的锁定 ETP 操作必须一次完成，两个锁定 500 ETP 的锁定交易不会被视为合格的锁定条件。",
   "POS_MINING.UTXO_REQUIREMENT": "同时，挖矿地址上还需要拥有可用的 ETP，单个超过 1000 ETP 且币龄足够大的 UTXO 可视为拥有一票 PoS 挖矿投票权。*",
-  "POS_MINING.UTXO_REQUIREMENT_DETAILS": "*如果您用满足 PoS 挖矿投票权门槛的 UTXO 发起一笔到自己的转账，这将使得该 UTXO 的币龄归零，该 UTXO 就会被视为待定的挖矿投票权，您必须等待大约 500 至 1000 个块才能使用该 UTXO 来进行 PoS 挖矿。满足挖矿投票权的 UTXO 在成功进行一次 PoS 挖矿之后，币龄归零，而成为待定的挖矿投票权。",
+  "POS_MINING.UTXO_REQUIREMENT_DETAILS": "如果您用满足 PoS 挖矿投票权门槛的 UTXO 发起一笔到自己的转账，这将使得该 UTXO 的币龄归零，该 UTXO 就会被视为待定的挖矿投票权，您必须等待大约 500 至 1000 个块才能使用该 UTXO 来进行 PoS 挖矿。满足挖矿投票权的 UTXO 在成功进行一次 PoS 挖矿之后，币龄归零，而成为待定的挖矿投票权。",
   "MINING.MINER": "挖矿地址",
   "POS_MINING.VOTE_AVAILABLE": "可用的挖矿投票权",
   "POS_MINING.VOTE_WAITING": "待定的挖矿投票权",
@@ -780,6 +780,19 @@
   "LOCK.CUSTOM_LOCKTIME_CHECKBOX": "使用自定义的锁定块高",
   "HELP.CUSTOM_LOCKTIME": "注意：如果您指定一个过小的锁定块高，将不能满足 PoS 挖矿所需的锁定条件；如果您指定一个很大的锁定块高，您的 ETP 将被锁定很长时间。",
   "MESSAGES.OPTIMIZE_NOTHING_TO_SPLIT": "无需优化",
-  "MESSAGES.POS_MINING_NEED_AVATAR": "您必须使用数字身份进行 PoS 挖矿！"
+  "MESSAGES.POS_MINING_NEED_AVATAR": "您必须使用数字身份进行 PoS 挖矿！",
+
+  "ASSET_CREATE.MST_MINING_CHECKBOX": "允许 MST 挖矿",
+  "HELP.MST_MINING_CHECKBOX": "MST 挖矿将允许矿工挖掘该 MST。 新的 MST 资产将会被选择挖矿该 MST 的矿工挖出，每次挖出的数量由下面的挖矿参数设定。",
+  "ASSET_CREATE.MST_MINING_INITIAL": "初始块奖励",
+  "ASSET_CREATE.MST_MINING_INTERVAL": "块奖励衰减块数间隔",
+  "ASSET_CREATE.MST_MINING_BASE": "衰减速度",
+  "HELP.MST_MINING_INITIAL": "这是矿工挖该 MST 的初始块奖励数量。示例：于 ETP 来说该值是 3 ETP，于比特币来说该值是 50 BTC。",
+  "HELP.MST_MINING_INTERVAL": "该数值表示块奖励衰减间隔所需的块数。示例：于 ETP 来说该值是 50 万块，于比特币来说该值是 21 万块（约 4 年）。",
+  "HELP.MST_MINING_BASE": "该数值表示衰减因子。示例：于 ETP 来说该值是 0.95（即每一衰减周期衰减 5%），于比特币来说该值是 0.5（即每一衰减周期衰减 50%）",
+
+  "ASSET_ALL.MST_MINING": "MST 挖矿",
+  "ASSET_ALL.MST_MINING_AVAILABLE": "可用",
+  "ASSET_ALL.MST_MINING_NOT_AVAILABLE": "不可用"
 
 }

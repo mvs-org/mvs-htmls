@@ -607,8 +607,8 @@
   "SETTINGS.EXPORT_EXPLANATION_WARNING": "Please note that, by default, the lightwallet only loads your first 50 addresses",
   "SETTINGS.QRCODE_TOO_MANY_ADDRESSES1": "Please note that the lightwallet only loads the first 50 addresses, while your wallet currently contains ",
   "SETTINGS.QRCODE_TOO_MANY_ADDRESSES2": " addresses. If you cannot see your full balance in the lightwallet, please go to the 'Addresses' page of this wallet and move your ETP and assets to addresses with indexes lower than 50.",
-  "ASSET.DEPOSIT": "I want to deposit this asset",
-  "HELP.ASSET_DEPOSIT": "You can deposit assets, and they will be frozen for the number of blocks denoted. Please be aware that unlike ETP, depositing assets does not provide any reward!",
+  "ASSET.DEPOSIT": "I want to lock this MST",
+  "HELP.ASSET_DEPOSIT": "You can lock a MST, and it will be frozen for the number of blocks denoted. Please be aware that unlike ETP, depositing a MST does not provide any reward!",
   "ASSET_TRANSFERT.SIMPLE_DEPOSIT": "Simple Deposit",
   "ASSET_TRANSFERT.EXPLANATION_SIMPLE_DEPOSIT": "This model will simply deposit the full quantity of assets for the number of blocks specified",
   "ASSET.LOCKED_PERIOD": "Locked period ",
@@ -783,7 +783,7 @@
   "MESSAGES.POS_MINING_NEED_AVATAR": "You have to use and avatar to do PoS mining!",
 
   "ASSET_CREATE.MST_MINING_CHECKBOX": "Allow MST mining",
-  "HELP.MST_MINING_CHECKBOX": "MST mining will allow miners to mine this MST. New tokens will be created in each block mined by a miner who choosed to mine this MST, according the the model selected below",
+  "HELP.MST_MINING_CHECKBOX": "MST mining will allow miners to mine this MST. New tokens will be created in each block mined by a miner who choosed to mine it, according the the model selected below",
   "ASSET_CREATE.MST_MINING_INITIAL": "Initial reward per block",
   "ASSET_CREATE.MST_MINING_INTERVAL": "Block reward decrease interval",
   "ASSET_CREATE.MST_MINING_BASE": "Decrease speed per interval",
@@ -793,6 +793,6 @@
 
   "ASSET_ALL.MST_MINING": "MST mining",
   "ASSET_ALL.MST_MINING_AVAILABLE": "Available",
-  "ASSET_ALL.MST_MINING_NOT_AVAILABLE": "Not available"  
-
+  "ASSET_ALL.MST_MINING_NOT_AVAILABLE": "Not available"
+  
 }
