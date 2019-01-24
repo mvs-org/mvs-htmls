@@ -54,6 +54,35 @@
           <div class="assetDataColumn col-xs-4 noPaddingLeftRight">{{'ADDRESS_OF_CREATOR' | translate}}</div>
           <div class="assetValueColumn col-xs-8 noPaddingLeftRight">{{asset.address}}</div>
         </div>
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-4 noPaddingLeftRight">{{'ASSET_ALL.MST_MINING' | translate}}</div>
+          <div ng-show="!mstminingLoaded" class="assetValueColumn col-xs-8 noPaddingLeftRight"><span class="mediumSpinner"></span></div>
+          <div ng-show="mstminingLoaded && mstMiningInfo[asset.symbol]" class="assetValueColumn col-xs-8 noPaddingLeftRight">{{ 'ASSET_ALL.MST_MINING_AVAILABLE' | translate }}</div>
+          <div ng-show="mstminingLoaded && !mstMiningInfo[asset.symbol]" class="assetValueColumn col-xs-8 noPaddingLeftRight">{{ 'ASSET_ALL.MST_MINING_NOT_AVAILABLE' | translate }}</div>
+        </div>
+        <div ng-show="mstMiningInfo[asset.symbol]">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-4 noPaddingLeftRight">
+              {{'ASSET_CREATE.MST_MINING_INITIAL' | translate}}
+              <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.MST_MINING_INITIAL' | translate }}"></span>
+            </div>
+            <div class="assetValueColumn col-xs-8 noPaddingLeftRight">{{mstMiningInfo[asset.symbol].initial | assetformat : asset.decimal_number}} {{asset.symbol}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-4 noPaddingLeftRight">
+              {{'ASSET_CREATE.MST_MINING_INTERVAL' | translate}}
+              <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.MST_MINING_INTERVAL' | translate }}"></span>
+            </div>
+            <div class="assetValueColumn col-xs-8 noPaddingLeftRight">{{mstMiningInfo[asset.symbol].interval| assetformat : 0}} {{ 'BLOCKS' | translate }}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-4 noPaddingLeftRight">
+              {{'ASSET_CREATE.MST_MINING_BASE' | translate}}
+              <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.MST_MINING_BASE' | translate }}"></span>
+          </div>
+            <div class="assetValueColumn col-xs-8 noPaddingLeftRight">{{mstMiningInfo[asset.symbol].base}} ({{mstMiningInfo[asset.symbol].rate}}%)</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

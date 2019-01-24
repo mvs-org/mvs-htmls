@@ -2515,6 +2515,7 @@
     $scope.showqr = showqr;
     $scope.buttonCopyToClipboard = new Clipboard('.btn');
     $scope.assetsLoaded = false;
+    $scope.mstminingLoaded = false;
     $scope.assetOriginal = 0;
     $scope.assetSecondaryIssue = 0;
     $scope.assetAddresses = [];
@@ -2522,6 +2523,7 @@
     $scope.myDidsAddresses = [];
     $scope.myAssetsBalances = [];
     $scope.myAsset = [];
+    $scope.mstMiningInfo = [];
 
 
     //Shows a modal of the address incl. a qr code
@@ -2564,6 +2566,29 @@
         $window.scrollTo(0,0);
       }
       NProgress.done();
+    });
+
+    MetaverseService.ListMstMiningAssets()
+    .then( (response) => {
+      if (typeof response.success !== 'undefined' && response.success) {
+        let mstMiningList = response.data.result;
+        if(mstMiningList && mstMiningList != []) {
+          mstMiningList.forEach( (asset) => {
+            let content = asset.content.split(/,|:/);
+            $scope.mstMiningInfo[asset.symbol] = {};
+            $scope.mstMiningInfo[asset.symbol][content[0]] = content[1];
+            $scope.mstMiningInfo[asset.symbol][content[2]] = content[3];
+            $scope.mstMiningInfo[asset.symbol][content[4]] = content[5];
+            $scope.mstMiningInfo[asset.symbol].rate = Math.round((1-content[5])*100);
+          });
+        }
+        $scope.mstminingLoaded = true;
+      } else {
+        $translate('MESSAGES.MST_MINING_LOAD_ERROR').then( (data) => {
+          //Show asset load error
+          FlashService.Error(data);
+        } );
+      }
     });
 
 
