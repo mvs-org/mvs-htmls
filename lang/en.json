@@ -27,14 +27,14 @@
   "USER_SETTING" : "Settings",
   "NAV_EXPLORER" : "Explorer",
   "MINING_START":      "Start mining",
-  "MINING_END":      "End mining",
+  "MINING_END":      "Stop mining",
   "MINING_RATE":      "Rate",
   "MINING_DIFFICULTY":      "Difficulty",
   "MINING_HEIGHT":      "Height",
   "MINING_IS_MINING":      "Currently Mining",
   "MINING_NOT_RECOMMENDED":      "Not suitable for home computing",
   "MINING_RECOMMENDED_CONFIG":      "View recommended configuration",
-  "MINING_HOW_STOP":      "To stop mining click on 'End mining' or close the terminal",
+  "MINING_HOW_STOP":      "To stop mining click on 'Stop mining' or close the terminal",
   "HEADLINE_MINING":      "Mining",
   "HEADLINE_CONSOLE":      "Console",
   "HEADLINE_ASSETS":      "Assets",
@@ -756,7 +756,7 @@
 
   "LOCK.ORGANIZE": "Optimize",
   "OPTIMIZE.CURRENT_NBR_VOTE": "Current number of votes",
-  "OPTIMIZE.MAX_NBR_VOTE": "New number of votes",
+  "OPTIMIZE.MAX_NBR_VOTE": "Maximum number of votes",
   "AVATAR": "Avatar",
 
   "HEADLINE_OPTIMIZE_VOTE": "Optimize your votes",
@@ -783,6 +783,12 @@
   "MESSAGES.POS_MINING_NEED_AVATAR": "You have to use and avatar to do PoS mining!",
 
   "ASSET_CREATE.MST_MINING_CHECKBOX": "Allow MST mining",
-  "HELP.MST_MINING_CHECKBOX": "MST mining will allow miners to mine this MST. New tokens will be created in each block mined by a miner who choosed to mine this MST, according the the model selected below"
+  "HELP.MST_MINING_CHECKBOX": "MST mining will allow miners to mine this MST. New tokens will be created in each block mined by a miner who choosed to mine this MST, according the the model selected below",
+  "ASSET_CREATE.MST_MINING_INITIAL": "Initial reward per block",
+  "ASSET_CREATE.MST_MINING_INTERVAL": "Block reward decrease interval",
+  "ASSET_CREATE.MST_MINING_BASE": "Decrease speed per interval",
+  "HELP.MST_MINING_INITIAL": "This is the initial reward of this MST received by the miner per block. For instance, this value was 3 for ETP and 50 for BTC",
+  "HELP.MST_MINING_INTERVAL": "This is the number of blocks between each decrease of reward per block. For instance this value is 500 000 blocks for ETP and 210 000 blocks (4 years) for BTC",
+  "HELP.MST_MINING_BASE": "This is the base to define the new block reward amount at the end of an interval. For instance this value is 0.95 (-5%) for ETP and 0.5 (-50%, or halving) for BTC"
 
 }

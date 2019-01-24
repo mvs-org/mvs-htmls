@@ -3114,6 +3114,7 @@
     $scope.createasset = createasset;
     $scope.popupIssue = popupIssue;
     $scope.issue = issue;
+    $scope.checkready = checkready;
 
     $scope.checkInputs = checkInputs;
     $scope.myDids = [];
@@ -3122,6 +3123,9 @@
     $scope.assets = [];
     $scope.listAllAssets = [];
     $scope.bountyFeeUpdate = bountyFeeUpdate;
+    $scope.mstmining_base_options = [];
+    for(let i = 100; i > 0; i--)
+      $scope.mstmining_base_options.push(i/100);
 
     //Initialize form data
     function init() {
@@ -3135,6 +3139,11 @@
       $scope.secondaryissue_rate = 0;
       //This object contains all form errors
       $scope.error = [];
+      $scope.mstminingError = [];
+      $scope.mstmining = false;
+      $scope.mstmining_initial = '';
+      $scope.mstmining_interval = '';
+      $scope.mstmining_base = '';
       $scope.bountyFee = MetaverseService.defaultBountyFee;
       $scope.bountyFeeMinMiner = MetaverseService.bountyFeeMinMiner;
     }
@@ -3206,6 +3215,14 @@
           return;
         }
       }
+      if($scope.mstmining) {
+        for (var error in $scope.mstminingError) {
+          if ($scope.mstminingError[error]) {
+            $scope.submittable = false;
+            return;
+          }
+        }
+      }
       $scope.submittable = true;
     }
 
@@ -3245,6 +3262,25 @@
       checkready();
     });
 
+    //Check if the mst mining initial is valid
+    $scope.$watch('mstmining_initial', (newVal, oldVal) => {
+      $scope.mstminingError.initial_empty = (newVal == undefined || newVal == '');
+      $scope.mstminingError.initial_decimals_too_high = newVal != undefined ? (newVal * Math.pow(10, $scope.decimals)) > 10000000000000000000 : false;
+      checkready();
+    });
+
+    //Check if the mst mining interval is valid
+    $scope.$watch('mstmining_interval', (newVal, oldVal) => {
+      $scope.mstminingError.interval_empty = (newVal == undefined || newVal == '');
+      checkready();
+    });
+
+    //Check if the mst mining interval is valid
+    $scope.$watch('mstmining_base', (newVal, oldVal) => {
+      $scope.mstminingError.base_empty = (newVal == undefined || newVal == '');
+      checkready();
+    });
+
     //Check if the password is valid
     $scope.$watch('password', (newVal, oldVal) => {
       $scope.errorPassword = (newVal == undefined || newVal == '');
@@ -3281,7 +3317,6 @@
             $window.scrollTo(0,0);
           }
         });
-        $scope.password = '';
       }
     }
     $scope.closeAll = function () {
@@ -3296,9 +3331,10 @@
       });
     }
 
-    function issue(symbol, bountyFee) {
+    function issue(symbol, bountyFee, mstmining, mstmining_initial, mstmining_interval, mstmining_base) {
       NProgress.start();
-      MetaverseService.Issue(symbol, 100-bountyFee)
+      let subsidy = mstmining ? "initial:" + mstmining_initial + ",interval:" + mstmining_interval + ",base:" + mstmining_base : ""
+      MetaverseService.Issue(symbol, 100-bountyFee, subsidy)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
           $translate('MESSAGES.ASSETS_ISSUE_SUCCESS').then( (data) => FlashService.Success(data, false, response.data.result.transaction.hash) );

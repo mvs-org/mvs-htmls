@@ -75,6 +75,48 @@
           <option ng-repeat="rate in [].constructor(100) track by $index" value="{{100-$index}}">{{100-$index}} %</option>
         </select>
       </div>
+
+      <!--Checkbox for mst mining-->
+      <div class="form-group col-xs-12 spe-addrbox depositAddressCheckbox">
+        <div class="checkboxCircle">
+          <div class="checkbox-box">
+            <input type="checkbox" tabIndex="-1" name="mstmining" ng-model="mstmining" ng-change="checkready()" id="checkboxCircleMstmining">
+            <label for="checkboxCircleMstmining"></label>
+          </div>
+          <span class="textCheckbox">{{ 'ASSET_CREATE.MST_MINING_CHECKBOX' | translate }}</span>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.MST_MINING_CHECKBOX' | translate }}"></span>
+        </div>
+      </div>
+
+      <!--MST mining initial-->
+      <div ng-show="mstmining">
+        <div class="form-group col-xs-12 noPaddingLeftRight">
+          <label for="mstmining_initial" class="control-label">
+            {{ 'ASSET_CREATE.MST_MINING_INITIAL' | translate }}
+          </label>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.MST_MINING_INITIAL' | translate }}"></span>
+          <input type="number" min="0" class="form-control" name="mstmining_initial" required placeholder="0" ng-model="mstmining_initial" ng-class="{validInput: !mstminingError.initial_empty && !mstminingError.initial_empty, wrongInput: mstminingError.initial_empty || mstminingError.initial_empty}" autocomplete="off">
+        </div>
+
+        <div class="form-group col-xs-12 noPaddingLeftRight">
+          <label for="mstmining_interval" class="control-label">
+            {{ 'ASSET_CREATE.MST_MINING_INTERVAL' | translate }}
+          </label>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.MST_MINING_INTERVAL' | translate }}"></span>
+          <input type="number" min="0" step="1" class="form-control" name="mstmining_interval" required placeholder="0" ng-model="mstmining_interval" ng-class="{validInput: !mstminingError.interval_empty, wrongInput: mstminingError.interval_empty}" autocomplete="off">
+        </div>
+
+        <div class="form-group col-xs-12 noPaddingLeftRight">
+          <label for="mstmining_base" class="control-label">
+            {{ 'ASSET_CREATE.MST_MINING_BASE' | translate }}
+          </label>
+          <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.MST_MINING_BASE' | translate }}"></span>
+          <select name="mstmining_base" type="number" class="form-control" ng-model="mstmining_base" ng-class="{validInput: !mstminingError.base_empty, wrongInput: mstminingError.base_empty}">
+            <option ng-repeat="rate in mstmining_base_options" value="{{rate}}">{{rate}}</option>
+          </select>
+        </div>
+      </div>
+
       <div class="form-group">
         <label for="useAddress" class="control-label">{{ 'CREATE_PROFILE.BOUNTY_FEE' | translate }}</label>
         <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.BOUNTY_FEE' | translate }}"></span>
@@ -140,37 +182,60 @@
       </div>
       <div class="panel-body">
         <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-          <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</div>
-          <div class="assetValueColumn col-xs-3 noPaddingLeftRight">{{symbol}}</div>
+          <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</div>
+          <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{symbol}}</div>
         </div>
         <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-          <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_CREATE.DID' | translate }}</div>
-          <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{selectedDid}}</div>
+          <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'ASSET_CREATE.DID' | translate }}</div>
+          <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{selectedDid}}</div>
         </div>
         <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-          <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate }}</div>
-          <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{max_supply | number : decimals}}</div>
+          <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate }}</div>
+          <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{max_supply | number : decimals}}</div>
         </div>
         <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-          <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_DIGITS' | translate }}</div>
-          <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{decimals}}</div>
+          <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_DIGITS' | translate }}</div>
+          <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{decimals}}</div>
         </div>
         <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-          <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_DESCRIPTION' | translate }}</div>
-          <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{description}}</div>
+          <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_DESCRIPTION' | translate }}</div>
+          <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{description}}</div>
         </div>
         <div ng-show="secondaryissue_rate != 0 || secondaryissue" class="col-xs-12 noPaddingLeftRight assetDataLine">
-          <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_CREATE.SECONDARY_ISSUE' | translate }}</div>
-          <div ng-hide="secondaryissue_rate == -1" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{secondaryissue_rate}} %</div>
-          <div ng-show="secondaryissue_rate == -1" class="assetValueColumn col-xs-9 noPaddingLeftRight">{{ 'ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED' | translate }}</div>
+          <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'ASSET_CREATE.SECONDARY_ISSUE' | translate }}</div>
+          <div ng-hide="secondaryissue_rate == -1" class="assetValueColumn col-xs-6 noPaddingLeftRight">{{secondaryissue_rate}} %</div>
+          <div ng-show="secondaryissue_rate == -1" class="assetValueColumn col-xs-6 noPaddingLeftRight">{{ 'ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED' | translate }}</div>
+        </div>
+        <div ng-show="mstmining">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-6 noPaddingLeftRight">
+              {{ 'ASSET_CREATE.MST_MINING_INITIAL' | translate }}
+              <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.MST_MINING_INITIAL' | translate }}"></span>
+            </div>
+            <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{mstmining_initial}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-6 noPaddingLeftRight">
+              {{ 'ASSET_CREATE.MST_MINING_INTERVAL' | translate }}
+              <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.MST_MINING_INTERVAL' | translate }}"></span>
+            </div>
+            <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{mstmining_interval}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-6 noPaddingLeftRight">
+              {{ 'ASSET_CREATE.MST_MINING_BASE' | translate }}
+              <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.MST_MINING_BASE' | translate }}"></span>
+            </div>
+            <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{mstmining_base}}</div>
+          </div>
         </div>
         <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-          <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</div>
-          <div class="assetValueColumn col-xs-9 noPaddingLeftRight">10 ETP</div>
+          <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</div>
+          <div class="assetValueColumn col-xs-6 noPaddingLeftRight">10 ETP</div>
         </div>
         <div class="col-xs-12 noPaddingLeftRight assetDataLine">
-          <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'TRANSFER_FEE_DISTRIBUTION' | translate }}</div>
-          <div class="assetValueColumn col-xs-9 noPaddingLeftRight">
+          <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_FEE_DISTRIBUTION' | translate }}</div>
+          <div class="assetValueColumn col-xs-6 noPaddingLeftRight">
             <div>{{ 'MINERS' | translate }}: {{(100-bountyFee)/10}} ETP</div>
             <div>{{ 'DEVELOPERS' | translate }}: {{bountyFee/10}} ETP</div>
           </div>
@@ -213,6 +278,6 @@
   </div>
   <div class="popupButtons">
     <a href="#!/asset/myassets" class="btn btn-link-red createAssetPopupButtons col-xs-6" ng-click="closeAll()">{{ 'ASSET_CREATE_SUCCESS_CANCEL_BUTTON' | translate }}</a>
-    <a href="#!/asset/myassets" class="btn btn-success createAssetPopupButtons col-xs-6" ng-click="issue(symbol, bountyFee);closeAll()">{{ 'ASSET_CREATE_SUCCESS_ISSUE_NOW' | translate }}</a>
+    <a href="#!/asset/myassets" class="btn btn-success createAssetPopupButtons col-xs-6" ng-click="issue(symbol, bountyFee, mstmining, mstmining_initial, mstmining_interval, mstmining_base, password);closeAll()">{{ 'ASSET_CREATE_SUCCESS_ISSUE_NOW' | translate }}</a>
   </div>
 </script>

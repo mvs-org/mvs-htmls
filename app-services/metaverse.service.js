@@ -691,9 +691,20 @@
          * @apiParam {List} params [username, password,symbol]
          *
          **/
-        function Issue(symbol, minerFee) {
+        function Issue(symbol, minerFee, subsidy) {
           var credentials = localStorageService.get('credentials');
-          return _sendV2('issue', [credentials.user, credentials.password, symbol, '-p', minerFee]);
+          var query = [];
+          query.push(credentials.user);
+          query.push(credentials.password);
+          query.push(symbol);
+          query.push('-p');
+          query.push(minerFee);
+          if(subsidy) {
+              query.push('-s');
+              query.push(subsidy);
+          }
+          console.log(query)
+          return _sendV2('issue', query);
         }
 
         /**
