@@ -3165,6 +3165,29 @@
 
     init();
 
+    if($scope.actionType == 'issue') {
+      MetaverseService.GetAccountAsset($scope.symbol)
+      .then( (response) => {
+        if (typeof response.success !== 'undefined' && response.success) {
+          console.log(response);
+          let assetInfo = response.data.result.assets[0];
+          $scope.decimals = assetInfo.decimal_number.toString();
+          $scope.selectedDid = assetInfo.issuer;
+          $scope.max_supply = parseFloat($filter('converttodisplay')(assetInfo.quantity, $scope.decimals));
+          $scope.description = assetInfo.description;
+          $scope.secondaryissue_rate = assetInfo.secondaryissue_threshold;
+          console.log($scope.secondaryissue_rate)
+          if($scope.secondaryissue_rate != 0)
+            $scope.secondaryissue = true;
+          if($scope.secondaryissue_rate == 127)
+            $scope.secondaryissue_rate = "-1";
+        } else {
+          $translate('MESSAGES.CANT_LOAD_ASSET_INFO').then( (data) => FlashService.Error(data) );
+          $window.scrollTo(0,0);
+        }
+      });
+    }
+
     MetaverseService.ListMyDids()
     .then( (response) => {
       if (typeof response.success !== 'undefined' && response.success) {
@@ -3352,7 +3375,8 @@
 
     function issue(symbol, bountyFee, mstmining, mstmining_initial, mstmining_interval, mstmining_base) {
       NProgress.start();
-      let subsidy = mstmining ? "initial:" + mstmining_initial + ",interval:" + mstmining_interval + ",base:" + mstmining_base : ""
+      var mstmining_initial_tosend = $filter('convertfortx')(mstmining_initial, $scope.decimals);
+      let subsidy = mstmining ? "initial:" + mstmining_initial_tosend + ",interval:" + mstmining_interval + ",base:" + mstmining_base : ""
       MetaverseService.Issue(symbol, 100-bountyFee, subsidy)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {

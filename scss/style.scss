@@ -721,6 +721,11 @@ _____  ._______  ___.___ _______
   border-width: solid 1px $mediumGrey;
 }
 
+.form-group label.disabled {
+  background-color : #eee;
+  cursor: not-allowed;
+}
+
 .noPaddingTopBottomButton {
   height: inherit;
   padding-top: 0;

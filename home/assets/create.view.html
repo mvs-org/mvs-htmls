@@ -69,7 +69,7 @@
         <label for="secondaryissue_rate" class="control-label">
           {{ 'ASSET_CREATE.SECONDARY_ISSUE' | translate }}
         </label>
-        <select name="secondaryissue_rate" type="number" class="form-control" ng-model="secondaryissue_rate" ng-change="availBalance(sendfrom)">
+        <select name="secondaryissue_rate" type="number" class="form-control" ng-model="secondaryissue_rate">
           <option ng-selected="secondaryissue" value="0">{{ 'ASSET_CREATE.SECONDARY_ISSUE_DISABLED' | translate }}</option>
           <option value="-1">{{ 'ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED' | translate }}</option>
           <option ng-repeat="rate in [].constructor(100) track by $index" value="{{100-$index}}">{{100-$index}} %</option>
@@ -212,7 +212,7 @@
               {{ 'ASSET_CREATE.MST_MINING_INITIAL' | translate }}
               <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.MST_MINING_INITIAL' | translate }}"></span>
             </div>
-            <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{mstmining_initial}}</div>
+            <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{mstmining_initial | number : decimals}}</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-6 noPaddingLeftRight">

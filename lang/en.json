@@ -793,6 +793,8 @@
 
   "ASSET_ALL.MST_MINING": "MST mining",
   "ASSET_ALL.MST_MINING_AVAILABLE": "Available",
-  "ASSET_ALL.MST_MINING_NOT_AVAILABLE": "Not available"
+  "ASSET_ALL.MST_MINING_NOT_AVAILABLE": "Not available",
+
+  "MESSAGES.CANT_LOAD_ASSET_INFO": "The information of this asset can't be loaded. Please try to refresh this page."
   
 }

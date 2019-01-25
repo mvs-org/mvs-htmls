@@ -14,6 +14,62 @@
         <label for="symbol" class="control-label">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</label>
         <input disabled type="text" class="form-control uppercase" name="symbol" required placeholder="" ng-model="symbol" ng-class="{validInput: !error.symbol_empty && !error.symbol_too_long && !error.symbol_wrong_char && !error.symbol_already_exist, wrongInput: error.symbol_empty || error.symbol_too_long || error.symbol_wrong_char || error.symbol_already_exist}" autocomplete="off">
       </div>
+
+      <!--Avatar-->
+      <div class="form-group">
+        <label for="useDid" class="control-label">{{ 'ASSET_CREATE.DID' | translate }}</label>
+        <select disabled name="useDid" type="text" class="form-control" placeholder="" ng-model="selectedDid" ng-change="changeDid(selectedDid)" ng-class="{validInput: !error.avatar, wrongInput: error.avatar}" >
+          <option value="{{selectedDid}}" title="{{selectedDid}}">{{selectedDid}}</option>
+        </select>
+      </div>
+      <!--Maximum supply-->
+      <div class="form-group col-xs-12 noPaddingLeftRight">
+        <div class="col-xs-8 noPaddingLeftRight maxSupply">
+          <label for="max_supply" class="control-label">{{ 'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate }}</label>
+          <input disabled type="number" min="0" class="form-control" name="max_supply" required placeholder="0" ng-model="max_supply" ng-class="{validInput: !error.max_supply_empty && !error.max_supply_decimals_too_high, wrongInput: error.max_supply_empty || error.max_supply_decimals_too_high}" autocomplete="off">
+        </div>
+        <!--Decimals-->
+        <div class="col-xs-4 noPaddingLeftRight">
+          <label for="decimals" class="control-label">{{ 'ASSET_ASSET_CREATE_DIGITS' | translate }}</label>
+          <select disabled type="number" class="form-control" name="decimals" required placeholder="" required ng-class="{validInput: !error.decimals_empty && !error.max_supply_decimals_too_high, wrongInput: error.decimals_empty || error.max_supply_decimals_too_high}" ng-model="decimals">
+            <option value=""></option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+          </select>
+        </div>
+      </div>
+      <!--Description-->
+      <div class="form-group">
+        <label for="description" class="control-label">{{ 'ASSET_ASSET_CREATE_DESCRIPTION' | translate }}</label>
+        <textarea disabled class="form-control" name="description" maxlength="64" required rows="1" cols="35" ng-model="description" ng-class="{validInput: !error.description_empty && !error.description_too_long, wrongInput: error.description_empty || error.description_too_long}" autocomplete="off"></textarea>
+      </div>
+      <!--Checkbox for secondaryissue-->
+      <div class="form-group col-xs-12 spe-addrbox depositAddressCheckbox">
+        <div class="checkboxCircle">
+          <div class="checkbox-box">
+            <input disabled type="checkbox" tabIndex="-1" name="secondaryissue" ng-model="secondaryissue" id="checkboxCircleSecondaryIssue">
+            <label class="disabled" for="checkboxCircleSecondaryIssue"></label>
+          </div>
+          <span class="textCheckbox">{{ 'ASSET_CREATE.SECONDARY_ISSUE_CHECKBOX' | translate }}</span>
+        </div>
+      </div>
+      <div class="form-group col-xs-12 noPaddingLeftRight" ng-show="secondaryissue">
+        <label for="secondaryissue_rate" class="control-label">
+          {{ 'ASSET_CREATE.SECONDARY_ISSUE' | translate }}
+        </label>
+        <select disabled name="secondaryissue_rate" type="number" class="form-control" ng-model="secondaryissue_rate">
+          <option value="0">{{ 'ASSET_CREATE.SECONDARY_ISSUE_DISABLED' | translate }}</option>
+          <option value="-1">{{ 'ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED' | translate }}</option>
+          <option ng-repeat="rate in [].constructor(100) track by $index" value="{{100-$index}}">{{100-$index}} %</option>
+        </select>
+      </div>
       
       <!--Checkbox for mst mining-->
       <div class="form-group col-xs-12 spe-addrbox depositAddressCheckbox">
@@ -74,6 +130,32 @@
       </div>
     </div>
 
+    <!--Rate details-->
+    <div ng-show="secondaryissue" class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+      <div class="assetDetailsPanel panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{'ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS' | translate}}</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-class="{'selected_row' : secondaryissue_rate == 0}">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_CREATE.SECONDARY_ISSUE_DISABLED' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_0' | translate}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-class="{'selected_row' : secondaryissue_rate == -1}">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'ASSET_CREATE.SECONDARY_ISSUE_UNLIMITED' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_MINUS1' | translate}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-class="{'selected_row' : secondaryissue_rate > 0}">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">1 - 100%</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'ASSET_CREATE.SECONDARY_ISSUE_RATE_DETAILS_1_TO_100' | translate}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{'ASSET_CREATE.SECONDARY_ISSUE_AVATAR_GET_CERT' | translate}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="col-md-12 form-group noPaddingLeftRight">
       </br>
       <!--Submit button-->
@@ -100,6 +182,22 @@
           <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_SYMBOL' | translate }}</div>
           <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{symbol}}</div>
         </div>
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'ASSET_CREATE.DID' | translate }}</div>
+          <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{selectedDid}}</div>
+        </div>
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_MAX_SUPPLY' | translate }}</div>
+          <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{max_supply | number : decimals}}</div>
+        </div>
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_DIGITS' | translate }}</div>
+          <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{decimals}}</div>
+        </div>
+        <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+          <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'ASSET_ASSET_CREATE_DESCRIPTION' | translate }}</div>
+          <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{description}}</div>
+        </div>
         <div ng-show="secondaryissue_rate != 0 || secondaryissue" class="col-xs-12 noPaddingLeftRight assetDataLine">
           <div class="assetDataColumn col-xs-6 noPaddingLeftRight">{{ 'ASSET_CREATE.SECONDARY_ISSUE' | translate }}</div>
           <div ng-hide="secondaryissue_rate == -1" class="assetValueColumn col-xs-6 noPaddingLeftRight">{{secondaryissue_rate}} %</div>
@@ -111,7 +209,7 @@
               {{ 'ASSET_CREATE.MST_MINING_INITIAL' | translate }}
               <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.MST_MINING_INITIAL' | translate }}"></span>
             </div>
-            <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{mstmining_initial}}</div>
+            <div class="assetValueColumn col-xs-6 noPaddingLeftRight">{{mstmining_initial | number : decimals}}</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-6 noPaddingLeftRight">
