@@ -802,7 +802,7 @@
     }
 
     //Check Inputs
-    function checkInputs(sendfrom, recipents, transactionFee, memo, password) {
+    function checkInputs() {
       $scope.confirmation = true;
       delete $rootScope.flash;
     }
@@ -3927,7 +3927,7 @@
   }
 
 
-  function CreateProfileController(MetaverseHelperService, MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $location, $rootScope, $filter) {
+  function CreateProfileController(MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $location, $rootScope) {
 
     $scope.listAddresses = [];
     $scope.listMultiSig = [];
@@ -4021,7 +4021,7 @@
         this.bountyFee = 100 - $scope.bountyFeeMinMiner;
     }
 
-    function checkInputs(password) {
+    function checkInputs() {
       $scope.confirmation = true;
       delete $rootScope.flash;
     }
@@ -4103,7 +4103,7 @@
 
   }
 
-  function ModifyAddressController(MetaverseHelperService, MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $location, $rootScope, $filter) {
+  function ModifyAddressController(MetaverseService, localStorageService, $scope, $translate, $window, FlashService, $location, $rootScope) {
 
     $scope.listAddresses = [];
     $scope.listMultiSig = [];
@@ -4201,7 +4201,7 @@
       $scope.selectedDidAddress = $scope.symbolAddress[symbol];
     }
 
-    function checkInputs(password) {
+    function checkInputs() {
       $scope.confirmation = true;
       delete $rootScope.flash;
     }
@@ -4280,7 +4280,7 @@
 
   }
 
-  function TransferCertController(MetaverseHelperService, MetaverseService, $scope, $filter, $rootScope, $location, $translate, $window, localStorageService, FlashService) {
+  function TransferCertController(MetaverseService, $scope, $filter, $rootScope, $location, $translate, $window, localStorageService, FlashService) {
 
     $scope.listAddresses = [];
     $scope.listMultiSig = [];
@@ -4485,7 +4485,7 @@
 
   }
 
-  function IssueCertController(MetaverseHelperService, MetaverseService, $scope, $filter, $rootScope, $location, $translate, $window, localStorageService, FlashService) {
+  function IssueCertController(MetaverseService, $scope, $filter, $rootScope, $location, $translate, $window, localStorageService, FlashService) {
 
     $scope.listAddresses = [];
     $scope.listMultiSig = [];
@@ -4626,7 +4626,7 @@
       }
     });
 
-    function checkInputs(password) {
+    function checkInputs() {
       $scope.symbol = $filter('uppercase')($scope.symbol);
       $scope.confirmation = true;
       delete $rootScope.flash;
@@ -4709,7 +4709,7 @@
 
   }
 
-  function ShowMITsController(MetaverseHelperService, MetaverseService, $scope, $translate, $window, localStorageService, FlashService) {
+  function ShowMITsController(MetaverseService, $scope, $translate, FlashService) {
 
     $scope.loaded = false;
     $scope.mymits = [];
@@ -4728,7 +4728,7 @@
   }
 
 
-  function CreateMITController(MetaverseHelperService, MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $location, $rootScope, $filter) {
+  function CreateMITController(MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $rootScope, $filter) {
 
     $scope.listAddresses = [];
     $scope.registerMIT = registerMIT;
@@ -4785,7 +4785,7 @@
 
     listAddresses();
 
-    function checkInputs(password) {
+    function checkInputs() {
       $scope.confirmation = true;
       delete $rootScope.flash;
     }
@@ -4886,7 +4886,7 @@
 
   }
 
-  function TransferMITController(MetaverseHelperService, MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $location, $rootScope, $filter) {
+  function TransferMITController(MetaverseService, $scope, $translate, $window, FlashService, ngDialog, $location, $rootScope, $filter) {
 
     $scope.transferMIT = transferMIT;
     $scope.error = [];
@@ -4931,7 +4931,7 @@
       }
     });
 
-    function checkInputs(password) {
+    function checkInputs() {
       $scope.confirmation = true;
       delete $rootScope.flash;
     }
@@ -5007,7 +5007,7 @@
   }
 
 
-  function LinkEthController(MetaverseHelperService, MetaverseService, localStorageService, $scope, $translate, $window, FlashService, ngDialog, $location) {
+  function LinkEthController(MetaverseService, localStorageService, $scope, $location) {
 
     $scope.listAddresses = [];
     $scope.senderAddressesLoaded = false;
@@ -5095,12 +5095,12 @@
 
   }
 
-  function AdvancedController(MetaverseService, FlashService, $translate, $scope, $window) {
+  function AdvancedController() {
    
 
   }
 
-  function PosController(MetaverseService, $rootScope, FlashService, $translate, $scope, $window) {
+  function PosController(MetaverseService, FlashService, $translate, $scope, $window) {
 
     $window.scrollTo(0,0);
 
@@ -5122,7 +5122,6 @@
     $scope.min_locked_range = 24000;
     $scope.forbidden_period_end_range = 1000;
     $scope.can_mine_till = 0;
-    $scope.nbr_lock_above_min_locked_etp = 0;
 
     $scope.stakeBalanceLoaded = true;
     $scope.initCheckLockRequirement = true;
@@ -5204,12 +5203,10 @@
         if (typeof response.success !== 'undefined' && response.success) {
           let locked_outputs = response.data.result;
           $scope.can_mine_till = 0;
-          $scope.nbr_lock_above_min_locked_etp = 0;
           let latest_valid_unlock = 0;
           if(locked_outputs) {
             locked_outputs.forEach(function(locked_output) {
               if(locked_output.locked_balance >= $scope.min_locked_etp && locked_output.locked_height > $scope.min_locked_range && locked_output.expiration_height - $scope.status.height > $scope.forbidden_period_end_range) {
-                $scope.nbr_lock_above_min_locked_etp++;
                 latest_valid_unlock = locked_output.expiration_height > latest_valid_unlock ? locked_output.expiration_height : latest_valid_unlock;
               }           
             });
@@ -5220,7 +5217,6 @@
           $translate('MESSAGES.GET_LOCKED_ERROR').then( (data) => FlashService.Error(data) );
           $window.scrollTo(0,0);
         }
-        
       });
     }
 
@@ -5317,7 +5313,6 @@
       }
     });
     
-
   }
 
   function OptimizeVoteController(MetaverseService, $rootScope, $location, localStorageService, FlashService, $translate, $scope, $window) {
@@ -5331,20 +5326,8 @@
     $scope.listAddresses = [];
     $scope.myDidsAddresses = [];
     $scope.symbolAddress = [];
-    $scope.loadingMiner = true;
-    $scope.mst = '';
-
-    $scope.min_locked_etp = 100000000000;
-    $scope.min_locked_range = 24000;
-    $scope.forbidden_period_end_range = 1000;
-    $scope.can_mine_till = 0;
-    $scope.nbr_lock_above_min_locked_etp = 0;
-
-    $scope.stakeBalanceLoaded = true;
-    $scope.initCheckLockRequirement = true;
 
     $scope.assets = [];
-    $scope.mstMinable = false;
 
     $scope.stakeUtxoLoaded = true;
     $scope.nbr_vote = [];

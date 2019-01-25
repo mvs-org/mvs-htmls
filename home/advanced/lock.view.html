@@ -22,6 +22,10 @@
 				<label for="quantity" class="control-label">{{ 'TRANSFER_VALUE' | translate }}</label>
 				<span ng-show="!balancesLoaded" class="miniSpinner"></span>
 			</div>
+			<!--AvailableBalance-->
+			<div class="col-xs-6 noPaddingLeftRight addRecipent">
+				<button type="button" tabIndex="-1" class="btn-link-red addRecipentButton">{{ 'TRANSFER_AMOUNT_AVALAIBLE' | translate }}: {{availableBalance | assetformat : 8}} ETP</button>
+			</div>
 			<input type="number" min=0 step="0.00000001" class="form-control" placeholder="0.00000000" name="quantity" ng-model="quantity" ng-class="{validInput: !error.quantity_empty && !error.quantity_not_enough_balance && !error.quantity_not_a_number, wrongInput: error.quantity_empty || error.quantity_not_enough_balance || error.quantity_not_a_number}" autocomplete="off">
 			<div ng-show="!loadingBalances && error.quantity_not_enough_balance && !error.quantity_not_a_number" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'DEPOSIT.AMOUNT_NOT_ENOUGH' | translate }}</div>
 			<div ng-show="error.quantity_not_a_number" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.NOT_A_NUMBER' | translate }}</div>
