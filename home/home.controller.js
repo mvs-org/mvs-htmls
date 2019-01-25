@@ -21,6 +21,7 @@
   .controller('LockController', LockController)
   .controller('ExplorerController', ExplorerController)
   .controller('ProfileController', ProfileController)
+  .controller('MyProfileController', MyProfileController)
   .controller('CreateProfileController', CreateProfileController)
   .controller('AllProfilesController', AllProfilesController)
   .controller('ModifyAddressController', ModifyAddressController)
@@ -3169,14 +3170,12 @@
       MetaverseService.GetAccountAsset($scope.symbol)
       .then( (response) => {
         if (typeof response.success !== 'undefined' && response.success) {
-          console.log(response);
           let assetInfo = response.data.result.assets[0];
           $scope.decimals = assetInfo.decimal_number.toString();
           $scope.selectedDid = assetInfo.issuer;
           $scope.max_supply = parseFloat($filter('converttodisplay')(assetInfo.quantity, $scope.decimals));
           $scope.description = assetInfo.description;
           $scope.secondaryissue_rate = assetInfo.secondaryissue_threshold;
-          console.log($scope.secondaryissue_rate)
           if($scope.secondaryissue_rate != 0)
             $scope.secondaryissue = true;
           if($scope.secondaryissue_rate == 127)
@@ -3793,7 +3792,11 @@
     }
   }
 
-  function ProfileController(MetaverseHelperService, MetaverseService, $scope, $location, $translate, $window, localStorageService, FlashService) {
+  function ProfileController() {
+
+  }
+
+  function MyProfileController(MetaverseHelperService, MetaverseService, $scope, $location, $translate, $window, localStorageService, FlashService) {
 
     $scope.selectedDid = $location.path().split('/')[3];
     $scope.myDids = [];

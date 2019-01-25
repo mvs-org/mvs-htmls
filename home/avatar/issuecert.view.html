@@ -49,6 +49,17 @@
         <input type="number" step="0.00000001" class="form-control" name="fee" id="" ng-model="transactionFee" ng-class="{validInput: !error.fee_empty && !error.fee_too_low, wrongInput: error.fee_empty || error.fee_too_low}">
         <div ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</div>
       </div>
+
+      <div class="row">
+        <br>
+        <!--Buttons-->
+        <div class="col-xs-6">
+          <button type="submit" ng-click="checkInputs(password)" class="btn btn-success" ng-disabled="!submittable">{{ 'ISSUE_CERT.TRANSFER_BUTTON' | translate }}</button>
+        </div>
+        <div class="col-xs-6">
+          <a href="#!/avatar/myavatars/" class="btn btn-success btn-success-secondary">{{ 'CREATE_PROFILE.BACK_TO_PROFILE' | translate }}</a>
+        </div>
+      </div>
     </div>
     <!--Certificates details-->
     <div class="col-sm-12 col-md-6">
@@ -70,21 +81,16 @@
             <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'ISSUE_CERT.EXPLANATION_NAMING' | translate}}</div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">
+            <div class="assetDataColumn col-xs-3 noPaddingLeftRight">{{ 'PROFIL.CERT_MINING' | translate }}</div>
+            <div class="assetValueColumn col-xs-9 noPaddingLeftRight">{{'PROFIL.CERTIFICATES_EXPLANATION_MINING' | translate}}</div>
+          </div>
+          <div class="col-xs-12 noPaddingLeftRight assetDataLine">
             <div class="assetDataColumn col-xs-12 noPaddingLeftRight">{{ 'ISSUE_CERT.EXPLANATION_COMMENT' | translate }}</div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-xs-12 col-md-12 noPaddingLeftRight">
-      <br>
-      <!--Buttons-->
-      <div class="col-xs-6 col-sm-3">
-        <button type="submit" ng-click="checkInputs(password)" class="btn btn-success" ng-disabled="!submittable">{{ 'ISSUE_CERT.TRANSFER_BUTTON' | translate }}</button>
-      </div>
-      <div class="col-xs-6 col-sm-3">
-        <a href="#!/avatar/myavatars/" class="btn btn-success btn-success-secondary">{{ 'CREATE_PROFILE.BACK_TO_PROFILE' | translate }}</a>
-      </div>
-    </div>
+    
   </form>
 
   <form ng-show="confirmation">

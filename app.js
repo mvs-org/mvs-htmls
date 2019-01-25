@@ -308,7 +308,7 @@
             .state('home.profile.myprofile', {
                 url: "/avatar/myavatars/:avatar",
                 templateUrl: "home/avatar/myavatars.view.html",
-                controller: 'ProfileController'
+                controller: 'MyProfileController'
             })
 
             .state('home.profile.create', {
