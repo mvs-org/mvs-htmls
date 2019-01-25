@@ -12,7 +12,7 @@
 			<label for="miner" class="control-label">{{ 'ASSET_CREATE.DID' | translate }}</label>
 			<span ng-show="!avatarsLoaded || !balancesLoaded" class="miniSpinner"></span>
 			<select name="avatar" type="avatar" class="form-control" placeholder="" ng-model="avatar" ng-class="{validInput: !error.avatar_empty, wrongInput: error.avatar_empty}">
-				<option ng-repeat="avatar in avatars | orderBy:'symbol'" value="{{avatar}}">{{avatar}} - {{addresses[avatarsAddresses[avatar]].available | assetformat : 8}} ETP</option>
+				<option ng-repeat="oneAddress in listAddresses | orderBy:'available':true" value="{{avatarsFromAddresses[oneAddress.address]}}" title="{{avatarsFromAddresses[oneAddress.address]}} ETP" ng-if="avatarsFromAddresses[oneAddress.address] && oneAddress.address.charAt(0) != '3'">{{avatarsFromAddresses[oneAddress.address]}} - {{oneAddress.available | assetformat : 8}} ETP</option>
 			</select>
 		</div>
 

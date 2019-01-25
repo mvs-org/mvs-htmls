@@ -372,6 +372,7 @@
 
     $scope.avatars = [];
     $scope.addresses = [];
+    $scope.listAddresses = [];
     $scope.avatarsAddresses = [];
     $scope.avatarsFromAddresses = [];
     $scope.locktimeDefaultPeriod = 24000;
@@ -445,7 +446,12 @@
             "available": parseInt(e.balance.available),
             "address": e.balance.address,
             "frozen": e.balance.frozen
-          });  
+          });
+          $scope.listAddresses.push({
+            "balance": parseInt(e.balance.unspent),
+            "available": parseInt(e.balance.available),
+            "address": e.balance.address
+          });
         });
         if($scope.avatar && $scope.avatarsAddresses[$scope.avatar] && $scope.addresses[$scope.avatarsAddresses[$scope.avatar]]) {
           $scope.availableBalance = $scope.addresses[$scope.avatarsAddresses[$scope.avatar]].available;
