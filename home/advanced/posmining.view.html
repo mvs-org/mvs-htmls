@@ -66,6 +66,7 @@
 
       <!--Buttons-->
       <div class="row">
+        <br>
         <div class="col-xs-6">
           <button class="btn btn-success" ng-disabled="!miner || !myDidsAddresses[miner] || (status.is_mining && status.block_type == 'PoS')" ng-click="startPosMining(myDidsAddresses[miner] ? myDidsAddresses[miner] : miner, mst)">
             {{ 'MINING_START' | translate }}

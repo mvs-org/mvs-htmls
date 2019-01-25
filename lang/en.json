@@ -798,6 +798,7 @@
   "MESSAGES.CANT_LOAD_ASSET_INFO": "The information of this asset can't be loaded. Please try to refresh this page.",
   "MINING.BACK_MINING" : "Back to Mining",
 
-  "ASSET.LOCK_TYPE": "Type of deposit"
+  "ASSET.LOCK_TYPE": "Type of deposit",
+  "ASSET.ISSUE_MST": "Issue MST"
 
 }

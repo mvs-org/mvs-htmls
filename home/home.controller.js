@@ -407,11 +407,12 @@
     function lock(avatar, quantity, locktime, transactionFee, password) {
       var lock_value = $filter('convertfortx')(quantity, $scope.decimal_number);
       var fee_value = $filter('convertfortx')(transactionFee, $scope.decimal_number);
+      var from = $scope.addresses[$scope.avatarsAddresses[avatar]].available >= lock_value ? avatar : undefined;
       if (password != localStorageService.get('credentials').password) {
         $translate('MESSAGES.WRONG_PASSWORD').then( (data) => FlashService.Error(data) );
         $window.scrollTo(0,0);
       } else {
-        MetaverseService.Lock(avatar, lock_value, locktime, fee_value, password)
+        MetaverseService.Lock(avatar, from, lock_value, locktime, fee_value, password)
         .then( (response) => {
           NProgress.done();
           if (typeof response.success !== 'undefined' && response.success) {
@@ -435,6 +436,16 @@
       }
     }
 
+    MetaverseHelperService.GetBalance( (err, balance, message) => {
+      if (err) {
+        FlashService.Error(message);
+        $window.scrollTo(0,0);
+      } else {
+        $scope.balance = balance;
+        $scope.availableBalance = balance['total-available'];
+        $scope.loadingBalances = false;
+      }
+    });
 
     //Load users ETP balance
     //Load the addresses and their balances
@@ -454,10 +465,6 @@
             "address": e.balance.address
           });
         });
-        if($scope.avatar && $scope.avatarsAddresses[$scope.avatar] && $scope.addresses[$scope.avatarsAddresses[$scope.avatar]]) {
-          $scope.availableBalance = $scope.addresses[$scope.avatarsAddresses[$scope.avatar]].available;
-          validQuantity($scope.quantity);
-        }
         $scope.balancesLoaded = true;
       }
     });
@@ -476,8 +483,6 @@
             $scope.avatar = '';
           } else {
             $scope.avatar = $scope.avatarsFromAddresses[$scope.addressURL];
-            $scope.availableBalance = $scope.addresses[$scope.addressURL] ? $scope.addresses[$scope.addressURL].available : 0;
-            validQuantity($scope.quantity);
           }
         } else {
           $scope.avatars = [];
@@ -516,8 +521,6 @@
     $scope.$watch('avatar', (newVal, oldVal) => {
       $scope.error.avatar_empty = (newVal == undefined || newVal == '');
       $scope.error.avatar_empty = (newVal == undefined || newVal == '');
-      if($scope.addresses && $scope.avatarsAddresses && $scope.avatarsAddresses[$scope.avatar] && $scope.addresses[$scope.avatarsAddresses[$scope.avatar]])
-        $scope.availableBalance = $scope.addresses[$scope.avatarsAddresses[$scope.avatar]].available;
       validQuantity($scope.quantity);
       checkready();
     });

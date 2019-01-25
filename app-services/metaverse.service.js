@@ -1029,9 +1029,21 @@
             return _sendV3('getasset', [asset, '-c']);
         }
 
-        function Lock(avatar, amount, locktime, transactionFee, password) {
+        function Lock(avatar, from, amount, locktime, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
-            return _sendV3('lock', [credentials.user, password, avatar, amount, locktime, '-f', transactionFee]);
+            var query = [];
+            query.push(credentials.user);
+            query.push(password);
+            query.push(avatar);
+            query.push(amount);
+            query.push(locktime);
+            query.push('-f');
+            query.push(transactionFee);
+            if(from) {
+                query.push('-s');
+                query.push(from);
+            }           
+            return _sendV3('lock', query);
         }
 
         function PopBlock(height) {
