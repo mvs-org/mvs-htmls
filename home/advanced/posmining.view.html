@@ -58,6 +58,7 @@
       <!--MST mined-->
       <div class="form-group" ng-hide="status.is_mining && status.block_type == 'PoS'">
         <label class="control-label">{{ 'MINING.MINE_MST' | translate }}</label>
+        <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.MST_MINING' | translate }}"></span>  
         <select name="mst" type="asset" class="form-control" placeholder="" ng-model="mst" ng-class="{validInput: true, wrongInput: false}">
           <option value="">{{ 'MINING.NO_MST' | translate }}</option>
           <option ng-repeat="asset in mstMiningList" value="{{asset.symbol}}">{{asset.symbol}}</option>

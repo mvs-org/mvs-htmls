@@ -799,6 +799,8 @@
   "MINING.BACK_MINING" : "Back to Mining",
 
   "ASSET.LOCK_TYPE": "Type of deposit",
-  "ASSET.ISSUE_MST": "Issue MST"
+  "ASSET.ISSUE_MST": "Issue MST",
+
+  "HELP.MST_MINING": "You can choose to mine one MST at the same time than ETP. Mining a MST does not impact the ETP reward neither change the mining difficulty, so it's always a good idea to also mine a MST!"
 
 }

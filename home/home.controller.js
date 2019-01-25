@@ -3314,6 +3314,7 @@
     //Check if the mst mining interval is valid
     $scope.$watch('mstmining_interval', (newVal, oldVal) => {
       $scope.mstminingError.interval_empty = (newVal == undefined || newVal == '');
+      $scope.mstminingError.interval_too_high = newVal > 10000000;
       checkready();
     });
 

@@ -97,7 +97,7 @@
             {{ 'ASSET_CREATE.MST_MINING_INTERVAL' | translate }}
           </label>
           <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.MST_MINING_INTERVAL' | translate }}"></span>
-          <input type="number" min="0" step="1" class="form-control" name="mstmining_interval" placeholder="0" ng-model="mstmining_interval" ng-class="{validInput: !mstminingError.interval_empty, wrongInput: mstminingError.interval_empty}" autocomplete="off">
+          <input type="number" min="0" step="1" class="form-control" name="mstmining_interval" placeholder="0" ng-model="mstmining_interval" ng-class="{validInput: !mstminingError.interval_empty && !mstminingError.interval_too_high, wrongInput: mstminingError.interval_empty || mstminingError.interval_too_high}" autocomplete="off">
         </div>
 
         <div class="form-group col-xs-12 noPaddingLeftRight">
