@@ -62,15 +62,19 @@
 					<label for="fee" class="control-label col-xs-6 noPaddingLeftRight">{{ 'TRANSFER_FEE' | translate }}</label>
 					<input type="number" step="0.00000001" class="form-control" name="fee" id="" ng-model="transactionFee" ng-class="{validInput: !error.fee_empty && !error.fee_too_low, wrongInput: error.fee_empty || error.fee_too_low}">
 					<div ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</div>
-	      </div>
-			</div>
-
-			<!--Submit button-->
-			<div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
-				<div class="col-xs-12 col-sm-6 col-md-3">
-					<br/>
-					<button type="submit" class="btn btn-success" id="transferBtn" ng-click="checkInputs()" ng-disabled="!submittable">{{ 'TRANSFER_SEND' | translate }}</button>
 				</div>
+				
+				<!--Submit button-->
+				<div class="row">
+					<br/>
+					<div class="col-xs-6 col-sm-6 col-md-6">	
+						<button type="submit" class="btn btn-success" id="transferBtn" ng-click="checkInputs()" ng-disabled="!submittable">{{ 'TRANSFER_SEND' | translate }}</button>
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6">
+						<a href="#!/home" class="btn btn-success btn-success-secondary">{{ 'TRANSFER_MULTISIGNATURE_BACK_WALLET' | translate }}</a>
+					</div>
+				</div>
+
 			</div>
 		</form>
 	</div>

@@ -59,7 +59,7 @@
         <div ng-show="error.quantity_not_enough_balance" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.QUANTITY_NOT_ENOUGH_ASSET' | translate }} {{symbol}}</div>
       </div>
 
-      <!--Checkbox to deposit-->
+      <!--Checkbox to lock-->
       <div ng-hide="swaptoken_option" class="form-group col-xs-12 spe-addrbox depositAddressCheckbox">
         <div class="checkboxCircle">
           <div class="checkbox-box">
@@ -74,7 +74,7 @@
       <div ng-show="frozen_option">
         <!--Model-->
         <div class="form-group">
-          <label for="model" class="control-label">{{ 'SECONDARY_ISSUE.TYPE' | translate }}</label>
+          <label for="model" class="control-label">{{ 'ASSET.LOCK_TYPE' | translate }}</label>
           <select name="model" type="model" class="form-control" placeholder="" ng-model="model" ng-change="checkready()" ng-class="{validInput: true, wrongInput: false}">
             <option value="0">{{ 'ASSET_TRANSFERT.SIMPLE_DEPOSIT' | translate }}</option>
             <option value="1">{{ 'SECONDARY_ISSUE.TYPE_1' | translate }}</option>
@@ -173,6 +173,17 @@
         <div ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</div>
       </div>
 
+      <!--Submit button-->
+      <div class="row">
+        <br>
+        <div class="col-xs-6 col-sm-6 col-md-6">
+          <button type="submit" class="btn btn-success" ng-click="checkInputs(quantityLocked, model2)" ng-disabled="!submittable">{{ 'TRANSFER_SEND' | translate }}</button>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6">
+          <a href="#!/home" class="btn btn-success btn-success-secondary">{{ 'TRANSFER_MULTISIGNATURE_BACK_WALLET' | translate }}</a>
+        </div>
+      </div>
+
     </div>
 
     <!--Models details-->
@@ -180,7 +191,7 @@
       <br/>
       <div class="assetDetailsPanel panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{'SECONDARY_ISSUE.TYPE' | translate}}</h3>
+          <h3 class="panel-title">{{'ASSET.LOCK_TYPE' | translate}}</h3>
         </div>
         <div class="panel-body">
           <div class="col-xs-12 noPaddingLeftRight assetDataLine" ng-class="{'selected_row' : model == 0}">
@@ -203,13 +214,6 @@
       </div>
     </div>
 
-    <!--Submit button-->
-    <div class="col-xs-12 col-sm-12 col-md-12 noPaddingLeftRight">
-      <div class="col-xs-12 col-sm-6 col-md-3 ">
-        <br/>
-        <button type="submit" class="btn btn-success" ng-click="checkInputs(quantityLocked, model2)" ng-disabled="!submittable">{{ 'TRANSFER_SEND' | translate }}</button>
-      </div>
-    </div>
   </form>
 
   <form ng-show="confirmation" class="row">

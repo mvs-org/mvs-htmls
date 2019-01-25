@@ -6,7 +6,7 @@
 </div>
 
 <form ng-hide="confirmation" class="row">
-	<div class="col-sm-12 col-md-6">
+	<div class="col-xs-12 col-sm-6">
 		<!--Avatar-->
 		<div class="form-group">
 			<label for="miner" class="control-label">{{ 'ASSET_CREATE.DID' | translate }}</label>
@@ -66,9 +66,15 @@
 			<div ng-show="error.fee_not_a_number" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.NOT_A_NUMBER' | translate }}</div>
 		</div>
 
-		<!--Submit button-->
-		<div class="col-xs-12 col-md-6 noPaddingLeftRight">
-			<button class="btn btn-success" type="submit" id="transferBtn" ng-click="checkInputs()" ng-disabled="!submittable">{{ 'LOCK.BUTTON' | translate }}</button>
+		<div class="row">
+			<!--Submit button-->
+			<div class="col-xs-6">
+				<button class="btn btn-success" type="submit" id="transferBtn" ng-click="checkInputs()" ng-disabled="!submittable">{{ 'LOCK.BUTTON' | translate }}</button>
+			</div>
+			<!--Return button-->
+			<div class="col-xs-6">
+				<a href="#!/advanced/pos" class="btn btn-success btn-success-secondary">{{ 'MINING.BACK_MINING' | translate }}</a>
+			</div>
 		</div>
 	</div>
 

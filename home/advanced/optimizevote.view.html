@@ -6,7 +6,7 @@
 </div>
 
 <form ng-hide="confirmation" class="ddbr row">
-	<div class="col-sm-12 col-md-6">
+	<div class="col-xs-12 col-sm-6">
 		<!--Sender-->
 		<div class="form-group">
 			<label for="addressFrom" class="control-label">{{ 'MINING.MINER' | translate }}</label>
@@ -42,10 +42,15 @@
 			<div ng-show="error.fee_too_low" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.TOO_LOW_FEE' | translate }}</div>
 		</div>
 
-		<!--Submit button-->
-		<div class="col-xs-12 col-md-6 noPaddingLeftRight">
-			<br/>
-			<button type="submit" class="btn btn-success" id="transferBtn" ng-click="checkInputs()" ng-disabled="!submittable">{{ 'LOCK.ORGANIZE' | translate}}</button>
+		<div class="row">
+			<!--Submit button-->
+			<div class="col-xs-6">
+				<button type="submit" class="btn btn-success" id="transferBtn" ng-click="checkInputs()" ng-disabled="!submittable">{{ 'LOCK.ORGANIZE' | translate}}</button>
+			</div>
+			<!--Return button-->
+			<div class="col-xs-6">
+				<a href="#!/advanced/pos" class="btn btn-success btn-success-secondary">{{ 'MINING.BACK_MINING' | translate }}</a>
+			</div>
 		</div>
 
 	</div>
