@@ -370,6 +370,7 @@
     $scope.checkInputs = checkInputs;
     $scope.checkready = checkready;
     $scope.loadingBalances = true;
+    $scope.loadingDids = true;
 
     $scope.avatars = [];
     $scope.addresses = [];
@@ -484,6 +485,7 @@
           } else {
             $scope.avatar = $scope.avatarsFromAddresses[$scope.addressURL];
           }
+          $scope.loadingDids = false;
         } else {
           $scope.avatars = [];
         }
