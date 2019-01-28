@@ -784,15 +784,23 @@
 
   "ASSET_CREATE.MST_MINING_CHECKBOX": "允许 MST 挖矿",
   "HELP.MST_MINING_CHECKBOX": "MST 挖矿将允许矿工挖掘该 MST。 新的 MST 资产将会被选择挖矿该 MST 的矿工挖出，每次挖出的数量由下面的挖矿参数设定。",
-  "ASSET_CREATE.MST_MINING_INITIAL": "初始块奖励",
-  "ASSET_CREATE.MST_MINING_INTERVAL": "块奖励衰减块数间隔",
-  "ASSET_CREATE.MST_MINING_BASE": "衰减速度",
-  "HELP.MST_MINING_INITIAL": "这是矿工挖该 MST 的初始块奖励数量。示例：于 ETP 来说该值是 3 ETP，于比特币来说该值是 50 BTC。",
+  "ASSET_CREATE.MST_MINING_INITIAL": "初始奖励",
+  "ASSET_CREATE.MST_MINING_INTERVAL": "块奖励衰减间隔",
+  "ASSET_CREATE.MST_MINING_BASE": "衰减因子",
+  "HELP.MST_MINING_INITIAL": "该数值表示矿工挖该 MST 的初始奖励数量。示例：于 ETP 来说该值是 3 ETP，于比特币来说该值是 50 BTC。",
   "HELP.MST_MINING_INTERVAL": "该数值表示块奖励衰减间隔所需的块数。示例：于 ETP 来说该值是 50 万块，于比特币来说该值是 21 万块（约 4 年）。",
   "HELP.MST_MINING_BASE": "该数值表示衰减因子。示例：于 ETP 来说该值是 0.95（即每一衰减周期衰减 5%），于比特币来说该值是 0.5（即每一衰减周期衰减 50%）",
 
   "ASSET_ALL.MST_MINING": "MST 挖矿",
   "ASSET_ALL.MST_MINING_AVAILABLE": "可用",
-  "ASSET_ALL.MST_MINING_NOT_AVAILABLE": "不可用"
+  "ASSET_ALL.MST_MINING_NOT_AVAILABLE": "不可用",
+
+  "MESSAGES.CANT_LOAD_ASSET_INFO": "无法获取该资产信息，请刷新页面再试。",
+  "MINING.BACK_MINING" : "返回挖矿",
+
+  "ASSET.LOCK_TYPE": "锁定类型",
+  "ASSET.ISSUE_MST": "发行资产 MST",
+
+  "HELP.MST_MINING": "您可以选择挖矿 ETP 的同时挖矿某种 MST。挖矿 MST 既不会影响挖矿 ETP 的奖励也不影响挖矿难度，因此选择同时挖矿 MST 是极好的！"
 
 }
