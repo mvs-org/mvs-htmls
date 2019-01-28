@@ -65,11 +65,13 @@
         </select>
       </div>
 
+      <div ng-show="!MpcActivated" class="wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'MESSAGES.MPC_NOT_ACTIVATED' | translate }}</div>
+      
       <!--Buttons-->
       <div class="row">
         <br>
         <div class="col-xs-6">
-          <button class="btn btn-success" ng-disabled="!miner || !myDidsAddresses[miner] || (status.is_mining && status.block_type == 'PoS')" ng-click="startPosMining(myDidsAddresses[miner] ? myDidsAddresses[miner] : miner, mst)">
+          <button class="btn btn-success" ng-disabled="!miner || !myDidsAddresses[miner] || (status.is_mining && status.block_type == 'PoS') || !MpcActivated" ng-click="startPosMining(myDidsAddresses[miner] ? myDidsAddresses[miner] : miner, mst)">
             {{ 'MINING_START' | translate }}
           </button>
         </div>
@@ -98,7 +100,7 @@
             <div ng-show="stakeBalanceLoaded && (miner || (status.is_mining && status.block_type == 'PoS')) && can_mine_till > 0" class="assetValueColumn col-xs-6 noPaddingLeftRight correctInputComment"><span class="glyphicon glyphicon-ok"></span> {{ 'POS_MINING.STAKING_REQUIREMENT_VALID' | translate }} {{can_mine_till | assetformat : 0}}</div>
             <div ng-show="stakeBalanceLoaded && (miner || (status.is_mining && status.block_type == 'PoS')) && can_mine_till == 0" class="assetValueColumn col-xs-6 noPaddingLeftRight wrongInputComment"><span class="glyphicon glyphicon-remove"></span> {{ 'POS_MINING.STAKING_REQUIREMENT_FAIL' | translate }}</div>
             <div class="assetValueColumn col-xs-6 col-xs-offset-6">
-              <a href="#!/advanced/lock/{{miner}}" class="btn btn-success">{{ 'LOCK.BUTTON' | translate}}</a>
+              <a href="#!/advanced/lock/{{miner}}" ng-disabled="!MpcLockActivated" class="btn btn-success">{{ 'LOCK.BUTTON' | translate}}</a>
             </div>
           </div>
           <div class="col-xs-12 noPaddingLeftRight assetDataLine">

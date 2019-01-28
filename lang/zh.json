@@ -801,6 +801,7 @@
   "ASSET.LOCK_TYPE": "锁定类型",
   "ASSET.ISSUE_MST": "发行资产 MST",
 
-  "HELP.MST_MINING": "您可以选择挖矿 ETP 的同时挖矿某种 MST。挖矿 MST 既不会影响挖矿 ETP 的奖励也不影响挖矿难度，因此选择同时挖矿 MST 是极好的！"
+  "HELP.MST_MINING": "您可以选择挖矿 ETP 的同时挖矿某种 MST。挖矿 MST 既不会影响挖矿 ETP 的奖励也不影响挖矿难度，因此选择同时挖矿 MST 是极好的！",
+  "MESSAGES.MPC_NOT_ACTIVATED": "MPC 还没有被激活！请耐心等待至激活块高 1924000，再使用 PoS 挖矿。"
 
 }

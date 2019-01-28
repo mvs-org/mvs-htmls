@@ -3718,6 +3718,8 @@
         if (typeof response != 'undefined' && response.success) {
           $scope.height = response.data.result.height;
           $rootScope.network = response.data.result.testnet ? 'testnet' : 'mainnet';
+          $rootScope.MpcActivated = !($rootScope.network == 'mainnet' && $scope.height < 1924000);
+          $rootScope.MpcLockActivated = !($rootScope.network == 'mainnet' && $scope.height < 1896000);
           $scope.version = response.data.result['wallet-version'];
           $scope.peers = response.data.result.peers;
         }
