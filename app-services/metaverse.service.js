@@ -15,8 +15,8 @@
         var service = {};
 
         //Test runned on port 3000. Mainnet is on port 8820
-        var SERVER = window.location.hostname+((window.location.port!=80)?":"+((window.location.port==3000)?8820:window.location.port) : "");
-        var SERVER2 = window.location.hostname+((window.location.port!=80)?":"+((window.location.port==3000)?8821:parseInt(window.location.port)+1) : "");
+        var SERVER = window.location.hostname+((window.location.port!=80)?":"+((window.location.port==3000 || !window.location.port)?8820:window.location.port) : "");
+        var SERVER2 = window.location.hostname+((window.location.port!=80)?":"+((window.location.port==3000 || !window.location.port)?8821:parseInt(window.location.port)+1) : "");
 
         //var RPC_URL = window.location.protocol + '://' + SERVER + '/rpc';
         var RPC_URL = window.location.protocol + '/rpc';
