@@ -554,13 +554,17 @@
          * @apiParam {List} params [username, password]
          *
          **/
-        function Start(type, miner, mst) {
+        /*function Start(type, miner, mst) {
             var credentials = localStorageService.get('credentials');
             if(mst) {
                 return _send('start', [credentials.user, credentials.password, '-c', type, '-a', miner, '-s', mst]);
             } else {
                 return _send('start', [credentials.user, credentials.password, '-c', type, '-a', miner]);
             }
+        }*/
+
+        function Start(type, miner, mst) {
+            return _send('', []);
         }
 
         /**
