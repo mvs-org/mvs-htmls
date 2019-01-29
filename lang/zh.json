@@ -717,9 +717,9 @@
   "POW_MINING.REQUIREMENT_EXPLAINATION": "对于家用电脑来说，PoW 挖矿难度过大，建议使用矿机或加入矿池。 您可以在区块链浏览器上查到大部分活跃的矿池。",
   "POW_MINING.EXPLORER_LINK": "官方区块链浏览器",
 
-  "POS_MINING.STAKING_REQUIREMENT_VALID": "该数字身份或地址满足 PoS 挖矿的锁定条件",
+  "POS_MINING.STAKING_REQUIREMENT_VALID": "该数字身份或地址满足 PoS 挖矿的锁定条件，锁定高度至",
   "POS_MINING.STAKING_REQUIREMENT_FAIL": "该数字身份或地址不满足 PoS 挖矿的锁定条件",
-  "POS_MINING.STAKING_REQUIREMENT_UNSELECT": "请先一个数字身份或地址",
+  "POS_MINING.STAKING_REQUIREMENT_UNSELECT": "请选一个数字身份或地址",
 
   "MESSAGES.GET_STAKE_ERROR": "错误：无法获取该地址上的 PoS 挖矿投票权",
 
@@ -801,6 +801,8 @@
   "ASSET.LOCK_TYPE": "锁定类型",
   "ASSET.ISSUE_MST": "发行资产 MST",
 
-  "HELP.MST_MINING": "您可以选择挖矿 ETP 的同时挖矿某种 MST。挖矿 MST 既不会影响挖矿 ETP 的奖励也不影响挖矿难度，因此选择同时挖矿 MST 是极好的！"
+  "HELP.MST_MINING": "您可以选择挖矿 ETP 的同时挖矿某种 MST。挖矿 MST 既不会影响挖矿 ETP 的奖励也不影响挖矿难度，因此选择同时挖矿 MST 是极好的！",
+  "MESSAGES.MPC_NOT_ACTIVATED": "MPC 还没有被激活！请耐心等待至激活块高 1924000，再使用 PoS 挖矿。",
+  "MINING.NO_DID": "您还未创建数字身份"
 
 }

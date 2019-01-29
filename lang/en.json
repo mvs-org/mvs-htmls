@@ -801,6 +801,8 @@
   "ASSET.LOCK_TYPE": "Type of deposit",
   "ASSET.ISSUE_MST": "Issue MST",
 
-  "HELP.MST_MINING": "You can choose to mine one MST at the same time than ETP. Mining a MST does not impact the ETP reward neither change the mining difficulty, so it's always a good idea to also mine a MST!"
+  "HELP.MST_MINING": "You can choose to mine one MST at the same time than ETP. Mining a MST does not impact the ETP reward neither change the mining difficulty, so it's always a good idea to also mine a MST!",
+  "MESSAGES.MPC_NOT_ACTIVATED": "MPC has not been activated yet! Please wait its activation, after block 1924000, to use PoS mining.",
+  "MINING.NO_DID": "You don't have any Avatars yet."
 
 }

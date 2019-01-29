@@ -4,7 +4,7 @@
 </div>
 
 <!--Main navbar-->
-<nav class="header navbar navbar-default navbar-fixed-top hidden-xs">
+<nav class="header navbar navbar-default navbar-fixed-top hidden-xs" ng-class="{testnetHeader: network == 'testnet'}">
   <div class="qq fullPageWidth headerBox">
     <div class="headerBox" ng-controller="MenuController">
       <ul class="nav navbar-nav">
@@ -24,7 +24,7 @@
           <!--Search big screen-->
           <p class="hidden-xs hidden-sm hidden-md topMenuButtonRight headerBoxSearchLarge">
             <span class="input-group searchArea">
-              <input type="search" name="search" maxlength="64" class="form-control researchTextBox navbar-form" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
+              <input type="search" name="search" maxlength="64" class="form-control researchTextBox navbar-form" ng-class="{testnetHeader: network == 'testnet'}" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
               <span class="input-group-addon researchButton">
                 <button type="submit" class="btn-link-black smallButton menuButton topMenuButtonRight glyphicon glyphicon-search" value="" ng-click="vm.search(stringToSearch)"></button>
               </span>
@@ -99,12 +99,12 @@
 
 <!--Nav bar for XS device-->
 <div class="panel navbarSmallScreens">
-  <div class="header visible-xs">
+  <div class="header visible-xs" ng-class="{testnetHeader: network == 'testnet'}">
 
     <!--Search very small screen-->
     <div class="col-xs-4">
       <div class="input-group headerBoxSearchXs headerButtonXs">
-        <input type="search" name="search" class="form-control researchTextBox navbar-form" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
+        <input type="search" name="search" class="form-control researchTextBox navbar-form" ng-class="{testnetHeader: network == 'testnet'}" ng-model="stringToSearch" ng-keyup="$event.keyCode == 13 && vm.search(stringToSearch)" placeholder="{{ 'HEADER_SEARCH_PLACEHOLDER' | translate }}">
         <span class="input-group-addon researchButton">
           <button type="submit" class="btn-link smallButton menuButton topMenuButtonRight glyphicon glyphicon-search" value="" ng-click="vm.search(stringToSearch)"></button>
         </span>
@@ -199,6 +199,9 @@
         </div>
       </a>
     </div>
-    <div class="version">{{ 'METAVERSE_VERSION' | translate }} {{version}}</div>
+    <div class="version">
+      {{ 'METAVERSE_VERSION' | translate }} {{version}}
+      <span ng-show="network == 'testnet'" class="testnetText">Testnet</span>
+    </div>
   </div>
 </div>

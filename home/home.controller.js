@@ -370,6 +370,7 @@
     $scope.checkInputs = checkInputs;
     $scope.checkready = checkready;
     $scope.loadingBalances = true;
+    $scope.loadingDids = true;
 
     $scope.avatars = [];
     $scope.addresses = [];
@@ -484,6 +485,7 @@
           } else {
             $scope.avatar = $scope.avatarsFromAddresses[$scope.addressURL];
           }
+          $scope.loadingDids = false;
         } else {
           $scope.avatars = [];
         }
@@ -3718,6 +3720,8 @@
         if (typeof response != 'undefined' && response.success) {
           $scope.height = response.data.result.height;
           $rootScope.network = response.data.result.testnet ? 'testnet' : 'mainnet';
+          $rootScope.MpcActivated = !($rootScope.network == 'mainnet' && $scope.height < 1924000);
+          $rootScope.MpcLockActivated = !($rootScope.network == 'mainnet' && $scope.height < 1896000);
           $scope.version = response.data.result['wallet-version'];
           $scope.peers = response.data.result.peers;
         }

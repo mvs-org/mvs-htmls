@@ -16,7 +16,7 @@
 
 
   <!--Main navbar-->
-  <nav class="header navbar navbar-default navbar-fixed-top hidden-xs">
+  <nav class="header navbar navbar-default navbar-fixed-top hidden-xs" ng-class="{testnetHeader: network == 'testnet'}">
     <div class="fullPageWidth headerBox">
       <div class="headerBox" ng-controller="MenuController">
         <ul class="nav navbar-nav">
@@ -58,7 +58,7 @@
 
   <!--Language button Small screens-->
   <div class="panel navbarSmallScreens">
-    <div class="header visible-xs">
+    <div class="header visible-xs" ng-class="{testnetHeader: network == 'testnet'}">
       <div class="col-xs-3">
         <div class="linkLogo">
           <a>
@@ -286,7 +286,10 @@
           </div>
         </div>
       </div>
-      <div class="version">{{ 'METAVERSE_VERSION' | translate }} {{vm.version}}</div>
+      <div class="version">
+        {{ 'METAVERSE_VERSION' | translate }} {{vm.version}}
+        <span ng-show="network == 'testnet'" class="testnetText">Testnet</span>
+      </div>
     </div>
   </div>
 </div>
