@@ -3520,7 +3520,7 @@
     $window.scrollTo(0,0);
 
     //var ws = new WebSocket('ws://localhost:8820/ws'); //For test
-    var ws = new WebSocket('ws://' + MetaverseService.SERVER + '/ws');  //Live
+    var ws = new WebSocket(MetaverseService.SERVER);  //Live
 
     $("#inputField").focus();
 
@@ -3611,7 +3611,7 @@
     $scope.heightFromExplorer = 0;
 
     //var ws = new WebSocket('ws://localhost:8821/ws');
-    var ws = new WebSocket('ws://' + MetaverseService.SERVER2 + '/ws');  //Live
+    var ws = new WebSocket(MetaverseService.SERVER2);  //Live
 
     $scope.showConnected = false;
     $scope.index = 0;

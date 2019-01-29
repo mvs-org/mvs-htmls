@@ -15,13 +15,13 @@
         var service = {};
 
         //Test runned on port 3000. Mainnet is on port 8820
-        var SERVER = window.location.hostname+((window.location.port!=80)?":"+((window.location.port==3000 || !window.location.port)?8820:window.location.port) : "");
-        var SERVER2 = window.location.hostname+((window.location.port!=80)?":"+((window.location.port==3000 || !window.location.port)?8821:parseInt(window.location.port)+1) : "");
+        var SERVER = 'wss://testnet.mvs.org/ws';
+        var SERVER2 = 'wss://testnet.mvs.org/ws';
 
         //var RPC_URL = window.location.protocol + '://' + SERVER + '/rpc';
-        var RPC_URL = window.location.protocol + '/rpc';
-        var RPC_URL_V2 = window.location.protocol + '/rpc/v2';
-        var RPC_URL_V3 = window.location.protocol + '/rpc/v3';
+        var RPC_URL = 'https://testnet.mvs.org/rpc';
+        var RPC_URL_V2 = 'https://testnet.mvs.org/rpc/v2';
+        var RPC_URL_V3 = 'https://testnet.mvs.org/rpc/v3';
 
 
         service.debug = false;
