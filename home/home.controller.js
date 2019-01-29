@@ -3561,6 +3561,17 @@
         $scope.consolelog.push(connectionstatus);
         $scope.querystring = '';
         $scope.queryHistory = 0;
+      } else if ($scope.querystring.startsWith("start")) {
+        $scope.index++;
+        $scope.consolelog.push({
+          query: $scope.querystring,
+          answer: "Mining not permitted via the public wallet",
+          index: $scope.index
+        });
+        $scope.queryHistory = $scope.consolelog.length;
+        $scope.querystring = '';
+        //$scope.$apply();
+        scrolldown();
       } else {
         NProgress.start();
         ws.send($scope.querystring);
