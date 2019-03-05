@@ -5211,7 +5211,7 @@
           let latest_valid_unlock = 0;
           if(locked_outputs) {
             locked_outputs.forEach(function(locked_output) {
-              if(locked_output.locked_balance >= $scope.min_locked_etp && locked_output.locked_height > $scope.min_locked_range && locked_output.expiration_height - $scope.status.height > $scope.forbidden_period_end_range) {
+              if(locked_output.locked_balance >= $scope.min_locked_etp && locked_output.locked_height >= $scope.min_locked_range && locked_output.expiration_height - $scope.status.height > $scope.forbidden_period_end_range) {
                 latest_valid_unlock = locked_output.expiration_height > latest_valid_unlock ? locked_output.expiration_height : latest_valid_unlock;
               }           
             });

@@ -780,7 +780,7 @@
   "LOCK.CUSTOM_LOCKTIME_CHECKBOX": "I want to use a custom number of blocks",
   "HELP.CUSTOM_LOCKTIME": "Be carefull when using a custom locktime! A too short period will not validate the requirement to do PoS mining, a too long period might lock your ETP for a very long time",
   "MESSAGES.OPTIMIZE_NOTHING_TO_SPLIT": "There is nothing to optimize",
-  "MESSAGES.POS_MINING_NEED_AVATAR": "You have to use and avatar to do PoS mining!",
+  "MESSAGES.POS_MINING_NEED_AVATAR": "You have to use an avatar to do PoS mining!",
 
   "ASSET_CREATE.MST_MINING_CHECKBOX": "Allow MST mining",
   "HELP.MST_MINING_CHECKBOX": "MST mining will allow miners to mine this MST. New tokens will be created in each block mined by a miner who choosed to mine it, according the the model selected below",
