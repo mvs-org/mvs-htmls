@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -15,8 +15,8 @@
         var service = {};
 
         //Test runned on port 3000. Mainnet is on port 8820
-        var SERVER = window.location.hostname+((window.location.port!=80)?":"+((window.location.port==3000 || !window.location.port)?8820:window.location.port) : "");
-        var SERVER2 = window.location.hostname+((window.location.port!=80)?":"+((window.location.port==3000 || !window.location.port)?8821:parseInt(window.location.port)+1) : "");
+        var SERVER = window.location.hostname + ((window.location.port != 80) ? ":" + ((window.location.port == 3000 || !window.location.port) ? 8820 : window.location.port) : "");
+        var SERVER2 = window.location.hostname + ((window.location.port != 80) ? ":" + ((window.location.port == 3000 || !window.location.port) ? 8821 : parseInt(window.location.port) + 1) : "");
 
         //var RPC_URL = window.location.protocol + '://' + SERVER + '/rpc';
         var RPC_URL = window.location.protocol + '/rpc';
@@ -27,33 +27,33 @@
         service.debug = false;
 
         service.MetaverseNetwork = {
-          mainnet: {
-              messagePrefix: '\x18Bitcoin Signed Message:\n',
-              bech32: 'bc',
-              bip32: {
-                  public: 0x0488b21e,
-                  private: 0x0488ade4
-              },
-              pubKeyHash: 0x32,
-              scriptHash: 0x05,
-              locktimes: [25200, 108000, 331200, 655200, 1314000],
-              wif: 0x80
-          },
-          testnet: {
-              messagePrefix: '\x18Bitcoin Signed Message:\n',
-              bech32: 'tb',
-              bip32: {
-                  public: 0x043587cf,
-                  private: 0x04358394
-              },
-              pubKeyHash: 0x7f,
-              scriptHash: 0xc4,
-              locktimes: [10, 20, 30, 40, 50],
-              wif: 0xef
-          }
+            mainnet: {
+                messagePrefix: '\x18Bitcoin Signed Message:\n',
+                bech32: 'bc',
+                bip32: {
+                    public: 0x0488b21e,
+                    private: 0x0488ade4
+                },
+                pubKeyHash: 0x32,
+                scriptHash: 0x05,
+                locktimes: [25200, 108000, 331200, 655200, 1314000],
+                wif: 0x80
+            },
+            testnet: {
+                messagePrefix: '\x18Bitcoin Signed Message:\n',
+                bech32: 'tb',
+                bip32: {
+                    public: 0x043587cf,
+                    private: 0x04358394
+                },
+                pubKeyHash: 0x7f,
+                scriptHash: 0xc4,
+                locktimes: [10, 20, 30, 40, 50],
+                wif: 0xef
+            }
         }
 
-        service.hasIcon = ['ETP', 'MVS.ZGC', 'MVS.ZDC', 'CSD.CSD', 'PARCELX.GPX', 'PARCELX.TEST', 'SDG', 'META', 'MVS.HUG', 'RIGHTBTC.RT', 'TIPLR.TPC', 'PANDO', 'VALOTY', 'KOALA.KT'];
+        service.hasIcon = ['ETP', 'MVS.ZGC', 'MVS.ZDC', 'CSD.CSD', 'PARCELX.GPX', 'PARCELX.TEST', 'SDG', 'META', 'MVS.HUG', 'RIGHTBTC.RT', 'TIPLR.TPC', 'PANDO', 'VALOTY', 'KOALA.KT', 'DNA'];
 
         service.burnAddress = '1111111111111111111114oLvT2';
         service.burnAddress_short = 'blackhole';
@@ -243,7 +243,7 @@
          *
          **/
         function ResetPassword(username, password, mnemonic) {
-          return _send('changepasswdext', ['-n', username, '-p', password, mnemonic]);
+            return _send('changepasswdext', ['-n', username, '-p', password, mnemonic]);
         }
 
 
@@ -253,8 +253,8 @@
         }*/
 
         function DumpKeyFile(password, last_word) {
-          var credentials = localStorageService.get('credentials');
-          return _sendV2('dumpkeyfile', [credentials.user, password, last_word, '-d']);
+            var credentials = localStorageService.get('credentials');
+            return _sendV2('dumpkeyfile', [credentials.user, password, last_word, '-d']);
         }
 
 
@@ -263,7 +263,7 @@
         }*/
 
         function ImportKeyFile(username, password, path, content) {
-          return _send('importkeyfile', [username, password, path, content]);
+            return _send('importkeyfile', [username, password, path, content]);
         }
 
 
@@ -429,10 +429,10 @@
          **/
         function Send(recipent, quantity, transactionFee, memo, password) {
             var credentials = localStorageService.get('credentials');
-            if(memo == '') {
-              return _sendV2('send', [credentials.user, password, recipent, quantity, '-f', transactionFee]);
+            if (memo == '') {
+                return _sendV2('send', [credentials.user, password, recipent, quantity, '-f', transactionFee]);
             } else {
-              return _sendV2('send', [credentials.user, password, recipent, quantity, '-f', transactionFee, '-m', memo]);
+                return _sendV2('send', [credentials.user, password, recipent, quantity, '-f', transactionFee, '-m', memo]);
             }
         }
 
@@ -475,10 +475,10 @@
          **/
         function SendFrom(sender, recipent, quantity, transactionFee, memo, password) {
             var credentials = localStorageService.get('credentials');
-            if(memo == '') {
-              return _sendV2('sendfrom', [credentials.user, password, sender, recipent, quantity, '-f', transactionFee]);
+            if (memo == '') {
+                return _sendV2('sendfrom', [credentials.user, password, sender, recipent, quantity, '-f', transactionFee]);
             } else {
-              return _sendV2('sendfrom', [credentials.user, password, sender, recipent, quantity, '-f', transactionFee, '-m', memo]);
+                return _sendV2('sendfrom', [credentials.user, password, sender, recipent, quantity, '-f', transactionFee, '-m', memo]);
             }
         }
 
@@ -527,18 +527,18 @@
             query.push(password);
             query.push('-f');
             query.push(transactionFee);
-            if(from) {
+            if (from) {
                 query.push('-s');
                 query.push(from);
             }
-            if(memo) {
+            if (memo) {
                 query.push('-i');
                 query.push(memo);
             }
-            recipents.forEach( (e) => {
-              recipent = e.address + ':' + e.value;
-              query.push('-r');
-              query.push(recipent);
+            recipents.forEach((e) => {
+                recipent = e.address + ':' + e.value;
+                query.push('-r');
+                query.push(recipent);
             });
             return _sendV2('sendmore', query);
         }
@@ -556,7 +556,7 @@
          **/
         function Start(type, miner, mst) {
             var credentials = localStorageService.get('credentials');
-            if(mst) {
+            if (mst) {
                 return _send('start', [credentials.user, credentials.password, '-c', type, '-a', miner, '-s', mst]);
             } else {
                 return _send('start', [credentials.user, credentials.password, '-c', type, '-a', miner]);
@@ -674,7 +674,7 @@
          **/
         function CreateAsset(symbol, issuer, quantity, secondary_offering, decimal_number, description, secondaryissue_rate) {
             var credentials = localStorageService.get('credentials');
-            return _sendV2('createasset', [credentials.user, credentials.password, '-s', symbol, '-i', issuer, '-v', quantity, '-n',decimal_number, '-d', description, '-r', secondaryissue_rate]);
+            return _sendV2('createasset', [credentials.user, credentials.password, '-s', symbol, '-i', issuer, '-v', quantity, '-n', decimal_number, '-d', description, '-r', secondaryissue_rate]);
         }
 
         /**
@@ -690,18 +690,18 @@
          *
          **/
         function Issue(symbol, minerFee, subsidy) {
-          var credentials = localStorageService.get('credentials');
-          var query = [];
-          query.push(credentials.user);
-          query.push(credentials.password);
-          query.push(symbol);
-          query.push('-p');
-          query.push(minerFee);
-          if(subsidy) {
-              query.push('-s');
-              query.push(subsidy);
-          }
-          return _sendV2('issue', query);
+            var credentials = localStorageService.get('credentials');
+            var query = [];
+            query.push(credentials.user);
+            query.push(credentials.password);
+            query.push(symbol);
+            query.push('-p');
+            query.push(minerFee);
+            if (subsidy) {
+                query.push('-s');
+                query.push(subsidy);
+            }
+            return _sendV2('issue', query);
         }
 
         /**
@@ -801,9 +801,9 @@
             query.push(publickeynum);
             query.push('-s');
             query.push(selfpublickey);
-            recipents.forEach( (e) => {
-              query.push('-k');
-              query.push(e.publicKey);
+            recipents.forEach((e) => {
+                query.push('-k');
+                query.push(e.publicKey);
             });
             query.push(credentials.user);
             query.push(credentials.password);
@@ -811,27 +811,27 @@
         }
 
         function ListMultiSig() {
-          var credentials = localStorageService.get('credentials');
-          return _send('listmultisig', [credentials.user, credentials.password]);
+            var credentials = localStorageService.get('credentials');
+            return _send('listmultisig', [credentials.user, credentials.password]);
         }
 
         function CreateMultisigTx(fromAddress, toAddress, amount, transactionFee, password) {
-          var credentials = localStorageService.get('credentials');
-          return _sendV2('createmultisigtx', [credentials.user, password, fromAddress, toAddress, amount, '-f', transactionFee]);
+            var credentials = localStorageService.get('credentials');
+            return _sendV2('createmultisigtx', [credentials.user, password, fromAddress, toAddress, amount, '-f', transactionFee]);
         }
 
         function CreateAssetMultisigTx(symbol, fromAddress, toAddress, amount, transactionFee, password) {
-          var credentials = localStorageService.get('credentials');
-          return _sendV2('createmultisigtx', [credentials.user, password, fromAddress, toAddress, amount, '-t', '3', '-s', symbol, '-f', transactionFee]);
+            var credentials = localStorageService.get('credentials');
+            return _sendV2('createmultisigtx', [credentials.user, password, fromAddress, toAddress, amount, '-t', '3', '-s', symbol, '-f', transactionFee]);
         }
 
         function SignMultisigTx(message, password, lastTx) {
-          var credentials = localStorageService.get('credentials');
-          if(lastTx) {
-            return _sendV2('signmultisigtx', [credentials.user, password, message, '-b']);
-          } else {
-            return _sendV2('signmultisigtx', [credentials.user, password, message]);
-          }
+            var credentials = localStorageService.get('credentials');
+            if (lastTx) {
+                return _sendV2('signmultisigtx', [credentials.user, password, message, '-b']);
+            } else {
+                return _sendV2('signmultisigtx', [credentials.user, password, message]);
+            }
         }
 
         function CheckAccount(user, password) {
@@ -840,7 +840,7 @@
         }
 
         function ImportAccount(user, password, phrase, address_count) {
-          return _send('importaccount', ['-n', user, '-p', password, '-i', address_count, phrase]);
+            return _send('importaccount', ['-n', user, '-p', password, '-i', address_count, phrase]);
         }
 
         function RegisterDid(address, symbol, password, minerFee) {
@@ -859,79 +859,79 @@
 
         function DidSendFrom(sendfrom, sendTo, value, transactionFee, memo, password) {
             var credentials = localStorageService.get('credentials');
-            if(memo == '') {
-              return _sendV2('didsendfrom', [credentials.user, password, sendfrom, sendTo, value, '-f', transactionFee]);
+            if (memo == '') {
+                return _sendV2('didsendfrom', [credentials.user, password, sendfrom, sendTo, value, '-f', transactionFee]);
             } else {
-              return _sendV2('didsendfrom', [credentials.user, password, sendfrom, sendTo, value, '-f', transactionFee, '-m', memo]);
+                return _sendV2('didsendfrom', [credentials.user, password, sendfrom, sendTo, value, '-f', transactionFee, '-m', memo]);
             }
         }
 
         function DidSend(sendTo, value, transactionFee, memo, password) {
             var credentials = localStorageService.get('credentials');
-            if(memo == '') {
-              return _sendV2('didsend', [credentials.user, password, sendTo, value, '-f', transactionFee]);
+            if (memo == '') {
+                return _sendV2('didsend', [credentials.user, password, sendTo, value, '-f', transactionFee]);
             } else {
-              return _sendV2('didsend', [credentials.user, password, sendTo, value, '-f', transactionFee, '-m', memo]);
+                return _sendV2('didsend', [credentials.user, password, sendTo, value, '-f', transactionFee, '-m', memo]);
             }
         }
 
         function DidSendAssetFrom(sender_address, recipent_address, symbol, quantity, type, unlockNumber, quantityLocked, periodLocked, periodsModel2, interestRate, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
-            switch(type){
-              case '0':
-                var modelToSend = "TYPE=1;LQ=" + quantity + ";LP=" + periodLocked + ";UN=1";
-                return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
-              case '1':
-                var modelToSend = "TYPE=1;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber;
-                return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
-              case '2':
-                var uc = '';
-                var uq = '';
-                periodsModel2.forEach( (period) => {
-                  uc += period.number;
-                  uc += ',';
-                  uq += period.quantityToSend;
-                  uq += ',';
-                });
-                uc = uc.substring(0, uc.length - 1);
-                uq = uq.substring(0, uq.length - 1);
-                var modelToSend = "TYPE=2;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";UC=" + uc + ";UQ=" + uq;
-                return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
-              case '3':
-                var modelToSend = "TYPE=3;LQ=" + quantity + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
-                return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
-              default:
-                return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee]);
+            switch (type) {
+                case '0':
+                    var modelToSend = "TYPE=1;LQ=" + quantity + ";LP=" + periodLocked + ";UN=1";
+                    return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
+                case '1':
+                    var modelToSend = "TYPE=1;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber;
+                    return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
+                case '2':
+                    var uc = '';
+                    var uq = '';
+                    periodsModel2.forEach((period) => {
+                        uc += period.number;
+                        uc += ',';
+                        uq += period.quantityToSend;
+                        uq += ',';
+                    });
+                    uc = uc.substring(0, uc.length - 1);
+                    uq = uq.substring(0, uq.length - 1);
+                    var modelToSend = "TYPE=2;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";UC=" + uc + ";UQ=" + uq;
+                    return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
+                case '3':
+                    var modelToSend = "TYPE=3;LQ=" + quantity + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
+                    return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
+                default:
+                    return _sendV2('didsendassetfrom', [credentials.user, password, sender_address, recipent_address, symbol, quantity, '-f', transactionFee]);
             }
         }
 
         function DidSendAsset(recipent_address, symbol, quantity, type, unlockNumber, quantityLocked, periodLocked, periodsModel2, interestRate, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
-            switch(type){
-              case '0':
-                var modelToSend = "TYPE=1;LQ=" + quantity + ";LP=" + periodLocked + ";UN=1";
-                return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
-              case '1':
-                var modelToSend = "TYPE=1;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber;
-                return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
-              case '2':
-                var uc = '';
-                var uq = '';
-                periodsModel2.forEach( (period) => {
-                  uc += period.number;
-                  uc += ',';
-                  uq += period.quantityToSend;
-                  uq += ',';
-                });
-                uc = uc.substring(0, uc.length - 1);
-                uq = uq.substring(0, uq.length - 1);
-                var modelToSend = "TYPE=2;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";UC=" + uc + ";UQ=" + uq;
-                return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
-              case '3':
-                var modelToSend = "TYPE=3;LQ=" + quantity + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
-                return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
-              default:
-                return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee]);
+            switch (type) {
+                case '0':
+                    var modelToSend = "TYPE=1;LQ=" + quantity + ";LP=" + periodLocked + ";UN=1";
+                    return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
+                case '1':
+                    var modelToSend = "TYPE=1;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber;
+                    return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
+                case '2':
+                    var uc = '';
+                    var uq = '';
+                    periodsModel2.forEach((period) => {
+                        uc += period.number;
+                        uc += ',';
+                        uq += period.quantityToSend;
+                        uq += ',';
+                    });
+                    uc = uc.substring(0, uc.length - 1);
+                    uq = uq.substring(0, uq.length - 1);
+                    var modelToSend = "TYPE=2;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";UC=" + uc + ";UQ=" + uq;
+                    return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
+                case '3':
+                    var modelToSend = "TYPE=3;LQ=" + quantity + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
+                    return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
+                default:
+                    return _sendV2('didsendasset', [credentials.user, password, recipent_address, symbol, quantity, '-f', transactionFee]);
             }
         }
 
@@ -978,41 +978,41 @@
             return _sendV2('transfermit', [credentials.user, password, sendto, symbol, '-f', transactionFee]);
         }
 
-        function SecondaryIssue(toDID, symbol, quantity, type, unlockNumber, quantityLocked, periodLocked, periodsModel2, interestRate, transactionFee, password){
+        function SecondaryIssue(toDID, symbol, quantity, type, unlockNumber, quantityLocked, periodLocked, periodsModel2, interestRate, transactionFee, password) {
             var credentials = localStorageService.get('credentials');
-            switch(type){
-              case '1':
-                var modelToSend = "TYPE=1;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber;
-                return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-m', modelToSend, '-f', transactionFee]);
-              case '2':
-                var credentials = localStorageService.get('credentials'); //;UC=20000,20000,20000;UQ=3000,3000,3000
-                var uc = '';
-                var uq = '';
-                periodsModel2.forEach( (period) => {
-                  uc += period.number;
-                  uc += ',';
-                  uq += period.quantityToSend;
-                  uq += ',';
-                });
-                uc = uc.substring(0, uc.length - 1);
-                uq = uq.substring(0, uq.length - 1);
-                var modelToSend = "TYPE=2;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";UC=" + uc + ";UQ=" + uq;
-                return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-m', modelToSend, '-f', transactionFee]);
-              case '3':
-                var modelToSend = "TYPE=3;LQ=" + quantity + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
-                return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
-              default:
-                return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-f', transactionFee]);
+            switch (type) {
+                case '1':
+                    var modelToSend = "TYPE=1;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber;
+                    return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-m', modelToSend, '-f', transactionFee]);
+                case '2':
+                    var credentials = localStorageService.get('credentials'); //;UC=20000,20000,20000;UQ=3000,3000,3000
+                    var uc = '';
+                    var uq = '';
+                    periodsModel2.forEach((period) => {
+                        uc += period.number;
+                        uc += ',';
+                        uq += period.quantityToSend;
+                        uq += ',';
+                    });
+                    uc = uc.substring(0, uc.length - 1);
+                    uq = uq.substring(0, uq.length - 1);
+                    var modelToSend = "TYPE=2;LQ=" + quantityLocked + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";UC=" + uc + ";UQ=" + uq;
+                    return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-m', modelToSend, '-f', transactionFee]);
+                case '3':
+                    var modelToSend = "TYPE=3;LQ=" + quantity + ";LP=" + periodLocked + ";UN=" + unlockNumber + ";IR=" + interestRate;
+                    return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-f', transactionFee, '-m', modelToSend]);
+                default:
+                    return _sendV2('secondaryissue', [credentials.user, password, toDID, symbol, quantity, '-f', transactionFee]);
             }
         }
 
         function Swaptoken(sendfrom, sendto, symbol, quantity, ethAddress, swaptokenFee, transactionFee, password) {
-          var credentials = localStorageService.get('credentials');
-          if(sendfrom) {
-            return _sendV2('swaptoken', [credentials.user, password, sendto, symbol, quantity, ethAddress, '-d', sendfrom, '-s', swaptokenFee, '-f', transactionFee]);
-          } else {
-            return _sendV2('swaptoken', [credentials.user, password, sendto, symbol, quantity, ethAddress, '-s', swaptokenFee, '-f', transactionFee]);
-          }
+            var credentials = localStorageService.get('credentials');
+            if (sendfrom) {
+                return _sendV2('swaptoken', [credentials.user, password, sendto, symbol, quantity, ethAddress, '-d', sendfrom, '-s', swaptokenFee, '-f', transactionFee]);
+            } else {
+                return _sendV2('swaptoken', [credentials.user, password, sendto, symbol, quantity, ethAddress, '-s', swaptokenFee, '-f', transactionFee]);
+            }
         }
 
         function GetLocked(user) {
@@ -1037,10 +1037,10 @@
             query.push(locktime);
             query.push('-f');
             query.push(transactionFee);
-            if(from) {
+            if (from) {
                 query.push('-s');
                 query.push(from);
-            }           
+            }
             return _sendV3('lock', query);
         }
 
@@ -1065,13 +1065,13 @@
 
         function _send(method, params) {
             return $http.post(RPC_URL, {
-                    method: method,
-                    params: params
-                }, {
+                method: method,
+                params: params
+            }, {
                     headers: {}
                 })
                 .then(
-                    function(res) {
+                    function (res) {
 
                         if (service.debug)
                             console.log({
@@ -1081,7 +1081,7 @@
                             });
                         return handleSuccess(res);
                     },
-                    function(res) {
+                    function (res) {
                         handleError(res);
                     }
                 );
@@ -1089,14 +1089,14 @@
 
         function _sendV2(method, params) {
             return $http.post(RPC_URL_V2, {
-                    jsonrpc: "2.0",
-                    method: method,
-                    params: params
-                }, {
+                jsonrpc: "2.0",
+                method: method,
+                params: params
+            }, {
                     headers: {}
                 })
                 .then(
-                    function(res) {
+                    function (res) {
 
                         if (service.debug)
                             console.log({
@@ -1106,7 +1106,7 @@
                             });
                         return handleSuccess(res);
                     },
-                    function(res) {
+                    function (res) {
                         handleError(res);
                     }
                 );
@@ -1114,14 +1114,14 @@
 
         function _sendV3(method, params) {
             return $http.post(RPC_URL_V3, {
-                    jsonrpc: "2.0",
-                    method: method,
-                    params: params
-                }, {
+                jsonrpc: "2.0",
+                method: method,
+                params: params
+            }, {
                     headers: {}
                 })
                 .then(
-                    function(res) {
+                    function (res) {
 
                         if (service.debug)
                             console.log({
@@ -1131,7 +1131,7 @@
                             });
                         return handleSuccess(res);
                     },
-                    function(res) {
+                    function (res) {
                         handleError(res);
                     }
                 );
@@ -1185,13 +1185,13 @@
 
         function GetBalance(callback) {
             MetaverseService.GetBalance()
-                .then(function(response) {
+                .then(function (response) {
                     if (typeof response.success !== 'undefined' && response.success) {
-                        $translate('MESSAGES.GENERAL_CONNECTION_ERROR').then(function(data) {
+                        $translate('MESSAGES.GENERAL_CONNECTION_ERROR').then(function (data) {
                             callback(null, response.data, data);
                         });
                     } else {
-                        $translate('MESSAGES.GENERAL_CONNECTION_ERROR').then(function(data) {
+                        $translate('MESSAGES.GENERAL_CONNECTION_ERROR').then(function (data) {
                             callback(1, null, data);
                         });
                     }
@@ -1202,11 +1202,11 @@
             //Check if worth to try
             if (tx.outputs != undefined && Array.isArray(tx.outputs)) {
                 var result;
-                tx.outputs.forEach(function(output) {
+                tx.outputs.forEach(function (output) {
                     if (output.attachment.type === 'asset-issue') { //an asset issue has the priority, and contains certs
                         result = TX_TYPE_ISSUE;
                     } else if (output.attachment.type === 'asset-transfer' && result != TX_TYPE_ISSUE) {
-                        if(tx.inputs != undefined && Array.isArray(tx.inputs) && tx.inputs[0] && tx.inputs[0].address=='') {
+                        if (tx.inputs != undefined && Array.isArray(tx.inputs) && tx.inputs[0] && tx.inputs[0].address == '') {
                             result = TX_TYPE_MST_MINING;
                         } else {
                             result = TX_TYPE_ASSET;
@@ -1233,29 +1233,29 @@
             var nbrBlocksScriptLenght = locktime.length;
             var nbrBlocksScriptReorderer = "";
 
-            for (var i=0; i < nbrBlocksScriptLenght; i=i+2) {
-                nbrBlocksScriptReorderer += locktime.charAt(nbrBlocksScriptLenght-i-2);
-                nbrBlocksScriptReorderer += locktime.charAt(nbrBlocksScriptLenght-i-1);
+            for (var i = 0; i < nbrBlocksScriptLenght; i = i + 2) {
+                nbrBlocksScriptReorderer += locktime.charAt(nbrBlocksScriptLenght - i - 2);
+                nbrBlocksScriptReorderer += locktime.charAt(nbrBlocksScriptLenght - i - 1);
             }
-            return parseInt(nbrBlocksScriptReorderer,16);
+            return parseInt(nbrBlocksScriptReorderer, 16);
         }
 
         function LoadTransactions(callback, type, page, limit) {
             MetaverseService.ListTxs(page, limit)
-                .then(function(response) {
-                  var transactions = [];
-                  var total_page = response.data.total_page;
-                    if ( response.success !== 'undefined' && response.success) {
-                      if(response.data.current_page==response.data.total_page){
-                        transactions.lastpage = true;
-                      } else {
-                        transactions.lastpage = false;
-                      }
+                .then(function (response) {
+                    var transactions = [];
+                    var total_page = response.data.total_page;
+                    if (response.success !== 'undefined' && response.success) {
+                        if (response.data.current_page == response.data.total_page) {
+                            transactions.lastpage = true;
+                        } else {
+                            transactions.lastpage = false;
+                        }
                         if (response.data.transactions == undefined) {
                             console.log('unable to load transactions.');
                             callback(1);
                         } else if (response.data.transactions.length > 0) {
-                            response.data.transactions.forEach(function(e) {
+                            response.data.transactions.forEach(function (e) {
                                 var transaction = {
                                     "height": e.height,
                                     "hash": e.hash,
@@ -1265,13 +1265,13 @@
                                     "value": 0,
                                     "memo": ""
                                 };
-                                switch(determineTransactionType(e)){
+                                switch (determineTransactionType(e)) {
                                     case TX_TYPE_ETP:
                                         //ETP transaction handling
                                         transaction.type = 'ETP';
                                         transaction.asset_type = 8;
                                         transaction.intrawallet = true;
-                                        e.outputs.forEach(function(output){
+                                        e.outputs.forEach(function (output) {
                                             //first match is for pre-MPC deposit, with reward
                                             //second match is for post-MPC lock, no reward
                                             if (typeof output.script != 'undefined' && (output.script.match(/\[ (\w+) ] numequalverify dup hash160 \[ (\w+) \] equalverify checksig/) != null) || (output.script.match(/\[ (\w+) ] checksequenceverify drop dup hash160 \[ (\w+) \] equalverify checksig/) != null)) {
@@ -1288,7 +1288,7 @@
                                                     "script": output.script
                                                 });
                                                 transaction.value += parseInt(output['etp-value']);
-                                            } else if((transaction.direction==='receive' && output.own==='true') || (transaction.direction==='send' && output.own==='false')){
+                                            } else if ((transaction.direction === 'receive' && output.own === 'true') || (transaction.direction === 'send' && output.own === 'false')) {
                                                 transaction.frozen = false;
                                                 transaction.intrawallet = false;
                                                 transaction.recipents.push({
@@ -1300,21 +1300,21 @@
                                             }
                                             //memo
                                             if (typeof output.attachment.content != 'undefined') {
-                                            transaction.memo = output.attachment.content;
+                                                transaction.memo = output.attachment.content;
                                             }
                                         });
-                                        if(transaction.intrawallet)
+                                        if (transaction.intrawallet)
                                             transaction.direction = 'intra';
                                         transactions.push(transaction);
                                         break;
                                     case TX_TYPE_ASSET:
                                         //Asset transactions
                                         transaction.intrawallet = true;
-                                        e.outputs.forEach(function(output){
-                                            if(output.attachment.type==='asset-transfer') {
+                                        e.outputs.forEach(function (output) {
+                                            if (output.attachment.type === 'asset-transfer') {
                                                 transaction.type = output.attachment.symbol;
                                                 transaction.decimal_number = output.attachment.decimal_number;
-                                                if((transaction.direction==='receive' && output.own==='true') || (transaction.direction==='send' && output.own==='false')){
+                                                if ((transaction.direction === 'receive' && output.own === 'true') || (transaction.direction === 'send' && output.own === 'false')) {
                                                     transaction.intrawallet = false;
                                                     transaction.recipents.push({
                                                         "address": output.address,
@@ -1325,26 +1325,26 @@
                                             }
                                             //memo
                                             if (typeof output.attachment.content != 'undefined') {
-                                              transaction.memo = output.attachment.content;
+                                                transaction.memo = output.attachment.content;
                                             }
                                         });
-                                        if(transaction.intrawallet)
+                                        if (transaction.intrawallet)
                                             transaction.direction = 'intra';
                                         transactions.push(transaction);
                                         break;
                                     case TX_TYPE_ISSUE:
                                         //Asset issue tx
-                                        transaction.direction='issue';
-                                        e.outputs.forEach(function(output){
-                                            if(output.own==='true' && output.attachment.type==='asset-issue'){
+                                        transaction.direction = 'issue';
+                                        e.outputs.forEach(function (output) {
+                                            if (output.own === 'true' && output.attachment.type === 'asset-issue') {
                                                 transaction.recipents.push({
                                                     "address": output.address,
                                                     "value": parseInt(output.attachment.quantity)
                                                 });
                                                 transaction.value += parseInt(output.attachment.quantity);
                                                 transaction.type = output.attachment.symbol;
-                                                transaction.decimal_number=output.attachment.decimal_number;
-                                            } else if(output.own==='true' && output.attachment.type==='asset-cert'){
+                                                transaction.decimal_number = output.attachment.decimal_number;
+                                            } else if (output.own === 'true' && output.attachment.type === 'asset-cert') {
                                                 /*var cert = {
                                                     "height": e.height,
                                                     "hash": e.hash,
@@ -1360,20 +1360,20 @@
                                                 });
                                                 transactions.push(cert);*/
                                             } else if (typeof output.attachment.content != 'undefined') {
-                                              //memo
-                                              transaction.memo = output.attachment.content;
+                                                //memo
+                                                transaction.memo = output.attachment.content;
                                             }
                                         });
                                         transactions.push(transaction);
                                         break;
                                     case TX_TYPE_CERT:
-                                        transaction.direction='cert';
-                                        e.outputs.forEach(function(output){
-                                            if(output.own==='true' && output.attachment.type==='asset-cert'){
+                                        transaction.direction = 'cert';
+                                        e.outputs.forEach(function (output) {
+                                            if (output.own === 'true' && output.attachment.type === 'asset-cert') {
                                                 transaction.recipents.push({
                                                     "address": output.address
                                                 });
-                                                if(output.attachment.certs == 'naming') {
+                                                if (output.attachment.certs == 'naming') {
                                                     transaction.type = output.attachment.symbol;
                                                 } else if (typeof transaction.type == 'undefined') {
                                                     transaction.type = output.attachment.symbol;
@@ -1383,9 +1383,9 @@
                                         transactions.push(transaction);
                                         break;
                                     case TX_TYPE_DID_REGISTER:
-                                        transaction.direction='did-register';
-                                        e.outputs.forEach(function(output){
-                                            if(output.own==='true' && output.attachment.type==='did-register'){
+                                        transaction.direction = 'did-register';
+                                        e.outputs.forEach(function (output) {
+                                            if (output.own === 'true' && output.attachment.type === 'did-register') {
                                                 transaction.recipents.push({
                                                     "address": output.address
                                                 });
@@ -1395,9 +1395,9 @@
                                         transactions.push(transaction);
                                         break;
                                     case TX_TYPE_DID_TRANSFER:
-                                        transaction.direction='did-transfer';
-                                        e.outputs.forEach(function(output){
-                                            if(output.own==='true' && output.attachment.type==='did-transfer'){
+                                        transaction.direction = 'did-transfer';
+                                        e.outputs.forEach(function (output) {
+                                            if (output.own === 'true' && output.attachment.type === 'did-transfer') {
                                                 transaction.recipents.push({
                                                     "address": output.address
                                                 });
@@ -1407,15 +1407,15 @@
                                         transactions.push(transaction);
                                         break;
                                     case TX_TYPE_MIT:
-                                        e.outputs.forEach(function(output){
-                                            if(output.attachment.type==='mit'){
-                                                if(output.attachment.status == 'transfered') {
-                                                    transaction.direction='mit-transfer';
+                                        e.outputs.forEach(function (output) {
+                                            if (output.attachment.type === 'mit') {
+                                                if (output.attachment.status == 'transfered') {
+                                                    transaction.direction = 'mit-transfer';
                                                 } else {
-                                                    transaction.direction='mit-issue';
+                                                    transaction.direction = 'mit-issue';
                                                 }
                                                 if (typeof output.attachment.content != 'undefined') {
-                                                  transaction.memo = output.attachment.content;
+                                                    transaction.memo = output.attachment.content;
                                                 }
                                                 transaction.recipents.push({
                                                     "address": output.address
@@ -1433,15 +1433,15 @@
                                     case TX_TYPE_MST_MINING:
                                         transaction.direction = 'mstmining';
                                         transaction.intrawallet = false;
-                                        e.outputs.forEach(function(output){
-                                            if(output.attachment.type==='asset-transfer') {
+                                        e.outputs.forEach(function (output) {
+                                            if (output.attachment.type === 'asset-transfer') {
                                                 transaction.type_mst = output.attachment.symbol;
                                                 transaction.decimal_number_mst = output.attachment.decimal_number;
                                                 transaction.value_mst = parseInt(output.attachment.quantity);
                                             } else {
                                                 transaction.type_etp = 'ETP';
                                                 transaction.decimal_number_etp = 8;
-                                                transaction.value_etp = parseInt(output['etp-value']);                                             
+                                                transaction.value_etp = parseInt(output['etp-value']);
                                             }
                                         });
                                         transactions.push(transaction);
@@ -1457,10 +1457,10 @@
                             callback(null, []);
                         }
                     } else if (response.message == "no record in this page") {
-                      //Empty transaction list
-                      callback(null, []);
+                        //Empty transaction list
+                        callback(null, []);
                     } else {
-                        $translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then(function(data) {
+                        $translate('MESSAGES.TRANSACTIONS_LOAD_ERROR').then(function (data) {
                             callback(1, null, null, data);
                         });
                     }
